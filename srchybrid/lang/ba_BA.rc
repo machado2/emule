@@ -1,0 +1,1631 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "ba_BA.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "..\resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Baskisch resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_EUQ)
+#ifdef _WIN32
+LANGUAGE LANG_BASQUE, SUBLANG_DEFAULT
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "ba_BA.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""..\\resource.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""..\\version.h""\r\n"
+    "#include ""lang.rc2""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_SOCKETS_INIT_FAILED "Windowseko socket-ak hasterakoan errorea."
+    IDS_ABOUTBOX            "&eMule-ri buruz..."
+    IDS_HTTPDOWNLOAD_FILESTATUS "%s-eko %s"
+    IDS_HTTPDOWNLOAD_CONNECTED "%s(e)ra konektatua"
+    IDS_HTTPDOWNLOAD_RESOLVING_NAME "Izena konpontzen: %s"
+    IDS_HTTPDOWNLOAD_RESOLVED_NAME "Izena %s-ra konpondua"
+    IDS_HTTPDOWNLOAD_CONNECTING "%s-(e)ra konektatzen"
+    IDS_HTTPDOWNLOAD_REDIRECTING "%s-ra bideratzen"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_GETTING_FILE_INFORMATION "Fitxategiaren informazioa eskuratzen"
+    IDS_HTTPDOWNLOAD_FAIL_PARSE_ERROR "Errore bat gertatu da %s url-a aztertzen"
+    IDS_HTTPDOWNLOAD_GENERIC_ERROR 
+                            "Errore bat gertatu da fitxategia jaisten saiatzerakoan, errorea:%s"
+    IDS_HTTPDOWNLOAD_FAIL_CONNECT_SERVER 
+                            "Errore bat gertatu da zerbitzarira konektatzerakoan, errorea:%s"
+    IDS_HTTPDOWNLOAD_INVALID_SERVER_RESPONSE 
+                            "Zerbitzaritik baliodun erantzunik jasotzerakoan errorea"
+    IDS_HTTPDOWNLOAD_INVALID_HTTP_RESPONSE 
+                            "Zerbitzaritik baliodun HTTP erantzunik jasotzerakoan errorea"
+    IDS_HTTPDOWNLOAD_ERROR_READFILE 
+                            "Fitxategia jaisterakoan errore bat gertatu da , errorea:%s"
+    IDS_HTTPDOWNLOAD_PERCENTAGE "Zerbitzari zerrenda eguneratzen: %s-etik %s% osatua"
+    IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Fitxategia berreskuratzen"
+    IDS_HTTPDOWNLOAD_OF     "%s-etik %s"
+    IDS_HTTPDOWNLOAD_SECONDS "%s seg"
+    IDS_HTTPDOWNLOAD_MINUTES "%s min"
+    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%s minutu %s segundu"
+    IDS_HTTPDOWNLOAD_BYTES  "%s1 Byte"
+    IDS_HTTPDOWNLOAD_KILOBYTES "%s KB"
+    IDS_CANCEL              "Utzi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_MEGABYTES "%s MB"
+    IDS_HTTP_CAPTION        "Zerbitzari zerrenda eguneratzen"
+    IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s kopiatua)"
+    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s Byte/Seg"
+    IDS_HSAV                "Hashset available"
+    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s KB/Seg"
+    IDS_FD_CORR             "Ustela"
+    IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
+                            "'%s' fitxategia dagoeneko badago.\nNahi ahal duzu ordezkatu?"
+    IDS_FD_RECOV            "Berreskuratua"
+    IDS_HTTPDOWNLOAD_FAIL_FILE_OPEN 
+                            "Errore bat gertatu da jaisteko den fitxategia irekitzerakoan, Errorea:%s"
+    IDS_HTTPDOWNLOAD_ABORTING_TRANSFER "Transferentzia eragozten"
+    IDS_FD_COMPR            "Compression"
+    IDS_WIZARD_NETWORK      "Choose which network(s) you want to use."
+    IDS_MAIN_READY          "eMule %s Bertsioa prest"
+    IDS_WIZARD_ED2K         "ED2k Settings"
+    IDS_SEL_SKIN            "Select Skin..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MAIN_SOCKETERROR    "Errore larria: Socketa %i portuan egiten ezgaia."
+    IDS_MAIN_BTN_DISCONNECT "Des&konektatu"
+    IDS_MAIN_BTN_DISCONNECT_TOOLTIP "Deskonektatu oraingo zerbitzaritik."
+    IDS_ERR_WRONGFILEID     "fileid okerra bidalia"
+    IDS_ERR_BADHASHSET      "baliogabeko edo husteldutako hashset-a jasoa"
+    IDS_ERR_BADDATABLOCK    "baliogabeko edo husteldutako DatuBlokea jasoa"
+    IDS_ERR_ILLFORMEDHASH   "Ill-formed hash"
+    IDS_ERR_BADED2KLINK     "ez da ondo-osatutako ed2k lotura"
+    IDS_ERR_NOSLLINK        "Ez da ED2K zerbitzaria edo fitxategi-lotura"
+    IDS_ERR_WRONGPACKAGESIZE "OP_FILEREQUEST pakete tamaina baliogabekoa"
+    IDS_ERR_WRONGHPACKAGESIZE "OP_HASHSETREQUEST pakete tamaina baliogabekoa"
+    IDS_ERR_BADCLIENTACTION "Bezero batek errore bat edo zerbait gaizki egin du: %s. Bezeroa deskonektatzen!"
+    IDS_ERR_UNKNOWNCLIENTACTION 
+                            "Bezero ezezagunak protokolo pakete luzatua bidaltzen ari da"
+    IDS_ERR_OPENMET         "Errorea: part.met fitxategia irekitzen huts egitea! (%s => %s)"
+    IDS_ERR_BADMETVERSION   "Errorea: part.met fitxategi bertsio baliogabekoa! (%s => %s)"
+    IDS_ERR_BADGAP          "Baliogabeko Gap-Tag-a part.met fitxategian"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_EMPTYADRESSESDAT_TITLE "serbitzarizerrenda berreskuratzea ezgaia"
+    IDS_ERR_BADSERVERMETVERSION "server.met-en versiontag baliogabekoa (0x%X)!"
+    IDS_SERVERSFOUND        "server.met-en %i zerbitzari aurkituak"
+    IDS_SERVERSADDED        "%d zerbitzari gehituak, %d kendutak"
+    IDS_ERR_BADSERVERLIST   "Error: server.met fitxategia hondatua dago, serbitzarizerrenda kargatzea ezgaia"
+    IDS_ERR_FILEERROR_SERVERMET 
+                            "ustekabeko server.met fitxategi errorea: %s, serbitzarizerrenda kargatzea ezgaia"
+    IDS_ERR_SAVESERVERMET   "server.met gordetzen errorea! "
+    IDS_PASSIVE             "Passive"
+    IDS_MAIN_CONNECTEDTO    "Konexioaren kokapena:"
+    IDS_MAIN_BTN_CANCEL     "&Utzi"
+    IDS_AVAIL               "Parts: %d , available: %d (%.1f%%)\n\n"
+    IDS_TYPE                "Mota"
+    IDS_FILEID              "FitzategiID"
+    IDS_FILE                "Fitzategia"
+    IDS_DOWNLOAD            "Jaitsi"
+    IDS_SL_SERVERNAME       "Serbitzari izena"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IP                  "IP"
+    IDS_DESCRIPTION         "Deskribapena"
+    IDS_PING                "Ping"
+    IDS_FILES               "Fitxategiak"
+    IDS_PREFERENCE          "Lehentasuna"
+    IDS_PRIONOPREF          "Lehentasunik ez"
+    IDS_CONNECTTHIS         "Hautatutako Zerbitzarira konektatu"
+    IDS_CHAT_WELCOME        "Bat-bateko mezugintza\n  \nEgin klik eskubiko botoiarekin edozein bezerotan eta 'Bidali mezua' aukeratu berriketa sesio bat hasteko."
+    IDS_MAIN_BTN_CANCEL_TOOLTIP "Oraingo konezio ahaleginak gelditu."
+    IDS_MAIN_BTN_CONNECT    "&Konektatu"
+    IDS_ERR_SAVESERVERMET2  "server.met gordetzerakoan erroreak! You may need to delete server.met and rename server.met.old to server.met!"
+    IDS_NOTCONNECTED        "Ez Konektatua"
+    IDS_DISCONNECTED        "Deskonektatua"
+    IDS_USERS               "Erabiltzaileak: %i"
+    IDS_UPDOWN              "Igo: %.1f | Jaitsi: %.1f"
+    IDS_CONNECTED           "Konektatua"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_WRITEERROR      "Ezusteko fitxategi errorea %s idazterakoan: %s"
+    IDS_ERR_COMPLETIONFAILED 
+                            "Ezusteko fitxategi errorea %s osatzerakoan. File paused, restart eMule to start another completing-try"
+    IDS_ERR_DELETEFAILED    "Hutsegitea %s ezabatzerakoan, hau eskuz egin beharko duzu"
+    IDS_DOWNLOADDONE        "%s jaisten bukatua :-)"
+    IDS_ERR_DELETE          "Hutsegitea %s ezabatzerakoan"
+    IDS_ERR_HASHERRORWARNING 
+                            "Abisua: jaitsitako part-a zatikatzen ezgaia - zatikatzea bukatugabea (%s)"
+    IDS_ERR_INCOMPLETEHASH  "Errorea: jaitsitako part-a zatikatzen ezgaia - zatikatzea bukatugabea (%s). Hau ez luke inoiz gertatu beharrik"
+    IDS_DOWNLOADING         "Jaisten"
+    IDS_WAITING             "Itxaroten"
+    IDS_HASHING             "Zatikatzen"
+    IDS_COMPLETING          "Osatzen"
+    IDS_COMPLETE            "Osatua"
+    IDS_PAUSED              "Etena"
+    IDS_ERRORLIKE           "Okerrekoa"
+    IDS_ASSIGNED2K          "eMule ez dago ED2K loturetara egokitua. Nahi ahal duzu eMule ED2K loturetara orain egokitzea (gomendagarria) ?"
+    IDS_ERR_EMPTYADRESSESDAT 
+                            "Ez da zerbitzarizerrendahelbidea sarrerarik 'adresses.dat'-en aurkitu. Mesedez, itsatsi zerbitzarizerrenda helbide baliodun bat fitxategi honetan zure zerbitzarizerrenda auto-eguneratu dadin."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LINKNOTADDED        "Ezin lotura gehitu"
+    IDS_MAIN_EXIT           "Benetan eMule itxi nahi ahal duzu?"
+    IDS_MAIN_EXITTITLE      "Ixteko konfirmazioa"
+    IDS_MAIN_POPUP_RESTORE  "Jarraitu"
+    IDS_CONNECTTOANYSERVER  "Edozein zerbitzarira konektatu"
+    IDS_EXIT                "Irten"
+    IDS_CONNECTING          "Konektatzen"
+    IDS_FAILED              "failed"
+    IDS_ERR_BADSERVERREPLY  "Corrupt or invalid loginanswer from server received"
+    IDS_NEWCLIENTID         "BezeroId berria %u da"
+    IDS_NOSHAREDFOLDERS     "Ez dago karpeta konpartiturik"
+    IDS_SHAREDFOLDERS       "Karpeta konpartituak"
+    IDS_VIEW1               "ikusi"
+    IDS_VIEW2               " (ez konpartitua"
+    IDS_PRIOLOW             "Baxua"
+    IDS_PRIONORMAL          "Normala"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOHIGH            "Altua"
+    IDS_DOWNLOADMENUTITLE   "Jaitsierak"
+    IDS_PRIORITY            "Lehentasuna"
+    IDS_NEWSERVERS          "%d serbitzari berri hartuak"
+    IDS_DL_STOP             "&Stop"
+    IDS_DL_PAUSE            "&Eten"
+    IDS_DL_RESUME           "&Jarraitu"
+    IDS_DL_OPEN             "&Fitxategia ireki"
+    IDS_DL_INFO             "Fitxategi eta detaileak erakutsi"
+    IDS_DL_CLEAR            "Betetakoak Garbitu"
+    IDS_DL_LINK1            "ED2k &lotura arbelera kopiatu"
+    IDS_DL_LINK2            "ED2k lotura arbelera kopiatu (&HTML)"
+    IDS_SHOWDETAILS         "&Zehetasunak erakutsi"
+    IDS_SEND_MSG            "&Mezua Bidali"
+    IDS_ASKING              "Galdetzen"
+    IDS_CONNVIASERVER       "Serbitzariaren bidez konektatzen"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ONQUEUE             "Zerrendan"
+    IDS_TRANSFERRING        "Transferitzen"
+    IDS_RECHASHSET          "hashset-a jasotzen"
+    IDS_NONEEDEDPARTS       "Beharreko zatirik ez"
+    IDS_NOCONNECTLOW2LOW    "Ezin konektatu LowID-tik LowID-ra"
+    IDS_UNKNOWN             "Ezezaguna"
+    IDS_ASKED4ANOTHERFILE   "Asked for another file"
+    IDS_Q_CANCELDL          "Zihur al zaude fitxategi horiek utzi eta ezabatu nahi dituzula?\n"
+    IDS_Q_CANCELDL2         "Zihur al zaude fitxategi hau utzi eta ezabatu nahi duzula?\n"
+    IDS_COPIED2CB           "Arbelera kopiatua: \n"
+    IDS_PROCDONE            "% egina"
+    IDS_SELECTINCOMINGDIR   "Karpeta bat aukeratu datozen fitxategientzako"
+    IDS_SELECTTEMPDIR       "Karpeta bat aukeratu temp fitxategientzako"
+    IDS_DL_FILENAME         "Fitxategi Izena"
+    IDS_DL_SIZE             "Tamaina"
+    IDS_DL_TRANSF           "Transferitua"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DL_SPEED            "Abiadura"
+    IDS_DL_PROGRESS         "Abantzamendua"
+    IDS_DL_SOURCES          "Iturriak"
+    IDS_ERR_BADSERVERLISTRECEIVED "Zerbitzarizerrenda-ren baliogabeko paketea jasoa"
+    IDS_STATUS              "Egoera"
+    IDS_DL_REMAINS          "Gainerakoa"
+    IDS_UPDATEFROM          "Update from URL: (filter.dat- or PeerGuardian-format)"
+    IDS_QL_USERNAME         "Erabiltzailea"
+    IDS_LOADURL             "Kargatu"
+    IDS_DELETEAFTERALLOC    "File '%s' is currently allocating disk space and will be deleted afterwards"
+    IDS_ERR_PACKAGEHANDLING "Unhandled error while processing packet from server (%s)"
+    IDS_QL_RATING           "Maila"
+    IDS_CONNECTINGTO        "%s-ra konektatzen(%s:%i)..."
+    IDS_CLIENTS             "Bezeroak"
+    IDS_SEARCH_ANY          "Edonor"
+    IDS_SEARCH_AUDIO        "Audioa"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SEARCH_PICS         "Imaginak"
+    IDS_SEARCH_PRG          "Programak"
+    IDS_SEARCH_VIDEO        "Bideoak"
+    IDS_SEARCH_CDIMG        "CD-Imaginak"
+    IDS_SEARCH_ARC          "Artxiboak"
+    IDS_ERR_INVALIDLINK     "ed2k lotura hau baliogabekoa da (%s)"
+    IDS_ERR_LINKERROR       "Baliogabeko lotura: %s"
+    IDS_ERR_NOTCONNECTED    "Ez zaude zerbitzari batetara konektatua!"
+    IDS_REMOVETHIS          "Ezabatu aukeratutako Zeritzaria"
+    IDS_REMOVEALL           "Ezabatu Zerbitzari guztiak"
+    IDS_SRV_ADDR            "Mesedez, zerbitzarihelbide bat sartu"
+    IDS_SRV_PORT            "serbitzariportu osatugabea: Mesedez serbitzariportu bat sartu"
+    IDS_SRV_NOTADDED        "Serbitzaria ez da gehitu!"
+    IDS_SRV_READD           "Serbitzaria hilda bezala markatu da, ber-gehitua izan da!"
+    IDS_SRV_NOURLAV         "URL-rik ez."
+    IDS_INVALIDURL          "Baliogabeko URL-a"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FAILEDDOWNLOADMET "Serbitzarizerrenda %s-tik jaisteko hutsegitea"
+    IDS_PERMISSION          "Baimena"
+    IDS_SHAREDFILES         "Fitxategi konpartituak"
+    IDS_PRIOVERYLOW         "Oso bajua"
+    IDS_PRIORELEASE         "Bertsio"
+    IDS_TRAYDLG_SPEED       "eMule Abiadura"
+    IDS_FSTATUS_LOCKED      "Blokeatua"
+    IDS_FSTATUS_FRIENDSONLY "Lagunak bakarrik"
+    IDS_FSTATUS_PUBLIC      "Publikoa"
+    IDS_PRIOHIGHEST         "Altuena"
+    IDS_ERR_NOPRIMCHANGE    "Ezin duzu baimenik aldatu fitxategi bat jaisten ari den bitartean!"
+    IDS_HIDDEN              "Ezkutatua"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FSTAT_TRANSFER      "Transfer"
+    IDS_FSTAT_CONNECTION    "Konexioa"
+    IDS_FSTAT_CLIENTS       "Bezeroak"
+    IDS_FSTAT_SERVERS       "Serbitzariak"
+    IDS_FSTAT_WAITING       "Itxaroten..."
+    IDS_TIME                "Denbora"
+    IDS_STATS_DDATA         "Jaitsitako Datuak (Sesioan (Totala)): %s (%s)"
+    IDS_STATS_UDATA         "Igotako Datuak (Sesioan (Totala)): %s (%s)"
+    IDS_STATS_AVGDL         "Batazbestekoa Jaitsiera-abiadura (Sesioan): %.2f KB/s"
+    IDS_STATS_AVGUL         "Batazbesteko Igoera-abiadura (Sesioan): %.2f KB/s"
+    IDS_STATS_FOUNDSRC      "Aurkitutako Iturriak: %i"
+    IDS_STATS_ACTDL         "Jaitsiera aktiboak (chunks): %i"
+    IDS_STATS_ACTUL         "Igoera aktiboak: %i"
+    IDS_STATS_WAITINGUSERS  "Igoerak itxaroten: %i"
+    IDS_STATS_RECONNECTS    "Berkonexioak: %i"
+    IDS_STATS_WAITTRANSF    "transferentzia itxaroten..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_WAITCONN      "konexioa itxaroten..."
+    IDS_STATS_CONNECTEDSINCE "%s-tik Serbitzarira konektatua"
+    IDS_STATS_RATIO         "Sesio IG:JA Ratioa:"
+    IDS_STATS_UNKNOWNCLIENT "Ezezagunak: %i"
+    IDS_STATS_TOTAL         "Totala: %i"
+    IDS_STATS_WORKING       "Lanean: %i"
+    IDS_STATS_DEAD          "Hildakoak/Ezabatuak: %i"
+    IDS_DISABLED            "baliogabetua"
+    IDS_STOPPED             "Gelditua"
+    IDS_STATS_UPDATELABEL   "Aktualizazio atzerapena: %i sec"
+    IDS_QUEUECOUNT          "%u (%u debekatua)"
+    IDS_NICKNAME            "Ezizen: "
+    IDS_CLIENTSFILENAME     "\nBezeroaren fitxategi-izena: "
+    IDS_ASKEDFAF            "\nBeste fitxategi batengatik galdetua"
+    IDS_WAITED              "Waited"
+    IDS_ERR_LOADCREDITFILE  "Failed to load creditfile, a new file will be created"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CREDITFILEOLD   "Creditfile is out of date and will be replaced"
+    IDS_CREDITFILELOADED    "Creditfile loaded, %u clients are known"
+    IDS_CREDITFILECORRUPT   "Error: the creditfile is corrupted and will be replaced!"
+    IDS_ERR_CREDITFILEREAD  "Unexpected file error while reading creditfile: %s"
+    IDS_ERR_FAILED_CREDITSAVE "Failed to save creditfile"
+    IDS_NOPARTSFOUND        "No part files found"
+    IDS_FOUNDPARTS          "Found %i part files"
+    IDS_NEWDOWNLOAD         "%s jaisten"
+    IDS_ERR_ALREADY_DOWNLOADING "Dagoeneko fitxategi hau jaisten ari zara %s"
+    IDS_ERR_ALREADY_DOWNLOADED "Dagoeneko fitxategi hau jaitsi duzu %s"
+    IDS_ERR_SERVERMET_BAD   "Errorea: known.met fitxategia usteldua dago, fitxategi ezagunak kargatzeko ezgaia"
+    IDS_ERR_SERVERMET_UNKNOWN 
+                            "known.met fitxategia irakurtzerakoan ustekabeko errorea: %s, fitxategi ezagunak kargatzeko ezgaia"
+    IDS_ERR_CONNECTIONERROR "Errorea konektatzerakoan: %s (%s:%i): %d"
+    IDS_ERR_SOCKET          "serbitzarisocket-ean errorea: %s (%s:%i): %u"
+    IDS_SHAREDFOUND         "%i fitxategi konpartitu ezagunak aurkituak"
+    IDS_SHAREDFOUNDHASHING  "%i fitxategi konpartitu ezagunak aurkituak, %i fitxategi berriak txikitzen"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FILECOMPLETIONTHREAD "Creating file completion thread failed"
+    IDS_FILEBUFFERSIZE      "File buffer size (%i)"
+    IDS_QUEUESIZE           "Queue size (%i)"
+    IDS_DAYS2               "days"
+    IDS_ERR_MAKEBAKCREDITFILE "Failed to make backup of creditfile"
+    IDS_COMMENT             "Comments"
+    IDS_IPFILTERED          "Filtered IP: %s (%s)"
+    IDS_DL_TRANSFCOMPL      "Completed"
+    IDS_STATS_FILTEREDCLIENTS "Filtered: %i"
+    IDS_FILTERLABEL         "Filter messages containing: (Separator | )"
+    IDS_ERR_LARGEREQBLOCK   "Client requested too large of a block."
+    IDS_SHOWRATEONTITLE     "Show transfer rates on title"
+    IDS_TBN_NOMESSAGEHISTORY "No history message!"
+    IDS_PW_DAP              "Add new downloads with auto priority"
+    IDS_FD_LASTCHANGE       "Last reception:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_RUNTIME       "Runtime"
+    IDS_ALL                 "All"
+    IDS_CAT_ADD             "Add Category..."
+    IDS_CAT_EDIT            "Edit Category..."
+    IDS_CAT_REMOVE          "Remove Category"
+    IDS_CAT                 "Category"
+    IDS_TITLE               "Title"
+    IDS_COLOR               "Color"
+    IDS_DEFAULT             "Default"
+    IDS_PW_DISPLAY          "Display"
+    IDS_CAT_INVADD          "Show all unassigned"
+    IDS_CAT_REINVADD        "Show all"
+    IDS_INDICATERATINGS     "Indicate downloads with comments/rating by icon"
+    IDS_ALLOTHERS           "Uncategorized"
+    IDS_TOCAT               "Assign To Category"
+    IDS_CAT_UNASSIGN        "(unassign)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_UDPEXT          "Error while processing incoming extended protocol UDP Packet"
+    IDS_ERR_INCOMPLETEBLOCK "Bloke osagabe batengatik galdetua "
+    IDS_ERR_OPEN            "eskatutako fitxategia irekitzen hutsegitea"
+    IDS_ERR_CLIENTERRORED   "'%s' bezeroak (%s) paketea sortzerakoan eragindako errorea - bezeroa deskonektatzen"
+    IDS_ERR_REQ_FNF         "eskaturiko fitxategia ez aurkitua"
+    IDS_CLIENTBLOCKED       "Badirudi '%s' bezeroa bezero erasotzaile bat dela eta debekatua dago igoerailara-tik"
+    IDS_LUSERS              "erabiltzaileak"
+    IDS_LFILES              "fitxategiak"
+    IDS_DESC                "Deskribapena: %s"
+    IDS_PORT                "Portua"
+    IDS_ERR_NOVALIDSERVERSFOUND 
+                            "Ez dira aurkitu zerbitzari baliodunik zerbitzarizerrenda-n"
+    IDS_CONNECTEDTOREQ      "Connected to %s (%s:%i), sending loginrequest"
+    IDS_ERR_FATAL           "Fatal Error while trying to connect. Internet connection might be down"
+    IDS_ERR_LOSTC           "Lost connection to %s (%s:%i)"
+    IDS_ERR_DEAD            "%s (%s:%i) appears to be dead."
+    IDS_ERR_FULL            "%s (%s:%i) appears to be full"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_METCORRUPT      "Errorea: %s (%s) usteldua dago, fitxategia kargatzen ezgaia"
+    IDS_ERR_FILEERROR       "Ezusteko fitxategi errorea %s irakurtzerakoan (%s): %s"
+    IDS_ERR_FILEOPEN        "%s irekitzerakoan hutsegitea (%s)"
+    IDS_SEL_SKINDIR         "Select Skin Directory..."
+    IDS_ERR_REHASH          "Abisua: %s usteldua liteke, betetako zati berzatikatzea"
+    IDS_SKIN_PROF           "Skin Profiles"
+    IDS_ERR_PART_FNF        ".part fitxategia ez aurkitua"
+    IDS_ERR_OPENMETFILE     "part.met fitxategia irekitzen hutsegitea"
+    IDS_KADOPEN             "Ireki"
+    IDS_ERR_SAVEMET         "ERROREA partfitxategia gordetzen: %s (%s => %s)"
+    IDS_ERR_FOUNDCORRUPTION "Part usteldua aurkitua(%i) in %s"
+    IDS_HASHINGDONE         "%s berzatikatzen bukatua, fitxategia ondo dagoela dirudi"
+    IDS_ERR_PARTCORRUPT     "Jaitsitako %i part-a usteldua dago :(  (%s)"
+    IDS_ICHWORKED           "ICH: Recovered corrupted part %i  (%s)"
+    IDS_ERR_OUTOFSPACE      "Diska toki gutxiegi duzu %s jaisteko!"
+    IDS_SE                  "Source Exchange"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOSERVERSC      "No valid servers to connect in serverlist found"
+    IDS_CONNECTEDTO         "Connection established on: %s"
+    IDS_DL_PREVIEW          "Preview"
+    IDS_VIEWQUEUE           "Ilara erakutsi"
+    IDS_VIEWUPLOADS         "Igoerak erakutsi"
+    IDS_TW_UPLOADS          "Igoerak"
+    IDS_TW_DOWNLOADS        "Jaitsierak"
+    IDS_TW_QUEUE            "Bezeroak Kolan:"
+    IDS_SW_SEARCHBOX        "Bilatu"
+    IDS_SW_NAME             "Izena"
+    IDS_SW_GLOBAL           "Bilaketa globala"
+    IDS_SW_TYPE             "Tipoa"
+    IDS_SW_DIRECTDOWNLOAD   "Jaitsiera Zuzena"
+    IDS_SW_LINK             "ED2K Lotura"
+    IDS_SW_START            "Hasi"
+    IDS_SCHEDULER           "Scheduler"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC                 "&IRC"
+    IDS_SW_RESULT           "Bilaketa emaitza"
+    IDS_SW_DOWNLOAD         "Jaitsi Aukeratutakoak"
+    IDS_SV_SERVERLIST       "Zerbitzari zerrenda"
+    IDS_SV_SERVERINFO       "Zerbitzari informazioa"
+    IDS_SV_LOG              "Log"
+    IDS_SV_NEWSERVER        "Zerbitzari berria"
+    IDS_SV_ADDRESS          "IP edo Helbidea"
+    IDS_SV_PORT             "Portua"
+    IDS_SV_ADD              "Listara gehitu"
+    IDS_SV_MET              "server.met URL honetatik eguneratu"
+    IDS_SV_UPDATE           "Eguneratu"
+    IDS_SF_FILES            "Fitxategi Konpartituak"
+    IDS_SF_STATISTICS       "Estatistikak"
+    IDS_SF_RELOAD           "Reload"
+    IDS_SF_CURRENT          "Oraingo sesioa"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIORITY_UP         "Increase Priority"
+    IDS_PRIORITY_DOWN       "Decrease Priority"
+    IDS_SPEED_LIMITS        "Speed Limits"
+    IDS_CAPACITY_LIMITS     "Bandwidth Limits"
+    IDS_ADMIN               "Administrator"
+    IDS_ACCESSDENIED        "Access denied!"
+    IDS_WEB_LOWUSER         "Guest"
+    IDS_WEB_ERR_CANTLOAD    "Can't load templates: Can't open file %s"
+    IDS_GLOBALSEARCH        "Global (Server)"
+    IDS_METHOD              "Method"
+    IDS_SW_WEBBASED         "Web-based Search"
+    IDS_NOTHING             "nothing"
+    IDS_SETUPSPEED          "set uploadlimit"
+    IDS_SETDOWNSPEED        "set downloadlimit"
+    IDS_DAYLY               "daily"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DAY_MO_FR           "Mon-Fri"
+    IDS_DAY_SA_SO           "Sat-Sun"
+    IDS_MO                  "Monday"
+    IDS_DI                  "Tuesday"
+    IDS_MI                  "Wednesday"
+    IDS_DO                  "Thursday"
+    IDS_FR                  "Friday"
+    IDS_SA                  "Saturday"
+    IDS_SO                  "Sunday"
+    IDS_WEB_ADMINLOGIN      "Web Interface: Admin-Login"
+    IDS_WEB_GUESTLOGIN      "Web Interface: Guest-Login"
+    IDS_WEB_SESSIONEND      "Web Interface: Logout"
+    IDS_DETAILS             "Details"
+    IDS_ACTION              "Action"
+    IDS_REMOVE              "Remove"
+    IDS_NEW                 "New"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SF_TOTAL            "Totala"
+    IDS_SF_TRANS            "Transferitua:"
+    IDS_SF_ACCEPTED         "Onartutako Igoerak:"
+    IDS_SF_REQUESTED        "Eskatuak:"
+    IDS_ST_DOWNLOAD         "Jaitsiera abiadura"
+    IDS_ST_UPLOAD           "Igoera abiadura"
+    IDS_ST_CURRENT          "oraingoa"
+    IDS_ST_SESSION          "sesio batazbestekoa"
+    IDS_ST_ACTIVED          "jaitsierak aktibo"
+    IDS_ST_ACTIVEU          "igoerak aktibo"
+    IDS_ST_WAITINGU         "igoerak itxoiten"
+    IDS_CW_MESSAGES         "Mezuak"
+    IDS_CW_FRIENDS          "Lagunak"
+    IDS_CW_SEND             "Bidali"
+    IDS_CW_CLOSE            "Itxi"
+    IDS_PW_GENERAL          "General"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_DIR              "Direktorioak"
+    IDS_PW_NICK             "Ezizena"
+    IDS_PW_INCOMING         "Fitxategi etorkinak"
+    IDS_PW_TEMP             "Fitxategi tenporala"
+    IDS_PW_BROWSE           "Miatu"
+    IDS_PW_SHARED           "Konpartitutako direktorioak"
+    IDS_PW_CONNECTION       "Konexioa"
+    IDS_PW_DOWNC            "Jaitsiera kapazitatea"
+    IDS_PW_DOWNL            "Jaitsiera muga"
+    IDS_PW_UPC              "Igoera kapazitatea"
+    IDS_PW_UPL              "Igoera muga"
+    IDS_PW_MAXC             "Konexio Max."
+    IDS_PW_CLIENTPORT       "Bezeroportua"
+    IDS_PW_AUTOCON          "Hasieran autokonektatu"
+    IDS_PW_RECON            "Galtzerakoan berkonektatu"
+    IDS_PW_SERVER           "Zerbitzaria"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_RDEAD            "Ezabatu hildako zerbitzaria"
+    IDS_PW_RETRIES          "saiakera eta gero"
+    IDS_PW_SCORE            "Prioritate sistema erabili"
+    IDS_PW_USC              "Zerbitzari zerrenda eguneratu zerbitzariari konektatzerakoan"
+    IDS_PW_UCC              "Zerbitzari zerrenda eguneratu bezero bat konektatzerakoan"
+    IDS_PW_FILTER           "beti filtratu IP txarrak"
+    IDS_PW_USS              "Hasieran zerbitzari zerrenda eguneratu"
+    IDS_PW_MISC             "Opzio nahastuak"
+    IDS_PW_TRAY             "Erretilu-ikonora minimi&zatu"
+    IDS_PW_BEEP             "Erroretan Beep"
+    IDS_PW_PROMPT           "Ateratzerakoan jakinarazi"
+    IDS_PW_SPLASH           "Plisti-plasta pantaila erakutsi"
+    IDS_PW_DBLCLICK         "Downloadlist doubleclick to expand"
+    IDS_PW_TOOL             "Tooltip Delay Time (segunduak)"
+    IDS_PW_FRONT            "Aurrera ekarri lotura klikatzerakoan"
+    IDS_PW_LANG             "Hizkuntzak"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_FILES            "Fitxategiak"
+    IDS_PW_ICH              "&Intelligent Corruption Handling"
+    IDS_PW_SHARE            "Nire konpartizioa ikusi"
+    IDS_PW_EVER             "Denak"
+    IDS_PW_FRIENDS          "Lagunak"
+    IDS_PW_NOONE            "Bat ere ez"
+    IDS_PW_RESET            "Garbitu"
+    IDS_PW_APPLY            "Ezarri"
+    IDS_EM_TRANS            "Transferentzia"
+    IDS_EM_SERVER           "Zerbitzariak"
+    IDS_EM_SEARCH           "Bilatu"
+    IDS_EM_FILES            "Fitxategi konpartitua"
+    IDS_EM_MESSAGES         "Mezuak"
+    IDS_EM_STATISTIC        "Estatistikak"
+    IDS_EM_PREFS            "Lehentasunak"
+    IDS_MB_LANGUAGEINFO     "Hizkuntza lehenetsi bat aukeratu da. Edozein momentutak aldatu dezakezu hizkuntza konfigurazioa preferentzien mihian."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_GENERAL          "General"
+    IDS_FD_NAME             "Izen Deiturak:"
+    IDS_FD_MET              "met-Fitxategia:"
+    IDS_FD_HASH             "Hash:"
+    IDS_FD_SIZE             "Fitxategi tamaina:"
+    IDS_FD_STATUS           "Partfilestatus:"
+    IDS_FD_TRANSFER         "Transferentzia"
+    IDS_FD_SOURCES          "Aurkitutako Jatorriak:"
+    IDS_FD_PARTS            "Filepart-Count:"
+    IDS_FD_TRANS            "Transferred:"
+    IDS_FD_DATARATE         "Datarate:"
+    IDS_FD_TRANSI           "Transferring:"
+    IDS_FD_COMPSIZE         "Completed Size:"
+    IDS_FD_CLOSE            "Close"
+    IDS_FD_TITLE            "File Details"
+    IDS_CD_GENERAL          "General"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UNAME            "Username:"
+    IDS_CD_UHASH            "Userhash:"
+    IDS_CD_CSOFT            "Clientsoftware:"
+    IDS_CD_UIP              "IP Address:"
+    IDS_CD_SIP              "Server IP:"
+    IDS_CD_VERSION          "Clientversion:"
+    IDS_CD_UID              "ID:"
+    IDS_CD_SNAME            "Zerbitzari izena:"
+    IDS_CD_CDOWN            "Une honetan jaisten:"
+    IDS_CD_DOWN             "Jaitsia (sesio honetan):"
+    IDS_CD_ADOWN            "Batezbesteko Jaitsiera abiadura:"
+    IDS_CD_TDOWN            "Jaitsitako guztia:"
+    IDS_CD_UP               "Kargatua (sesio honetan):"
+    IDS_CD_AUP              "Batezbesteko Igoera abiadura:"
+    IDS_CD_TUP              "Kargatutako guztia:"
+    IDS_CD_TRANS            "Transferentzia"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_SCORES           "Zenbaketak"
+    IDS_CD_MOD              "KA/JA Modifikatzailea:"
+    IDS_CD_RATING           "Maila (totala):"
+    IDS_CD_USCORE           "Kargatzeko ilararen zenbaketa:"
+    IDS_CD_TITLE            "Bezeroaren Xehetasunak"
+    IDS_EMULEW              "Klik "
+    IDS_EMULEW2             "bertsio berri bat eskuragarri dagoen txekeatzeko"
+    IDS_EMULEW3             "hemen"
+    IDS_PW_MAXSOURCES       "Max Sources Per File"
+    IDS_SHAREDFILESCOUNT    "Banatutako Fitxategien kopurua: %i"
+    IDS_SF_SIZE             "Banatutako Fitxategien tamaina: %s"
+    IDS_ERR_WRONGPARTNUMBER "part number ezezaguna"
+    IDS_ERR_BADPORT         "portu zenbaki okerra"
+    IDS_ERR_NOHELLO         "Zerbaitengatik galdetu kaixo esan gabe"
+    IDS_ERR_INVALIDPACKAGE  "Baliorik gabeko edo usteldutako pakete jasota"
+    IDS_ERR_CLIENTERROR     "'%s' bezeroak (IP:%s) %s errorea eragin du. Bezeroa deskonektatzen!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_BADSIZE         "tamaina okerra (OP_QUEUERANKING)"
+    IDS_ERR_BADCLIENT2      "'%s' bezeroak (IP:%s) %u errorea eragin du. Bezeroa deskonektatzen!"
+    IDS_ERR_NOTAFILELINK    "Ez da fitxategi lotura."
+    IDS_ERR_CREATEPARTFILE  "ERROREA: Part fitxategia sortzerakoan akatsa)"
+    IDS_ERR_UDP_MISCONF     "Error while processing incoming UDP Packet (Most likely a misconfigured server)"
+    IDS_CHAT_START          "*** Chatsession Start : "
+    IDS_FILEPRIO            "File Priority"
+    IDS_SCORE               "Zenbaketa"
+    IDS_ASKED               "Galdetua"
+    IDS_LASTSEEN            "Azken Ikusia"
+    IDS_BANNED              "Banned"
+    IDS_PRIOVERYHIGH        "Oso Altua"
+    IDS_UUSERS              "Erabiltzaileak"
+    IDS_UFAILED             "Hutseginda"
+    IDS_OPENFILE            "Fitxategia ireki"
+    IDS_DATE                "Data"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARTINFOS           "Partfilename: %s\nParts: %d , %s: %d (%.1f%%)\n"
+    IDS_PARTINFOS2          "%d%% eginda (%s) - %d iturriengatik transferitzen"
+    IDS_USERID              "ErabiltzaileID"
+    IDS_CLIENT              "Bezero"
+    IDS_SERVER              "Serbitzari"
+    IDS_SOURCEINFO          "AskedCount: %d - AvailablePartCount: %d"
+    IDS_CLIENTSOURCENAME    "\nBereroaren fitxategi-izena: "
+    IDS_USERINFO            "Ezizena: %s (ErabiltzaileID: %u)\n"
+    IDS_FILESTATS_SESSION   "Filestats for this session: Accepted %d of %d requests, %d bytes transferred\n"
+    IDS_FILESTATS_TOTAL     "Filestats for all sessions: Accepted %d of %d requests, %d bytes transferred"
+    IDS_REQ_UNKNOWNFILE     "Requested unknown file"
+    IDS_TRANSFERTIME        "Time Since First Transfer: %s"
+    IDS_SF_AVERAGESIZE      "Average filesize: %s"
+    IDS_SF_REQUESTS         "Requests"
+    IDS_SF_ACCEPTS          "Accepted Requests"
+    IDS_SF_TRANSFERRED      "Transferred Data"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_REMOVESEARCHSTRING  "Close This Searchresult"
+    IDS_REMOVESELECTED      "Remove Selected Search"
+    IDS_REMOVEALLSEARCH     "Remove All Searches"
+    IDS_ENTERQUEUE          "Entered Queue"
+    IDS_SF_FAIL             "Failed Servers"
+    IDS_SF_WUSER            "Users on Working Servers"
+    IDS_SF_WFILE            "Files on Working Servers"
+    IDS_SF_USER             "Total Users"
+    IDS_SF_FILE             "Total Files"
+    IDS_UPLOADTIME          "Upload Time"
+    IDS_LASTSEENCOMPL       "Last seen complete:"
+    IDS_YES                 "Yes"
+    IDS_NO                  "No"
+    IDS_UNBAN               "Unban"
+    IDS_SF_WORKING          "Working Servers"
+    IDS_ADDTOSTATIC         "Add To Static Server List"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDED2SSF           "Added to static server list"
+    IDS_STATICSERVER        "Static"
+    IDS_ERROR_SSF           "Failed to open staticservers.dat"
+    IDS_ERR_PACKAGEERROR    "Critical error while processing datapacket for %s (wrong size) - datablock droped"
+    IDS_SF_ACTIVECON        "Active Connections (estimate)"
+    IDS_SF_MAXCONLIMITREACHED "Max Connection Limit Reached"
+    IDS_SF_AVGCON           "Average Connections (estimate)"
+    IDS_SF_PEAKCON          "Peak Connections (estimate)"
+    IDS_ST_ACTIVEC          "konezio aktiboak (1:3)"
+    IDS_NETWORK             "Sarea"
+    IDS_SF_DELCOUNT         "Serbitzari ezabatuak"
+    IDS_QUEUEFULL           "Queue Full"
+    IDS_AVG                 "Average"
+    IDS_BYTES               "Bytes"
+    IDS_KBYTES              "KB"
+    IDS_MBYTES              "MB"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GBYTES              "GB"
+    IDS_TBYTES              "TB"
+    IDS_SECS                "secs"
+    IDS_MINS                "mins"
+    IDS_HOURS               "h"
+    IDS_DAYS                "D"
+    IDS_ED2KLINKFIX         "eD2K Linkak"
+    IDS_RECONNECT           "Serbitzariari konexio automatikoa %d segundutan gauzatuko da"
+    IDS_SERVERADDED         "Serbitzari gehitua: "
+    IDS_STATS_SUCCUPCOUNT   "Igoera sesio arrakastatsuen totala: %i"
+    IDS_STATS_FAILUPCOUNT   "Hutsegindako igoera sesio osoa: %i"
+    IDS_STATS_AVEUPTIME     "Average Uploads Time: %s"
+    IDS_SEARCHMINSIZE       "Tamaina minimoa (MB)"
+    IDS_SEARCHMAXSIZE       "Tamaina maximoa (MB)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PREF_ONLINESIG      "Online-Signature gaitu"
+    IDS_ERROR_SAVEFILE      "Gordetzen errorea"
+    IDS_REQ_SHAREDFILES     "%s erabiltzailea (%u) zure fitxategi konpartituen zerrenda eskatu du -> %s"
+    IDS_ACCEPTED            "onartua"
+    IDS_DENIED              "ukatua"
+    IDS_PW_CON_DOWNLBL      "Jaitsi"
+    IDS_PW_CON_UPLBL        "Igo"
+    IDS_PW_AUTOCONNECTSTATICONLY "Autoconnect to servers in static list only"
+    IDS_PW_CON_LIMITFRM     "Limits"
+    IDS_PW_FILE_ICH         "I.C.H aktiboa"
+    IDS_STATS_AVGLABEL      "Batazbesteko grafikoarentzat denbora: %i minutu"
+    IDS_GRAPHS              "Grafikoak"
+    IDS_STREE               "Zuhaitza estatistikoa"
+    IDS_STATSSETUPINFO      "Estatistika-Displaya konfiguratu"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DOWNLOADMOVIECHUNKS "Try to download first and last chunks first"
+    IDS_UPDATEQUEUE         "Don't update Queue list in real time"
+    IDS_RECOVER_SINGLE      "1 file recovered."
+    IDS_RECOVER_MULTIPLE    "%ld files recovered."
+    IDS_ATTEMPTING_RECOVERY "Attempting archive recovery..."
+    IDS_RECOVERY_SUCCESSFUL "Archive recovery successful."
+    IDS_RECOVERY_FAILED     "Archive recovery failed."
+    IDS_STARTNEXTFILE       "Start next paused file when a file completes"
+    IDS_FULLCHUNKTRANS      "Try to transfer full chunks to all uploads"
+    IDS_MANUALSERVERHIGHPRIO "Set manually added servers to high priority"
+    IDS_VERBOSE             "Verbose (additional program feedback)"
+    IDS_FLAT                "flat"
+    IDS_ROUND               "round"
+    IDS_SAMEUSERHASH        "Client '%s' and '%s' have the same userhash or IP - removed '%s'"
+    IDS_SEARCHEXTENTION     "Extension"
+    IDS_SEARCHAVAIL         "Availability"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDLIMIT           "Hard muga"
+    IDS_COL_MORECOLORS      "more..."
+    IDS_KBYTESEC            "kB/s"
+    IDS_TOOMANYCONNS        "Konexio gehiegi"
+    IDS_DOWNLOADRENAMED     "Fitxategi bat izen horrekin existitzen da dagoeneko, fitxategia %s bezala izandu da gordea"
+    IDS_TBN_DOWNLOADDONE    "Jaitsia:"
+    IDS_TBN_DOWNLOADADDED   "Jaitsietara gehiegitua:"
+    IDS_PW_TBN_USESOUND     "Soinua erabili"
+    IDS_PW_TBN_ONLOG        "Sarrera berria log-ean"
+    IDS_PW_TBN_ONCHAT       "Chat sesio berria hasten du"
+    IDS_PW_TBN_POP_ALWAYS   "Chat mezu berri bat jaso da"
+    IDS_PW_TBN_ONDOWNLOAD   "Jaitsiera bak gehitua edo bukatua"
+    IDS_PW_EKDEV_OPTIONS    "Jakinarazpenak"
+    IDS_PW_TASKBARNOTIFIER  "Pop Up mezua"
+    IDS_PW_TBN_OPTIONS      "Pop out noiz"
+    IDS_TBN_NEWCHATMSG      "Nondik mezuak"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_CON_CAPFRM       "Ahalmenak"
+    IDS_IRC_STATUSLOG       "Status Log"
+    IDS_IRC_STATUS          "Status"
+    IDS_IRC_PRIVATECHANSTART "* Chat sesio pribatua hasia"
+    IDS_IRC_SLAPMSG         "* %s slaps %s around with a large Babelfish!"
+    IDS_IRC_PRIVMESSAGE     "Mezu Pribatua"
+    IDS_IRC_OP              "Op"
+    IDS_IRC_DEOP            "DeOp"
+    IDS_IRC_VOICE           "Voice"
+    IDS_IRC_HALFOP          "HalfOp"
+    IDS_IRC_DEHALFOP        "DeHalfOp"
+    IDS_IRC_KICK            "Kick"
+    IDS_IRC_SLAP            "Slap"
+    IDS_IRC_JOIN            "Join"
+    IDS_IRC_CHANNELLIST     "Kanal zerrenda"
+    IDS_IRC_CONNECT         "Konektatu"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_DISCONNECT      "Deskonektatu"
+    IDS_IRC_HASJOINED       "* %s sartu da %s -n"
+    IDS_IRC_HASPARTED       "* %s -k %s apartatu du (%s)"
+    IDS_IRC_WASKICKEDBY     "* %s botata izandu da %s -gatik (%s)"
+    IDS_IRC_NICKUSED        "Zure ezizena erabilita dago serbitzari honetan. Arren ezizen diferente bat erabili preferentziatan."
+    IDS_IRC_DEVOICE         "DeVoice"
+    IDS_IRC_HASQUIT         "* %s utzi du (%s)"
+    IDS_IRC_NOWKNOWNAS      "* %s orain ezaguna hala da %s"
+    IDS_IRC_SETSMODE        "* %s ezartzen du modo: %s %s"
+    IDS_IRC_NOTSUPPORTED    "** Some modes have been set that is not supported yet. You may need to leave and reenter channel to update nicklist.."
+    IDS_IRC_CHANNEL         "Kanala"
+    IDS_IRC_NICK            "Ezizena"
+    IDS_IRC_SEND            "Bidali"
+    IDS_IRC_NAME            "Izena"
+    IDS_IRC_SLAPMSGSEND     "PRIVMSG %s :\001ACTION slaps %s around with a large Babelfish!\001"
+    IDS_IRC_ADDTIMESTAMP    "Mezuei timestamp gehitu."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_USEFILTER       "Erabili Channel List Filtroa"
+    IDS_IRC_PERFORM         "Burutu"
+    IDS_IRC_USEPERFORM      "Konektatzerakoan burututako katea erabili"
+    IDS_IRC_ADDTOFRIENDLIST "Lagun zerrendara gehitua"
+    IDS_IRC_LOADCHANNELLISTONCON "konektatzerakoan serbitzari kanal zerrenda gehitu"
+    IDS_IRC_ADDASFRIEND     "zure laguna bezala gehitua!"
+    IDS_PW_WARNING          """%s""-rentzako aukeratutako zenbakia zure SE-ak onartzen duenak baino luzeagoa da:  %d\nThis may cause your system to become unstable.\n\nZihur al zaude hau egin nahi duzula?"
+    IDS_TAKEOVER            "Kontrola hartu"
+    IDS_CLEANUP             "Garbitu"
+    IDS_RENAME              "Berizendu"
+    IDS_IRC_ADDLINKTOIRC    "Add this to the IRC clipboard to send to friends"
+    IDS_IRC_SENDLINK        "Hau lagun bati bidali: "
+    IDS_IRC_RECIEVEDLINK    "%s bidalitakoak (%s) auto-bidalitakoak izateko."
+    IDS_IRC_ACCEPTLINKS     "ED2K linkak IRC-an onartu. (Kontuz hau erabiltzerakoan!)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SOURCENAMES         "Jatorrizko izenak"
+    IDS_PREF_STARTMIN       "Txikituta hasi"
+    IDS_PS_TBN_IMPORTANT    "Premiazkoa: Diska-lekurik ez, serbitzari konexioa galdua"
+    IDS_COLORS              "Koloreak"
+    IDS_SP_BACKGROUND       "Atzekaldea"
+    IDS_SP_GRID             "Sareta"
+    IDS_SP_DL1              "Orain jaisten"
+    IDS_SP_DL2              "Jaitsiera denbora-batazbestekoa"
+    IDS_SP_DL3              "Jaitsiera sesio-batazbestekoa"
+    IDS_SP_UL1              "Orain igotzen"
+    IDS_SP_UL2              "Igoera denbora-batazbestekoa"
+    IDS_SP_UL3              "Igoera sesio-batazbestekoa"
+    IDS_SP_ACTCON           "Konexio aktiboak"
+    IDS_SP_ACTDL            "Jaitsiera aktiboak"
+    IDS_SP_ACTUL            "Igoera aktiboak"
+    IDS_PW_TIT_UP           "Igoera abiadura-muga ezarri"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_TIT_DOWN         "Jaitsiera abiadura-muga ezarri"
+    IDS_PW_UNLIMITED        "Mugagabea"
+    IDS_PW_MINREC           "gomendatutako gutxiengoa \t%i "
+    IDS_PW_UA               "up/down erabateko abiadura-muga ezarri"
+    IDS_PW_PA               "up/down-abiadura erregulatu"
+    IDS_IRC_IGNOREINFOMESSAGE "info mezuak ez ikusi"
+    IDS_CONNECTIONLOST      "Konexioa galdua"
+    IDS_WIZ_OS_FRAME        "Sistema Eragilea"
+    IDS_WIZ_CONCURENTDOWN_FRAME 
+                            "Zenbat jaitsiera izango dituzu bat-batean?"
+    IDS_WIZ_CUSTOM_FRAME    "Zure abiadura-konexioa testeatu baduzu, hemen ezarri"
+    IDS_WIZ_HOTBUTTON_FRAME "Aurrezarri Botoiak"
+    IDS_WIZ_TRUEUPLOAD_TEXT "Benetako igoera banda-zabalera"
+    IDS_WIZ_TRUEDOWNLOAD_TEXT "Benetako jaitsiera banda-zabalera"
+    IDS_FRIENDLIST          "Lagunak"
+    IDS_CHATDISCONNECTED    "*** Deskonektatua"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZARD              "Magilaria"
+    IDS_ADDFRIEND           "Lagunei erantsi"
+    IDS_REMOVEFRIEND        "Laguna ezabatu"
+    IDS_REMOVEFROMSTOK      "zerbitzari-zerrenda estatikotik ezabatua"
+    IDS_REMOVEFROMSTATIC    "zerbitzari-zerrenda estatikotik ezabatu"
+    IDS_LENGTH              "Luzera"
+    IDS_VIDEO               "Bideoa"
+    IDS_AUDIO               "Audioa"
+    IDS_FILEINFO            "Fitxategi &Informazioa"
+    IDS_CODEC               "Codec-a"
+    IDS_BITRATE             "Bitrate"
+    IDS_WIDTH               "Zabalera"
+    IDS_FPS                 "Fps"
+    IDS_CHANNELS            "Kanalak"
+    IDS_SAMPLERATE          "Samplerate"
+    IDS_ROUNDBITRATE        "Round bitrate"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HEIGHT              "Luzera"
+    IDS_SHAREDFILES_FAILED  "'%s'-tik fitxategi konpartituak berreskuratzea ezgaia"
+    IDS_SHAREDFILES_REQUEST "'%s'-tik fitxategi konpartituak eskatzen"
+    IDS_VIEWFILES           "Fitxategiak ikusi"
+    IDS_FRIENDSLOT          "Friend Slot ezarri"
+    IDS_FRIENDDETAIL        "(Friend Slot)"
+    IDS_ASCWOP_PROXYSUPPORT "Automatic server connect without proxy"
+    IDS_UDPDISABLED         "disable"
+    IDS_CTINFO              "Select your connection type here:"
+    IDS_WIZ_CTFRAME         "Connection Type"
+    IDS_CONCURDWL           "Concurrent Downloads"
+    IDS_UNIT                "Unit:"
+    IDS_WIZARD_CUSTOM       "Custom"
+    IDS_WIZARD_ENTERBELOW   "(enter below!)"
+    IDS_STATS_MAXAVGDL      "Max Downloadrate Average: %.2f kB/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MAXDL         "Max Downloadrate: %.2f kB/s"
+    IDS_PW_FASTSRVCON       "Safe Connect"
+    IDS_SOURCELINKFAILED    "You need a HighID to create a valid sourcelink"
+    IDS_CREATESOURCELINK    "Copy eD2K Link To Clipboard (&Source)"
+    IDS_ERR_LOADSERVERMET   "Failed to load server.met!"
+    IDS_ERR_CORRUPTCOMPRPKG "Corrupted compressed packet for %s received (error %i)"
+    IDS_ERR_EMFRIENDSINVALID "The file emfriends.met is invalid or corrupted!"
+    IDS_ERR_READEMFRIENDS   "Unknown error while reading emfriends.met: %s"
+    IDS_ERR_KNOWNSERVERINFOREC "Unknown server info received!"
+    IDS_ERR_TIMERCREATEFAILED "Fatal Error: Failed to create Timer"
+    IDS_WIZ_DOWN            "Down (kbit/s)"
+    IDS_WIZ_UP              "Up (kbit/s)"
+    IDS_SELECT_INCOMINGDIR  "Choose a folder for incoming files"
+    IDS_SELECT_TEMPDIR      "Choose a folder for temp files"
+    IDS_PRIOAUTO            "Auto"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOAUTONORMAL      "Auto [No]"
+    IDS_PRIOAUTOHIGH        "Auto [Hi]"
+    IDS_PRIOAUTORELEASE     "Auto [Re]"
+    IDS_PRIOAUTOLOW         "Auto [Lo]"
+    IDS_ERR_CONTIMEOUT      "Connection attempt to ""%s"" (%s:%i ) timed out"
+    IDS_ERR_CONFAILED       "Connecting to ""%s"" (%s:%i ) failed."
+    IDS_OUTOFSERVERS        "Failed to connect to all servers listed. Making another pass."
+    IDS_PW_CONLIMITS        "Connection limits"
+    IDS_MAXCON5SECLABEL     "Max. new connections / 5 secs."
+    IDS_PW_UAP              "Add new shared files with auto priority"
+    IDS_MAXCLIENT           "Max Users"
+    IDS_PW_TWEAK            "Extended Settings"
+    IDS_TWEAKS_WARNING      "Warning:  Do not change these setting unless you know what you are doing. Otherwise you can easily make things worse for yourself.\neMule will run fine without adjusting any of these settings."
+    IDS_ADDAFRIEND          "Add Friend..."
+    IDS_PAF_REQINFO         "Required Information"
+    IDS_PAF_MOREINFO        "Additional Information"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOVALIDFRIENDINFO "You have to enter a valid IP and port!"
+    IDS_ADD                 "Add"
+    IDS_RECOVERED_PARTMET   "Recovered part.met file for: %s"
+    IDS_CMT_QUEST           "Comment this file! (This text will be shown to all users)"
+    IDS_CMT_AIDE            "For a film, you can say its length, its story, the language... And if it is a fake, you can inform other eMule users..."
+    IDS_CMT_TITLE           "%s file comment"
+    IDS_CMT_ADD             "&Edit File Comments..."
+    IDS_CMT_NONE            "No comments"
+    IDS_CMT_READ            "File comment:"
+    IDS_CMT_NOTCONNECTED    "Not connected yet..."
+    IDS_CMT_SHOWALL         "Show Comme&nts..."
+    IDS_CMT_REFRESH         "&Refresh"
+    IDS_CMT_READALL         "All Comments"
+    IDS_CMT_NOCOMMENT       "No comments entered..."
+    IDS_CMT_RATEQUEST       "File quality"
+    IDS_CMT_RATEHELP        "Choose the file rating or advice users if the file is invalid!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CMT_FAKE            "Invalid / Corrupt / Fake"
+    IDS_CMT_POOR            "Poor"
+    IDS_CMT_GOOD            "Good"
+    IDS_CMT_FAIR            "Fair"
+    IDS_CMT_EXCELLENT       "Excellent"
+    IDS_CMT_NOTRATED        "Not rated"
+    IDS_KILO                "K"
+    IDS_MEGA                "M"
+    IDS_GIGA                "G"
+    IDS_TERRA               "T"
+    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "Ignore eMule protocol messages"
+    IDS_SMARTLOWIDCHECK     "Use smart LowID check on connect"
+    IDS_SF_SRVOCC           "Server Occupation: %.2f%%"
+    IDS_3DDEP               "Progressbar style"
+    IDS_AUTOTAKEED2KLINKS   "Autotake eD2K links only during runtime"
+    IDS_ADDNEWFILESPAUSED   "Add files to download in paused mode"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_STATS            "Lost to corruption: %s       Gained by compression: %s\nPackages saved by I.C.H.: %i"
+    IDS_ERR_NOHELP          "No local help-file found.\n Please visit our homepage to get a copy of the newest help-file! (download section)\nDo you want to browse the onlinehelp now instead?"
+    IDS_SHOWOVERHEAD        "Show overhead bandwidth"
+    IDS_UPDOWNSMALL         "Up: %.1f | Down: %.1f"
+    IDS_EDITLIST            "List..."
+    IDS_SP_ICONBAR          "Systrayicon Speedbar"
+    IDS_RATINGRECV          "Rating for file '%s' received: %i"
+    IDS_DESCRIPTIONRECV     "Description for file '%s' received: %s"
+    IDS_WEBSERVICES         "&Web Services"
+    IDS_WEBSVEDIT           "Edit Web Services..."
+    IDS_CHECK4UPDATE        "Check for new version"
+    IDS_STARTUP             "Startup"
+    IDS_NEWVERSIONAVL       "A new version of eMule is available! Check the project-homepage for more information."
+    IDS_NEWVERSIONAVLPOPUP  "A new version of eMule is available. Click here to read about the new version!"
+    IDS_NEWVERSIONFAILED    "Unable to check for new version."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CB_TBN_ONNEWVERSION "New eMule version detected"
+    IDS_NONEWERVERSION      "No new eMule version detected."
+    IDS_VERSIONCHECK        "&Versioncheck"
+    IDS_VISITVERSIONCHECK   "\n\nDo you want do visit the Informationpage now?"
+    IDS_PW_VIDEOPLAYER      "Video player"
+    IDS_VIDEOBACKUP         "Create backup to preview"
+    IDS_STATIC_EMPTY        "(empty=default)"
+    IDS_MYINFO              "My Info"
+    IDS_ID                  "ID"
+    IDS_IDLOW               "Low ID"
+    IDS_IDHIGH              "High ID"
+    IDS_UPSTATUS            "Obtained Parts"
+    IDS_TOVERHEAD           "Total Overhead (Packets): %s (%s)"
+    IDS_FROVERHEAD          "File Request Overhead (Packets): %s (%s)"
+    IDS_SSOVERHEAD          "Source Exchange Overhead (Packets): %s (%s)"
+    IDS_SOVERHEAD           "Server Overhead (Packets): %s (%s)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDDOWNLOADSFROMCB  "Add these eD2K-file-links to download?\n"
+    IDS_ADDDOWNLOADSFROMCBTITLE "eD2K-file-link on clipboard"
+    IDS_PF_WATCHCB          "Watch clipboard for eD2K file links"
+    IDS_SECURITY            "Security"
+    IDS_IPFILTERLOADED      "%i IP-filters loaded"
+    IDS_IPFILTER            "IP-Filter"
+    IDS_EDIT                "Edit..."
+    IDS_FILTERLEVEL         "Filterlevel"
+    IDS_FILTERSERVERBYIPFILTER "Filter servers too (rejects dynIP-servers)"
+    IDS_FILTERCOMMENTSLABEL "Ignore comments containing: (Separator | )"
+    IDS_CLIENTLIST          "Known Clients"
+    IDS_FOLDER              "Folder"
+    IDS_CL_UPLOADSTATUS     "Upload Status"
+    IDS_CL_TRANSFUP         "Transferred Up"
+    IDS_CL_DOWNLSTATUS      "Download Status"
+    IDS_CL_TRANSFDOWN       "Transferred Down"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CL_PENDING          "Pending"
+    IDS_CL_LOW2LOW          "Low To Low IP"
+    IDS_ERROR               "Error"
+    IDS_OPENINC             "&Open Incoming Folder"
+    IDS_HOTMENU             "Hotmenu"
+    IDS_DISABLEKNOWNLIST    "Disable Known Clients list"
+    IDS_DISABLEQUEUELIST    "Disable Queue list"
+    IDS_USECREDITSYSTEM     "Use credit system (reward uploaders)"
+    IDS_FIRSTAUTODOWN       "Enable this option if you want eMule to manage your download priorities.\n\nTurning this on will allow eMule to make sure downloads with a lot of sources do not interfere with downloads that have few sources.\n\nIf you just updated from a client v0.26 and below, all current downloads have been defaulted to Auto Prio.\n\nThis option will only affect future downloads. (Default Enabled)"
+    IDS_FIRSTAUTOUP         "Enable this option if you want eMule to manage your upload priorities.\n\nTurning this on will allow eMule to boost rare files meaning popular files will be harder for other people to get.\n\nTurning this off will allow eMule to upload popular files more often meaning rare files will be harder for other people to get.\n\nIf you just updated from a client v0.26 and below, all current shared files have been defaulted to Auto Prio.\n\nThis option will only affect future shared files. (Default Enabled)"
+    IDS_FIRSTCREDITSYSTEM   "Do you want to reward people that upload to you?\n\nThis is commonly known as the Credit System. Turning this on will help fight against leachers. If you are a dedicated releaser, you will want to turn this off.\n\n(Default Yes)"
+    IDS_FIRSTFULLCHUNK      "Enable this option if you want to upload full chunks.\n\nUsing full chunk gives the client a better chance to complete a chunk. Turning this off will help rotate your queue faster. If you are a dedicated releaser, you will want to turn this on.\n\n(Default Enabled)"
+    IDS_FIRSTSAFECON        "Enable this option if you want eMule to connect using Safe Connect?\n\nTurning this feature off allows eMule to connect to servers a little faster, but can cause you to get more false lowID connects.\n\n(Default Disabled)"
+    IDS_FIRSTRUNASSIST      "Do you want to run a first-run setup-wizard?"
+    IDS_FIRSTAUTOCON        "Enable this option if you want eMule to connect at startup.\n\n(Default Disabled)"
+    IDS_FIRSTCOMPLETE       "You have now completed the first time wizard.\n\nAll these settings and more can be changed by clicking the preferences icon. For explainations and support check out the help by pressing F1 in eMule!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ENTERUSERNAME       "Please enter your username:"
+    IDS_STATIC_CPUMEM       "Save CPU && memory usage"
+    IDS_LOG2DISK            "Log"
+    IDS_EDITCAT             "Edit Category-Properties"
+    IDS_PW_WS               "Web Interface"
+    IDS_ENABLED             "Enabled"
+    IDS_WEB_LOGIN           "Login"
+    IDS_WEB_ENTER_PASSWORD  "Enter your password here"
+    IDS_WEB_LOGIN_NOW       "Login Now"
+    IDS_WEB_CONFIRM_REMOVE_SERVER 
+                            "Are you sure to remove this server from list?"
+    IDS_WEB_CONTROL         "Web Control Panel"
+    IDS_WEB_LOGOUT          "Logout"
+    IDS_WEB_ACTIONS         "Actions"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHOW_UPLOAD_QUEUE "Show Queue"
+    IDS_WEB_HIDE_UPLOAD_QUEUE "Hide Queue"
+    IDS_WEB_GZIP_COMPRESSION "Gzip compression"
+    IDS_WEB_GZIP_COMMENT    "Save traffic, especially in graphs."
+    IDS_WEB_UPLOAD_QUEUE_COMMENT 
+                            "Enable or disable the display of waiting queue in transfer page."
+    IDS_WEB_REFRESH_TIME    "Refresh-Time of Pages"
+    IDS_WEB_REFRESH_COMMENT "Time in seconds (zero=disabled):"
+    IDS_SV_URL              "URL"
+    IDS_WS_RELOAD_TMPL      "Template"
+    IDS_SV_DEBUGLOG         "Debug Log"
+    IDS_WS_PASS             "Password"
+    IDS_WEB_FILESETTINGS    "File Settings"
+    IDS_WS_ERR_LOADTEMPLATE "Can't load templates: replace file %s with a newer version!"
+    IDS_WEB_CONLIMITS       "Connection limits"
+    IDS_INFLST_USER_TOTALDOWNLOAD "Downloaded total"
+    IDS_INFLST_USER_TOTALUPLOAD "Uploaded total"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_BADLOGINATTEMPT "Web interface: Failed Loginattempt"
+    IDS_ERR_TOOLARGEFILE    "File larger than the supported size of the edonkey protocol (>=4GB)"
+    IDS_MSGONLYFRIENDS      "Accept from friends only"
+    IDS_MSGONLYSEC          "Accept from valid clients only"
+    IDS_DAY_MO_SA           "Mon-Sat"
+    IDS_LIMITSOURCES        "Limit sources"
+    IDS_LIMITCONS5SEC       "Limit connections/5secs"
+    IDS_SCHED_CATSTOP       "Cat:Stop Downloads"
+    IDS_SCHED_CATRESUME     "Cat:Resume Downloads"
+    IDS_S_DAYS              "Days"
+    IDS_STARTTIME           "Start Time"
+    IDS_VALUE               "Value"
+    IDS_SCHED_ENTERDATARATELIMIT "Enter the datarate limit:"
+    IDS_SCHED_ENTERVAL      "Please enter the new value:"
+    IDS_SCHED_ACTCONFIG     "Configure Action"
+    IDS_SELECTCAT           "Select category"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALLUNASSIGNED       "All uncategorized"
+    IDS_ACTSESSIONS         "active session(s)"
+    IDS_WEBSRV              "Web Interface"
+    IDS_SW_REFETCHRES       "Refetch Results"
+    IDS_FILEHASH            "File Hash"
+    IDS_GLOBALSEARCH2       "Global Search"
+    IDS_PW_PROXY            "Proxy"
+    IDS_PROXY_ENABLE        "Enable proxy"
+    IDS_PROXY_TYPE          "Proxy type:"
+    IDS_PROXY_HOST          "Proxy host:"
+    IDS_PROXY_PORT          "Proxy port:"
+    IDS_PROXY_AUTH          "Enable authentication"
+    IDS_AUTH                "Authentication"
+    IDS_SHOWCATINFO         "Show download info on category tabs"
+    IDS_SW_SEARCHINGINFO    "Search in progress. Refetch results in a moment!"
+    IDS_LOGENTRY            "Log Entry"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COPY                "Copy"
+    IDS_SELECTALL           "Select All"
+    IDS_AUTOSCROLL          "Autoscroll"
+    IDS_WIZ1_WELCOME_TITLE  "Welcome to eMule"
+    IDS_WIZ1_WELCOME_ACTIONS 
+                            "This wizard will guide you through the first steps in configuring eMule."
+    IDS_WIZ1_WELCOME_BTN_HINT "To continue, click Next."
+    IDS_WIZ1_END_TITLE      "Completing the Wizard"
+    IDS_WIZ1                "eMule First Runtime Wizard"
+    IDS_WIZ1_END_BTN_HINT   "To close this wizard, click Finish."
+    IDS_WIZ1_UPLOAD_SUBTITLE "Full Chunk Transfer"
+    IDS_DL_RESUMENEXT       "Resume Next Paused"
+    IDS_DONTCHANGE          "Don't change"
+    IDS_STARTPRIO           "Change priority for new assigned files"
+    IDS_PREF_STARTNEXTFILECAT "Prefer same category"
+    IDS_REPAINTGRAPHS       "Don't recreate statistic graphs on resize"
+    IDS_SOFTFILES           "Soft File Limit"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDFILES           "Hard File Limit"
+    IDS_FILTER              "Filter"
+    IDS_LINKS               "Links"
+    IDS_HM_SCHED_ON         "Switch Scheduler On"
+    IDS_HM_SCHED_OFF        "Switch Scheduler Off"
+    IDS_HM_LINKHP           "eMule Homepage"
+    IDS_HM_LINKFAQ          "eMule FAQ"
+    IDS_HM_LINKVC           "eMule Versioncheck"
+    IDS_DEBUG_SOURCE_EXCHANGE "Display source exchange messages"
+    IDS_SHAREDREQ1          "User %s (%u) requested your list of shared directories -> %s"
+    IDS_SHAREDREQ2          "User %s (%u) requested your list of shared files for directory '%s' -> %s"
+    IDS_SHAREDANSW          "User %s (%u) shares directory '%s'"
+    IDS_SHAREDANSW2         "User %s (%u) sent not requested list of shared directories - ignored"
+    IDS_SHAREDINFO1         "User %s (%u) sent list of shared files for directory '%s'"
+    IDS_SHAREDINFO2         "User %s (%u) finished sending lists of shared files"
+    IDS_SHAREDANSW3         "User %s (%u) sent not requested list of shared files for directory '%s' - ignored"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHAREDREQDENIED     "User %s (%u) denied access to list of shared directories/files"
+    IDS_AUTOCLEANUPFN       "Cleanup filenames"
+    IDS_ONNEWDOWNLOAD       "Initialisations"
+    IDS_FILTERFILENAMEWORD  "Enter words to filter, seperated by |"
+    IDS_FNFILTERTITLE       "Edit filename wordfilter for name-cleanup"
+    IDS_CHANGECATVIEW       "Select View Filter"
+    IDS_STATUS_NOTCOMPLETED "Incomplete"
+    IDS_STATS_CUMULATIVE    "Cumulative"
+    IDS_STATS_OVRHD         "Overhead"
+    IDS_STATS_RECORDS       "Records"
+    IDS_STATS_OVRHD2        "Overhead: %s (%s Packets)"
+    IDS_STATS_COMPDL        "Completed Downloads"
+    IDS_STATS_SVRECWORKING  "Max. Working Servers"
+    IDS_STATS_SVRECUSERS    "Max. Users Online"
+    IDS_SEARCH_TEXT         "Search for"
+    IDS_STATS_SVRECFILES    "Max. Files Available"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SHRECNUM      "Max. Files Ever Shared"
+    IDS_SEARCH_COLUMN       "Search in column"
+    IDS_STATS_SHRECSIZE     "Largest Share Size"
+    IDS_STATS_SHRECASIZE    "Largest Average File Size"
+    IDS_STATS_MYRUNTIME     "Overall Run Time: %s"
+    IDS_STATS_SESSION       "Session"
+    IDS_STATS_SRATIO        "Session UL:DL Ratio:"
+    IDS_STATS_CRATIO        "Cumulative UL:DL Ratio:"
+    IDS_SEARCH_NORESULT     "No matching entry found."
+    IDS_STATS_CURRSRVDUR    "Current Server Duration"
+    IDS_LONGSECS            "Seconds"
+    IDS_STATS_DLSES         "Download Sessions"
+    IDS_LONGMINS            "Minutes"
+    IDS_STATS_SDLSES        "Successful Download Sessions"
+    IDS_STATS_FDLSES        "Failed Download Sessions"
+    IDS_STATS_AVGDATADLSES  "Average Downloaded Per Session"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ULSES         "Upload Sessions"
+    IDS_STATS_GAINCOMP      "Gained Due To Compression: %s"
+    IDS_STATS_LOSTCORRUPT   "Lost Due To Corruption: %s"
+    IDS_STATS_AVGDATAULSES  "Average Uploaded Per Session"
+    IDS_STATS_ICHSAVED      "Parts Saved Due To I.C.H: %u"
+    IDS_STATS_MBRESET_TXT   "Are you sure you wish to reset your cumulative statistics?\n\nIf you change your mind, you can reverse this action by clicking the 'Restore Stats' button."
+    IDS_STATS_MBRESET_CAP   "Confirm Reset"
+    IDS_STATS_MBRESTORE_TXT "Are you sure you wish to restore your cumulative statistics from the backup file?\n\nClicking 'Restore Stats' again will reload your current statistics."
+    IDS_STATS_MBRESTORE_CAP "Confirm Restore"
+    IDS_ERR_NOSTATBKUP      "ERROR: The backup statistics file was not found..."
+    IDS_STATS_NFOLOADEDBKUP "Loaded backed up statistical data..."
+    IDS_STATS_NFORESET      "Statistics have been reset!"
+    IDS_STATS_BNRESET       "Reset Statistics"
+    IDS_STATS_BNRESTORE     "Restore Statistics"
+    IDS_CONNECTIONSTATISTICS "Connection Statistics"
+    IDS_PPGSTATS_YSCALE     "Connections statistics Y-axis scale:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PPGSTATS_ACRATIO    "Active connections ratio:"
+    IDS_STATS_PROBLEMATIC   "Problematic"
+    IDS_LONGHRS             "Hours"
+    IDS_STATS_LARGESTFILE   "Largest Shared File"
+    IDS_CLIENTSOFTWARE      "Client Software"
+    IDS_STATS_DSPF          "Part File"
+    IDS_STATS_DATASOURCE    "Data Source"
+    IDS_STATS_DSFILE        "Complete File"
+    IDS_STATS_GENERAL       "General"
+    IDS_STATS_TRANSTIME     "Transfer Time"
+    IDS_STATS_DOWNTIME      "Download Time"
+    IDS_STATS_UPTIME        "Upload Time"
+    IDS_STATS_TOTALSRVDUR   "Total Server Duration"
+    IDS_STATS_MAXAVGUL      "Max Average Upload Rate"
+    IDS_STATS_MAXUL         "Max Upload Rate"
+    IDS_STATS_AVGDLTIME     "Average Download Time"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_OLDCLIENTS    "Old"
+    IDS_STATS_PRTDEF        "Default"
+    IDS_STATS_PRTOTHER      "Other"
+    IDS_STATS_MNUTREETITLE  "Statistics Tree"
+    IDS_STATS_MNUTREECPYSEL "Copy Selected Branch"
+    IDS_STATS_MNUTREECPYALL "Copy All Statistics"
+    IDS_STATS_MNUTREEHTML   "HTML Features"
+    IDS_STATS_EXPORT2HTML   "Export All Statistics..."
+    IDS_STATS_EXPORTVIS     "Export All Visible..."
+    IDS_STATS_MNUTREECPYVIS "Copy All Visible"
+    IDS_STATS_MNUTREEEXPANDALL "Expand All Sections"
+    IDS_STATS_MNUTREECOLLAPSEALL "Collapse All Sections"
+    IDS_STATS_MNUTREEEXPANDMAIN "Expand Main Sections"
+    IDS_STATS_LASTRESETSTATIC "Statistics last reset: %s"
+    IDS_STATS_MONTHLY       "Monthly"
+    IDS_STATS_YEARLY        "Yearly"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_TIMESTATS     "Time Statistics"
+    IDS_STATS_AVGANDPROJ    "Projected Averages"
+    IDS_STATS_TIMESINCERESET "Time Since Last Reset: %s"
+    IDS_CRYPT_INITFAILED    "Failed to initalize cryptokeys - secure ident disabled"
+    IDS_CD_IDENT            "Identification:"
+    IDS_IDENTOK             "Successful"
+    IDS_IDENTFAILED         "Invalid"
+    IDS_IDENTNOSUPPORT      "Not supported or disabled"
+    IDS_COMMITFILES         "Safe .met/.dat file writing"
+    IDS_ERR_BADUNC          "invalid UNC-name"
+    IDS_NEVER               "Never"
+    IDS_ALWAYS              "Always"
+    IDS_ONSHUTDOWN          "On shutdown"
+    IDS_UNCFOLDERS          "UNC Folders"
+    IDS_USESECIDENT         "Use secure identification"
+    IDS_ADVSPAMFILTER       "Advanced spamfilter"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SECUREIDENT   "Secure Ident (OK : Failed )"
+    IDS_ONDISK              "Size on disk: "
+    IDS_CLIENTCOL           "Warning: Found matching client, to a currently connected client: %s (%s) and %s (%s)"
+    IDS_SEARCH_UNTERMSTRING "Unterminated string"
+    IDS_SEARCH_GENERALERROR "General error"
+    IDS_SEARCH_MISSINGORRIGHT "Missing right side for OR operator"
+    IDS_SEARCH_MISSINGNOTRIGHT "Missing right side for NOT operator"
+    IDS_SEARCH_MISSINGEXPRPARANT "Missing expression for '(' ')'"
+    IDS_SEARCH_MISSINGCLOSINGPARANT "Missing closing ')'"
+    IDS_SEARCH_MISSINGANDLEFT "Missing left side of AND operator"
+    IDS_SEARCH_MISSINGORLEFT "Missing left side of OR operator"
+    IDS_SEARCH_MISSINGNOTLEFT "Missing left side of NOT operator"
+    IDS_SEARCH_EXPRERROR    "Failed to parse search expression"
+    IDS_SEARCH_TOOCOMPLEX   "Expression too complex"
+    IDS_SEARCH_INVALIDMINMAX "Invalid units for Min/Max filesize specified"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_VERSION             "Version"
+    IDS_ALL_A4AF_TO_THIS    "Swap All Sources To This File Now"
+    IDS_ALL_A4AF_TO_OTHER   "Swap All Sources To Any Other File Now"
+    IDS_ALL_A4AF_AUTO       "Automatically Swap All (A4AF) Sources To This File"
+    IDS_SWAP_A4AF_TO_THIS   "Swap (A4AF) Sources To This File Now"
+    IDS_SWAP_A4AF_TO_OTHER  "Swap (A4AF) Sources To Any Other File Now"
+    IDS_A4AF                "Sources Handling (A4AF)"
+    IDS_MOBILEMULE          "MobileMule"
+    IDS_ENABLEMM            "Enable MobileMule"
+    IDS_AUTOCAT_LABEL       "Auto cat-assignment (pattern, seperated by |)"
+    IDS_SHOWEXTSETTINGS     "Show more controls (advanced mode controls)"
+    IDS_TREEOPTIONS_TRUE    "True"
+    IDS_TREEOPTIONS_FALSE   "False"
+    IDS_TREEOPTIONS_OK      "OK"
+    IDS_HYPERTEXT_FONT_HINT "Font for Server-, Message- and IRC-Window"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SELECT_FONT         "Select Font"
+    IDS_SERVER_LIMITS       "Soft- / Hard-Filelimit"
+    IDS_SERVERINFO          "Server Information"
+    IDS_KBITSSEC            "kBits/sec"
+    IDS_KBYTESSEC           "kBytes/sec"
+    IDS_ERR_CREATE_DIR      "Failed to create %s directory ""%s"" - %s"
+    IDS_WRN_INCFILE_RESERVED 
+                            "The incoming directory must not be set to an eMule installation directory."
+    IDS_WRN_TEMPFILES_RESERVED 
+                            "The temporary directory must not be set to an eMule installation directory."
+    IDS_WRN_INCTEMP_SAME    "Incoming directory and temporary directory must not be the same."
+    IDS_MMFAILED            "Failed to create MobileMule Socket!"
+    IDS_MMSTARTED           "MobileMule server started on Port %i. Protocol version: %s"
+    IDS_SHOWDWLPERCENTAGE   "Show percentage of download completion in progressbar"
+    IDS_TBN_ONNEWDOWNLOAD   "Download added"
+    IDS_ARTIST              "Artist"
+    IDS_ALBUM               "Album"
+    IDS_MMGUIDELINK         "MobileMule Guide"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UPLOADREQ        "Requested to upload:"
+    IDS_SETTINGCHANGED_RESTART 
+                            "For the changed settings to take effect, please restart eMule!"
+    IDS_CREDITSEXPIRED      ", %i clients deleted (not seen within 5 month)"
+    IDS_SOURCESINFO         "%i  (Useful: %i, NNP: %i);  A4AF: %i"
+    IDS_SHOW_META_DATA      "Show &Meta Data..."
+    IDS_META_DATA           "Meta Data"
+    IDS_TIMEBEFORE          "(%s ago)"
+    IDS_FD_TIMEDATE         "Dates"
+    IDS_FILEINFORMATION     "File Information"
+    IDS_STATS_FREESPACE     "Free Space on Tempdrive: "
+    IDS_IRC_HELPCHANNEL     "Connect to help channel"
+    IDS_IRC_HELPCHANNELPERFORM "/join #emule"
+    IDS_IRC_ACCEPTLINKSFRIENDS "From friends only"
+    IDS_COMPLSOURCES        "Complete Sources"
+    IDS_CHECKNOENDTIME      "No end time"
+    IDS_FD_DOWNLOADSTARTED  "Download added:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MATCH_KEYWORDS      "Match keywords"
+    IDS_FAILEDREOPEN        "Fatal Error: Failed to reopen Partfile '%s' (%s)!"
+    IDS_ERR_PREVIEWALREADY  "There is already a preview request pending from this client"
+    IDS_ERR_PREVIEWFAILED   "Preview from User '%s' failed"
+    IDS_DWTOT               "Disk Space"
+    IDS_DWTOT_NR            "Number of Downloads: %d"
+    IDS_DWTOT_TSD           "Total Size of Downloads: %s"
+    IDS_DWTOT_TCS           "Total Completed Size: %s (%.0f%%)"
+    IDS_DWTOT_TSL           "Total Size Left to Transfer: %s"
+    IDS_DWTOT_TSN           "Total Space Needed by Downloads: %s"
+    IDS_DWTOT_FS            "Free Space on Tempdrive: %s"
+    IDS_NEEDFREEDISKSPACE   "%s (you need to free %s!)"
+    IDS_SERVERKEEPALIVETIMEOUT "Server connection refresh interval [min.]"
+    IDS_MORE                "&More"
+    IDS_TOOLS               "T&ools"
+    IDS_ERR_JIGLENEEDSTYPE  "If you want to search the Jigle database without specifying a file type, you have to specify at least a file extension!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CREATEHOSTNAMESRCLINK "Copy eD2K Link To Clipboard (Hostname)"
+    IDS_HASHINGFILESCOUNT   " (%u hashing)"
+    IDS_CHECKDISKSPACE      "Check diskspace"
+    IDS_YOURHOSTNAME        "Hostname for own eD2K links"
+    IDS_INSUFFICIENT        "Insufficient Diskspace"
+    IDS_MINFREEDISKSPACE    "Min. free diskspace [MB]"
+    IDS_WARNING             "Warning"
+    IDS_IMPORTSPLPF         "Import Partfiles (eM, eD, ON)"
+    IDS_IMP_STEPREADPF      "Reading part folder"
+    IDS_IMP_STEPBASICINF    "Retriving basic information from partfile"
+    IDS_IMP_STEPCRDESTFILE  "Creating destination partfile"
+    IDS_IMP_LOADDATA        "Loading data from old part file (%i of %i)"
+    IDS_IMP_SAVEDATA        "Saving data block into new single partfile (%i of %i)"
+    IDS_IMP_IOERROR         "Fileerror while converting partfile"
+    IDS_IMP_GETPFINFO       "Retriving source partfile information"
+    IDS_IMP_ADDDWL          "Adding download and save new partfile"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_FETCHSTATUS     "Fetching status..."
+    IDS_IMP_INPROGR         "in progress"
+    IDS_IMP_ERR_DISKSP      "Error: Out of diskspace"
+    IDS_IMP_ERR_PARTMETIO   "Error: Partmet not found"
+    IDS_IMP_ERR_IO          "Error: IO Error!"
+    IDS_IMP_ERR_FAILED      "Error: Failed!"
+    IDS_IMP_STATUSQUEUED    "Queued"
+    IDS_IMP_ALRDWL          "Already downloading"
+    IDS_IMP_ADDBTN          "&Add imports"
+    IDS_IMP_RETRYBTN        "&Retry selected"
+    IDS_IMP_REMOVEBTN       "Re&move selected"
+    IDS_IMP_SELFOLDER       "Please choose a single partmet-folder or your old tempfolder with all the partmet-subfolders!"
+    IDS_IMP_DELSRC          "Do you want the source-partfile of successfully imported downloads be deleted?"
+    IDS_IMP_SIZE            "%s (Disk:%s)"
+    IDS_IMP_STATUS          "Importing %s: %s"
+    IDS_DYNUPENABLED        "Find best upload limit automatically"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE "Ping tolerance (% of lowest ping)"
+    IDS_DYNUP_GOINGUPDIVIDER "Going up slowness"
+    IDS_DYNUP_GOINGDOWNDIVIDER "Going down slowness"
+    IDS_DYNUP_NUMBEROFPINGS "Max number of pings for average"
+    IDS_DYNUP_MINUPLOAD     "Lowest allowed upload speed"
+    IDS_ESTTIMELEFT         "Estimated time left:"
+    IDS_TRANSFER_RATE_LABEL "Transfer rate:"
+    IDS_SAVELOG             "Save Log"
+    IDS_CMT_COPYCLIPBOARD   "Copy comment to clipboard"
+    IDS_ASKDOWNLOADLANG     "The language you selected is not installed on your system. Do you want eMule to download it from emule-project.net?"
+    IDS_ASKDOWNLOADLANGCAP  "Download language files"
+    IDS_ERR_FAILEDDOWNLOADLANG 
+                            "Failed to download and install selected language dll from %s!"
+    IDS_ERR_BADFOLDER       "Invalid folder.\nFolder can not be created. Please check name and location."
+    IDS_AUTOREMOVEFD        "Auto clear completed downloads"
+    IDS_MM_BLOCK            "3 failed logins for MobileMule logged - any further attempt is blocked for 10 min!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_KAD_NODE            "Node Lookup (%i:%i)"
+    IDS_KAD_STOREFILE       "Store File (%i:%i)"
+    IDS_KAD_STOREKW         "Store Keyword (%i:%i)"
+    IDS_KAD_UNKNOWN         "Unknown (%i:%i)"
+    IDS_SRV_TCPCOMPR        "TCP compression"
+    IDS_KADSEARCHLAB        "Current Searches"
+    IDS_SRV_UDPSR           "Extended UDP protocol for source requests"
+    IDS_SRV_UDPFR           "Extended UDP protocol for file requests"
+    IDS_EM_HELP             "&Help"
+    IDS_WRN_FRIENDDUPLIPPORT 
+                            "Friend not added.\r\n\r\nThere is already a friend with same IP address and port available."
+    IDS_DYNUP               "Upload SpeedSense"
+    IDS_KADOVERHEAD         "Kad Overhead (Packets): %s (%s)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MM_NEWUSER          "New user successfully logged into MobileMule-Server"
+    IDS_RADCLIENTS          "from known clients"
+    IDS_KADUDPPORTERR       "Kad's UDP port conflicts with either eMule's Ext UDP port or eMule's Server UDP port. The port has been changed to %u."
+    IDS_CONFIRM_FILEDELETE  "Do you really want to remove all selected files from disk?"
+    IDS_OPENFOLDER          "Open Folder"
+    IDS_DELETE              "Delete From Disk"
+    IDS_BOOTSTRAP           "Bootstrap"
+    IDS_VIAED2KSQ           "via eD2K Server"
+    IDS_EM_KADEMLIA         "&Kad"
+    IDS_VIAKAD              "via Kad"
+    IDS_VIASE               "via Source Exchange"
+    IDS_SELECTTOOLBARBITMAP "Select Toolbar Bitmap..."
+    IDS_SELECTTOOLBARBITMAPDIR "Select Toolbar Bitmap Directory..."
+    IDS_TOOLBARSKINS        "Toolbar Skins"
+    IDS_NOTEXTLABELS        "No Labels"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TEXTLABELSONRIGHT   "Right of Icon"
+    IDS_TEXTLABELS          "Text Labels"
+    IDS_ENABLETEXTLABELS    "Below Icon"
+    IDS_CUSTOMIZETOOLBAR    "Customize Toolbar..."
+    IDS_KAD_RECHECKFW       "Recheck Firewall"
+    IDS_SHAREDTITLE         "Shared ED2K|Kad"
+    IDS_WARNINGNOBS         "Bootstrapping inactive now (Kad already connected)."
+    IDS_FIREWALLED          "Firewalled"
+    IDS_KADEMLIA            "Kad"
+    IDS_KADCONTACTLAB       "Contacts"
+    IDS_KADDISTANCE         "Distance"
+    IDS_KEY                 "Key"
+    IDS_NUMBER              "Number"
+    IDS_KAD_SEARCHSRC       "Search Sources (%i:%i)"
+    IDS_KAD_SEARCHKW        "Search Keywords (%i:%i)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LOG_SECURE_IDENT    "Log secure ident"
+    IDS_LOG_FILTERED_IPS    "Log filtered and/or ignored IPs"
+    IDS_LOG_FILE_SAVING     "Log file save actions"
+    IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|All Files (*.*)|*.*||"
+    IDS_DELETEIPFILTERS     "Do you really want to delete the selected IP filters?"
+    IDS_TOTAL_IPFILTER_LABEL "Total IP filters:"
+    IDS_TOTAL_IPS_LABEL     "Total IPs:"
+    IDS_DELETE2             "Delete"
+    IDS_APPEND              "Append..."
+    IDS_SAVE                "Save"
+    IDS_IP_START            "Start"
+    IDS_IP_END              "End"
+    IDS_IP_LEVEL            "Level"
+    IDS_IP_DESC             "Description"
+    IDS_IP_HITS             "Hits"
+    IDS_IP_RULES            "IP Filters:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOTCONNECTEDKAD "You are currently not connected to the Kad Network!"
+    IDS_IRC_NOSFS           "No Shared Files Selected"
+    IDS_IRC_IGNOREMISCMESSAGE "Ignore Misc info messages"
+    IDS_KNOWN               "Known"
+    IDS_DL_ACTIVE_TIME      "Download time"
+    IDS_KADALPHA            "Kademlia is still in an early development stage. We recommend to enabled it only if you are interested in testing it"
+    IDS_ERR_RENAMESF        "Failed to rename\r\n    ""%s""\r\nto\r\n    ""%s""\r\n\r\n%hs"
+    IDS_RESETLABEL          "Auto completion (history function)"
+END
+
+#endif    // Baskisch resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "..\version.h"
+#include "lang.rc2"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

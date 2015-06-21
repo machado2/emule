@@ -1,0 +1,1652 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "sl_SI.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "..\resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Slovenian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_SLV)
+#ifdef _WIN32
+LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT
+#pragma code_page(1250)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "sl_SI.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""..\\resource.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""..\\version.h""\r\n"
+    "#include ""lang.rc2""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_SOCKETS_INIT_FAILED "Napaka pri inicializaciji windowsovih prikljuèkov."
+    IDS_ABOUTBOX            "&Vizitka..."
+    IDS_HTTPDOWNLOAD_FILESTATUS "%s od %s"
+    IDS_HTTPDOWNLOAD_CONNECTED "Povezan z: %s"
+    IDS_HTTPDOWNLOAD_RESOLVING_NAME "Išèem pot do: %s"
+    IDS_HTTPDOWNLOAD_RESOLVED_NAME "Najdena pot do %s"
+    IDS_HTTPDOWNLOAD_CONNECTING "Povezujem se z %s"
+    IDS_HTTPDOWNLOAD_REDIRECTING "Preusmerjam do %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_GETTING_FILE_INFORMATION "Dobivam informacije o dat."
+    IDS_HTTPDOWNLOAD_FAIL_PARSE_ERROR "Napaka pri analizi URLja: %s"
+    IDS_HTTPDOWNLOAD_GENERIC_ERROR 
+                            "Napaka pri poskusu prenosa datoteke, Napaka:%s"
+    IDS_HTTPDOWNLOAD_FAIL_CONNECT_SERVER 
+                            "Napaka pri poskusu povezave s strežnikom, Napaka:%s"
+    IDS_HTTPDOWNLOAD_INVALID_SERVER_RESPONSE 
+                            "Strežnikov odgovor ni bil sprejet."
+    IDS_HTTPDOWNLOAD_INVALID_HTTP_RESPONSE 
+                            "Strežnikov HTTP odgovor ni bil sprejet."
+    IDS_HTTPDOWNLOAD_ERROR_READFILE "Napaka pri prenosu datoteke, Napaka:%s"
+    IDS_HTTPDOWNLOAD_PERCENTAGE 
+                            "Osvežujem listo strežnikov: %s%% od %s Konèano."
+    IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Prenašam datoteko"
+    IDS_HTTPDOWNLOAD_OF     "%s od %s"
+    IDS_HTTPDOWNLOAD_SECONDS "%s s"
+    IDS_HTTPDOWNLOAD_MINUTES "%s min"
+    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%s min %s s"
+    IDS_HTTPDOWNLOAD_BYTES  "%s B"
+    IDS_HTTPDOWNLOAD_KILOBYTES "%s kB"
+    IDS_CANCEL              "Preklièi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_MEGABYTES "%s MB"
+    IDS_HTTP_CAPTION        "Osvežujem listo strežnikov"
+    IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s skopirano)"
+    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s B/s"
+    IDS_HSAV                "Hashset dosegljiv"
+    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s kB/s"
+    IDS_FD_CORR             "Pokvarjen"
+    IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
+                            "Dat. '%s' že obstaja.\nAli jo želite prepisati?"
+    IDS_FD_RECOV            "Rešeno"
+    IDS_HTTPDOWNLOAD_FAIL_FILE_OPEN 
+                            "Napaka pri poskusu odprtja dat. za prenos, Napaka:%s"
+    IDS_HTTPDOWNLOAD_ABORTING_TRANSFER "Ustavljam prenos"
+    IDS_FD_COMPR            "Stiskanje"
+    IDS_WIZARD_NETWORK      "Izberite omrežje(a), ki ga želite uporabljati."
+    IDS_MAIN_READY          "eMule %s pripravljen"
+    IDS_WIZARD_ED2K         "ED2k nastavitve"
+    IDS_SEL_SKIN            "Izberi preobleko..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MAIN_SOCKETERROR    "Kritièna Napaka: Povezava s portom %i ni uspela."
+    IDS_MAIN_BTN_DISCONNECT "Preki&ni"
+    IDS_MAIN_BTN_DISCONNECT_TOOLTIP "Prekine povezavo s strežnikom."
+    IDS_ERR_WRONGFILEID     "Napaèen ID dat. poslan."
+    IDS_ERR_BADHASHSET      "Pokvarjena ali neveljavna HashKoda sprejeta."
+    IDS_ERR_BADDATABLOCK    "Pokvarjen ali neveljaven del dat. sprejet."
+    IDS_ERR_ILLFORMEDHASH   "Napèno zgenerirana HashKoda."
+    IDS_ERR_BADED2KLINK     "Slabo generirana ED2k povezava."
+    IDS_ERR_NOSLLINK        "Ni ED2k strežnik ali povezava."
+    IDS_ERR_WRONGPACKAGESIZE "Neveljavna OP_FILEREQUEST velikost paketa."
+    IDS_ERR_WRONGHPACKAGESIZE "Neveljavna OP_HASHSETREQUEST velikost paketa"
+    IDS_ERR_BADCLIENTACTION "Uporabnik je povzroèil napako: %s. Prekinjam povezavo z uporabnikom!"
+    IDS_ERR_UNKNOWNCLIENTACTION 
+                            "Neznan uporabnik je poslal paket razširjenega protokola"
+    IDS_ERR_OPENMET         "Napaka: Odprtje dat. part.met je bilo neuspešno! (%s => %s)"
+    IDS_ERR_BADMETVERSION   "Napaka: Neveljavna razlièica dat. part.met! (%s => %s)"
+    IDS_ERR_BADGAP          "Neveljavno zaznamovana luknja v dat. part.met"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_EMPTYADRESSESDAT_TITLE 
+                            "Osvežitev strežniške liste ni bilo uspešno."
+    IDS_ERR_BADSERVERMETVERSION 
+                            "Neveljaven zaznamek verzije v server.met (0x%X)!"
+    IDS_SERVERSFOUND        "Število najdenih strežnikov v server.met: %i"
+    IDS_SERVERSADDED        "%d strežnikov dodanih, %d izpušèenih."
+    IDS_ERR_BADSERVERLIST   "Napaka: dat. server.met je pokvarjena, naložitev strežniške liste neuspešno."
+    IDS_ERR_FILEERROR_SERVERMET 
+                            "Neprièakovana napaka med branjem server.met: %s, naložitev strežniške liste neuspešno."
+    IDS_ERR_SAVESERVERMET   "Shranjevanje server.met ni uspelo!"
+    IDS_PASSIVE             "Pasiven"
+    IDS_MAIN_CONNECTEDTO    "Povezan z: "
+    IDS_MAIN_BTN_CANCEL     "P&rekini"
+    IDS_AVAIL               "Parts: %d , available: %d (%.1f%%)\n\n"
+    IDS_TYPE                "Tip"
+    IDS_FILEID              "HashKoda"
+    IDS_FILE                "Datoteka"
+    IDS_DOWNLOAD            "Prenos"
+    IDS_SL_SERVERNAME       "Strežnik"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IP                  "IP"
+    IDS_DESCRIPTION         "Opis"
+    IDS_PING                "Ping"
+    IDS_FILES               "Datotek"
+    IDS_PREFERENCE          "Priljubljenost"
+    IDS_PRIONOPREF          "Ni priljubljenih"
+    IDS_CONNECTTHIS         "Poveži se z izbranim strežnikom"
+    IDS_CHAT_WELCOME        "Pošlji sporoèilo\n  \nKliknite z desnim miškinim gumbom na uporabnika in izberite 'Pošlji sporoèilo' za zaèetek pogovora."
+    IDS_MAIN_BTN_CANCEL_TOOLTIP 
+                            "Ustavi trenutna poskušanja povezave s strežnikom."
+    IDS_MAIN_BTN_CONNECT    "&Poveži!"
+    IDS_ERR_SAVESERVERMET2  "Shranjevanje server.met ni bilo uspešno! Mogoèe bo potrebno zbrisati server.met in preimenovati server.met.old v server.met!"
+    IDS_NOTCONNECTED        "Ni povezave"
+    IDS_DISCONNECTED        "Ni povezave"
+    IDS_USERS               "Uporabnikov: %i"
+    IDS_UPDOWN              "Gor: %.1f(%.1f) | Dol: %.1f(%.1f)"
+    IDS_CONNECTED           "Povezan"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_WRITEERROR      "Neprièakovana napaka med pisanjem %s : %s"
+    IDS_ERR_COMPLETIONFAILED 
+                            "Neprièakovana napaka med konèevanjem %s. Dat. na pavzi, ponovno zaženite eMule za ponoven poskus"
+    IDS_ERR_DELETEFAILED    "Brisanje %s ni bilo uspešno, zbrisati jo boste morali sami"
+    IDS_DOWNLOADDONE        "Prenašanje %s konèano :-)"
+    IDS_ERR_DELETE          "Brisanje %s ni bilo uspešno"
+    IDS_ERR_HASHERRORWARNING 
+                            "Opozorilo: Hashiranje prenesenega dela ni bilo uspešno - HashKoda nedokonèana (%s)"
+    IDS_ERR_INCOMPLETEHASH  "Napaka: Hashiranje prenesenega dela ni bilo uspešno - HashKoda nedokonèana (%s). To se ne bi smelo zgoditi."
+    IDS_DOWNLOADING         "Prenašam"
+    IDS_WAITING             "Èakam"
+    IDS_HASHING             "Hashiram"
+    IDS_COMPLETING          "Konèujem"
+    IDS_COMPLETE            "Konèano"
+    IDS_PAUSED              "Na Pavzi"
+    IDS_ERRORLIKE           "Vsebuje napake"
+    IDS_ASSIGNED2K          "eMule ni dodeljena ED2k povezavam. Ali želite eMule dodeliti ED2k povezavam (priporoèeno) ?"
+    IDS_ERR_EMPTYADRESSESDAT 
+                            "Nobenega naslova strežniške liste v 'adresses.dat'. Prosimo vpišite veljaven naslov, da bo samoosvežitev delovala pravilno."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LINKNOTADDED        "Dodajanje povezave ni uspelo"
+    IDS_MAIN_EXIT           "Želite zapustiti eMule?"
+    IDS_MAIN_EXITTITLE      "Potrditev izhoda"
+    IDS_MAIN_POPUP_RESTORE  "Poveèaj"
+    IDS_CONNECTTOANYSERVER  "Poveži s katerimkoli strežnikom"
+    IDS_EXIT                "Izhod"
+    IDS_CONNECTING          "Povezujem"
+    IDS_FAILED              "Neuspeh"
+    IDS_ERR_BADSERVERREPLY  "Sprejet pokvarjen ali neveljaven pozdrav strežnika."
+    IDS_NEWCLIENTID         "Nov ID uporabnika je %u"
+    IDS_NOSHAREDFOLDERS     "Nobene deljene datoteke."
+    IDS_SHAREDFOLDERS       "Deljene datoteke"
+    IDS_VIEW1               "Poglej "
+    IDS_VIEW2               " (ni deljen)"
+    IDS_PRIOLOW             "Nizka"
+    IDS_PRIONORMAL          "Srednja"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOHIGH            "Visoka"
+    IDS_DOWNLOADMENUTITLE   "Prenosi"
+    IDS_PRIORITY            "Prioriteta"
+    IDS_NEWSERVERS          "Sprejetih %d novih strežnikov"
+    IDS_DL_STOP             "&Ustavi"
+    IDS_DL_PAUSE            "Pav&za"
+    IDS_DL_RESUME           "&Nadaljuj"
+    IDS_DL_OPEN             "&Odpri datoteko"
+    IDS_DL_INFO             "Pri&kaži informacije o datoteki"
+    IDS_DL_CLEAR            "Po&briši konèane"
+    IDS_DL_LINK1            "Kopiraj ED2k povezavo v od&lagališèe"
+    IDS_DL_LINK2            "Kopiraj ED2k povezavo v odlagališèe (&HTML)"
+    IDS_SHOWDETAILS         "Pri&kaži informacije"
+    IDS_SEND_MSG            "Pošlji &sporoèilo"
+    IDS_ASKING              "Sprašujem"
+    IDS_CONNVIASERVER       "Povezujem preko strežnika"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ONQUEUE             "V vrsti"
+    IDS_TRANSFERRING        "Prenašam"
+    IDS_RECHASHSET          "Sprejemam HashKodo"
+    IDS_NONEEDEDPARTS       "Niè uporabnih delov"
+    IDS_NOCONNECTLOW2LOW    "Povezava med uporabnikoma z nizkima IDjema ni mogoèa"
+    IDS_UNKNOWN             "Neznano"
+    IDS_ASKED4ANOTHERFILE   "Prosil za drugo dat."
+    IDS_Q_CANCELDL          "Ste preprièani, da želite prekiniti prenose in zbrisati dat.?\n"
+    IDS_Q_CANCELDL2         "Ste preprièani, da želite prekiniti prenos in zbrisati dat.?\n"
+    IDS_COPIED2CB           "Skopirano v odlagališèe: \n"
+    IDS_PROCDONE            "% konèano"
+    IDS_SELECTINCOMINGDIR   "Izberite mapo za prihajajoèe dat."
+    IDS_SELECTTEMPDIR       "Izberite mapo za zaèasne dat."
+    IDS_DL_FILENAME         "Ime Datoteke"
+    IDS_DL_SIZE             "Velikost"
+    IDS_DL_TRANSF           "Prenešeno"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DL_SPEED            "Hitrost"
+    IDS_DL_PROGRESS         "Potek"
+    IDS_DL_SOURCES          "Virov"
+    IDS_ERR_BADSERVERLISTRECEIVED "Neveljaven paket strežniške liste sprejet"
+    IDS_STATUS              "Stanje"
+    IDS_DL_REMAINS          "Preostaja še"
+    IDS_QL_USERNAME         "Uporabniško ime"
+    IDS_ERR_PACKAGEHANDLING "Napaka med obdelavo paketa s strežnika (%s)"
+    IDS_QL_RATING           "Ocena"
+    IDS_CONNECTINGTO        "Povezujem z %s (%s:%i)..."
+    IDS_CLIENTS             "Uporabnikov"
+    IDS_SEARCH_ANY          "Karkoli"
+    IDS_SEARCH_AUDIO        "Avdio"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SEARCH_PICS         "Slika"
+    IDS_SEARCH_PRG          "Program"
+    IDS_SEARCH_VIDEO        "Video"
+    IDS_SEARCH_CDIMG        "Kopija CDja"
+    IDS_SEARCH_ARC          "Arhiv"
+    IDS_ERR_INVALIDLINK     "Ta ED2k povezava je neveljavna (%s)"
+    IDS_ERR_LINKERROR       "Neveljavna povezava: %s"
+    IDS_ERR_NOTCONNECTED    "Niste povezani s strežnikom!"
+    IDS_REMOVETHIS          "Zbrišite izbrani strežnik"
+    IDS_REMOVEALL           "Zbrišite vse strežnike"
+    IDS_SRV_ADDR            "Prosim vnesite naslov strežnika"
+    IDS_SRV_PORT            "Prosim vnesite port strežnika"
+    IDS_SRV_NOTADDED        "Strežnik ni bil dodan!"
+    IDS_SRV_READD           "Strežnik je bil oznaèen za nedosegljivega, bil je ponovno dodan!"
+    IDS_SRV_NOURLAV         "Nobenega razpoložljivega URLja."
+    IDS_INVALIDURL          "Neveljaven URL"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FAILEDDOWNLOADMET "Prenos strežniške liste s %s ni uspel!"
+    IDS_PERMISSION          "Dovoljenje"
+    IDS_SHAREDFILES         "Deljene datoteke"
+    IDS_PRIOVERYLOW         "Zelo nizka"
+    IDS_PRIORELEASE         "Najveèja"
+    IDS_FSTATUS_LOCKED      "Zaklenjeno"
+    IDS_KADALPHA            "Kademlia je še vedno v zgodnji razvojni fazi. To funkcijo priporoèamo le, èe jo želite testirati"
+    IDS_FSTATUS_FRIENDSONLY "Samo prijatelji"
+    IDS_FSTATUS_PUBLIC      "Javno"
+    IDS_ERR_RENAMESF        "Nauspeh pri preimenovanju\r\n    ""%s""\r\nv\r\n    ""%s""\r\n\r\n%hs"
+    IDS_PRIOHIGHEST         "Najveèja"
+    IDS_AVAILABLE           "dosegljiva"
+    IDS_ERR_NOPRIMCHANGE    "Ne morete spremeniti dovoljenja medtem, ko se dat. prenaša!"
+    IDS_HIDDEN              "Skrito"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FSTAT_TRANSFER      "Prenosi"
+    IDS_FSTAT_CONNECTION    "Povezava"
+    IDS_FSTAT_CLIENTS       "Uporabniki"
+    IDS_FSTAT_SERVERS       "Strežniki"
+    IDS_FSTAT_WAITING       "Èakam..."
+    IDS_TIME                "Èas"
+    IDS_STATS_DDATA         "Sprejetih podatkov: %s"
+    IDS_STATS_UDATA         "Poslani podatki: %s"
+    IDS_STATS_AVGDL         "Povpreèni prenos(dol): %.2f kB/s"
+    IDS_STATS_AVGUL         "Povpreèni prenos(gor): %.2f kB/s"
+    IDS_STATS_FOUNDSRC      "Najdenih virov: %i"
+    IDS_STATS_ACTDL         "Aktivnih prenosov: %i"
+    IDS_STATS_ACTUL         "Aktivnih prenosov: %i"
+    IDS_STATS_WAITINGUSERS  "Èakajoèih prenosov: %i"
+    IDS_STATS_RECONNECTS    "Ponovnih povezav: %i"
+    IDS_STATS_WAITTRANSF    "Èakam na prenos..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_WAITCONN      "Èakam na povezavo..."
+    IDS_STATS_CONNECTEDSINCE "S strežnikom povezan že %s"
+    IDS_STATS_RATIO         "Razmerje med prenosi (gor:dol):"
+    IDS_STATS_UNKNOWNCLIENT "Neznano: %i"
+    IDS_STATS_TOTAL         "Skupaj: %i"
+    IDS_STATS_WORKING       "Delujoèi: %i"
+    IDS_STATS_DEAD          "Nedosegljivi/Izbrisani: %i"
+    IDS_DISABLED            "Izkljuèeno"
+    IDS_STOPPED             "Ustavljeno"
+    IDS_STATS_UPDATELABEL   "Osveži vsakih: %i s"
+    IDS_QUEUECOUNT          "%u (št. izloèenih: %u)"
+    IDS_NICKNAME            "Uporabniško ime: "
+    IDS_CLIENTSFILENAME     "\nUporabnikovo ime dat.: "
+    IDS_ASKEDFAF            "\nProsil za drugo dat."
+    IDS_WAITED              "Èakal"
+    IDS_ERR_LOADCREDITFILE  "Naložitev datoteke z bonusi, ustvarjena bo nova"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CREDITFILEOLD   "Datoteka z bonusi je stara in bo zamenjana"
+    IDS_CREDITFILELOADED    "Naložena datoteka z bonusi, %u znanih uporabnikov"
+    IDS_CREDITFILECORRUPT   "Napaka: Datoteka z bonusi je pokvarjena in bo zamenjana!"
+    IDS_ERR_CREDITFILEREAD  "Neprièakovana napaka med branjem datoteke z bonusi: %s"
+    IDS_ERR_FAILED_CREDITSAVE "Shranjevanje datoteke z bonusi ni uspelo"
+    IDS_NOPARTSFOUND        "Niè delnih prenosov najdenih"
+    IDS_FOUNDPARTS          "Število najdenih delnih prenosov: %i"
+    IDS_NEWDOWNLOAD         "Prenašam %s"
+    IDS_ERR_ALREADY_DOWNLOADING "Dat. %s že prenašate"
+    IDS_ERR_ALREADY_DOWNLOADED "Dat. %s ste že prenesli"
+    IDS_ERR_SERVERMET_BAD   "Napaka: Dat. known.met je pokvarjena, naložitev znanih dat. ni uspela"
+    IDS_ERR_SERVERMET_UNKNOWN 
+                            "Neprièakovana napaka med branjem dat. known.met: %s, naložitev znanih dat. ni uspela"
+    IDS_ERR_CONNECTIONERROR "Napaka med povezovanjem z %s (%s:%i): %s"
+    IDS_ERR_SOCKET          "Napaka v strežnikovem prikljuèku: %s (%s:%i): %s"
+    IDS_SHAREDFOUND         "Najdenih %i znanih deljenih datotek"
+    IDS_SHAREDFOUNDHASHING  "Najdenih %i znanih deljenih dat., hashiram %i novih dat."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_UDPEXT          "Napaka med procesiranjem UDP Paketa"
+    IDS_ERR_INCOMPLETEBLOCK "Zahtevan nedokonèan blok dat."
+    IDS_ERR_OPEN            "Napaka pri odpiranju zahtevane dat."
+    IDS_ERR_CLIENTERRORED   "Uporabnik '%s' je povzroèil napako med ustvarjanjem paketa (%s) - prekinjam povezavo z uporabnikom"
+    IDS_ERR_REQ_FNF         "Zahtevana dat. ni bila najdena"
+    IDS_CLIENTBLOCKED       "Uporabnik '%s' je agresiven in je bil izloèen iz vrste"
+    IDS_LUSERS              "Uporabniki"
+    IDS_LFILES              "datotek"
+    IDS_DESC                "Opis: %s"
+    IDS_PORT                "Port"
+    IDS_ERR_NOVALIDSERVERSFOUND 
+                            "Nobenega veljavnega strežnika v strežniški listi"
+    IDS_CONNECTEDTOREQ      "Povezan z: %s (%s:%i), pošiljam željo za vstop"
+    IDS_ERR_FATAL           "Kritièna napaka med povezovanjem. Internetna povezava je mogoèe izklopljena"
+    IDS_ERR_LOSTC           "Izgubljena povezeva z %s (%s:%i)"
+    IDS_ERR_DEAD            "%s (%s:%i) je nedosegljiv."
+    IDS_ERR_FULL            "%s (%s:%i) je poln."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_METCORRUPT      "Napaka: %s (%s) je pokvarjena, odprtje dat. neuspešno"
+    IDS_ERR_FILEERROR       "Neprièakovana napaka med branjem dat. %s (%s): %s"
+    IDS_ERR_FILEOPEN        "Napaka pri odpiranju %s (%s)"
+    IDS_SEL_SKINDIR         "Izberti mapo za preobleke..."
+    IDS_ERR_REHASH          "Opozorilo: %s je mogoèe pokvarjena, rehashiram konèane dele datoteke"
+    IDS_SKIN_PROF           "Profili preoblek"
+    IDS_ERR_PART_FNF        ".part dat. ni bila najdena"
+    IDS_ERR_OPENMETFILE     "Napaka pri odpiranju dat. part.met"
+    IDS_KADOPEN             "Odpri"
+    IDS_ERR_SAVEMET         "Napaka pri shranjevanju delne dat.: %s (%s)"
+    IDS_ERR_FOUNDCORRUPTION "Najden pokvarjen del dat. (%i) v %s"
+    IDS_HASHINGDONE         "Rehashiranje %s konèano, datoteka je brez napake"
+    IDS_ERR_PARTCORRUPT     "Prenešen del %i je pokvarjen :-(  (%s)"
+    IDS_ICHWORKED           "IRN: Rešen pokvarjen del %i  (%s)"
+    IDS_ERR_OUTOFSPACE      "Imate premalo prostora na disku za prenos %s!"
+    IDS_SE                  "Izmenjava virov"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOSERVERSC      "Nobenega veljavnega strežnika v strežniški listi"
+    IDS_CONNECTEDTO         "Povezan z: %s"
+    IDS_DL_PREVIEW          "Predogled"
+    IDS_VIEWQUEUE           "Prikaži vrsto"
+    IDS_VIEWUPLOADS         "Prikaži prenose"
+    IDS_TW_UPLOADS          "Prenosi Gor"
+    IDS_TW_DOWNLOADS        "Prenosi Dol"
+    IDS_TW_QUEUE            "Uporabnikov v vrsti:"
+    IDS_SW_SEARCHBOX        "Išèi"
+    IDS_SW_NAME             "Ime"
+    IDS_SW_GLOBAL           "Išèi globalno"
+    IDS_SW_TYPE             "Tip"
+    IDS_SW_DIRECTDOWNLOAD   "Neposredni prenos"
+    IDS_SW_LINK             "ED2k Povezava(e)"
+    IDS_SW_START            "Zaèni"
+    IDS_SCHEDULER           "Urnik"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC                 "IRC"
+    IDS_SW_RESULT           "Rezultati iskanja"
+    IDS_SW_DOWNLOAD         "Prenesi izbrane"
+    IDS_SV_SERVERLIST       "Strežniška lista"
+    IDS_SV_SERVERINFO       "Sporoèila strežikov"
+    IDS_SV_LOG              "Zapisnik"
+    IDS_SV_NEWSERVER        "Nov strežnik"
+    IDS_SV_ADDRESS          "IP ali Naslov"
+    IDS_SV_PORT             "Port"
+    IDS_SV_ADD              "Dodaj v listo"
+    IDS_SV_MET              "Osveži server.met preko URLja"
+    IDS_SV_UPDATE           "Osveži"
+    IDS_SF_FILES            "Deljene datoteke"
+    IDS_SF_STATISTICS       "Statistika"
+    IDS_SF_RELOAD           "Osveži"
+    IDS_SF_CURRENT          "Seja"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIORITY_UP         "Zvišaj prioriteto"
+    IDS_PRIORITY_DOWN       "Znižaj prioriteto"
+    IDS_SPEED_LIMITS        "Omejitev hitrosti"
+    IDS_CAPACITY_LIMITS     "Zmogljivost prenosa"
+    IDS_ADMIN               "Administrator"
+    IDS_ACCESSDENIED        "Dostop zavrnjen!"
+    IDS_WEB_LOWUSER         "Gost"
+    IDS_WEB_ERR_CANTLOAD    "Ne morem naložiti predlog: Ne morem odpreti dat. %s"
+    IDS_GLOBALSEARCH        "Globalno (Strežnik)"
+    IDS_METHOD              "Metoda"
+    IDS_SW_WEBBASED         "Išèi po internetu"
+    IDS_NOTHING             "Niè"
+    IDS_SETUPSPEED          "Nastavi omejitev prenosa(dol)"
+    IDS_SETDOWNSPEED        "nastavi omejitev prenosa(gor)"
+    IDS_DAYLY               "dnevno"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DAY_MO_FR           "Pon-Pet"
+    IDS_DAY_SA_SO           "Sob-Ned"
+    IDS_MO                  "Ponedeljek"
+    IDS_DI                  "Torek"
+    IDS_MI                  "Sreda"
+    IDS_DO                  "Èetrtek"
+    IDS_FR                  "Petek"
+    IDS_SA                  "Sobota"
+    IDS_SO                  "Nedelja"
+    IDS_WEB_ADMINLOGIN      "Webserver-Admin-Prijava"
+    IDS_WEB_GUESTLOGIN      "Webserver-Gost-Prijava"
+    IDS_WEB_SESSIONEND      "Webserver: Odjava"
+    IDS_DETAILS             "Podrobnosti"
+    IDS_ACTION              "Dejanje"
+    IDS_REMOVE              "Odstrani"
+    IDS_NEW                 "Novo"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SF_TOTAL            "Skupaj"
+    IDS_SF_TRANS            "Prenešeno:"
+    IDS_SF_ACCEPTED         "Sprejetih prenosov:"
+    IDS_SF_REQUESTED        "Zaželjenih:"
+    IDS_ST_DOWNLOAD         "Hitrost prenosa(dol)"
+    IDS_ST_UPLOAD           "Hitrost prenosa(gor)"
+    IDS_ST_CURRENT          "trenutno"
+    IDS_ST_SESSION          "povpreèno na sejo"
+    IDS_ST_ACTIVED          "aktivnih prenosov(dol)"
+    IDS_ST_ACTIVEU          "aktivnih prenosov(gor)"
+    IDS_ST_WAITINGU         "èakajoèih prenosov(gor)"
+    IDS_CW_MESSAGES         "Sporoèila"
+    IDS_CW_FRIENDS          "Prijatelji"
+    IDS_CW_SEND             "Pošlji"
+    IDS_CW_CLOSE            "Zapri"
+    IDS_PW_GENERAL          "Splošno"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_DIR              "Mape"
+    IDS_PW_NICK             "Uporabniško ime"
+    IDS_PW_INCOMING         "Prenešene datoteke"
+    IDS_PW_TEMP             "Zaèasne datoteke"
+    IDS_PW_BROWSE           "Poišèi"
+    IDS_PW_SHARED           "Deljene datoteke"
+    IDS_PW_CONNECTION       "Povezava"
+    IDS_PW_DOWNC            "Max. dol"
+    IDS_PW_DOWNL            "Omejitev dol"
+    IDS_PW_UPC              "Max. gor"
+    IDS_PW_UPL              "Omejitev gor"
+    IDS_PW_MAXC             "Max. povezav"
+    IDS_PW_CLIENTPORT       "Port"
+    IDS_PW_AUTOCON          "Samodejno poveži ob zagonu"
+    IDS_PW_RECON            "Poveži ob prekinjeni povezavi"
+    IDS_PW_SERVER           "Strežnik"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_RDEAD            "Zbriši nedoseg. strežnike po"
+    IDS_PW_RETRIES          "poskusih"
+    IDS_PW_SCORE            "Uporabi prioriteto"
+    IDS_PW_USC              "Osveži strežniško listo ob povezavi s strežnikom"
+    IDS_PW_UCC              "Osveži strežniško listo ob povezavi z uporabnikom"
+    IDS_PW_FILTER           "Filtriraj LAN IP serverjev in odjemalcev"
+    IDS_PW_USS              "Samodejno osveži strežniško listo ob zagonu"
+    IDS_PW_MISC             "Razno"
+    IDS_PW_TRAY             "Pomanjšaj v orodno vrstico"
+    IDS_PW_BEEP             "Opozorilni zvok ob napakah"
+    IDS_PW_PROMPT           "Opozori ob izhodu"
+    IDS_PW_SPLASH           "Prikaži uvodno sliko"
+    IDS_PW_DBLCLICK         "Dvojni klik za razširitev pri prenosih"
+    IDS_PW_TOOL             "Èas pred prikazom pomoèi (sek.)"
+    IDS_PW_FRONT            "Poveèaj ob kliku na povezavo"
+    IDS_PW_LANG             "Jezik"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_FILES            "Datoteke"
+    IDS_PW_ICH              "Inteligentno Reševanje Napak"
+    IDS_PW_SHARE            "Pokaži moje datoteke"
+    IDS_PW_EVER             "Vsem"
+    IDS_PW_FRIENDS          "Prijateljem"
+    IDS_PW_NOONE            "Nikomur"
+    IDS_PW_RESET            "Poèisti"
+    IDS_PW_APPLY            "Prikaži"
+    IDS_EM_TRANS            "Prenos"
+    IDS_EM_SERVER           "Strežniki"
+    IDS_EM_SEARCH           "Iskanje"
+    IDS_EM_FILES            "Moje datoteke"
+    IDS_EM_MESSAGES         "Sporoèila"
+    IDS_EM_STATISTIC        "Statistika"
+    IDS_EM_PREFS            "Nastavitve"
+    IDS_MB_LANGUAGEINFO     "Izbran je bil privzet jezik. Spremenite ga lahko v nastavitvah."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_GENERAL          "Splošno"
+    IDS_FD_NAME             "Celo Ime:"
+    IDS_FD_MET              "Trenutno Ime:"
+    IDS_FD_HASH             "HashKoda:"
+    IDS_FD_SIZE             "Velikost:"
+    IDS_FD_STATUS           "Stanje:"
+    IDS_FD_TRANSFER         "Prenos"
+    IDS_FD_SOURCES          "Najdenih Virov:"
+    IDS_FD_PARTS            "Delov:"
+    IDS_FD_TRANS            "Prenešeno:"
+    IDS_FD_DATARATE         "Hitrost:"
+    IDS_FD_TRANSI           "Prenosov:"
+    IDS_FD_COMPSIZE         "Konèano:"
+    IDS_FD_CLOSE            "Zapri"
+    IDS_FD_TITLE            "Informacije o Datoteki"
+    IDS_CD_GENERAL          "Splošno"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UNAME            "Ime:"
+    IDS_CD_UHASH            "HashKoda:"
+    IDS_CD_CSOFT            "Program:"
+    IDS_CD_UIP              "IP Naslov:"
+    IDS_CD_SIP              "Strežnikov IP:"
+    IDS_CD_VERSION          "Razlièica:"
+    IDS_CD_UID              "ID:"
+    IDS_CD_SNAME            "Ime Strežnika:"
+    IDS_CD_CDOWN            "Trenutno prenaša:"
+    IDS_CD_DOWN             "Prenesel(dol) (seja):"
+    IDS_CD_ADOWN            "Povpreèni prenos(dol):"
+    IDS_CD_TDOWN            "Prenešeno skupaj(dol):"
+    IDS_CD_UP               "Prenesel(gor) (seja):"
+    IDS_CD_AUP              "Povpreèni prenos(gor):"
+    IDS_CD_TUP              "Prenešeno skupaj(gor):"
+    IDS_CD_TRANS            "Prenos"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_SCORES           "Toèke"
+    IDS_CD_MOD              "Gor/Dol spremenljivka:"
+    IDS_CD_RATING           "Razmerja (skupno):"
+    IDS_CD_USCORE           "Toèk v vrsti:"
+    IDS_CD_TITLE            "Informacije o uporabniku:"
+    IDS_EMULEW              "Kliknite,"
+    IDS_EMULEW2             "da preverite, èe obstaja novejša razlièica"
+    IDS_EMULEW3             "tukaj"
+    IDS_PW_MAXSOURCES       "Max. virov na datoteko"
+    IDS_SHAREDFILESCOUNT    "Število deljenih datotek: %i"
+    IDS_SF_SIZE             "Celotna velikost deljenih datotek: %s"
+    IDS_ERR_WRONGPARTNUMBER "Napaèna številka dela datoteke"
+    IDS_ERR_BADPORT         "Slaba številka porta"
+    IDS_ERR_NOHELLO         "Zahteval nekaj brez predstavitve"
+    IDS_ERR_INVALIDPACKAGE  "Sprejet je bil neveljaven ali pokvarjen paket."
+    IDS_ERR_CLIENTERROR     "Uporabnik '%s' (IP:%s) je povzroèil napako: %s. Prekinjam povezavo z uporabnikom!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_BADSIZE         "Neveljavna velikost (OP_QUEUERANKING)"
+    IDS_ERR_BADCLIENT2      "Uporabnik '%s' (IP:%s) je povzroèil napako: %u. Prekinjam povezavo z uporabnikom!"
+    IDS_ERR_NOTAFILELINK    "Ni dat. povezava."
+    IDS_ERR_CREATEPARTFILE  "Napaka: Ustvarjanje delne datoteke ni uspelo."
+    IDS_ERR_UDP_MISCONF     "Napaka pri obdelavi prihajajoèega UDP Paketa (Najverjetneje napaka na strežniku)"
+    IDS_CHAT_START          "*** Zaèetek Pogovora : "
+    IDS_FILEPRIO            "Prioriteta"
+    IDS_SCORE               "Toèke"
+    IDS_ASKED               "Zahteval"
+    IDS_LASTSEEN            "Nazadnje viden ob"
+    IDS_BANNED              "Izloèen"
+    IDS_PRIOVERYHIGH        "Zelo visoka"
+    IDS_UUSERS              "Uporabniki"
+    IDS_UFAILED             "Ni uspel"
+    IDS_OPENFILE            "Odpri datoteko"
+    IDS_DATE                "Datum"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARTINFOS           "ImePartdat:"
+    IDS_PARTINFOS2          "Prenašam (od %d virov)"
+    IDS_USERID              "ID Uporabnika"
+    IDS_CLIENT              "Uporabnik"
+    IDS_SERVER              "Strežnik"
+    IDS_SOURCEINFO          "Število zaželjenih delov: %d - Število delov na voljo: %d"
+    IDS_CLIENTSOURCENAME    "\nUporabnikovo ime Dat.: "
+    IDS_USERINFO            "Uporabniško Ime: %s\n"
+    IDS_FILESTATS_SESSION   "Statistika prenosov v tej seji: Sprejetih %d od %d zaželjenih prenosov, %s prenešenih\n"
+    IDS_FILESTATS_TOTAL     "Statistika prenosov: Sprejetih %d od %d zaželjenih prenosov, %s prenešenih"
+    IDS_REQ_UNKNOWNFILE     "Zaželjena neznana Dat."
+    IDS_TRANSFERTIME        "Èas od prvega prenosa: %s"
+    IDS_SF_AVERAGESIZE      "Povpreèna velikost datoteke: %s"
+    IDS_SF_REQUESTS         "Zahtev"
+    IDS_SF_ACCEPTS          "Sprejetih zahtev"
+    IDS_SF_TRANSFERRED      "Prenešenih podatkov"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_REMOVESEARCHSTRING  "Zbriši izbrana iskanja"
+    IDS_REMOVESELECTED      "Zbriši izbrano"
+    IDS_REMOVEALLSEARCH     "Zbriši vse"
+    IDS_ENTERQUEUE          "Vstopil v vrsto ob"
+    IDS_SF_FAIL             "Nedelujoèi strežniki"
+    IDS_SF_WUSER            "Uporabnikov na delujoèih strežnikih"
+    IDS_SF_WFILE            "Datotek na delujoèih strežnikih"
+    IDS_SF_USER             "Skupno uporabnikov"
+    IDS_SF_FILE             "Skupno datotek"
+    IDS_UPLOADTIME          "Èas prenosa"
+    IDS_LASTSEENCOMPL       "Zadnji konèan del:"
+    IDS_YES                 "Da"
+    IDS_NO                  "Ne"
+    IDS_UNBAN               "Dovoli nazaj"
+    IDS_SF_WORKING          "Delujoèi strežniki"
+    IDS_ADDTOSTATIC         "Dodaj v statièno strežniško listo"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDED2SSF           "Dodan v statièno strežniško listo"
+    IDS_STATICSERVER        "Statièni strežnik"
+    IDS_ERROR_SSF           "Neuspešno odpiranje dat. statiènih strežnikov"
+    IDS_ERR_PACKAGEERROR    "Napaka pri obdelavi paketa %s (neveljavna velikost) - paket zbrisan"
+    IDS_SF_ACTIVECON        "Aktivnih povezav (približek)"
+    IDS_SF_MAXCONLIMITREACHED "Doseženo najveè možnih povezav"
+    IDS_SF_AVGCON           "Povpreèno povezav (približek)"
+    IDS_SF_PEAKCON          "Povezav v konici (približek)"
+    IDS_ST_ACTIVEC          "aktivnih povezav"
+    IDS_NETWORK             "omrežje"
+    IDS_SF_DELCOUNT         "Zbrisani strežniki"
+    IDS_QUEUEFULL           "Vrsta polna"
+    IDS_AVG                 "povpreèje"
+    IDS_BYTES               "B"
+    IDS_KBYTES              "kB"
+    IDS_MBYTES              "MB"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GBYTES              "GB"
+    IDS_TBYTES              "TB"
+    IDS_SECS                "s"
+    IDS_MINS                "min"
+    IDS_HOURS               "h"
+    IDS_DAYS                "dni"
+    IDS_ED2KLINKFIX         "ED2k Povezave"
+    IDS_RECONNECT           "Ponovni poskus samodejnega povezovanja èez %d s"
+    IDS_SERVERADDED         "Dodan strežnik: %s"
+    IDS_IRC_IGNOREJOINMESSAGE "Ignoriraj sporoèila ob prijavi"
+    IDS_STATS_SUCCUPCOUNT   "Skupno uspešnih prenosov: %i (%.2f%%)"
+    IDS_IRC_IGNOREPARTMESSAGE "Ignoriraj sporoèila ob odjavi"
+    IDS_STATS_FAILUPCOUNT   "Skupno neuspešnih prenosov: %i (%.2f%%)"
+    IDS_STATS_AVEUPTIME     "Povpreèni èas prenosov: %s"
+    IDS_SEARCHMINSIZE       "Min. velikost"
+    IDS_SEARCHMAXSIZE       "Max. velikost"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PREF_ONLINESIG      "Vklopi online status"
+    IDS_ERROR_SAVEFILE      "Napaka pri shranjevanju"
+    IDS_REQ_SHAREDFILES     "Uporabnik %s (%u) je zahteval seznam deljenih datotek -> %s"
+    IDS_ACCEPTED            "sprejeto"
+    IDS_DENIED              "zavrnjeno"
+    IDS_PW_CON_DOWNLBL      "Prenos(dol)"
+    IDS_PW_CON_UPLBL        "Prenos(gor)"
+    IDS_PW_AUTOCONNECTSTATICONLY "Samodejna povezava na statiène strežnike"
+    IDS_PW_CON_LIMITFRM     "Omejitev"
+    IDS_PW_FILE_ICH         "IRN aktiven"
+    IDS_STATS_AVGLABEL      "Povpreèni èas za grafe: %i min"
+    IDS_GRAPHS              "Grafi"
+    IDS_STREE               "Statistièno drevo"
+    IDS_IRC_IGNOREQUITMESSAGE "Ignoriraj sporoèila ob odhodu"
+    IDS_STATSSETUPINFO      "Nastavitve za statistiko"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DOWNLOADMOVIECHUNKS "Najprej poskusi prenesti prvi in zadnji del"
+    IDS_UPDATEQUEUE         "Ne posodabljaj vrste v realnem èasu"
+    IDS_RECOVER_SINGLE      "1 datoteka rešena."
+    IDS_RECOVER_MULTIPLE    "%ld datotek rešenih."
+    IDS_ATTEMPTING_RECOVERY "Poskušam rešiti arhiv..."
+    IDS_RECOVERY_SUCCESSFUL "Reševanje arhiva uspešno."
+    IDS_RECOVERY_FAILED     "Reševanje arhiva neuspešno."
+    IDS_STARTNEXTFILE       "Ob konèanem prenosu naj se zaène naslednji na pavzi"
+    IDS_FULLCHUNKTRANS      "Pošiljaj le cele pakete"
+    IDS_MANUALSERVERHIGHPRIO 
+                            "Vsi roèno dodani strežniki imajo visoko prioriteto"
+    IDS_VERBOSE             "Dodatni programovi izpisi"
+    IDS_FLAT                "toèno"
+    IDS_ROUND               "zaokroženo"
+    IDS_SAMEUSERHASH        "Uporabnik '%s' in '%s' imata enak userhash ali IP - odstranjen '%s'"
+    IDS_SEARCHEXTENTION     "Konènica"
+    IDS_SEARCHAVAIL         "Min. virov"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDLIMIT           "Zgornja meja"
+    IDS_COL_MORECOLORS      "veè..."
+    IDS_KBYTESEC            "kB/s"
+    IDS_TOOMANYCONNS        "Preveè povezav"
+    IDS_DOWNLOADRENAMED     "Datoteka s tem imenom že obstaja, zato je bila shranjena pod imenom %s"
+    IDS_TBN_DOWNLOADDONE    "Prenešeno:"
+    IDS_TBN_DOWNLOADADDED   "Dodano med prenose:"
+    IDS_PW_TBN_USESOUND     "Uporabi zvok"
+    IDS_PW_TBN_ONLOG        "Novem vnosu v zapisnik"
+    IDS_PW_TBN_ONCHAT       "Novem pogovoru"
+    IDS_PW_TBN_POP_ALWAYS   "Sprejetem sporoèilu"
+    IDS_PW_TBN_ONDOWNLOAD   "Konèanem prenosu"
+    IDS_PW_EKDEV_OPTIONS    "Opozorila"
+    IDS_PW_TASKBARNOTIFIER  "Vizualno opozorilo"
+    IDS_PW_TBN_OPTIONS      "Vizualno opozori ob"
+    IDS_TBN_NEWCHATMSG      "Sporoèilo od"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_CON_CAPFRM       "Zmogljivost prenosa"
+    IDS_IRC_STATUSLOG       "Zapisnik stanj"
+    IDS_IRC_STATUS          "Stanje"
+    IDS_IRC_PRIVATECHANSTART "* Zaèetek zasebnega pogovora"
+    IDS_IRC_SLAPMSG         "* %s udari %s z veliko mastno in debelo ribico!"
+    IDS_IRC_PRIVMESSAGE     "Zasebno sporoèilo"
+    IDS_IRC_OP              "Op"
+    IDS_IRC_DEOP            "DeOp"
+    IDS_IRC_VOICE           "Glas"
+    IDS_IRC_HALFOP          "HalfOp"
+    IDS_IRC_DEHALFOP        "DeHalfOp"
+    IDS_IRC_KICK            "Vrzi ven"
+    IDS_IRC_SLAP            "Udari"
+    IDS_IRC_JOIN            "Pojdi na"
+    IDS_IRC_CHANNELLIST     "Lista kanalov"
+    IDS_IRC_CONNECT         "Poveži"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_DISCONNECT      "Prekini zvezo"
+    IDS_IRC_HASJOINED       "* %s je prišel na %s"
+    IDS_IRC_HASPARTED       "* %s je odšel z %s (%s)"
+    IDS_IRC_WASKICKEDBY     "* %s je vrgel ven %s (%s)"
+    IDS_IRC_NICKUSED        "Vaš vzdevek je že v uporabi. Prosim nastavite si novega v lastnostih."
+    IDS_IRC_DEVOICE         "Odvzemi glas"
+    IDS_IRC_HASQUIT         "* %s je odšel (%s)"
+    IDS_IRC_NOWKNOWNAS      "* %s se je preimenoval v %s"
+    IDS_IRC_SETSMODE        "* %s nastavi: %s %s"
+    IDS_IRC_NOTSUPPORTED    "** Nekatere nastavitve na kanalu še niso podprte. Mogoèe bo potreben ponoven priklop na kanal.."
+    IDS_IRC_CHANNEL         "Kanal"
+    IDS_IRC_NICK            "Vzdevek"
+    IDS_IRC_SEND            "Pošlji"
+    IDS_IRC_NAME            "Ime"
+    IDS_IRC_SLAPMSGSEND     "PRIVMSG %s :\001ACTION udari %s z veliko mastno in debelo ribico!\001"
+    IDS_IRC_ADDTIMESTAMP    "Sporoèilom dodaj èas"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_USEFILTER       "Uporabi filter na kanalih"
+    IDS_IRC_PERFORM         "Dod. lastnosti"
+    IDS_IRC_USEPERFORM      "Uporabi dod. lastnosti ob povezavi."
+    IDS_IRC_ADDTOFRIENDLIST "Dodaj med prijatelje"
+    IDS_IRC_LOADCHANNELLISTONCON "Naloži listo kanalov ob priklopu"
+    IDS_IRC_ADDASFRIEND     "vas je dodal med prijatelje!"
+    IDS_PW_WARNING          "Število ki ste ga izbrali za ""%s"" je veèje kot ga podpira vaš OS:  %d\nVaš OS lahko postane nestabilen.\n\nSte preprièani da želite nadaljevati?"
+    IDS_TAKEOVER            "Prevzemi"
+    IDS_CLEANUP             "Poèisti"
+    IDS_RENAME              "Preimenuj"
+    IDS_IRC_ADDLINKTOIRC    "Dodaj v IRCovo odložišèe."
+    IDS_IRC_SENDLINK        "Pošlji prijatelju: "
+    IDS_IRC_RECIEVEDLINK    "%s je poslal (%s)."
+    IDS_IRC_ACCEPTLINKS     "Sprejmi ED2k povezave v IRCu (Previdno!)"
+    IDS_SHARED              "Deljeno"
+    IDS_DOWNLOADED          "Prenešeno"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SOURCENAMES         "Imena datoteke"
+    IDS_PREF_STARTMIN       "Zaèni pomanjšano"
+    IDS_PS_TBN_IMPORTANT    "Kritiènih napakah"
+    IDS_COLORS              "Barve"
+    IDS_SP_BACKGROUND       "Ozadje"
+    IDS_SP_GRID             "Mreža"
+    IDS_SP_DL1              "Trenutni prenos(dol)"
+    IDS_SP_DL2              "Èas prenosa(dol) - povpreèje"
+    IDS_SP_DL3              "Prenos(dol) v seji - povpreèje"
+    IDS_SP_UL1              "Trenutni prenos(gor)"
+    IDS_SP_UL2              "Èas prenosa(gor) - povpreèje"
+    IDS_SP_UL3              "Prenos(gor) v seji - povpreèje"
+    IDS_SP_ACTCON           "Aktivne povezave"
+    IDS_SP_ACTDL            "Aktivnih prenosov(dol)"
+    IDS_SP_ACTUL            "Aktivnih prenosov(gor)"
+    IDS_PW_TIT_UP           "Omejitev prenosa(gor)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_TIT_DOWN         "Omejitev prenosa(dol)"
+    IDS_PW_UNLIMITED        "Neomejeno"
+    IDS_PW_MINREC           "priporoèen min.\t%i "
+    IDS_PW_UA               "Hitrost na max."
+    IDS_PW_PA               "Zmanjšaj hitrost"
+    IDS_IRC_IGNOREINFOMESSAGE "Ignoriraj informativna sporoèila"
+    IDS_CONNECTIONLOST      "Povezava zgubljena"
+    IDS_WIZ_OS_FRAME        "Operacijski Sistem"
+    IDS_WIZ_CONCURENTDOWN_FRAME "Koliko datotek ponavadi prenašate hkrati?"
+    IDS_HASHINGFILE         "Hashiram datoteko:"
+    IDS_WIZ_CUSTOM_FRAME    "èe ste testirali hitrost vaše povezave, vpišite rezultat sem."
+    IDS_WIZ_HOTBUTTON_FRAME "Prednastavljeni gumbi"
+    IDS_WIZ_TRUEUPLOAD_TEXT "Pravi prenos(gor)"
+    IDS_WIZ_TRUEDOWNLOAD_TEXT "Pravi prenos(dol)"
+    IDS_FRIENDLIST          "Prijatelji"
+    IDS_CHATDISCONNECTED    "*** Povezava prekinjena"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZARD              "Èarovnik"
+    IDS_ADDFRIEND           "Dodaj med prijatelje"
+    IDS_REMOVEFRIEND        "Odstrani prijatelja"
+    IDS_REMOVEFROMSTOK      "Odstranjen z liste statiènih strežnikov"
+    IDS_REMOVEFROMSTATIC    "Odstrani z liste statiènih strežnikov"
+    IDS_LENGTH              "Dolžina"
+    IDS_VIDEO               "Video"
+    IDS_AUDIO               "Avdio"
+    IDS_FILEINFO            "&Info. o datoteki"
+    IDS_CODEC               "Kodek"
+    IDS_BITRATE             "Bitrate"
+    IDS_WIDTH               "Širina"
+    IDS_FPS                 "Fps"
+    IDS_CHANNELS            "Kanali"
+    IDS_SAMPLERATE          "Frekvenca"
+    IDS_ROUNDBITRATE        "Zaokrožen bitrate"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HEIGHT              "Višina"
+    IDS_SHAREDFILES_FAILED  "Napaka pri vpogledu deljenih datotek '%s'"
+    IDS_SHAREDFILES_REQUEST "Želja po vpogledu deljenih datotek '%s' poslana"
+    IDS_VIEWFILES           "Prikaži datoteke"
+    IDS_FRIENDSLOT          "Nov prijatelj"
+    IDS_FRIENDDETAIL        "(Prijatelj)"
+    IDS_ASCWOP_PROXYSUPPORT "Samodejna povezava na strežnik brez proxya"
+    IDS_UDPDISABLED         "izkljuèi"
+    IDS_CTINFO              "Izberite tip povezave:"
+    IDS_WIZ_CTFRAME         "Tip povezave"
+    IDS_CONCURDWL           "Hkratnih prenosov"
+    IDS_UNIT                "Enota:"
+    IDS_WIZARD_CUSTOM       "Po svoje"
+    IDS_WIZARD_ENTERBELOW   "(vnesite!)"
+    IDS_STATS_MAXAVGDL      "Povpreèni najveèji prenos (dol)-seja: %.2f kB/s"
+    IDS_USS_MIN             "Opozorilo: USS trenutno ne podpira hitrosti uploada pod 10K. Èe veste, da vaša povezava tega ne zmore, USS izkljuèite."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MAXDL         "Najveèji prenos (dol)-seja: %.2f kB/s"
+    IDS_PW_FASTSRVCON       "Povezava na hitre strežnike"
+    IDS_SOURCELINKFAILED    "Potrebujete visok ID, da naredite povezavo na vir"
+    IDS_CREATESOURCELINK    "Kopiraj ED2k povezavo v odlagališèe (&vir)"
+    IDS_ERR_LOADSERVERMET   "Napaka pri odpiranju server.met!"
+    IDS_ERR_CORRUPTCOMPRPKG "Sprejet pokvarjen stisnjen paket za %s (napaka %i)"
+    IDS_ERR_EMFRIENDSINVALID 
+                            "Datoteka emfriends.met je neveljavna ali pokvarjena!"
+    IDS_ERR_READEMFRIENDS   "Neznana napaka pri branju emfriends.met: %s"
+    IDS_ERR_KNOWNSERVERINFOREC "Sprejeta neznana sporoèila strežnika!"
+    IDS_ERR_TIMERCREATEFAILED 
+                            "Kritièna napaka: Napaka pri ustvarjanju èasovnika"
+    IDS_WIZ_DOWN            "Dol (kbit/s)"
+    IDS_WIZ_UP              "Gor (kbit/s)"
+    IDS_SELECT_INCOMINGDIR  "Izberite mapo za prenešene datoteke"
+    IDS_SELECT_TEMPDIR      "Izberite mapo za zaèasne datoteke"
+    IDS_PRIOAUTO            "Samod."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOAUTONORMAL      "Samod. [No]"
+    IDS_PRIOAUTOHIGH        "Samod. [Vi]"
+    IDS_PRIOAUTORELEASE     "Samod. [Na]"
+    IDS_PRIOAUTOLOW         "Samod. [Ni]"
+    IDS_ERR_CONTIMEOUT      "Povezava na ""%s"" (%s:%i ) se je iztekla."
+    IDS_ERR_CONFAILED       "Povezava na ""%s"" (%s:%i ) ni uspela."
+    IDS_OUTOFSERVERS        "Niè veè uporabnih strežnikov."
+    IDS_PW_CONLIMITS        "Limita povezav"
+    IDS_MAXCON5SECLABEL     "Max. novih povezav / 5s"
+    IDS_PW_UAP              "Nove deljene datoteke z avtoprioriteto"
+    IDS_MAXCLIENT           "Max uporabnikov"
+    IDS_PW_TWEAK            "Dodatne nastavitve"
+    IDS_TWEAKS_WARNING      "Opozorilo:  Ne spreminjajte teh nastavitev èe ne veste kaj poènete. Stvari lahko tako samo poslabšate.\neMule bo deloval tudi z nespremenjenimi nastavitvami."
+    IDS_ADDAFRIEND          "Dodaj prijatelja"
+    IDS_PAF_REQINFO         "Potrebne informacije"
+    IDS_PAF_MOREINFO        "Dodatne informacije"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOVALIDFRIENDINFO "Vnesti morate veljaven IP in port!"
+    IDS_ADD                 "Dodaj"
+    IDS_RECOVERED_PARTMET   "Rešena part.met datoteka za: %s"
+    IDS_CMT_QUEST           "Komentiraj to datoteko! (Ta tekst lahko vidijo vsi uporabniki)"
+    IDS_CMT_AIDE            "Za film lahko napišete zgodbo, dolžino... èe je fake, lahko opozorite ostale uporabnike eMule... "
+    IDS_CMT_TITLE           "%s komentar datoteke"
+    IDS_CMT_ADD             "Spremeni komentar datoteke..."
+    IDS_CMT_NONE            "Ni komentarjev"
+    IDS_CMT_READ            "Komentar:"
+    IDS_CMT_NOTCONNECTED    "Povezava še ni vzpostavljena.."
+    IDS_CMT_SHOWALL         "Prikaži vse komentarje"
+    IDS_CMT_REFRESH         "Osveži"
+    IDS_CMT_READALL         "Vsi komentarji"
+    IDS_CMT_NOCOMMENT       "Noben komentar ni bil vnešen..."
+    IDS_CMT_RATEQUEST       "Kvaliteta"
+    IDS_CMT_RATEHELP        "Ocenite kvaliteto datoteke"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CMT_FAKE            "Neveljaven / Pokvarjen / Fake"
+    IDS_CMT_POOR            "Slaba"
+    IDS_CMT_GOOD            "Dobra"
+    IDS_CMT_FAIR            "Srednja"
+    IDS_CMT_EXCELLENT       "Odlièna"
+    IDS_CMT_NOTRATED        "Še ni doloèena"
+    IDS_KILO                "k"
+    IDS_MEGA                "M"
+    IDS_GIGA                "G"
+    IDS_TERRA               "T"
+    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "Ignoriraj eMule proto obvestila"
+    IDS_SMARTLOWIDCHECK     "Uporabi pametno preverjanje LowID ob povezavi"
+    IDS_SF_SRVOCC           "Zasedenost strežnika: %.2f%%"
+    IDS_3DDEP               "Prikaz napredka"
+    IDS_AUTOTAKEED2KLINKS   "Prestrezi ED2k povezave samo ob delovanju"
+    IDS_ADDNEWFILESPAUSED   "Nove dodane datoteke na pavzi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_STATS            "Izguba zaradi kompresije: %s       Pridobitev zaradi kompresije: %s\nRešenih paketov: %i"
+    IDS_ERR_NOHELP          "Nobene help datoteke.\n Obišèite našo stran za najnovejšo razlièico! (download stran)"
+    IDS_SHOWOVERHEAD        "Prikaži presežen prenos"
+    IDS_UPDOWNSMALL         "Gor: %.1f | Dol: %.1f"
+    IDS_EDITLIST            "Prikaži"
+    IDS_SP_ICONBAR          "Prikaz hitrosti v orodni vrstici"
+    IDS_RATINGRECV          "Ocena datoteke '%s' sprejeta: %i"
+    IDS_DESCRIPTIONRECV     "Opis datoteke '%s' sprejet: %s"
+    IDS_WEBSERVICES         "Spletne strani"
+    IDS_WEBSVEDIT           "Spremeni Spletne strani"
+    IDS_CHECK4UPDATE        "Preveri za novejšo razlièico"
+    IDS_STARTUP             "Zagon"
+    IDS_NEWVERSIONAVL       "Na voljo je novejši eMule! Obišèite našo stran za veè informacij."
+    IDS_NEWVERSIONAVLPOPUP  "Na voljo je novejši eMule. Pritisnite tukaj za veè informacij!"
+    IDS_NEWVERSIONFAILED    "Napaka pri pregledu za novo razlièico."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CB_TBN_ONNEWVERSION "Razpoložljivosti novejšega eMule"
+    IDS_NONEWERVERSION      "Novejšega eMule ni na voljo."
+    IDS_VERSIONCHECK        "&Novejša razlièica"
+    IDS_VISITVERSIONCHECK   "\n\nŽelite obiskati stran o informacijah?"
+    IDS_PW_VIDEOPLAYER      "Video Predvajalnik"
+    IDS_VIDEOBACKUP         "Shrani za predogled"
+    IDS_STATIC_EMPTY        "(prazno=privzeto)"
+    IDS_MYINFO              "Moji podatki"
+    IDS_ID                  "ID"
+    IDS_IDLOW               "Nizek ID"
+    IDS_IDHIGH              "Visok ID"
+    IDS_UPSTATUS            "Stanje datoteke"
+    IDS_TOVERHEAD           "Celotni presežek (paketov): %s (%s)"
+    IDS_FROVERHEAD          "Presežek zahtev datotek (paketov): %s (%s)"
+    IDS_SSOVERHEAD          "Presežek izmenjav virov (paketov): %s (%s)"
+    IDS_SOVERHEAD           "Presežek strežnikov (Paketov): %s (%s)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FILECOMPLETIONTHREAD "Napaka pri konèevanju datoteke"
+    IDS_FILEBUFFERSIZE      "Velikost datoteènega pomnilnika"
+    IDS_QUEUESIZE           "Velikost vrste"
+    IDS_DAYS2               "dni"
+    IDS_ERR_MAKEBAKCREDITFILE "Napaka pri shranjevanju datoteke z bonusi"
+    IDS_COMMENT             "Komentar"
+    IDS_IPFILTERED          "Filtriran IP: %s (%s)"
+    IDS_DL_TRANSFCOMPL      "Konèan"
+    IDS_STATS_FILTEREDCLIENTS "Filtriranih: %i"
+    IDS_FILTERLABEL         "Filtriraj sporoèila, ki vsebujejo: (Razloèevalec | )"
+    IDS_ERR_LARGEREQBLOCK   "Uporabnik je zahteval prevelik blok."
+    IDS_SHOWRATEONTITLE     "Prikaži razmerja prenosov na naslovni vrstici"
+    IDS_TBN_NOMESSAGEHISTORY "Ni zgodovine!"
+    IDS_PW_DAP              "Novi prenosi z avtoprioriteto"
+    IDS_FD_LASTCHANGE       "Zadnja sprememba:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_RUNTIME       "Èas delovanja"
+    IDS_ALL                 "vse"
+    IDS_CAT_ADD             "Dodaj kategorijo"
+    IDS_CAT_EDIT            "Spremeni kategorijo"
+    IDS_CAT_REMOVE          "Zbriši kategorijo"
+    IDS_CAT                 "Kategorija"
+    IDS_TITLE               "Naslov"
+    IDS_COLOR               "Barva"
+    IDS_DEFAULT             "Privzeto"
+    IDS_PW_DISPLAY          "Prikaz"
+    IDS_CAT_INVADD          "Prikaži vse nedodeljene"
+    IDS_CAT_REINVADD        "Prikaži vse"
+    IDS_INDICATERATINGS     "Uporabi ikone za komentarje/ocene"
+    IDS_ALLOTHERS           "vsi ostali"
+    IDS_TOCAT               "Dodeli kategoriji"
+    IDS_CAT_UNASSIGN        "(zbriši dodelitev)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDDOWNLOADSFROMCB  "Dodaj ED2k povezave med prenose?\n"
+    IDS_ADDDOWNLOADSFROMCBTITLE "ED2k povezava na odlagališèu"
+    IDS_PF_WATCHCB          "Opazuj odlagališèe za ED2k povezave"
+    IDS_SECURITY            "Varnost"
+    IDS_IPFILTERLOADED      "%i IP-filtrov naloženih"
+    IDS_IPFILTER            "IP-filter"
+    IDS_EDIT                "Spremeni"
+    IDS_FILTERLEVEL         "Stopnja filtra"
+    IDS_FILTERSERVERBYIPFILTER 
+                            "Filtriraj tudi strežnike (zavrne tudi dynIP-strežnike)"
+    IDS_FILTERCOMMENTSLABEL "Ignoriraj komentarje, ki vsebujejo: (razloèevalec | )"
+    IDS_CLIENTLIST          "Poznani Uporabniki"
+    IDS_FOLDER              "Mapa"
+    IDS_CL_UPLOADSTATUS     "Stanje prenosa(gor)"
+    IDS_CL_TRANSFUP         "Prenešeno gor"
+    IDS_CL_DOWNLSTATUS      "Stanje Prenosa(dol)"
+    IDS_CL_TRANSFDOWN       "Prenešeno dol"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CL_PENDING          "Èakam..."
+    IDS_CL_LOW2LOW          "Nizek z nizkim IDjem"
+    IDS_ERROR               "Napaka"
+    IDS_OPENINC             "&Odpri mapo Incoming"
+    IDS_HOTMENU             "Vroèe povezave"
+    IDS_DISABLEKNOWNLIST    "Izklopi listo poznanih uporabnikov"
+    IDS_DISABLEQUEUELIST    "Izklopi prikaz vrste"
+    IDS_USECREDITSYSTEM     "Uporabi bonuse (nagradi uploaderje)"
+    IDS_FIRSTAUTODOWN       "Želite, da eMule opravlja s prioriteto vaših prenosov?\r\rÈe vklopite to bo eMule skrbel, da prenosi z manj viri ne bodo zapostavljeni.\r\rTo bo vplivalo samo na nove prenose. (Privzeto Da)"
+    IDS_FIRSTAUTOUP         "Želite, da eMule opravlja s prioriteto vaših pošiljanj?\r\rÈe vklopite to bo eMule skrbel, da bodo imele redkejše datoteke višjo prioriteto.\r\rTo bo vplivalo samo na nove prenose. (Privzeto Da)"
+    IDS_FIRSTCREDITSYSTEM   "Želite nagraditi ljudi, ki vam pošiljajo datoteke?\r\rBolje znano kot Bonus Sistem. S tem se borimo proti ljudem, ki samo vzemajo in nièesar ne dajo. Èe veliko pošiljate, potem je zaželjeno, da to izklopite.\r\r(Privzeto Da)"
+    IDS_FIRSTFULLCHUNK      "Želite pošiljati samo cele dele datotek?\r\rS tem boste pripomogli, da bodo drugi hitreje dobili datoteko. Èe izklopite se bo vaša vrsta hitreje premikala. Èe veliko pošiljate, potem je zaželjeno, da imate to vklopljeno.\r\r(Privzeto Da)"
+    IDS_FIRSTSAFECON        "Želite, da eMule uporablja varno povezovanje?\r\rÈe izklopite, se bo eMule hitreje povezal, vandar je veèja možnost, da dobite nizek ID.\r\r(Privzeto Ne)"
+    IDS_FIRSTRUNASSIST      "Želite uporabiti èarovnika ob prvem zagonu?"
+    IDS_FIRSTAUTOCON        "Želite, da se eMule poveže ob zagonu?\r\r(Privzeto Ne)"
+    IDS_FIRSTCOMPLETE       "Vse to in še veliko veè se da spremeniti v nastavitvah.\r\rProsimo vzemite si èas in jih nastavite po svojih potrebah.\r\rNa prvi strani nastavitev si izberite svoje uporabniško ime.\r\rKo si izberete uporabniško ime, kliknite na zavihek povezava in poženite èarovnika."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ENTERUSERNAME       "Prosim vnesite uporabniško ime:"
+    IDS_STATIC_CPUMEM       "Shrani porabo CPE && Spomina"
+    IDS_KAD_SEARCH_KEYWORD_TOO_SHORT 
+                            "Keyword too short.\r\n\r\nThe keyword(s) used in a Kad search expression must have a minimum length of 3 characters."
+    IDS_LOG2DISK            "Shrani zapisnik na disk"
+    IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING 
+                            "There is already a Kad search ongoing for the keyword ""%s"".\r\n\r\nTo search again for that keyword, either wait until this keyword search is finished or close the according search results pane."
+    IDS_KAD_SEARCH_KEYWORD_INVALID 
+                            "Invalid Kad keyword.\r\n\r\nA Kad search expression has the following format:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nThe <kad-keyword> must not contain any of the following characters:\r\n\r\n\t%s"
+    IDS_EDITCAT             "Uredi Kategorije-Lastnosti"
+    IDS_PW_WS               "Webserver"
+    IDS_ENABLED             "Vklopljen"
+    IDS_WEB_LOGIN           "Uporabniško ime"
+    IDS_WEB_ENTER_PASSWORD  "Geslo"
+    IDS_WEB_LOGIN_NOW       "Prijava"
+    IDS_WEB_CONFIRM_REMOVE_SERVER 
+                            "Ste preprièani, da želite odstraniti strežnik?"
+    IDS_WEB_CONTROL         "Nastavitve za strežnik"
+    IDS_WEB_LOGOUT          "Odjava"
+    IDS_WEB_ACTIONS         "Dejanja"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHOW_UPLOAD_QUEUE "Prikaži vrsto"
+    IDS_WEB_HIDE_UPLOAD_QUEUE "Skrij vrsto"
+    IDS_WEB_GZIP_COMPRESSION "Gzip stiskanje"
+    IDS_WEB_GZIP_COMMENT    "Shrani prenos (grafi)."
+    IDS_WEB_UPLOAD_QUEUE_COMMENT "Vklopi ali izklopi prikaz Vrste."
+    IDS_WEB_REFRESH_TIME    "Osvežitev strani"
+    IDS_WEB_REFRESH_COMMENT "Èas v sekundah (niè=izklopljeno):"
+    IDS_SV_URL              "URL"
+    IDS_WS_RELOAD_TMPL      "Predloga"
+    IDS_SV_DEBUGLOG         "Zapisnik podrobnosti"
+    IDS_WS_PASS             "Geslo"
+    IDS_WEB_FILESETTINGS    "Nastavitve datotek"
+    IDS_WS_ERR_LOADTEMPLATE "Napaka pri odpiranju vzorcev: nadomestite %s z novejšo razlièico!"
+    IDS_WEB_CONLIMITS       "Omejitev Povezav"
+    IDS_INFLST_USER_TOTALDOWNLOAD "Skupaj prenešeno dol"
+    IDS_INFLST_USER_TOTALUPLOAD "Skupaj prenešeno gor"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_BADLOGINATTEMPT "Webserver: Neuspešna prijava"
+    IDS_ERR_TOOLARGEFILE    "Datoteka prevelika za uporabo v eMule (>=4GB)"
+    IDS_MSGONLYFRIENDS      "Sprejmi samo od prijateljev"
+    IDS_MSGONLYSEC          "Sprejmi samo od veljavnih uporabnikov"
+    IDS_DAY_MO_SA           "Pon-Sob"
+    IDS_LIMITSOURCES        "Omejitev virov"
+    IDS_LIMITCONS5SEC       "Omejitev povezav/5s"
+    IDS_SCHED_CATSTOP       "Kat:Ustavi prenose"
+    IDS_SCHED_CATRESUME     "Kat:Nadaljuj prenose"
+    IDS_S_DAYS              "Dni"
+    IDS_STARTTIME           "Zaèetek"
+    IDS_VALUE               "Vrednost"
+    IDS_SCHED_ENTERDATARATELIMIT "Vnesite omejitev prenosov:"
+    IDS_SCHED_ENTERVAL      "Vnesite novo vrednost:"
+    IDS_SCHED_ACTCONFIG     "Konfiguriraj dejanje"
+    IDS_SELECTCAT           "Izberi kategorijo"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALLUNASSIGNED       "vse nedefinirane"
+    IDS_ACTSESSIONS         "aktivnih sej"
+    IDS_WEBSRV              "Webserver"
+    IDS_SW_REFETCHRES       "Ponovni rezultati"
+    IDS_FILEHASH            "Hash datoteke"
+    IDS_GLOBALSEARCH2       "Globalno iskanje"
+    IDS_PW_PROXY            "Proxy"
+    IDS_PROXY_ENABLE        "Vklopi proxy"
+    IDS_PROXY_TYPE          "Proxy tip:"
+    IDS_PROXY_HOST          "Proxy gostitelj:"
+    IDS_PROXY_PORT          "Proxy port:"
+    IDS_PROXY_AUTH          "Vklopi avtentikacijo"
+    IDS_AUTH                "Avtentikacija"
+    IDS_SHOWCATINFO         "Prikaži info. o prenosih na zavihkih kategorij"
+    IDS_SW_SEARCHINGINFO    "Trenutno išèem. Ponovni rezultati bodo takoj!"
+    IDS_LOGENTRY            "Vnos v zapisnik"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COPY                "Kopiraj"
+    IDS_SELECTALL           "Oznaèi vse"
+    IDS_AUTOSCROLL          "AvtoDrsenje"
+    IDS_WIZ1_WELCOME_TITLE  "Dobrodošli v eMule"
+    IDS_WIZ1_WELCOME_ACTIONS "Èarovnik vam bo pomagal konfigurirati eMule."
+    IDS_WIZ1_WELCOME_BTN_HINT "Za nadaljevanje, pritisnite Naprej."
+    IDS_WIZ1_END_TITLE      "Konèevanje èarovnika"
+    IDS_WIZ1                "Èarovnik ob prvem zagonu eMule"
+    IDS_WIZ1_END_BTN_HINT   "Èe hoèete zapreti èarovnika, pritisnite Konèaj."
+    IDS_WIZ1_UPLOAD_SUBTITLE "Prenos celih delov"
+    IDS_DL_RESUMENEXT       "Nadaljuj naslednjega na pavzi"
+    IDS_DONTCHANGE          "Ne spremeni"
+    IDS_STARTPRIO           "Spremeni prioriteto novim datotekam"
+    IDS_PREF_STARTNEXTFILECAT "drži se iste kategorije"
+    IDS_REPAINTGRAPHS       "Ne naredi novih grafov ob poveèanju"
+    IDS_SOFTFILES           "Mehka omejitev datotek"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDFILES           "Trda omejitev datotek"
+    IDS_FILTER              "Filter"
+    IDS_LINKS               "Povezave"
+    IDS_HM_SCHED_ON         "Vklopi Urnik"
+    IDS_HM_SCHED_OFF        "Izklopi Urnik"
+    IDS_HM_LINKHP           "Domaèa Stran eMule"
+    IDS_HM_LINKFAQ          "eMule FAQ"
+    IDS_HM_LINKVC           "Pregled razlièice eMule"
+    IDS_DEBUG_SOURCE_EXCHANGE "Prikaži sporoèila ob izmenjavi virov"
+    IDS_SHAREDREQ1          "Uporabnik %s (%u) je zahteval seznam vaših datotek -> %s"
+    IDS_SHAREDREQ2          "Uporabnik %s (%u) je zahteval seznam vaših datotek v mapi '%s' -> %s"
+    IDS_SHAREDANSW          "Uporabnik %s (%u) deli mapo '%s'"
+    IDS_SHAREDANSW2         "Uporabnik %s (%u) je poslal nezahtevan seznam datotek - ignorirano"
+    IDS_SHAREDINFO1         "Uporabnik %s (%u) je poslal seznam datotek '%s'"
+    IDS_SHAREDINFO2         "Uporabnik %s (%u) je konèal s pošiljanjem seznama datotek"
+    IDS_SHAREDANSW3         "Uporabnik %s (%u) je poslal nezahtevan seznam datotek v mapi '%s' - ignorirano"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHAREDREQDENIED     "Uporabnik %s (%u) je zavrnil zahtevo po seznamu datotek"
+    IDS_AUTOCLEANUPFN       "Poèisti imena"
+    IDS_ONNEWDOWNLOAD       "Inicializacije"
+    IDS_FILTERFILENAMEWORD  "Vnesite besede za filtriranje, razloèevalec |"
+    IDS_FNFILTERTITLE       "Vnesite imena datotek za filtriranje pri èišèenju imen"
+    IDS_CHANGECATVIEW       "Izberite prikazovalni filter"
+    IDS_STATUS_NOTCOMPLETED "Nedokonèano"
+    IDS_STATS_CUMULATIVE    "Skupno"
+    IDS_STATS_OVRHD         "Presežek"
+    IDS_STATS_RECORDS       "Zapisov"
+    IDS_STATS_OVRHD2        "Presežek: %s (%s paketov)"
+    IDS_STATS_COMPDL        "Konèanih prenosov"
+    IDS_STATS_SVRECWORKING  "Max. delujoèih strežnikov"
+    IDS_STATS_SVRECUSERS    "Max. uporabnikov online"
+    IDS_SEARCH_TEXT         "Išèi"
+    IDS_STATS_SVRECFILES    "Max. razpoložljivih dat."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SHRECNUM      "Max. kadarkoli deljenih dat."
+    IDS_SEARCH_COLUMN       "Išèi v stolpcu"
+    IDS_STATS_SHRECSIZE     "Najveèja velikost deljenih dat."
+    IDS_STATS_SHRECASIZE    "Najveèja povpreèna velikost dat."
+    IDS_STATS_MYRUNTIME     "Skupen èas delovanja: %s"
+    IDS_STATS_SESSION       "Seja"
+    IDS_STATS_SRATIO        "UL:DL razmerje seje:"
+    IDS_STATS_CRATIO        "Skupno razmerje UL:DL:"
+    IDS_SEARCH_NORESULT     "Ni najdenih ustreznih vnosov."
+    IDS_STATS_CURRSRVDUR    "Trajanje povezave na strežnik"
+    IDS_LONGSECS            "sekund"
+    IDS_STATS_DLSES         "Download sej"
+    IDS_LONGMINS            "minut"
+    IDS_STATS_SDLSES        "Uspešnih download sej"
+    IDS_STATS_FDLSES        "Neuspešnih download sej"
+    IDS_STATS_AVGDATADLSES  "Povpreèni prenos dol na sejo"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ULSES         "Upload sej"
+    IDS_STATS_GAINCOMP      "Pridobljeno zaradi stiskanja: %s"
+    IDS_STATS_LOSTCORRUPT   "Izgubljeno (pokvarjeni deli): %s"
+    IDS_STATS_AVGDATAULSES  "Povpreèni prenos gor na sejo"
+    IDS_STATS_ICHSAVED      "Delov rešenih z I.R.N: %u"
+    IDS_STATS_MBRESET_TXT   "Ste preprièani, da želite resetirati vaše skupne statistike?\n\nÈe si premislite, jih lahko povrnete z gumbom 'Povrni stat.'"
+    IDS_STATS_MBRESET_CAP   "Potrdi reset."
+    IDS_STATS_MBRESTORE_TXT "Ste preprièani,da želite povrniti vaše skupne statistike iz varn. kopije?\n\nPonovno kliknite 'Povrni stat.' da naložite svoje trenutne statistike."
+    IDS_STATS_MBRESTORE_CAP "Potrdi obnovo"
+    IDS_ERR_NOSTATBKUP      "NAPAKA: Varn. kopija statistik ni bila najdena..."
+    IDS_STATS_NFOLOADEDBKUP "Statistièni podatki naloženi..."
+    IDS_STATS_NFORESET      "Statistike so bile resetirane!"
+    IDS_STATS_BNRESET       "Resetiraj statistike"
+    IDS_STATS_BNRESTORE     "Povrni statistike"
+    IDS_CONNECTIONSTATISTICS "Statistika povezav"
+    IDS_PPGSTATS_YSCALE     "Statistika povezav na Y-osi v merilu:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PPGSTATS_ACRATIO    "Razmerje aktivnih povezav:"
+    IDS_STATS_PROBLEMATIC   "Problematièen"
+    IDS_LONGHRS             "ur"
+    IDS_STATS_LARGESTFILE   "Najveèja deljena datoteka"
+    IDS_CLIENTSOFTWARE      "Software odjemalca"
+    IDS_STATS_DSPF          "Part dat."
+    IDS_STATS_DATASOURCE    "Izvor dat."
+    IDS_STATS_DSFILE        "Celotna dat."
+    IDS_STATS_GENERAL       "Skupno"
+    IDS_STATS_TRANSTIME     "Èas prenosa"
+    IDS_STATS_DOWNTIME      "Èas prenosa(dol)"
+    IDS_STATS_UPTIME        "Èas prenosa(gor)"
+    IDS_STATS_TOTALSRVDUR   "Skupno trajanje povezave na strežnik"
+    IDS_STATS_MAXAVGUL      "Max povpreèni prenos(gor)"
+    IDS_STATS_MAXUL         "Max prenos(gor)"
+    IDS_STATS_AVGDLTIME     "Povpreèni èas prenosa(dol)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_OLDCLIENTS    "Stari"
+    IDS_STATS_PRTDEF        "Privzeti"
+    IDS_STATS_PRTOTHER      "Ostali"
+    IDS_STATS_MNUTREETITLE  "Drevo statistik"
+    IDS_STATS_MNUTREECPYSEL "Kopiraj izbrano vejo"
+    IDS_STATS_MNUTREECPYALL "Kopiraj vse statistike"
+    IDS_STATS_MNUTREEHTML   "Možnosti HTML"
+    IDS_STATS_EXPORT2HTML   "Izvozi sve statistike"
+    IDS_STATS_EXPORTVIS     "Izvozi vse vidne"
+    IDS_STATS_MNUTREECPYVIS "Kopiraj vse vidne"
+    IDS_STATS_MNUTREEEXPANDALL "Razširi vse odseke"
+    IDS_STATS_MNUTREECOLLAPSEALL "Skrèi vse odseke"
+    IDS_STATS_MNUTREEEXPANDMAIN "Razširi glavni odsek"
+    IDS_STATS_LASTRESETSTATIC "Statistike zadnjiè resetirane: %s"
+    IDS_STATS_MONTHLY       "Meseèno"
+    IDS_STATS_YEARLY        "Letno"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_TIMESTATS     "Èasovne statistike"
+    IDS_STATS_AVGANDPROJ    "Naèrtovana povpreèja"
+    IDS_STATS_TIMESINCERESET "Èas od zadnjega reseta: %s"
+    IDS_CRYPT_INITFAILED    "Nisem uspel inicializirati kriptokljuèev - secure ident onemogoèen"
+    IDS_CD_IDENT            "Identifikacija:"
+    IDS_IDENTOK             "uspešno"
+    IDS_IDENTFAILED         "Neveljaven"
+    IDS_IDENTNOSUPPORT      "Ni podprt ali ali onemogoèen"
+    IDS_COMMITFILES         "Varn. kopija .met/.dat datotek"
+    IDS_ERR_BADUNC          "neveljavno UNC-ime"
+    IDS_NEVER               "Nikoli"
+    IDS_ALWAYS              "Vedno"
+    IDS_ONSHUTDOWN          "Ob izkljuèitvi"
+    IDS_UNCFOLDERS          "UNC mape"
+    IDS_USESECIDENT         "Uporabi varno identifikacijo"
+    IDS_ADVSPAMFILTER       "Napredni filter za spam"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SECUREIDENT   "Varna ident. (OK : Neuspel )"
+    IDS_ONDISK              "Velikost na disku: "
+    IDS_CLIENTCOL           "Opozorilo: Najden enak odjemalec na trenutno povezanem odjemalcu: %s (%s) in %s (%s)"
+    IDS_SEARCH_UNTERMSTRING "Nedokonèan vnos"
+    IDS_SEARCH_GENERALERROR "Splošna napaka"
+    IDS_SEARCH_MISSINGORRIGHT "Manjkajoèa desna stran za operator OR"
+    IDS_SEARCH_MISSINGNOTRIGHT "Manjkajoèa desna stran za operator NOT"
+    IDS_SEARCH_MISSINGEXPRPARANT "Manjkajoèa izraz za '(' ')'"
+    IDS_SEARCH_MISSINGCLOSINGPARANT "Manjkajoè zakljuèni ')'"
+    IDS_SEARCH_MISSINGANDLEFT "Manjkajoèa leva stran za operator AND"
+    IDS_SEARCH_MISSINGORLEFT "Manjkajoèa leva stran za operator OR"
+    IDS_SEARCH_MISSINGNOTLEFT "Manjkajoèa leva stran za operator NOT"
+    IDS_SEARCH_EXPRERROR    "Neuspešna razèlenitev iskalnega izraza"
+    IDS_SEARCH_TOOCOMPLEX   "Izraz preveè zapleten"
+    IDS_SEARCH_INVALIDMINMAX 
+                            "Doloèene neveljavne enote za Min/Max velikost dat."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_VERSION             "Razlièica"
+    IDS_ALL_A4AF_TO_THIS    "Prenesi vse vire na to dat."
+    IDS_ALL_A4AF_TO_OTHER   "Prenesi vse vire na katerokoli drugo dat."
+    IDS_ALL_A4AF_AUTO       "Samodejno prenesi vse (A4AF)vire na to dat."
+    IDS_SWAP_A4AF_TO_THIS   "Prenesi vire na to datoteko"
+    IDS_SWAP_A4AF_TO_OTHER  "prenesi vire na katerokoli drugo dat."
+    IDS_A4AF                "Upravljanje z viri (A4AF)"
+    IDS_MOBILEMULE          "MobileMule"
+    IDS_ENABLEMM            "Omogoèi MobileMule"
+    IDS_AUTOCAT_LABEL       "Samodejna dol. kategorij (vzorec, deljen z |)"
+    IDS_SHOWEXTSETTINGS     "Pokaži veè kotrol (napredni naèin)"
+    IDS_TREEOPTIONS_TRUE    "Da"
+    IDS_TREEOPTIONS_FALSE   "Ne"
+    IDS_TREEOPTIONS_OK      "V redu"
+    IDS_HYPERTEXT_FONT_HINT "Pisava za okno strežnika, sporoèil in IRCa"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SELECT_FONT         "Izberi pisavo"
+    IDS_SERVER_LIMITS       "Mehka- / Trda-omejitev dat."
+    IDS_SERVERINFO          "Informacije o strežnikih"
+    IDS_KBITSSEC            "kBitov/sek"
+    IDS_KBYTESSEC           "kBytov/sek"
+    IDS_ERR_CREATE_DIR      "Neuspešno ustvarjanje %s mape ""%s"" - %s"
+    IDS_WRN_INCFILE_RESERVED 
+                            "Mapa incoming ne sme biti nastavljena na inštalacijsko mapo eMule."
+    IDS_WRN_TEMPFILES_RESERVED 
+                            "Mapa temp ne sme biti nastavljena na inštalacijsko mapo eMule."
+    IDS_WRN_INCTEMP_SAME    "Za incoming in temp ne sme biti nastavljena ista mapa."
+    IDS_MMFAILED            "Neuspešno odpiranje MobileMule vtièa!"
+    IDS_MMSTARTED           "MobileMule strežnik se je zagnal na portu %i. Razlièica protokola: %s"
+    IDS_SHOWDWLPERCENTAGE   "Pokaži odstotek dokonèanega prenosa na vrstici poteka"
+    IDS_TBN_ONNEWDOWNLOAD   "Dodanem prenosu"
+    IDS_ARTIST              "Izvajalec"
+    IDS_ALBUM               "Album"
+    IDS_MMGUIDELINK         "MobileMule vodiè"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UPLOADREQ        "Zahtevan prenos(gor):"
+    IDS_SETTINGCHANGED_RESTART 
+                            "Da bi spremenjene nastavitve zaèele delovati, je potreben ponovni zagon eMule!"
+    IDS_CREDITSEXPIRED      ", %i odjemalcev izbrisanih (niso bili videni 5 mesecev)"
+    IDS_SOURCESINFO         "%i  (Uporabno: %i, NNP: %i, A4AF: %i)"
+    IDS_SHOW_META_DATA      "Pokaži &Meta podatki..."
+    IDS_META_DATA           "Meta podatki"
+    IDS_TIMEBEFORE          "(pred %s)"
+    IDS_FD_TIMEDATE         "Datumi"
+    IDS_FILEINFORMATION     "Inf. o datoteki"
+    IDS_STATS_FREESPACE     "Prostor na disku: "
+    IDS_IRC_HELPCHANNEL     "Poveži s kanali za pomoè"
+    IDS_IRC_HELPCHANNELPERFORM "/join #emule"
+    IDS_IRC_ACCEPTLINKSFRIENDS "Samo od prijateljev"
+    IDS_COMPLSOURCES        "Celotnih virov"
+    IDS_CHECKNOENDTIME      "ni zakljuè. èasa"
+    IDS_FD_DOWNLOADSTARTED  "Prenos dodan:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MATCH_KEYWORDS      "Primerjaj kljuèni besedi"
+    IDS_FAILEDREOPEN        "Kritièna napaka: Neuspešno odpiranje partdat. '%s' (%s)!"
+    IDS_ERR_PREVIEWALREADY  "Zahteva za predogled od odjemalca že obstaja"
+    IDS_ERR_PREVIEWFAILED   "Predogled od uporabnika '%s' neuspel"
+    IDS_DWTOT               "Prostor na disku"
+    IDS_DWTOT_NR            "Število prenosov(dol): %d"
+    IDS_DWTOT_TSD           "Skupna velikost prenosov(dol): %s"
+    IDS_DWTOT_TCS           "Skupno prenešenega: %s (%.0f%%)"
+    IDS_DWTOT_TSL           "Skupno ostalo za prenos: %s"
+    IDS_DWTOT_TSN           "Prostor, potreben za prenose: %s"
+    IDS_DWTOT_FS            "Prostora na temp disku: %s"
+    IDS_NEEDFREEDISKSPACE   "%s (osvoboditi morate %s!)"
+    IDS_SERVERKEEPALIVETIMEOUT 
+                            "Razmak med osvežitvama povezave na strežnik [min.]"
+    IDS_MORE                "&veè"
+    IDS_TOOLS               "O&rodja"
+    IDS_ERR_JIGLENEEDSTYPE  "Èe želite iskati po bazi Jigle brez doloèenega tipa datoteke, morate doloèiti vsaj konènico datoteke!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CREATEHOSTNAMESRCLINK 
+                            "Kopiraj ED2k povezavo na odložišèe(gostiteljsko ime)"
+    IDS_HASHINGFILESCOUNT   " (%u hashing)"
+    IDS_CHECKDISKSPACE      "Preveri prostor na disku"
+    IDS_YOURHOSTNAME        "Gostiteljsko ime za lastne ED2k povezave"
+    IDS_INSUFFICIENT        "Premalo prostora na disku"
+    IDS_MINFREEDISKSPACE    "Min. prostora na disku [MB]"
+    IDS_WARNING             "Opozorilo"
+    IDS_IMPORTSPLPF         "Uvozi delno datoteko (eM, eD, ON)"
+    IDS_IMP_STEPREADPF      "Berem part mapo"
+    IDS_IMP_STEPBASICINF    "Pridobivam osnovne informacije o delni datoteki"
+    IDS_IMP_STEPCRDESTFILE  "Ustvarjam ciljno delno datoteko"
+    IDS_IMP_LOADDATA        "Nalagam podatke iz stare delne datoteke (%i of %i)"
+    IDS_IMP_SAVEDATA        "Shranjujem podatkovne bloke v novo delno datoteko (%i of %i)"
+    IDS_IMP_IOERROR         "Napaka pri konvertiranju delne datoteke"
+    IDS_IMP_GETPFINFO       "Pridobivam inf. o ciljni delni datoteki"
+    IDS_IMP_ADDDWL          "Dodajam prenos in shranjujem novo delno dat."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_FETCHSTATUS     "Poizvedujem o stanju..."
+    IDS_IMP_INPROGR         "v poteku"
+    IDS_IMP_ERR_DISKSP      "Napaka: Ni prostora na disku"
+    IDS_IMP_ERR_PARTMETIO   "Napaka: Partmet ni najden"
+    IDS_IMP_ERR_IO          "Napaka: Napaka I/O!"
+    IDS_IMP_ERR_FAILED      "Napaka: Neuspel!"
+    IDS_IMP_STATUSQUEUED    "V vrsti"
+    IDS_IMP_ALRDWL          "Že prenašam"
+    IDS_IMP_ADDBTN          "&Dodaj uvožene"
+    IDS_IMP_RETRYBTN        "&Ponovno poskusi izbrane"
+    IDS_IMP_REMOVEBTN       "Od&strani izbrane"
+    IDS_IMP_SELFOLDER       "Izberite samo eno mapo z vsemi starimi delnimi datotekami v njej ali podmapah!"
+    IDS_IMP_DELSRC          "Želite da se izvorne delne datoteke uspešno zakljuèenih prenosov izbrišejo?"
+    IDS_IMP_SIZE            "%s (Disk:%s)"
+    IDS_IMP_STATUS          "Uvažam %s: %s"
+    IDS_DYNUPENABLED        "Samodejno najdi najboljšo omejitev hitrosti prenosa gor"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE "Ping toleranca (% najnižjega pinga)"
+    IDS_DYNUP_GOINGUPDIVIDER "Hitrost dviganja"
+    IDS_DYNUP_GOINGDOWNDIVIDER "Hitrost spušèanja"
+    IDS_DYNUP_NUMBEROFPINGS "Max. število pingov za povpreèje"
+    IDS_DYNUP_MINUPLOAD     "najnižja dovoljena hitrost prenosa gor"
+    IDS_ESTTIMELEFT         "Preostalo èasa(ocena):"
+    IDS_TRANSFER_RATE_LABEL "Prenos:"
+    IDS_SAVELOG             "Shrani dnevnik"
+    IDS_CMT_COPYCLIPBOARD   "Kopiraj komentarje na odložišèe"
+    IDS_ASKDOWNLOADLANG     "Jezik, ki ste ga izbrali, ni namešèen na vašem sistemu. Želite, da ga eMule prenese s strani emule-project.net?"
+    IDS_ASKDOWNLOADLANGCAP  "Prenesi datoteke z jeziki"
+    IDS_ERR_FAILEDDOWNLOADLANG 
+                            "Neuspel prenos in namestitev izbranega jezika dll z %s!"
+    IDS_AUTOREMOVEFD        "Samodejno izbriši konèane prenose"
+    IDS_MM_BLOCK            "Zabeležene 3 neuspele prijave na MobileMule - dostop je blokiran za 10 min!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_KAD_NODE            "Išèi Node (%i:%i)"
+    IDS_KAD_STOREFILE       "Shrani dat. (%i:%i)"
+    IDS_KAD_STOREKW         "shrani kjuèno besedo (%i:%i)"
+    IDS_KAD_UNKNOWN         "Neznano (%i:%i)"
+    IDS_SRV_TCPCOMPR        "TCP stiskanje"
+    IDS_KADSEARCHLAB        "Trenutna iskanja"
+    IDS_SRV_UDPSR           "Dodatne UDP protokol za zahteve virom"
+    IDS_SRV_UDPFR           "Dodaten UDP protokol za zahteve dat."
+    IDS_MINLENGTH           "Min. length [hh:mm:ss]"
+    IDS_EM_HELP             "&Pomoè"
+    IDS_WRN_FRIENDDUPLIPPORT 
+                            "Prijatelj ni bil dodan.\r\n\r\nPrijatelj z istim IP naslovom in portom že obstaja."
+    IDS_DYNUP               "Upload SpeedSense"
+    IDS_KADOVERHEAD         "Kad presežek (Paketov): %s (%s)"
+    IDS_FIND                "Najdi..."
+    IDS_LOG_BANNED_CLIENTS  "Beleži izloèene odjemalce"
+    IDS_LOG_RATING_RECV     "Beleži opise in ocene prejetih datotek"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TEXTLABELSONRIGHT   "desno od ikone"
+    IDS_TEXTLABELS          "Besedilne oznake"
+    IDS_ENABLETEXTLABELS    "pod ikono"
+    IDS_CUSTOMIZETOOLBAR    "Orodna vrstica po meri"
+    IDS_MINBITRATE          "Min. bitrate [kBit/s]"
+    IDS_KAD_RECHECKFW       "Preveri požarni zid"
+    IDS_SHAREDTITLE         "Deljenih ED2k|Kademlia"
+    IDS_WARNINGNOBS         "Vezalka (bootstrap) neaktivna (Kademlia onemogoèena ali že povezana)."
+    IDS_FIREWALLED          "za pož. zidom"
+    IDS_KADEMLIA            "Kademlia"
+    IDS_KADCONTACTLAB       "Kontakti"
+    IDS_KADDISTANCE         "Razdalja"
+    IDS_KEY                 "Kljuè"
+    IDS_NUMBER              "Številka"
+    IDS_KAD_SEARCHSRC       "Išèi vire (%i:%i)"
+    IDS_KAD_SEARCHKW        "Išèi kljuène besede (%i:%i)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MM_NEWUSER          "Nov uporabnik uspešno prijavljen na MobileMule server"
+    IDS_RADCLIENTS          "od znanih odjemalcev"
+    IDS_KADUDPPORTERR       "Kad UDP port je bil v sporu z eMule UDP portom oz. eMule server UDP portom. Št. porta je bila spremenjena na %u."
+    IDS_CONFIRM_FILEDELETE  "Res želite odstraniti vse izbrane datoteke z diska?"
+    IDS_OPENFOLDER          "Odpri mapo"
+    IDS_DELETE              "Odstrani z diska"
+    IDS_BOOTSTRAP           "Bootstrap"
+    IDS_VIAED2KSQ           "preko ED2k strežnik/vrsta"
+    IDS_EM_KADEMLIA         "&Kademlia"
+    IDS_VIAKAD              "preko Kademlie"
+    IDS_VIASE               "preko izmenjave virov"
+    IDS_SELECTTOOLBARBITMAP "Izberi slike za orodno vrstico"
+    IDS_SELECTTOOLBARBITMAPDIR "izberi mapo za slike"
+    IDS_TOOLBARSKINS        "Preobleke za orodno vrstico"
+    IDS_NOTEXTLABELS        "Brez oznak"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LOG_SECURE_IDENT    "Beleži varno ident."
+    IDS_LOG_FILTERED_IPS    "Beleži filtrirane in/ali ignorirane IPje"
+    IDS_LOG_FILE_SAVING     "Beleži shranjevanja datotek"
+    IDS_IPFILTERFILES       "Vse datoteke z IP filtri (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|Datoteke z eMule IP filtri (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Zašèitne P2P datoteke (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Besedilne datoteke (*.txt)|*.txt|Vse datoteke (*.*)|*.*||"
+    IDS_DELETEIPFILTERS     "Zares želite izbrisati izbrane IP filtre?"
+    IDS_TOTAL_IPFILTER_LABEL "Skupno IP filtrov:"
+    IDS_TOTAL_IPS_LABEL     "Skupno IPjev:"
+    IDS_DELETE2             "Izbriši"
+    IDS_APPEND              "Pripni..."
+    IDS_SAVE                "Shrani"
+    IDS_IP_START            "Zaèni"
+    IDS_IP_END              "Konèaj"
+    IDS_IP_LEVEL            "Stopnja"
+    IDS_IP_DESC             "Opis"
+    IDS_IP_HITS             "Zadetkov"
+    IDS_IP_RULES            "IP Filtrov:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOTCONNECTEDKAD "Trenutno niste povezani v Kad omrežje!"
+    IDS_IRC_NOSFS           "Ni izbranih deljenih datotek"
+    IDS_IRC_IGNOREMISCMESSAGE "Ignoriraj nedoloèna sporoèila"
+    IDS_KNOWN               "Znan"
+    IDS_RESETLABEL          "Auto completion (history function)"
+END
+
+#endif    // Slovenian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "..\version.h"
+#include "lang.rc2"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

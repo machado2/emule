@@ -1,0 +1,177 @@
+//this file is part of eMule
+//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//
+//This program is free software; you can redistribute it and/or
+//modify it under the terms of the GNU General Public License
+//as published by the Free Software Foundation; either
+//version 2 of the License, or (at your option) any later version.
+//
+//This program is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with this program; if not, write to the Free Software
+//Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#include "stdafx.h"
+#include "emule.h"
+#include "ClosableTabCtrl.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+
+// CClosableTabCtrl
+// by enkeyDEV(Ottavio84)
+
+IMPLEMENT_DYNAMIC(CClosableTabCtrl, CTabCtrl)
+
+BEGIN_MESSAGE_MAP(CClosableTabCtrl, CTabCtrl)
+	ON_WM_LBUTTONUP()
+	ON_WM_CREATE()
+	ON_WM_SYSCOLORCHANGE()
+END_MESSAGE_MAP()
+
+CClosableTabCtrl::CClosableTabCtrl()
+{
+	m_bCloseable = true;
+	memset(&m_iiCloseButton, 0, sizeof m_iiCloseButton);
+}
+
+CClosableTabCtrl::~CClosableTabCtrl()
+{
+}
+
+void CClosableTabCtrl::GetCloseButtonRect(const CRect& rcItem, CRect& rcCloseButton)
+{
+	rcCloseButton.top = rcItem.top + 2;
+	rcCloseButton.bottom = rcCloseButton.top + (m_iiCloseButton.rcImage.bottom - m_iiCloseButton.rcImage.top);
+	rcCloseButton.right = rcItem.right - 2;
+	rcCloseButton.left = rcCloseButton.right - (m_iiCloseButton.rcImage.right - m_iiCloseButton.rcImage.left);
+}
+
+void CClosableTabCtrl::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	if (m_bCloseable)
+	{
+		int iTabs = GetItemCount();
+		for (int i = 0; i < iTabs; i++)
+		{
+			CRect rcItem;
+			GetItemRect(i, rcItem);
+			CRect rcCloseButton;
+			GetCloseButtonRect(rcItem, rcCloseButton);
+			rcCloseButton.top -= 2;
+			rcCloseButton.left -= 4;
+			rcCloseButton.right += 2;
+			rcCloseButton.bottom += 4;
+			if (rcCloseButton.PtInRect(point))
+			{
+				GetParent()->SendMessage(WM_CLOSETAB, (WPARAM) i);
+				return; 
+			}
+		}
+	}
+	
+	CTabCtrl::OnLButtonDown(nFlags, point);
+}
+
+void CClosableTabCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
+{
+	CRect rect = lpDrawItemStruct->rcItem;
+	int nTabIndex = lpDrawItemStruct->itemID;
+	if (nTabIndex < 0)
+		return;
+	BOOL bSelected = (nTabIndex == GetCurSel());
+
+	TCHAR szLabel[256];
+	TC_ITEM tci;
+	tci.mask = TCIF_TEXT | TCIF_IMAGE | TCIF_STATE;
+	tci.pszText = szLabel;
+	tci.cchTextMax = ARRSIZE(szLabel);
+	tci.dwStateMask = TCIS_HIGHLIGHTED;
+	if (!GetItem(nTabIndex, &tci))
+		return;
+
+	CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
+	if (!pDC)
+		return;
+
+	int iOldBkMode = pDC->SetBkMode(TRANSPARENT);
+
+	// Draw image on left side
+	CImageList* piml = GetImageList();
+	if (tci.iImage >= 0 && piml && piml->m_hImageList)
+	{
+		IMAGEINFO ii;
+		piml->GetImageInfo(0, &ii);
+		rect.left += bSelected ? 8 : 4;
+		piml->Draw(pDC, tci.iImage, CPoint(rect.left, rect.top + 2), ILD_TRANSPARENT);
+		rect.left += (ii.rcImage.right - ii.rcImage.left);
+		if (!bSelected)
+			rect.left += 4;
+	}
+
+	bool bCloseable = m_bCloseable;
+	if (bCloseable && GetParent()->SendMessage(WM_QUERYTAB, nTabIndex))
+		bCloseable = false;
+
+	// Draw 'Close button' at right side
+	if (bCloseable && m_ImgLstCloseButton.m_hImageList)
+	{
+		CRect rcCloseButton;
+		GetCloseButtonRect(rect, rcCloseButton);
+		m_ImgLstCloseButton.Draw(pDC, 0, rcCloseButton.TopLeft(), ILD_TRANSPARENT);
+		rect.right = rcCloseButton.left - 2;
+	}
+
+	COLORREF crOldColor;
+	if (tci.dwState & TCIS_HIGHLIGHTED)
+		crOldColor = pDC->SetTextColor(RGB(192, 0, 0));
+
+	rect.top += 4;
+	pDC->DrawText(szLabel, rect, DT_SINGLELINE | DT_TOP | DT_CENTER | DT_NOPREFIX);
+
+	if (tci.dwState & TCIS_HIGHLIGHTED)
+		pDC->SetTextColor(crOldColor);
+	pDC->SetBkMode(iOldBkMode);
+}
+
+void CClosableTabCtrl::PreSubclassWindow()
+{
+	CTabCtrl::PreSubclassWindow();
+	ModifyStyle(0, TCS_OWNERDRAWFIXED);
+	SetAllIcons();
+}
+
+int CClosableTabCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CTabCtrl::OnCreate(lpCreateStruct) == -1)
+		return -1;
+	ModifyStyle(0, TCS_OWNERDRAWFIXED);
+	SetAllIcons();
+	return 0;
+}
+
+void CClosableTabCtrl::OnSysColorChange()
+{
+	CTabCtrl::OnSysColorChange();
+	SetAllIcons();
+}
+
+void CClosableTabCtrl::SetAllIcons()
+{
+	if (m_bCloseable)
+	{
+		m_ImgLstCloseButton.DeleteImageList();
+		m_ImgLstCloseButton.Create(8, 8, theApp.m_iDfltImageListColorFlags | ILC_MASK, 0, 1);
+		m_ImgLstCloseButton.SetBkColor(CLR_NONE);
+		m_ImgLstCloseButton.Add(CTempIconLoader("CloseTab", 8, 8));
+		m_ImgLstCloseButton.GetImageInfo(0, &m_iiCloseButton);
+		Invalidate();
+	}
+}

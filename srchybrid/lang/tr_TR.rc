@@ -1,0 +1,1664 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "tr_TR.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "..\resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Turkish resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_TRK)
+#ifdef _WIN32
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+#pragma code_page(1254)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "tr_TR.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""..\\resource.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""..\\version.h""\r\n"
+    "#include ""lang.rc2""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_SOCKETS_INIT_FAILED "Windows soketlerini baþlatým hatasý."
+    IDS_ABOUTBOX            "eMule &Hakkýnda..."
+    IDS_HTTPDOWNLOAD_FILESTATUS "%s adresinden %s"
+    IDS_HTTPDOWNLOAD_CONNECTED "%s adresine baðlandý"
+    IDS_HTTPDOWNLOAD_RESOLVING_NAME "Çözülen isim: %s"
+    IDS_HTTPDOWNLOAD_RESOLVED_NAME "Ýsim %s adresine çözüldü"
+    IDS_HTTPDOWNLOAD_CONNECTING "%s adresine baðlanýyor"
+    IDS_HTTPDOWNLOAD_REDIRECTING "%s adresine yönlendiriliyor"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_GETTING_FILE_INFORMATION "Dosya bilgisi alýnýyor"
+    IDS_HTTPDOWNLOAD_FAIL_PARSE_ERROR "Ayrýþtýrýlýrken hata oluþan url: %s"
+    IDS_HTTPDOWNLOAD_GENERIC_ERROR 
+                            "Dosya indirme denenirken bir hata oluþtu, Hata:%s"
+    IDS_HTTPDOWNLOAD_FAIL_CONNECT_SERVER 
+                            "Sunucuya baðlanýrken bir hata oluþtu, Hata:%s"
+    IDS_HTTPDOWNLOAD_INVALID_SERVER_RESPONSE 
+                            "Sunucudan geçerli bir yanýt alma baþarýsýz"
+    IDS_HTTPDOWNLOAD_INVALID_HTTP_RESPONSE 
+                            "Sunucudan geçerli bir HTTP yanýtý alma baþarýsýz"
+    IDS_HTTPDOWNLOAD_ERROR_READFILE 
+                            "Dosya indirilirken bir hata oluþtu, Hata:%s"
+    IDS_HTTPDOWNLOAD_PERCENTAGE 
+                            "Sunucu listesi güncelleniyor: %s%% / %s Tamamlandý"
+    IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Dosya alýnýyor "
+    IDS_HTTPDOWNLOAD_OF     "%s / %s"
+    IDS_HTTPDOWNLOAD_SECONDS "%s saniye"
+    IDS_HTTPDOWNLOAD_MINUTES "%s dakika"
+    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%s dak. %s san."
+    IDS_HTTPDOWNLOAD_BYTES  "%s Bayt"
+    IDS_HTTPDOWNLOAD_KILOBYTES "%s KB"
+    IDS_CANCEL              "Ýptal"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_MEGABYTES "%s MB"
+    IDS_HTTP_CAPTION        "Sunucu listesi güncelleniyor"
+    IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s kopyalandý)"
+    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s Bayt/San"
+    IDS_HSAV                "Adresleme grubu mevcut"
+    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s KB/San"
+    IDS_FD_CORR             "Arýzalý"
+    IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
+                            "'%s' dosyasý zaten var.\nDeðiþtirmek istiyor musunuz?"
+    IDS_FD_RECOV            "Düzeldi"
+    IDS_HTTPDOWNLOAD_FAIL_FILE_OPEN 
+                            "Ýndirilmiþ dosya açýlýrken bir hata oluþtu, Hata:%s"
+    IDS_HTTPDOWNLOAD_ABORTING_TRANSFER "Aktarým durduruluyor"
+    IDS_FD_COMPR            "Sýkýþtýrma"
+    IDS_WIZARD_NETWORK      "Kullanmak istediðiniz að(lar)ý seçin."
+    IDS_MAIN_READY          "eMule %s sürümü hazýr"
+    IDS_WIZARD_ED2K         "ED2k Ayarlarý"
+    IDS_SEL_SKIN            "Kaplama Seç..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MAIN_SOCKETERROR    "Önemli Hata: %i baðlantý noktasýnda soket oluþturulamaz"
+    IDS_MAIN_BTN_DISCONNECT "Baðlantýyý &kes"
+    IDS_MAIN_BTN_DISCONNECT_TOOLTIP "Þimdiki sunucudan baðlantýyý kes"
+    IDS_ERR_WRONGFILEID     "yanlýþ dosya kimliði gönderildi"
+    IDS_ERR_BADHASHSET      "bozuk veya geçersiz adresleme grubu alýndý"
+    IDS_ERR_BADDATABLOCK    "bozuk veya geçersiz VeriBloðu alýndý"
+    IDS_ERR_ILLFORMEDHASH   "kötü yapýlý adresleme"
+    IDS_ERR_BADED2KLINK     "doðru yapýlandýrýlmamýþ ed2k baðlantýsý"
+    IDS_ERR_NOSLLINK        "ED2K sunucusu veya dosya baðlantýsý deðil"
+    IDS_ERR_WRONGPACKAGESIZE "geçersiz OP_FILEREQUEST paket boyutu"
+    IDS_ERR_WRONGHPACKAGESIZE "geçersiz OP_HASHSETREQUEST paket boyutu"
+    IDS_ERR_BADCLIENTACTION "Bir kullanýcý hataya sebep oldu veya kötü biþey yaptý: %s. Kullanýcý baðlantýsý kesiliyor!"
+    IDS_ERR_UNKNOWNCLIENTACTION 
+                            "Bilinmeyen kullanýcýlar geliþmiþ protokol paketi yolluyor."
+    IDS_ERR_OPENMET         "Hata: part.met dosyasýný açma baþarýsýz! (%s => %s)"
+    IDS_ERR_BADMETVERSION   "Hata: Geçersiz part.met dosyasý sürümü! (%s => %s)"
+    IDS_ERR_BADGAP          "part.met dosyasýnda geçersiz Boþluk-Etiketi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_EMPTYADRESSESDAT_TITLE "Sunucu listesi alýnamaz"
+    IDS_ERR_BADSERVERMETVERSION 
+                            "server.met dosyasýnda yanlýþ sürüm etiketi (0x%X)!"
+    IDS_SERVERSFOUND        "%i adet sunucu server.met dosyasýnda bulundu"
+    IDS_SERVERSADDED        "%d adet sunucu eklendi, %d adet sunucu eklenmedi (zaten listede/geçersiz)"
+    IDS_ERR_BADSERVERLIST   "Hata: server.met dosyasý bozulmuþ, sunucu listesi yüklenemez"
+    IDS_ERR_FILEERROR_SERVERMET 
+                            "server.met dosyasý okunurken beklenmedik dosya hatasý oluþtu: %s, sunucu listesi yüklenemez"
+    IDS_ERR_SAVESERVERMET   "server.met dosyasýný kaydetme baþýrýsýz!"
+    IDS_PASSIVE             "Pasif"
+    IDS_MAIN_CONNECTEDTO    "Baðlantý kuruldu:"
+    IDS_MAIN_BTN_CANCEL     "Ý&ptal"
+    IDS_AVAIL               "Parça: %d adet, mevcut: %d (%% %.1f)\n\n"
+    IDS_TYPE                "Türü"
+    IDS_FILEID              "DosyaID"
+    IDS_FILE                "Dosya"
+    IDS_DOWNLOAD            "Ýndir"
+    IDS_SL_SERVERNAME       "Sunucu Adý"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IP                  "IP"
+    IDS_DESCRIPTION         "Taným"
+    IDS_PING                "Ping"
+    IDS_FILES               "Dosya"
+    IDS_PREFERENCE          "Tercih"
+    IDS_PRIONOPREF          "Tercih yok"
+    IDS_CONNECTTHIS         "Seçili sunucuya baðlan"
+    IDS_CHAT_WELCOME        "Anýnda Mesajlaþma\n  \nSohbet oturumunu baþlatmak için istediginiz kullanýcýya sað-týklayýp 'Mesaj Gönder' i seçin"
+    IDS_MAIN_BTN_CANCEL_TOOLTIP "Þimdiki baðlanma giriþimlerini durdurur"
+    IDS_MAIN_BTN_CONNECT    "&Baðlan"
+    IDS_ERR_SAVESERVERMET2  "Server.met dosyasýný kaydetme baþarýsýz! Server.met dosyasýný silin ve server.met.old dosyasýnýn ismini server.met olarak deðiþtirin!"
+    IDS_NOTCONNECTED        "Baðlý Deðil"
+    IDS_DISCONNECTED        "Baðlantý kesildi"
+    IDS_USERS               "Kullanýcý: %i"
+    IDS_UPDOWN              "Gön.: %.1f(%.1f) | Ýnd.: %.1f(%.1f)"
+    IDS_CONNECTED           "Baðlandý"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_WRITEERROR      "%s dosyasýna yazarken beklenmedik dosya hatasý : %s"
+    IDS_ERR_COMPLETIONFAILED 
+                            "%s dosyasý tamamlanýrken beklenmedik bir dosya hatasý. Dosya duraklatýldý, baþka bir tamamlama denemesini baþlatmak için eMule'u yeniden baþlatýn"
+    IDS_ERR_DELETEFAILED    "%s dosyasýný silme baþarýsýz, bunu sizin yapmanýz gerekecek"
+    IDS_DOWNLOADDONE        "%s dosyasýný indirme bitti :-)"
+    IDS_ERR_DELETE          "%s dosyasýný silme baþarýsýz"
+    IDS_ERR_HASHERRORWARNING 
+                            "Uyarý: Ýndirilmiþ parça adreslenemez - adresleme grubu tamamlanmadý (%s)"
+    IDS_ERR_INCOMPLETEHASH  "Hata: Ýndirilmiþ parça adreslenemez - adresleme grubu tamamlanmadý (%s). Bu hiçbir zaman olmamalý."
+    IDS_DOWNLOADING         "Ýndiriliyor"
+    IDS_WAITING             "Bekliyor"
+    IDS_HASHING             "Adresleniyor"
+    IDS_COMPLETING          "Tamamlanýyor"
+    IDS_COMPLETE            "Tamamlandý"
+    IDS_PAUSED              "Duraklatýldý"
+    IDS_ERRORLIKE           "Hatalý"
+    IDS_ASSIGNED2K          "eMule ED2K baðlantýlarýna atanmamýþ. eMule 'un ED2K baðlantýlarýna atanmasýný istermesiniz (tavsiye edilir) ?"
+    IDS_ERR_EMPTYADRESSESDAT 
+                            "'adresses.dat' dosyasýnda sunucu listesi adres giriþi bulunamadý. Sunucu listenizi otomatik güncellemek için lütfen geçerli bir 'sunuculistesi' adresini bu dosyaya yapýþtýrýn."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LINKNOTADDED        "Baðlantý eklenemedi"
+    IDS_MAIN_EXIT           "Gerçekten eMule'den çýkmak istiyormusunuz?"
+    IDS_MAIN_EXITTITLE      "Çýkýþ onayý"
+    IDS_MAIN_POPUP_RESTORE  "Geri Yükle"
+    IDS_CONNECTTOANYSERVER  "Herhangi bir sunucuya baðlan"
+    IDS_EXIT                "Çý&kýþ"
+    IDS_CONNECTING          "Baðlanýyor"
+    IDS_FAILED              "baþarýsýz"
+    IDS_ERR_BADSERVERREPLY  "Sunucudan bozuk veya geçersiz oturum açma cevabý alýndý"
+    IDS_NEWCLIENTID         "Yeni kullanýcý kimlik numaranýz %u"
+    IDS_NOSHAREDFOLDERS     "Paylaþýlan klasör yok"
+    IDS_SHAREDFOLDERS       "Paylaþýlan klasörler"
+    IDS_VIEW1               "görünüm "
+    IDS_VIEW2               " (paylaþýlmamýþ)"
+    IDS_PRIOLOW             "Düþük"
+    IDS_PRIONORMAL          "Normal"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOHIGH            "Yüksek"
+    IDS_DOWNLOADMENUTITLE   "Ýndirilenler"
+    IDS_PRIORITY            "Öncelik"
+    IDS_NEWSERVERS          "%d adet yeni sunucu alýndý"
+    IDS_DL_STOP             "&Durdur"
+    IDS_DL_PAUSE            "D&uraklat"
+    IDS_DL_RESUME           "D&evam"
+    IDS_DL_OPEN             "Dosyayý &Aç"
+    IDS_DL_INFO             "Dosya &ayrýntýlarýný göster"
+    IDS_DL_CLEAR            "Tamamlananlarý &Temizle"
+    IDS_DL_LINK1            "ED2k &baðlantýsýný panoya kopyala"
+    IDS_DL_LINK2            "ED2k baðlantýsýný panoya kopyala (&HTML)"
+    IDS_SHOWDETAILS         "&Ayrýntýlarý Göster"
+    IDS_SEND_MSG            "&Mesaj Gönder"
+    IDS_ASKING              "Soruyor"
+    IDS_CONNVIASERVER       "Sunucu yoluyla baðlanýyor"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ONQUEUE             "Sýrada"
+    IDS_TRANSFERRING        "Aktarýlýyor"
+    IDS_RECHASHSET          "Adresleme grubu alýnýyor"
+    IDS_NONEEDEDPARTS       "Gereksiz parçalar"
+    IDS_NOCONNECTLOW2LOW    "DüþükID'den DüþükID'ye baðlanýlamaz"
+    IDS_UNKNOWN             "Bilinmiyor"
+    IDS_ASKED4ANOTHERFILE   "Baþka dosya için soruldu"
+    IDS_Q_CANCELDL          "Ýþlemi iptal edip dosyalarý silmek istediðinize eminmisiniz?\n"
+    IDS_Q_CANCELDL2         "Ýþlemi iptal edip bu dosyayý silmek istediðinize eminmisiniz?\n"
+    IDS_COPIED2CB           "Panoya kopyalanan: \n"
+    IDS_PROCDONE            "% bitti"
+    IDS_SELECTINCOMINGDIR   "Gelen dosyalar için bir klasör seçin"
+    IDS_SELECTTEMPDIR       "Geçici dosyalar için bir klasör seçin"
+    IDS_DL_FILENAME         "Dosya Adý"
+    IDS_DL_SIZE             "Boyut"
+    IDS_DL_TRANSF           "Aktarýlan"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DL_SPEED            "Hýz"
+    IDS_DL_PROGRESS         "Ýlerleme"
+    IDS_DL_SOURCES          "Kaynaklar"
+    IDS_ERR_BADSERVERLISTRECEIVED "Geçersiz sunucu listesi paketi alýndý"
+    IDS_STATUS              "Durum"
+    IDS_DL_REMAINS          "Kalan"
+    IDS_UPDATEFROM          "URL'den Güncelle: (filter.dat- veya PeerGuardian-biçimi)"
+    IDS_QL_USERNAME         "Kullanýcý Adý"
+    IDS_LOADURL             "Yükle"
+    IDS_DELETEAFTERALLOC    "'%s' dosyasýna halen disk alaný ayrýlýyor ve sonradan silinecek"
+    IDS_ERR_PACKAGEHANDLING "(%s) sunucusundan gelen paketi iþlerken beklenmedik hata oldu"
+    IDS_QL_RATING           "Beðenilme Oraný"
+    IDS_CONNECTINGTO        "%s (%s:%i) sunucusuna baðlanýyor ..."
+    IDS_CLIENTS             "Kullanýcýlar"
+    IDS_SEARCH_ANY          "Herhangi"
+    IDS_SEARCH_AUDIO        "Ses"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SEARCH_PICS         "Resim"
+    IDS_SEARCH_PRG          "Program"
+    IDS_SEARCH_VIDEO        "Video"
+    IDS_SEARCH_CDIMG        "CD-Ýmajý"
+    IDS_SEARCH_ARC          "Arþiv"
+    IDS_ERR_INVALIDLINK     "Bu ed2k baðlantýsý geçersiz (%s)"
+    IDS_ERR_LINKERROR       "Geçersiz baðlantý: %s"
+    IDS_ERR_NOTCONNECTED    "Bir sunucuya baðlý deðilsiniz!"
+    IDS_REMOVETHIS          "Seçili Sunucu(larý)yu Kaldýr"
+    IDS_REMOVEALL           "Tüm Sunucularý Kaldýr"
+    IDS_SRV_ADDR            "Bir sunucu adresi girin"
+    IDS_SRV_PORT            "Tamamlanmamýþ sunucu baðlantý noktasý: Lütfen bir sunucu baðlantý noktasý girin"
+    IDS_SRV_NOTADDED        "Sunucu eklenmedi!"
+    IDS_SRV_READD           "Sunucu ölü olarak iþaretlenmiþti, tekrar eklendi!"
+    IDS_SRV_NOURLAV         "URL mevcut deðil."
+    IDS_INVALIDURL          "Geçersiz URL"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FAILEDDOWNLOADMET 
+                            "%s adresinden sunucu listesinin indirilmesi baþarýsýz"
+    IDS_PERMISSION          "Ýzin"
+    IDS_SHAREDFILES         "Paylaþýlanlar"
+    IDS_PRIOVERYLOW         "Çok düþük"
+    IDS_PRIORELEASE         "Yayým"
+    IDS_FSTATUS_LOCKED      "Kilitlendi"
+    IDS_KADALPHA            "Kademlia hala erken geliþtirilme aþamasýnda. Eðer sýnamak için ilgi duyuyorsanýz etkinleþtirmenizi öneririz"
+    IDS_FSTATUS_FRIENDSONLY "Sadece arkadaþlar"
+    IDS_VIAPASSIVE          "Pasif yoluyla"
+    IDS_FSTATUS_PUBLIC      "Herkes"
+    IDS_ERR_RENAMESF        "Yeniden adlandýrma baþarýsýz\r\n    ""%s""\r\na\r\n    ""%s""\r\n\r\n%hs"
+    IDS_PRIOHIGHEST         "En yüksek"
+    IDS_AVAILABLE           "mevcut"
+    IDS_ERR_NOPRIMCHANGE    "Dosya hala indiriliyorken izinleri deðiþtiremezsiniz!"
+    IDS_HIDDEN              "Gizli"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FSTAT_TRANSFER      "Aktarým"
+    IDS_FSTAT_CONNECTION    "Baðlantý"
+    IDS_FSTAT_CLIENTS       "Kullanýcýlar"
+    IDS_FSTAT_SERVERS       "Sunucular"
+    IDS_FSTAT_WAITING       "Bekliyor..."
+    IDS_TIME                "Zaman"
+    IDS_STATS_DDATA         "Ýndirilmiþ Veri: %s"
+    IDS_STATS_UDATA         "Gönderilmiþ Veri: %s"
+    IDS_STATS_AVGDL         "Ortalama ÝndirmeHýzý: %.2f kB/s"
+    IDS_STATS_AVGUL         "Ortalama GöndermeHýzý: %.2f kB/s"
+    IDS_STATS_FOUNDSRC      "Bulunan Kaynak: %i"
+    IDS_STATS_ACTDL         "Aktif Ýndirme (iri parça): %i"
+    IDS_STATS_ACTUL         "Aktif Gönderme: %i"
+    IDS_STATS_WAITINGUSERS  "Bekleyen Gönderme: %i"
+    IDS_STATS_RECONNECTS    "Tekrar baðlanma: %i"
+    IDS_STATS_WAITTRANSF    "aktarým için bekleniyor..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_WAITCONN      "baðlantý için bekleniyor..."
+    IDS_STATS_CONNECTEDSINCE "Sunucuya baðlý kalma: %s"
+    IDS_STATS_RATIO         "Oturumluk GÖN:ÝND Oraný (Oturum (Toplam)):"
+    IDS_STATS_UNKNOWNCLIENT "Bilinmeyen: %i"
+    IDS_STATS_TOTAL         "Toplam: %i"
+    IDS_STATS_WORKING       "Çalýþan: %i"
+    IDS_STATS_DEAD          "Ölü/Silinmiþ: %i"
+    IDS_DISABLED            "Etkisiz"
+    IDS_STOPPED             "Durdu"
+    IDS_STATS_UPDATELABEL   "Güncelleme gecikmesi: %i san"
+    IDS_QUEUECOUNT          "%u (%u adet yasaklandý)"
+    IDS_NICKNAME            "TakmaAd: "
+    IDS_CLIENTSFILENAME     "\nKullanýcýnýn dosya adý: "
+    IDS_ASKEDFAF            "\nBaþka dosya için soruldu"
+    IDS_WAITED              "Bekleme"
+    IDS_ERR_LOADCREDITFILE  "Kredi dosyasýný yükleme baþarýsýz, yeni bir dosya oluþturulacak"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CREDITFILEOLD   "Kredi dosyasý eskimiþ, yenilenecek."
+    IDS_CREDITFILELOADED    "Kredi dosyasý yüklendi, %u adet kullanýcý biliniyor"
+    IDS_CREDITFILECORRUPT   "Hata: Kredi dosyasý bozuk, yenilenecek!"
+    IDS_ERR_CREDITFILEREAD  "Kredi dosyasý okunurken beklenmeyen hata oluþtu: %s"
+    IDS_ERR_FAILED_CREDITSAVE "Kredi dosyasýný kaydetme baþarýsýz"
+    IDS_NOPARTSFOUND        "Parça dosyasý bulunamadý"
+    IDS_FOUNDPARTS          "%i adet parça dosyasý bulundu"
+    IDS_NEWDOWNLOAD         "%s dosyasý indiriliyor"
+    IDS_ERR_ALREADY_DOWNLOADING "%s dosyasýný zaten indirmeyi deniyorsunuz"
+    IDS_ERR_ALREADY_DOWNLOADED "%s dosyasýna zaten sahipsiniz"
+    IDS_ERR_SERVERMET_BAD   "Hata: known.met dosyasý bozulmuþ, bilinen dosyalar yüklenemez"
+    IDS_ERR_SERVERMET_UNKNOWN 
+                            "known.met dosyasý okunurken beklenmedik bir hata oluþtu: %s, bilinen dosyalar yüklenemez"
+    IDS_ERR_CONNECTIONERROR "%s (%s:%i) sunucusuna baðlanýrken hata oluþtu: %s"
+    IDS_ERR_SOCKET          "Sunucu soketinde hata: %s (%s:%i): %s"
+    IDS_SHAREDFOUND         "%i adet bilinen paylaþýlmýþ dosya bulundu"
+    IDS_SHAREDFOUNDHASHING  "%i adet bilinen paylaþýlmýþ dosya bulundu, %i adet yeni dosya adresleniyor."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_UDPEXT          "Gelen geniþletilmiþ protokol UDP paketini iþlerken hata oluþtu."
+    IDS_ERR_INCOMPLETEBLOCK "tamamlanmamýþ blok için soruldu "
+    IDS_ERR_OPEN            "istenen dosyayý açma baþarýsýz"
+    IDS_ERR_CLIENTERRORED   "Kullanýcý '%s' paket (%s) oluþturulurken bir hataya sebep oldu - kullanýcý baðlantýsý kesiliyor"
+    IDS_ERR_REQ_FNF         "istenen dosya bulunamadý"
+    IDS_CLIENTBLOCKED       "Kullanýcý '%s' agresif istemciye benziyor ve kullanýcý gönderme sýrasýndan atýldý."
+    IDS_LUSERS              "kullanýcý"
+    IDS_LFILES              "dosya"
+    IDS_DESC                "Taným: %s"
+    IDS_PORT                "Port"
+    IDS_ERR_NOVALIDSERVERSFOUND 
+                            "Sunucu listesinde baðlanmak için geçerli sunucular bulunamadý"
+    IDS_CONNECTEDTOREQ      "%s (%s:%i) sunucusuna baðlandý, oturum açma isteði yollanýyor"
+    IDS_ERR_FATAL           "Baðlantý denemesinde önemli hata. Internet baðlantýnýz kopmuþ olabilir"
+    IDS_ERR_LOSTC           "%s (%s:%i) sunucusuna baðlantý kaybedildi"
+    IDS_ERR_DEAD            "%s (%s:%i) sunucusu ölü görünüyor"
+    IDS_ERR_FULL            "%s (%s:%i) sunucusu dolu görünüyor"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_METCORRUPT      "Hata: %s (%s) bozulmuþ, dosya yüklenemez"
+    IDS_ERR_FILEERROR       "%s (%s) okunurken beklenmeyen dosya hatasý: %s"
+    IDS_ERR_FILEOPEN        "%s (%s) doyasýný açma baþarýsýz"
+    IDS_SEL_SKINDIR         "Kaplama Dizini Seç..."
+    IDS_ERR_REHASH          "Uyarý: %s dosyasý bozulmuþ olabilir, tamamlanan parçalarýn tekrar adreslemesi yapýlýyor"
+    IDS_SKIN_PROF           "Kaplama Profilleri"
+    IDS_ERR_PART_FNF        ".part dosyasý bulunamadý"
+    IDS_ERR_OPENMETFILE     "part.met dosyasýný açma baþarýsýz"
+    IDS_KADOPEN             "Aç"
+    IDS_ERR_SAVEMET         "Parça dosyasý kaydedilirken HATA oldu: %s (%s)"
+    IDS_ERR_FOUNDCORRUPTION "Bozulmuþ parça (%i), %s dosyasýnda bulundu"
+    IDS_HASHINGDONE         "%s dosyasýnýn tekrar adreslemesi bitti, dosya iyi gözüküyor."
+    IDS_ERR_PARTCORRUPT     "Ýndirilmiþ parça %i bozuk :(  (%s)"
+    IDS_ICHWORKED           "ICH: Bozulan parça %i onarýldý  (%s)"
+    IDS_ERR_OUTOFSPACE      "%s dosyasýný indirmek için yeterli disk alanýnýz yok!"
+    IDS_SE                  "Kaynak Deðiþimi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOSERVERSC      "Sunucu listesinde baðlanmak için geçerli sunucular bulunamadý"
+    IDS_CONNECTEDTO         "%s sunucusuna baðlantý kuruldu"
+    IDS_DL_PREVIEW          "Önizleme"
+    IDS_VIEWQUEUE           "Sýrayý Göster"
+    IDS_VIEWUPLOADS         "Gönderilenleri Göster"
+    IDS_TW_UPLOADS          "Gönderilenler"
+    IDS_TW_DOWNLOADS        "Ýndirilenler"
+    IDS_TW_QUEUE            "Sýradaki Kullanýcý:"
+    IDS_SW_SEARCHBOX        "Ara"
+    IDS_SW_NAME             "Ýsim"
+    IDS_SW_GLOBAL           "&Genel ara"
+    IDS_SW_TYPE             "Türü"
+    IDS_SW_DIRECTDOWNLOAD   "Doðrudan Ýndirme"
+    IDS_SW_LINK             "ED2K Baðlantý(larý)sý"
+    IDS_SW_START            "Baþlat"
+    IDS_SCHEDULER           "Zamanlayýcý"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC                 "Sohbet (IRC)"
+    IDS_SW_RESULT           "Arama Sonuçlarý"
+    IDS_SW_DOWNLOAD         "Seçileni Ýndir"
+    IDS_SV_SERVERLIST       "Sunucu Listesi"
+    IDS_SV_SERVERINFO       "SunucuBilgisi"
+    IDS_SV_LOG              "Günlük"
+    IDS_SV_NEWSERVER        "Yeni Sunucu"
+    IDS_SV_ADDRESS          "IP veya Adres"
+    IDS_SV_PORT             "B.Nokta"
+    IDS_SV_ADD              "Listeye ekle"
+    IDS_SV_MET              "server.met'i URL'den güncelle"
+    IDS_SV_UPDATE           "Güncelle"
+    IDS_SF_FILES            "Paylaþýlan Dosyalar"
+    IDS_SF_STATISTICS       "Ýstatistikler"
+    IDS_SF_RELOAD           "Tekrar Yükle"
+    IDS_SF_CURRENT          "Þimdiki Oturum"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIORITY_UP         "Önceliði Arttýr"
+    IDS_PRIORITY_DOWN       "Önceliði Azalt"
+    IDS_SPEED_LIMITS        "Hýz Sýnýrlarý"
+    IDS_CAPACITY_LIMITS     "Bantgeniþliði Sýnýrlarý"
+    IDS_ADMIN               "Yönetici"
+    IDS_ACCESSDENIED        "Eriþim engellendi!"
+    IDS_WEB_LOWUSER         "Konuk"
+    IDS_WEB_ERR_CANTLOAD    "Þablonlar yüklenemiyor: %s dosyasý açýlamýyor"
+    IDS_GLOBALSEARCH        "Genel (Sunucu)"
+    IDS_METHOD              "Yöntem"
+    IDS_SW_WEBBASED         "Web-tabanlý Arama"
+    IDS_NOTHING             "hiçbirþey"
+    IDS_SETUPSPEED          "gönderme sýnýrýný ayarla"
+    IDS_SETDOWNSPEED        "indirme sýnýrýný ayarla"
+    IDS_DAYLY               "Günlük"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DAY_MO_FR           "P.tesi-Cuma"
+    IDS_DAY_SA_SO           "C.tesi-Pazar"
+    IDS_MO                  "Pazartesi"
+    IDS_DI                  "Salý"
+    IDS_MI                  "Çarþamba"
+    IDS_DO                  "Perþembe"
+    IDS_FR                  "Cuma"
+    IDS_SA                  "Cumartesi"
+    IDS_SO                  "Pazar"
+    IDS_WEB_ADMINLOGIN      "Web Arabirimi: Yönetici-OturumAçtý"
+    IDS_WEB_GUESTLOGIN      "Web Arabirimi: Konuk-OturumAçtý"
+    IDS_WEB_SESSIONEND      "Web Arabirimi: OturumKapandý"
+    IDS_DETAILS             "Ayrýntýlar"
+    IDS_ACTION              "Faaliyet"
+    IDS_REMOVE              "Kaldýr"
+    IDS_NEW                 "Yeni"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SF_TOTAL            "Toplam"
+    IDS_SF_TRANS            "Aktarýlmýþ:"
+    IDS_SF_ACCEPTED         "Kabul Olan Gönderme:"
+    IDS_SF_REQUESTED        "Ýstenen:"
+    IDS_ST_DOWNLOAD         "Ýndirme-Hýzý"
+    IDS_ST_UPLOAD           "Gönderme-Hýzý"
+    IDS_ST_CURRENT          "Þimdiki"
+    IDS_ST_SESSION          "Oturum ortalamasý"
+    IDS_ST_ACTIVED          "Aktif indirmeler"
+    IDS_ST_ACTIVEU          "Aktif göndermeler"
+    IDS_ST_WAITINGU         "Bekleyen göndermeler"
+    IDS_CW_MESSAGES         "Mesajlar"
+    IDS_CW_FRIENDS          "Arkadaþlar"
+    IDS_CW_SEND             "Gönder"
+    IDS_CW_CLOSE            "Kapat"
+    IDS_PW_GENERAL          "Genel"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_DIR              "Dizinler"
+    IDS_PW_NICK             "TakmaAd"
+    IDS_PW_INCOMING         "Gelen Dosyalar"
+    IDS_PW_TEMP             "Geçici Dosyalar"
+    IDS_PW_BROWSE           "Gözat..."
+    IDS_PW_SHARED           "Paylaþýlan Dizinler (Ctrl-týklama altdizinleri içerir)"
+    IDS_PW_CONNECTION       "Baðlantý"
+    IDS_PW_DOWNC            "Ýndirme kapasitesi"
+    IDS_PW_DOWNL            "Ýndirme sýnýrý"
+    IDS_PW_UPC              "Gönderme kapasitesi"
+    IDS_PW_UPL              "Gönderme sýnýrý"
+    IDS_PW_MAXC             "En Fazla Baðlantý"
+    IDS_PW_CLIENTPORT       "Ýstemci baðlantý noktasý"
+    IDS_PW_AUTOCON          "Baþlangýçta otomatik baðlan"
+    IDS_PW_RECON            "Kopunca tekrar baðlan"
+    IDS_PW_SERVER           "Sunucu"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_RDEAD            "Ölü sunucuyu kaldýr,"
+    IDS_PW_RETRIES          "denemeden sonra"
+    IDS_PW_SCORE            "Öncelik sistemini kullan"
+    IDS_PW_USC              "Bir sunucuya baðlanýrken sunucu listesini güncelle"
+    IDS_PW_UCC              "Bir kullanýcý baðlandýðýnda sunucu listesini güncelle"
+    IDS_PW_FILTER           "Sunucu ve istemci AÐ IP'lerini süz"
+    IDS_PW_USS              "Baþlangýçta sunucu listesini otomatik-güncelle"
+    IDS_PW_MISC             "Diðer Seçenekler"
+    IDS_PW_TRAY             "&Sistem tablasýna küçült"
+    IDS_PW_BEEP             "Hatalarda sesle uyar"
+    IDS_PW_PROMPT           "Çýkarken sor"
+    IDS_PW_SPLASH           "Karþýlama Ekraný Göster"
+    IDS_PW_DBLCLICK         "Ýndirme listesini geniþletmek için çift-týkla"
+    IDS_PW_TOOL             "Araç ipucu gecikme süresi (saniye)"
+    IDS_PW_FRONT            "Baðlantýya týklandýðýnda öne getir"
+    IDS_PW_LANG             "Dil"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_FILES            "Dosyalar"
+    IDS_PW_ICH              "&Akýllý Bozukluk Saptama"
+    IDS_PW_SHARE            "Paylaþýlan dosyalarýmý/dizinlerimi görenler"
+    IDS_PW_EVER             "Herkes"
+    IDS_PW_FRIENDS          "Arkadaslar"
+    IDS_PW_NOONE            "Hiç kimse"
+    IDS_PW_RESET            "Temizle"
+    IDS_PW_APPLY            "Uygula"
+    IDS_EM_TRANS            "&Aktarýmlar"
+    IDS_EM_SERVER           "&Sunucular"
+    IDS_EM_SEARCH           "A&ra"
+    IDS_EM_FILES            "&Paylaþýlanlar"
+    IDS_EM_MESSAGES         "&Mesajlar"
+    IDS_EM_STATISTIC        "Ýs&tatistikler"
+    IDS_EM_PREFS            "Terci&hler"
+    IDS_MB_LANGUAGEINFO     "Varsayýlan bir dil seçildi. Dil ayarýný istediðiniz zaman tercihler sekmesinden deðiþtirebilirsiniz."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_GENERAL          "Genel"
+    IDS_FD_NAME             "Tam Ýsim:"
+    IDS_FD_MET              "part.met dosyasý:"
+    IDS_FD_HASH             "Adresleme:"
+    IDS_FD_SIZE             "Dosya Boyutu:"
+    IDS_FD_STATUS           "ParçaDosyasýDurumu:"
+    IDS_FD_TRANSFER         "Aktarým"
+    IDS_FD_SOURCES          "Bulunan Kaynak:"
+    IDS_FD_PARTS            "Parça:"
+    IDS_FD_TRANS            "Aktarýlan:"
+    IDS_FD_DATARATE         "Veri Hýzý:"
+    IDS_FD_TRANSI           "Aktarýlýyor:"
+    IDS_FD_COMPSIZE         "Tamamlanan:"
+    IDS_FD_CLOSE            "Kapat"
+    IDS_FD_TITLE            "Dosya Ayrýntýlarý"
+    IDS_CD_GENERAL          "Genel"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UNAME            "KullanýcýAdý:"
+    IDS_CD_UHASH            "KullanýcýAdresi:"
+    IDS_CD_CSOFT            "ÝstemciYazýlýmý:"
+    IDS_CD_UIP              "IP Adresi:"
+    IDS_CD_SIP              "Sunucu IP:"
+    IDS_CD_VERSION          "ÝstemciSürümü:"
+    IDS_CD_UID              "ID:"
+    IDS_CD_SNAME            "Sunucu Adý:"
+    IDS_CD_CDOWN            "Þimdi indirilen:"
+    IDS_CD_DOWN             "Ýndirildi (bu oturumda):"
+    IDS_CD_ADOWN            "Ortalama Ýndirme Hýzý:"
+    IDS_CD_TDOWN            "Toplam indirilen:"
+    IDS_CD_UP               "Gönderildi (bu oturumda):"
+    IDS_CD_AUP              "Ortalama Gönderme Hýzý:"
+    IDS_CD_TUP              "Toplam gönderilen:"
+    IDS_CD_TRANS            "Aktarým"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_SCORES           "Skorlar"
+    IDS_CD_MOD              "Ýnd/Gön Deðiþtiricisi:"
+    IDS_CD_RATING           "Beðenme Oraný (toplam):"
+    IDS_CD_USCORE           "GöndermeSýrasý Skoru:"
+    IDS_CD_TITLE            "Ýstemci Ayrýntýlarý"
+    IDS_EMULEW              "Eger"
+    IDS_EMULEW2             "surum varsa kontrol etmek icin buraya tiklayin!"
+    IDS_EMULEW3             "yeni"
+    IDS_PW_MAXSOURCES       "En çok kaynak/dosya"
+    IDS_SHAREDFILESCOUNT    "Paylaþýlan Dosya Sayýsý: %i"
+    IDS_SF_SIZE             "Paylaþýlan Dosyalarýn toplam boyutu: %s"
+    IDS_ERR_WRONGPARTNUMBER "yanlýþ parça numarasý"
+    IDS_ERR_BADPORT         "Kötü bað.noktasý numarasý"
+    IDS_ERR_NOHELLO         "Merhaba demeden bir þeyler sorar"
+    IDS_ERR_INVALIDPACKAGE  "Geçersiz veya bozuk paket alýndý!"
+    IDS_ERR_CLIENTERROR     "Kullanýcý '%s' (IP:%s) hataya sebep oldu: %s. Kullanýcý baðlantýsý kesiliyor!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_BADSIZE         "geçersiz boyut (OP_QUEUERANKING)"
+    IDS_ERR_BADCLIENT2      "Kullanýcý '%s' (IP:%s) hataya sebep oldu: %u. Kullanýcý baðlantýsý kesiliyor!"
+    IDS_ERR_NOTAFILELINK    "Dosya baðlantýsý deðil"
+    IDS_ERR_CREATEPARTFILE  "HATA: Parça dosyasý oluþturma baþarýsýz"
+    IDS_ERR_UDP_MISCONF     "Gelen UDP Paketi iþlenirken bir hata oluþtu (Büyük ihtimalle eksik yapýlandýrýlmýþ bir sunucu)"
+    IDS_CHAT_START          "*** SohbetOturumu Baþlatýldý : "
+    IDS_FILEPRIO            "Dosya Önceliði"
+    IDS_SCORE               "Skor"
+    IDS_ASKED               "Sorma"
+    IDS_LASTSEEN            "Son Görünme"
+    IDS_BANNED              "Yasaklý"
+    IDS_PRIOVERYHIGH        "Çok yüksek"
+    IDS_UUSERS              "Kullanýcý"
+    IDS_UFAILED             "Baþarýsýz"
+    IDS_OPENFILE            "Dosya &Aç"
+    IDS_DATE                "Tarih"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARTINFOS           "ParçaDosyaAdý:"
+    IDS_PARTINFOS2          "Ýndiriliyor (%d kaynaktan)"
+    IDS_USERID              "Kullanýcý-ID"
+    IDS_CLIENT              "Ýstemci"
+    IDS_SERVER              "Sunucu"
+    IDS_SOURCEINFO          "Sorma: %d kez - MevcutParçaSayýsý: %d"
+    IDS_CLIENTSOURCENAME    "\nKullanýcýnýn Dosya Adý: "
+    IDS_USERINFO            "TakmaAd: %s\n"
+    IDS_FILESTATS_SESSION   "Bu oturum için dosya istatistikleri:  %d / %d istek kabul edildi, %s aktarýldý\n"
+    IDS_FILESTATS_TOTAL     "Tüm oturumlar için dosya istatistikleri:  %d / %d istek kabul edildi, %s aktarýldý"
+    IDS_REQ_UNKNOWNFILE     "Bilinmeyen bir dosya istendi"
+    IDS_TRANSFERTIME        "Ýlk Aktarýmdan bu yana geçen süre: %s"
+    IDS_SF_AVERAGESIZE      "Ortalama Dosya Boyutu: %s"
+    IDS_SF_REQUESTS         "Ýstek"
+    IDS_SF_ACCEPTS          "Kabul Edilen Ýstek"
+    IDS_SF_TRANSFERRED      "Aktarýlan Veri"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_REMOVESEARCHSTRING  "Bu Arama Sonucunu kapat"
+    IDS_REMOVESELECTED      "Seçili olaný Kaldýr"
+    IDS_REMOVEALLSEARCH     "Tümünü Kaldýr"
+    IDS_ENTERQUEUE          "Sýraya Girme"
+    IDS_SF_FAIL             "Baþarýsýz Sunucu"
+    IDS_SF_WUSER            "Çalýþan Sunuculardaki Kullanýcýlar"
+    IDS_SF_WFILE            "Çalýþan Sunuculardaki Dosyalar"
+    IDS_SF_USER             "Toplam Kullanýcý"
+    IDS_SF_FILE             "Toplam Dosya"
+    IDS_UPLOADTIME          "Gönderme Süresi"
+    IDS_LASTSEENCOMPL       "Son Görünen Tamamlama:"
+    IDS_YES                 "Evet"
+    IDS_NO                  "Hayýr"
+    IDS_UNBAN               "Yasaklama"
+    IDS_SF_WORKING          "Çalýþan Sunucu"
+    IDS_ADDTOSTATIC         "Statik Sunucu Listesine Ekle"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDED2SSF           "Statik sunucu listesine eklendi"
+    IDS_STATICSERVER        "Statik"
+    IDS_ERROR_SSF           "staticservers.dat dosyasýný açma baþarýsýz"
+    IDS_ERR_PACKAGEERROR    "%s için veri paketi iþlenirken kritik hata oluþtu (yanlýþ boyut) - veri bloðu býrakýlmýþ"
+    IDS_SF_ACTIVECON        "Aktif Baðlantý (tahmini)"
+    IDS_SF_MAXCONLIMITREACHED "En Fazla Baðlantý Sýnýrýna Ulaþma"
+    IDS_SF_AVGCON           "Ortalama Baðlantý (tahmini)"
+    IDS_SF_PEAKCON          "En Uç Baðlantý (tahmini)"
+    IDS_ST_ACTIVEC          "aktif baðlantýlar"
+    IDS_NETWORK             "Að"
+    IDS_SF_DELCOUNT         "Silinmiþ Sunucu"
+    IDS_QUEUEFULL           "Sýra Dolu"
+    IDS_AVG                 "Ortalama"
+    IDS_BYTES               "Bayt"
+    IDS_KBYTES              "KB"
+    IDS_MBYTES              "MB"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GBYTES              "GB"
+    IDS_TBYTES              "TB"
+    IDS_SECS                "san"
+    IDS_MINS                "dak"
+    IDS_HOURS               "sa"
+    IDS_DAYS                "gün"
+    IDS_ED2KLINKFIX         "ED2K Baðlantýlarý"
+    IDS_RECONNECT           "Sunucuya otomatik olarak baðlanmayý %d saniye içinde deneyecek"
+    IDS_SERVERADDED         "Eklenen sunucu: %s"
+    IDS_IRC_IGNOREJOINMESSAGE "Katýlým bilgi mesajlarýný yoksay"
+    IDS_STATS_SUCCUPCOUNT   "Toplam baþarýlý gönderme oturumu: %i (%.2f%%)"
+    IDS_IRC_IGNOREPARTMESSAGE "Parça bilgi mesajlarýný yoksay"
+    IDS_STATS_FAILUPCOUNT   "Toplam baþarýsýz gönderme oturumu: %i (%.2f%%)"
+    IDS_STATS_AVEUPTIME     "Ortalama gönderme süresi: %s"
+    IDS_SEARCHMINSIZE       "En Az Boyut"
+    IDS_SEARCHMAXSIZE       "En Fazla Boyut"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PREF_ONLINESIG      "Online-Signature Etkin"
+    IDS_ERROR_SAVEFILE      "Kaydetme baþarýsýz"
+    IDS_REQ_SHAREDFILES     "Kullanýcý %s (%u) paylaþýlan dosya listenizi istedi -> %s"
+    IDS_ACCEPTED            "kabul edildi"
+    IDS_DENIED              "reddedildi"
+    IDS_PW_CON_DOWNLBL      "Ýndirme"
+    IDS_PW_CON_UPLBL        "Gönderme"
+    IDS_PW_AUTOCONNECTSTATICONLY "Sadece statik sunuculara otomatik baðlan"
+    IDS_PW_CON_LIMITFRM     "Sýnýrlar"
+    IDS_PW_FILE_ICH         "I.C.H aktif"
+    IDS_STATS_AVGLABEL      "Ortalama çizelgesi için süre: %i dak"
+    IDS_GRAPHS              "Çizelgeler"
+    IDS_STREE               "Ýstatistik Aðacý"
+    IDS_IRC_IGNOREQUITMESSAGE "Çýkýþ bilgi mesajlarýný yoksay"
+    IDS_STATSSETUPINFO      "Ýstatistikler"
+    IDS_IRC_SOUNDEVENTS     "Sesli olay çal"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DOWNLOADMOVIECHUNKS "Birinci ve sonuncu iri parçayý indirmeyi dene"
+    IDS_UPDATEQUEUE         "Sýra listesini gerçek zamanlý güncelleme"
+    IDS_RECOVER_SINGLE      "1 dosya onarýldý."
+    IDS_RECOVER_MULTIPLE    "%ld dosya onarýldý."
+    IDS_ATTEMPTING_RECOVERY "Arþivi onarmayý deniyor..."
+    IDS_RECOVERY_SUCCESSFUL "Arþivi onarma baþarýlý."
+    IDS_RECOVERY_FAILED     "Arþivi onarma baþarýsýz."
+    IDS_STARTNEXTFILE       "Dosya tamamlandýðýnda duraklatýlmýþ diðerini baþlat"
+    IDS_FULLCHUNKTRANS      "Tüm göndermelere tam iri parçalarý aktarmayý dene"
+    IDS_MANUALSERVERHIGHPRIO 
+                            "El ile eklenmiþ sunucularý Yüksek Öncelikli olarak ayarla"
+    IDS_VERBOSE             "Fazla bilgi (ilave program geri iletimi)"
+    IDS_FLAT                "düz"
+    IDS_ROUND               "yuvarlak"
+    IDS_SAMEUSERHASH        "Kullanýcý '%s' ve '%s' ayný kullanýcý adreslemesine veya IP'ye sahip - '%s' kaldýrýldý"
+    IDS_SEARCHEXTENTION     "Uzantý"
+    IDS_SEARCHAVAIL         "Kullanýlýrlýk"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDLIMIT           "Kesin Sýnýr"
+    IDS_COL_MORECOLORS      "daha..."
+    IDS_KBYTESEC            "kB/s"
+    IDS_TOOMANYCONNS        "Çok fazla baðlantý"
+    IDS_DOWNLOADRENAMED     "Bu isimde bir dosya zaten var, dosya %s olarak kaydedildi"
+    IDS_TBN_DOWNLOADDONE    "Ýndirilen:"
+    IDS_TBN_DOWNLOADADDED   "Ýndirilenlere eklenen:"
+    IDS_PW_TBN_USESOUND     "Ses kullan"
+    IDS_PW_TBN_ONLOG        "Günlüðe yeni giriþte"
+    IDS_PW_TBN_ONCHAT       "Yeni bir sohbet oturumu baþladýðýnda"
+    IDS_PW_TBN_POP_ALWAYS   "Yeni bir sohbet mesajý alýndýðýnda"
+    IDS_PW_TBN_ONDOWNLOAD   "Ýndirme bittiðinde"
+    IDS_PW_EKDEV_OPTIONS    "Hatýrlatmalar"
+    IDS_PW_TASKBARNOTIFIER  "Mesaj açýlma"
+    IDS_PW_TBN_OPTIONS      "Üste çýk"
+    IDS_TBN_NEWCHATMSG      "Mesajýn geldiði yer"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_CON_CAPFRM       "Kapasiteler"
+    IDS_IRC_STATUSLOG       "Durum Günlüðü"
+    IDS_IRC_STATUS          "Durum"
+    IDS_IRC_PRIVATECHANSTART "* Özel sohbet oturumu baþladý"
+    IDS_IRC_SLAPMSG         "* %s  %s'a büyük bir balýkla patlatýyor!"
+    IDS_IRC_PRIVMESSAGE     "Özel Mesaj"
+    IDS_IRC_OP              "Op"
+    IDS_IRC_DEOP            "DeOp"
+    IDS_IRC_VOICE           "Ses"
+    IDS_IRC_HALFOP          "YarýmOp"
+    IDS_IRC_DEHALFOP        "DeYarýmOp"
+    IDS_IRC_KICK            "Tekmele"
+    IDS_IRC_SLAP            "Tokatla"
+    IDS_IRC_JOIN            "Katýl"
+    IDS_IRC_CHANNELLIST     "Kanal Listesi"
+    IDS_IRC_CONNECT         "Baðlan"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_DISCONNECT      "Baðlantýyý Kes"
+    IDS_IRC_HASJOINED       "* %s , %s odasýna katýldý"
+    IDS_IRC_HASPARTED       "* %s , %s (%s) 'a ayrýldý"
+    IDS_IRC_WASKICKEDBY     "* %s , %s (%s) tarafýndan tekmelendi"
+    IDS_IRC_NICKUSED        "Takma adýnýz zaten IRC sunucusunda kullanýmda. Tercihlerde IRC sekmesinde farklý bir takma ad seçin."
+    IDS_IRC_DEVOICE         "SesAl"
+    IDS_IRC_HASQUIT         "* %s çýktý (%s)"
+    IDS_IRC_NOWKNOWNAS      "* %s artýk %s olarak biliniyor"
+    IDS_IRC_SETSMODE        "* %s modu ayarlýyor: %s %s"
+    IDS_IRC_NOTSUPPORTED    "** Bazý deteklenmeyen modlar ayarlandý. Kullanýcý listesini yenilemek için kanaldan çýkýp tekrar girmeniz gerekebilir.."
+    IDS_IRC_CHANNEL         "Kanal"
+    IDS_IRC_NICK            "TakmaAd"
+    IDS_IRC_SEND            "Gönder"
+    IDS_IRC_NAME            "Ýsim"
+    IDS_IRC_SLAPMSGSEND     "ÖZELMSJ %s :\001Tokat faaliyeti, %s'a büyük balýkla vuruyor!\001"
+    IDS_IRC_ADDTIMESTAMP    "Mesajlara tarih bilgisi ekle"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_USEFILTER       "Kanal listesi süzgeci kullan"
+    IDS_IRC_PERFORM         "Gerçekleþtir"
+    IDS_IRC_USEPERFORM      "Baðlantýda gerçekleþtirme dizgisi kullan."
+    IDS_IRC_ADDTOFRIENDLIST "Arkadaþ listesine ekle"
+    IDS_IRC_LOADCHANNELLISTONCON "Baðlandýðýnda sunucu kanal listesini yükle"
+    IDS_IRC_ADDASFRIEND     "seni arkadaþ olarak ekledi!"
+    IDS_PW_WARNING          """%s"" için seçtiðiniz sayý ÝS'nizin desteklediðinden çok büyük:  %d\nBu sisteminizin kararsýz olmasýna neden olabilir.\n\nBunu yapmayý istediðinize eminmisiniz?"
+    IDS_TAKEOVER            "Devral"
+    IDS_CLEANUP             "Temizle"
+    IDS_RENAME              "Yen.Adlandýr"
+    IDS_IRC_ADDLINKTOIRC    "Arkadaþa göndermek için bunu IRC panosuna ekle"
+    IDS_IRC_SENDLINK        "Bunu arkadaþa gönder: "
+    IDS_IRC_RECIEVEDLINK    "%s gönderildi (%s) otomatik baþlatýldý."
+    IDS_IRC_ACCEPTLINKS     "IRC'de eD2K baðlantýlarýný kabul et. (Bunu dikkatli kullanýn!)"
+    IDS_SHARED              "Paylaþýlmýþ"
+    IDS_DOWNLOADED          "Ýndirilmiþ"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SOURCENAMES         "Kaynak Ýsimleri"
+    IDS_PREF_STARTMIN       "Simge durumunda baþlat"
+    IDS_PS_TBN_IMPORTANT    "Acil: Yetersiz disk alanýnda, sunucu baðlantýsý kaybedildiðinde"
+    IDS_COLORS              "Renkler"
+    IDS_SP_BACKGROUND       "Zemin"
+    IDS_SP_GRID             "Izgara"
+    IDS_SP_DL1              "Þimdiki indirme"
+    IDS_SP_DL2              "Ýndirme zaman-ortalamasý"
+    IDS_SP_DL3              "Ýndirme oturum-ortalamasý"
+    IDS_SP_UL1              "Þimdiki gönderme"
+    IDS_SP_UL2              "Gönderme zaman-ortalamasý"
+    IDS_SP_UL3              "Gönderme oturum-ortalamasý"
+    IDS_SP_ACTCON           "Aktif baðlantý"
+    IDS_SP_ACTDL            "Aktif indirme"
+    IDS_SP_ACTUL            "Aktif gönderme"
+    IDS_PW_TIT_UP           "Gönderme-Hýz Sýnýrýný Ayarla"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_TIT_DOWN         "Ýndirme-Hýz Sýnýrýný Ayarla"
+    IDS_PW_UNLIMITED        "Sýnýrsýz"
+    IDS_PW_MINREC           "En Azý Önerilir\t%i "
+    IDS_PW_UA               "Tam Gön/Ýnd-Hýzýna Ayarla"
+    IDS_PW_PA               "Gön/Ýnd-Hýzýný Kýs"
+    IDS_IRC_IGNOREINFOMESSAGE "Bilgi mesajlarýný yoksay"
+    IDS_CONNECTIONLOST      "Baðlantý koptu"
+    IDS_WIZ_OS_FRAME        "Ýþletim Sistemi"
+    IDS_WIZ_CONCURENTDOWN_FRAME 
+                            "Genellikle birkerede kaç tane indirme yapýyorsunuz?"
+    IDS_HASHINGFILE         "Adreslenen dosya:"
+    IDS_WIZ_CUSTOM_FRAME    "Eðer baðlantý hýzýnýzý sýnadýysanýz, sonuçlarý buraya koyun."
+    IDS_WIZ_HOTBUTTON_FRAME "Belirlenmiþ Düðmeler"
+    IDS_WIZ_TRUEUPLOAD_TEXT "Doðru Gönderme Bantgeniþliði"
+    IDS_WIZ_TRUEDOWNLOAD_TEXT "Doðru Ýndirme Bantgeniþliði"
+    IDS_FRIENDLIST          "Arkadaþlar"
+    IDS_CHATDISCONNECTED    "*** Baðlantý Kesildi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZARD              "Sihirbaz..."
+    IDS_ADDFRIEND           "Arkadaþlara Ekle"
+    IDS_REMOVEFRIEND        "Arkadaþý Kaldýr"
+    IDS_REMOVEFROMSTOK      "Statik sunucu listesinden kaldýrýldý"
+    IDS_REMOVEFROMSTATIC    "Statik Sunucu Listesinden Kaldýr"
+    IDS_LENGTH              "Uzunluk"
+    IDS_VIDEO               "Görüntü"
+    IDS_AUDIO               "Ses"
+    IDS_FILEINFO            "Medya Bilgisi"
+    IDS_CODEC               "Kodek"
+    IDS_BITRATE             "Bitoraný"
+    IDS_WIDTH               "Geniþlik"
+    IDS_FPS                 "Kare/san"
+    IDS_CHANNELS            "Kanallar"
+    IDS_SAMPLERATE          "Örn.Oraný"
+    IDS_ROUNDBITRATE        "BitOranýný Yuvarla"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HEIGHT              "Yükseklik"
+    IDS_SHAREDFILES_FAILED  "'%s' kullanýcýsýndan paylaþýlan dosyalar alýnamaz"
+    IDS_SHAREDFILES_REQUEST "'%s' kullanýcýsýndan paylaþýlan dosyalar isteniyor"
+    IDS_VIEWFILES           "Paylaþ.Dosyalarý &Görüntüle"
+    IDS_FRIENDSLOT          "Arkadaþ Slotu Kur"
+    IDS_FRIENDDETAIL        "(Arkadaþ Slotu)"
+    IDS_ASCWOP_PROXYSUPPORT "Proksi'siz otomatik sunucuya baðlan"
+    IDS_UDPDISABLED         "etkisiz"
+    IDS_CTINFO              "Buradan baðlantý türünüzü seçin:"
+    IDS_WIZ_CTFRAME         "Baðlantý Türü"
+    IDS_CONCURDWL           "Eþzamanlý Ýndirmeler"
+    IDS_UNIT                "Birim:"
+    IDS_WIZARD_CUSTOM       "Özel"
+    IDS_WIZARD_ENTERBELOW   "(aþaðý girin!)"
+    IDS_STATS_MAXAVGDL      "En Fazla ÝndirmeHýzý Ortalamasý: %.2f kB/s"
+    IDS_USS_MIN             "Uyarý: USS þimdilik 10K 'dan az gönderme hýzýný desteklemiyor. Eðer baðlantýnýzýn bunu saðlayamadýðýný biliyorsanýz, lütfen USS'i etkisizleþtirin."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MAXDL         "En Fazla ÝndirmeHýzý: %.2f kB/s"
+    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
+                            "Arkadaþ Ekle protokol mesajlarýný eMule yoksaysýn"
+    IDS_PW_FASTSRVCON       "Güvenli Baðlantý."
+    IDS_SOURCELINKFAILED    "Geçerli kaynak baðlantýsý oluþturmak için YüksekID'ye ihtiyacýnýz var"
+    IDS_CREATESOURCELINK    "ED2k baðlantýsýný panoya kopyala (kaynak)"
+    IDS_ERR_LOADSERVERMET   "server.met dosyasýný yükleme baþarýsýz!"
+    IDS_ERR_CORRUPTCOMPRPKG "%s için bozuk sýkýþtýrýlmýþ paket alýndý(hata %i)"
+    IDS_ERR_EMFRIENDSINVALID "emfriends.met dosyasý geçersiz veya bozuk!"
+    IDS_ERR_READEMFRIENDS   "emfriends.met dosyasý okunurken bilinmeyen bir hata oldu: %s"
+    IDS_ERR_KNOWNSERVERINFOREC "Bilinmeyen sunucu bilgisi alýndý!"
+    IDS_ERR_TIMERCREATEFAILED "Önemli Hata: Zamanlayýcý oluþturma baþarýsýz"
+    IDS_WIZ_DOWN            "Ýnd. (kbit/s)"
+    IDS_WIZ_UP              "Gön. (kbit/s)"
+    IDS_SELECT_INCOMINGDIR  "Gelen dosyalar için klasör seçin"
+    IDS_SELECT_TEMPDIR      "Geçici dosyalar için klasör seçin"
+    IDS_PRIOAUTO            "Otomatik"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOAUTONORMAL      "Otomatik [Nor]"
+    IDS_PRIOAUTOHIGH        "Otomatik [Yük]"
+    IDS_PRIOAUTORELEASE     "Otomatik [Yay]"
+    IDS_PRIOAUTOLOW         "Otomatik [Düþ]"
+    IDS_ERR_CONTIMEOUT      """%s"" (%s:%i ) sunucusuna baðlantý giriþimi zaman aþýmýna uðradý"
+    IDS_ERR_CONFAILED       """%s"" (%s:%i ) sunucusuna baðlantý baþarýsýz."
+    IDS_OUTOFSERVERS        "Listelenen tüm sunuculara baðlanma baþarýsýz. Diðerine geçiþ yapýlýyor."
+    IDS_PW_CONLIMITS        "Baðlantý Sýnýrlarý"
+    IDS_MAXCON5SECLABEL     "En fazla yeni baðlantý / 5 san."
+    IDS_PW_UAP              "Yeni paylaþýlan dosyalarý otomatik öncelikli olarak ekle"
+    IDS_MAXCLIENT           "En Fazla Kullanýcý"
+    IDS_PW_TWEAK            "Geniþletilmiþ Ayarlar"
+    IDS_TWEAKS_WARNING      "Uyarý:  Ne yaptýðýnýzý bilene kadar bu ayarlarý deðiþtirmeyin. Yoksa kendi kendinize kolaylýkla yanlýþ daha kötü birþeyler yapabilirsiniz.\neMule bu ayarlar yapýlmadan iyi çalýþacaktýr."
+    IDS_ADDAFRIEND          "Arkadaþ Ekle"
+    IDS_PAF_REQINFO         "Gerekli Bilgi"
+    IDS_PAF_MOREINFO        "Ýlave Bilgi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOVALIDFRIENDINFO "Geçerli IP ve baðlantý noktasý girmelisiniz!"
+    IDS_ADD                 "Ekle"
+    IDS_RECOVERED_PARTMET   "Bunun için onarýlmýþ part.met dosyasý: %s"
+    IDS_CMT_QUEST           "Bu dosyayý yorumla! (Bu metin tüm kullanýcýlara gösterilecek)"
+    IDS_CMT_AIDE            "Filmler için uzunluðunu, hikayesini, dilini söyliyebilirsiniz... Ve eðer sahteyse diðer eMule kullanýcýlarýný bilgilendirebilirsiniz..."
+    IDS_CMT_TITLE           "%s dosyasý yorumu"
+    IDS_CMT_ADD             "Dosya Yorumlarýný &Düzenle..."
+    IDS_CMT_NONE            "Yorum yok"
+    IDS_CMT_READ            "Dosya yorumu:"
+    IDS_CMT_NOTCONNECTED    "Henüz baðlý deðil..."
+    IDS_CMT_SHOWALL         "Yorumlarý &Göster..."
+    IDS_CMT_REFRESH         "&Yenile"
+    IDS_CMT_READALL         "Tüm Yorumlar"
+    IDS_CMT_NOCOMMENT       "Yorum girilmedi..."
+    IDS_CMT_RATEQUEST       "Dosya kalitesi"
+    IDS_CMT_RATEHELP        "Eðer geçersizse diðer kullanýcýlara tavsiyede bulunun veya dosya beðenilme oranýný seçin"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CMT_FAKE            "Geçersiz / Bozuk / Sahte"
+    IDS_CMT_POOR            "Kötü"
+    IDS_CMT_GOOD            "Ýyi"
+    IDS_CMT_FAIR            "Uygun"
+    IDS_CMT_EXCELLENT       "Mükemmel"
+    IDS_CMT_NOTRATED        "Oranlanmamýþ"
+    IDS_KILO                "K"
+    IDS_MEGA                "M"
+    IDS_GIGA                "G"
+    IDS_TERRA               "T"
+    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "Emule protokol mesajlarýný yoksay"
+    IDS_SMARTLOWIDCHECK     "Baðlantýda akýllý DüþükID kontrolü kullan"
+    IDS_SF_SRVOCC           "Sunucu Doluluðu: %%%.2f"
+    IDS_3DDEP               "Ýlerleme çubuðu sitili"
+    IDS_AUTOTAKEED2KLINKS   "ED2K Baðlantýlarýný sadece çalýþýrken otomatik al"
+    IDS_ADDNEWFILESPAUSED   "Dosyalarý duraklat modunda indirmeye ekle"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_STATS            "Bozulma kaybý: %s       Sýkýþtýrmayla kazanýlan: %s\nI.C.H. tarafýndan kaydedilen paket: %i"
+    IDS_ERR_NOHELP          "Yardým-dosyasý bulunamadý.\n En yeni yardým-dosyasýný almak için lütfen anasayfamýzý ziyaret edin! (indirme bölümünde)\nOnun yerine þimdi çevrimiçi yardýma gözatmak istermisiniz?"
+    IDS_SHOWOVERHEAD        "Biriken bantgeniþliði göster"
+    IDS_UPDOWNSMALL         "Gönderme: %.1f | Ýndirme: %.1f"
+    IDS_EDITLIST            "Liste..."
+    IDS_SP_ICONBAR          "Sis.tablasý simgesi Hýzçubuðu"
+    IDS_RATINGRECV          "'%s' dosyasý için alýnan beðenilme oraný: %i"
+    IDS_DESCRIPTIONRECV     "'%s' dosyasý için alýnan taným: %s"
+    IDS_WEBSERVICES         "&Web Hizmeti"
+    IDS_WEBSVEDIT           "Web Hizmetini Düzenle..."
+    IDS_IRC_EMULEPROTO_IGNORESENDLINK 
+                            "Baðlantý gönder protokol mesajlarýný eMule yoksaysýn"
+    IDS_CHECK4UPDATE        "Yeni sürüm için kontrol et"
+    IDS_STARTUP             "Baþlangýç"
+    IDS_NEWVERSIONAVL       "eMule'un yeni sürümü mevcut! Daha fazla bilgi için proje-anasayfamýzý kontrol edin."
+    IDS_NEWVERSIONAVLPOPUP  "eMule'un yeni sürümü mevcut. Yeni sürüm hakkýnda okumak için buraya týklayýn!"
+    IDS_NEWVERSIONFAILED    "Yeni sürüm için kontrol edilemez."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CB_TBN_ONNEWVERSION "Yeni eMule sürümü algýlandýðýnda"
+    IDS_NONEWERVERSION      "Yeni eMule sürümü algýlanmadý."
+    IDS_VERSIONCHECK        "&SürümKontrol"
+    IDS_VISITVERSIONCHECK   "\n\nBilgi sayfasýný þimdi ziyaret etmek istiyormusunuz?"
+    IDS_PW_VIDEOPLAYER      "Görüntü Oynatýcýsý"
+    IDS_VIDEOBACKUP         "Önizlemek için yedekleme oluþtur"
+    IDS_STATIC_EMPTY        "(boþ=varsayýlan)"
+    IDS_MYINFO              "Bilgim"
+    IDS_ID                  "Kimlik No"
+    IDS_IDLOW               "Düþük ID"
+    IDS_IDHIGH              "Yüksek ID"
+    IDS_UPSTATUS            "Elde Edilen Parçalar"
+    IDS_TOVERHEAD           "Toplam Biriken (Paket): %s (%s)"
+    IDS_FROVERHEAD          "Dosya Ýsteði Birikimi (Paket): %s (%s)"
+    IDS_SSOVERHEAD          "Kaynak Deðiþim Birikimi (Paket): %s (%s)"
+    IDS_SOVERHEAD           "Sunucu Birikimi (Paket): %s (%s)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FILECOMPLETIONTHREAD 
+                            "Dosya tamamlama parçacýðý oluþturma baþarýsýz"
+    IDS_FILEBUFFERSIZE      "Dosya Tampon Boyutu"
+    IDS_QUEUESIZE           "Sýra Boyutu"
+    IDS_DAYS2               "gün"
+    IDS_ERR_MAKEBAKCREDITFILE "Kredi dosyasýnýn yedeklenmesi baþarýsýz"
+    IDS_COMMENT             "Yorumlar"
+    IDS_IPFILTERED          "Süzülen IP: %s (%s)"
+    IDS_DL_TRANSFCOMPL      "Tamamlanan"
+    IDS_STATS_FILTEREDCLIENTS "Süzülen: %i"
+    IDS_FILTERLABEL         "Süzülen mesajlarýn içeriði: (Ayýraç | )"
+    IDS_ERR_LARGEREQBLOCK   "Kullanýcý çok büyük bir blok istedi."
+    IDS_SHOWRATEONTITLE     "Aktarým hýzýný baþlýkta göster"
+    IDS_TBN_NOMESSAGEHISTORY "Geçmiþ mesaj yok!"
+    IDS_PW_DAP              "Yeni indirmeleri otomatik öncelikli olarak ekle"
+    IDS_FD_LASTCHANGE       "Son Alým:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_RUNTIME       "Çalýþma süresi"
+    IDS_ALL                 "Tümü"
+    IDS_CAT_ADD             "Kategori Ekle"
+    IDS_CAT_EDIT            "Kategori Düzenle"
+    IDS_CAT_REMOVE          "Kategori Kaldýr"
+    IDS_CAT                 "Kategori"
+    IDS_TITLE               "Baþlýk"
+    IDS_COLOR               "Renk"
+    IDS_DEFAULT             "Varsayýlan"
+    IDS_PW_DISPLAY          "Görüntü"
+    IDS_CAT_INVADD          "Tüm belirlenmemiþleri göster"
+    IDS_CAT_REINVADD        "Tümünü göster"
+    IDS_INDICATERATINGS     "Ýndirilenleri yorum/beðenilme oraný simgeleriyle göster"
+    IDS_ALLOTHERS           "Kategorilenmemiþ"
+    IDS_TOCAT               "Kategori belirle"
+    IDS_CAT_UNASSIGN        "(belirlenmemiþ)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDDOWNLOADSFROMCB  "Bu ED2k-dosya-baðlantýsýný indirmeye ekle?\n"
+    IDS_ADDDOWNLOADSFROMCBTITLE "Panodaki ED2k-dosya-baðlantýsý"
+    IDS_PF_WATCHCB          "ED2k-dosya-baðlantýsý için panoyu izle"
+    IDS_SECURITY            "Güvenlik"
+    IDS_IPFILTERLOADED      "%i adet IP-süzgeci yüklendi"
+    IDS_IPFILTER            "IP-Süzgeci"
+    IDS_EDIT                "Düzenle"
+    IDS_FILTERLEVEL         "Süzme Seviyesi"
+    IDS_FILTERSERVERBYIPFILTER 
+                            "Sunucularýda süz (dinIP-sunucularýda reddedilir)"
+    IDS_FILTERCOMMENTSLABEL "Yoksayýlacak yorumlarýn içeriði: (Ayýraç | )"
+    IDS_CLIENTLIST          "Bilinen Ýstemciler"
+    IDS_FOLDER              "Klasör"
+    IDS_CL_UPLOADSTATUS     "Gönderme Durumu"
+    IDS_CL_TRANSFUP         "Gönderilen Aktarým"
+    IDS_CL_DOWNLSTATUS      "Ýndirme Durumu"
+    IDS_CL_TRANSFDOWN       "Ýndirilen Aktarým"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CL_PENDING          "Beklemede"
+    IDS_CL_LOW2LOW          "Düþük IP'den Düþük IP'ye"
+    IDS_ERROR               "Hata"
+    IDS_OPENINC             "Gelen Klasörünü &Aç"
+    IDS_HOTMENU             "Acil Menü"
+    IDS_DISABLEKNOWNLIST    "Bilinen Ýstemci Listesi Etkisiz"
+    IDS_DISABLEQUEUELIST    "Sýra Listesi Etkisiz"
+    IDS_USECREDITSYSTEM     "Kredi Sistemi Kullan (Göndericilere Ödül)"
+    IDS_FIRSTAUTODOWN       "Eðer eMule'un indirme önceliklerinizi yönetmesini isterseniz bu seçeneði etkinleþtirin.\n\nBunu açmak, eMule'e, bir kaç kaynaklý indirmeye karýþmadan, çok sayýda kaynaklý emin indirmeler yapmasýna izin verecek.\n\nEðer istemci s0.26 ve altýndaki istemcilerden henüz güncellediyseniz, þimdiki tüm indirmeleriniz Otomatik Öncelikli olarak varsayýldý.\n\nBu seçenek sadece ilerki indirmelerinizde etkili olacak. (Varsayýlan Etkin)"
+    IDS_FIRSTAUTOUP         "Eðer eMule'un gönderme önceliklerinizi yönetmesini isterseniz bu seçeneði etkinleþtirin.\n\nBunu açmak, emule'un, diðer insanlarýn almasý için zor olacak nadir dosyalarý yani populer dosyalarý desteklemesine izin verecek.\n\nBunu kapamak, eMule'un, diðer insanlarýn almasý için zor olacak populer dosyalarý yani çok sýk istenen nadir dosyalarý göndermesine izin verecek.\n\nEðer istemci s0.26 ve altýndaki istemcilerden henüz güncellediyseniz, þimdiki tüm paylaþýlan dosyalarýnýz Otomatik Öncelikli olarak varsayýldý.\n\nBu seçenek sadece ilerki paylaþýlan dosyalarda etkili olacak. (Varsayýlan Etkin)"
+    IDS_FIRSTCREDITSYSTEM   "Ýnsanlarý size dosya gönderdikleri için ödüllendirmek istermisiniz?\n\nBu genellikle Kredi Sistemi olarak biliniyor. Bunu açmak, sömürücülere karþý savaþmanýza yardým edecek. Eðer atanmýþ serbest biriyseniz, bunu kapatmayý istiyeceksinizdir.\n\n(Varsayýlan Evet)"
+    IDS_FIRSTFULLCHUNK      "Eðer tam iri parçalarý göndermek isterseniz bu seçeneði etkinleþtirin.\n\nTam iri parçalarý kullanmak kullanýcýya parçayý tamamlamasý için iyi bir þans verir. Bunu kapamak sýranýn hýzlý dönmesine yardým edecek. Eðer atanmýþ serbest biriyseniz, bunu açmak istiyeceksinizdir.\n\n(Varsayýlan Etkin)"
+    IDS_FIRSTSAFECON        "Eðer eMule'un Güvenli Baðlantý'yý kullanarak baðlanmasýný isterseniz bu seçeneði etkinleþtirin.\n\nBu özelliði kapamak eMule'un sunuculara biraz daha hýzlý baðlanmasýna izin verir, ama daha çok yanlýþ düþükID baðlantýsý kurmanýza sebep olabilir.\n\n(Varsayýlan Etkisiz)"
+    IDS_FIRSTRUNASSIST      "Ýlk-çalýþtýrma kurulum-sihirbazýný çalýþtýrmak istermisiniz?"
+    IDS_FIRSTAUTOCON        "Eðer eMule'un baþlangýçta baðlanmasýný isterseniz bu seçeneði etkinleþtirin.\n\n(Varsayýlan Etkisiz)"
+    IDS_FIRSTCOMPLETE       "Þimdi ilkkez sihirbazýný tamamladýnýz.\n\nTüm bu ayarlar ve fazlasý tercihler simgesine týklanarak deðiþtirilebilir. Açýklamalar ve destek için eMule'deyken F1 tuþuna basarak yardým alabilirsiniz!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ENTERUSERNAME       "Lütfen kullanýcý adýnýzý girin:"
+    IDS_STATIC_CPUMEM       "CPU && Bellek kullanýmýný koru"
+    IDS_KAD_SEARCH_KEYWORD_TOO_SHORT 
+                            "Keyword too short.\r\n\r\nThe keyword(s) used in a Kad search expression must have a minimum length of 3 characters."
+    IDS_LOG2DISK            "Diske günlüðü kaydet"
+    IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING 
+                            "There is already a Kad search ongoing for the keyword ""%s"".\r\n\r\nTo search again for that keyword, either wait until this keyword search is finished or close the according search results pane."
+    IDS_KAD_SEARCH_KEYWORD_INVALID 
+                            "Invalid Kad keyword.\r\n\r\nA Kad search expression has the following format:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nThe <kad-keyword> must not contain any of the following characters:\r\n\r\n\t%s"
+    IDS_EDITCAT             "Kategori-Tercihleri Düzenle"
+    IDS_PW_WS               "Web Arabirimi"
+    IDS_ENABLED             "Etkin"
+    IDS_WEB_LOGIN           "OturumAç"
+    IDS_WEB_ENTER_PASSWORD  "Parolanýzý buraya girin"
+    IDS_WEB_LOGIN_NOW       "Þimdi OturumAç"
+    IDS_WEB_CONFIRM_REMOVE_SERVER 
+                            "Bu sunucuyu listeden kaldýracaðýnýza eminmisiniz?"
+    IDS_WEB_CONTROL         "Web Denetim Paneli"
+    IDS_WEB_LOGOUT          "OturumKapa"
+    IDS_WEB_ACTIONS         "Faaliyetler"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHOW_UPLOAD_QUEUE "Sýrayý Göster"
+    IDS_WEB_HIDE_UPLOAD_QUEUE "Sýrayý Gizle"
+    IDS_WEB_GZIP_COMPRESSION "Gzip Sýkýþtýrmasý"
+    IDS_WEB_GZIP_COMMENT    "Trafiði kaydet, özellikle çizelgedekileri."
+    IDS_WEB_UPLOAD_QUEUE_COMMENT 
+                            "Aktarým sayfasýnda bekleyen sýrayý görüntüleme etkin veya etkisiz."
+    IDS_WEB_REFRESH_TIME    "Sayfalarýn Yenilenme-Süresi"
+    IDS_WEB_REFRESH_COMMENT "Saniye süresi (sýfýr=etkisiz):"
+    IDS_SV_URL              "URL"
+    IDS_WS_RELOAD_TMPL      "Þablon"
+    IDS_SV_DEBUGLOG         "Hata Günlüðü"
+    IDS_WS_PASS             "Parola"
+    IDS_WEB_FILESETTINGS    "Dosya Ayarlarý"
+    IDS_WS_ERR_LOADTEMPLATE "Þablonlar yüklenemiyor: %s dosyasýný yeni sürümüyle deðiþtirin!"
+    IDS_WEB_CONLIMITS       "Baðlantý Sýnýrlarý"
+    IDS_INFLST_USER_TOTALDOWNLOAD "Toplam indirilmiþ"
+    IDS_INFLST_USER_TOTALUPLOAD "Toplam gönderilmiþ"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_BADLOGINATTEMPT "Web arabirimi: OturumAçma giriþimi baþarýsýz"
+    IDS_ERR_TOOLARGEFILE    "Dosya, edonkey protokolünün desteklediði boyuttan daha büyük (>=4GB)"
+    IDS_MSGONLYFRIENDS      "Sadece arkadaþlardan kabul et"
+    IDS_MSGONLYSEC          "Sadece geçerli istemcilerden kabul et"
+    IDS_DAY_MO_SA           "P.tesi-C.tesi"
+    IDS_LIMITSOURCES        "Sýnýrlý kaynaklar"
+    IDS_LIMITCONS5SEC       "Sýnýrlý baðlantý/5 san."
+    IDS_SCHED_CATSTOP       "Kat:Ýndirmeleri Durdur"
+    IDS_SCHED_CATRESUME     "Kat:Ýndirmelere Devam et"
+    IDS_S_DAYS              "Gün"
+    IDS_STARTTIME           "Baþlama Zamaný"
+    IDS_VALUE               "Deðer"
+    IDS_SCHED_ENTERDATARATELIMIT "VeriHýzý sýnýrýný girin:"
+    IDS_SCHED_ENTERVAL      "Lütfen yeni deðer girin:"
+    IDS_SCHED_ACTCONFIG     "Faaliyetleri Yapýlandýr"
+    IDS_SELECTCAT           "Kategori seç"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALLUNASSIGNED       "Tümü kategorilenmemiþ"
+    IDS_ACTSESSIONS         "adet aktif oturum"
+    IDS_WEBSRV              "Web Arabirimi"
+    IDS_SW_REFETCHRES       "Sonuçlarý Yenile"
+    IDS_FILEHASH            "Dosya Adreslemesi"
+    IDS_GLOBALSEARCH2       "Genel Arama"
+    IDS_PW_PROXY            "Proksi"
+    IDS_PROXY_ENABLE        "Proksi Etkin"
+    IDS_PROXY_TYPE          "Proksi türü:"
+    IDS_PROXY_HOST          "Proksi anamakine:"
+    IDS_PROXY_PORT          "Proksi b.noktasý:"
+    IDS_PROXY_AUTH          "Kimlik Denetimi Etkin"
+    IDS_AUTH                "Kimlik Denetimi"
+    IDS_SHOWCATINFO         "Kategori sekmelerinde indirme bilgisini göster"
+    IDS_SW_SEARCHINGINFO    "Arama sürüyor. Sonuçlar bir dakika içinde tekrar gelecek!"
+    IDS_LOGENTRY            "Günlük Giriþi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COPY                "Kopyala"
+    IDS_SELECTALL           "Tümünü Seç"
+    IDS_AUTOSCROLL          "Otomatik Kaydýr"
+    IDS_WIZ1_WELCOME_TITLE  "eMule'e Hoþgeldiniz"
+    IDS_WIZ1_WELCOME_ACTIONS 
+                            "Bu sihirbaz size eMule'un yapýlandýrýlmasýnýn ilk adýmýnda kýlavuzluk edecektir."
+    IDS_WIZ1_WELCOME_BTN_HINT "Devam etmek için, Ýleri'ye týklayýn."
+    IDS_WIZ1_END_TITLE      "Sihirbaz Tamamlanýyor"
+    IDS_WIZ1                "eMule Ýlkkez Çalýþma Sihirbazý"
+    IDS_WIZ1_END_BTN_HINT   "Bu sihirbazý kapatmak için, Son'a týklayýn."
+    IDS_WIZ1_UPLOAD_SUBTITLE "Tam Ýri Parça Aktarýmý"
+    IDS_DL_RESUMENEXT       "Sonraki duraklatýlmýþ dosyayý devam ettir"
+    IDS_DONTCHANGE          "Deðiþtirme"
+    IDS_STARTPRIO           "Yeni belirlenmiþ dosyalar için önceliði deðiþtir"
+    IDS_PREF_STARTNEXTFILECAT "ayný kategoriyi tercih et"
+    IDS_REPAINTGRAPHS       "Yeni boyutta istatistik çizelgesini yeniden oluþturma"
+    IDS_SOFTFILES           "Esnek Dosya Sýnýrý"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDFILES           "Kesin Dosya Sýnýrý"
+    IDS_FILTER              "Süz"
+    IDS_LINKS               "Baðlantýlar"
+    IDS_HM_SCHED_ON         "Zamanlayýcýyý Aç"
+    IDS_HM_SCHED_OFF        "Zamanlayýcýyý Kapa"
+    IDS_HM_LINKHP           "eMule Anasayfasý"
+    IDS_HM_LINKFAQ          "eMule S.S.S"
+    IDS_HM_LINKVC           "eMule SürümKontrol"
+    IDS_DEBUG_SOURCE_EXCHANGE "Kaynak deðiþim mesajlarýný görüntüle"
+    IDS_SHAREDREQ1          "Kullanýcý %s (%u) paylaþýlmýþ dizinlerinizin listesini istedi -> %s"
+    IDS_SHAREDREQ2          "Kullanýcý %s (%u) '%s' dizini için paylaþýlmýþ dosyalarýn listesini istedi -> %s"
+    IDS_SHAREDANSW          "Kullanýcý %s (%u) '%s' dizinini paylaþýyor"
+    IDS_SHAREDANSW2         "Kullanýcý %s (%u) paylaþýlmýþ dizinlerin istenmeyen listesini gönderdi - yoksayýldý"
+    IDS_SHAREDINFO1         "Kullanýcý %s (%u) '%s' dizini için paylaþýlmýþ dosyalarýn listesini gönderdi"
+    IDS_SHAREDINFO2         "Kullanýcý %s (%u) paylaþýlmýþ dosyalarýn listesinin gönderimini bitirdi"
+    IDS_SHAREDANSW3         "Kullanýcý %s (%u) '%s' dizini için paylaþýlmýþ dosyalarýn istenmeyen listesini gönderdi - yoksayýldý"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHAREDREQDENIED     "Kullanýcý %s (%u) paylaþýlmýþ dizinlerin/dosyalarýn listesine eriþimi engelledi"
+    IDS_AUTOCLEANUPFN       "DosyaÝsmini temizle"
+    IDS_ONNEWDOWNLOAD       "Baþlatýmlar"
+    IDS_FILTERFILENAMEWORD  "Süzmek için kelime girin, | ile ayýrýn"
+    IDS_FNFILTERTITLE       "Ýsim-temizleme için dosya ismi kelime süzgecini düzenle"
+    IDS_CHANGECATVIEW       "Görünüm süzgecini seç"
+    IDS_STATUS_NOTCOMPLETED "Bitmemiþ"
+    IDS_STATS_CUMULATIVE    "Birikmiþ"
+    IDS_STATS_OVRHD         "Birikim"
+    IDS_STATS_RECORDS       "Kayýtlar"
+    IDS_STATS_OVRHD2        "Birikim: %s (%s Paket)"
+    IDS_STATS_COMPDL        "Tamamlanan Ýndirme"
+    IDS_STATS_SVRECWORKING  "En Fazla Çalýþan Sunucu"
+    IDS_STATS_SVRECUSERS    "En Fazla Çevrimiçi Kullanýcý"
+    IDS_SEARCH_TEXT         "Yapýlacak arama"
+    IDS_STATS_SVRECFILES    "En Fazla Mevcut Dosya"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SHRECNUM      "Hep Paylaþýlan En Fazla Dosya"
+    IDS_SEARCH_COLUMN       "Sütunda arama"
+    IDS_STATS_SHRECSIZE     "En Geniþ Paylaþým Boyutu"
+    IDS_STATS_SHRECASIZE    "En Geniþ Ortalama Dosya Boyutu"
+    IDS_STATS_MYRUNTIME     "Bütün Çalýþma Süresi: %s"
+    IDS_STATS_SESSION       "Oturum"
+    IDS_STATS_SRATIO        "Oturum GÖN:ÝND Oraný:"
+    IDS_STATS_CRATIO        "Birikmiþ GÖN:ÝND Oraný:"
+    IDS_SEARCH_NORESULT     "Birbirine uyan giriþ bulanamadý."
+    IDS_STATS_CURRSRVDUR    "Þimdiki Sunucu Süresi"
+    IDS_LONGSECS            "Saniye"
+    IDS_STATS_DLSES         "Ýndirme Oturumu"
+    IDS_LONGMINS            "Dakika"
+    IDS_STATS_SDLSES        "Baþarýlý Ýndirme Oturumu"
+    IDS_STATS_FDLSES        "Baþarýsýz Ýndirme Oturumu"
+    IDS_STATS_AVGDATADLSES  "Her Oturumda Ortalama Ýndirilen"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ULSES         "Gönderme Oturumu"
+    IDS_STATS_GAINCOMP      "Sýkýþtýrmadan Dolayý Kazanýlan: %s"
+    IDS_STATS_LOSTCORRUPT   "Bozulmadan Dolayý Kaybedilen: %s"
+    IDS_STATS_AVGDATAULSES  "Her Oturumda Ortalama Gönderilen"
+    IDS_STATS_ICHSAVED      "I.C.H 'den dolayý kaydedilen parça: %u"
+    IDS_STATS_MBRESET_TXT   "Birikmiþ istatistiklerinizi sýfýrlamak istediðinize eminmisiniz?\n\nEðer fikrinizi deðiþtirirseniz, 'Ýstatistikleri Geri Yükle' düðmesine basarak bu iþlemi tersine çevirebilirsiniz."
+    IDS_STATS_MBRESET_CAP   "Sýfýrlama Onayý"
+    IDS_STATS_MBRESTORE_TXT "Birikmiþ istatistiklerinizi yedekleme dosyasýndan geri yüklemek istediðinize eminmisiniz?\n\nTekrar 'Ýstatistikleri Geri Yükle' 'ye týklamak þimdiki istatistiklerinizi yeniden yükleyecek."
+    IDS_STATS_MBRESTORE_CAP "Geri Yükleme Onayý"
+    IDS_ERR_NOSTATBKUP      "HATA: Yedek istatistik dosyasý bulunamadý..."
+    IDS_STATS_NFOLOADEDBKUP "Yedeklenmiþ istatistiksel veri yüklendi..."
+    IDS_STATS_NFORESET      "Ýstatistikler sýfýrlandý!"
+    IDS_STATS_BNRESET       "Ýstatistikleri Sýfýrla"
+    IDS_STATS_BNRESTORE     "Ýstatistikleri Geri Yükle"
+    IDS_CONNECTIONSTATISTICS "Baðlantý Ýstatistikleri"
+    IDS_PPGSTATS_YSCALE     "Baðlantý Ýstatistikleri Y-Ekseni Ölçeði:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PPGSTATS_ACRATIO    "Aktif Baðlantý Oraný:"
+    IDS_STATS_PROBLEMATIC   "Þüpheli"
+    IDS_LONGHRS             "Saat"
+    IDS_STATS_LARGESTFILE   "En Geniþ Paylaþýlan Dosya"
+    IDS_CLIENTSOFTWARE      "Ýstemci Yazýlýmý"
+    IDS_STATS_DSPF          "Parça Dosyasý"
+    IDS_STATS_DATASOURCE    "Veri Kaynaðý"
+    IDS_STATS_DSFILE        "Tam Dosya"
+    IDS_STATS_GENERAL       "Genel"
+    IDS_STATS_TRANSTIME     "Aktarma Süresi"
+    IDS_STATS_DOWNTIME      "Ýndirme Süresi"
+    IDS_STATS_UPTIME        "Gönderme Süresi"
+    IDS_STATS_TOTALSRVDUR   "Toplam Sunucu Süresi"
+    IDS_STATS_MAXAVGUL      "En Fazla Ortalama Gönderme Hýzý"
+    IDS_STATS_MAXUL         "En Fazla Gönderme Hýzý"
+    IDS_STATS_AVGDLTIME     "Ortalama Ýndirme Süresi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_OLDCLIENTS    "Eski"
+    IDS_STATS_PRTDEF        "Varsayýlan"
+    IDS_STATS_PRTOTHER      "Diðer"
+    IDS_STATS_MNUTREETITLE  "Ýstatistik Aðacý"
+    IDS_STATS_MNUTREECPYSEL "Seçili Dalý Kopyala"
+    IDS_STATS_MNUTREECPYALL "Tüm Ýstatistikleri Kopyala"
+    IDS_STATS_MNUTREEHTML   "HTML Özellikleri"
+    IDS_STATS_EXPORT2HTML   "Tüm Ýstatistikleri Dýþarý Aktar"
+    IDS_STATS_EXPORTVIS     "Tüm Görünenleri Dýþarý Aktar"
+    IDS_STATS_MNUTREECPYVIS "Tüm Görünenleri Kopyala"
+    IDS_STATS_MNUTREEEXPANDALL "Tüm Bölümleri Geniþlet"
+    IDS_STATS_MNUTREECOLLAPSEALL "Tüm Bölümleri Daralt"
+    IDS_STATS_MNUTREEEXPANDMAIN "Ana Bölümü Geniþlet"
+    IDS_STATS_LASTRESETSTATIC "Ýstatistikleri son sýfýrlama: %s"
+    IDS_STATS_MONTHLY       "Aylýk"
+    IDS_STATS_YEARLY        "Yýllýk"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_TIMESTATS     "Zaman Ýstatistikleri"
+    IDS_STATS_AVGANDPROJ    "Planlanmýþ Ortalamalar"
+    IDS_STATS_TIMESINCERESET "Son Sýfýrlamadan Bu Yana Geçen Süre: %s"
+    IDS_CRYPT_INITFAILED    "GizliAnahtar baþlatýmý baþarýsýz - güvenli kimlik etkisiz"
+    IDS_CD_IDENT            "Kimlik:"
+    IDS_IDENTOK             "Baþarýlý"
+    IDS_IDENTFAILED         "Geçersiz"
+    IDS_IDENTNOSUPPORT      "Desteklenmez veya etkisiz"
+    IDS_COMMITFILES         "Güvenli .met/.dat dosyasý yazýmý"
+    IDS_ERR_BADUNC          "geçersiz UNC-ismi"
+    IDS_NEVER               "Asla"
+    IDS_ALWAYS              "Her Zaman"
+    IDS_ONSHUTDOWN          "Kapanýþta"
+    IDS_UNCFOLDERS          "UNC Klasörleri"
+    IDS_USESECIDENT         "Güvenli kimlik kullan"
+    IDS_ADVSPAMFILTER       "Geliþmiþ çöp süzgeci"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SECUREIDENT   "Güvenli Kimlik (TAMAM : Baþarýsýz )"
+    IDS_ONDISK              "Diskteki boyut: "
+    IDS_CLIENTCOL           "Uyarý: Birbiriyle ayný iki kullanýcý bulundu, þimdi baðlý olan kullanýcýlar: %s (%s) ve %s (%s)"
+    IDS_SEARCH_UNTERMSTRING "Sonlandýrýlamaz dizgi"
+    IDS_SEARCH_GENERALERROR "Genel hata"
+    IDS_SEARCH_MISSINGORRIGHT "VEYA operatörü için eksik sað kýsým"
+    IDS_SEARCH_MISSINGNOTRIGHT "DEÐÝL operatörü için eksik sað kýsým"
+    IDS_SEARCH_MISSINGEXPRPARANT "'(' ')' için eksik ifade"
+    IDS_SEARCH_MISSINGCLOSINGPARANT "')' kapatma eksik"
+    IDS_SEARCH_MISSINGANDLEFT "VE operatörünün sol kýsmý eksik"
+    IDS_SEARCH_MISSINGORLEFT "VEYA operatörünün sol kýsmý eksik"
+    IDS_SEARCH_MISSINGNOTLEFT "DEÐÝL operatörünün sol kýsmý eksik"
+    IDS_SEARCH_EXPRERROR    "Arama ifadesini ayrýþtýrma baþarýsýz"
+    IDS_SEARCH_TOOCOMPLEX   "Ýfade çok karýþýk"
+    IDS_SEARCH_INVALIDMINMAX 
+                            "En az/En fazla dosya boyutu için geçersiz birim belirlenmiþ"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_VERSION             "Sürüm"
+    IDS_ALL_A4AF_TO_THIS    "Tüm Kaynaklarý Þimdi Bu Dosyaya Geçir"
+    IDS_ALL_A4AF_TO_OTHER   "Tüm Kaynaklarý Þimdi Diðer Herhangi Bir Dosyaya Geçir"
+    IDS_ALL_A4AF_AUTO       "Otomatik Olarak Tüm (A4AF) Kaynaklarý Bu Dosyaya Geçir"
+    IDS_SWAP_A4AF_TO_THIS   "(A4AF) Kaynaklarý Þimdi Bu Dosyaya Geçir"
+    IDS_SWAP_A4AF_TO_OTHER  "(A4AF) Kaynaklarý Þimdi Diðer Herhangi Bir Dosyaya Geçir"
+    IDS_A4AF                "Kaynak Saptama (A4AF)"
+    IDS_MOBILEMULE          "MobileMule"
+    IDS_ENABLEMM            "MobileMule etkin"
+    IDS_AUTOCAT_LABEL       "Otomatik Kat-Belirleme (örnek, | ile ayýrýn)"
+    IDS_SHOWEXTSETTINGS     "Daha çok denetim göster (geliþmiþ modda denetimler)"
+    IDS_TREEOPTIONS_TRUE    "Doðru"
+    IDS_TREEOPTIONS_FALSE   "Yalnýþ"
+    IDS_TREEOPTIONS_OK      "TAMAM"
+    IDS_HYPERTEXT_FONT_HINT "Sunucu-, Mesaj- ve IRC-Penceresi için yazý tipi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SELECT_FONT         "Yazý Tipi Seçin"
+    IDS_SERVER_LIMITS       "Esnek- / Kesin-Dosya sýnýrý"
+    IDS_SERVERINFO          "Sunucu Bilgisi"
+    IDS_KBITSSEC            "kBit/san"
+    IDS_KBYTESSEC           "kBayt/san"
+    IDS_ERR_CREATE_DIR      "%s dizini oluþturma baþarýsýz ""%s"" - %s"
+    IDS_WRN_INCFILE_RESERVED 
+                            "Gelen dizini eMule kurulum dizini olarak ayarlanamaz."
+    IDS_WRN_TEMPFILES_RESERVED 
+                            "Geçici dizini eMule kurulum dizini olarak ayarlanamaz."
+    IDS_WRN_INCTEMP_SAME    "Gelen dizini ve geçici dizini ayný olamaz."
+    IDS_MMFAILED            "MobileMule Soketini oluþturma baþarýsýz!"
+    IDS_MMSTARTED           "MobileMule sunucusu %i baðlantý noktasýnda baþlatýldý. Protokol sürümü: %s"
+    IDS_SHOWDWLPERCENTAGE   "Ýlerleme çubuðunda indirme tamamlanma yüzdesini göster"
+    IDS_TBN_ONNEWDOWNLOAD   "Ýndirme eklendiðinde"
+    IDS_ARTIST              "Sanatçý"
+    IDS_ALBUM               "Albüm"
+    IDS_MMGUIDELINK         "MobileMule Kýlavuzu"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UPLOADREQ        "Ýstenen gönderim:"
+    IDS_SETTINGCHANGED_RESTART 
+                            "Deðiþtirilen ayarlarýn etkili olmasý için, lütfen eMule'ü yeniden baþlatýn!"
+    IDS_CREDITSEXPIRED      ", %i istemci silindi (5 ay içinde görünmez)"
+    IDS_SOURCESINFO         "%i  (Kullanýþlý: %i, NNP: %i, A4AF: %i)"
+    IDS_SHOW_META_DATA      "&Meta Verisini Göster..."
+    IDS_META_DATA           "Meta Verisi"
+    IDS_TIMEBEFORE          "(%s önce)"
+    IDS_FD_TIMEDATE         "Tarihler"
+    IDS_FILEINFORMATION     "Dosya Bilgisi"
+    IDS_STATS_FREESPACE     "Geçici sürücüde Boþ Alan: "
+    IDS_IRC_HELPCHANNEL     "Yardým kanallarýna baðlan"
+    IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-turkish"
+    IDS_IRC_ACCEPTLINKSFRIENDS "Sadece arkadaþlardan"
+    IDS_COMPLSOURCES        "Tam Kaynaklar"
+    IDS_CHECKNOENDTIME      "Bitiþ zamaný yok"
+    IDS_FD_DOWNLOADSTARTED  "Eklenen indirme:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MATCH_KEYWORDS      "Eþ kelimeler"
+    IDS_FAILEDREOPEN        "Önemli Hata: '%s' parça dosyasýnýn tekrar açýlmasý baþarýsýz (%s)!"
+    IDS_ERR_PREVIEWALREADY  "Zaten bu kullanýcýdan beklenen önizleme isteði var"
+    IDS_ERR_PREVIEWFAILED   "'%s' kullanýcýsýndan önizleme baþarýsýz"
+    IDS_DWTOT               "Disk Alaný"
+    IDS_DWTOT_NR            "Ýndirme Sayýsý: %d"
+    IDS_DWTOT_TSD           "Ýndirmelerin Toplam Boyutu: %s"
+    IDS_DWTOT_TCS           "Toplam Tamamlanan Boyut: %s (%%%.0f)"
+    IDS_DWTOT_TSL           "Aktarýlacak Toplam Kalan Boyut: %s"
+    IDS_DWTOT_TSN           "Ýndirmeler için Gerekli Toplam Alan: %s"
+    IDS_DWTOT_FS            "Geçici Sürücüde Boþ Alan: %s"
+    IDS_NEEDFREEDISKSPACE   "%s (%s boþ yere ihtiyacýnýz var!)"
+    IDS_SERVERKEEPALIVETIMEOUT "Sunucu baðlantýsý yenileme aralýðý [dak.]"
+    IDS_MORE                "&Daha Fazla"
+    IDS_TOOLS               "&Araçlar"
+    IDS_ERR_JIGLENEEDSTYPE  "Eðer belli olmayan dosya türüyle Jigle veritabanýný aramak isterseniz, en az dosya uzantýsýný belirtmelisiniz!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CREATEHOSTNAMESRCLINK 
+                            "eD2K Baðlantýsýný Panoya Kopyala (Anamakineadý)"
+    IDS_HASHINGFILESCOUNT   " (%u adresleniyor)"
+    IDS_CHECKDISKSPACE      "Diskalanýný Kontrol Et"
+    IDS_YOURHOSTNAME        "Kendi eD2K baðlantýnýz için anamakineadý"
+    IDS_INSUFFICIENT        "Yetersiz Diskalaný"
+    IDS_MINFREEDISKSPACE    "En az boþ diskalaný [MB]"
+    IDS_WARNING             "Uyarý"
+    IDS_IMPORTSPLPF         "Parça Dosyalarýný Dýþarýdan Al (eM, eD, ON)"
+    IDS_IMP_STEPREADPF      "Parça klasörü okunuyor"
+    IDS_IMP_STEPBASICINF    "Parça dosyasýndan temel bilgiler alýnýyor"
+    IDS_IMP_STEPCRDESTFILE  "Hedefteki parça dosyasý oluþturuluyor"
+    IDS_IMP_LOADDATA        "Eski parça dosyasýndan veri yükleniyor (%i / %i)"
+    IDS_IMP_SAVEDATA        "Yeni tek parça dosyasýna veri bloðu kaydediliyor (%i / %i)"
+    IDS_IMP_IOERROR         "Parça dosyasý dönüþtürülürken dosya hatasý oluþtu"
+    IDS_IMP_GETPFINFO       "Kaynak parça dosyasý bilgisi alýnýyor"
+    IDS_IMP_ADDDWL          "Ýndirme ekleniyor ve yeni parça dosyasý kaydediliyor"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_FETCHSTATUS     "Durum getiriliyor..."
+    IDS_IMP_INPROGR         "ilerlemekte"
+    IDS_IMP_ERR_DISKSP      "Hata: Yetersiz diskalaný"
+    IDS_IMP_ERR_PARTMETIO   "Hata: Partmet bulunamadý"
+    IDS_IMP_ERR_IO          "Hata: IO Hatasý!"
+    IDS_IMP_ERR_FAILED      "Hata: Baþarýsýz!"
+    IDS_IMP_STATUSQUEUED    "Sýrada"
+    IDS_IMP_ALRDWL          "Zaten indiriliyor"
+    IDS_IMP_ADDBTN          "Dýþarýdan alým &ekle"
+    IDS_IMP_RETRYBTN        "Seçileni &Tkr.Dene"
+    IDS_IMP_REMOVEBTN       "Seçileni &Kaldýr"
+    IDS_IMP_SELFOLDER       "Lütfen tek partmet-klasörü veya tüm partmet-altklasörleri ile eski geçici klasörünüzü seçin!"
+    IDS_IMP_DELSRC          "Baþarýlý dýþardan alýnmýþ indirmenin kaynak-parça dosyasýný silmek istediðinize eminmisiniz?"
+    IDS_IMP_SIZE            "%s (Disk:%s)"
+    IDS_IMP_STATUS          "%s dýþardan alýnýyor: %s"
+    IDS_DYNUPENABLED        "Otomatik olarak en iyi gönderme sýnýrýný bul"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE "Ping toleransý (en düþük ping %)"
+    IDS_DYNUP_GOINGUPDIVIDER "Yavaþlýðý arttýr"
+    IDS_DYNUP_GOINGDOWNDIVIDER "Yavaþlýðý düþür"
+    IDS_DYNUP_NUMBEROFPINGS "Ortalama için en fazla ping sayýsý"
+    IDS_DYNUP_MINUPLOAD     "Ýzin verilmiþ en düþük gönderme hýzý"
+    IDS_ESTTIMELEFT         "Tahmini geçen süre:"
+    IDS_TRANSFER_RATE_LABEL "Aktarma oraný:"
+    IDS_SAVELOG             "Günlüðü kaydet"
+    IDS_CMT_COPYCLIPBOARD   "Yorumu panoya kopyala"
+    IDS_ASKDOWNLOADLANG     "Seçmiþ olduðunuz dil sisteminize kurulu deðil. eMule'un bunu emule-project.net adresinden indirmesini istermisiniz?"
+    IDS_ASKDOWNLOADLANGCAP  "Dil dosyalarýný indir"
+    IDS_ERR_FAILEDDOWNLOADLANG 
+                            "Seçili '.dll' dil dosyasýný %s adresinden indirme ve kurma baþarýsýz!"
+    IDS_ERR_BADFOLDER       "Geçersiz klasör.\nKlasör oluþturulamadý. Lütfen isim ve yerini kontrol edin."
+    IDS_AUTOREMOVEFD        "Tamamlanan indirmeleri otomatik temizle"
+    IDS_MM_BLOCK            "MobileMule oturumu için 3 baþarýsýz oturum açýldý - 10 dakikalýðýna daha fazla giriþim engellenecek!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_KAD_NODE            "Node Arama (%i:%i)"
+    IDS_KAD_STOREFILE       "Dosya Stokla (%i:%i)"
+    IDS_KAD_STOREKW         "Sözcük Stokla (%i:%i)"
+    IDS_KAD_UNKNOWN         "Bilinmeyen (%i:%i)"
+    IDS_SRV_TCPCOMPR        "TCP sýkýþtýrmasý"
+    IDS_KADSEARCHLAB        "Þimdiki Aramalar"
+    IDS_SRV_UDPSR           "Kaynak istekleri için geniþletilmiþ UDP protokolü"
+    IDS_SRV_UDPFR           "Dosya istekleri için geniþletilmiþ UDP protokolü"
+    IDS_MINLENGTH           "En az uzunluk [ss:dd:ss]"
+    IDS_EM_HELP             "&Yardým"
+    IDS_WRN_FRIENDDUPLIPPORT 
+                            "Arkadaþ eklenmedi.\r\n\r\nZaten ayný IP adresi ve baðlantý noktasý olan arkadaþ var."
+    IDS_DYNUP               "Gönderme HýzýAlgýlama"
+    IDS_KADOVERHEAD         "Kad Birikimi (Paket): %s (%s)"
+    IDS_FIND                "Bul..."
+    IDS_LOG_BANNED_CLIENTS  "Yasaklý istemcileri günlükle"
+    IDS_LOG_RATING_RECV     "Alýnmýþ dosya taným ve oranlarýný günlükle"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MM_NEWUSER          "MobileMule-Sunucusu 'na yeni kullanýcý baþarýlý oturum açtý"
+    IDS_RADCLIENTS          "Bilinen istemcilerden"
+    IDS_KADUDPPORTERR       "Kad 'in UDP baðlantý noktasý ya eMule'ün Ext UDP bað.noktasýyla yada eMule'ün Sunucu UDP bað.noktasýyla çakýþýyor. Baðlantý noktasý %u numarasýna deðiþtirildi."
+    IDS_CONFIRM_FILEDELETE  "Tüm seçili dosyalarý gerçekten diskten kaldýrmak istiyormusunuz?"
+    IDS_OPENFOLDER          "Klasör Aç"
+    IDS_DELETE              "Diskten Sil"
+    IDS_BOOTSTRAP           "Önyükleme"
+    IDS_VIAED2KSQ           "ED2K Sunucusu yoluyla"
+    IDS_EM_KADEMLIA         "&Kad"
+    IDS_VIAKAD              "Kad yoluyla"
+    IDS_VIASE               "Kaynak Deðiþim yoluyla"
+    IDS_SELECTTOOLBARBITMAP "Araç Çubuðu için Bitmap Seç"
+    IDS_SELECTTOOLBARBITMAPDIR "Bitmap Dizini Seç"
+    IDS_TOOLBARSKINS        "Araç Çubuðu Kaplamalarý"
+    IDS_NOTEXTLABELS        "Etiket yok"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TEXTLABELSONRIGHT   "Simgenin Saðý"
+    IDS_TEXTLABELS          "Metin Etiketleri"
+    IDS_ENABLETEXTLABELS    "Simgenin Altý"
+    IDS_CUSTOMIZETOOLBAR    "Araç Çubuðunu Özelleþtir"
+    IDS_MINBITRATE          "En az bitoraný [kBit/s]"
+    IDS_KAD_RECHECKFW       "Güvenlik Duvarý Kontrolü"
+    IDS_SHAREDTITLE         "ED2K|Kad Paylaþýldý"
+    IDS_WARNINGNOBS         "Þuan önyükleme aktif deðil (Kad etkisiz veya zaten baðlý)."
+    IDS_FIREWALLED          "Güvenlik Duvarý"
+    IDS_KADEMLIA            "Kad"
+    IDS_KADCONTACTLAB       "Baðlantýlar"
+    IDS_KADDISTANCE         "Mesafe"
+    IDS_KEY                 "Anahtar"
+    IDS_NUMBER              "Sayý"
+    IDS_KAD_SEARCHSRC       "Kaynaklarý Ara (%i:%i)"
+    IDS_KAD_SEARCHKW        "Sözcük Ara (%i:%i)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LOG_SECURE_IDENT    "Güvenli kimlik günlükle"
+    IDS_LOG_FILTERED_IPS    "Süzülen ve/veya yoksayýlan IP'leri günlükle"
+    IDS_LOG_FILE_SAVING     "Dosya kayýt faaliyetini günlükle"
+    IDS_IPFILTERFILES       "Tüm IP Süzgeç Dosyalarý (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Süzgeç Dosyalarý (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Dosyalarý (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Metin Dosyalarý (*.txt)|*.txt|Tüm Dosyalar (*.*)|*.*||"
+    IDS_DELETEIPFILTERS     "Seçili IP Süzgecini gerçekten silmek istiyormusunuz?"
+    IDS_TOTAL_IPFILTER_LABEL "Toplam IP süzgeci:"
+    IDS_TOTAL_IPS_LABEL     "Toplam IP:"
+    IDS_DELETE2             "Sil"
+    IDS_APPEND              "Ýlave et..."
+    IDS_SAVE                "Kaydet"
+    IDS_IP_START            "Baþlangýç"
+    IDS_IP_END              "Bitiþ"
+    IDS_IP_LEVEL            "Seviye"
+    IDS_IP_DESC             "Taným"
+    IDS_IP_HITS             "Basýþ"
+    IDS_IP_RULES            "IP Süzgeçleri:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOTCONNECTEDKAD "Þu an Kad Aðýna baðlý deðilsiniz!"
+    IDS_IRC_NOSFS           "Paylaþýlan Dosyalar Seçili Deðil"
+    IDS_IRC_IGNOREMISCMESSAGE "Diðer bilgi mesajlarýný yoksay"
+    IDS_KNOWN               "Bilinen"
+    IDS_DL_ACTIVE_TIME      "Ýndirme süresi"
+    IDS_RESETLABEL          "Auto completion (history function)"
+END
+
+#endif    // Turkish resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "..\version.h"
+#include "lang.rc2"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

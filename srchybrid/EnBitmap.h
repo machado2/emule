@@ -1,0 +1,25 @@
+#if !defined(AFX_ENBITMAP_H__1FDE0A4E_8AB4_11D6_95AD_EFA89432A428__INCLUDED_)
+#define AFX_ENBITMAP_H__1FDE0A4E_8AB4_11D6_95AD_EFA89432A428__INCLUDED_
+
+#pragma once
+
+class CEnBitmap : public CBitmap  
+{
+public:
+	CEnBitmap();
+	virtual ~CEnBitmap();
+
+	BOOL LoadImage(LPCTSTR pszImagePath, COLORREF crBack = 0);
+	BOOL LoadImage(UINT uIDRes, LPCTSTR pszResourceType, HMODULE hInst = NULL, COLORREF crBack = 0); 
+	BOOL LoadImage(LPCTSTR lpszResourceName, LPCTSTR pszResourceType, HMODULE hInst = NULL, COLORREF crBack = 0); 
+
+	// helpers
+	static BOOL GetResource(LPCTSTR lpName, LPCTSTR lpType, HMODULE hInst, void* pResource, int& nBufSize);
+	static IPicture* LoadFromBuffer(BYTE* pBuff, int nSize);
+
+protected:
+	BOOL Attach(IPicture* pPicture, COLORREF crBack);
+
+};
+
+#endif // !defined(AFX_ENBITMAP_H__1FDE0A4E_8AB4_11D6_95AD_EFA89432A428__INCLUDED_)

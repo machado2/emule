@@ -1,0 +1,1662 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "fi_FI.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "..\resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Finnish resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FIN)
+#ifdef _WIN32
+LANGUAGE LANG_FINNISH, SUBLANG_DEFAULT
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "fi_FI.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""..\\resource.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""..\\version.h""\r\n"
+    "#include ""lang.rc2""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_SOCKETS_INIT_FAILED "Virhe luotaessa windows-soketteja"
+    IDS_ABOUTBOX            "&Tietoa eMulesta..."
+    IDS_HTTPDOWNLOAD_FILESTATUS "Tiedosto: %s Palvelin: %s"
+    IDS_HTTPDOWNLOAD_CONNECTED "Yhdistetty %s"
+    IDS_HTTPDOWNLOAD_RESOLVING_NAME "Selvitetään nimeä: %s"
+    IDS_HTTPDOWNLOAD_RESOLVED_NAME "Nimi selvitetty: %s"
+    IDS_HTTPDOWNLOAD_CONNECTING "Yhdistetään: %s"
+    IDS_HTTPDOWNLOAD_REDIRECTING "Uudelleenohjataan: %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_GETTING_FILE_INFORMATION "Haetaan tiedoston tiedot"
+    IDS_HTTPDOWNLOAD_FAIL_PARSE_ERROR "Virhe käsiteltäessä osoitetta: %s"
+    IDS_HTTPDOWNLOAD_GENERIC_ERROR "Virhe yritettäessä ladata tiedostoa: %s"
+    IDS_HTTPDOWNLOAD_FAIL_CONNECT_SERVER 
+                            "eMule kohtasi virheen yhdistäessään palvelimelle: %s"
+    IDS_HTTPDOWNLOAD_INVALID_SERVER_RESPONSE 
+                            "Palvelin ei palauttanut kelvollista vastausta"
+    IDS_HTTPDOWNLOAD_INVALID_HTTP_RESPONSE 
+                            "Palvelin ei palauttanut Kelvollista HTTP-vastausta"
+    IDS_HTTPDOWNLOAD_ERROR_READFILE 
+                            "eMule kohtasi virheen ladatessaan tiedostoa: %s"
+    IDS_HTTPDOWNLOAD_PERCENTAGE 
+                            "Päivitetään palvelinlistaa: %s%% / %s valmiina"
+    IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Haetaan tiedostoa"
+    IDS_HTTPDOWNLOAD_OF     "%s / %s"
+    IDS_HTTPDOWNLOAD_SECONDS "%s s"
+    IDS_HTTPDOWNLOAD_MINUTES "%s min"
+    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%s min %s s"
+    IDS_HTTPDOWNLOAD_BYTES  "%s tavua"
+    IDS_HTTPDOWNLOAD_KILOBYTES "%s KiB"
+    IDS_CANCEL              "Peruuta"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_MEGABYTES "%s MiB"
+    IDS_HTTP_CAPTION        "Päivitetään palvelinlistaa"
+    IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s kopioitu)"
+    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s B/s"
+    IDS_HSAV                "Hashset available"
+    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s KiB/s"
+    IDS_FD_CORR             "Corrupted"
+    IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
+                            "Tiedosto '%s' on jo olemassa.\nHaluatko korvata sen?"
+    IDS_FD_RECOV            "Recovered"
+    IDS_HTTPDOWNLOAD_FAIL_FILE_OPEN 
+                            "eMule kohtasi virheen avatessaan tiedostoa luettavaksi: %s"
+    IDS_HTTPDOWNLOAD_ABORTING_TRANSFER "Peruutan siirtoa"
+    IDS_FD_COMPR            "Compression"
+    IDS_WIZARD_NETWORK      "Choose which network(s) you want to use."
+    IDS_MAIN_READY          "eMule %s on valmis käytettäväksi"
+    IDS_WIZARD_ED2K         "ED2k Settings"
+    IDS_SEL_SKIN            "Select Skin..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MAIN_SOCKETERROR    "Virhe: eMule ei voi luoda sokettia porttiin %i"
+    IDS_MAIN_BTN_DISCONNECT "&Katkaise"
+    IDS_MAIN_BTN_DISCONNECT_TOOLTIP "Katkaisee yhteyden nykyiseen palvelimeen"
+    IDS_ERR_WRONGFILEID     "Virhe: Vastaanotin väärän tiedoston tunnnisteen"
+    IDS_ERR_BADHASHSET      "Virhe: Vastaanotin virheellisen hashkokoelman"
+    IDS_ERR_BADDATABLOCK    "Virhe: Vastaanotin virheellisen osan tiedostoon"
+    IDS_ERR_ILLFORMEDHASH   "Virheellisesti muotoiltu hash"
+    IDS_ERR_BADED2KLINK     "Virheellinen ed2k-linkki"
+    IDS_ERR_NOSLLINK        "Ei ole ed2k-linkki"
+    IDS_ERR_WRONGPACKAGESIZE "Virheellinen OP_FILEREQUEST-pakettikoko"
+    IDS_ERR_WRONGHPACKAGESIZE "Virheellinen OP_HASHSETREQUEST-pakettikoko"
+    IDS_ERR_BADCLIENTACTION "Varoitus: Käyttäjä aiheutti virheen: %s. Katkaisin yhteyden"
+    IDS_ERR_UNKNOWNCLIENTACTION 
+                            "Varoitus: Tuntematon käyttäjä lähettää laajennetun protokollan paketteja"
+    IDS_ERR_OPENMET         "eMule ei voi avata tiedostoa part.met (%s => %s)"
+    IDS_ERR_BADMETVERSION   "Virhe: Tiedoston part.met versio on väärä (%s => %s)"
+    IDS_ERR_BADGAP          "Virhe: Virheellinen Gap-tagi tiedostossa part.met"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_EMPTYADRESSESDAT_TITLE "Palvelinlistan osoitetta ei ole"
+    IDS_ERR_BADSERVERMETVERSION 
+                            "Väärä tagiversio server.met-tiedostossa (0x%X)!"
+    IDS_SERVERSFOUND        "Tiedostossa server.met on %i palvelinta"
+    IDS_SERVERSADDED        "Lisäsin %d ja poistin %d palvelinta"
+    IDS_ERR_BADSERVERLIST   "Tiedosto server.met on vioittunut. eMule ei voi ladata palvelinlistaa"
+    IDS_ERR_FILEERROR_SERVERMET 
+                            "eMule kohtasi virheen lukiessaan server.met-tiedostoa: %s. eMule ei ladannut palvelinlistaa."
+    IDS_ERR_SAVESERVERMET   "eMule kohtasi virheen tallentaessaan server.met-tiedostoa!"
+    IDS_PASSIVE             "Passive"
+    IDS_MAIN_CONNECTEDTO    "Yhteys muodostettu: "
+    IDS_MAIN_BTN_CANCEL     "&Peruuta"
+    IDS_AVAIL               "Kimpaleita: %d , saatavilla: %d (%.1f%%)\n\n"
+    IDS_TYPE                "Tyyppi"
+    IDS_FILEID              "Hash"
+    IDS_FILE                "Tiedosto"
+    IDS_DOWNLOAD            "Lataus"
+    IDS_SL_SERVERNAME       "Nimi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IP                  "IP"
+    IDS_DESCRIPTION         "Kuvaus"
+    IDS_PING                "Viive"
+    IDS_FILES               "Tiedostoja"
+    IDS_PREFERENCE          "Prioriteetti"
+    IDS_PRIONOPREF          "Ei prioriteettia"
+    IDS_CONNECTTHIS         "Yhdistä valittuun palvelimeen"
+    IDS_CHAT_WELCOME        "Instant Messaging\n  \nKlikkaa oikealla ja valitse 'Lähetä viesti'"
+    IDS_MAIN_BTN_CANCEL_TOOLTIP "Lopettaa nykyiset yhdistämisyritykset"
+    IDS_MAIN_BTN_CONNECT    "&Yhdistä"
+    IDS_ERR_SAVESERVERMET2  "Virhe tallentaessani tiedostoa server.met. Joudut luultavasti poistamaan vanhan server.met-tiedoston ja korvaamaan sen server.met.old-tiedostolla"
+    IDS_NOTCONNECTED        "Ei yhteyttä palvelimeen"
+    IDS_DISCONNECTED        "Yhteys on katkaistu"
+    IDS_USERS               "Käytt. %i"
+    IDS_UPDOWN              "Ulos %.1f(%.1f) | Sis. %.1f(%.1f)"
+    IDS_CONNECTED           "Yhdistetty"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_WRITEERROR      "Virhe: Virhe tapahtui kirjoittaessani %s : %s"
+    IDS_ERR_COMPLETIONFAILED 
+                            "Virhe: Virhe tapahtui viimeistellessäni tiedostoa %s. Käynnistä minut uudestaan, jos haluat minun koittavan viimeistelyä uudestaan"
+    IDS_ERR_DELETEFAILED    "Virhe: En voi poistaa tiedostoa %s. Joudut tekemään sen itse"
+    IDS_DOWNLOADDONE        "Tiedosto %s on valmis"
+    IDS_ERR_DELETE          "Virhe: En voi poistaa tiedostoa %s."
+    IDS_ERR_HASHERRORWARNING 
+                            "Varoitus: En voi muodostaa hashia ladatulle tiedostolle %s: hashkokoelma on vajaa"
+    IDS_ERR_INCOMPLETEHASH  "Virhe: En voi muodostaa hashia ladatulle kimpaleelle tiedostosta %s: hashkokoelma on vajaa. Tätä ei pitäisit tapahtua"
+    IDS_DOWNLOADING         "Lataan"
+    IDS_WAITING             "Odotan"
+    IDS_HASHING             "Luon hashia"
+    IDS_COMPLETING          "Viimeistelen"
+    IDS_COMPLETE            "Valmis"
+    IDS_PAUSED              "Pysäytetty"
+    IDS_ERRORLIKE           "Virhe"
+    IDS_ASSIGNED2K          "eMule ei nappaa ed2k-linkkejä. Haluatko sen nappaavan ne (suositeltavaa)?"
+    IDS_ERR_EMPTYADRESSESDAT 
+                            "eMule ei löytänyt palvelinlistan osoitetta adresses.dat-tiedostosta. Lisää toimiva osoite."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LINKNOTADDED        "Linkkiä ei voi lisätä"
+    IDS_MAIN_EXIT           "Haluatko varmasti sulkea eMulen?"
+    IDS_MAIN_EXITTITLE      "Suljetaanko eMule?"
+    IDS_MAIN_POPUP_RESTORE  "Avaa"
+    IDS_CONNECTTOANYSERVER  "Yhdistä mille tahansa palvelimelle"
+    IDS_EXIT                "Sulje"
+    IDS_CONNECTING          "Yhdistän"
+    IDS_FAILED              "Epäonnistui"
+    IDS_ERR_BADSERVERREPLY  "Kirjautumisvastaus oli virheellinen"
+    IDS_NEWCLIENTID         "Uusi tunniste on %u"
+    IDS_NOSHAREDFOLDERS     "Ei jaettuja hakemistoja"
+    IDS_SHAREDFOLDERS       "Jaetut hakemistot"
+    IDS_VIEW1               "Näytä "
+    IDS_VIEW2               " (ei jaettu)"
+    IDS_PRIOLOW             "Pieni"
+    IDS_PRIONORMAL          "Normaali"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOHIGH            "Suuri"
+    IDS_DOWNLOADMENUTITLE   "Lataukset"
+    IDS_PRIORITY            "Prioriteetti"
+    IDS_NEWSERVERS          "Vastaanotin %d uutta palvelinta"
+    IDS_DL_STOP             "&Lopeta"
+    IDS_DL_PAUSE            "&Pysäytä"
+    IDS_DL_RESUME           "&Jatka"
+    IDS_DL_OPEN             "&Avaa tiedosto"
+    IDS_DL_INFO             "Näytä &tiedot"
+    IDS_DL_CLEAR            "Poista &valmiit listasta"
+    IDS_DL_LINK1            "&Kopioi ed2k-linkki leikepöydälle"
+    IDS_DL_LINK2            "Kopioi ed2k-linkki leikepöydälle (&HTML)"
+    IDS_SHOWDETAILS         "&Näytä tiedot"
+    IDS_SEND_MSG            "Lähetä v&iesti"
+    IDS_ASKING              "Kysyn"
+    IDS_CONNVIASERVER       "Yhdistän palvelimen välityksellä"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ONQUEUE             "Jonossa"
+    IDS_TRANSFERRING        "Siirrän"
+    IDS_RECHASHSET          "Vastaanotan hashkokoelmaa"
+    IDS_NONEEDEDPARTS       "Ei tarvittavia osia"
+    IDS_NOCONNECTLOW2LOW    "Matalalla tunnisteella ei voi yhdistää toiseen"
+    IDS_UNKNOWN             "Tuntematon"
+    IDS_ASKED4ANOTHERFILE   "Kysyin jo toista tiedostoa"
+    IDS_Q_CANCELDL          "Haluatko varmasti lopettaa näiden tiedostojen lataamisen?\n"
+    IDS_Q_CANCELDL2         "Haluatko varmasti lopettaa tämän tiedoston lataamisen?\n"
+    IDS_COPIED2CB           "Kopioin leikepöydälle: \n"
+    IDS_PROCDONE            "% valmiina"
+    IDS_SELECTINCOMINGDIR   "Valitse hakemisto valmistuneille tiedostoille"
+    IDS_SELECTTEMPDIR       "Valitse hakemisto väliaikaisille tiedostoille"
+    IDS_DL_FILENAME         "Nimi"
+    IDS_DL_SIZE             "Koko"
+    IDS_DL_TRANSF           "Siirretty"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DL_SPEED            "Nopeus"
+    IDS_DL_PROGRESS         "Edistyminen"
+    IDS_DL_SOURCES          "Lähteitä"
+    IDS_ERR_BADSERVERLISTRECEIVED 
+                            "Vastaanotin virheellisen palvelinlistapaketin"
+    IDS_STATUS              "Tila"
+    IDS_DL_REMAINS          "Jäljellä"
+    IDS_QL_USERNAME         "Nimi"
+    IDS_ERR_PACKAGEHANDLING "Virhe palvelimelta vastaanottamassani paketissa (%s)"
+    IDS_QL_RATING           "Arvo"
+    IDS_CONNECTINGTO        "Yhdistän palvelimelle %s (%s: %i)..."
+    IDS_CLIENTS             "Käyttäjiä"
+    IDS_SEARCH_ANY          "Kaikki"
+    IDS_SEARCH_AUDIO        "Musiikki"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SEARCH_PICS         "Kuvat"
+    IDS_SEARCH_PRG          "Ohjelmat"
+    IDS_SEARCH_VIDEO        "Videot"
+    IDS_SEARCH_CDIMG        "CD-Imaget"
+    IDS_SEARCH_ARC          "Arkistot"
+    IDS_ERR_INVALIDLINK     "Tämä ed2k-linkki on virheellinen: %s"
+    IDS_ERR_LINKERROR       "Virheellinen linkki: %s"
+    IDS_ERR_NOTCONNECTED    "Palvelimeen ei ole yheyttä!"
+    IDS_REMOVETHIS          "Poista valittu palvelin"
+    IDS_REMOVEALL           "Poista kaikki palvelimet"
+    IDS_SRV_ADDR            "Anna palvelimen osoite"
+    IDS_SRV_PORT            "Virheellinen portti! Anna toinen portti"
+    IDS_SRV_NOTADDED        "En lisännyt palvelinta!"
+    IDS_SRV_READD           "Palvelin oli merkitty kuolleeksi. Lisäsin sen takaisin!"
+    IDS_SRV_NOURLAV         "Osoitetta ei olesaatavilla."
+    IDS_INVALIDURL          "Virheellinen osoite"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FAILEDDOWNLOADMET 
+                            "eMule kohtasi virheen ladatessaan palvelinlistaa osoitteesta %s"
+    IDS_PERMISSION          "Oikeus"
+    IDS_SHAREDFILES         "Jaetut tiedostot"
+    IDS_PRIOVERYLOW         "Pienin"
+    IDS_PRIORELEASE         "Julkaisu"
+    IDS_FSTATUS_LOCKED      "Lukittu"
+    IDS_KADALPHA            "Kademlia is still in an early development stage. We recommend to enabled it only if you are interested in testing it"
+    IDS_FSTATUS_FRIENDSONLY "Vain kavereille"
+    IDS_FSTATUS_PUBLIC      "Julkinen"
+    IDS_ERR_RENAMESF        "Failed to rename\r\n    ""%s""\r\nto\r\n    ""%s""\r\n\r\n%hs"
+    IDS_PRIOHIGHEST         "Suurin"
+    IDS_AVAILABLE           "available"
+    IDS_ERR_NOPRIMCHANGE    "Et voi muuttaa latauksessa olevan tiedoston oikeuksia!"
+    IDS_HIDDEN              "Piilotettu"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FSTAT_TRANSFER      "Siirto"
+    IDS_FSTAT_CONNECTION    "Yhteys"
+    IDS_FSTAT_CLIENTS       "Käyttäjät"
+    IDS_FSTAT_SERVERS       "Palvelimet"
+    IDS_FSTAT_WAITING       "Odotetaan..."
+    IDS_TIME                "Aika"
+    IDS_STATS_DDATA         "Vastaanotettu: %s"
+    IDS_STATS_UDATA         "Lähetetty: %s"
+    IDS_STATS_AVGDL         "Keskim. latausnopeus: %.2f KiB/s"
+    IDS_STATS_AVGUL         "Keskim. lähetysnopeus: %.2f KiB/s"
+    IDS_STATS_FOUNDSRC      "Lähteitä löydetty: %i"
+    IDS_STATS_ACTDL         "Aktiivisia latauksia: %i"
+    IDS_STATS_ACTUL         "Aktiivisia lähetyksiä: %i"
+    IDS_STATS_WAITINGUSERS  "Odottavia lähetyksiä: %i"
+    IDS_STATS_RECONNECTS    "Uudelleenyhdistämisiä: %i"
+    IDS_STATS_WAITTRANSF    "Odotetaan siirtoa..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_WAITCONN      "Odotetaan yhteyttä..."
+    IDS_STATS_CONNECTEDSINCE "Aikaa palvelimelle yhdistämisestä: %s"
+    IDS_STATS_RATIO         "Lähetys-/lataussuhde sessio / yhteensä:"
+    IDS_STATS_UNKNOWNCLIENT "Tuntemattomia: %i"
+    IDS_STATS_TOTAL         "Yhteensä: %i"
+    IDS_STATS_WORKING       "Toimivia: %i"
+    IDS_STATS_DEAD          "Kuollut/Poistettu: %i"
+    IDS_DISABLED            "Ei käytössä"
+    IDS_STOPPED             "Pysäytetty"
+    IDS_STATS_UPDATELABEL   "Päivitysviive: %i s"
+    IDS_QUEUECOUNT          "%u (%u estetty)"
+    IDS_NICKNAME            "Nimi: "
+    IDS_CLIENTSFILENAME     "\nKäyttäjän tiedoston nimi: "
+    IDS_ASKEDFAF            "\nKysyi toista tiedostoa"
+    IDS_WAITED              "Odotusaika"
+    IDS_ERR_LOADCREDITFILE  "Virhe tapahtui lukiessani ansiotiedostoa. Se korvataan uudella."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CREDITFILEOLD   "Ansiotiedosto on vanhentunut. Se korvataan uudella."
+    IDS_CREDITFILELOADED    "Pistetiedosto ladattu: %u tunnettua käyttäjää"
+    IDS_CREDITFILECORRUPT   "Ansiotiedosto on korruptoitunut. Se korvataan uudella!"
+    IDS_ERR_CREDITFILEREAD  "eMule kohtasi virheen lukiessaan ansiotiedostoa: %s"
+    IDS_ERR_FAILED_CREDITSAVE 
+                            "eMule kohtasi virheen tallentaessaan ansiotiedosta"
+    IDS_NOPARTSFOUND        "En löytänyt yhtään latausta"
+    IDS_FOUNDPARTS          "Löysin %i latausta"
+    IDS_NEWDOWNLOAD         "Aloitan tiedoston %s lataamisen"
+    IDS_ERR_ALREADY_DOWNLOADING "Tiedosto %s on jo latauslistassa"
+    IDS_ERR_ALREADY_DOWNLOADED "Olen jo ladannut tiedoston %s"
+    IDS_ERR_SERVERMET_BAD   "Tiedosto known.met on vioittunut. eMule ei voi ladata tunnettuja tiedostoja."
+    IDS_ERR_SERVERMET_UNKNOWN 
+                            "eMule kohtasi virheen lukiessaan tiedostoa known.met: %s. eMule ei voi ladata tunnettuja tiedostoja."
+    IDS_ERR_CONNECTIONERROR "eMule kohtasi virheen yhdistäessään palvelimelle %s (%s: %i): %s"
+    IDS_ERR_SOCKET          "Palvelinsoketissa on virhe: %s (%s: %i): %s"
+    IDS_SHAREDFOUND         "Löysin %i jaettua tiedostoa"
+    IDS_SHAREDFOUNDHASHING  "Löysin %i jaettua tiedostoa ja muodostan hashia %i uudelle tiedostolle"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_UDPEXT          "eMule kohtasi virheen käsitellessään laajennetun protokollan UDP-pakettia"
+    IDS_ERR_INCOMPLETEBLOCK "Kysyi keskeneräistä kimpaletta"
+    IDS_ERR_OPEN            "eMule kohtasi virheen avatessaan pyydettyä tiedostoa"
+    IDS_ERR_CLIENTERRORED   "eMule kohtasi virheen luodessaan pakettia käyttäjälle %s: %s. Yhteys katkaistiin."
+    IDS_ERR_REQ_FNF         "Pyydettyä tiedostoa ei löytynyt"
+    IDS_CLIENTBLOCKED       "Käyttäjä '%s' estettiin liian aggressiivsen käytöksen takia"
+    IDS_LUSERS              "Käyttäjiä"
+    IDS_LFILES              "tiedostoa"
+    IDS_DESC                "Kuvaus: %s"
+    IDS_PORT                "Portti"
+    IDS_ERR_NOVALIDSERVERSFOUND 
+                            "Virhe: En löytänyt toimivaa palvelinta listasta"
+    IDS_CONNECTEDTOREQ      "Yritän yhdistää palvelimeen %s (%s:%i): Lähetin kirjautumispyynnön"
+    IDS_ERR_FATAL           "eMule kohtasi virheen yhdistäessään palvelimeen. Tarkista internetyhteys!"
+    IDS_ERR_LOSTC           "Virhe: Yhteys palvelimeen %s (%s:%i) katkesi"
+    IDS_ERR_DEAD            "Palvelin %s (%s:%i) ei ole käytettävissä"
+    IDS_ERR_FULL            "Palvelin %s (%s:%i) on täynnä"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_METCORRUPT      "%s (%s) on korruptoitunut. eMule ei voi ladata tiedostoa"
+    IDS_ERR_FILEERROR       "eMule kohtasi virheen lukiessaan tiedostoa %s (%s): %s"
+    IDS_ERR_FILEOPEN        "eMule kohtasi virheen avatessaan tiedostoa %s (%s)"
+    IDS_SEL_SKINDIR         "Select Skin Directory..."
+    IDS_ERR_REHASH          "Tiedosto %s saattaa olla vioittunut. Muodostan uuden hashin"
+    IDS_SKIN_PROF           "Skin Profiles"
+    IDS_ERR_PART_FNF        "Virhe: En löytänyt .part-tiedosta"
+    IDS_ERR_OPENMETFILE     "Virhe: En voi avata tiedostoa part.met"
+    IDS_KADOPEN             "Open"
+    IDS_ERR_SAVEMET         "eMule kohtasi virheen tallentaessaan kimpaletiedostoa %s (%s)"
+    IDS_ERR_FOUNDCORRUPTION "Varoitus: Löysin vioittuneen kimpaleen %i tiedostosta %s"
+    IDS_HASHINGDONE         "Huomautus: Olen muodostanut uuden hashin tiedostolle %s. En havainnut virheitä"
+    IDS_ERR_PARTCORRUPT     "Varoitus: Lataamani kimpale %i tiedostosta %s on vioittunut"
+    IDS_ICHWORKED           "Korjasin vioittuneen kimpaleen %i tiedostosta %s"
+    IDS_ERR_OUTOFSPACE      "Virhe: Tiedostolle %s ei ole tilaa"
+    IDS_SE                  "Source Exchange"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOSERVERSC      "Virhe: En löytänyt toimivaa palvelinta listasta"
+    IDS_CONNECTEDTO         "Yhdistin palvelimeen %s"
+    IDS_DL_PREVIEW          "Esikatsele"
+    IDS_VIEWQUEUE           "Näytä jono"
+    IDS_VIEWUPLOADS         "Näytä lähetykset"
+    IDS_TW_UPLOADS          "Lähetykset"
+    IDS_TW_DOWNLOADS        "Lataukset"
+    IDS_TW_QUEUE            "Käyttäjiä jonossa:"
+    IDS_SW_SEARCHBOX        "Etsi"
+    IDS_SW_NAME             "Nimi"
+    IDS_SW_GLOBAL           "Globaali haku"
+    IDS_SW_TYPE             "Tyyppi"
+    IDS_SW_DIRECTDOWNLOAD   "Lataa linkistä"
+    IDS_SW_LINK             "ed2k-linkit"
+    IDS_SW_START            "Aloita"
+    IDS_SCHEDULER           "Ajastin"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC                 "IRC"
+    IDS_SW_RESULT           "Haun tulokset"
+    IDS_SW_DOWNLOAD         "Lataa valitut"
+    IDS_SV_SERVERLIST       "Palvelinlista"
+    IDS_SV_SERVERINFO       "Palvelimen tiedot"
+    IDS_SV_LOG              "Loki"
+    IDS_SV_NEWSERVER        "Uusi palvelin"
+    IDS_SV_ADDRESS          "IP tai osoite"
+    IDS_SV_PORT             "Portti"
+    IDS_SV_ADD              "Lisää listaan"
+    IDS_SV_MET              "Päivitä server.met osoitteesta"
+    IDS_SV_UPDATE           "Päivitä"
+    IDS_SF_FILES            "Jaetut tiedostot"
+    IDS_SF_STATISTICS       "Tilastot"
+    IDS_SF_RELOAD           "Päivitä"
+    IDS_SF_CURRENT          "Tämä sessio"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIORITY_UP         "Nosta prioriteettiä"
+    IDS_PRIORITY_DOWN       "Laske prioriteettiä"
+    IDS_SPEED_LIMITS        "Nopeusrajoitukset"
+    IDS_CAPACITY_LIMITS     "Yhteyden rajoitukset"
+    IDS_ADMIN               "Pääkäyttäjä"
+    IDS_ACCESSDENIED        "Pääsy evätty!"
+    IDS_WEB_LOWUSER         "Vieras"
+    IDS_WEB_ERR_CANTLOAD    "eMule kohtasi virheen avatessaan tiedostoa %s."
+    IDS_GLOBALSEARCH        "Gloobali (Palvelin)"
+    IDS_METHOD              "Tapa"
+    IDS_SW_WEBBASED         "Verkkohaku"
+    IDS_NOTHING             "ei mikään"
+    IDS_SETUPSPEED          "aseta lähetysraja"
+    IDS_SETDOWNSPEED        "aseta latausraja"
+    IDS_DAYLY               "päivittäin"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DAY_MO_FR           "Ma - Pe"
+    IDS_DAY_SA_SO           "La - Su"
+    IDS_MO                  "Maanantai"
+    IDS_DI                  "Tiistai"
+    IDS_MI                  "Keskiviikko"
+    IDS_DO                  "Torstai"
+    IDS_FR                  "Perjantai"
+    IDS_SA                  "Lauantai"
+    IDS_SO                  "Sunnuntai"
+    IDS_WEB_ADMINLOGIN      "Verkkokäyttöliittymä: Pääkäyttäjä kirjautui sisään"
+    IDS_WEB_GUESTLOGIN      "Verkkokäyttöliittymä: Vieras kirjautui sisään"
+    IDS_WEB_SESSIONEND      "Verkkokäyttöliittymä: Uloskirjautuminen"
+    IDS_DETAILS             "Yksityiskohdat"
+    IDS_ACTION              "Toiminto"
+    IDS_REMOVE              "Poista"
+    IDS_NEW                 "Uusi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SF_TOTAL            "Yhteensä"
+    IDS_SF_TRANS            "Siirretty:"
+    IDS_SF_ACCEPTED         "Hyväksytyt pyynnöt:"
+    IDS_SF_REQUESTED        "Pyydetty:"
+    IDS_ST_DOWNLOAD         "Latausnopeus"
+    IDS_ST_UPLOAD           "Lähetysnopeus"
+    IDS_ST_CURRENT          "Nykyinen"
+    IDS_ST_SESSION          "Session keskiarvo"
+    IDS_ST_ACTIVED          "Aktiiviset lataukset"
+    IDS_ST_ACTIVEU          "Aktiiviset lähetykset"
+    IDS_ST_WAITINGU         "Odottavat lähetykset"
+    IDS_CW_MESSAGES         "Viestit"
+    IDS_CW_FRIENDS          "Kaverit"
+    IDS_CW_SEND             "Lähetä"
+    IDS_CW_CLOSE            "Sulje"
+    IDS_PW_GENERAL          "Yleiset"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_DIR              "Hakemistot"
+    IDS_PW_NICK             "Nimi"
+    IDS_PW_INCOMING         "Valmistuneet tiedostot:"
+    IDS_PW_TEMP             "Väliaikaiset tiedostot:"
+    IDS_PW_BROWSE           "Selaa"
+    IDS_PW_SHARED           "Jaetut hakemistot:"
+    IDS_PW_CONNECTION       "Yhteys"
+    IDS_PW_DOWNC            "Latauskapasiteetti"
+    IDS_PW_DOWNL            "Latausraja"
+    IDS_PW_UPC              "Lähetyskapasiteetti"
+    IDS_PW_UPL              "Lähetysraja"
+    IDS_PW_MAXC             "Yhteyksiä enintään"
+    IDS_PW_CLIENTPORT       "Portti"
+    IDS_PW_AUTOCON          "Yhdistä käynnistettäessä"
+    IDS_PW_RECON            "Yhdistä palvelimelta pudotessa"
+    IDS_PW_SERVER           "Palvelimet"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_RDEAD            "Poista palvelin"
+    IDS_PW_RETRIES          "ep.on. yrityksen jälkeen"
+    IDS_PW_SCORE            "Käytä prioriteettisysteemiä"
+    IDS_PW_USC              "Päivitä palvelinlista yhdistettäessä palvelimelle"
+    IDS_PW_UCC              "Päivitä palvelinlista käyttäjän yhdistäessä"
+    IDS_PW_FILTER           "Suotata palvelimien ja käyttäjien LAN-IP:t"
+    IDS_PW_USS              "Päivitä palvelinlista käynnistettäessä"
+    IDS_PW_MISC             "Muut asetukset"
+    IDS_PW_TRAY             "Pienen&nä palkkiin"
+    IDS_PW_BEEP             "Piippaa virheen sattuessa"
+    IDS_PW_PROMPT           "Varmista sulkeminen"
+    IDS_PW_SPLASH           "Näytä aloituskuva"
+    IDS_PW_DBLCLICK         "Näytä latauksen lähteet vain tuplaklikkauksella"
+    IDS_PW_TOOL             "Pikkuvihjeiden viive (s)"
+    IDS_PW_FRONT            "Tuo päällimmäiseksi linkistä"
+    IDS_PW_LANG             "Kieli"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_FILES            "Tiedostot"
+    IDS_PW_ICH              "&Älykäs korruptioiden hallinta"
+    IDS_PW_SHARE            "Näytä jaetut tiedostot"
+    IDS_PW_EVER             "Kaikille"
+    IDS_PW_FRIENDS          "Kavereille"
+    IDS_PW_NOONE            "Älä näytä"
+    IDS_PW_RESET            "Tyhjennä"
+    IDS_PW_APPLY            "Käytä"
+    IDS_EM_TRANS            "&Siirrot"
+    IDS_EM_SERVER           "&Palvelimet"
+    IDS_EM_SEARCH           "&Haku"
+    IDS_EM_FILES            "&Jaot"
+    IDS_EM_MESSAGES         "&Viestit"
+    IDS_EM_STATISTIC        "&Tilastot"
+    IDS_EM_PREFS            "&Asetukset"
+    IDS_MB_LANGUAGEINFO     "Oletuskieli on valittu ja halutessasi voit vaihtaa sen Asetukset-välilehdeltä."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_GENERAL          "Yleistä"
+    IDS_FD_NAME             "Koko nimi:"
+    IDS_FD_MET              "met-tiedosto:"
+    IDS_FD_HASH             "Hash:"
+    IDS_FD_SIZE             "Koko:"
+    IDS_FD_STATUS           "Tiedoston tila:"
+    IDS_FD_TRANSFER         "Siirto"
+    IDS_FD_SOURCES          "Löydetyt lähteet:"
+    IDS_FD_PARTS            "Parts:"
+    IDS_FD_TRANS            "Siirretty:"
+    IDS_FD_DATARATE         "Nopeus:"
+    IDS_FD_TRANSI           "Siirretään:"
+    IDS_FD_COMPSIZE         "Valmis koko:"
+    IDS_FD_CLOSE            "Sulje"
+    IDS_FD_TITLE            "Muut tiedot"
+    IDS_CD_GENERAL          "Yleistä"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UNAME            "Nimi:"
+    IDS_CD_UHASH            "Hash:"
+    IDS_CD_CSOFT            "Ohjelma:"
+    IDS_CD_UIP              "IP-osoite:"
+    IDS_CD_SIP              "Palvelimen IP:"
+    IDS_CD_VERSION          "Versio:"
+    IDS_CD_UID              "Tunniste:"
+    IDS_CD_SNAME            "Palvelin:"
+    IDS_CD_CDOWN            "Nyt latauksessa:"
+    IDS_CD_DOWN             "Ladannut (sessio):"
+    IDS_CD_ADOWN            "Keskim. latausnopeus:"
+    IDS_CD_TDOWN            "Ladannut yhteensä:"
+    IDS_CD_UP               "Lähettänyt (sessio):"
+    IDS_CD_AUP              "Keskim. lähetysnopeus:"
+    IDS_CD_TUP              "Lähettänyt yhteensä:"
+    IDS_CD_TRANS            "Siirrot"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_SCORES           "Pisteet"
+    IDS_CD_MOD              "Lähetys/lataus -suhde:"
+    IDS_CD_RATING           "Arvo (yhteensä):"
+    IDS_CD_USCORE           "Lähetysjonopisteet:"
+    IDS_CD_TITLE            "Käyttäjän tiedot"
+    IDS_EMULEW              "Paina"
+    IDS_EMULEW2             "tarkastaaksesi uuden version saatavuuden"
+    IDS_EMULEW3             "tästä"
+    IDS_PW_MAXSOURCES       "Maks. lähteitä / tiedosto"
+    IDS_SHAREDFILESCOUNT    "Tiedostoja: %i"
+    IDS_SF_SIZE             "Tiedostojen koko: %s"
+    IDS_ERR_WRONGPARTNUMBER "Virheellinen kimpalenumero"
+    IDS_ERR_BADPORT         "Virheellinen portti"
+    IDS_ERR_NOHELLO         "Kysyy tervehtimättä"
+    IDS_ERR_INVALIDPACKAGE  "Virheellinen tai korruptoitunut paketti vastaanotettiin"
+    IDS_ERR_CLIENTERROR     "Käyttäjä '%s' (IP: %s) aiheutti virheen: %s. Yhteys käyttäjään katkaistiin!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_BADSIZE         "Virheellinen koko (OP_QUEUERANKING)"
+    IDS_ERR_BADCLIENT2      "Käyttäjä '%s' (IP: %s) aiheutti virheen: %u. Yhteys käyttäjään katkaistiin!"
+    IDS_ERR_NOTAFILELINK    "Ei ole tiedostolinkki"
+    IDS_ERR_CREATEPARTFILE  "eMule ei voi luoda kimpaletiedostoa."
+    IDS_ERR_UDP_MISCONF     "eMule kohtasi virheen käsitellessään saapuvia UDP-paketteja (Useimmiten väärin konfiguroitu palvelin)."
+    IDS_CHAT_START          "*** Uusi keskustelusessio : "
+    IDS_FILEPRIO            "Tiedoston prioriteetti"
+    IDS_SCORE               "Pisteet"
+    IDS_ASKED               "Kysytty"
+    IDS_LASTSEEN            "Viimeksi nähty"
+    IDS_BANNED              "Estetty"
+    IDS_PRIOVERYHIGH        "Suurin"
+    IDS_UUSERS              "Käyttäjiä"
+    IDS_UFAILED             "Epäonnistumisia"
+    IDS_OPENFILE            "Avaa tiedosto"
+    IDS_DATE                "Päiväys"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARTINFOS           "Kimpaletiedoston nimi:"
+    IDS_PARTINFOS2          "Lataus %d lähteeltä"
+    IDS_USERID              "Tunniste"
+    IDS_CLIENT              "Käyttäjä"
+    IDS_SERVER              "Palvelin"
+    IDS_SOURCEINFO          "%d kertaa kysytty - Kimpaleita saatavilla: %d"
+    IDS_CLIENTSOURCENAME    "\nKäyttäjän tiedostonimi: "
+    IDS_USERINFO            "Nimi: %s\n"
+    IDS_FILESTATS_SESSION   "Tilastot tästä sessiosta: Hyväksytty %d / %d pyynnöistä, %s siirretty\n"
+    IDS_FILESTATS_TOTAL     "Tilastot kaikista sessioista: Hyväksytty %d / %d pyynnöistä, %s siirretty"
+    IDS_REQ_UNKNOWNFILE     "Pyysi tuntematonta tiedostoa"
+    IDS_TRANSFERTIME        "Aikaa ensimmäisestä siirrosta: %s"
+    IDS_SF_AVERAGESIZE      "Keskimääräinen koko: %s"
+    IDS_SF_REQUESTS         "Pyyntöjä"
+    IDS_SF_ACCEPTS          "Hyväksyttyjä"
+    IDS_SF_TRANSFERRED      "Lähetetty"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_REMOVESEARCHSTRING  "Sulje tämä haku"
+    IDS_REMOVESELECTED      "Sulje valitut hakutulokset"
+    IDS_REMOVEALLSEARCH     "Sulje kaikki"
+    IDS_ENTERQUEUE          "Liittyi jonoon"
+    IDS_SF_FAIL             "Toimimattomia"
+    IDS_SF_WUSER            "Käyttäjiä toimivilla"
+    IDS_SF_WFILE            "Tiedostoja toimivilla"
+    IDS_SF_USER             "Käyttäjiä yhteensä"
+    IDS_SF_FILE             "Tiedostoja yhteensä"
+    IDS_UPLOADTIME          "Lähetysaika"
+    IDS_LASTSEENCOMPL       "Viimeksi nähty kokonaisena:"
+    IDS_YES                 "Kyllä"
+    IDS_NO                  "Ei"
+    IDS_UNBAN               "Poista estot"
+    IDS_SF_WORKING          "Toimivia"
+    IDS_ADDTOSTATIC         "Lisää kiinteään palvelinlistaan"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDED2SSF           "Lisätty kiinteään palvelinlistaan"
+    IDS_STATICSERVER        "Kiinteä"
+    IDS_ERROR_SSF           "Virhe: En voi avata tiedostoa staticservers.dat"
+    IDS_ERR_PACKAGEERROR    "eMule kohtasi virheen käsitellessään kimpaletta %s varten (väärä koko). Hylkäsin osan"
+    IDS_SF_ACTIVECON        "Aktiivisia yhteyksiä (arvio)"
+    IDS_SF_MAXCONLIMITREACHED "Yhteyksien enimmäismäärä saavutettu"
+    IDS_SF_AVGCON           "Yhteyksiä keskimäärin (arvio)"
+    IDS_SF_PEAKCON          "Samanaikaisten yhteyksien suurin määrä (arvio)"
+    IDS_ST_ACTIVEC          "Aktiiviset yhteydet"
+    IDS_NETWORK             "Verkko"
+    IDS_SF_DELCOUNT         "Poistetut"
+    IDS_QUEUEFULL           "Jono on täysi"
+    IDS_AVG                 "Keskiarvo"
+    IDS_BYTES               "B"
+    IDS_KBYTES              "KiB"
+    IDS_MBYTES              "MiB"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GBYTES              "GiB"
+    IDS_TBYTES              "TiB"
+    IDS_SECS                "s"
+    IDS_MINS                "min"
+    IDS_HOURS               "h"
+    IDS_DAYS                "d"
+    IDS_ED2KLINKFIX         "ed2k-linkit"
+    IDS_RECONNECT           "Yritän yhdistää palvelimelle uudestaan %d sekunnin kuluttua"
+    IDS_SERVERADDED         "Palvelin lisätty: %s"
+    IDS_IRC_IGNOREJOINMESSAGE "Ignore Join info messages"
+    IDS_STATS_SUCCUPCOUNT   "Virheettömiä lähetyssessioita: %i (%.2f%%)"
+    IDS_IRC_IGNOREPARTMESSAGE "Ignore Part info messages"
+    IDS_STATS_FAILUPCOUNT   "Epäonnistuneita lähetyssessioita: %i (%.2f%%)"
+    IDS_STATS_AVEUPTIME     "Keskimääräinen lähetysaika: %s"
+    IDS_SEARCHMINSIZE       "Min. koko"
+    IDS_SEARCHMAXSIZE       "Maks. koko"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PREF_ONLINESIG      "Käytä online-signaturea"
+    IDS_ERROR_SAVEFILE      "Virhe tallennettaessa"
+    IDS_REQ_SHAREDFILES     "Käyttäjä %s (%u) pyysi listaa jaetuista tiedostoista -> %s"
+    IDS_ACCEPTED            "Hyväksyin"
+    IDS_DENIED              "Kielsin"
+    IDS_PW_CON_DOWNLBL      "Lataus"
+    IDS_PW_CON_UPLBL        "Lähetys"
+    IDS_PW_AUTOCONNECTSTATICONLY 
+                            "Yhdistä automaattisesti vain kiinteään palvelinlistaan"
+    IDS_PW_CON_LIMITFRM     "Rajoitukset"
+    IDS_PW_FILE_ICH         "I.C.H käytössä"
+    IDS_STATS_AVGLABEL      "Keskiarvokuvaajan ajanjakso: %i min"
+    IDS_GRAPHS              "Kuvaajat"
+    IDS_STREE               "Tilastot"
+    IDS_IRC_IGNOREQUITMESSAGE "Ignore Quit info messages"
+    IDS_STATSSETUPINFO      "Tilastot"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DOWNLOADMOVIECHUNKS "Yritä ladata ensimmäinen ja viimeinen kimpale ensiksi"
+    IDS_UPDATEQUEUE         "Älä päivitä jonotuslistaa reaaliajassa."
+    IDS_RECOVER_SINGLE      "Korjasin yhden tiedoston"
+    IDS_RECOVER_MULTIPLE    "Korjasin %ld tiedostoa"
+    IDS_ATTEMPTING_RECOVERY "Yritän korjata arkistoa..."
+    IDS_RECOVERY_SUCCESSFUL "Arkiston korjaaminen onnistui"
+    IDS_RECOVERY_FAILED     "Arkiston korjaaminen epäonnistui"
+    IDS_STARTNEXTFILE       "Aloita seuraava pysäytetty tiedosto toisen valmistuessa"
+    IDS_FULLCHUNKTRANS      "Yritä lähettää kimpaleet kokonaisina"
+    IDS_MANUALSERVERHIGHPRIO 
+                            "Aseta käsin lisätyt palvelimet suurelle prioriteetille"
+    IDS_VERBOSE             "Virheloki"
+    IDS_FLAT                "litteä"
+    IDS_ROUND               "pyöreä"
+    IDS_SAMEUSERHASH        "Käyttäjillä '%s' ja '%s' on sama hash tai IP. '%s' poistettiin"
+    IDS_SEARCHEXTENTION     "Tied. pääte"
+    IDS_SEARCHAVAIL         "Saatavuus"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDLIMIT           "Kova rajoitus"
+    IDS_COL_MORECOLORS      "Lisää..."
+    IDS_KBYTESEC            "KiB/s"
+    IDS_TOOMANYCONNS        "Liian monta yhteyttä"
+    IDS_DOWNLOADRENAMED     "Samanniminen tiedosto on jo olemassa. Tallensin tiedoston nimellä %s"
+    IDS_TBN_DOWNLOADDONE    "Ladattu: "
+    IDS_TBN_DOWNLOADADDED   "Lisätty latauksiin: "
+    IDS_PW_TBN_USESOUND     "Käytä ääntä"
+    IDS_PW_TBN_ONLOG        "Lokiin tulee uusi tapahtuma"
+    IDS_PW_TBN_ONCHAT       "Uusi keskustelu aloitetaan"
+    IDS_PW_TBN_POP_ALWAYS   "Uusi viesti vastaanotetaan"
+    IDS_PW_TBN_ONDOWNLOAD   "Lataus tuli valmiiksi"
+    IDS_PW_EKDEV_OPTIONS    "Ilmoitukset"
+    IDS_PW_TASKBARNOTIFIER  "Ponnahdusviesti"
+    IDS_PW_TBN_OPTIONS      "Näytä ilmoitus kun"
+    IDS_TBN_NEWCHATMSG      "Viesti"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_CON_CAPFRM       "Kapasiteetit"
+    IDS_IRC_STATUSLOG       "Tilaloki"
+    IDS_IRC_STATUS          "Tila"
+    IDS_IRC_PRIVATECHANSTART "-!- Yksityinen keskustelu"
+    IDS_IRC_SLAPMSG         "-!- %s slaps %s around with Finnish bath whisk!"
+    IDS_IRC_PRIVMESSAGE     "Yksityinen viesti"
+    IDS_IRC_OP              "Op (+o)"
+    IDS_IRC_DEOP            "DeOp (-o)"
+    IDS_IRC_VOICE           "Voice (+v)"
+    IDS_IRC_HALFOP          "HalfOp (+h)"
+    IDS_IRC_DEHALFOP        "DeHalfOp (-h)"
+    IDS_IRC_KICK            "Kick"
+    IDS_IRC_SLAP            "Slap"
+    IDS_IRC_JOIN            "Join"
+    IDS_IRC_CHANNELLIST     "Kanavalista"
+    IDS_IRC_CONNECT         "Yhdistä"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_DISCONNECT      "Katkaise yhteys"
+    IDS_IRC_HASJOINED       "-!- %s joined %s"
+    IDS_IRC_HASPARTED       "-!- %s parted %s (%s)"
+    IDS_IRC_WASKICKEDBY     "-!- %s kicked by %s (%s)"
+    IDS_IRC_NICKUSED        "Nimesi on jo käytössä, vaihda se asetuksissa"
+    IDS_IRC_DEVOICE         "DeVoice (-v)"
+    IDS_IRC_HASQUIT         "-!- %s quit (%s)"
+    IDS_IRC_NOWKNOWNAS      "-!- %s is now %s"
+    IDS_IRC_SETSMODE        "-!- %s sets: %s %s"
+    IDS_IRC_NOTSUPPORTED    "-!- Joitakin moodeja laitettiin päälle, joita ei osata vielä käsitellä. Sinun täytyy ehkä poistua ja liittyä uudelleen kanavalle päivittääksesi nimilistan"
+    IDS_IRC_CHANNEL         "Kanava"
+    IDS_IRC_NICK            "Nimimerkki"
+    IDS_IRC_SEND            "Lähetä"
+    IDS_IRC_NAME            "Nimi"
+    IDS_IRC_SLAPMSGSEND     "PRIVMSG %s :\001ACTION slaps %s around with Finnish bath whisk!\001"
+    IDS_IRC_ADDTIMESTAMP    "Lisää aikamerkintä viesteihin"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_USEFILTER       "Suodata kanavat"
+    IDS_IRC_PERFORM         "Palvelimelle yhdistättessä"
+    IDS_IRC_USEPERFORM      "Suorita yhdistettäessä palvelimelle"
+    IDS_IRC_ADDTOFRIENDLIST "Lisää kaverilistaan"
+    IDS_IRC_LOADCHANNELLISTONCON "Näytä kanavaluettelo yhdistettäessä"
+    IDS_IRC_ADDASFRIEND     "lisäsi sinut ystäväkseen!"
+    IDS_PW_WARNING          "Valitsemasi arvo ""%s"" on suurempi kuin mitä käyttöjärjestelmäsi tukee:  %d\nKäyttöjärjestelmäsi voi muuttua epävakaaksi.\n\nHaluatko varmasti tehdä tämän?"
+    IDS_TAKEOVER            "Vaihda"
+    IDS_CLEANUP             "Siisti"
+    IDS_RENAME              "Nimeä"
+    IDS_IRC_ADDLINKTOIRC    "Lisää tämä IRC-leikepöydälle"
+    IDS_IRC_SENDLINK        "Lähetä tämä kaverille: "
+    IDS_IRC_RECIEVEDLINK    "%s lähetti tiedoston (%s) ladattavaksi heti"
+    IDS_IRC_ACCEPTLINKS     "Hyväksy ed2k-linkit IRC:ssä. (Käytä varauksella!)"
+    IDS_SHARED              "Shared"
+    IDS_DOWNLOADED          "Downloaded"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SOURCENAMES         "Lähteiden nimet"
+    IDS_PREF_STARTMIN       "Aloita pienennettynä"
+    IDS_PS_TBN_IMPORTANT    "Tallennustila loppui, yhteys palvelimelle katkesi tai jotain muuta vakavaa"
+    IDS_COLORS              "Värit"
+    IDS_SP_BACKGROUND       "Tausta"
+    IDS_SP_GRID             "Ruudukko"
+    IDS_SP_DL1              "Lataus: nykyinen"
+    IDS_SP_DL2              "Lataus: ajallinen keskiarvo"
+    IDS_SP_DL3              "Lataus: session keskiarvo"
+    IDS_SP_UL1              "Lähetys: nykyinen"
+    IDS_SP_UL2              "Lähetys: ajallinen keskiarvo"
+    IDS_SP_UL3              "Lähetys: session keskiarvo"
+    IDS_SP_ACTCON           "Aktiiviset yhteydet"
+    IDS_SP_ACTDL            "Aktiiviset lataukset"
+    IDS_SP_ACTUL            "Aktiiviset lähetykset"
+    IDS_PW_TIT_UP           "Aseta lähetysnopeuden raja"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_TIT_DOWN         "Aseta latausnopeuden raja"
+    IDS_PW_UNLIMITED        "Rajaton"
+    IDS_PW_MINREC           "Alin suositeltu\t%i "
+    IDS_PW_UA               "Aseta suurin lähetys-/latausnopeus"
+    IDS_PW_PA               "Rajoita lähetys-/latausnopeutta"
+    IDS_IRC_IGNOREINFOMESSAGE "Hylkää infoviestit"
+    IDS_CONNECTIONLOST      "Yhteyden katoaminen"
+    IDS_WIZ_OS_FRAME        "Käyttöjärjestelmä"
+    IDS_WIZ_CONCURENTDOWN_FRAME 
+                            "Kuinka monta latausta sinulla on yleensä samanaikaisesti?"
+    IDS_HASHINGFILE         "Hashing file:"
+    IDS_WIZ_CUSTOM_FRAME    "Jos testasit yhteytesi nopeuden, aseta tulokset tänne"
+    IDS_WIZ_HOTBUTTON_FRAME "Oletusarvoiset napit"
+    IDS_WIZ_TRUEUPLOAD_TEXT "Todellinen lähetysnopeus"
+    IDS_WIZ_TRUEDOWNLOAD_TEXT "Todellinen latausnopeus"
+    IDS_FRIENDLIST          "Kaverit"
+    IDS_CHATDISCONNECTED    "-!- Yhteys katkesi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZARD              "Velho"
+    IDS_ADDFRIEND           "Lisää kavereihin"
+    IDS_REMOVEFRIEND        "Poista kaveri"
+    IDS_REMOVEFROMSTOK      "Poistettiin kiinteästä palvelinlistasta"
+    IDS_REMOVEFROMSTATIC    "Poista kiinteästä palvelinlistasta"
+    IDS_LENGTH              "Kesto"
+    IDS_VIDEO               "Video"
+    IDS_AUDIO               "Audio"
+    IDS_FILEINFO            "T&iedoston Tiedot"
+    IDS_CODEC               "Codec"
+    IDS_BITRATE             "Bitrate"
+    IDS_WIDTH               "Leveys"
+    IDS_FPS                 "Fps"
+    IDS_CHANNELS            "Kanavia"
+    IDS_SAMPLERATE          "Samplerate"
+    IDS_ROUNDBITRATE        "Pyöristä bitrate"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HEIGHT              "Korkeus"
+    IDS_SHAREDFILES_FAILED  "En saanut listaa jaetuista tiedostoista käyttäjältä '%s'"
+    IDS_SHAREDFILES_REQUEST "Pyydän listaa jaetuista tiedostoista käyttäjältä '%s'"
+    IDS_VIEWFILES           "Näytä tiedostot"
+    IDS_FRIENDSLOT          "Muodosta kaveripaikka"
+    IDS_FRIENDDETAIL        "(Kaveripaikka)"
+    IDS_ASCWOP_PROXYSUPPORT "Automaattinen yhdistys palvelimelle ilman välityspalvelinta"
+    IDS_UDPDISABLED         "Ei käytössä"
+    IDS_CTINFO              "Valitse yhteystyyppisi:"
+    IDS_WIZ_CTFRAME         "Yhteystyyppi"
+    IDS_CONCURDWL           "Samanaikaiset lataukset"
+    IDS_UNIT                "Yksikkö:"
+    IDS_WIZARD_CUSTOM       "Muu"
+    IDS_WIZARD_ENTERBELOW   "(aseta alle!)"
+    IDS_STATS_MAXAVGDL      "Suurin keskim. latausnopeus: %.2f KiB/s"
+    IDS_USS_MIN             "Warning: USS currently does not support upload speeds less then 10K. If you know your connection is not able to handle this, please disable USS."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MAXDL         "Suurin latausnopeus: %.2f KiB/s"
+    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
+                            "Ignore eMule add friend protocol messages"
+    IDS_PW_FASTSRVCON       "Nopea yhdistäminen palvelimelle"
+    IDS_SOURCELINKFAILED    "Sinulla pitää olla korkea tunniste jotta voi tehdä lähdelinkin"
+    IDS_CREATESOURCELINK    "Kopioi ed2k-linkki leikepöydälle (lähde)"
+    IDS_ERR_LOADSERVERMET   "Virhe: En voi ladata tiedostoa server.met"
+    IDS_ERR_CORRUPTCOMPRPKG "Vastaanotin vioittuneen pakatun paketin tiedostolle %s: %i"
+    IDS_ERR_EMFRIENDSINVALID "Virhe: Tiedosto emfriends.met kelvoton"
+    IDS_ERR_READEMFRIENDS   "Virhe: eMule kohtasi virheen lukiessaan tiedostoa emfriends.met: %s"
+    IDS_ERR_KNOWNSERVERINFOREC 
+                            "Virhe: eMule vastaanotti tuntemattomia tietoja palvelimesta"
+    IDS_ERR_TIMERCREATEFAILED "Virhe: Ajastimen luominen epäonnistui"
+    IDS_WIZ_DOWN            "Sisään (kbit/s)"
+    IDS_WIZ_UP              "Ulos (kbit/s)"
+    IDS_SELECT_INCOMINGDIR  "Valitse hakemisto ladattaville tiedostoille"
+    IDS_SELECT_TEMPDIR      "Valitse hakemisto väliaikaisille tiedostoille"
+    IDS_PRIOAUTO            "Autom."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOAUTONORMAL      "Auto [No]"
+    IDS_PRIOAUTOHIGH        "Auto [Su]"
+    IDS_PRIOAUTORELEASE     "Auto [Ju]"
+    IDS_PRIOAUTOLOW         "Auto [Ma]"
+    IDS_ERR_CONTIMEOUT      "Yhdistämisyritys kohteeseen '%s' (%s:%i ) aikakatkaistiin"
+    IDS_ERR_CONFAILED       "Yhdistämisyritys kohteeseen '%s' (%s:%i ) epäonnistui"
+    IDS_OUTOFSERVERS        "Listassa ei ole enää palvelimia, joille yhdistää"
+    IDS_PW_CONLIMITS        "Yhteyden rajoitukset"
+    IDS_MAXCON5SECLABEL     "Suurin määrä uusia yhteyksiä viidessä sekunnissa"
+    IDS_PW_UAP              "Lisää uudet jaetut tiedostot autoprioriteetin alaisiksi"
+    IDS_MAXCLIENT           "Maksimi"
+    IDS_PW_TWEAK            "Lisäasetukset"
+    IDS_TWEAKS_WARNING      "Varoitus: Älä koske näihin asetuksiin, jos et tiedä mitä teet!"
+    IDS_ADDAFRIEND          "Lisää kaveri"
+    IDS_PAF_REQINFO         "Tarvittavat tiedot"
+    IDS_PAF_MOREINFO        "Ylimääräiset tiedot"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOVALIDFRIENDINFO 
+                            "Sinun pitää antaa kelvollinen IP-osoite ja portti!"
+    IDS_ADD                 "Lisää"
+    IDS_RECOVERED_PARTMET   "Korjasin tiedoston %s part.met-tiedoston"
+    IDS_CMT_QUEST           "Kommentoi tätä tiedostoa! (Tämä teksti näkyy kaikille käyttäjille)"
+    IDS_CMT_AIDE            "Elokuvasta voit kertoa pituuden, juonen, kielen jne.... Voit kertoa muille käyttäjille, jos se on väärennös"
+    IDS_CMT_TITLE           "Tiedostolle on %s kommenttia"
+    IDS_CMT_ADD             "Vaihda tämän tiedoston kommenttia"
+    IDS_CMT_NONE            "Ei kommentteja"
+    IDS_CMT_READ            "Tiedoston kommentti:"
+    IDS_CMT_NOTCONNECTED    "Palvelimeen ei ole vielä saatu yhteyttä"
+    IDS_CMT_SHOWALL         "Näytä kaikki kommentit"
+    IDS_CMT_REFRESH         "&Päivitä"
+    IDS_CMT_READALL         "Kaikki kommentit"
+    IDS_CMT_NOCOMMENT       "Ei kommentteja"
+    IDS_CMT_RATEQUEST       "Tiedoston laatu"
+    IDS_CMT_RATEHELP        "Valitse arviosi tiedostolle tai viestitä muille, jos se on kelvoton"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CMT_FAKE            "Kelvoton / Korruptoitunut / Väärennös"
+    IDS_CMT_POOR            "Huono"
+    IDS_CMT_GOOD            "Hyvä"
+    IDS_CMT_FAIR            "Kohtalainen"
+    IDS_CMT_EXCELLENT       "Erinomainen"
+    IDS_CMT_NOTRATED        "Arvioimaton"
+    IDS_KILO                "K"
+    IDS_MEGA                "M"
+    IDS_GIGA                "G"
+    IDS_TERRA               "T"
+    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "Suodata eMule-protokollan viestit"
+    IDS_SMARTLOWIDCHECK     "Viisas matalan tunnisteen tarkistaminen yhdistettäessä"
+    IDS_SF_SRVOCC           "Palvelimien käyttöaste: %.2f%%"
+    IDS_3DDEP               "Edistymispalkin tyyli"
+    IDS_AUTOTAKEED2KLINKS   "Nappaa ed2k-linkit vain eMulen ollessa päällä"
+    IDS_ADDNEWFILESPAUSED   "Aseta uudet lataukset pysäytetyksi"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_STATS            "Hävinnyt korruptioihin: %s       Pakkauksella saatu hyöty: %s\nI.C.H. pelastanut kimpaleita: %i"
+    IDS_ERR_NOHELP          "Ohjetiedostoa ei löytynyt.\n Vieraile sivuillamme, missä on uusin painos! (download osasto)"
+    IDS_SHOWOVERHEAD        "Näytä overhead-liikenne"
+    IDS_UPDOWNSMALL         "Ulos %.1f | Sisään %.1f"
+    IDS_EDITLIST            "Lista"
+    IDS_SP_ICONBAR          "Nopeuspalkki järjestelmätarjotinkuvakkeessa"
+    IDS_RATINGRECV          "Vastaanotin arvioinnin tiedostolle '%s': %i"
+    IDS_DESCRIPTIONRECV     "Vastaanotin kuvauksen tiedostolle '%s': %s"
+    IDS_WEBSERVICES         "Verkkopalvelut"
+    IDS_WEBSVEDIT           "Muokkaa verkkopalveluita"
+    IDS_IRC_EMULEPROTO_IGNORESENDLINK 
+                            "Ignore eMule send link protocol messages"
+    IDS_CHECK4UPDATE        "Tarkista uuden version saatavuus"
+    IDS_STARTUP             "Käynnistys"
+    IDS_NEWVERSIONAVL       "Uusi versio on saatavilla! Projektin kotisivuilta saat lisätietoja."
+    IDS_NEWVERSIONAVLPOPUP  "Uusi versio on saatavilla. Klikkaa tästä lukeaksesi uudesta versiosta!"
+    IDS_NEWVERSIONFAILED    "Uuden version tarkistaminen epäonnistui."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CB_TBN_ONNEWVERSION "Uusi versio on saatavilla."
+    IDS_NONEWERVERSION      "Uutta versioita ei ole saatavilla."
+    IDS_VERSIONCHECK        "&Päivitystarve"
+    IDS_VISITVERSIONCHECK   "\n\nHaluatko vierailla tietosivuilla nyt?"
+    IDS_PW_VIDEOPLAYER      "Videosoitin"
+    IDS_VIDEOBACKUP         "Luo kopio katselemista varten"
+    IDS_STATIC_EMPTY        "(tyhjä=oletus)"
+    IDS_MYINFO              "Tietosi"
+    IDS_ID                  "Tunniste"
+    IDS_IDLOW               "Matala tunniste"
+    IDS_IDHIGH              "Korkea tunniste"
+    IDS_UPSTATUS            "Osaliikenne"
+    IDS_TOVERHEAD           "Overhead-liikenne yhteensä (pakettia): %s (%s)"
+    IDS_FROVERHEAD          "Tiedostojen pyytäminen (pakettia): %s (%s)"
+    IDS_SSOVERHEAD          "Lähteiden vaihto (pakettia): %s (%s)"
+    IDS_SOVERHEAD           "Palvelimet (pakettia): %s (%s)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FILECOMPLETIONTHREAD 
+                            "Tiedon viimeistelyyn tarkoitetun säikeen käynnistäminen epäonnistui"
+    IDS_FILEBUFFERSIZE      "Tiedostopuskurimuistin koko"
+    IDS_QUEUESIZE           "Jonon koko"
+    IDS_DAYS2               "päivää"
+    IDS_ERR_MAKEBAKCREDITFILE 
+                            "Varmuuskopion luominen ansiotiedostosta epäonnistui"
+    IDS_COMMENT             "Kommentti"
+    IDS_IPFILTERED          "Suodatin IP-osoitteen %s (%s)"
+    IDS_DL_TRANSFCOMPL      "Valmis"
+    IDS_STATS_FILTEREDCLIENTS "Suodatettu: %i"
+    IDS_FILTERLABEL         "Suodata viestit, jotka sisältävät: (erotin | )"
+    IDS_ERR_LARGEREQBLOCK   "Käyttäjä pyysi liian isoa pakettia."
+    IDS_SHOWRATEONTITLE     "Näytä siirtonopeudet otsikkorivillä"
+    IDS_TBN_NOMESSAGEHISTORY "Ei historiaa viesteille!"
+    IDS_PW_DAP              "Lisää uudet lataukset autoprioriteetillä"
+    IDS_FD_LASTCHANGE       "Viimeisin vastaanotto:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_RUNTIME       "Päällä"
+    IDS_ALL                 "kaikki"
+    IDS_CAT_ADD             "Lisää kategoria"
+    IDS_CAT_EDIT            "Muokkaa kategoriaa"
+    IDS_CAT_REMOVE          "Poista kategoria"
+    IDS_CAT                 "Kategoria"
+    IDS_TITLE               "Otsikko"
+    IDS_COLOR               "Väri"
+    IDS_DEFAULT             "Oletus"
+    IDS_PW_DISPLAY          "Ulkoasu"
+    IDS_CAT_INVADD          "Näytä sijoittamattomat"
+    IDS_CAT_REINVADD        "Näitä kaikki"
+    IDS_INDICATERATINGS     "Osoita kommentoidut/arvostellut lataukset merkillä"
+    IDS_ALLOTHERS           "kaikki muut"
+    IDS_TOCAT               "Sijoita kategoriaan"
+    IDS_CAT_UNASSIGN        "(poista sijoitus)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDDOWNLOADSFROMCB  "Lisää nämä ed2k-tiedostolikit ladattavaksi?\n"
+    IDS_ADDDOWNLOADSFROMCBTITLE "ed2k-tiedostolinkki leikepöydällä"
+    IDS_PF_WATCHCB          "Seuraa ed2k-tiedostolinkkejä leikepöydältä"
+    IDS_SECURITY            "Turvallisuus"
+    IDS_IPFILTERLOADED      "%i IP-suodatinta ladattu"
+    IDS_IPFILTER            "IP-suodatin"
+    IDS_EDIT                "Muokkaa"
+    IDS_FILTERLEVEL         "Suodatintaso"
+    IDS_FILTERSERVERBYIPFILTER "Suodata palvelimet (myös dynIP-palvelimet)"
+    IDS_FILTERCOMMENTSLABEL "Suodata kommentit, jotka sisältävät: (Erotin | )"
+    IDS_CLIENTLIST          "Tunnetut käyttäjät"
+    IDS_FOLDER              "Kansio"
+    IDS_CL_UPLOADSTATUS     "Lähetystila"
+    IDS_CL_TRANSFUP         "Ulos"
+    IDS_CL_DOWNLSTATUS      "Lataustila"
+    IDS_CL_TRANSFDOWN       "Sisään"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CL_PENDING          "Vireillä"
+    IDS_CL_LOW2LOW          "Matala tunniste"
+    IDS_ERROR               "Virhe"
+    IDS_OPENINC             "&Avaa valmiit tiedostot -kansio"
+    IDS_HOTMENU             "Pikavalikko"
+    IDS_DISABLEKNOWNLIST    "Älä näytä tunnetut käyttäjät -listaa"
+    IDS_DISABLEQUEUELIST    "Älä näytä jonotuslistaa"
+    IDS_USECREDITSYSTEM     "Käytä ansiojärjestelmää (palkitsee lähettäjiä)"
+    IDS_FIRSTAUTODOWN       "Haluatko eMulen hallitsevan latausten prioriteettejä?\r\rTätä käyttämällä suurilähteiset tiedostot eivät jyrää pieniä.\rTämä vaikuttaa vain uusiin latauksiin. (Oletys: Kyllä)"
+    IDS_FIRSTAUTOUP         "Haluatko eMulen hallitsevan lähetysten prioriteettejä?\r\rKäyttämällä tätä annat muille mahdollisuuden saada harvinaisempia tiedostoja.\rTämä vaikuttaa vain uusiin tiedostoihin. (Oletus: Kyllä)"
+    IDS_FIRSTCREDITSYSTEM   "Haluatko eMulen palkitsevan niitä, jotka lähettävät sinulle?\r\rTämä ominaisuus tunnetaan nimellä ansiojärjestelmä (Credit System). Valitsemalla ei vastustat datanimijöitä (leecher).\r\r(Oletus: Kyllä)"
+    IDS_FIRSTFULLCHUNK      "Haluatko eMulen yrittävän lähettää osat kokonaisina?\r\rTämä helpottaa huomattavasti tiedostojen leviämistä, mutta valitsemalla ei, jonosi pyörii nopeammin. Jos julkaiset jotain, sinun tulisi käyttää tätä ominaisuutta.\r\r(Oletus: Kyllä)"
+    IDS_FIRSTSAFECON        "Haluatko eMulen käyttävän turvallista yhdistämistä palvelimelle? Jos et käytä tätä ominaisuutta, yhdistäminen palvelimelle nopeutuu, mutta riski saada matala ID suurenee.\r\r(Oletus: Ei)"
+    IDS_FIRSTRUNASSIST      "Haluatko suorittaa ensimmäinen kerta opastuksen?"
+    IDS_FIRSTAUTOCON        "Haluatko eMulen yhdistävän palvelimelle heti käynnistettäessä?\r\r(Oletus: Ei)"
+    IDS_FIRSTCOMPLETE       "Olet nyt valinnut kaikkein tärkeimmät asetukset.\r\rKaikki nämä ja paljon muita asetuksia löydät Asetukset-nappia painamalla. Lisätietoja saat oppaasta, jonka saat esille painamalla F1!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ENTERUSERNAME       "Anna nimimerkki:"
+    IDS_STATIC_CPUMEM       "Prosessorin ja muistin käyttö"
+    IDS_KAD_SEARCH_KEYWORD_TOO_SHORT 
+                            "Keyword too short.\r\n\r\nThe keyword(s) used in a Kad search expression must have a minimum length of 3 characters."
+    IDS_LOG2DISK            "Save log to disk"
+    IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING 
+                            "There is already a Kad search ongoing for the keyword ""%s"".\r\n\r\nTo search again for that keyword, either wait until this keyword search is finished or close the according search results pane."
+    IDS_KAD_SEARCH_KEYWORD_INVALID 
+                            "Invalid Kad keyword.\r\n\r\nA Kad search expression has the following format:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nThe <kad-keyword> must not contain any of the following characters:\r\n\r\n\t%s"
+    IDS_EDITCAT             "Muokkaa kategorian ominaisuuksia"
+    IDS_PW_WS               "Verkkokäyttöliittymä"
+    IDS_ENABLED             "Päällä"
+    IDS_WEB_LOGIN           "Kirjaudu sisään"
+    IDS_WEB_ENTER_PASSWORD  "Anna salasana"
+    IDS_WEB_LOGIN_NOW       "Kirjaudu"
+    IDS_WEB_CONFIRM_REMOVE_SERVER 
+                            "Haluatko varmasti poistaa tämän palvelimen listasta?"
+    IDS_WEB_CONTROL         "Verkkokäyttäliittymä"
+    IDS_WEB_LOGOUT          "Kirjaudu ulos"
+    IDS_WEB_ACTIONS         "Toiminnot"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHOW_UPLOAD_QUEUE "Näytä lähetysjono"
+    IDS_WEB_HIDE_UPLOAD_QUEUE "Piilota lähetysjono"
+    IDS_WEB_GZIP_COMPRESSION "Gzip-pakkaus"
+    IDS_WEB_GZIP_COMMENT    "Vähentää liikennettä, erityisesti diagrammeissa."
+    IDS_WEB_UPLOAD_QUEUE_COMMENT 
+                            "Näytä tai piilota lähetysjono Siirrot-sivulla."
+    IDS_WEB_REFRESH_TIME    "Sivujen päivitysviive"
+    IDS_WEB_REFRESH_COMMENT "Viive sekunneissa, 0 = ei käytössä"
+    IDS_SV_URL              "URL"
+    IDS_WS_RELOAD_TMPL      "Malli"
+    IDS_SV_DEBUGLOG         "Debug-loki"
+    IDS_WS_PASS             "Salasana"
+    IDS_WEB_FILESETTINGS    "Tiedostoasetukset"
+    IDS_WS_ERR_LOADTEMPLATE "En voi ladata malleja: korvaa tiedosto %s uudemmalla versiolla!"
+    IDS_WEB_CONLIMITS       "Yhteyden rajoitukset"
+    IDS_INFLST_USER_TOTALDOWNLOAD "Sisään yhteensä"
+    IDS_INFLST_USER_TOTALUPLOAD "Ulos yhteensä"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_BADLOGINATTEMPT "Verkkokäyttöliittymä: Epäonnistunut kirjautuminen"
+    IDS_ERR_TOOLARGEFILE    "Tiedosti on suurempi kuin mitä protokolla tukee (4GiB)"
+    IDS_MSGONLYFRIENDS      "Hyväksy vain kavereilta"
+    IDS_MSGONLYSEC          "Hyväksy kaikilta"
+    IDS_DAY_MO_SA           "Ma - La"
+    IDS_LIMITSOURCES        "Rajoita lähteitä"
+    IDS_LIMITCONS5SEC       "Rajoita yhteyksiä /5s"
+    IDS_SCHED_CATSTOP       "Kat:Pysäytä lataukset"
+    IDS_SCHED_CATRESUME     "Kat:Jatka latauksia"
+    IDS_S_DAYS              "Päivää"
+    IDS_STARTTIME           "Aloitusajankohta"
+    IDS_VALUE               "Arvo"
+    IDS_SCHED_ENTERDATARATELIMIT "Aseta uusi siirtonopeus:"
+    IDS_SCHED_ENTERVAL      "Aseta uusi arvo:"
+    IDS_SCHED_ACTCONFIG     "Valitse tapahtuman asetukset"
+    IDS_SELECTCAT           "Valitse kategoria"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALLUNASSIGNED       "kaikki sijoittamattomat"
+    IDS_ACTSESSIONS         "aktiivista sessiota"
+    IDS_WEBSRV              "Verkkokäyttöliittymä"
+    IDS_SW_REFETCHRES       "Hae tulokset uudelleen"
+    IDS_FILEHASH            "Tiedoston hash"
+    IDS_GLOBALSEARCH2       "Globaali haku"
+    IDS_PW_PROXY            "Välityspalvelin"
+    IDS_PROXY_ENABLE        "Käytä välityspalvelinta"
+    IDS_PROXY_TYPE          "Tyyppi:"
+    IDS_PROXY_HOST          "Osoite:"
+    IDS_PROXY_PORT          "Portti:"
+    IDS_PROXY_AUTH          "Käytä todennusta"
+    IDS_AUTH                "Todennus"
+    IDS_SHOWCATINFO         "Näytä lataustietoa välilehdissä"
+    IDS_SW_SEARCHINGINFO    "Haku käynnissä. Tulokset haetaan hetken kulutta!"
+    IDS_LOGENTRY            "Loki"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COPY                "Kopioi"
+    IDS_SELECTALL           "Valitse kaikki"
+    IDS_AUTOSCROLL          "Automaattinen vieritys"
+    IDS_WIZ1_WELCOME_TITLE  "Tervetuloa"
+    IDS_WIZ1_WELCOME_ACTIONS 
+                            "Opastan sinulle asetusten valitsemisen ensiaskeleet."
+    IDS_WIZ1_WELCOME_BTN_HINT "Paina seuraava jatkaaksesi."
+    IDS_WIZ1_END_TITLE      "Valmis"
+    IDS_WIZ1                "Ensimmäinen kerta"
+    IDS_WIZ1_END_BTN_HINT   "Sulje valitsemalla valmis."
+    IDS_WIZ1_UPLOAD_SUBTITLE "Siirrä kimpaleet kokonaisina"
+    IDS_DL_RESUMENEXT       "Jatka seuraavaa pysäytettyä latausta"
+    IDS_DONTCHANGE          "Älä vaihda"
+    IDS_STARTPRIO           "Vaihda pioriteettia uusille sijoitetuille tiedostoille"
+    IDS_PREF_STARTNEXTFILECAT "puolla samaa kategoriaa"
+    IDS_REPAINTGRAPHS       "Älä luo tilastoja uudelleen muutettaessa ikkunan kokoa"
+    IDS_SOFTFILES           "Pehmeä tiedostorajoitus"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDFILES           "Kova tiedostorajoitus"
+    IDS_FILTER              "Suodatin"
+    IDS_LINKS               "Linkit"
+    IDS_HM_SCHED_ON         "Ajastin päälle"
+    IDS_HM_SCHED_OFF        "Ajastin pois päältä"
+    IDS_HM_LINKHP           "Kotisivut"
+    IDS_HM_LINKFAQ          "FAQ"
+    IDS_HM_LINKVC           "Version tarkistus"
+    IDS_DEBUG_SOURCE_EXCHANGE 
+                            "Näytä viestit, jotka koskevat lähteiden vaihtoa"
+    IDS_SHAREDREQ1          "Käyttäjä %s (%u) pyysi listaa jaetuista hakemistoista -> %s"
+    IDS_SHAREDREQ2          "Käyttäjä %s (%u) pyysi listaa jaetuista tiedostoista hakemistossa '%s' -> %s"
+    IDS_SHAREDANSW          "Käyttäjä %s (%u) jakaa hakemistoa '%s'"
+    IDS_SHAREDANSW2         "Käyttäjä %s (%u) lähetti pyytämättä listan jaetuista hakemistoista - suodatin ne pois"
+    IDS_SHAREDINFO1         "Käyttäjä %s (%u) lähetti listan jaetuista tiedostoista hakemistossa '%s'"
+    IDS_SHAREDINFO2         "Käyttäjä %s (%u) on lähettäny listan jaetuista tiedostoista"
+    IDS_SHAREDANSW3         "Käyttäjä %s (%u) lähetti pyytämättä listan jaetuista tiedostoista hakemistossa '%s' - suodatin ne  pois"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHAREDREQDENIED     "Käyttäjä %s (%u) ei lähettänyt listaa jaetuista tiedostoista tai hakemistoista"
+    IDS_AUTOCLEANUPFN       "Siisti tiedoston nimi"
+    IDS_ONNEWDOWNLOAD       "Alkuvalmistelut"
+    IDS_FILTERFILENAMEWORD  "Suodatettavat sanat, erotin |"
+    IDS_FNFILTERTITLE       "Latausten nimisiivouksen sanasuodatin"
+    IDS_CHANGECATVIEW       "Valitse suodatin"
+    IDS_STATUS_NOTCOMPLETED "Keskeneräinen"
+    IDS_STATS_CUMULATIVE    "Kumulatiiviset"
+    IDS_STATS_OVRHD         "Overhead"
+    IDS_STATS_RECORDS       "Ennätykset"
+    IDS_STATS_OVRHD2        "Overhead: %s (%s pakettia)"
+    IDS_STATS_COMPDL        "Valmiita latauksia"
+    IDS_STATS_SVRECWORKING  "Eniten toimivia palvelimia"
+    IDS_STATS_SVRECUSERS    "Enitän käyttäjiä verkossa"
+    IDS_SEARCH_TEXT         "Etsittävä"
+    IDS_STATS_SVRECFILES    "Eniten tiedostoja saatavilla"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SHRECNUM      "Eniten jaettuja tiedosta"
+    IDS_SEARCH_COLUMN       "Etsi sarakkeesta"
+    IDS_STATS_SHRECSIZE     "Suurin tiedostokoko"
+    IDS_STATS_SHRECASIZE    "Suurin keskim. tiedostokoko"
+    IDS_STATS_MYRUNTIME     "Kokonaispäälläoloaika: %s"
+    IDS_STATS_SESSION       "Sessio"
+    IDS_STATS_SRATIO        "Session lähetys/lataus -suhde:"
+    IDS_STATS_CRATIO        "Kumulatiivinen lähetys/lataus -suhde:"
+    IDS_SEARCH_NORESULT     "Ei hakutuloksia."
+    IDS_STATS_CURRSRVDUR    "Nykyisellä palvelimella vietetty aika"
+    IDS_LONGSECS            "sekuntia"
+    IDS_STATS_DLSES         "Lataussessioita"
+    IDS_LONGMINS            "minuuttia"
+    IDS_STATS_SDLSES        "Onnistuineita lataussessioita"
+    IDS_STATS_FDLSES        "Epäonnistuineita lataussessioita"
+    IDS_STATS_AVGDATADLSES  "Keskim. ladattu / sessio"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ULSES         "Lähetyssessioita"
+    IDS_STATS_GAINCOMP      "Pakkauksella saatu hyöty: %s"
+    IDS_STATS_LOSTCORRUPT   "Korruption aiheuttama menetys: %s"
+    IDS_STATS_AVGDATAULSES  "Keskim. lähetetty / sessio"
+    IDS_STATS_ICHSAVED      "Korruptiohallinnan korjaamia kimpaleita: %u"
+    IDS_STATS_MBRESET_TXT   "Haluatko varmasti nollata kumulatiiviset tilastot?\n\nVoit halutessasi palauttaa tilastot 'Palauta tilastot' nappia painamalla."
+    IDS_STATS_MBRESET_CAP   "Hyväksy nollaus"
+    IDS_STATS_MBRESTORE_TXT "Haluatko varmasti palauttaa kumulatiiviset tilastot?\n\n'Palauta tilastot' napin painaminen palauttaa tämänhetkiset tilastot."
+    IDS_STATS_MBRESTORE_CAP "Hyväksy palautus"
+    IDS_ERR_NOSTATBKUP      "Virhe: En löydä tilastojen varmuuskopiota"
+    IDS_STATS_NFOLOADEDBKUP "Latasin varmuuskopioidut tilastot"
+    IDS_STATS_NFORESET      "Nollasin tilastot!"
+    IDS_STATS_BNRESET       "Nollaa tilastot"
+    IDS_STATS_BNRESTORE     "Palauta tilastot"
+    IDS_CONNECTIONSTATISTICS "Yhteystilastot"
+    IDS_PPGSTATS_YSCALE     "Yhteystilastojen Y-akselin laajuus:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PPGSTATS_ACRATIO    "Aktiivisten yhteyksien suhde:"
+    IDS_STATS_PROBLEMATIC   "Ongelmallisia"
+    IDS_LONGHRS             "tuntia"
+    IDS_STATS_LARGESTFILE   "Suurin jaettu tiedosto"
+    IDS_CLIENTSOFTWARE      "Asiakasohjelmat"
+    IDS_STATS_DSPF          "Kimpaletiedosto"
+    IDS_STATS_DATASOURCE    "Tietolähde"
+    IDS_STATS_DSFILE        "Valmis tiedosto"
+    IDS_STATS_GENERAL       "Yleiset"
+    IDS_STATS_TRANSTIME     "Siirtojen kesto"
+    IDS_STATS_DOWNTIME      "Latausten kesto"
+    IDS_STATS_UPTIME        "Lähetysten kesto"
+    IDS_STATS_TOTALSRVDUR   "Palvelimilla vietetty aika"
+    IDS_STATS_MAXAVGUL      "Suurin keskim. lähetysnopeus"
+    IDS_STATS_MAXUL         "Suurin lähetysnopeus"
+    IDS_STATS_AVGDLTIME     "Keskim. latauksen kesto"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_OLDCLIENTS    "Vanha"
+    IDS_STATS_PRTDEF        "Oletus"
+    IDS_STATS_PRTOTHER      "Muu"
+    IDS_STATS_MNUTREETITLE  "Tilastopuu"
+    IDS_STATS_MNUTREECPYSEL "Kopioi valittu oksa"
+    IDS_STATS_MNUTREECPYALL "Kopioi kaikki tilastot"
+    IDS_STATS_MNUTREEHTML   "HTML-toiminnot"
+    IDS_STATS_EXPORT2HTML   "Vie kaikki tilastot"
+    IDS_STATS_EXPORTVIS     "Vie kaikki näkyvät tilastot"
+    IDS_STATS_MNUTREECPYVIS "Kopio kaikki näkyvät tilastot"
+    IDS_STATS_MNUTREEEXPANDALL "Laajenna kaikki"
+    IDS_STATS_MNUTREECOLLAPSEALL "Kutista kaikki"
+    IDS_STATS_MNUTREEEXPANDMAIN "Laajenna pääryhmät"
+    IDS_STATS_LASTRESETSTATIC "Tilastot nollattiin viimeksi: %s"
+    IDS_STATS_MONTHLY       "Kuukausittain"
+    IDS_STATS_YEARLY        "Vuosittain"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_TIMESTATS     "Aikatilastot"
+    IDS_STATS_AVGANDPROJ    "Arviot ajanjaksoille"
+    IDS_STATS_TIMESINCERESET "Aikaa viime nollauksesta: %s"
+    IDS_CRYPT_INITFAILED    "Virhe crypto-avaimien luomisessa - Varmennettu käyttäjätunnistus on pois päältä"
+    IDS_CD_IDENT            "Tunnistus:"
+    IDS_IDENTOK             "Onnistunui"
+    IDS_IDENTFAILED         "Virheelllinen"
+    IDS_IDENTNOSUPPORT      "Ei tuettu tai ei käytössä"
+    IDS_COMMITFILES         "Turvallinen .met/.dat tiedostojen kirjoitus"
+    IDS_ERR_BADUNC          "Virheellinen UNC-nimi"
+    IDS_NEVER               "Ei koskaan"
+    IDS_ALWAYS              "Aina"
+    IDS_ONSHUTDOWN          "Sammutettaessa"
+    IDS_UNCFOLDERS          "UNC-kansiot"
+    IDS_USESECIDENT         "Käytä varmennettua käyttäjätunnistusta"
+    IDS_ADVSPAMFILTER       "Kehittynyt spämmisuodatin"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SECUREIDENT   "Varmennettu käyttäjätunnistus (OK : Epäonnistuneita)"
+    IDS_ONDISK              "Koko levyllä: "
+    IDS_CLIENTCOL           "Varoitus: Löysin vastaavan käyttäjän tällä hetkellä yhdistyneeseen käyttäjään: %s (%s) ja %s (%s)"
+    IDS_SEARCH_UNTERMSTRING "Päättymätön merkkijono"
+    IDS_SEARCH_GENERALERROR "Yleinen virhe"
+    IDS_SEARCH_MISSINGORRIGHT "OR-operaattorin oikea puoli puuttuu"
+    IDS_SEARCH_MISSINGNOTRIGHT "NOT-operaattorin oikea puoli puuttuu"
+    IDS_SEARCH_MISSINGEXPRPARANT "Puuttuva ilmaisu suluille '(' ')'"
+    IDS_SEARCH_MISSINGCLOSINGPARANT "Puuttuva lopetussulku ')'"
+    IDS_SEARCH_MISSINGANDLEFT "AND-operaattorilta puuttuu vasen puoli"
+    IDS_SEARCH_MISSINGORLEFT "OR-operaattorilta puuttuu vasen puoli"
+    IDS_SEARCH_MISSINGNOTLEFT "NOT-operaattorilta puuttuu vasen puoli"
+    IDS_SEARCH_EXPRERROR    "Hakuilmaisun jästentäminen epäonnistui"
+    IDS_SEARCH_TOOCOMPLEX   "Liian monimutkainen ilmaisu"
+    IDS_SEARCH_INVALIDMINMAX "Kelvoton yksikkö minimi-/maksimikoossa"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_VERSION             "Versio"
+    IDS_ALL_A4AF_TO_THIS    "Siirrä kaikki lähteet tähän tiedostoon"
+    IDS_ALL_A4AF_TO_OTHER   "Siirrä kaikki lähteet muihin tiedostoihin"
+    IDS_ALL_A4AF_AUTO       "Siirrä automaattisesti kaikki (A4AF)lähteet tähän tiedostoon"
+    IDS_SWAP_A4AF_TO_THIS   "Siirrä lähde tähän tiedostoon"
+    IDS_SWAP_A4AF_TO_OTHER  "Siirrä lähde toiseen tiedostoon"
+    IDS_A4AF                "Lähteiden käsittelu (A4AF)"
+    IDS_MOBILEMULE          "MobileMule"
+    IDS_ENABLEMM            "Käytä MobileMulea"
+    IDS_AUTOCAT_LABEL       "Automaattinen kategoriaan sijoitus (kaava, erotin |)"
+    IDS_SHOWEXTSETTINGS     "Näytä enemmän asetuksia"
+    IDS_TREEOPTIONS_TRUE    "Tosi"
+    IDS_TREEOPTIONS_FALSE   "Epätosi"
+    IDS_TREEOPTIONS_OK      "OK"
+    IDS_HYPERTEXT_FONT_HINT "Palvelin-, Viesit- ja IRC-välilehden fontti"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SELECT_FONT         "Valitse fontti"
+    IDS_SERVER_LIMITS       "Pehmeä- / kova tiedostojen määrä"
+    IDS_SERVERINFO          "Palvelimen tiedot"
+    IDS_KBITSSEC            "kbit/s"
+    IDS_KBYTESSEC           "KiB/s"
+    IDS_ERR_CREATE_DIR      "Hakemiston %s luominen epäonnistui ""%s"" - %s"
+    IDS_WRN_INCFILE_RESERVED 
+                            "Valmiit tiedostot -hakemisto ei saa olla sama kuin eMulen asennushakemisto."
+    IDS_WRN_TEMPFILES_RESERVED 
+                            "Väliaikaiset tiedostot -hakemisto ei saa olla sama kuin eMulen asennushakemisto."
+    IDS_WRN_INCTEMP_SAME    "Valmiit tiedostot -hakemisto ei saa olla sama kuin väliaikset tiedostot -hakemisto."
+    IDS_MMFAILED            "MobileMulen soketin luominen epäonnistui!"
+    IDS_MMSTARTED           "MobileMule käynnissä portissa %i. Protokollan versio: %s"
+    IDS_SHOWDWLPERCENTAGE   "Näytä latauksen edistyminen prosentteina edistymispalkissa"
+    IDS_TBN_ONNEWDOWNLOAD   "Lataus lisättiin"
+    IDS_ARTIST              "Artisti"
+    IDS_ALBUM               "Albumi"
+    IDS_MMGUIDELINK         "MobileMule opas"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UPLOADREQ        "Pyydetty lähetys:"
+    IDS_SETTINGCHANGED_RESTART 
+                            "Jotta asetukset tulisivat voimaan, eMule pitää käynnistää uudelleen."
+    IDS_CREDITSEXPIRED      ", %i käyttäjää, joita ei ole nähty 5 kuukauden sisällä, poistettiin tietokannasta."
+    IDS_SOURCESINFO         "%i  (Hyödyllisiä: %i, NNP: %i, A4AF: %i)"
+    IDS_SHOW_META_DATA      "Näytä &Meta-tiedot..."
+    IDS_META_DATA           "Meta-tiedot"
+    IDS_TIMEBEFORE          "(%s sitten)"
+    IDS_FD_TIMEDATE         "Päivämäärät"
+    IDS_FILEINFORMATION     "Tiedoston tiedot"
+    IDS_STATS_FREESPACE     "Vapaata tilaa väliaikaisaosiolla: "
+    IDS_IRC_HELPCHANNEL     "Yhistä apukanaville."
+    IDS_IRC_HELPCHANNELPERFORM "/join #emule"
+    IDS_IRC_ACCEPTLINKSFRIENDS "Vain kavereilta"
+    IDS_COMPLSOURCES        "Kokonaisia lähteitä"
+    IDS_CHECKNOENDTIME      "ei päättymisajankohtaa"
+    IDS_FD_DOWNLOADSTARTED  "Uusi lataus:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MATCH_KEYWORDS      "Osuneet hakusanat"
+    IDS_FAILEDREOPEN        "Vakava virhe: kimpaletiedoston uudelleenavaus ei onnistunut: '%s' (%s)!"
+    IDS_ERR_PREVIEWALREADY  "Toinen esikatselupyyntö on jo jonossa tällä käyttäjällä"
+    IDS_ERR_PREVIEWFAILED   "Esikatselu epäonnistui, käyttäjä '%s'"
+    IDS_DWTOT               "Lataukset"
+    IDS_DWTOT_NR            "Latausten määrä: %d"
+    IDS_DWTOT_TSD           "Latausten koko: %s"
+    IDS_DWTOT_TCS           "Latausten valmis koko: %s (%.0f%%)"
+    IDS_DWTOT_TSL           "Vielä ladattavana oleva koko: %s"
+    IDS_DWTOT_TSN           "Latausten vaatima tila: %s"
+    IDS_DWTOT_FS            "Vapaata tilaa väliaikaisosiolla: %s"
+    IDS_NEEDFREEDISKSPACE   "%s (sinulla pitää olla %s vapaata tilaa!)"
+    IDS_SERVERKEEPALIVETIMEOUT "Palvelinyhteyden tarkistusväli [min]"
+    IDS_MORE                "&Lisää"
+    IDS_TOOLS               "T&yökalut"
+    IDS_ERR_JIGLENEEDSTYPE  "Jigle haluaa tiedostolle päätteen tai tyypin. Täytä ainakin toinen!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CREATEHOSTNAMESRCLINK "Kopio ed2k-linkki leikepöydälle (palvelinnimi)"
+    IDS_HASHINGFILESCOUNT   " (%u hash)"
+    IDS_CHECKDISKSPACE      "Tarkista levytila"
+    IDS_YOURHOSTNAME        "Palvelinnimi omille ed2k-linkeille"
+    IDS_INSUFFICIENT        "Levyllä ei ole tarpeeksi tilaa"
+    IDS_MINFREEDISKSPACE    "Pienin määrä vapaata levytilaa [MiB]"
+    IDS_WARNING             "Varoitus"
+    IDS_IMPORTSPLPF         "Tuo kimpaletiedostoja (eM, eD, ON)"
+    IDS_IMP_STEPREADPF      "Luen kimpaletiedostojen kansiota"
+    IDS_IMP_STEPBASICINF    "Haen perustietoja kimpaletiedostoista"
+    IDS_IMP_STEPCRDESTFILE  "Luon kimpaletiedostoa"
+    IDS_IMP_LOADDATA        "Lataan tietoja vanhasta kimpaletiedostosta (%i / %i)"
+    IDS_IMP_SAVEDATA        "Tallennan tiedot yhteen uuteen kimpaletiedostoon (%i / %i)"
+    IDS_IMP_IOERROR         "Tiedostovirhe kimpaletiedoston muuttamisessa"
+    IDS_IMP_GETPFINFO       "Haen lähteen kimpaletiedoston tietoja"
+    IDS_IMP_ADDDWL          "Lisään uuden latauksen ja tallennan uuden kimpaletiedoston"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_FETCHSTATUS     "Noudon tila..."
+    IDS_IMP_INPROGR         "käynnissä"
+    IDS_IMP_ERR_DISKSP      "Virhe: Levytila on lopussa"
+    IDS_IMP_ERR_PARTMETIO   "Virhe: partmet-tiedostoa ei löydy"
+    IDS_IMP_ERR_IO          "Virhe: IO-virhe!"
+    IDS_IMP_ERR_FAILED      "Virhe: Jotain epäonnistui!"
+    IDS_IMP_STATUSQUEUED    "Jonossa"
+    IDS_IMP_ALRDWL          "Jo latauksessa"
+    IDS_IMP_ADDBTN          "&Lisää tuonteja"
+    IDS_IMP_RETRYBTN        "Yritä %uudelleen valitat"
+    IDS_IMP_REMOVEBTN       "&Poista valitut"
+    IDS_IMP_SELFOLDER       "Valitse yksi lähdekansio tai vanha väliaikaiskansio kaikkine alikansioineen!"
+    IDS_IMP_DELSRC          "Haluatko poistaa alkuperäiset tiedostot onnistuneesti tuoduille latauksille?"
+    IDS_IMP_SIZE            "%s (Levy: %s)"
+    IDS_IMP_STATUS          "Tuodaan %s: %s"
+    IDS_DYNUPENABLED        "Etsi paras lähetysnopeys automaattisesti"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE "Ping-viiveen sietoraja (prosenttia alhaisimmasta)"
+    IDS_DYNUP_GOINGUPDIVIDER "Nopeuden kasvamishitaus"
+    IDS_DYNUP_GOINGDOWNDIVIDER "Nopeuden laskemishitaus"
+    IDS_DYNUP_NUMBEROFPINGS "Enimmäismäärä ping-paketteja keskiarvolle"
+    IDS_DYNUP_MINUPLOAD     "Alhaisin salllittu lähetysnopeus"
+    IDS_ESTTIMELEFT         "Aikaa jäljellä arviolta:"
+    IDS_TRANSFER_RATE_LABEL "Siirtonopeus:"
+    IDS_SAVELOG             "Säästä loki"
+    IDS_CMT_COPYCLIPBOARD   "Kopioi kommentti leikepöydälle"
+    IDS_ASKDOWNLOADLANG     "Valitsemaasi kieltä ei ole asennettu tähän järjestelmään. Haluatko, että eMule lataa sen verkosta?"
+    IDS_ASKDOWNLOADLANGCAP  "Kielitiedostojen lataus"
+    IDS_ERR_FAILEDDOWNLOADLANG 
+                            "Valitun kielen lataaminen ja asentaminen epäonnistui osoitteesta %s!"
+    IDS_ERR_BADFOLDER       "Kelvoton kansio.\nKansiota ei voi luoda. Tarkista kansion nimi ja sijainti."
+    IDS_AUTOREMOVEFD        "Poista valmiit lataukset listasta autom."
+    IDS_MM_BLOCK            "3 epäonnistunutta kirjautimisyritystä MobileMuleen. Kaikki tuleva toiminta on estetty kymmeneksi minuutiksi!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_KAD_NODE            "Käyttäjien etsintä (%i)"
+    IDS_KAD_STOREFILE       "Tiedostojen julkaisu (%i:%i)"
+    IDS_KAD_STOREKW         "Avainsanojen julkaisu (%i:%i)"
+    IDS_KAD_UNKNOWN         "Tuntematon (%i)"
+    IDS_SRV_TCPCOMPR        "TCP-pakkaus"
+    IDS_KADSEARCHLAB        "Nykyiset haut"
+    IDS_SRV_UDPSR           "Laajennettu UDP-protokolla lähteiden pyytämiseen"
+    IDS_SRV_UDPFR           "Laajennettu UDP-protokolla tiedostojen pyytämiseen"
+    IDS_MINLENGTH           "Min. length [hh:mm:ss]"
+    IDS_EM_HELP             "&Help"
+    IDS_WRN_FRIENDDUPLIPPORT 
+                            "En lisännyt kaveria.\r\n\r\nToinen kaveri on olemassa samalla IP-osoitteella ja portilla."
+    IDS_DYNUP               "Lähetysnopeuden tunnustelu"
+    IDS_KADOVERHEAD         "Kad Overhead (Packets): %s (%s)"
+    IDS_FIND                "Find..."
+    IDS_LOG_BANNED_CLIENTS  "Log banned clients"
+    IDS_LOG_RATING_RECV     "Log received file descriptions and ratings"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TEXTLABELSONRIGHT   "Ikonin oikealla puolella"
+    IDS_TEXTLABELS          "Tekstiselitteet"
+    IDS_ENABLETEXTLABELS    "Ikonin alla"
+    IDS_CUSTOMIZETOOLBAR    "Muokkaa työkalupalkkia"
+    IDS_MINBITRATE          "Min. bitrate [kBit/s]"
+    IDS_KAD_RECHECKFW       "Tarkista palomuurin tila"
+    IDS_SHAREDTITLE         "Jaettu ed2k|Kademlia"
+    IDS_WARNINGNOBS         "Bootstrapping ei ole päällä (Kademliaan on jo yhteys tai Kademlia ei ole käytössä)."
+    IDS_FIREWALLED          "Palomuurin takana"
+    IDS_KADEMLIA            "Kademlia"
+    IDS_KADCONTACTLAB       "Kontaktit"
+    IDS_KADDISTANCE         "Etäisyys"
+    IDS_KEY                 "Avain"
+    IDS_NUMBER              "Numero"
+    IDS_KAD_SEARCHSRC       "Lähteiden haku (%i)"
+    IDS_KAD_SEARCHKW        "Tiedostojen haku (%i)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MM_NEWUSER          "Uusi käyttäjä kirjautui MobileMule-palvelimeen"
+    IDS_RADCLIENTS          "käyttäjiltä, joihin on yhteys"
+    IDS_KADUDPPORTERR       "Kademlian UDP-portti on sama kuin eMulen laajennetun protokollan UDP-portti tai eMulen palvelin UDP-portti. Vaihdoin portin ja se on nyt %u."
+    IDS_CONFIRM_FILEDELETE  "Do you really want to remove all selected files from disk?"
+    IDS_OPENFOLDER          "Open folder"
+    IDS_DELETE              "Delete from disk"
+    IDS_BOOTSTRAP           "Bootstrap"
+    IDS_VIAED2KSQ           "ed2k-palvelimen tai jonon kautta"
+    IDS_EM_KADEMLIA         "&Kademlia"
+    IDS_VIAKAD              "Kademlian kautta"
+    IDS_VIASE               "lähteidenvaihdon kautta"
+    IDS_SELECTTOOLBARBITMAP "Valitse bittikartta"
+    IDS_SELECTTOOLBARBITMAPDIR "Valitse hakemisto"
+    IDS_TOOLBARSKINS        "Työkalurivin skini"
+    IDS_NOTEXTLABELS        "Ei selityksiä"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LOG_SECURE_IDENT    "Log secure ident"
+    IDS_LOG_FILTERED_IPS    "Log filtered and/or ignored IPs"
+    IDS_LOG_FILE_SAVING     "Log file save actions"
+    IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|All Files (*.*)|*.*||"
+    IDS_DELETEIPFILTERS     "Do you really want to delete the selected IP filters?"
+    IDS_TOTAL_IPFILTER_LABEL "Total IP filters:"
+    IDS_TOTAL_IPS_LABEL     "Total IPs:"
+    IDS_DELETE2             "Delete"
+    IDS_APPEND              "Append..."
+    IDS_SAVE                "Save"
+    IDS_IP_START            "Start"
+    IDS_IP_END              "End"
+    IDS_IP_LEVEL            "Level"
+    IDS_IP_DESC             "Description"
+    IDS_IP_HITS             "Hits"
+    IDS_IP_RULES            "IP Filters:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOTCONNECTEDKAD "You are currently not connected to the Kad Network!"
+    IDS_IRC_NOSFS           "No Shared Files Selected"
+    IDS_IRC_IGNOREMISCMESSAGE "Ignore Misc info messages"
+    IDS_KNOWN               "Known"
+    IDS_DL_ACTIVE_TIME      "Download time"
+    IDS_RESETLABEL          "Auto completion (history function)"
+END
+
+#endif    // Finnish resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "..\version.h"
+#include "lang.rc2"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

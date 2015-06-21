@@ -1,0 +1,1654 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "da_DK.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "..\resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Danish resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DAN)
+#ifdef _WIN32
+LANGUAGE LANG_DANISH, SUBLANG_DEFAULT
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "da_DK.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""..\\resource.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""..\\version.h""\r\n"
+    "#include ""lang.rc2""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_SOCKETS_INIT_FAILED "Fejl ved initialisering af Windows sockets."
+    IDS_ABOUTBOX            "&Om eMule..."
+    IDS_HTTPDOWNLOAD_FILESTATUS "%s fra %s"
+    IDS_HTTPDOWNLOAD_CONNECTED "Forbundet til %s"
+    IDS_HTTPDOWNLOAD_RESOLVING_NAME "Opløser navn: %s"
+    IDS_HTTPDOWNLOAD_RESOLVED_NAME "Opløst navn til %s"
+    IDS_HTTPDOWNLOAD_CONNECTING "Forbinder til %s"
+    IDS_HTTPDOWNLOAD_REDIRECTING "Omdirigerer til %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_GETTING_FILE_INFORMATION "Henter filinformation"
+    IDS_HTTPDOWNLOAD_FAIL_PARSE_ERROR 
+                            "Der opstod en fejl ved parsing af url: %s"
+    IDS_HTTPDOWNLOAD_GENERIC_ERROR 
+                            "Der opstod en fejl ved forsøg på download af filen, Fejl:%s"
+    IDS_HTTPDOWNLOAD_FAIL_CONNECT_SERVER 
+                            "Der opstod en fejl ved oprettelse af forbindelse til server, Fejl:%s"
+    IDS_HTTPDOWNLOAD_INVALID_SERVER_RESPONSE 
+                            "Der opstod en fejl, da serveren ikke sendte et forventet svar."
+    IDS_HTTPDOWNLOAD_INVALID_HTTP_RESPONSE 
+                            "Der opstod en fejl, da serveren ikke sendte et forventet HTTP svar"
+    IDS_HTTPDOWNLOAD_ERROR_READFILE 
+                            "Der opstod en fejl ved download af filen, Fejl: %s"
+    IDS_HTTPDOWNLOAD_PERCENTAGE "Opdaterer serverliste: %s%% af %s fuldført"
+    IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Modtager filen"
+    IDS_HTTPDOWNLOAD_OF     "%s af %s"
+    IDS_HTTPDOWNLOAD_SECONDS "%s sek"
+    IDS_HTTPDOWNLOAD_MINUTES "%s min"
+    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%s min %s sek"
+    IDS_HTTPDOWNLOAD_BYTES  "%s Bytes"
+    IDS_HTTPDOWNLOAD_KILOBYTES "%s KB"
+    IDS_CANCEL              "Annuller"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HTTPDOWNLOAD_MEGABYTES "%s MB"
+    IDS_HTTP_CAPTION        "Opdaterer serverliste"
+    IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s kopieret)"
+    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s Bytes/s"
+    IDS_HSAV                "Hashset available"
+    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s KB/s"
+    IDS_FD_CORR             "Corrupted"
+    IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
+                            "Filen '%s' eksisterer allerede.\nØnsker du at overskrive den?"
+    IDS_FD_RECOV            "Recovered"
+    IDS_HTTPDOWNLOAD_FAIL_FILE_OPEN 
+                            "Der opstod en fejl under åbning af fil, som skal downloades, Fejl:%s"
+    IDS_HTTPDOWNLOAD_ABORTING_TRANSFER "Annullerer overførsel"
+    IDS_FD_COMPR            "Compression"
+    IDS_WIZARD_NETWORK      "Choose which network(s) you want to use."
+    IDS_MAIN_READY          "eMule Version %s klar"
+    IDS_WIZARD_ED2K         "ED2k Settings"
+    IDS_SEL_SKIN            "Select Skin..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MAIN_SOCKETERROR    "Fatal Fejl: Kunne ikke forbinde socket til port %i"
+    IDS_MAIN_BTN_DISCONNECT "Afbryd"
+    IDS_MAIN_BTN_DISCONNECT_TOOLTIP "Afbryd fra nuværende server"
+    IDS_ERR_WRONGFILEID     "Forkert fileID sendt"
+    IDS_ERR_BADHASHSET      "Fejlbehæftet eller ugyldig Hashset modtaget"
+    IDS_ERR_BADDATABLOCK    "Fejlbehæftet eller ugyldig DataBlock modtaget"
+    IDS_ERR_ILLFORMEDHASH   "Ikke velformet hash"
+    IDS_ERR_BADED2KLINK     "Ukorrekt ed2k link"
+    IDS_ERR_NOSLLINK        "Ikke en ED2K server eller fil link"
+    IDS_ERR_WRONGPACKAGESIZE "Ugyldig OP_FILEREQUEST pakkestørrelse"
+    IDS_ERR_WRONGHPACKAGESIZE "Ugyldig OP_HASHSETREQUEST pakkestørrelse"
+    IDS_ERR_BADCLIENTACTION "En klient forårsagede en fejl: %s. afbryder forbindelsen til klienten!"
+    IDS_ERR_UNKNOWNCLIENTACTION 
+                            "Ukendte klienter sender extended protocol pakker"
+    IDS_ERR_OPENMET         "Fejl: Kunne ikke åbne part.met fil! (%s => %s)"
+    IDS_ERR_BADMETVERSION   "Fejl: Ukorrekt part.met filversion! (%s => %s)"
+    IDS_ERR_BADGAP          "Ukorrekt Gap-Tag i part.met fil     "
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_EMPTYADRESSESDAT_TITLE "Kunne ikke hente serverliste"
+    IDS_ERR_BADSERVERMETVERSION 
+                            "Ikke korrekt versionstag i server.met (0x%X)!"
+    IDS_SERVERSFOUND        "%i servere i server.met fundet"
+    IDS_SERVERSADDED        "%d servere tilføjet, %d slettet"
+    IDS_ERR_BADSERVERLIST   "Fejl: Filen server.met er fejlbehæftet, kunne ikke indlæse serverliste"
+    IDS_ERR_FILEERROR_SERVERMET 
+                            "Uventet filfejl ved indlæsning af server.met: %s, kunne ikke indlæse serverliste"
+    IDS_ERR_SAVESERVERMET   "Kunne ikke gemme server.met!"
+    IDS_PASSIVE             "Passive"
+    IDS_MAIN_CONNECTEDTO    "Forbundet til:"
+    IDS_MAIN_BTN_CANCEL     "&Annuller"
+    IDS_AVAIL               "Parts: %d , available: %d (%.1f%%)\n\n"
+    IDS_TYPE                "Type"
+    IDS_FILEID              "Fil ID"
+    IDS_FILE                "Fil"
+    IDS_DOWNLOAD            "Download"
+    IDS_SL_SERVERNAME       "Servernavn"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IP                  "IP"
+    IDS_DESCRIPTION         "Beskrivelse"
+    IDS_PING                "Ping"
+    IDS_FILES               "Filer"
+    IDS_PREFERENCE          "Præference"
+    IDS_PRIONOPREF          "Ingen Præf"
+    IDS_CONNECTTHIS         "Forbind til valgt server"
+    IDS_CHAT_WELCOME        "Instant Messaging\n  \nHøjreklik på en klient og vælg 'Send Besked' for at starte en chat"
+    IDS_MAIN_BTN_CANCEL_TOOLTIP "Stopper nuværende forbindelsesforsøg"
+    IDS_MAIN_BTN_CONNECT    "&Forbind"
+    IDS_ERR_SAVESERVERMET2  "Kunne ikke gemme server.met! Forsøg at slette server.met og omdøb server.met.old til server.met!"
+    IDS_NOTCONNECTED        "Ikke forbundet"
+    IDS_DISCONNECTED        "Forbindelse afbrudt"
+    IDS_USERS               "Brugere: %i"
+    IDS_UPDOWN              "Op: %.1f(%.1f) | Ned: %.1f(%.1f)"
+    IDS_CONNECTED           "Forbundet"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_WRITEERROR      "Uventet filfejl ved forsøg på skrivning %s : %s"
+    IDS_ERR_COMPLETIONFAILED 
+                            "Uventet filfejl ved forsøg på at gøre filen %s færdig. Filen er paused - genstart eMule for at forsøge igen"
+    IDS_ERR_DELETEFAILED    "Kunne ikke slette %s, slet filen ved hjælp af operativsystemet"
+    IDS_DOWNLOADDONE        "Download færdig %s :-)"
+    IDS_ERR_DELETE          "Kunne ikke slette %s"
+    IDS_ERR_HASHERRORWARNING 
+                            "Advarsel: Kunne ikke hashe downloadet del - hashset ikke komplet (%s)"
+    IDS_ERR_INCOMPLETEHASH  "Fejl: Kunne ikke hashe downloadet del - hashset ikke komplet (%s). Dette burde aldrig ske"
+    IDS_DOWNLOADING         "Downloader"
+    IDS_WAITING             "Afventer"
+    IDS_HASHING             "Hasher"
+    IDS_COMPLETING          "Færdiggører"
+    IDS_COMPLETE            "Færdig"
+    IDS_PAUSED              "Pause"
+    IDS_ERRORLIKE           "Fejlbehæftet"
+    IDS_ASSIGNED2K          "eMule er ikke valgt til at håndtere ED2K links. Ønsker du at vælge Emule til at håndtere ED2K links (anbefalet) ?"
+    IDS_ERR_EMPTYADRESSESDAT 
+                            "Ingen serverlistadresse fundet i 'adresses.dat'. Kopier en serverlistadresse ind i filen for at autoopdatere din serverliste"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LINKNOTADDED        "Kunne ikke tilføje link"
+    IDS_MAIN_EXIT           "Er du sikker på, at du vil afslutte eMule?"
+    IDS_MAIN_EXITTITLE      "Bekræft afslutning"
+    IDS_MAIN_POPUP_RESTORE  "Genskab"
+    IDS_CONNECTTOANYSERVER  "Forbind til en server"
+    IDS_EXIT                "Afslut"
+    IDS_CONNECTING          "Forbinder"
+    IDS_FAILED              "Fejlet"
+    IDS_ERR_BADSERVERREPLY  "Modtog fejlbehæftet eller ugyldig loginsvar fra server"
+    IDS_NEWCLIENTID         "Nyt klientID er %u"
+    IDS_NOSHAREDFOLDERS     "Ingen delte mapper"
+    IDS_SHAREDFOLDERS       "Delte mapper"
+    IDS_VIEW1               "Se "
+    IDS_VIEW2               " (ikke delt)"
+    IDS_PRIOLOW             "Lav"
+    IDS_PRIONORMAL          "Normal"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOHIGH            "Høj"
+    IDS_DOWNLOADMENUTITLE   "Downloads"
+    IDS_PRIORITY            "Prioritet"
+    IDS_NEWSERVERS          "Modtog %d nye servere"
+    IDS_DL_STOP             "&Stop"
+    IDS_DL_PAUSE            "&Pause"
+    IDS_DL_RESUME           "&Fortsæt"
+    IDS_DL_OPEN             "&Åben filen"
+    IDS_DL_INFO             "Vis fil&detaljer"
+    IDS_DL_CLEAR            "F&jern færdige"
+    IDS_DL_LINK1            "Kopier ED2k &link til clipboard"
+    IDS_DL_LINK2            "Kopier ED2k link til clipboard (&HTML)"
+    IDS_SHOWDETAILS         "Vis &Detaljer"
+    IDS_SEND_MSG            "Send &Besked"
+    IDS_ASKING              "Forespørger"
+    IDS_CONNVIASERVER       "Forbinder via server"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ONQUEUE             "I kø"
+    IDS_TRANSFERRING        "Overfører"
+    IDS_RECHASHSET          "Modtager Hashset"
+    IDS_NONEEDEDPARTS       "Ingen nødvendige dele"
+    IDS_NOCONNECTLOW2LOW    "Kan ikke forbinde (lavt ID til lavt ID)"
+    IDS_UNKNOWN             "Ukendt"
+    IDS_ASKED4ANOTHERFILE   "Forespurgt på anden fil"
+    IDS_Q_CANCELDL          "Er du sikker på, at du ønsker at annullere og slette disse filer?\n"
+    IDS_Q_CANCELDL2         "Er du sikker på, at du ønsker at annullere og slette denne fil?\n"
+    IDS_COPIED2CB           "Kopieret til clipboard: \n"
+    IDS_PROCDONE            "% færdig"
+    IDS_SELECTINCOMINGDIR   "Vælg en mappe til indkommende filer"
+    IDS_SELECTTEMPDIR       "Vælg en mappe til temp filer"
+    IDS_DL_FILENAME         "Filnavn"
+    IDS_DL_SIZE             "Størrelse"
+    IDS_DL_TRANSF           "Overført"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DL_SPEED            "Hastighed"
+    IDS_DL_PROGRESS         "Fremgang"
+    IDS_DL_SOURCES          "Kilder"
+    IDS_ERR_BADSERVERLISTRECEIVED "Fejlbehæftet serverlistepakke modtaget"
+    IDS_STATUS              "Status"
+    IDS_DL_REMAINS          "Mangler"
+    IDS_QL_USERNAME         "Brugernavn"
+    IDS_ERR_PACKAGEHANDLING "Ikke håndteret fejl mens pakke fra server blev behandlet (%s)"
+    IDS_QL_RATING           "Rating"
+    IDS_CONNECTINGTO        "Forbinder til %s (%s:%i)..."
+    IDS_CLIENTS             "Klienter"
+    IDS_SEARCH_ANY          "Alle"
+    IDS_SEARCH_AUDIO        "Lyd/musik"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SEARCH_PICS         "Billeder"
+    IDS_SEARCH_PRG          "Programmer"
+    IDS_SEARCH_VIDEO        "Video"
+    IDS_SEARCH_CDIMG        "CD-Images"
+    IDS_SEARCH_ARC          "Arkiver"
+    IDS_ERR_INVALIDLINK     "Dette ed2k link er fejlbehæftet (%s)"
+    IDS_ERR_LINKERROR       "Fejlbehæftet link: %s"
+    IDS_ERR_NOTCONNECTED    "Du er ikke forbundet til en server!"
+    IDS_REMOVETHIS          "Fjern valgte servere"
+    IDS_REMOVEALL           "Fjern alle servere"
+    IDS_SRV_ADDR            "Indtast en serveradresse"
+    IDS_SRV_PORT            "Ikke komplet serverport: Indtast en serverport"
+    IDS_SRV_NOTADDED        "Server ikke tilføjet!"
+    IDS_SRV_READD           "Server markeret som død, den er blevet tilføjet igen!"
+    IDS_SRV_NOURLAV         "Ingen URL tilgængelig."
+    IDS_INVALIDURL          "Invalid URL"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FAILEDDOWNLOADMET "Kunne ikke downloade serverliste fra %s"
+    IDS_PERMISSION          "Tilladelse"
+    IDS_SHAREDFILES         "Delte filer"
+    IDS_PRIOVERYLOW         "Meget lav"
+    IDS_PRIORELEASE         "Release"
+    IDS_FSTATUS_LOCKED      "Låst"
+    IDS_KADALPHA            "Kademlia is still in an early development stage. We recommend to enabled it only if you are interested in testing it"
+    IDS_FSTATUS_FRIENDSONLY "Kun venner"
+    IDS_FSTATUS_PUBLIC      "Offentlig"
+    IDS_ERR_RENAMESF        "Failed to rename\r\n    ""%s""\r\nto\r\n    ""%s""\r\n\r\n%hs"
+    IDS_PRIOHIGHEST         "Højest"
+    IDS_AVAILABLE           "available"
+    IDS_ERR_NOPRIMCHANGE    "Du kan ikke skifte tilladelse mens en fil downloades!"
+    IDS_HIDDEN              "Skjult"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FSTAT_TRANSFER      "Overfører"
+    IDS_FSTAT_CONNECTION    "Forbindelse"
+    IDS_FSTAT_CLIENTS       "Klienter"
+    IDS_FSTAT_SERVERS       "Servere"
+    IDS_FSTAT_WAITING       "Afventer..."
+    IDS_TIME                "Tid"
+    IDS_STATS_DDATA         "Downloaded Data: %s"
+    IDS_STATS_UDATA         "Uploaded Data: %s"
+    IDS_STATS_AVGDL         "Gennemsnitlig Downloadrate: %.2f kB/s"
+    IDS_STATS_AVGUL         "Gennemsnitlig Uploadrate: %.2f kB/s"
+    IDS_STATS_FOUNDSRC      "Fundne kilder: %i"
+    IDS_STATS_ACTDL         "Aktive Downloads (chunks): %i"
+    IDS_STATS_ACTUL         "Aktive Uploads: %i"
+    IDS_STATS_WAITINGUSERS  "Afventende Uploads: %i"
+    IDS_STATS_RECONNECTS    "Genforbindelser: %i"
+    IDS_STATS_WAITTRANSF    "Afventer overførelse..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_WAITCONN      "Afventer forbindelse..."
+    IDS_STATS_CONNECTEDSINCE "Forbundet til server siden: %s"
+    IDS_STATS_RATIO         "UL:DL forhold:"
+    IDS_STATS_UNKNOWNCLIENT "Ukendt: %i"
+    IDS_STATS_TOTAL         "Total: %i"
+    IDS_STATS_WORKING       "Arbejdende: %i"
+    IDS_STATS_DEAD          "Døde/Slettede: %i"
+    IDS_DISABLED            "Deaktiver"
+    IDS_STOPPED             "Stoppet"
+    IDS_STATS_UPDATELABEL   "Opdateringshastighed: %i sek"
+    IDS_QUEUECOUNT          "%u (%u bandlyst)"
+    IDS_NICKNAME            "Nick: "
+    IDS_CLIENTSFILENAME     "\nKlientens filnavn: "
+    IDS_ASKEDFAF            "\nForespurgt på anden fil"
+    IDS_WAITED              "Ventet"
+    IDS_ERR_LOADCREDITFILE  "Kunne ikke indlæse kreditfil, opretter en ny"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CREDITFILEOLD   "Kreditfil er ikke opdateret og vil blive genoprettet"
+    IDS_CREDITFILELOADED    "Kreditfil indlæst, %u kendte "
+    IDS_CREDITFILECORRUPT   "Fejl: Kreditfilen er fejlbehæftet og vil blive genoprettet!"
+    IDS_ERR_CREDITFILEREAD  "Uventet filfejl ved indlæsning af kreditfil: %s"
+    IDS_ERR_FAILED_CREDITSAVE "Kunne ikke gemme kreditfil"
+    IDS_NOPARTSFOUND        "Ingen part filer fundet"
+    IDS_FOUNDPARTS          "Fundet %i part filer"
+    IDS_NEWDOWNLOAD         "Downloader %s"
+    IDS_ERR_ALREADY_DOWNLOADING "Du downloader allerede denne fil %s"
+    IDS_ERR_ALREADY_DOWNLOADED "Du har allerede downloadet denne fil %s"
+    IDS_ERR_SERVERMET_BAD   "Fejl: filen known.met er fejlbehæftet, kunne ikke indlæse kendte filer"
+    IDS_ERR_SERVERMET_UNKNOWN 
+                            "Uventet filfejl ved indlæsning af known.met: %s, kunne ikke indlæse kendte filer"
+    IDS_ERR_CONNECTIONERROR "Fejl ved forbindelse til %s (%s:%i): %s"
+    IDS_ERR_SOCKET          "Fejl i serversocket: %s (%s:%i): %s"
+    IDS_SHAREDFOUND         "Fundet %i kendte delte filer"
+    IDS_SHAREDFOUNDHASHING  "Fundet %i kendte delte filer, hasher %i nye filer nu"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_UDPEXT          "Der opstod en fejl ved behandling af modtaget Extended Protocol UDP pakke"
+    IDS_ERR_INCOMPLETEBLOCK "Forespurgt på ikke færdig blok "
+    IDS_ERR_OPEN            "Kunne ikke åbne ønsket fil"
+    IDS_ERR_CLIENTERRORED   "Klient '%s' forårsagede en fejl ved oprettelse af pakke (%s) - afbryder forbindelse til klient"
+    IDS_ERR_REQ_FNF         "Ønsket fil ikke fundet"
+    IDS_CLIENTBLOCKED       "Klient '%s' opfører sig aggresivt og bliver bandlyst fra uploadkøen"
+    IDS_LUSERS              "brugere"
+    IDS_LFILES              "Filer"
+    IDS_DESC                "Beskrivelse: %s"
+    IDS_PORT                "Port"
+    IDS_ERR_NOVALIDSERVERSFOUND "Ingen valide servere fundet i serverlisten"
+    IDS_CONNECTEDTOREQ      "Forbundet til %s (%s:%i), sender loginforespørgsel"
+    IDS_ERR_FATAL           "Fatal fejl ved forsøg på forbindelse. Internetforbindelsen er måske nede"
+    IDS_ERR_LOSTC           "Forbindelse til %s (%s:%i) tabt"
+    IDS_ERR_DEAD            "%s (%s:%i) ser ud til at være død."
+    IDS_ERR_FULL            "%s (%s:%i) ser ud til at være fuld"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_METCORRUPT      "Fejl: %s (%s) er fejlbehæftet, kunne ikke indlæse fil"
+    IDS_ERR_FILEERROR       "Uventet filfejl ved indlæsning af %s (%s): %s"
+    IDS_ERR_FILEOPEN        "Kunne ikke åbne %s (%s)"
+    IDS_SEL_SKINDIR         "Select Skin Directory..."
+    IDS_ERR_REHASH          "Advarsel: %s kan være fejlbehæftet, udfører rehashing af færdige dele"
+    IDS_SKIN_PROF           "Skin Profiles"
+    IDS_ERR_PART_FNF        ".part fil ikke fundet"
+    IDS_ERR_OPENMETFILE     "Kunne ikke åbne part.met fil"
+    IDS_KADOPEN             "Open"
+    IDS_ERR_SAVEMET         "Fejl ved forsøg på at gemme partfil: %s (%s)"
+    IDS_ERR_FOUNDCORRUPTION "Fundet fejlbehæftet del (%i) in %s"
+    IDS_HASHINGDONE         "Rehashing færdig %s, fil er tilsyneladende ok"
+    IDS_ERR_PARTCORRUPT     "Downloadet del %i er fejlbehæftet:(  (%s)"
+    IDS_ICHWORKED           "ICH: Genskabt fejlbehæftet del %i  (%s)"
+    IDS_ERR_OUTOFSPACE      "Du har ikke nok diskplads til at downloade %s!"
+    IDS_SE                  "Source Exchange"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOSERVERSC      "Ingen valide servere fundet i serverlisten"
+    IDS_CONNECTEDTO         "Forbundet til: %s"
+    IDS_DL_PREVIEW          "Preview"
+    IDS_VIEWQUEUE           "Vis kø"
+    IDS_VIEWUPLOADS         "Vis uploads"
+    IDS_TW_UPLOADS          "Uploads"
+    IDS_TW_DOWNLOADS        "Downloads"
+    IDS_TW_QUEUE            "Klienter i kø:"
+    IDS_SW_SEARCHBOX        "Søg"
+    IDS_SW_NAME             "Navn"
+    IDS_SW_GLOBAL           "Søg globalt"
+    IDS_SW_TYPE             "Type"
+    IDS_SW_DIRECTDOWNLOAD   "Direkte Download"
+    IDS_SW_LINK             "ED2K Link(s)"
+    IDS_SW_START            "Start"
+    IDS_SCHEDULER           "Scheduler"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC                 "IRC"
+    IDS_SW_RESULT           "Søgeresultat"
+    IDS_SW_DOWNLOAD         "Download valgt"
+    IDS_SV_SERVERLIST       "Serverliste"
+    IDS_SV_SERVERINFO       "Serverinfo"
+    IDS_SV_LOG              "Log"
+    IDS_SV_NEWSERVER        "Ny Server"
+    IDS_SV_ADDRESS          "IP eller adresse"
+    IDS_SV_PORT             "Port"
+    IDS_SV_ADD              "Tilføj til liste"
+    IDS_SV_MET              "Opdater server.met fra URL"
+    IDS_SV_UPDATE           "Opdater"
+    IDS_SF_FILES            "Delte filer"
+    IDS_SF_STATISTICS       "Statistik"
+    IDS_SF_RELOAD           "Genindlæs"
+    IDS_SF_CURRENT          "Nuværende Session"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIORITY_UP         "Forøg prioritet"
+    IDS_PRIORITY_DOWN       "Formindsk prioritet"
+    IDS_SPEED_LIMITS        "Hastighedsbegrænsninger"
+    IDS_CAPACITY_LIMITS     "Båndbreddebegrænsning"
+    IDS_ADMIN               "Administrator"
+    IDS_ACCESSDENIED        "Adgang nægtet!"
+    IDS_WEB_LOWUSER         "Gæst"
+    IDS_WEB_ERR_CANTLOAD    "Kan ikke indlæse skabeloner: Kan ikke åbne filen %s"
+    IDS_GLOBALSEARCH        "Global (Server)"
+    IDS_METHOD              "Metode"
+    IDS_SW_WEBBASED         "Web-baseret søgning"
+    IDS_NOTHING             "ingenting"
+    IDS_SETUPSPEED          "sæt uploadbegrænsning"
+    IDS_SETDOWNSPEED        "sæt downloadbegrænsning"
+    IDS_DAYLY               "dagligt"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DAY_MO_FR           "Man-Fre"
+    IDS_DAY_SA_SO           "Lør-Søn"
+    IDS_MO                  "Mandag"
+    IDS_DI                  "Tirsdag"
+    IDS_MI                  "Onsdag"
+    IDS_DO                  "Torsdag"
+    IDS_FR                  "Fredag"
+    IDS_SA                  "Lørdag"
+    IDS_SO                  "Søndag"
+    IDS_WEB_ADMINLOGIN      "Webserver admin log ind"
+    IDS_WEB_GUESTLOGIN      "Webserver gæst log ind"
+    IDS_WEB_SESSIONEND      "Webserver: Log ud"
+    IDS_DETAILS             "Detaljer"
+    IDS_ACTION              "Handling"
+    IDS_REMOVE              "Fjern"
+    IDS_NEW                 "Ny"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SF_TOTAL            "Total"
+    IDS_SF_TRANS            "Overført:"
+    IDS_SF_ACCEPTED         "Accepterede uploads:"
+    IDS_SF_REQUESTED        "Forespurgte:"
+    IDS_ST_DOWNLOAD         "Download hastighed"
+    IDS_ST_UPLOAD           "Upload hastighed"
+    IDS_ST_CURRENT          "Nuværende"
+    IDS_ST_SESSION          "Session gennemsnit"
+    IDS_ST_ACTIVED          "Aktive downloads"
+    IDS_ST_ACTIVEU          "Aktive uploads"
+    IDS_ST_WAITINGU         "Afventende uploads"
+    IDS_CW_MESSAGES         "Beskeder"
+    IDS_CW_FRIENDS          "Venner"
+    IDS_CW_SEND             "Send"
+    IDS_CW_CLOSE            "Luk"
+    IDS_PW_GENERAL          "Generelt"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_DIR              "Mapper"
+    IDS_PW_NICK             "Nick"
+    IDS_PW_INCOMING         "Indkommende filer"
+    IDS_PW_TEMP             "Temp filer"
+    IDS_PW_BROWSE           "Gennemse"
+    IDS_PW_SHARED           "Delte mapper"
+    IDS_PW_CONNECTION       "Forbindelse"
+    IDS_PW_DOWNC            "Download kapacitet"
+    IDS_PW_DOWNL            "Download begrænsning"
+    IDS_PW_UPC              "Upload kapacitet"
+    IDS_PW_UPL              "Upload begrænsning"
+    IDS_PW_MAXC             "Max. forbindelser"
+    IDS_PW_CLIENTPORT       "Klientport"
+    IDS_PW_AUTOCON          "Autoforbind ved opstart"
+    IDS_PW_RECON            "Genforbind ved tabt forbindelse"
+    IDS_PW_SERVER           "Server"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_RDEAD            "Fjern døde servere efter"
+    IDS_PW_RETRIES          "Genforsøg"
+    IDS_PW_SCORE            "Benyt prioriteringsssystem"
+    IDS_PW_USC              "Opdater serverliste ved forbindelse til en server"
+    IDS_PW_UCC              "Opdater serverliste når en klient forbinder"
+    IDS_PW_FILTER           "Filter server and client LAN IPs"
+    IDS_PW_USS              "Autoopdater serverliste ved opstart"
+    IDS_PW_MISC             "Forskellige indstillinger"
+    IDS_PW_TRAY             "Minim&er til trayicon"
+    IDS_PW_BEEP             "Beep ved fejl"
+    IDS_PW_PROMPT           "Bekræft lukning"
+    IDS_PW_SPLASH           "Vis Splashscreen"
+    IDS_PW_DBLCLICK         "Downloadliste udfolder ved dobbelt klik"
+    IDS_PW_TOOL             "Tooltip forsinkelsestid (sekunder)"
+    IDS_PW_FRONT            "Bring til front ved klik på link"
+    IDS_PW_LANG             "Sprog"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_FILES            "Filer"
+    IDS_PW_ICH              "&Intelligent Corruption Handling"
+    IDS_PW_SHARE            "Se mine delte filer"
+    IDS_PW_EVER             "Alle"
+    IDS_PW_FRIENDS          "Venner"
+    IDS_PW_NOONE            "Ingen"
+    IDS_PW_RESET            "Nulstil"
+    IDS_PW_APPLY            "Anvend"
+    IDS_EM_TRANS            "Overførsler"
+    IDS_EM_SERVER           "Servere"
+    IDS_EM_SEARCH           "Søg"
+    IDS_EM_FILES            "Delte filer"
+    IDS_EM_MESSAGES         "Beskeder"
+    IDS_EM_STATISTIC        "Statistik"
+    IDS_EM_PREFS            "Indstillinger"
+    IDS_MB_LANGUAGEINFO     "Et standard sprog blev valgt. Du kan skifte sprog under Indstillinger"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_GENERAL          "Generelt"
+    IDS_FD_NAME             "Fuldt Navn:"
+    IDS_FD_MET              "Met-Fil:"
+    IDS_FD_HASH             "Hash:"
+    IDS_FD_SIZE             "Filstørrelse:"
+    IDS_FD_STATUS           "Partfilstatus:"
+    IDS_FD_TRANSFER         "Overfør"
+    IDS_FD_SOURCES          "Fundet kilder:"
+    IDS_FD_PARTS            "Parts:"
+    IDS_FD_TRANS            "Overført:"
+    IDS_FD_DATARATE         "Datarate:"
+    IDS_FD_TRANSI           "Overfører:"
+    IDS_FD_COMPSIZE         "Færdig størrelse:"
+    IDS_FD_CLOSE            "Luk"
+    IDS_FD_TITLE            "Fildetaljer"
+    IDS_CD_GENERAL          "Generelt"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UNAME            "Brugernavn:"
+    IDS_CD_UHASH            "Brugerhash:"
+    IDS_CD_CSOFT            "Klientsoftware:"
+    IDS_CD_UIP              "IP Adresse:"
+    IDS_CD_SIP              "Server IP:"
+    IDS_CD_VERSION          "Klientversion:"
+    IDS_CD_UID              "ID:"
+    IDS_CD_SNAME            "Servernavn:"
+    IDS_CD_CDOWN            "Downloader nu:"
+    IDS_CD_DOWN             "Downloadet (denne session):"
+    IDS_CD_ADOWN            "Gennemsnitlig Downloadrate:"
+    IDS_CD_TDOWN            "Downloadet total:"
+    IDS_CD_UP               "Uploadet (denne session):"
+    IDS_CD_AUP              "Gennemsnitlig Uploadrate:"
+    IDS_CD_TUP              "Uploadet total:"
+    IDS_CD_TRANS            "Overførsel"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_SCORES           "Scores"
+    IDS_CD_MOD              "DL/UP:"
+    IDS_CD_RATING           "Rating (total):"
+    IDS_CD_USCORE           "Uploadkø Score:"
+    IDS_CD_TITLE            "Klientdetaljer"
+    IDS_EMULEW              "Klik"
+    IDS_EMULEW2             "for at se om en ny eMule version er tilgængelig"
+    IDS_EMULEW3             "Her"
+    IDS_PW_MAXSOURCES       "Max. kilder per fil"
+    IDS_SHAREDFILESCOUNT    "Antal delte filer: %i"
+    IDS_SF_SIZE             "Samlet størrelse af delte filer: %s"
+    IDS_ERR_WRONGPARTNUMBER "Forkert delnummer"
+    IDS_ERR_BADPORT         "Forkert portnummer"
+    IDS_ERR_NOHELLO         "Spørger efter noget uden at hilse"
+    IDS_ERR_INVALIDPACKAGE  "Ugyldig eller korrupt pakke modtaget"
+    IDS_ERR_CLIENTERROR     "Klienten '%s' (IP:%s) forårsagede en fejl: %s. Afbryder klient!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_BADSIZE         "Ugyldig størrelse (OP_QUEUERANKING)"
+    IDS_ERR_BADCLIENT2      "Klienten '%s' (IP:%s) forårsagede en fejl: %u. Afbryder klient!"
+    IDS_ERR_NOTAFILELINK    "Ugyldigt fil link"
+    IDS_ERR_CREATEPARTFILE  "FEJL: Kunne ikke oprette part fil)"
+    IDS_ERR_UDP_MISCONF     "Der opstod en fejl ved behandling af en modtaget UDP Pakke (Sandsynligvis en miskonfigureret server)"
+    IDS_CHAT_START          "*** Chatsession Start : "
+    IDS_FILEPRIO            "Filprioritet"
+    IDS_SCORE               "Score"
+    IDS_ASKED               "Forespurgt"
+    IDS_LASTSEEN            "Sidst set"
+    IDS_BANNED              "Bandlyst"
+    IDS_PRIOVERYHIGH        "Meget høj"
+    IDS_UUSERS              "Brugere"
+    IDS_UFAILED             "Fejlet"
+    IDS_OPENFILE            "Åben fil"
+    IDS_DATE                "Dato"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PARTINFOS           "Partfilename:"
+    IDS_PARTINFOS2          "Downloading (from %d sources)"
+    IDS_USERID              "BrugerID"
+    IDS_CLIENT              "Klient"
+    IDS_SERVER              "Server"
+    IDS_SOURCEINFO          "Antal spurgte: %dx - Tilgængelige dele: %d"
+    IDS_CLIENTSOURCENAME    "\nKlientens filnavn: "
+    IDS_USERINFO            "Nick: %s\n"
+    IDS_FILESTATS_SESSION   "Filstatistikker for sessionen: Accepteret %d af %d forespørgsler, %s overført\n"
+    IDS_FILESTATS_TOTAL     "Filstatistikker for alle sessioner: Accepteret %d af %d forespørgsler, %s overført"
+    IDS_REQ_UNKNOWNFILE     "Forespurgte ukendt fil"
+    IDS_TRANSFERTIME        "Tid siden første overførelse: %s"
+    IDS_SF_AVERAGESIZE      "Gennemsnitlig filstørrelse: %s"
+    IDS_SF_REQUESTS         "Forespørgelser"
+    IDS_SF_ACCEPTS          "Accepterede forespørgelser"
+    IDS_SF_TRANSFERRED      "Overført data"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_REMOVESEARCHSTRING  "Fjern valgte søgning(er)"
+    IDS_REMOVESELECTED      "Fjern valgte"
+    IDS_REMOVEALLSEARCH     "Fjern alt"
+    IDS_ENTERQUEUE          "Indtrådt i køen"
+    IDS_SF_FAIL             "Døde servere"
+    IDS_SF_WUSER            "Brugere på aktive servere"
+    IDS_SF_WFILE            "Filer på aktive servere"
+    IDS_SF_USER             "Samlet antal brugere"
+    IDS_SF_FILE             "Samlet antal filer"
+    IDS_UPLOADTIME          "Upload tid"
+    IDS_LASTSEENCOMPL       "Sidst set færdig:"
+    IDS_YES                 "Ja"
+    IDS_NO                  "Nej"
+    IDS_UNBAN               "Fjern bandlysning"
+    IDS_SF_WORKING          "Aktive servere"
+    IDS_ADDTOSTATIC         "Tilføj til liste over statiske servere"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDED2SSF           "tilføjet til liste over statiske servere"
+    IDS_STATICSERVER        "Statisk"
+    IDS_ERROR_SSF           "Kunne ikke åbne staticservers.dat"
+    IDS_ERR_PACKAGEERROR    "Kritisk fejl mens datapakke for %s (forkert størrelse) blev behandlet - datablock droppet"
+    IDS_SF_ACTIVECON        "Aktive forbindelser (anslået)"
+    IDS_SF_MAXCONLIMITREACHED "Grænse for antal forbindelser nået"
+    IDS_SF_AVGCON           "Gennemsnitlige antal forbindelser (anslået)"
+    IDS_SF_PEAKCON          "Højeste antal forbindelser (anslået)"
+    IDS_ST_ACTIVEC          "Aktive forbindelser"
+    IDS_NETWORK             "Netværk"
+    IDS_SF_DELCOUNT         "Slettede servere"
+    IDS_QUEUEFULL           "Kø fyldt"
+    IDS_AVG                 "Gennemsnit"
+    IDS_BYTES               "Bytes"
+    IDS_KBYTES              "KB"
+    IDS_MBYTES              "MB"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GBYTES              "GB"
+    IDS_TBYTES              "TB"
+    IDS_SECS                "sek"
+    IDS_MINS                "min"
+    IDS_HOURS               "t"
+    IDS_DAYS                "D"
+    IDS_ED2KLINKFIX         "ED2K Links"
+    IDS_RECONNECT           "Automatisk forbindelse til server vil blive forsøgt om %d sekunder"
+    IDS_SERVERADDED         "Server tilføjet: %s"
+    IDS_IRC_IGNOREJOINMESSAGE "Ignore Join info messages"
+    IDS_STATS_SUCCUPCOUNT   "Totalt antal succesfulde upload-sessioner: %i (%.2f%%)"
+    IDS_IRC_IGNOREPARTMESSAGE "Ignore Part info messages"
+    IDS_STATS_FAILUPCOUNT   "Totalt antal fejlede upload-sessioner: %i (%.2f%%)"
+    IDS_STATS_AVEUPTIME     "Gennemsnitlig upload-tid: %s"
+    IDS_SEARCHMINSIZE       "Min. størrelse"
+    IDS_SEARCHMAXSIZE       "Max. størrelse"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PREF_ONLINESIG      "Benyt Onlinesignatur"
+    IDS_ERROR_SAVEFILE      "Kunne ikke gemme"
+    IDS_REQ_SHAREDFILES     "Brugeren %s (%u) ville se dine delte filer -> %s"
+    IDS_ACCEPTED            "accepteret"
+    IDS_DENIED              "nægtet"
+    IDS_PW_CON_DOWNLBL      "Download"
+    IDS_PW_CON_UPLBL        "Upload"
+    IDS_PW_AUTOCONNECTSTATICONLY "Autoforbind kun til statiske servere"
+    IDS_PW_CON_LIMITFRM     "Begrænsning"
+    IDS_PW_FILE_ICH         "I.C.H aktiveret"
+    IDS_STATS_AVGLABEL      "Tid for gennemsnitsgraf: %i min"
+    IDS_GRAPHS              "Graf"
+    IDS_STREE               "Statistik træ"
+    IDS_IRC_IGNOREQUITMESSAGE "Ignore Quit info messages"
+    IDS_STATSSETUPINFO      "Statistikvisning"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DOWNLOADMOVIECHUNKS "Forsøg at downloade første og sidste dele først"
+    IDS_UPDATEQUEUE         "Opdater ikke køliste i realtid"
+    IDS_RECOVER_SINGLE      "1 fil genoprettet."
+    IDS_RECOVER_MULTIPLE    "%ld filer genoprettet."
+    IDS_ATTEMPTING_RECOVERY "Forsøger arkivgenoprettelse..."
+    IDS_RECOVERY_SUCCESSFUL "Arkiv genoprettelse lykkedes."
+    IDS_RECOVERY_FAILED     "Arkiv genoprettelse fejlede."
+    IDS_STARTNEXTFILE       "Fortsæt næste pausede fil når en fil er færdig"
+    IDS_FULLCHUNKTRANS      "Forsøg at overføre komplette dele (chunks) ved alle uploads"
+    IDS_MANUALSERVERHIGHPRIO "Sæt manuelt tilføjede servere til høj prioritet"
+    IDS_VERBOSE             "Verbose (yderligere programinformation)"
+    IDS_FLAT                "Flad"
+    IDS_ROUND               "Rund"
+    IDS_SAMEUSERHASH        "Klienterne '%s' og '%s' har samme brugerhash eller IP - fjernet '%s'"
+    IDS_SEARCHEXTENTION     "Filextension"
+    IDS_SEARCHAVAIL         "Tilgængelighed"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDLIMIT           "Hård begrænsning"
+    IDS_COL_MORECOLORS      "flere..."
+    IDS_KBYTESEC            "kB/s"
+    IDS_TOOMANYCONNS        "For mange forbindelser"
+    IDS_DOWNLOADRENAMED     "Der eksisterer allerede en fil med dette navn, filen er gemt som %s"
+    IDS_TBN_DOWNLOADDONE    "Downloadet:"
+    IDS_TBN_DOWNLOADADDED   "Tilføjet til downloads:"
+    IDS_PW_TBN_USESOUND     "Benyt lyd"
+    IDS_PW_TBN_ONLOG        "Ny linie i log"
+    IDS_PW_TBN_ONCHAT       "Starter en ny chat session"
+    IDS_PW_TBN_POP_ALWAYS   "En ny chat besked er modtaget"
+    IDS_PW_TBN_ONDOWNLOAD   "A download is finished"
+    IDS_PW_EKDEV_OPTIONS    "Underrettelser"
+    IDS_PW_TASKBARNOTIFIER  "Besk. popup"
+    IDS_PW_TBN_OPTIONS      "Popup når"
+    IDS_TBN_NEWCHATMSG      "Besked fra"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_CON_CAPFRM       "Kapacitet"
+    IDS_IRC_STATUSLOG       "Status Log"
+    IDS_IRC_STATUS          "Status"
+    IDS_IRC_PRIVATECHANSTART "* Privat chatsession startet"
+    IDS_IRC_SLAPMSG         "* %s slår %s med en stor Babelfish!"
+    IDS_IRC_PRIVMESSAGE     "Privat besked"
+    IDS_IRC_OP              "Op"
+    IDS_IRC_DEOP            "DeOp"
+    IDS_IRC_VOICE           "Voice"
+    IDS_IRC_HALFOP          "HalfOp"
+    IDS_IRC_DEHALFOP        "DeHalfOp"
+    IDS_IRC_KICK            "Kick"
+    IDS_IRC_SLAP            "Slap"
+    IDS_IRC_JOIN            "Deltag"
+    IDS_IRC_CHANNELLIST     "Kanalliste"
+    IDS_IRC_CONNECT         "Forbind"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_DISCONNECT      "Afbryd"
+    IDS_IRC_HASJOINED       "* %s indtrådt i %s"
+    IDS_IRC_HASPARTED       "* %s har forladt %s (%s)"
+    IDS_IRC_WASKICKEDBY     "* %s blev kicked af %s (%s)"
+    IDS_IRC_NICKUSED        "Dit nick benyttes allerede på IRC serveren. Skriv /nick nytnick for at ændre det."
+    IDS_IRC_DEVOICE         "DeVoice"
+    IDS_IRC_HASQUIT         "* %s har forladt (%s)"
+    IDS_IRC_NOWKNOWNAS      "* %s kendes nu som %s"
+    IDS_IRC_SETSMODE        "* %s sætter tilstande: %s %s"
+    IDS_IRC_NOTSUPPORTED    "** Nogle tilstande er blevet sat, men supporteres ikke endnu. Du kan blive nødt til at forlade og genindtræde i kanalen for at opdatere nickliste.."
+    IDS_IRC_CHANNEL         "Kanal"
+    IDS_IRC_NICK            "Nick"
+    IDS_IRC_SEND            "Send"
+    IDS_IRC_NAME            "Navn"
+    IDS_IRC_SLAPMSGSEND     "PRIVMSG %s :\001ACTION slår %s med en stor Babelfish!\001"
+    IDS_IRC_ADDTIMESTAMP    "Tilføj tidsstempel til beskeder"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_USEFILTER       "Benyt kanalliste filter."
+    IDS_IRC_PERFORM         "Udfør"
+    IDS_IRC_USEPERFORM      "Benyt udførstreng ved forbindelse."
+    IDS_IRC_ADDTOFRIENDLIST "Tilføj til venneliste"
+    IDS_IRC_LOADCHANNELLISTONCON "Indlæs serverkanalliste ved forbindelse."
+    IDS_IRC_ADDASFRIEND     "tilføjede dig som ven!"
+    IDS_PW_WARNING          "Tallet du har valgt for ""%s"" er højere end det dit OS supporterer: %d\nDette kan betyde at dit system bliver ustabilt.\n\nEr du sikker på dit valg?"
+    IDS_TAKEOVER            "Overtag"
+    IDS_CLEANUP             "Ryd op"
+    IDS_RENAME              "Omdøb"
+    IDS_IRC_ADDLINKTOIRC    "Tilføj dette til IRC clipboard for at sende til en ven."
+    IDS_IRC_SENDLINK        "Send dette til en ven: "
+    IDS_IRC_RECIEVEDLINK    "%s sendt (%s) for at blive startet automatisk."
+    IDS_IRC_ACCEPTLINKS     "Accepter ED2K links i IRC. (Benyt dette med forsigtighed!)"
+    IDS_SHARED              "Shared"
+    IDS_DOWNLOADED          "Downloaded"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SOURCENAMES         "Kildenavne"
+    IDS_PREF_STARTMIN       "Start minimeret"
+    IDS_PS_TBN_IMPORTANT    "Vigtigt: Ikke mere diskplads, tabt serverforbindelse"
+    IDS_COLORS              "Farver"
+    IDS_SP_BACKGROUND       "Baggrund"
+    IDS_SP_GRID             "Gitternet/akser"
+    IDS_SP_DL1              "Download nuværende"
+    IDS_SP_DL2              "Download tidsgennemsnit"
+    IDS_SP_DL3              "Download sessionsgennemsnit"
+    IDS_SP_UL1              "Upload nuværende"
+    IDS_SP_UL2              "Upload tidsgennemsnit"
+    IDS_SP_UL3              "Upload sessionsgennemsnit"
+    IDS_SP_ACTCON           "Aktive forbindelser"
+    IDS_SP_ACTDL            "Aktive downloads"
+    IDS_SP_ACTUL            "Aktive uploads"
+    IDS_PW_TIT_UP           "Sæt Upload-begrænsning"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PW_TIT_DOWN         "Sæt Download-begrænsning"
+    IDS_PW_UNLIMITED        "Ubegrænset"
+    IDS_PW_MINREC           "Minimum anbefalet\t%i "
+    IDS_PW_UA               "Fuld op/ned hastighed"
+    IDS_PW_PA               "Op/ned hastighed på 1kB/s"
+    IDS_IRC_IGNOREINFOMESSAGE "Ignorer infobeskeder"
+    IDS_CONNECTIONLOST      "Tabt forbindelse"
+    IDS_WIZ_OS_FRAME        "Operativsystem"
+    IDS_WIZ_CONCURENTDOWN_FRAME 
+                            "Hvor mange downloads har du normalt i gang på en gang?"
+    IDS_HASHINGFILE         "Hashing file:"
+    IDS_WIZ_CUSTOM_FRAME    "Hvis du har testet din forbindelseshastighed, så indsæt resultatet her."
+    IDS_WIZ_HOTBUTTON_FRAME "Forudindstillingsknapper"
+    IDS_WIZ_TRUEUPLOAD_TEXT "Korrekt upload båndbredde"
+    IDS_WIZ_TRUEDOWNLOAD_TEXT "Korrekt download båndbredde"
+    IDS_FRIENDLIST          "Venner"
+    IDS_CHATDISCONNECTED    "*** Afbrudt"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZARD              "Guide"
+    IDS_ADDFRIEND           "Tilføj til venner"
+    IDS_REMOVEFRIEND        "Fjern ven"
+    IDS_REMOVEFROMSTOK      "fjernet fra statisk serverliste"
+    IDS_REMOVEFROMSTATIC    "Fjern fra statisk serverliste"
+    IDS_LENGTH              "Længde"
+    IDS_VIDEO               "Video"
+    IDS_AUDIO               "Lyd/Musik"
+    IDS_FILEINFO            "Fil&info"
+    IDS_CODEC               "Codec"
+    IDS_BITRATE             "Bitrate"
+    IDS_WIDTH               "Bredde"
+    IDS_FPS                 "Fps"
+    IDS_CHANNELS            "Kanaler"
+    IDS_SAMPLERATE          "Samplerate"
+    IDS_ROUNDBITRATE        "Afrundet Bitrate"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HEIGHT              "Højde"
+    IDS_SHAREDFILES_FAILED  "Kunne ikke se delte filer hos '%s'"
+    IDS_SHAREDFILES_REQUEST "Forespørger delte filer hos '%s'"
+    IDS_VIEWFILES           "Se filer"
+    IDS_FRIENDSLOT          "Opbyg ven-uploadplads"
+    IDS_FRIENDDETAIL        "(ven-uploadplads)"
+    IDS_ASCWOP_PROXYSUPPORT "Automatisk serverforbindelse uden proxy"
+    IDS_UDPDISABLED         "deaktiveret"
+    IDS_CTINFO              "Vælg din forbindelsestype her"
+    IDS_WIZ_CTFRAME         "Forbindelsestype"
+    IDS_CONCURDWL           "Samtidige downloads"
+    IDS_UNIT                "Enhed"
+    IDS_WIZARD_CUSTOM       "Speciel"
+    IDS_WIZARD_ENTERBELOW   "(indtast herunder!)"
+    IDS_STATS_MAXAVGDL      "Max. Downloadrate gennemsnit: %.2f kB/s"
+    IDS_USS_MIN             "Warning: USS currently does not support upload speeds less then 10K. If you know your connection is not able to handle this, please disable USS."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MAXDL         "Max. Downloadrate: %.2f kB/s"
+    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
+                            "Ignore eMule add friend protocol messages"
+    IDS_PW_FASTSRVCON       "Forbind hurtigt til servere"
+    IDS_SOURCELINKFAILED    "Du skal have et højt ID for at lave et ED2K link (kilde)"
+    IDS_CREATESOURCELINK    "Kopier ED2k link til clipboard (kilde)"
+    IDS_ERR_LOADSERVERMET   "Kunne ikke indlæse server.met!"
+    IDS_ERR_CORRUPTCOMPRPKG "Korrupt komprimeret pakke for %s modtaget (fejl %i)"
+    IDS_ERR_EMFRIENDSINVALID "Filen emfriends.met er invalid eller korrupt!"
+    IDS_ERR_READEMFRIENDS   "Ukendt fejl ved indlæsning af filen emfriends.met: %s"
+    IDS_ERR_KNOWNSERVERINFOREC "Ukendt serverinformation modtaget!"
+    IDS_ERR_TIMERCREATEFAILED "Fatal fejl: Kunne ikke oprette en timer"
+    IDS_WIZ_DOWN            "Ned (kbit/s)"
+    IDS_WIZ_UP              "Op (kbit/s)"
+    IDS_SELECT_INCOMINGDIR  "Vælg en mappe til indkommende filer"
+    IDS_SELECT_TEMPDIR      "Vælg en mappe til temp filer"
+    IDS_PRIOAUTO            "Auto"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PRIOAUTONORMAL      "Auto [No]"
+    IDS_PRIOAUTOHIGH        "Auto [Hø]"
+    IDS_PRIOAUTORELEASE     "Auto [Re]"
+    IDS_PRIOAUTOLOW         "Auto [La]"
+    IDS_ERR_CONTIMEOUT      "Forbindelsesforsøg til ""%s"" (%s:%i ) er timet ud"
+    IDS_ERR_CONFAILED       "Forbindelse til ""%s"" (%s:%i ) fejlet."
+    IDS_OUTOFSERVERS        "Der findes ikke flere servere, der kan forbindes til."
+    IDS_PW_CONLIMITS        "Forbindelsesbegrænsninger"
+    IDS_MAXCON5SECLABEL     "Max nye forbindelser / 5 sek."
+    IDS_PW_UAP              "Tilføj nye delte filer med autoprioritet"
+    IDS_MAXCLIENT           "Max brugere"
+    IDS_PW_TWEAK            "Avanceret"
+    IDS_TWEAKS_WARNING      "Advarsel: Skift ikke disse indstillinger med mindre du er klar over, hvad du gør.\neMule kører fint uden du skifter disse indstillinger."
+    IDS_ADDAFRIEND          "Tilføj en ven"
+    IDS_PAF_REQINFO         "Nødvendig information"
+    IDS_PAF_MOREINFO        "Yderligere information"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOVALIDFRIENDINFO "Du skal indtaste en valid IP og port!"
+    IDS_ADD                 "Tilføj"
+    IDS_RECOVERED_PARTMET   "Genskabt part.met fil for: %s"
+    IDS_CMT_QUEST           "Kommentér denne fil! (Teksten vil blive vist til alle brugere, så skriv på engelsk)"
+    IDS_CMT_AIDE            "Du kan bruge dette til fx at fortælle om en film, dens længde, plot og du kan informere andre eMule brugere om fakes... "
+    IDS_CMT_TITLE           "%s filkommentar"
+    IDS_CMT_ADD             "Rediger filkommentar"
+    IDS_CMT_NONE            "Ingen kommentarer indtastet..."
+    IDS_CMT_READ            "Filkommentar:"
+    IDS_CMT_NOTCONNECTED    "Ikke forbundet endnu..."
+    IDS_CMT_SHOWALL         "Vis alle kommentarer"
+    IDS_CMT_REFRESH         "Genindlæs"
+    IDS_CMT_READALL         "Alle kommentarer"
+    IDS_CMT_NOCOMMENT       "Ingen kommentar"
+    IDS_CMT_RATEQUEST       "Filkvalitet"
+    IDS_CMT_RATEHELP        "Vurder filkvalitet"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CMT_FAKE            "Ikke gyldig / Fejlbehæftet / Fake"
+    IDS_CMT_POOR            "Dårlig"
+    IDS_CMT_GOOD            "God"
+    IDS_CMT_FAIR            "Fair"
+    IDS_CMT_EXCELLENT       "Fortrinlig"
+    IDS_CMT_NOTRATED        "Ikke vurderet"
+    IDS_KILO                "k"
+    IDS_MEGA                "M"
+    IDS_GIGA                "G"
+    IDS_TERRA               "T"
+    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "Ignorer eMule protobeskeder."
+    IDS_SMARTLOWIDCHECK     "Benyt smart lav-id check ved forbindelse"
+    IDS_SF_SRVOCC           "Serverbelastning: %.2f%%"
+    IDS_3DDEP               "Fremskridtsbar stil"
+    IDS_AUTOTAKEED2KLINKS   "ED2K Links overtages kun mens eMule kører"
+    IDS_ADDNEWFILESPAUSED   "Tilføj filer til download i pause-tilstand"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FD_STATS            "Tabt ved korruption: %s       Vundet ved kompresion: %s\nPakker gemt med I.C.H.: %i"
+    IDS_ERR_NOHELP          "Kunne ikke finde hjælpefil.\n Besøg vor hjemmeside og hent den nyeste hjælpefil! (download sektion)"
+    IDS_SHOWOVERHEAD        "Vis overheadbåndbredde"
+    IDS_UPDOWNSMALL         "Op: %.1f | Ned: %.1f"
+    IDS_EDITLIST            "Liste"
+    IDS_SP_ICONBAR          "Trayikon hastighedsbar"
+    IDS_RATINGRECV          "Filvurdering af '%s' modtaget: %i"
+    IDS_DESCRIPTIONRECV     "Filbeskrivelse af '%s' modtaget: %s"
+    IDS_WEBSERVICES         "Webservices"
+    IDS_WEBSVEDIT           "Rediger webservices"
+    IDS_IRC_EMULEPROTO_IGNORESENDLINK 
+                            "Ignore eMule send link protocol messages"
+    IDS_CHECK4UPDATE        "Check for ny version"
+    IDS_STARTUP             "Opstart"
+    IDS_NEWVERSIONAVL       "Der er en ny eMule version tilgængelig! Check eMule hjemmesiden for mere information."
+    IDS_NEWVERSIONAVLPOPUP  "Der er en ny eMule version tilgængelig!. Klik her for at læse mere om versionen!"
+    IDS_NEWVERSIONFAILED    "Ikke i stand til at checke for ny version."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CB_TBN_ONNEWVERSION "Ny eMule version fundet"
+    IDS_NONEWERVERSION      "Ingen ny eMule version fundet."
+    IDS_VERSIONCHECK        "&Versionscheck"
+    IDS_VISITVERSIONCHECK   "\n\nØnsker du at besøge informationssiden nu?"
+    IDS_PW_VIDEOPLAYER      "Videoafspiller"
+    IDS_VIDEOBACKUP         "Opret backup før preview"
+    IDS_STATIC_EMPTY        "(tom=standard)"
+    IDS_MYINFO              "Min info"
+    IDS_ID                  "ID"
+    IDS_IDLOW               "Lavt ID"
+    IDS_IDHIGH              "Højt ID"
+    IDS_UPSTATUS            "Allerede hentede dele"
+    IDS_TOVERHEAD           "Totalt overhead (Pakker): %s (%s)"
+    IDS_FROVERHEAD          "Filforespørgsel overhead (Pakker): %s (%s)"
+    IDS_SSOVERHEAD          "Kildeudveksling overhead (Pakker): %s (%s)"
+    IDS_SOVERHEAD           "Server overhead (Pakker): %s (%s)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_FILECOMPLETIONTHREAD 
+                            "Kunne ikke oprette tråd til filfærdiggørelse"
+    IDS_FILEBUFFERSIZE      "Filbuffer størrelse"
+    IDS_QUEUESIZE           "Køstørrelse"
+    IDS_DAYS2               "dage"
+    IDS_ERR_MAKEBAKCREDITFILE "Kunne ikke oprette backup af kreditfil"
+    IDS_COMMENT             "Kommentar"
+    IDS_IPFILTERED          "Filtreret IP: %s (%s)"
+    IDS_DL_TRANSFCOMPL      "Færdiggjort"
+    IDS_STATS_FILTEREDCLIENTS "Filtreret: %i"
+    IDS_FILTERLABEL         "Filtrer beskeder der indeholder: (Separator | )"
+    IDS_ERR_LARGEREQBLOCK   "Klienten forespurgte på en for stor blok."
+    IDS_SHOWRATEONTITLE     "Vis overførselshastighed i titelbaren"
+    IDS_TBN_NOMESSAGEHISTORY "Ingen gemte beskeder!"
+    IDS_PW_DAP              "Tilføj nye downloads med autoprioritet"
+    IDS_FD_LASTCHANGE       "Sidste modtagelse:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_RUNTIME       "Programkørsel"
+    IDS_ALL                 "Alle"
+    IDS_CAT_ADD             "Tilføj kategori"
+    IDS_CAT_EDIT            "Rediger kategori"
+    IDS_CAT_REMOVE          "Fjern kategori"
+    IDS_CAT                 "Kategori"
+    IDS_TITLE               "Titel"
+    IDS_COLOR               "Farve"
+    IDS_DEFAULT             "Standard"
+    IDS_PW_DISPLAY          "Display"
+    IDS_CAT_INVADD          "Vis alle ikke-kategoriserede"
+    IDS_CAT_REINVADD        "Vis alle"
+    IDS_INDICATERATINGS     "Indiker at downloads har kommentar/vurdering med icon"
+    IDS_ALLOTHERS           "ikke kategoriseret"
+    IDS_TOCAT               "Tildel til kategori"
+    IDS_CAT_UNASSIGN        "(ikke-kategoriseret)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDDOWNLOADSFROMCB  "Tilføj disse ED2k-fil-links til downloads?\n"
+    IDS_ADDDOWNLOADSFROMCBTITLE "ED2k-fil-link i udklipsholder"
+    IDS_PF_WATCHCB          "Overvåg udklipsholder for ED2k-fil-links"
+    IDS_SECURITY            "Sikkerhed"
+    IDS_IPFILTERLOADED      "%i IP-filtre indlæst"
+    IDS_IPFILTER            "IP-filter"
+    IDS_EDIT                "Rediger"
+    IDS_FILTERLEVEL         "Filterniveau"
+    IDS_FILTERSERVERBYIPFILTER 
+                            "Filtrer også servere (filtrerer også dynIP-servere)"
+    IDS_FILTERCOMMENTSLABEL "Ignorer kommentarer indeholdende: (Separator | )"
+    IDS_CLIENTLIST          "Kendte klienter"
+    IDS_FOLDER              "Mappe"
+    IDS_CL_UPLOADSTATUS     "Upload status"
+    IDS_CL_TRANSFUP         "Overført op"
+    IDS_CL_DOWNLSTATUS      "Download status"
+    IDS_CL_TRANSFDOWN       "Overført ned"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CL_PENDING          "Verserende"
+    IDS_CL_LOW2LOW          "Lav til lav IP"
+    IDS_ERROR               "Fejl"
+    IDS_OPENINC             "&Åbn indkommende mappe"
+    IDS_HOTMENU             "Genvejsmenu"
+    IDS_DISABLEKNOWNLIST    "Deaktiver liste af kendte klienter"
+    IDS_DISABLEQUEUELIST    "Deaktiver køliste"
+    IDS_USECREDITSYSTEM     "Benyt kreditsystem (belønner uploadere)"
+    IDS_FIRSTAUTODOWN       "Skal eMule håndtere dine download prioriteter?\r\rHvis du aktiverer dette vil eMule kunne sikre, at downloads med mange kilder ikke forstyrrer downloads med få kilder.\r\rHvis du lige har opdateret fra version 0.26 og lavere vil alle nuværende downloads blive sat til autoprioritet.\rDenne option vil kun have betydning for fremtidige downloads. (Tilvalgt som standard)"
+    IDS_FIRSTAUTOUP         "Skal eMule håndtere dine upload prioriteter?\r\rHvis du aktiverer dette vil eMule automatisk gøre sjældne filer mere tilgængelige end populære filer.\rHvis du ikke aktiverer dette vil sjældne filer blive sværere at få fat på i netværket.\r\rHvis du lige har opdateret fra version 0.26 og lavere vil alle nuværende delte filer blive sat til autoprioritet. Denne option vil kun have betydning for fremtidige delte filer. (Tilvalgt som standard)"
+    IDS_FIRSTCREDITSYSTEM   "Ønsker du at belønne dem som uploader til dig?\r\rDette kendes som et kreditsystem. Hvis du aktiverer dette vil du hjælpe i kampen mod leachere (folk som kun downloader og ikke bidrager med upload). Hvis du er en dedikeret releaser skal du ikke aktivere dette. (Tilvalgt som standard)"
+    IDS_FIRSTFULLCHUNK      "Ønsker du at uploade hele dele?\r\rHvis du aktiverer dette vil du give en klient bedre mulighed for at færdiggøre en del. Hvis du deaktiverer dette vil der ske større udskiftning i din upload kø. Hvis du er en dedikeret releaser skal du aktivere dette. (Tilvalgt som standard)"
+    IDS_FIRSTSAFECON        "Ønsker du at eMule skal forbinde til servere ved at benytte smart lav-id check?\r\rHvis du deaktiverer dette kan eMule forbinde til servere en smule hurtigere, men til gengæld kan du risikere at få et lavt id. (Fravalgt som standard)"
+    IDS_FIRSTRUNASSIST      "Ønsker du at køre en førstegangs installationsvejledning?"
+    IDS_FIRSTAUTOCON        "Ønsker du at eMule forbinder ved opstart? (Fravalgt som standard)"
+    IDS_FIRSTCOMPLETE       "Du har nu gennemført installationsvejledningen.\r\rAlle de valgte indstillinger kan ændres ved at klikke på indstillinger ikonet. Hvis du ønsker hjælp eller forklaringer til indstillingerne kan du trykke på F1 i eMule!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ENTERUSERNAME       "Indtast dit brugernavn:"
+    IDS_STATIC_CPUMEM       "Spar på CPU- && hukommelsesforbrug"
+    IDS_KAD_SEARCH_KEYWORD_TOO_SHORT 
+                            "Keyword too short.\r\n\r\nThe keyword(s) used in a Kad search expression must have a minimum length of 3 characters."
+    IDS_LOG2DISK            "Save log to disk"
+    IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING 
+                            "There is already a Kad search ongoing for the keyword ""%s"".\r\n\r\nTo search again for that keyword, either wait until this keyword search is finished or close the according search results pane."
+    IDS_KAD_SEARCH_KEYWORD_INVALID 
+                            "Invalid Kad keyword.\r\n\r\nA Kad search expression has the following format:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nThe <kad-keyword> must not contain any of the following characters:\r\n\r\n\t%s"
+    IDS_EDITCAT             "Rediger kategoriegenskaber"
+    IDS_PW_WS               "Webserver"
+    IDS_ENABLED             "aktiveret"
+    IDS_WEB_LOGIN           "Log ind"
+    IDS_WEB_ENTER_PASSWORD  "Indtast dit password her"
+    IDS_WEB_LOGIN_NOW       "Log ind nu"
+    IDS_WEB_CONFIRM_REMOVE_SERVER 
+                            "Er du sikker på du vil fjerne denne server fra listen?"
+    IDS_WEB_CONTROL         "Web kontrolpanel"
+    IDS_WEB_LOGOUT          "Log ud"
+    IDS_WEB_ACTIONS         "Handling"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHOW_UPLOAD_QUEUE "Vis kø"
+    IDS_WEB_HIDE_UPLOAD_QUEUE "Skjul kø"
+    IDS_WEB_GZIP_COMPRESSION "Gzip komprimering"
+    IDS_WEB_GZIP_COMMENT    "Spar på båndbredde - specielt ved graffremstilling."
+    IDS_WEB_UPLOAD_QUEUE_COMMENT 
+                            "Aktiver eller deaktiver visning af køer på overførselssiden."
+    IDS_WEB_REFRESH_TIME    "Tid for genopfrisk af sider"
+    IDS_WEB_REFRESH_COMMENT "Tid i sekunder (nul=deaktiveret):"
+    IDS_SV_URL              "URL"
+    IDS_WS_RELOAD_TMPL      "Reload skabelon"
+    IDS_SV_DEBUGLOG         "Debug log"
+    IDS_WS_PASS             "Password"
+    IDS_WEB_FILESETTINGS    "Filindstillinger"
+    IDS_WS_ERR_LOADTEMPLATE "Kan ikke indlæse skabeloner: Udskift fil %s med en nyere version!"
+    IDS_WEB_CONLIMITS       "Forbindelsesbegrænsninger"
+    IDS_INFLST_USER_TOTALDOWNLOAD "Downloadet totalt"
+    IDS_INFLST_USER_TOTALUPLOAD "Uploadet totalt"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_BADLOGINATTEMPT "Webserver: Log ind forsøg fejlet"
+    IDS_ERR_TOOLARGEFILE    "Filen er større end edonkey protokollen kan håndtere (>=4GB)"
+    IDS_MSGONLYFRIENDS      "Accepter kun fra venner"
+    IDS_MSGONLYSEC          "Accepter kun fra gyldige klienter"
+    IDS_DAY_MO_SA           "Man-Lør"
+    IDS_LIMITSOURCES        "Begræns kilder"
+    IDS_LIMITCONS5SEC       "Begræns forbindelser / 5 sek."
+    IDS_SCHED_CATSTOP       "Kat:Stop downloads"
+    IDS_SCHED_CATRESUME     "Kat:Genoptag downloads"
+    IDS_S_DAYS              "Dage"
+    IDS_STARTTIME           "Starttid"
+    IDS_VALUE               "Værdi"
+    IDS_SCHED_ENTERDATARATELIMIT "Indtast datarate begrænsning:"
+    IDS_SCHED_ENTERVAL      "Indtast den nye værdi:"
+    IDS_SCHED_ACTCONFIG     "Konfigurer handling"
+    IDS_SELECTCAT           "Vælg kategori"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ALLUNASSIGNED       "alle ikke-tildelte"
+    IDS_ACTSESSIONS         "aktive sessioner"
+    IDS_WEBSRV              "WebSrv."
+    IDS_SW_REFETCHRES       "Genindlæs resultater"
+    IDS_FILEHASH            "Filhash"
+    IDS_GLOBALSEARCH2       "Global søgning"
+    IDS_PW_PROXY            "Proxy"
+    IDS_PROXY_ENABLE        "Aktiver proxy"
+    IDS_PROXY_TYPE          "Proxy type:"
+    IDS_PROXY_HOST          "Proxy vært:"
+    IDS_PROXY_PORT          "Proxy port:"
+    IDS_PROXY_AUTH          "Aktiver autentifikation"
+    IDS_AUTH                "Autentifikation"
+    IDS_SHOWCATINFO         "Vis downloadinfo på kategorifaneblad"
+    IDS_SW_SEARCHINGINFO    "Søgning i gang. Genindlæser resultat om et øjeblik!"
+    IDS_LOGENTRY            "Log indførsel"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COPY                "Kopier"
+    IDS_SELECTALL           "Vælg alle"
+    IDS_AUTOSCROLL          "Autoscroll"
+    IDS_WIZ1_WELCOME_TITLE  "Velkommen til eMule"
+    IDS_WIZ1_WELCOME_ACTIONS 
+                            "Denne vejledning vil guide dig gennem de første trin i opsætning af eMule."
+    IDS_WIZ1_WELCOME_BTN_HINT "For at fortsætte, klik næste"
+    IDS_WIZ1_END_TITLE      "Færdiggører vejledning"
+    IDS_WIZ1                "eMule førstegangsvejledning"
+    IDS_WIZ1_END_BTN_HINT   "For at lukke denne vejledning, klik færdig."
+    IDS_WIZ1_UPLOAD_SUBTITLE "Fuld chunk overførsel"
+    IDS_DL_RESUMENEXT       "Fortsæt næstede pausede"
+    IDS_DONTCHANGE          "Skift ikke"
+    IDS_STARTPRIO           "Skift prioritet for nye tildelte filer"
+    IDS_PREF_STARTNEXTFILECAT "foretræk samme kategori"
+    IDS_REPAINTGRAPHS       "Genskab ikke statistikgrafer ved resize"
+    IDS_SOFTFILES           "Blød filgrænse"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HARDFILES           "Hård filgrænse"
+    IDS_FILTER              "Filter"
+    IDS_LINKS               "Links"
+    IDS_HM_SCHED_ON         "Aktiver scheduler"
+    IDS_HM_SCHED_OFF        "Deaktiver scheduler"
+    IDS_HM_LINKHP           "eMule hjemmeside"
+    IDS_HM_LINKFAQ          "eMule FAQ"
+    IDS_HM_LINKVC           "eMule versionscheck"
+    IDS_DEBUG_SOURCE_EXCHANGE "Vis kildeudvekslingsbeskeder"
+    IDS_SHAREDREQ1          "Bruger %s (%u) forespurgt liste af dine delte mapper -> %s"
+    IDS_SHAREDREQ2          "Bruger %s (%u) forespurgt liste af delte filer for mappe '%s' -> %s"
+    IDS_SHAREDANSW          "Bruger %s (%u) deler mappe '%s'"
+    IDS_SHAREDANSW2         "Bruger %s (%u) sendte ikke forespurgt liste af delte mapper - ignoreret"
+    IDS_SHAREDINFO1         "Bruger %s (%u) sendt liste af delte filer for mappe '%s'"
+    IDS_SHAREDINFO2         "Bruger %s (%u) færdig med at sende lister af delte filer"
+    IDS_SHAREDANSW3         "Bruger %s (%u) sendte ikke forespurgt liste af delte filer for mappe '%s' - ignoreret"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHAREDREQDENIED     "Bruger %s (%u) tillader ikke adgang til delte mapper/filer"
+    IDS_AUTOCLEANUPFN       "Ryd op i  filnavn"
+    IDS_ONNEWDOWNLOAD       "Initialisering"
+    IDS_FILTERFILENAMEWORD  "Indtast filter ord, separeret med |"
+    IDS_FNFILTERTITLE       "Rediger filnavn ordfilter for navneoprydning"
+    IDS_CHANGECATVIEW       "Vælg vis filter"
+    IDS_STATUS_NOTCOMPLETED "Ikke færdig"
+    IDS_STATS_CUMULATIVE    "Kumulativ"
+    IDS_STATS_OVRHD         "Overhead"
+    IDS_STATS_RECORDS       "Records"
+    IDS_STATS_OVRHD2        "Overhead: %s (%s pakker)"
+    IDS_STATS_COMPDL        "Færdiggjorte downloads"
+    IDS_STATS_SVRECWORKING  "Max. servere i drift"
+    IDS_STATS_SVRECUSERS    "Max. brugere Users online"
+    IDS_SEARCH_TEXT         "Søg efter"
+    IDS_STATS_SVRECFILES    "Max. filer tilgængelige"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SHRECNUM      "Max. filer nogensinde delt"
+    IDS_SEARCH_COLUMN       "Søg i kolonne"
+    IDS_STATS_SHRECSIZE     "Største deling størelse"
+    IDS_STATS_SHRECASIZE    "Største gennemsnitlige filstørrelse"
+    IDS_STATS_MYRUNTIME     "Total kørselstid: %s"
+    IDS_STATS_SESSION       "Session"
+    IDS_STATS_SRATIO        "Session UL:DL forhold:"
+    IDS_STATS_CRATIO        "Kumulativt UL:DL forhold:"
+    IDS_SEARCH_NORESULT     "Ingen resultater fundet."
+    IDS_STATS_CURRSRVDUR    "Nuværende server varighed"
+    IDS_LONGSECS            "Sekunder"
+    IDS_STATS_DLSES         "Download sessioner"
+    IDS_LONGMINS            "Minutter"
+    IDS_STATS_SDLSES        "Successfulde downloadsessioner"
+    IDS_STATS_FDLSES        "Fejlede downloadsessioner"
+    IDS_STATS_AVGDATADLSES  "Gennemsnitligt downloadet pr session"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ULSES         "Upload sessioner"
+    IDS_STATS_GAINCOMP      "Vundet ved komprimering: %s"
+    IDS_STATS_LOSTCORRUPT   "Tabt ved corruption: %s"
+    IDS_STATS_AVGDATAULSES  "Gennemsnitligt uploadet pr session"
+    IDS_STATS_ICHSAVED      "Dele gemt ved I.C.H: %u"
+    IDS_STATS_MBRESET_TXT   "Er du sikker på at du ønsker at slette den kumulative statistik?\n\nHvis du fortryder kan du genoprette den ved at klikke på 'Genskab stats' knappen."
+    IDS_STATS_MBRESET_CAP   "Bekræft reset"
+    IDS_STATS_MBRESTORE_TXT "Er du sikker på at du ønsker at genskabe den kumulative statistik fra backup fil?\n\nVed klik på 'Genskab Stats' vil din nuværende statistik blive genindlæst."
+    IDS_STATS_MBRESTORE_CAP "Bekræft genskab"
+    IDS_ERR_NOSTATBKUP      "FEJL: Backup statistikfil blev ikke fundet..."
+    IDS_STATS_NFOLOADEDBKUP "Indlæst statistiske data fra back up..."
+    IDS_STATS_NFORESET      "Statistik er blevet reset!"
+    IDS_STATS_BNRESET       "Reset statistik"
+    IDS_STATS_BNRESTORE     "Genskab statistik"
+    IDS_CONNECTIONSTATISTICS "Forbindelse statistik"
+    IDS_PPGSTATS_YSCALE     "Forbindelsesstatistik Y-akse skala:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PPGSTATS_ACRATIO    "Aktive forbindelser forhold:"
+    IDS_STATS_PROBLEMATIC   "Problematisk"
+    IDS_LONGHRS             "Timer"
+    IDS_STATS_LARGESTFILE   "Største delte fil"
+    IDS_CLIENTSOFTWARE      "Klient software"
+    IDS_STATS_DSPF          "Part fil"
+    IDS_STATS_DATASOURCE    "Datakilde"
+    IDS_STATS_DSFILE        "Komplet fil"
+    IDS_STATS_GENERAL       "Generelt"
+    IDS_STATS_TRANSTIME     "Overførselstid"
+    IDS_STATS_DOWNTIME      "Download tid"
+    IDS_STATS_UPTIME        "Upload tid"
+    IDS_STATS_TOTALSRVDUR   "Total server varighed"
+    IDS_STATS_MAXAVGUL      "Max gennemsnitsupload forhold"
+    IDS_STATS_MAXUL         "Max upload forhold"
+    IDS_STATS_AVGDLTIME     "Gennemsnit download tid"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_OLDCLIENTS    "Gammel"
+    IDS_STATS_PRTDEF        "Default"
+    IDS_STATS_PRTOTHER      "Andre"
+    IDS_STATS_MNUTREETITLE  "Statistiktræ"
+    IDS_STATS_MNUTREECPYSEL "Kopier valgt gren"
+    IDS_STATS_MNUTREECPYALL "Kopier al statistik"
+    IDS_STATS_MNUTREEHTML   "HTML Features"
+    IDS_STATS_EXPORT2HTML   "Eksporter al statistik"
+    IDS_STATS_EXPORTVIS     "Eksporter alt synligt"
+    IDS_STATS_MNUTREECPYVIS "Kopier alt synligt"
+    IDS_STATS_MNUTREEEXPANDALL "Udvid alle sektioner"
+    IDS_STATS_MNUTREECOLLAPSEALL "Sammentræk alle sektioner"
+    IDS_STATS_MNUTREEEXPANDMAIN "Udvid main sektioner"
+    IDS_STATS_LASTRESETSTATIC "Statistik sidste reset: %s"
+    IDS_STATS_MONTHLY       "Månedlig"
+    IDS_STATS_YEARLY        "Årlig"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_TIMESTATS     "Tidsstatistik"
+    IDS_STATS_AVGANDPROJ    "Beregnede gennemsnit"
+    IDS_STATS_TIMESINCERESET "Tid siden sidste reset: %s"
+    IDS_CRYPT_INITFAILED    "Failed to initalize cryptokeys - secure ident disabled"
+    IDS_CD_IDENT            "Identification:"
+    IDS_IDENTOK             "Successful"
+    IDS_IDENTFAILED         "Invalid"
+    IDS_IDENTNOSUPPORT      "Not supported or disabled"
+    IDS_COMMITFILES         "Safe .met/.dat file writing"
+    IDS_ERR_BADUNC          "invalid UNC-name"
+    IDS_NEVER               "Never"
+    IDS_ALWAYS              "Always"
+    IDS_ONSHUTDOWN          "On shutdown"
+    IDS_UNCFOLDERS          "UNC Folders"
+    IDS_USESECIDENT         "Use secure identification"
+    IDS_ADVSPAMFILTER       "Advanced spamfilter"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_SECUREIDENT   "Secure Ident (OK : Failed )"
+    IDS_ONDISK              "Size on disk: "
+    IDS_CLIENTCOL           "Warning: Found matching client, to a currently connected client: %s (%s) and %s (%s)"
+    IDS_SEARCH_UNTERMSTRING "Unterminated string"
+    IDS_SEARCH_GENERALERROR "General error"
+    IDS_SEARCH_MISSINGORRIGHT "Missing right side for OR operator"
+    IDS_SEARCH_MISSINGNOTRIGHT "Missing right side for NOT operator"
+    IDS_SEARCH_MISSINGEXPRPARANT "Missing expression for '(' ')'"
+    IDS_SEARCH_MISSINGCLOSINGPARANT "Missing closing ')'"
+    IDS_SEARCH_MISSINGANDLEFT "Missing left side of AND operator"
+    IDS_SEARCH_MISSINGORLEFT "Missing left side of OR operator"
+    IDS_SEARCH_MISSINGNOTLEFT "Missing left side of NOT operator"
+    IDS_SEARCH_EXPRERROR    "Failed to parse search expression"
+    IDS_SEARCH_TOOCOMPLEX   "Expression too complex"
+    IDS_SEARCH_INVALIDMINMAX "Invalid units for Min/Max filesize specified"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_VERSION             "Version"
+    IDS_ALL_A4AF_TO_THIS    "Swap all sources to this file now"
+    IDS_ALL_A4AF_TO_OTHER   "Swap all sources to any other file now"
+    IDS_ALL_A4AF_AUTO       "Automatically swap all (A4AF)sources to this file"
+    IDS_SWAP_A4AF_TO_THIS   "Swap source to this file now"
+    IDS_SWAP_A4AF_TO_OTHER  "Swap source to any other file now"
+    IDS_A4AF                "Sources handling (A4AF)"
+    IDS_MOBILEMULE          "MobileMule"
+    IDS_ENABLEMM            "Enable MobileMule"
+    IDS_AUTOCAT_LABEL       "Auto Cat-Assignment (pattern, seperated by |)"
+    IDS_SHOWEXTSETTINGS     "Show more controls (advanced mode controls)"
+    IDS_TREEOPTIONS_TRUE    "True"
+    IDS_TREEOPTIONS_FALSE   "False"
+    IDS_TREEOPTIONS_OK      "OK"
+    IDS_HYPERTEXT_FONT_HINT "Font for Server-, Message- and IRC-Window"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SELECT_FONT         "Select font"
+    IDS_SERVER_LIMITS       "Soft- / Hard-Filelimit"
+    IDS_SERVERINFO          "Server Information"
+    IDS_KBITSSEC            "kBits/sec"
+    IDS_KBYTESSEC           "kBytes/sec"
+    IDS_ERR_CREATE_DIR      "Failed to create %s directory ""%s"" - %s"
+    IDS_WRN_INCFILE_RESERVED 
+                            "The incoming directory must not be set to an eMule installation directory."
+    IDS_WRN_TEMPFILES_RESERVED 
+                            "The temporary directory must not be set to an eMule installation directory."
+    IDS_WRN_INCTEMP_SAME    "Incoming directory and temporary directory must not be the same."
+    IDS_MMFAILED            "Failed to create MobileMule Socket!"
+    IDS_MMSTARTED           "MobileMule server started on Port %i. Protocol version: %s"
+    IDS_SHOWDWLPERCENTAGE   "Show percentage of download completion in progressbar"
+    IDS_TBN_ONNEWDOWNLOAD   "Download added"
+    IDS_ARTIST              "Artist"
+    IDS_ALBUM               "Album"
+    IDS_MMGUIDELINK         "MobileMule Guide"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CD_UPLOADREQ        "Requested upload:"
+    IDS_SETTINGCHANGED_RESTART 
+                            "For the changed settings to take effect, please restart eMule!"
+    IDS_CREDITSEXPIRED      ", %i clients deleted (not seen within 5 month)"
+    IDS_SOURCESINFO         "%i  (Useful: %i, NNP: %i, A4AF: %i)"
+    IDS_SHOW_META_DATA      "Show &Meta Data..."
+    IDS_META_DATA           "Meta Data"
+    IDS_TIMEBEFORE          "(%s ago)"
+    IDS_FD_TIMEDATE         "Dates"
+    IDS_FILEINFORMATION     "File Information"
+    IDS_STATS_FREESPACE     "Free Space on Tempdrive: "
+    IDS_IRC_HELPCHANNEL     "Connect to help channels."
+    IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-danish"
+    IDS_IRC_ACCEPTLINKSFRIENDS "From friends only."
+    IDS_COMPLSOURCES        "Complete Sources"
+    IDS_CHECKNOENDTIME      "no end time"
+    IDS_FD_DOWNLOADSTARTED  "Download added:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MATCH_KEYWORDS      "Match keywords"
+    IDS_FAILEDREOPEN        "Fatal Error: Failed to reopen Partfile '%s' (%s)!"
+    IDS_ERR_PREVIEWALREADY  "There is already a preview request pending from this client"
+    IDS_ERR_PREVIEWFAILED   "Preview from User '%s' failed"
+    IDS_DWTOT               "Disk Space"
+    IDS_DWTOT_NR            "Number of Downloads: %d"
+    IDS_DWTOT_TSD           "Total Size of Downloads: %s"
+    IDS_DWTOT_TCS           "Total Completed Size: %s (%.0f%%)"
+    IDS_DWTOT_TSL           "Total Size Left to Transfer: %s"
+    IDS_DWTOT_TSN           "Total Space Needed by Downloads: %s"
+    IDS_DWTOT_FS            "Free Space on Tempdrive: %s"
+    IDS_NEEDFREEDISKSPACE   "%s (you need to free %s!)"
+    IDS_SERVERKEEPALIVETIMEOUT "Server connection refresh interval [min.]"
+    IDS_MORE                "&More"
+    IDS_TOOLS               "T&ools"
+    IDS_ERR_JIGLENEEDSTYPE  "If you want to search the Jigle database without specifying a file type, you have to specify at least a file extension!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CREATEHOSTNAMESRCLINK "Copy eD2K Link To Clipboard (Hostname)"
+    IDS_HASHINGFILESCOUNT   " (%u hashing)"
+    IDS_CHECKDISKSPACE      "Check Diskspace"
+    IDS_YOURHOSTNAME        "Hostname for own eD2K links"
+    IDS_INSUFFICIENT        "Insufficient Diskspace"
+    IDS_MINFREEDISKSPACE    "Min. free diskspace [MB]"
+    IDS_WARNING             "Warning"
+    IDS_IMPORTSPLPF         "Import partfiles (eM, eD, ON)"
+    IDS_IMP_STEPREADPF      "Reading part folder"
+    IDS_IMP_STEPBASICINF    "Retriving basic information from partfile"
+    IDS_IMP_STEPCRDESTFILE  "Creating destination partfile"
+    IDS_IMP_LOADDATA        "Loading data from old part file (%i of %i)"
+    IDS_IMP_SAVEDATA        "Saving data block into new single partfile (%i of %i)"
+    IDS_IMP_IOERROR         "Fileerror while converting partfile"
+    IDS_IMP_GETPFINFO       "Retriving source partfile information"
+    IDS_IMP_ADDDWL          "Adding download and save new partfile"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_FETCHSTATUS     "Fetching status..."
+    IDS_IMP_INPROGR         "in progress"
+    IDS_IMP_ERR_DISKSP      "Error: Out of diskspace"
+    IDS_IMP_ERR_PARTMETIO   "Error: Partmet not found"
+    IDS_IMP_ERR_IO          "Error: IO Error!"
+    IDS_IMP_ERR_FAILED      "Error: Failed!"
+    IDS_IMP_STATUSQUEUED    "Queued"
+    IDS_IMP_ALRDWL          "Already downloading"
+    IDS_IMP_ADDBTN          "&Add imports"
+    IDS_IMP_RETRYBTN        "&Retry selected"
+    IDS_IMP_REMOVEBTN       "Re&move selected"
+    IDS_IMP_SELFOLDER       "Please choose a single partmet-folder or your old tempfolder with all the partmet-subfolders!"
+    IDS_IMP_DELSRC          "Do you want the source-partfile of successfully imported downloads be deleted?"
+    IDS_IMP_SIZE            "%s (Disk:%s)"
+    IDS_IMP_STATUS          "Importing %s: %s"
+    IDS_DYNUPENABLED        "Find best upload limit automatically"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE "Ping tolerance (% of lowest ping)"
+    IDS_DYNUP_GOINGUPDIVIDER "Going up slowness"
+    IDS_DYNUP_GOINGDOWNDIVIDER "Going down slowness"
+    IDS_DYNUP_NUMBEROFPINGS "Max number of pings for average"
+    IDS_DYNUP_MINUPLOAD     "Lowest allowed upload speed"
+    IDS_ESTTIMELEFT         "Estimated time left:"
+    IDS_TRANSFER_RATE_LABEL "Transfer rate:"
+    IDS_SAVELOG             "Save log"
+    IDS_CMT_COPYCLIPBOARD   "Copy comment to clipboard"
+    IDS_ASKDOWNLOADLANG     "The language you selected is not installed on your system. Do you want eMule to download it from emule-project.net?"
+    IDS_ASKDOWNLOADLANGCAP  "Download language files"
+    IDS_ERR_FAILEDDOWNLOADLANG 
+                            "Failed to download and install selected language dll from %s!"
+    IDS_ERR_BADFOLDER       "Invalid folder.\nFolder can not be created. Please check name and location."
+    IDS_AUTOREMOVEFD        "Auto clear completed downloads"
+    IDS_MM_BLOCK            "3 failed logins for MobileMule logged - any further attempt is blocked for 10 min!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_KAD_NODE            "Node Lookup (%i:%i)"
+    IDS_KAD_STOREFILE       "Store File (%i:%i)"
+    IDS_KAD_STOREKW         "Store Keyword (%i:%i)"
+    IDS_KAD_UNKNOWN         "Unknown (%i:%i)"
+    IDS_SRV_TCPCOMPR        "TCP compression"
+    IDS_KADSEARCHLAB        "Current Searches"
+    IDS_SRV_UDPSR           "Extended UDP protocol for source requests"
+    IDS_SRV_UDPFR           "Extended UDP protocol for file requests"
+    IDS_MINLENGTH           "Min. length [hh:mm:ss]"
+    IDS_EM_HELP             "&Help"
+    IDS_WRN_FRIENDDUPLIPPORT 
+                            "Friend not added.\r\n\r\nThere is already a friend with same IP address and port available."
+    IDS_DYNUP               "Upload SpeedSense"
+    IDS_KADOVERHEAD         "Kad Overhead (Packets): %s (%s)"
+    IDS_FIND                "Find..."
+    IDS_LOG_BANNED_CLIENTS  "Log banned clients"
+    IDS_LOG_RATING_RECV     "Log received file descriptions and ratings"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MM_NEWUSER          "New user successfully logged into MobileMule-Server"
+    IDS_RADCLIENTS          "from known clients"
+    IDS_KADUDPPORTERR       "Kads UDP port conflicts with either eMule's Ext UDP port or eMule's Server UDP port. Port has been changed to %u."
+    IDS_CONFIRM_FILEDELETE  "Do you really want to remove all selected files from disk?"
+    IDS_OPENFOLDER          "Open folder"
+    IDS_DELETE              "Delete from disk"
+    IDS_BOOTSTRAP           "Bootstrap"
+    IDS_VIAED2KSQ           "via ED2K Server/Queue"
+    IDS_EM_KADEMLIA         "&Kad"
+    IDS_VIAKAD              "via Kad"
+    IDS_VIASE               "via Source Exchange"
+    IDS_SELECTTOOLBARBITMAP "Select Bitmap for Toolbar"
+    IDS_SELECTTOOLBARBITMAPDIR "Select Bitmapdir"
+    IDS_TOOLBARSKINS        "Toolbar skins"
+    IDS_NOTEXTLABELS        "No labels"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TEXTLABELSONRIGHT   "right of the icon"
+    IDS_TEXTLABELS          "Text labels"
+    IDS_ENABLETEXTLABELS    "below the icon"
+    IDS_CUSTOMIZETOOLBAR    "Customize Toolbar"
+    IDS_MINBITRATE          "Min. bitrate [kBit/s]"
+    IDS_KAD_RECHECKFW       "Recheck Firewall"
+    IDS_SHAREDTITLE         "Shared ED2K|Kad"
+    IDS_WARNINGNOBS         "Bootstrapping inactive now (Kad disabled or already connected)."
+    IDS_FIREWALLED          "Firewalled"
+    IDS_KADEMLIA            "Kad"
+    IDS_KADCONTACTLAB       "Contacts"
+    IDS_KADDISTANCE         "Distance"
+    IDS_KEY                 "Key"
+    IDS_NUMBER              "Number"
+    IDS_KAD_SEARCHSRC       "Search Sources (%i:%i)"
+    IDS_KAD_SEARCHKW        "Search Keywords (%i:%i)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LOG_SECURE_IDENT    "Log secure ident"
+    IDS_LOG_FILTERED_IPS    "Log filtered and/or ignored IPs"
+    IDS_LOG_FILE_SAVING     "Log file save actions"
+    IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|All Files (*.*)|*.*||"
+    IDS_DELETEIPFILTERS     "Do you really want to delete the selected IP filters?"
+    IDS_TOTAL_IPFILTER_LABEL "Total IP filters:"
+    IDS_TOTAL_IPS_LABEL     "Total IPs:"
+    IDS_DELETE2             "Delete"
+    IDS_APPEND              "Append..."
+    IDS_SAVE                "Save"
+    IDS_IP_START            "Start"
+    IDS_IP_END              "End"
+    IDS_IP_LEVEL            "Level"
+    IDS_IP_DESC             "Description"
+    IDS_IP_HITS             "Hits"
+    IDS_IP_RULES            "IP Filters:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOTCONNECTEDKAD "You are currently not connected to the Kad Network!"
+    IDS_IRC_NOSFS           "No Shared Files Selected"
+    IDS_IRC_IGNOREMISCMESSAGE "Ignore Misc info messages"
+    IDS_KNOWN               "Known"
+    IDS_DL_ACTIVE_TIME      "Download time"
+    IDS_RESETLABEL          "Auto completion (history function)"
+END
+
+#endif    // Danish resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "..\version.h"
+#include "lang.rc2"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
