@@ -505,6 +505,9 @@ public:
 	uint16			m_lastPartAsked;
 	bool			m_bAddNextConnect;
 
+	// Fábio
+    int				GetUpDownDifference() const;
+
     void			SetSlotNumber(uint32 newValue)					{ m_slotNumber = newValue; }
     uint32			GetSlotNumber() const							{ return m_slotNumber; }
     CEMSocket*		GetFileUploadSocket(bool log = false);
@@ -750,5 +753,7 @@ protected:
     DWORD   m_dwLastTriedToConnect; // ZZ:DownloadManager (one resk timestamp for each file)
     bool    RecentlySwappedForSourceExchange() { return ::GetTickCount()-lastSwapForSourceExchangeTick < 30*1000; } // ZZ:DownloadManager
     void    SetSwapForSourceExchangeTick() { lastSwapForSourceExchangeTick = ::GetTickCount(); } // ZZ:DownloadManager
+public:
+	int CompareRank(const CUpDownClient *client) const;
 };
 //#pragma pack()

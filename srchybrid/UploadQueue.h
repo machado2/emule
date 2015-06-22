@@ -108,7 +108,9 @@ private:
 	uint32	m_nLastStartUpload;
 	uint32	m_dwRemovedClientByScore;
 
-	uint32	m_imaxscore;
+	uint32	m_imaxscore, m_iminscore;
+	int		m_imaxdifference, m_imindifference;	
+
 
     DWORD   m_dwLastCalculatedAverageCombinedFilePrioAndCredit;
     float   m_fAverageCombinedFilePrioAndCredit;

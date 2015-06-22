@@ -77,6 +77,7 @@ void CQueueListCtrl::Init()
 	InsertColumn(7,GetResString(IDS_ENTERQUEUE),LVCFMT_LEFT,110,7);
 	InsertColumn(8,GetResString(IDS_BANNED),LVCFMT_LEFT,60,8);
 	InsertColumn(9,GetResString(IDS_UPSTATUS),LVCFMT_LEFT,100,9);
+	InsertColumn(10, L"Difference", LVCFMT_RIGHT,60,4);
 
 	SetAllIcons();
 	Localize();
@@ -179,6 +180,9 @@ void CQueueListCtrl::Localize()
 		hdi.pszText = strRes.GetBuffer();
 		pHeaderCtrl->SetItem(9, &hdi);
 		strRes.ReleaseBuffer();
+
+		hdi.pszText = L"Difference";
+		pHeaderCtrl->SetItem(10, &hdi);
 	}
 }
 
@@ -408,6 +412,10 @@ void CQueueListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 						cur_rec.top--;
 					}
 					break;
+				case 10:
+					int difference = client->GetUpDownDifference();
+					Sbuffer.Format(L"%d MB", difference);
+					break;
 		   	}
 			if( iColumn != 9 && iColumn != 0)
 				dc.DrawText(Sbuffer,Sbuffer.GetLength(),&cur_rec,DLC_DT_TEXT);
@@ -569,26 +577,10 @@ int CQueueListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 		}
 		
 		case 2: {
-			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
-			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
-			if( (file1 != NULL) && (file2 != NULL))
-				iResult=((file1->GetUpPriority()==PR_VERYLOW) ? -1 : file1->GetUpPriority()) - ((file2->GetUpPriority()==PR_VERYLOW) ? -1 : file2->GetUpPriority());
-			else if( file1 == NULL )
-				iResult=1;
-			else
-				iResult=-1;
-			break;
+			return item1->CompareRank(item2);
 		}
 		case 102:{
-			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
-			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
-			if( (file1 != NULL) && (file2 != NULL))
-				iResult=((file2->GetUpPriority()==PR_VERYLOW) ? -1 : file2->GetUpPriority()) - ((file1->GetUpPriority()==PR_VERYLOW) ? -1 : file1->GetUpPriority());
-			else if( file1 == NULL )
-				iResult=1;
-			else
-				iResult=-1;
-			break;
+			return item2->CompareRank(item1);
 		}
 
 		case 3: 
@@ -639,6 +631,23 @@ int CQueueListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 		case 109: 
 			iResult=item2->GetUpPartCount() - item1->GetUpPartCount();
 			break;
+		case 10:
+			{
+				int dif1 = item1->GetUpDownDifference();
+				int dif2 = item2->GetUpDownDifference();
+				if (dif1 < dif2) return -1;
+				if (dif1 > dif2) return 1;
+				return CompareUnsigned(item1->GetScore(false), item2->GetScore(false));
+			}
+		case 110:
+			{
+				int dif1 = item1->GetUpDownDifference();
+				int dif2 = item2->GetUpDownDifference();
+				if (dif1 < dif2) return 1;
+				if (dif1 > dif2) return -1;
+				return CompareUnsigned(item2->GetScore(false), item1->GetScore(false));
+			}
+
 		default:
 			iResult=0;
 			break;

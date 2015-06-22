@@ -104,9 +104,8 @@ CUploadQueue::CUploadQueue()
 CUpDownClient* CUploadQueue::FindBestClientInQueue()
 {
 	POSITION toadd = 0;
-	POSITION toaddlow = 0;
-	uint32	bestscore = 0;
-	uint32  bestlowscore = 0;
+	CUpDownClient *best_client = 0;
+
     CUpDownClient* newclient = NULL;
     CUpDownClient* lowclient = NULL;
 
@@ -126,41 +125,14 @@ CUpDownClient* CUploadQueue::FindBestClientInQueue()
 		}
         else
         {
-		    // finished clearing
-		    uint32 cur_score = cur_client->GetScore(false);
-
-		    if ( cur_score > bestscore)
-		    {
-                // cur_client is more worthy than current best client that is ready to go (connected).
-                if(!cur_client->HasLowID() || (cur_client->socket && cur_client->socket->IsConnected())) {
-                    // this client is a HighID or a lowID client that is ready to go (connected)
-                    // and it is more worthy
-			        bestscore = cur_score;
-			        toadd = pos2;
-                    newclient = waitinglist.GetAt(toadd);
-                } 
-				else if(!cur_client->m_bAddNextConnect) 
-				{
-                    // this client is a lowID client that is not ready to go (not connected)
-    
-                    // now that we know this client is not ready to go, compare it to the best not ready client
-                    // the best not ready client may be better than the best ready client, so we need to check
-                    // against that client
-			        if (cur_score > bestlowscore)
-			        {
-                        // it is more worthy, keep it
-				        bestlowscore = cur_score;
-				        toaddlow = pos2;
-                        lowclient = waitinglist.GetAt(toaddlow);
-			        }
-                }
-            } 
+			// decides if 'toadd' will be changed
+			if (cur_client->CompareRank(best_client) == 1) {
+				best_client = cur_client;
+				toadd = pos2;				
+			}
 		}
 	}
 	
-	if (bestlowscore > bestscore && lowclient)
-		lowclient->m_bAddNextConnect = true;
-
     if (!toadd)
 		return NULL;
     else
@@ -802,20 +774,6 @@ bool CUploadQueue::CheckForTimeOver(CUpDownClient* client){
 			    AddDebugLogLine(DLP_LOW, false, _T("%s: Upload session ended due to max time %s."), client->GetUserName(), CastSecondsToHM(SESSIONMAXTIME/1000));
 		    return true;
 	    }
-
-		// Cache current client score
-		const uint32 score = client->GetScore(true, true);
-
-		// Check if another client has a bigger score
-		if (score < GetMaxClientScore() && m_dwRemovedClientByScore < GetTickCount()) {
-			if (thePrefs.GetLogUlDlEvents())
-				AddDebugLogLine(DLP_VERYLOW, false, _T("%s: Upload session ended due to score."), client->GetUserName());
-			//Set timer to prevent to many uploadslot getting kick do to score.
-			//Upload slots are delayed by a min of 1 sec and the maxscore is reset every 5 sec.
-			//So, I choose 6 secs to make sure the maxscore it updated before doing this again.
-			m_dwRemovedClientByScore = GetTickCount()+SEC2MS(6);
-			return true;
-		}
 	}
 	else{
 		// Allow the client to download a specified amount per session
@@ -838,10 +796,12 @@ uint16 CUploadQueue::GetWaitingPosition(CUpDownClient* client)
 {
 	if (!IsOnUploadQueue(client))
 		return 0;
+	if (!client)
+		return 0;
 	UINT rank = 1;
-	uint32 myscore = client->GetScore(false);
 	for (POSITION pos = waitinglist.GetHeadPosition(); pos != 0; ){
-		if (waitinglist.GetNext(pos)->GetScore(false) > myscore)
+		CUpDownClient *cliQueue = waitinglist.GetNext(pos);
+		if (client->CompareRank(cliQueue) < 0)
 			rank++;
 	}
 	return rank;
@@ -966,9 +926,6 @@ VOID CALLBACK CUploadQueue::UploadTimer(HWND hwnd, UINT uMsg,UINT_PTR idEvent,DW
 				theApp.emuledlg->ShowTransferRate();
 				thePrefs.EstimateMaxUploadCap(theApp.uploadqueue->GetDatarate()/1024);
 				
-				if (!thePrefs.TransferFullChunks())
-					theApp.uploadqueue->UpdateMaxClientScore();
-
 				// update cat-titles with downloadinfos only when needed
 				if (thePrefs.ShowCatTabInfos() && 
 					theApp.emuledlg->activewnd == theApp.emuledlg->transferwnd && 

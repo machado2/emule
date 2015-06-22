@@ -246,6 +246,16 @@ uint32 CUpDownClient::GetScore(bool sysvalue, bool isdownloading, bool onlybasev
 	return (uint32)fBaseValue;
 }
 
+int CUpDownClient::GetUpDownDifference() const {
+	// friend slot
+	if (IsFriend() && GetFriendSlot() && !HasLowID())
+		return 0x0FFFFFFF;
+
+	long long byteDif = credits->GetDownloadedTotal() - credits->GetUploadedTotal();
+	int dif = byteDif / 1048576;
+    return dif;
+}
+
 class CSyncHelper
 {
 public:
@@ -956,4 +966,90 @@ CEMSocket* CUpDownClient::GetFileUploadSocket(bool bLog)
 void CUpDownClient::SetCollectionUploadSlot(bool bValue){
 	ASSERT( !IsDownloading() || bValue == m_bCollectionUploadSlot );
 	m_bCollectionUploadSlot = bValue;
+}
+
+// Translate priority in a linear integer
+int translatePriority(int pr) {
+	switch (pr) {
+		case PR_VERYLOW:
+			return 1;
+		case PR_LOW:
+			return 2;
+		case PR_HIGH:
+			return 4;
+		case PR_VERYHIGH:
+			return 5;
+		case PR_NORMAL:
+		default:
+			return 3;
+	}
+}
+
+uint32 MaiorBit(uint32 entrada) {
+    const BYTE* pucIP = (BYTE*)&entrada;
+    uint32 saida;
+    for (unsigned int b = 0; b < 4; b++)
+        for (unsigned int i = 7; i > 0; i--) {
+            saida = pucIP[b] & (1 << i);
+            if (saida)
+                return saida << (b * 8);
+        }
+    return 0;
+}
+
+int CUpDownClient::CompareRank(const CUpDownClient *client) const {
+	int tmpa, tmpb;
+
+	// null client
+	if (!client) return 1;
+	
+	// friend
+	if (GetFriendSlot()) return 1;
+	if (client->GetFriendSlot()) return -1;
+	
+	// banned
+	tmpa = (IsBanned() || m_bGPLEvildoer) ? 1 : 0;
+	tmpb = (client->IsBanned() || client->m_bGPLEvildoer) ? 1 : 0;	
+	if (tmpa > tmpb) return -1;
+	if (tmpb > tmpa) return 1;
+
+	// file doesnt exist
+	CKnownFile *arq1, *arq2;
+	arq1 = theApp.sharedfiles->GetFileByID(requpfileid);
+	arq2 = theApp.sharedfiles->GetFileByID(client->requpfileid);
+	if ((!arq1) && (!arq2)) return 0;
+	if (!arq1) return -1;
+	if (!arq2) return 1;
+
+    // file priority, considering auto-priority as normal
+	tmpa = translatePriority(arq1->GetUpPriority());
+    if (arq1->IsAutoUpPriority()) tmpa = 3;
+	tmpb = translatePriority(arq2->GetUpPriority());
+    if (arq2->IsAutoUpPriority()) tmpb = 3;
+	if (tmpa > tmpb) return 1;
+	if (tmpb > tmpa) return -1;
+
+	// pay back first
+	tmpa = GetUpDownDifference();
+	tmpb = client->GetUpDownDifference();
+	if (tmpa > tmpb) return 1;
+	if (tmpb > tmpa) return -1;
+
+    // boost rare files
+    tmpa = arq1->statistic.GetAccepts();
+	tmpb = arq2->statistic.GetAccepts();
+	if (tmpa > tmpb) return -1;
+	if (tmpb > tmpa) return 1;
+
+    // take the nearest IP first, to minimize internet global
+    // traffic
+    uint32 difa = MaiorBit(GetConnectIP() ^ theApp.GetPublicIP());
+    uint32 difb = MaiorBit(client->GetConnectIP() ^ theApp.GetPublicIP());
+    if (difa > difb) return -1;
+    if (difb > difa) return 1;
+
+	//score
+	if (GetScore(false) > client->GetScore(false)) return 1;
+	if (GetScore(false) < client->GetScore(false)) return -1;
+	return 0;
 }
