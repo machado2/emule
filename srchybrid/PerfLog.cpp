@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -24,6 +24,7 @@
 #include "Preferences.h"
 #include "Statistics.h"
 #include "emuledlg.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -91,7 +92,7 @@ void CPerfLog::WriteSamples(UINT nCurDn, UINT nCurUp, UINT nCurDnOH, UINT nCurUp
 
 	FILE* fp = _tfsopen(m_strFilePath, (m_eMode == OneSample) ? _T("wt") : _T("at"), _SH_DENYWR);
 	if (fp == NULL){
-		theApp.emuledlg->AddLogLine(false, _T("Failed to open performance log file \"%s\" - %hs"), m_strFilePath, strerror(errno));
+		LogError(false, _T("Failed to open performance log file \"%s\" - %hs"), m_strFilePath, strerror(errno));
 		return;
 	}
 	setvbuf(fp, NULL, _IOFBF, 16384); // ensure that all lines are written to file with one call
@@ -111,8 +112,8 @@ void CPerfLog::LogSamples()
 		return;
 
 	// 'data counters' amount of transfered file data
-	UINT nCurDn = theApp.stat_sessionReceivedBytes - m_nLastSessionRecvBytes;
-	UINT nCurUp = theApp.stat_sessionSentBytes - m_nLastSessionSentBytes;
+	UINT nCurDn = theStats.sessionReceivedBytes - m_nLastSessionRecvBytes;
+	UINT nCurUp = theStats.sessionSentBytes - m_nLastSessionSentBytes;
 
 	// 'overhead counters' amount of total overhead
 	uint64 nDnOHTotal = theStats.GetDownDataOverheadFileRequest() + 
@@ -130,8 +131,8 @@ void CPerfLog::LogSamples()
 
 	WriteSamples(nCurDn, nCurUp, nCurDnOH, nCurUpOH);
 
-	m_nLastSessionRecvBytes = theApp.stat_sessionReceivedBytes;
-	m_nLastSessionSentBytes = theApp.stat_sessionSentBytes;
+	m_nLastSessionRecvBytes = theStats.sessionReceivedBytes;
+	m_nLastSessionSentBytes = theStats.sessionSentBytes;
 	m_nLastDnOH = nDnOHTotal;
 	m_nLastUpOH = nUpOHTotal;
 	m_dwLastSampled = dwNow;

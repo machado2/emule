@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -35,6 +35,7 @@
 #include "ServerWnd.h"
 #include "SearchDlg.h"
 #include "IPFilter.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -86,7 +87,7 @@ void CServerSocket::OnConnect(int nErrorCode){
 		case WSAETIMEDOUT: 	
 		case WSAEADDRINUSE:
 			if (thePrefs.GetVerbose())
-				AddDebugLogLine(false, _T("Failed to connect to server %s; %s"), cur_server->GetAddress(), GetErrorMessage(nErrorCode, 1));
+				DebugLogError(_T("Failed to connect to server %s; %s"), cur_server->GetAddress(), GetErrorMessage(nErrorCode, 1));
 			m_bIsDeleting = true;
 			SetConnectionState(CS_SERVERDEAD);
 			serverconnect->DestroySocket(this);
@@ -96,7 +97,7 @@ void CServerSocket::OnConnect(int nErrorCode){
 			if (m_ProxyConnectFailed)
 			{
 				if (thePrefs.GetVerbose())
-					AddDebugLogLine(false, _T("Failed to connect to server %s; %s"), cur_server->GetAddress(), GetErrorMessage(nErrorCode, 1));
+					DebugLogError(_T("Failed to connect to server %s; %s"), cur_server->GetAddress(), GetErrorMessage(nErrorCode, 1));
 				m_ProxyConnectFailed = false;
 				m_bIsDeleting = true;
 				SetConnectionState(CS_SERVERDEAD);
@@ -105,7 +106,7 @@ void CServerSocket::OnConnect(int nErrorCode){
 			}
 		default:	
 			if (thePrefs.GetVerbose())
-				AddDebugLogLine(false, _T("Failed to connect to server %s; %s"), cur_server->GetAddress(), GetErrorMessage(nErrorCode, 1));
+				DebugLogError(_T("Failed to connect to server %s; %s"), cur_server->GetAddress(), GetErrorMessage(nErrorCode, 1));
 			m_bIsDeleting = true;
 			SetConnectionState(CS_FATALERROR);
 			serverconnect->DestroySocket(this);
@@ -129,70 +130,71 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 				if (thePrefs.GetDebugServerTCPLevel() > 0)
 					Debug(_T("ServerMsg - OP_ServerMessage\n"));
 
-				CStringA strMessages;
-				if (size >= 2){
-					UINT uLen = *(uint16*)packet;
-					if (uLen > size-2)
-						uLen = size-2;
-					memcpy(strMessages.GetBuffer(uLen), packet + sizeof uint16, uLen);
-					strMessages.ReleaseBuffer(uLen);
+				CServer* pServer = cur_server ? theApp.serverlist->GetServerByAddress(cur_server->GetAddress(),cur_server->GetPort()) : NULL;
+				CSafeMemFile data((const BYTE*)packet, size);
+				CString strMessages(data.ReadString(pServer ? pServer->GetUnicodeSupport() : false));
+
+				if (thePrefs.GetDebugServerTCPLevel() > 0){
+					UINT uAddData = data.GetLength() - data.GetPosition();
+					if (uAddData > 0){
+						Debug(_T("*** NOTE: OP_ServerMessage: ***AddData: %u bytes\n"), uAddData);
+						DebugHexDump((uint8*)packet + data.GetPosition(), uAddData);
+					}
 				}
 
 				// 16.40 servers do not send separate OP_SERVERMESSAGE packets for each line;
 				// instead of this they are sending all text lines with one OP_SERVERMESSAGE packet.
-				USES_CONVERSION;
 				int iPos = 0;
-				CStringA message = strMessages.Tokenize("\r\n", iPos);
+				CString message = strMessages.Tokenize(_T("\r\n"), iPos);
 				while (!message.IsEmpty())
 				{
 					bool bOutputMessage = true;
-					if (strnicmp(message, "server version", 14) == 0){
-						CStringA strVer = message.Mid(14);
+					if (_tcsnicmp(message, _T("server version"), 14) == 0){
+						CString strVer = message.Mid(14);
 						strVer.Trim();
 						strVer = strVer.Left(64); // truncate string to avoid misuse by servers in showing ads
-						CServer* eserver = theApp.serverlist->GetServerByAddress(cur_server->GetAddress(),cur_server->GetPort());
-						if (eserver){
-							eserver->SetVersion(A2CT(strVer));
-							theApp.emuledlg->serverwnd->serverlistctrl.RefreshServer(eserver);
+						if (pServer){
+							pServer->SetVersion(strVer);
+							theApp.emuledlg->serverwnd->serverlistctrl.RefreshServer(pServer);
 							theApp.emuledlg->serverwnd->UpdateMyInfo();
 						}
 						if (thePrefs.GetDebugServerTCPLevel() > 0)
-							Debug(_T("%hs\n"), message);
+							Debug(_T("%s\n"), message);
 					}
-					else if (strncmp(message, "ERROR", 5) == 0){
-						CServer* pServer = theApp.serverlist->GetServerByAddress(cur_server->GetAddress(),cur_server->GetPort());
-						AddLogLine(true, _T("%s %s (%s:%u) - %hs"), 
+					else if (_tcsncmp(message, _T("ERROR"), 5) == 0){
+						LogError(LOG_STATUSBAR, _T("%s %s (%s:%u) - %s"), 
 							GetResString(IDS_ERROR),
 							pServer ? pServer->GetListName() : GetResString(IDS_PW_SERVER), 
-							cur_server->GetAddress(), cur_server->GetPort(), message.Mid(5).Trim(" :"));
+							cur_server ? cur_server->GetAddress() : _T(""), 
+							cur_server ? cur_server->GetPort() : 0, message.Mid(5).Trim(_T(" :")));
 						bOutputMessage = false;
 					}
-					else if (strncmp(message, "WARNING", 7) == 0){
-						CServer* pServer = theApp.serverlist->GetServerByAddress(cur_server->GetAddress(),cur_server->GetPort());
-						AddLogLine(true, _T("%s %s (%s:%u) - %hs"), 
+					else if (_tcsncmp(message, _T("WARNING"), 7) == 0){
+						LogWarning(LOG_STATUSBAR, _T("%s %s (%s:%u) - %s"), 
 							GetResString(IDS_WARNING),
 							pServer ? pServer->GetListName() : GetResString(IDS_PW_SERVER), 
-							cur_server->GetAddress(), cur_server->GetPort(), message.Mid(7).Trim(" :"));
+							cur_server ? cur_server->GetAddress() : _T(""),
+							cur_server ? cur_server->GetPort() : 0, message.Mid(7).Trim(_T(" :")));
 						bOutputMessage = false;
 					}
 
-					if (message.Find("[emDynIP: ") != (-1) && message.Find("]") != (-1) && message.Find("[emDynIP: ") < message.Find("]")){
-						CStringA dynip = message.Mid(message.Find("[emDynIP: ")+10,message.Find("]") - (message.Find("[emDynIP: ")+10));
-						dynip.Trim(" ");
-						if ( dynip.GetLength() && dynip.GetLength() < 51){
-							CServer* eserver = theApp.serverlist->GetServerByAddress(cur_server->GetAddress(),cur_server->GetPort());
-							if (eserver){
-								eserver->SetDynIP(A2CT(dynip));
-								cur_server->SetDynIP(A2CT(dynip));
-								theApp.emuledlg->serverwnd->serverlistctrl.RefreshServer(eserver);
+					if (message.Find(_T("[emDynIP: ")) != -1 && message.Find(_T("]")) != -1 && message.Find(_T("[emDynIP: ")) < message.Find(_T("]"))){
+						CString dynip = message.Mid(message.Find(_T("[emDynIP: ")) + 10, message.Find(_T("]")) - (message.Find(_T("[emDynIP: ")) + 10));
+						dynip.Trim(_T(" "));
+						if (dynip.GetLength() && dynip.GetLength() < 51){
+							if (pServer){
+								pServer->SetDynIP(dynip);
+								if (cur_server)
+									cur_server->SetDynIP(dynip);
+								theApp.emuledlg->serverwnd->serverlistctrl.RefreshServer(pServer);
 								theApp.emuledlg->serverwnd->UpdateMyInfo();
 							}
 						}
 					}
 					if (bOutputMessage)
-						theApp.emuledlg->AddServerMessageLine(A2CT(message));
+						theApp.emuledlg->AddServerMessageLine(message);
 
-					message = strMessages.Tokenize("\r\n", iPos);
+					message = strMessages.Tokenize(_T("\r\n"), iPos);
 				}
 				break;
 			}
@@ -208,9 +210,22 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 				ASSERT( cur_server );
 				if (cur_server){
 					if (size >= sizeof(LoginAnswer_Struct)+4){
-						if (thePrefs.GetDebugServerTCPLevel() > 0)
-							Debug(_T("  Flags=%08x\n"), *((uint32*)(packet + sizeof(LoginAnswer_Struct))));
-						cur_server->SetTCPFlags(*((uint32*)(packet + sizeof(LoginAnswer_Struct))));
+						DWORD dwFlags = *((uint32*)(packet + sizeof(LoginAnswer_Struct)));
+						if (thePrefs.GetDebugServerTCPLevel() > 0){
+							CString strInfo;
+							strInfo.AppendFormat(_T("  TCP Flags=0x%08x"), dwFlags);
+							const DWORD dwKnownBits = SRV_TCPFLG_COMPRESSION | SRV_TCPFLG_NEWTAGS | SRV_TCPFLG_UNICODE;
+							if (dwFlags & ~dwKnownBits)
+								strInfo.AppendFormat(_T("  ***UnkBits=0x%08x"), dwFlags & ~dwKnownBits);
+							if (dwFlags & SRV_TCPFLG_COMPRESSION)
+								strInfo.AppendFormat(_T("  Compression=1"));
+							if (dwFlags & SRV_TCPFLG_NEWTAGS)
+								strInfo.AppendFormat(_T("  NewTags=1"));
+							if (dwFlags & SRV_TCPFLG_UNICODE)
+								strInfo.AppendFormat(_T("  Unicode=1"));
+							Debug(_T("%s\n"), strInfo);
+						}
+						cur_server->SetTCPFlags(dwFlags);
 					}
 					else
 						cur_server->SetTCPFlags(0);
@@ -256,7 +271,7 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 					theApp.OnlineSig();       // Added By Bouc7 
 				}
 				serverconnect->SetClientID(la->clientid);
-				AddLogLine(false,GetResString(IDS_NEWCLIENTID),la->clientid);
+				AddLogLine(false, GetResString(IDS_NEWCLIENTID), la->clientid);
 
 				theApp.downloadqueue->ResetLocalServerRequests();
 				break;
@@ -265,19 +280,24 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 				if (thePrefs.GetDebugServerTCPLevel() > 0)
 					Debug(_T("ServerMsg - OP_SearchResult\n"));
 				CServer* cur_srv = (serverconnect) ? serverconnect->GetCurrentServer() : NULL;
+				CServer* pServer = cur_srv ? theApp.serverlist->GetServerByAddress(cur_srv->GetAddress(), cur_srv->GetPort()) : NULL;
 				bool bMoreResultsAvailable;
-				uint16 uSearchResults = theApp.searchlist->ProcessSearchanswer(packet, size, cur_srv ? cur_srv->GetIP():0, cur_srv ? cur_srv->GetPort() : 0, &bMoreResultsAvailable);
+				uint16 uSearchResults = theApp.searchlist->ProcessSearchanswer(packet, size, true/*pServer ? pServer->GetUnicodeSupport() : false*/, cur_srv ? cur_srv->GetIP() : 0, cur_srv ? cur_srv->GetPort() : 0, &bMoreResultsAvailable);
 				theApp.emuledlg->searchwnd->LocalSearchEnd(uSearchResults, bMoreResultsAvailable);
 				break;
 			}
 			case OP_FOUNDSOURCES:{
 				if (thePrefs.GetDebugServerTCPLevel() > 0)
 					Debug(_T("ServerMsg - OP_FoundSources; Sources=%u  %s\n"), (UINT)(uchar)packet[16], DbgGetFileInfo((uchar*)packet));
-				CSafeMemFile sources((BYTE*)packet,size);
-				uchar fileid[16];
-				sources.ReadHash16(fileid);
-				if (CPartFile* file = theApp.downloadqueue->GetFileByID(fileid))
-					file->AddSources(&sources,cur_server->GetIP(), cur_server->GetPort());
+				ASSERT( cur_server );
+				if (cur_server)
+				{
+					CSafeMemFile sources((BYTE*)packet,size);
+					uchar fileid[16];
+					sources.ReadHash16(fileid);
+					if (CPartFile* file = theApp.downloadqueue->GetFileByID(fileid))
+						file->AddSources(&sources,cur_server->GetIP(), cur_server->GetPort());
+				}
 				break;
 			}
 			case OP_SERVERSTATUS:{
@@ -288,7 +308,7 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 					break;//throw "Invalid status packet";
 				uint32 cur_user = PeekUInt32(packet);
 				uint32 cur_files = PeekUInt32(packet+4);
-				CServer* update = theApp.serverlist->GetServerByAddress( cur_server->GetAddress(), cur_server->GetPort() );
+				CServer* update = cur_server ? theApp.serverlist->GetServerByAddress(cur_server->GetAddress(), cur_server->GetPort()) : NULL;
 				if (update){
 					update->SetUserCount(cur_user); 
 					update->SetFileCount(cur_files);
@@ -310,10 +330,11 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 					Debug(_T("ServerMsg - OP_ServerIdent\n"));
 				if (size<16+4+2+4){
 					if (thePrefs.GetVerbose())
-						AddDebugLogLine(false,GetResString(IDS_ERR_KNOWNSERVERINFOREC)); 
+						DebugLogError(_T("%s"), GetResString(IDS_ERR_KNOWNSERVERINFOREC));
 					break;// throw "Invalid server info received"; 
 				} 
 
+				CServer* pServer = cur_server ? theApp.serverlist->GetServerByAddress(cur_server->GetAddress(),cur_server->GetPort()) : NULL;
 				CString strInfo;
 				CSafeMemFile data((BYTE*)packet, size);
 				
@@ -332,15 +353,15 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 				CString strName;
 				CString strDescription;
 				for (UINT i = 0; i < nTags; i++){
-					CTag tag(&data);
-					if (tag.tag.specialtag == ST_SERVERNAME){
+					CTag tag(&data, pServer ? pServer->GetUnicodeSupport() : false);
+					if (tag.GetNameID() == ST_SERVERNAME){
 						if (tag.IsStr()){
 							strName = tag.GetStr();
 							if (thePrefs.GetDebugServerTCPLevel() > 0)
 								strInfo.AppendFormat(_T("  Name=%s"), strName);
 						}
 					}
-					else if (tag.tag.specialtag == ST_DESCRIPTION){
+					else if (tag.GetNameID() == ST_DESCRIPTION){
 						if (tag.IsStr()){
 							strDescription = tag.GetStr();
 							if (thePrefs.GetDebugServerTCPLevel() > 0)
@@ -348,7 +369,7 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 						}
 					}
 					else if (thePrefs.GetDebugServerTCPLevel() > 0)
-						strInfo.AppendFormat(_T("  ***UnkTag: 0x%02x=%u"), tag.tag.specialtag, tag.tag.intvalue);
+						strInfo.AppendFormat(_T("  ***UnkTag: 0x%02x=%u"), tag.GetNameID(), tag.GetInt());
 				}
 				if (thePrefs.GetDebugServerTCPLevel() > 0){
 					strInfo += _T('\n');
@@ -361,24 +382,19 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 					}
 				}
 
-				ASSERT( cur_server );
-				if (cur_server){
-					CServer* update = theApp.serverlist->GetServerByAddress(cur_server->GetAddress(),cur_server->GetPort()); 
-					ASSERT( update );
-					if (update){
-						update->SetListName(strName);
-						update->SetDescription(strDescription);
-						if (((uint32*)aucHash)[0] == 0x2A2A2A2A){
-							const CString& rstrVersion = update->GetVersion();
-							if (!rstrVersion.IsEmpty())
-								update->SetVersion(_T("eFarm ") + rstrVersion);
-							else
-								update->SetVersion(_T("eFarm"));
-						}
-						theApp.emuledlg->ShowConnectionState(); 
-						theApp.emuledlg->serverwnd->serverlistctrl.RefreshServer(update); 
-						theApp.emuledlg->serverwnd->UpdateMyInfo();
+				if (pServer){
+					pServer->SetListName(strName);
+					pServer->SetDescription(strDescription);
+					if (((uint32*)aucHash)[0] == 0x2A2A2A2A){
+						const CString& rstrVersion = pServer->GetVersion();
+						if (!rstrVersion.IsEmpty())
+							pServer->SetVersion(_T("eFarm ") + rstrVersion);
+						else
+							pServer->SetVersion(_T("eFarm"));
 					}
+					theApp.emuledlg->ShowConnectionState(); 
+					theApp.emuledlg->serverwnd->serverlistctrl.RefreshServer(pServer); 
+					theApp.emuledlg->serverwnd->UpdateMyInfo();
 				}
 				break;
 			} 
@@ -406,7 +422,7 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 						count--;
 					}
 					if (addcount)
-						AddLogLine(false,GetResString(IDS_NEWSERVERS), addcount);
+						AddLogLine(false, GetResString(IDS_NEWSERVERS), addcount);
 					if (thePrefs.GetDebugServerTCPLevel() > 0){
 						UINT uAddData = servers.GetLength() - servers.GetPosition();
 						if (uAddData > 0){
@@ -417,7 +433,7 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 				}
 				catch(CFileException* error){
 					if (thePrefs.GetVerbose())
-						AddDebugLogLine(false,GetResString(IDS_ERR_BADSERVERLISTRECEIVED));
+						DebugLogError(_T("%s"), GetResString(IDS_ERR_BADSERVERLISTRECEIVED));
 					error->Delete();
 				}
 				break;
@@ -430,7 +446,7 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 					uint32 dwIP = PeekUInt32(packet);
 
 					if (theApp.ipfilter->IsFiltered(dwIP)){
-						theApp.stat_filteredclients++;
+						theStats.filteredclients++;
 						if (thePrefs.GetLogFilteredIPs())
 							AddDebugLogLine(false, _T("Ignored callback request (IP=%s) - IP filter (%s)"), ipstr(dwIP), theApp.ipfilter->GetLastHit());
 						break;
@@ -459,21 +475,21 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 			}
 			case OP_CALLBACK_FAIL:{
 				if (thePrefs.GetDebugServerTCPLevel() > 0)
-					Debug(_T("ServerMsg - OP_Callback_Fail %s\n"), GetHexDump((uint8*)packet, size));
+					Debug(_T("ServerMsg - OP_Callback_Fail %s\n"), DbgGetHexDump((uint8*)packet, size));
 				break;
 			}
 			case OP_REJECT:{
 				if (thePrefs.GetDebugServerTCPLevel() > 0)
-					Debug(_T("ServerMsg - OP_Reject %s\n"), GetHexDump((uint8*)packet, size));
+					Debug(_T("ServerMsg - OP_Reject %s\n"), DbgGetHexDump((uint8*)packet, size));
 				// this could happen if we send a command with the wrong protocol (e.g. sending a compressed packet to
 				// a server which does not support that protocol).
 				if (thePrefs.GetVerbose())
-					AddDebugLogLine(false, _T("Server rejected last command"));
+					DebugLogError(_T("Server rejected last command"));
 				break;
 			}
 			default:
 				if (thePrefs.GetDebugServerTCPLevel() > 0)
-					Debug(_T("***NOTE: ServerMsg - Unknown message; opcode=0x%02x  %s\n"), opcode, GetHexDump((uint8*)packet, size));
+					Debug(_T("***NOTE: ServerMsg - Unknown message; opcode=0x%02x  %s\n"), opcode, DbgGetHexDump((uint8*)packet, size));
 				;
 		}
 
@@ -486,7 +502,7 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 			TCHAR szError[MAX_CFEXP_ERRORMSG];
 			error->m_strFileName = _T("server packet");
 			error->GetErrorMessage(szError, ARRSIZE(szError));
-			AddDebugLogLine(false,GetResString(IDS_ERR_PACKAGEHANDLING),szError);
+		    DebugLogError(GetResString(IDS_ERR_PACKAGEHANDLING), szError);
 		}
 		error->Delete();
 		ASSERT(0);
@@ -496,7 +512,7 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 	catch(CMemoryException* error)
 	{
 		if (thePrefs.GetVerbose())
-			AddDebugLogLine(false,GetResString(IDS_ERR_PACKAGEHANDLING),_T("CMemoryException"));
+			DebugLogError(GetResString(IDS_ERR_PACKAGEHANDLING), _T("CMemoryException"));
 		error->Delete();
 		ASSERT(0);
 		if (opcode==OP_SEARCHRESULT || opcode==OP_FOUNDSOURCES)
@@ -505,13 +521,13 @@ bool CServerSocket::ProcessPacket(char* packet, uint32 size, uint8 opcode){
 	catch(CString error)
 	{
 		if (thePrefs.GetVerbose())
-			AddDebugLogLine(false,GetResString(IDS_ERR_PACKAGEHANDLING),error.GetBuffer());
+			DebugLogError(GetResString(IDS_ERR_PACKAGEHANDLING), error);
 		ASSERT(0);
 	}
 	catch(...)
 	{
 		if (thePrefs.GetVerbose())
-			AddDebugLogLine(false,GetResString(IDS_ERR_PACKAGEHANDLING),_T("Unknown exception"));
+			DebugLogError(GetResString(IDS_ERR_PACKAGEHANDLING), _T("Unknown exception"));
 		ASSERT(0);
 	}
 
@@ -527,7 +543,7 @@ void CServerSocket::ConnectToServer(CServer* server){
 	}
 
 	cur_server = new CServer(server);
-	AddLogLine(false,GetResString(IDS_CONNECTINGTO),cur_server->GetListName(),cur_server->GetFullIP(),cur_server->GetPort());
+	Log(GetResString(IDS_CONNECTINGTO), cur_server->GetListName(), cur_server->GetFullIP(), cur_server->GetPort());
 
 	if (thePrefs.IsProxyASCWOP() )
 	{
@@ -535,17 +551,17 @@ void CServerSocket::ConnectToServer(CServer* server){
 		{
 			thePrefs.SetProxyASCWOP(true);
 			thePrefs.SetUseProxy(false);
-			AddLogLine(false,GetResString(IDS_ASCWOP_PROXYSUPPORT)+GetResString(IDS_DISABLED));
+			AddLogLine(false, GetResString(IDS_ASCWOP_PROXYSUPPORT) + GetResString(IDS_DISABLED));
 		}
 		else
 			thePrefs.SetProxyASCWOP(false);
 	}
 
 	SetConnectionState(CS_CONNECTING);
-	if (!this->Connect(server->GetAddress(),server->GetPort())){
-		int error = this->GetLastError();
-		if ( error != WSAEWOULDBLOCK){
-			AddLogLine(false,GetResString(IDS_ERR_CONNECTIONERROR),cur_server->GetListName(),cur_server->GetFullIP(),cur_server->GetPort(), GetErrorMessage(error, 1)); 
+	if (!Connect(server->GetAddress(),server->GetPort())){
+		DWORD dwError = GetLastError();
+		if (dwError != WSAEWOULDBLOCK){
+			LogError(GetResString(IDS_ERR_CONNECTIONERROR), cur_server->GetListName(), cur_server->GetFullIP(), cur_server->GetPort(), GetErrorMessage(dwError, 1));
 			SetConnectionState(CS_FATALERROR);
 			return;
 		}
@@ -557,7 +573,7 @@ void CServerSocket::OnError(int nErrorCode)
 {
 	SetConnectionState(CS_DISCONNECTED);
 	if (thePrefs.GetVerbose())
-		AddDebugLogLine(false,GetResString(IDS_ERR_SOCKET),cur_server->GetListName(),cur_server->GetFullIP(),cur_server->GetPort(), GetErrorMessage(nErrorCode, 1));
+		DebugLogError(GetResString(IDS_ERR_SOCKET), cur_server->GetListName(), cur_server->GetFullIP(), cur_server->GetPort(), GetErrorMessage(nErrorCode, 1));
 }
 
 bool CServerSocket::PacketReceived(Packet* packet)
@@ -570,7 +586,7 @@ bool CServerSocket::PacketReceived(Packet* packet)
 			uint32 uComprSize = packet->size;
 			if (!packet->UnPackPacket(250000)){
 				if (thePrefs.GetVerbose())
-					AddDebugLogLine(false,_T("Failed to decompress server TCP packet: protocol=0x%02x  opcode=0x%02x  size=%u"), packet ? packet->prot : 0, packet ? packet->opcode : 0, packet ? packet->size : 0);
+					DebugLogError(_T("Failed to decompress server TCP packet: protocol=0x%02x  opcode=0x%02x  size=%u"), packet ? packet->prot : 0, packet ? packet->opcode : 0, packet ? packet->size : 0);
 				return true;
 			}
 			packet->prot = OP_EDONKEYPROT;
@@ -585,13 +601,13 @@ bool CServerSocket::PacketReceived(Packet* packet)
 		else
 		{
 			if (thePrefs.GetVerbose())
-				AddDebugLogLine(false,_T("Received server TCP packet with unknown protocol: protocol=0x%02x  opcode=0x%02x  size=%u"), packet ? packet->prot : 0, packet ? packet->opcode : 0, packet ? packet->size : 0);
+				DebugLogWarning(_T("Received server TCP packet with unknown protocol: protocol=0x%02x  opcode=0x%02x  size=%u"), packet ? packet->prot : 0, packet ? packet->opcode : 0, packet ? packet->size : 0);
 		}
 	}
 	catch(...)
 	{
 		if (thePrefs.GetVerbose())
-			AddDebugLogLine(false,_T("Error: Unhandled exception while processing server TCP packet: protocol=0x%02x  opcode=0x%02x  size=%u"), packet ? packet->prot : 0, packet ? packet->opcode : 0, packet ? packet->size : 0);
+			DebugLogError(_T("Error: Unhandled exception while processing server TCP packet: protocol=0x%02x  opcode=0x%02x  size=%u"), packet ? packet->prot : 0, packet ? packet->opcode : 0, packet ? packet->size : 0);
 		ASSERT(0);
 		return false;
 	}

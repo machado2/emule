@@ -1,10 +1,10 @@
 #include <stdafx.h>
-#pragma comment(lib, "ws2_32.lib")
 #include "emule.h"
 #include "OtherFunctions.h"
 #include "WebSocket.h"
 #include "WebServer.h"
 #include "Preferences.h"
+#include "StringConversion.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -233,7 +233,7 @@ void CWebSocket::SendContent(LPCSTR szStdResponse, const void* pContent, DWORD d
 void CWebSocket::SendContent(LPCSTR szStdResponse, const CString& rstr)
 {
 #ifdef _UNICODE
-	CStringA strA(rstr);
+	CStringA strA(wc2utf8(rstr));
 	SendContent(szStdResponse, strA, strA.GetLength());
 #else
 	SendContent(szStdResponse, rstr, rstr.GetLength());

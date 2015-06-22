@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -42,6 +42,9 @@ CTransferWnd::CTransferWnd(CWnd* pParent /*=NULL*/)
 {
 	icon_download = NULL;
 	m_uWnd2 = DFLT_TRANSFER_WND2;
+	m_pLastMousePoint.x = -1;
+	m_pLastMousePoint.y = -1;
+	m_nLastCatTT = -1;
 }
 
 CTransferWnd::~CTransferWnd()
@@ -126,7 +129,7 @@ BOOL CTransferWnd::OnInitDialog()
 	UpdateTabToolTips();
 	m_tooltipCats.SendMessage(TTM_SETMAXTIPWIDTH, 0, SHRT_MAX); // recognize \n chars!
 	m_tooltipCats.SetDelayTime(TTDT_AUTOPOP, 20000);
-	m_tooltipCats.SetDelayTime(TTDT_INITIAL, 0);
+	m_tooltipCats.SetDelayTime(TTDT_INITIAL, thePrefs.GetToolTipDelay()*1000);
 	m_tooltipCats.Activate(TRUE);
 
 	UpdateListCount(m_uWnd2);
@@ -344,7 +347,7 @@ BOOL CTransferWnd::PreTranslateMessage(MSG* pMsg)
 				m_nLastCatTT=m_nDropIndex;
 			    if (m_nDropIndex!=-1)
 				    UpdateTabToolTips(m_nDropIndex);
-			    m_tooltipCats.Update();
+			    //m_tooltipCats.Update();
 			}
 		}
 	}
@@ -396,10 +399,17 @@ void CTransferWnd::UpdateListCount(uint8 listindex, int iCount /*=-1*/)
 
 	CString buffer;
 	switch (m_uWnd2){
-		case 1:
-			buffer.Format(_T(" (%i)"), iCount == -1 ? uploadlistctrl.GetItemCount() : iCount);
+        case 1: {
+            uint32 itemCount = iCount == -1 ? uploadlistctrl.GetItemCount() : iCount;
+            uint32 activeCount = theApp.uploadqueue->GetActiveUploadsCount();
+            if(activeCount >= itemCount) {
+                buffer.Format(_T(" (%i)"), itemCount);
+            } else {
+                buffer.Format(_T(" (%i/%i)"), activeCount, itemCount);
+            }
 			GetDlgItem(IDC_UPLOAD_ICO)->SetWindowText(GetResString(IDS_TW_UPLOADS)+buffer);
 			break;
+        }
 		case 2:
 			buffer.Format(_T(" (%i)"), iCount == -1 ? queuelistctrl.GetItemCount() : iCount);
 			GetDlgItem(IDC_UPLOAD_ICO)->SetWindowText(GetResString(IDS_ONQUEUE)+buffer);
@@ -589,42 +599,49 @@ void CTransferWnd::OnNMRclickDltab(NMHDR *pNMHDR, LRESULT *pResult)
 // <-- ZZ:DownloadManager
 
 	menu.CreatePopupMenu();
-	menu.AddMenuTitle(GetResString(IDS_CAT));
+	if (rightclickindex)
+		menu.AddMenuTitle(GetResString(IDS_CAT)+_T(" (")+thePrefs.GetCategory(rightclickindex)->title+_T(")") ,true );
+	else
+		menu.AddMenuTitle(GetResString(IDS_CAT),true);
 
-	if (rightclickindex==0 ){
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0,GetResString(IDS_ALL) );
+	m_isetcatmenu=rightclickindex;
+
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0,GetResString(IDS_ALL) );
+	if (rightclickindex==0 )
 		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+1,GetResString(IDS_ALLOTHERS) );
-		m_CatMenu.AppendMenu(MF_SEPARATOR);
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+2,GetResString(IDS_STATUS_NOTCOMPLETED) );
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+3,GetResString(IDS_DL_TRANSFCOMPL) );
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+4,GetResString(IDS_WAITING) );
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+5,GetResString(IDS_DOWNLOADING) );
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+6,GetResString(IDS_ERRORLIKE) );
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+7,GetResString(IDS_PAUSED) );
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+8,GetResString(IDS_STOPPED) );
-		m_CatMenu.AppendMenu(MF_SEPARATOR);
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+10,GetResString(IDS_VIDEO) );
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+11,GetResString(IDS_AUDIO) );
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+12,GetResString(IDS_SEARCH_ARC) );
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+13,GetResString(IDS_SEARCH_CDIMG) );
-		
-		m_CatMenu.CheckMenuItem( MP_CAT_SET0+thePrefs.GetAllcatType() ,MF_CHECKED | MF_BYCOMMAND);
+	m_CatMenu.AppendMenu(MF_SEPARATOR);
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+2,GetResString(IDS_STATUS_NOTCOMPLETED) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+3,GetResString(IDS_DL_TRANSFCOMPL) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+4,GetResString(IDS_WAITING) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+5,GetResString(IDS_DOWNLOADING) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+6,GetResString(IDS_ERRORLIKE) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+7,GetResString(IDS_PAUSED) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+8,GetResString(IDS_SEENCOMPL) );
+	m_CatMenu.AppendMenu(MF_SEPARATOR);
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+10,GetResString(IDS_VIDEO) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+11,GetResString(IDS_AUDIO) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+12,GetResString(IDS_SEARCH_ARC) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+13,GetResString(IDS_SEARCH_CDIMG) );
 
-		menu.AppendMenu(MF_STRING|MF_POPUP,(UINT_PTR)m_CatMenu.m_hMenu, GetResString(IDS_CHANGECATVIEW) );
-		menu.AppendMenu(MF_SEPARATOR);
+	if (thePrefs.IsExtControlsEnabled()) {
+		m_CatMenu.AppendMenu(MF_SEPARATOR);
+		m_CatMenu.AppendMenu( thePrefs.GetCatFilter(rightclickindex)>1?MF_STRING:MF_GRAYED,MP_CAT_SET0+20,GetResString(IDS_NEGATEFILTER) );
+		if ( thePrefs.GetCatFilter(rightclickindex)>1 && thePrefs.GetCatFilterNeg(rightclickindex))
+			m_CatMenu.CheckMenuItem( MP_CAT_SET0+20 ,MF_CHECKED | MF_BYCOMMAND);
 	}
+	
+	m_CatMenu.CheckMenuItem( MP_CAT_SET0+thePrefs.GetCatFilter(rightclickindex) ,MF_CHECKED | MF_BYCOMMAND);
 
-	menu.AppendMenu(MF_STRING,MP_CAT_ADD,GetResString(IDS_CAT_ADD));
-	menu.AppendMenu(flag,MP_CAT_EDIT,GetResString(IDS_CAT_EDIT));
-	menu.AppendMenu(flag,MP_CAT_REMOVE, GetResString(IDS_CAT_REMOVE));
+	menu.AppendMenu(MF_STRING|MF_POPUP,(UINT_PTR)m_CatMenu.m_hMenu, GetResString(IDS_CHANGECATVIEW),_T("SEARCHPARAMS") );
 	menu.AppendMenu(MF_SEPARATOR);
-	menu.AppendMenu(MF_STRING|MF_POPUP,(UINT_PTR)m_PrioMenu.m_hMenu, GetResString(IDS_PRIORITY) );
 
-	menu.AppendMenu(MF_STRING,MP_CANCEL,GetResString(IDS_MAIN_BTN_CANCEL) );
-	menu.AppendMenu(MF_STRING,MP_STOP, GetResString(IDS_DL_STOP));
-	menu.AppendMenu(MF_STRING,MP_PAUSE, GetResString(IDS_DL_PAUSE));
-	menu.AppendMenu(MF_STRING,MP_RESUME, GetResString(IDS_DL_RESUME));
-	menu.AppendMenu(MF_STRING,MP_RESUMENEXT, GetResString(IDS_DL_RESUMENEXT));
+	menu.AppendMenu(MF_STRING|MF_POPUP,(UINT_PTR)m_PrioMenu.m_hMenu, GetResString(IDS_PRIORITY), _T("FILEPRIORITY") );
+
+	menu.AppendMenu(MF_STRING,MP_CANCEL,GetResString(IDS_MAIN_BTN_CANCEL),_T("DELETE") );
+	menu.AppendMenu(MF_STRING,MP_STOP, GetResString(IDS_DL_STOP),_T("STOP"));
+	menu.AppendMenu(MF_STRING,MP_PAUSE, GetResString(IDS_DL_PAUSE), _T("PAUSE"));
+	menu.AppendMenu(MF_STRING,MP_RESUME, GetResString(IDS_DL_RESUME), _T("RESUME"));
+	menu.AppendMenu(MF_STRING,MP_RESUMENEXT, GetResString(IDS_DL_RESUMENEXT), _T("RESUME"));
 	
 // ZZ:DownloadManager -->
     if(rightclickindex != 0 && thePrefs.IsExtControlsEnabled()) {
@@ -632,6 +649,14 @@ void CTransferWnd::OnNMRclickDltab(NMHDR *pNMHDR, LRESULT *pResult)
         menu.CheckMenuItem(MP_DOWNLOAD_ALPHABETICAL, category_Struct && category_Struct->downloadInAlphabeticalOrder ? MF_CHECKED : MF_UNCHECKED);
     }
 // <-- ZZ:DownloadManager
+
+	menu.AppendMenu(MF_SEPARATOR);
+	menu.AppendMenu(MF_STRING,MP_HM_OPENINC, GetResString(IDS_OPENINC), _T("FOLDERS") );
+
+	menu.AppendMenu(MF_SEPARATOR);
+	menu.AppendMenu(MF_STRING,MP_CAT_ADD,GetResString(IDS_CAT_ADD));
+	menu.AppendMenu(flag,MP_CAT_EDIT,GetResString(IDS_CAT_EDIT));
+	menu.AppendMenu(flag,MP_CAT_REMOVE, GetResString(IDS_CAT_REMOVE));
 
 	menu.TrackPopupMenu(TPM_LEFTALIGN |TPM_RIGHTBUTTON, point.x, point.y, this);
 	VERIFY( m_PrioMenu.DestroyMenu() );
@@ -716,8 +741,9 @@ void CTransferWnd::OnLButtonUp(UINT nFlags, CPoint point)
 
 
 			m_dlTab.SetCurSel(downloadlistctrl.curTab);
-			if (m_dlTab.GetCurSel()>0 || (thePrefs.GetAllcatType()==1 && m_dlTab.GetCurSel()==0) )
-				downloadlistctrl.ChangeCategory(m_dlTab.GetCurSel());
+			//if (m_dlTab.GetCurSel()>0 || (thePrefs.GetAllcatType()==1 && m_dlTab.GetCurSel()==0) )
+			downloadlistctrl.ChangeCategory(m_dlTab.GetCurSel());
+
 			UpdateCatTabTitles();
 
 		} else m_dlTab.SetCurSel(downloadlistctrl.curTab);
@@ -727,12 +753,24 @@ void CTransferWnd::OnLButtonUp(UINT nFlags, CPoint point)
 
 BOOL CTransferWnd::OnCommand(WPARAM wParam,LPARAM lParam ){ 
 
+	// category filter menuitems
 	if (wParam>=MP_CAT_SET0 && wParam<=MP_CAT_SET0+20) {
-		thePrefs.SetAllcatType(wParam-MP_CAT_SET0);
-		m_nLastCatTT=-1;
-		m_dlTab.SetCurSel(0);
-		downloadlistctrl.ChangeCategory(0);
-		EditCatTabLabel(0,GetCatTitle( thePrefs.GetAllcatType()));
+		if (wParam==MP_CAT_SET0+20) {
+			// negate
+			thePrefs.SetCatFilterNeg(m_isetcatmenu, (!thePrefs.GetCatFilterNeg(m_isetcatmenu)) );
+
+
+		} else {
+			// dont negate all/uncat filter
+			if (wParam-MP_CAT_SET0<=1)
+				thePrefs.SetCatFilterNeg(m_isetcatmenu, false);
+
+			thePrefs.SetCatFilter(m_isetcatmenu,wParam-MP_CAT_SET0);
+			m_nLastCatTT=-1;
+		}
+		EditCatTabLabel(m_isetcatmenu);
+		downloadlistctrl.ChangeCategory( m_dlTab.GetCurSel() );
+		thePrefs.SaveCats();
 	}
 
 	switch (wParam){ 
@@ -746,7 +784,7 @@ BOOL CTransferWnd::OnCommand(WPARAM wParam,LPARAM lParam ){
 			else {
 				theApp.emuledlg->searchwnd->UpdateCatTabs();
 				m_dlTab.InsertItem(newindex,thePrefs.GetCategory(newindex)->title);
-				EditCatTabLabel(newindex,thePrefs.GetCategory(newindex)->title);
+				EditCatTabLabel(newindex);
 				thePrefs.SaveCats();
 				VerifyCatTabSize();
 			}
@@ -832,7 +870,7 @@ BOOL CTransferWnd::OnCommand(WPARAM wParam,LPARAM lParam ){
 			break;
 		}
 		case MP_RESUMENEXT: {
-			theApp.downloadqueue->StartNextFile(rightclickindex,true);
+			theApp.downloadqueue->StartNextFile(rightclickindex,false);
 			break;
 		}
 
@@ -858,6 +896,11 @@ BOOL CTransferWnd::OnCommand(WPARAM wParam,LPARAM lParam ){
 			OnBnClickedQueueRefreshButton();
 			break;
 		}
+									   
+		case MP_HM_OPENINC:
+			ShellExecute(NULL, _T("open"), thePrefs.GetCategory(m_isetcatmenu)->incomingpath,NULL, NULL, SW_SHOW);
+			break;
+
 	}
 	return TRUE;
 }
@@ -874,6 +917,10 @@ void CTransferWnd::UpdateCatTabTitles(bool force) {
 		EditCatTabLabel(i,(i==0)? GetCatTitle( thePrefs.GetAllcatType() ):thePrefs.GetCategory(i)->title);
 }
 
+void CTransferWnd::EditCatTabLabel(int i) {
+	EditCatTabLabel(i,(i==0)? GetCatTitle( thePrefs.GetAllcatType() ):thePrefs.GetCategory(i)->title);
+}
+
 void CTransferWnd::EditCatTabLabel(int index,CString newlabel) {
 
 	TCITEM tabitem;
@@ -882,6 +929,18 @@ void CTransferWnd::EditCatTabLabel(int index,CString newlabel) {
 	tabitem.mask = TCIF_TEXT;
 
 	newlabel.Replace(_T("&"),_T("&&"));
+
+	// add filter label
+	if (index && thePrefs.GetCatFilter(index)>0) {
+		newlabel.Append(_T(" (")) ;
+		if (thePrefs.GetCatFilterNeg(index))
+			newlabel.Append(_T("!"));			
+			newlabel.Append( GetCatTitle(thePrefs.GetCatFilter(index)) + _T(")") );
+	} else
+		if (!index && thePrefs.GetCatFilterNeg(index)  )
+			newlabel=_T("!") + newlabel;
+
+
 	int count,dwl;
 
 // ZZ:DownloadManager -->
@@ -938,6 +997,8 @@ int CTransferWnd::AddCategorie(CString newtitle,CString newincoming,CString newc
 	_stprintf(newcat->comment,newcomment);
 	newcat->autocat=newautocat;
     newcat->downloadInAlphabeticalOrder = FALSE; // ZZ:DownloadManager
+	newcat->filter=0;
+	newcat->filterNeg=false;
 
 	int index=thePrefs.AddCat(newcat);
 	if (addTab) m_dlTab.InsertItem(index,newtitle);
@@ -1061,8 +1122,8 @@ CString CTransferWnd::GetTabStatistic(uint8 tab) {
 		GetResString(IDS_DL_SPEED) ,speed,GetResString(IDS_KBYTESEC),
 
 
-		GetResString(IDS_DL_SIZE),CastItoXBytes(trsize),CastItoXBytes(size),
-		GetResString(IDS_ONDISK),CastItoXBytes(disksize)		);
+		GetResString(IDS_DL_SIZE),CastItoXBytes(trsize, false, false),CastItoXBytes(size, false, false),
+		GetResString(IDS_ONDISK),CastItoXBytes(disksize, false, false));
 	return title;
 }
 
@@ -1145,7 +1206,7 @@ CString CTransferWnd::GetCatTitle(int catid)
 		case 5 : return GetResString(IDS_DOWNLOADING);
 		case 6 : return GetResString(IDS_ERRORLIKE);
 		case 7 : return GetResString(IDS_PAUSED);
-		case 8 : return GetResString(IDS_STOPPED);
+		case 8 : return GetResString(IDS_SEENCOMPL);
 		case 10 : return GetResString(IDS_VIDEO);
 		case 11 : return GetResString(IDS_AUDIO);
 		case 12 : return GetResString(IDS_SEARCH_ARC);

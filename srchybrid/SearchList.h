@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -15,7 +15,6 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
-#include "Loggable.h"
 #include "KnownFile.h"
 
 class CFileDataIO;
@@ -25,7 +24,10 @@ class CSearchFile : public CAbstractFile
 	friend class CPartFile;
 	friend class CSearchListCtrl;
 public:
-	CSearchFile(CFileDataIO* in_data, uint32 nSearchID, uint32 nServerIP=0, uint16 nServerPort=0, LPCTSTR pszDirectory = NULL, bool nKademlia = false);
+	CSearchFile(CFileDataIO* in_data, bool bOptUTF8, uint32 nSearchID,
+				uint32 nServerIP=0, uint16 nServerPort=0,
+				LPCTSTR pszDirectory = NULL, 
+				bool nKademlia = false);
 	CSearchFile(const CSearchFile* copyfrom);
 	CSearchFile(uint32 nSearchID, const uchar* pucFileHash, uint32 uFileSize, LPCTSTR pszFileName, int iFileType, int iAvailability);
 	~CSearchFile();
@@ -35,6 +37,9 @@ public:
 	uint32	GetSourceCount() const;
 	uint32	AddCompleteSources(uint32 count);
 	uint32	GetCompleteSourceCount() const;
+	int		IsComplete() const;
+	int		IsComplete(UINT uSources, UINT uCompleteSources) const;
+	time_t	GetLastSeenComplete() const;
 	uint32	GetSearchID() const { return m_nSearchID; }
 	LPCTSTR GetDirectory() const { return m_pszDirectory; }
 	const CArray<CTag*,CTag*>& GetTags() const { return taglist; }
@@ -142,7 +147,7 @@ __inline bool __stdcall operator==(const CSearchFile::SClient& c1, const CSearch
 }
 
 
-class CSearchList: public CLoggable
+class CSearchList
 {
 friend class CSearchListCtrl;
 public:
@@ -151,8 +156,8 @@ public:
 	void	Clear();
 	void	NewSearch(CSearchListCtrl* in_wnd, CStringA strResultFileType, uint32 nSearchID, bool MobilMuleSearch = false);
 	uint16	ProcessSearchanswer(char* packet, uint32 size, CUpDownClient* Sender, bool* pbMoreResultsAvailable, LPCTSTR pszDirectory = NULL);
-	uint16	ProcessSearchanswer(char* packet, uint32 size, uint32 nServerIP, uint16 nServerPort, bool* pbMoreResultsAvailable);
-	uint16	ProcessUDPSearchanswer(CFileDataIO& packet, uint32 nServerIP, uint16 nServerPort);
+	uint16	ProcessSearchanswer(char* packet, uint32 size, bool bOptUTF8, uint32 nServerIP, uint16 nServerPort, bool* pbMoreResultsAvailable);
+	uint16	ProcessUDPSearchanswer(CFileDataIO& packet, bool bOptUTF8, uint32 nServerIP, uint16 nServerPort);
 	uint16	GetResultCount() const;
 	uint16	GetResultCount(uint32 nSearchID) const;
 	void	AddResultCount(uint32 nSearchID, const uchar* hash, UINT nCount);
@@ -181,7 +186,7 @@ private:
 	CMap<uint32, uint32, uint16, uint16> m_foundSourcesCount;
 
 	CSearchListCtrl*	outputwnd;
-	CStringA m_strResultFileType;
+	CString m_strResultFileType;
 	uint32	m_nCurrentSearch;
 	bool	m_MobilMuleSearch;
 };

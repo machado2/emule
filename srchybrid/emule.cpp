@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -31,6 +31,7 @@
 #include "Scheduler.h"
 #include "SearchList.h"
 #include "kademlia/kademlia/Kademlia.h"
+#include "kademlia/kademlia/Prefs.h"
 #include "kademlia/kademlia/Error.h"
 #include "kademlia/utils/UInt128.h"
 #include "PerfLog.h"
@@ -65,10 +66,11 @@
 #include "SearchDlg.h"
 #include "enbitmap.h"
 #include "FirewallOpener.h"
+#include "StringConversion.h"
+#include "Log.h"
 
-
-CLog theLog;
-CLog theVerboseLog;
+CLogFile theLog;
+CLogFile theVerboseLog;
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -76,6 +78,71 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+
+///////////////////////////////////////////////////////////////////////////////
+// MSLU (Microsoft Layer for Unicode) support - UnicoWS
+// 
+HMODULE g_hUnicoWS = NULL;
+bool g_bUnicoWS = false;
+#ifdef _UNICODE
+void ShowUnicowsError()
+{
+	// NOTE: Do *NOT* use any MFC nor W-functions here!
+	// NOTE: Do *NOT* use eMule's localization functions here!
+	MessageBoxA(NULL,
+				"This eMule version requires the \"Microsoft(R) Layer for Unicode(TM) on Windows(R) 95/98/ME Systems\".\r\n"
+				"\r\n"
+				"Download the MSLU package from Microsoft(R) here:\r\n"
+				"        http://www.microsoft.com/downloads/details.aspx?FamilyId=73BA7BD7-ED06-4F0D-80A4-2A7EEAEE17E2\r\n"
+				"or\r\n"
+				"        visit the eMule Project Download Page http://www.emule-project.net/home/perl/general.cgi?rm=download\r\n"
+				"or\r\n"
+				"        search the Microsoft(R) Download Center http://www.microsoft.com/downloads/ for \"MSLU\" or \"unicows\"."
+				"\r\n"
+				"\r\n"
+				"\r\n"
+				"After downloading the MSLU package, run the \"unicows.exe\" program and specify your eMule installation folder "
+				"where to place the extracted files from the package.\r\n"
+				"\r\n"
+				"Ensure that the file \"unicows.dll\" was placed in your eMule installation folder and start eMule again.",
+				"eMule",
+				MB_ICONSTOP | MB_SYSTEMMODAL | MB_SETFOREGROUND);
+}
+
+extern "C" HMODULE __stdcall ExplicitPreLoadUnicows()
+{
+#ifdef _AFXDLL
+	// UnicoWS support *requires* statically linked MFC and C-RTL.
+
+	// NOTE: Do *NOT* use any MFC nor W-functions here!
+	// NOTE: Do *NOT* use eMule's localization functions here!
+	MessageBoxA(NULL, 
+				"This eMule version (Unicode, MSLU, shared MFC) does not run with this version of Windows.", 
+				"eMule", 
+				MB_ICONSTOP | MB_SYSTEMMODAL | MB_SETFOREGROUND);
+	exit(1);
+#endif
+
+	// Pre-Load UnicoWS -- needed for proper initialization of MFC/C-RTL
+	HMODULE g_hUnicoWS = LoadLibraryA("unicows.dll");
+	if (g_hUnicoWS == NULL)
+	{
+		ShowUnicowsError();
+		exit(1);
+	}
+
+	g_bUnicoWS = true;
+	return g_hUnicoWS;
+}
+
+// NOTE: Do *NOT* change the name of this function. It *HAS* to be named "_PfnLoadUnicows" !
+extern "C" HMODULE (__stdcall *_PfnLoadUnicows)(void) = &ExplicitPreLoadUnicows;
+#endif //_UNICODE
+
+
+///////////////////////////////////////////////////////////////////////////////
+// C-RTL Memory Debug Support
+// 
 #ifdef _DEBUG
 static CMemoryState oldMemState, newMemState, diffMemState;
 
@@ -87,11 +154,12 @@ int eMuleAllocHook(int mode, void* pUserData, size_t nSize, int nBlockUse, long 
 // don't use a CString for that memory - it will not be available on application termination!
 #define APP_CRT_DEBUG_LOG_FILE _T("eMule CRT Debug Log.txt")
 static TCHAR _szCrtDebugReportFilePath[MAX_PATH] = APP_CRT_DEBUG_LOG_FILE;
-#endif
+#endif //_DEBUG
+
 
 struct SLogItem
 {
-    bool addtostatusbar;
+	UINT uFlags;
     CString line;
 };
 
@@ -100,7 +168,7 @@ void CALLBACK myErrHandler(Kademlia::CKademliaError *error)
 	CString msg;
 	msg.Format(_T("\r\nError 0x%08X : %hs\r\n"), error->m_ErrorCode, error->m_ErrorDescription);
 	if(theApp.emuledlg && theApp.emuledlg->IsRunning())
-		theApp.QueueDebugLogLine(false, msg);
+		theApp.QueueDebugLogLine(false, _T("%s"), msg);
 }
 
 void CALLBACK myDebugAndLogHandler(LPCSTR lpMsg)
@@ -129,6 +197,7 @@ CemuleApp::CemuleApp(LPCTSTR lpszAppName)
 {
 	srand(time(NULL));
 	m_dwPublicIP = 0;
+	m_bAutoStart = false;
 
 	m_ullComCtrlVer = MAKEDLLVERULL(4,0,0,0);
 	m_hSystemImageList = NULL;
@@ -235,6 +304,11 @@ BOOL CemuleApp::InitInstance()
 	pendinglink = 0;
 	if (ProcessCommandline())
 		return false;
+
+	extern bool CheckThreadLocale();
+	if (!CheckThreadLocale())
+		return false;
+
 	// InitCommonControls() ist für Windows XP erforderlich, wenn ein Anwendungsmanifest
 	// die Verwendung von ComCtl32.dll Version 6 oder höher zum Aktivieren
 	// von visuellen Stilen angibt. Ansonsten treten beim Erstellen von Fenstern Fehler auf.
@@ -270,8 +344,17 @@ BOOL CemuleApp::InitInstance()
 	AfxEnableControlContainer();
 	if (!AfxInitRichEdit2()){
 		if (!AfxInitRichEdit())
-			AfxMessageBox(_T("No Rich Edit control library found!")); // should never happen..
+			AfxMessageBox(_T("Fatal Error: No Rich Edit control library found!")); // should never happen..
 	}
+
+	if (!Kademlia::CKademlia::initUnicode(AfxGetInstanceHandle())){
+		AfxMessageBox(_T("Fatal Error: Failed to load Unicode character tables for Kademlia!")); // should never happen..
+		return FALSE; // DO *NOT* START !!!
+	}
+
+	extern bool SelfTest();
+	if (!SelfTest())
+		return FALSE; // DO *NOT* START !!!
 
 	// create & initalize all the important stuff 
 	thePrefs.Init();
@@ -292,8 +375,8 @@ BOOL CemuleApp::InitInstance()
 #ifdef _DEBUG
 	_sntprintf(_szCrtDebugReportFilePath, ARRSIZE(_szCrtDebugReportFilePath), _T("%s\\%s"), thePrefs.GetAppDir(), APP_CRT_DEBUG_LOG_FILE);
 #endif
-	VERIFY( theLog.SetFilePath(thePrefs.GetAppDir() + _T("eMule.log")) );
-	VERIFY( theVerboseLog.SetFilePath(thePrefs.GetAppDir() + _T("eMule_Verbose.log")) );
+	VERIFY( theLog.SetFilePath(thePrefs.GetLogDir() + _T("eMule.log")) );
+	VERIFY( theVerboseLog.SetFilePath(thePrefs.GetLogDir() + _T("eMule_Verbose.log")) );
 	theLog.SetMaxFileSize(thePrefs.GetMaxLogFileSize());
 	theVerboseLog.SetMaxFileSize(thePrefs.GetMaxLogFileSize());
 	if (thePrefs.GetLog2Disk())
@@ -308,6 +391,11 @@ BOOL CemuleApp::InitInstance()
 	// Barry - Auto-take ed2k links
 	if (thePrefs.AutoTakeED2KLinks())
 		Ask4RegFix(false, true);
+
+	if( thePrefs.GetAutoStart() )
+		::AddAutoStart();
+	else
+		::RemAutoStart();
 
 	m_pFirewallOpener = new CFirewallOpener();
 	m_pFirewallOpener->Init(true); // we need to init it now (even if we may not use it yet) because of CoInitializeSecurity - which kinda ruins the sense of the class interface but ooohh well :P
@@ -356,14 +444,6 @@ BOOL CemuleApp::InitInstance()
 	scheduler = new CScheduler();
 	m_pPeerCache = new CPeerCacheFinder();
 	
-	// reset statistic values
-	theApp.stat_sessionReceivedBytes=0;
-	theApp.stat_sessionSentBytes=0;
-    theApp.stat_sessionSentBytesToFriend = 0;
-	theApp.stat_reconnects=0;
-	theApp.stat_transferStarttime=0;
-	theApp.stat_serverConnectTime=0;
-	theApp.stat_filteredclients=0;
 	thePerfLog.Startup();
 	dlg.DoModal();
 
@@ -443,6 +523,9 @@ bool CemuleApp::ProcessCommandline()
 #endif
 			if (_tcscmp(pszParam, _T("ignoreinstances")) == 0)
 				bIgnoreRunningInstances = true;
+
+			if (_tcscmp(pszParam, _T("AutoStart")) == 0)
+				m_bAutoStart = true;
 		}
 	}
 
@@ -505,111 +588,217 @@ BOOL CALLBACK CemuleApp::SearchEmuleWindow(HWND hWnd, LPARAM lParam){
 
 void CemuleApp::UpdateReceivedBytes(uint32 bytesToAdd) {
 	SetTimeOnTransfer();
-	stat_sessionReceivedBytes+=bytesToAdd;
+	theStats.sessionReceivedBytes+=bytesToAdd;
 }
 
 void CemuleApp::UpdateSentBytes(uint32 bytesToAdd, bool sentToFriend) {
 	SetTimeOnTransfer();
-	stat_sessionSentBytes+=bytesToAdd;
+	theStats.sessionSentBytes+=bytesToAdd;
 
     if(sentToFriend == true) {
-	    stat_sessionSentBytesToFriend += bytesToAdd;
+	    theStats.sessionSentBytesToFriend += bytesToAdd;
     }
 }
 
 void CemuleApp::SetTimeOnTransfer() {
-	if (stat_transferStarttime>0) return;
+	if (theStats.transferStarttime>0) return;
 	
-	stat_transferStarttime=GetTickCount();
+	theStats.transferStarttime=GetTickCount();
 }
 
 CString CemuleApp::CreateED2kSourceLink(const CAbstractFile* f)
 {
 	if (!IsConnected() || IsFirewalled()){
-		AddLogLine(true,GetResString(IDS_SOURCELINKFAILED));
+		LogWarning(LOG_STATUSBAR, GetResString(IDS_SOURCELINKFAILED));
 		return _T("");
 	}
 	uint32 dwID = GetID();
 
 	CString strLink;
 	strLink.Format(_T("ed2k://|file|%s|%u|%s|/|sources,%i.%i.%i.%i:%i|/"),
-		StripInvalidFilenameChars(f->GetFileName(), false),	// spaces to dots
+		EncodeUrlUtf8(StripInvalidFilenameChars(f->GetFileName(), false)),
 		f->GetFileSize(),
 		EncodeBase16(f->GetFileHash(),16),
 		(uint8)dwID,(uint8)(dwID>>8),(uint8)(dwID>>16),(uint8)(dwID>>24), thePrefs.GetPort() );
 	return strLink;
 }
-
+/*
 CString CemuleApp::CreateED2kHostnameSourceLink(const CAbstractFile* f)
 {
 	CString strLink;
 	strLink.Format(_T("ed2k://|file|%s|%u|%s|/|sources,%s:%i|/"),
-		StripInvalidFilenameChars(f->GetFileName(), false),	// spaces to dots
+		EncodeUrlUtf8(StripInvalidFilenameChars(f->GetFileName(), false)),
 		f->GetFileSize(),
 		EncodeBase16(f->GetFileHash(),16),
 		thePrefs.GetYourHostname(), thePrefs.GetPort() );
 	return strLink;
 }
+*/
+
+CString CemuleApp::CreateKadSourceLink(const CAbstractFile* f)
+{
+	CString strLink;
+	ASSERT(Kademlia::CKademlia::getPrefs() != NULL);
+	if( theApp.clientlist->GetBuddy() && theApp.IsFirewalled() )
+	{
+		CString KadID;
+		Kademlia::CKademlia::getPrefs()->getKadID().xor(Kademlia::CUInt128(true)).toHexString(&KadID);
+		strLink.Format(_T("ed2k://|file|%s|%u|%s|/|kadsources,%s:%s|/"),
+			EncodeUrlUtf8(StripInvalidFilenameChars(f->GetFileName(), false)),
+			f->GetFileSize(),
+			EncodeBase16(f->GetFileHash(),16),
+			md4str(thePrefs.GetUserHash()), KadID);
+	}
+	return strLink;
+}
 
 //TODO: Move to emule-window
-bool CemuleApp::CopyTextToClipboard( CString strText )
+bool CemuleApp::CopyTextToClipboard(CString strText)
 {
 	if (strText.IsEmpty())
 		return false;
 
-	//allocate global memory & lock it
-	HGLOBAL hGlobal = GlobalAlloc(GHND | GMEM_SHARE, (strText.GetLength() + 1)*sizeof(TCHAR));
-	if(hGlobal == NULL)
-		return false;
-
-	PTSTR pGlobal = static_cast<PTSTR>(GlobalLock(hGlobal));
-	if( pGlobal == NULL ){
-		GlobalFree(hGlobal);
-		return false;
+	HGLOBAL hGlobalT = GlobalAlloc(GHND | GMEM_SHARE, (strText.GetLength() + 1) * sizeof(TCHAR));
+	if (hGlobalT != NULL)
+	{
+		LPTSTR pGlobalT = static_cast<LPTSTR>(GlobalLock(hGlobalT));
+		if (pGlobalT != NULL)
+		{
+			_tcscpy(pGlobalT, strText);
+			GlobalUnlock(hGlobalT);
+		}
+		else
+		{
+			GlobalFree(hGlobalT);
+			hGlobalT = NULL;
+		}
 	}
 
-	//copy the text
-	_tcscpy(pGlobal, (LPCTSTR)strText);
-	GlobalUnlock(hGlobal);
-
-	//Open the Clipboard and insert the handle into the global memory
-	bool bResult = false;
-	if( OpenClipboard(NULL) )
-	{
-		if( EmptyClipboard() )
 #ifdef _UNICODE
-			bResult = (SetClipboardData(CF_UNICODETEXT,hGlobal) != NULL);
-#else
-			bResult = (SetClipboardData(CF_TEXT,hGlobal) != NULL);
+	CStringA strTextA(strText);
+	HGLOBAL hGlobalA = GlobalAlloc(GHND | GMEM_SHARE, (strTextA.GetLength() + 1) * sizeof(CHAR));
+	if (hGlobalA != NULL)
+	{
+		LPSTR pGlobalA = static_cast<LPSTR>(GlobalLock(hGlobalA));
+		if (pGlobalA != NULL)
+		{
+			strcpy(pGlobalA, strTextA);
+			GlobalUnlock(hGlobalA);
+		}
+		else
+		{
+			GlobalFree(hGlobalA);
+			hGlobalA = NULL;
+		}
+	}
 #endif
+
+	if (hGlobalT == NULL
+#ifdef _UNICODE
+		&& hGlobalA == NULL
+#endif
+		)
+		return false;
+
+	int iCopied = 0;
+	if (OpenClipboard(NULL))
+	{
+		if (EmptyClipboard())
+		{
+#ifdef _UNICODE
+			if (hGlobalT){
+				if (SetClipboardData(CF_UNICODETEXT, hGlobalT) != NULL){
+					iCopied++;
+				}
+				else{
+					GlobalFree(hGlobalT);
+					hGlobalT = NULL;
+				}
+			}
+			if (hGlobalA){
+				if (SetClipboardData(CF_TEXT, hGlobalA) != NULL){
+					iCopied++;
+				}
+				else{
+					GlobalFree(hGlobalA);
+					hGlobalA = NULL;
+				}
+			}
+#else
+			if (SetClipboardData(CF_TEXT, hGlobalT) != NULL){
+				iCopied++;
+			}
+			else{
+				GlobalFree(hGlobalT);
+				hGlobalT = NULL;
+			}
+#endif
+		}
 		CloseClipboard();
 	}
-	if (bResult)
-		IgnoreClipboardLinks(strText); // this is so eMule won't think the clipboard has ed2k links for adding
+
+	if (iCopied == 0)
+	{
+		if (hGlobalT){
+			GlobalFree(hGlobalT);
+			hGlobalT = NULL;
+		}
+#ifdef _UNICODE
+		if (hGlobalA){
+			GlobalFree(hGlobalA);
+			hGlobalA = NULL;
+		}
+#endif
+	}
 	else
-		GlobalFree(hGlobal);
-	return bResult;
+		IgnoreClipboardLinks(strText); // this is so eMule won't think the clipboard has ed2k links for adding
+
+	return (iCopied != 0);
 }
 
 //TODO: Move to emule-window
-CString CemuleApp::CopyTextFromClipboard() 
+CString CemuleApp::CopyTextFromClipboard()
 {
-	HGLOBAL	hglb; 
-	LPSTR  lptstr; 
-	CString	retstring;
-
-	if (!IsClipboardFormatAvailable(CF_TEXT)) 
-		return _T(""); 
-	if (!OpenClipboard(NULL)) 
+#ifdef _UNICODE
+	if (IsClipboardFormatAvailable(CF_UNICODETEXT))
+	{
+		if (OpenClipboard(NULL))
+		{
+			bool bResult = false;
+			CString strClipboard;
+			HGLOBAL hMem = GetClipboardData(CF_UNICODETEXT);
+			if (hMem)
+			{
+				LPCWSTR pwsz = (LPCWSTR)GlobalLock(hMem);
+				if (pwsz)
+				{
+					strClipboard = pwsz;
+					GlobalUnlock(hMem);
+					bResult = true;
+				}
+			}
+			CloseClipboard();
+			if (bResult)
+				return strClipboard;
+		}
+	}
+#endif
+	if (!IsClipboardFormatAvailable(CF_TEXT))
+		return _T("");
+	if (!OpenClipboard(NULL))
 		return _T("");
 
-	hglb = GetClipboardData(CF_TEXT); 
-	if (hglb != NULL) 
-	{ 
-		lptstr = (LPSTR)GlobalLock(hglb); 
+	CString	retstring;
+	HGLOBAL	hglb = GetClipboardData(CF_TEXT);
+	if (hglb != NULL)
+	{
+		LPCSTR lptstr = (LPCSTR)GlobalLock(hglb);
 		if (lptstr != NULL)
+		{
 			retstring = lptstr;
-	} 
+			GlobalUnlock(hglb);
+		}
+	}
 	CloseClipboard();
 
 	return retstring;
@@ -640,13 +829,12 @@ void CemuleApp::OnlineSig() // Added By Bouc7
 		fexp.GetErrorMessage(szError, ARRSIZE(szError));
 		strError += _T(" - ");
 		strError += szError;
-		AddLogLine(true, _T("%s"), strError);
+		LogError(LOG_STATUSBAR, _T("%s"), strError);
 		return;
     }
 
 	try
 	{
-		USES_CONVERSION;
 		char buffer[20];
 		CStringA strBuff;
 		if (IsConnected()){
@@ -702,16 +890,17 @@ void CemuleApp::OnlineSig() // Added By Bouc7
 		ex->GetErrorMessage(szError, ARRSIZE(szError));
 		strError += _T(" - ");
 		strError += szError;
-		AddLogLine(true, _T("%s"), strError);
+		LogError(LOG_STATUSBAR, _T("%s"), strError);
 		ex->Delete();
 	}
 } //End Added By Bouc7
 
-CString CemuleApp::GetLangHelpFilePath()
+bool CemuleApp::GetLangHelpFilePath(CString& strResult)
 {
 	// Change extension for help file
 	CString strHelpFile = m_pszHelpFilePath;
 	CFileFind ff;
+	bool bFound;
 	if (thePrefs.GetLanguageID() != MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT))
 	{
 		int pos = strHelpFile.ReverseFind(_T('.'));
@@ -721,12 +910,24 @@ CString CemuleApp::GetLangHelpFilePath()
 			strHelpFile = temp;
 		
 		// if not exists, use original help (english)
-		if (!ff.FindFile(strHelpFile, 0))
+		if (!ff.FindFile(strHelpFile, 0)){
 			strHelpFile = m_pszHelpFilePath;
+			bFound = false;
+		}
+		else
+			bFound = true;
+		strHelpFile.Replace(_T(".HLP"), _T(".chm"));
+	}
+	else{
+		strHelpFile.Replace(_T(".HLP"), _T(".chm"));
+		if (!ff.FindFile(strHelpFile, 0))
+			bFound = false;
+		else
+			bFound = true;
 	}
 	ff.Close();
-	strHelpFile.Replace(_T(".HLP"), _T(".chm"));
-	return strHelpFile;
+	strResult = strHelpFile;
+	return bFound;
 }
 
 void CemuleApp::SetHelpFilePath(LPCTSTR pszHelpFilePath)
@@ -754,9 +955,37 @@ void CemuleApp::OnHelp()
 
 void CemuleApp::ShowHelp(UINT uTopic, UINT uCmd)
 {
-	CString strHelpFilePath = GetLangHelpFilePath();
+	CString strHelpFilePath;
+	bool bResult = GetLangHelpFilePath(strHelpFilePath);
+	if (!bResult){
+		if (ShowWebHelp())
+			return;
+	}
 	SetHelpFilePath(strHelpFilePath);
 	WinHelpInternal(uTopic, uCmd);
+}
+
+bool CemuleApp::ShowWebHelp(){
+	uint16 nWebLanguage;
+	switch(thePrefs.GetLanguageID()){
+		// languages for we have a onlinehelp
+		case 1031: nWebLanguage = 2; break;
+        case 1036: nWebLanguage = 13; break;
+        case 1033: nWebLanguage = 1; break;
+		case 1028: nWebLanguage = 16; break;
+        case 1034: nWebLanguage = 17; break;
+        case 1040: nWebLanguage = 18; break;
+        case 1043: nWebLanguage = 29; break;
+        case 1046: nWebLanguage = 30; break;
+		default:
+			return false;
+	}
+	// onlinehelp unfortunatly doesnt supports context based help yet, since the topic IDs
+	// differ for each language, maybe improved in later versions
+	CString strHelpURL;
+	strHelpURL.Format(_T("%s/home/perl/help.cgi?l=%u"), thePrefs.GetHomepageBaseURL(), nWebLanguage); 
+	ShellExecute(NULL, NULL, strHelpURL, NULL, thePrefs.GetAppDir(), SW_SHOWDEFAULT);
+	return true;
 }
 
 int CemuleApp::GetFileTypeSystemImageIdx(LPCTSTR pszFilePath, int iLength /* = -1 */)
@@ -810,8 +1039,11 @@ int CemuleApp::GetFileTypeSystemImageIdx(LPCTSTR pszFilePath, int iLength /* = -
 
 bool CemuleApp::IsConnected()
 {
-	//Once we can handle lowID users in Kad, we remove the IsFirewalled!
-	return (theApp.serverconnect->IsConnected() || (Kademlia::CKademlia::isConnected() && !Kademlia::CKademlia::isFirewalled()));
+	return (theApp.serverconnect->IsConnected() || Kademlia::CKademlia::isConnected());
+}
+
+bool CemuleApp::IsPortchangeAllowed() {
+	return ( theApp.clientlist->GetClientCount()==0 && !IsConnected() );
 }
 
 uint32 CemuleApp::GetID(){
@@ -820,13 +1052,15 @@ uint32 CemuleApp::GetID(){
 		ID = ntohl(Kademlia::CKademlia::getIPAddress());
 	else if( theApp.serverconnect->IsConnected() )
 		ID = theApp.serverconnect->GetClientID();
-	else 
-		ID = 0; //Once we can handle lowID users in Kad, this may change.
+	else if ( Kademlia::CKademlia::isConnected() && Kademlia::CKademlia::isFirewalled() )
+		ID = 1;
+	else
+		ID = 0;
 	return ID;
 }
 
 uint32 CemuleApp::GetPublicIP() const {
-	if (m_dwPublicIP == 0 && Kademlia::CKademlia::isConnected() && !Kademlia::CKademlia::isFirewalled() )
+	if (m_dwPublicIP == 0 && Kademlia::CKademlia::isConnected() && Kademlia::CKademlia::getIPAddress() )
 		return ntohl(Kademlia::CKademlia::getIPAddress());
 	return m_dwPublicIP;
 }
@@ -837,15 +1071,15 @@ void CemuleApp::SetPublicIP(const uint32 dwIP){
 		ASSERT ( m_pPeerCache );
 		if ( GetPublicIP() == 0)
 			AddDebugLogLine(DLP_VERYLOW, false, _T("My public IP Address is: %s"),ipstr(dwIP));
-		else if (Kademlia::CKademlia::isConnected() && !Kademlia::CKademlia::isFirewalled() && ntohl(Kademlia::CKademlia::getIPAddress()) != dwIP)
-			AddDebugLogLine(DLP_DEFAULT, false,  _T("Public IP Address reported from Kademlia (%s) differs from new found (%s)"),ipstr(ntohl(Kademlia::CKademlia::getIPAddress())),ipstr(dwIP));
+		else if (Kademlia::CKademlia::isConnected() && Kademlia::CKademlia::getPrefs() && Kademlia::CKademlia::getPrefs()->getIPAddress())
+			if(ntohl(Kademlia::CKademlia::getIPAddress()) != dwIP)
+				AddDebugLogLine(DLP_DEFAULT, false,  _T("Public IP Address reported from Kademlia (%s) differs from new found (%s)"),ipstr(ntohl(Kademlia::CKademlia::getIPAddress())),ipstr(dwIP));
 		m_pPeerCache->FoundMyPublicIPAddress(dwIP);	
 	}
 	else
 		AddDebugLogLine(DLP_VERYLOW, false, _T("Deleted public IP"));
 	
 	m_dwPublicIP = dwIP;
-
 }
 
 
@@ -878,6 +1112,7 @@ bool CemuleApp::DoCallback( CUpDownClient *client )
 					if(client->GetServerIP() == theApp.serverconnect->GetCurrentServer()->GetIP() && client->GetServerPort() == theApp.serverconnect->GetCurrentServer()->GetPort())
 					{
 						//Both Connected - Server lowID, Kad Open - Client on same server
+						//We prevent a callback to the server as this breaks the protocol and will get you banned.
 						return false;
 					}
 					else
@@ -1160,7 +1395,7 @@ void CemuleApp::AddEd2kLinksToDownload(CString strlink, uint8 cat)
 		{
 			TCHAR szBuffer[200];
 			_sntprintf(szBuffer, ARRSIZE(szBuffer), GetResString(IDS_ERR_INVALIDLINK), error);
-			AddLogLine(true, GetResString(IDS_ERR_LINKERROR), szBuffer);
+			LogError(LOG_STATUSBAR, GetResString(IDS_ERR_LINKERROR), szBuffer);
 		}
 		resToken = strlink.Tokenize(_T("\t\n\r"), curPos);
 	}
@@ -1215,6 +1450,7 @@ bool CemuleApp::IsEd2kLinkInClipboard(LPCSTR pszLinkType, int iLinkTypeLen)
 					while (*pszText == ' ' || *pszText == '\t' || *pszText == '\r' || *pszText == '\n')
 						pszText++;
 					bFoundLink = (strncmp(pszText, pszLinkType, iLinkTypeLen) == 0);
+					GlobalUnlock(hText);
 				}
 			}
 			CloseClipboard();
@@ -1252,7 +1488,7 @@ void CemuleApp::QueueDebugLogLine(bool addtostatusbar, LPCTSTR line, ...)
 	va_end(argptr);
 
 	SLogItem* newItem = new SLogItem;
-	newItem->addtostatusbar = addtostatusbar;
+	newItem->uFlags = LOG_DEBUG | LOG_STATUSBAR;
 	newItem->line = bufferline;
 	m_QueueDebugLog.AddTail(newItem);
 
@@ -1261,6 +1497,27 @@ void CemuleApp::QueueDebugLogLine(bool addtostatusbar, LPCTSTR line, ...)
 
 void CemuleApp::QueueLogLine(bool addtostatusbar, LPCTSTR line,...)
 {
+	m_queueLock.Lock();
+
+	TCHAR bufferline[1000];
+
+	va_list argptr;
+	va_start(argptr, line);
+	_vsntprintf(bufferline, ARRSIZE(bufferline), line, argptr);
+	va_end(argptr);
+
+	SLogItem* newItem = new SLogItem;
+	newItem->uFlags = LOG_STATUSBAR;
+	newItem->line = bufferline;
+	m_QueueLog.AddTail(newItem);
+
+	m_queueLock.Unlock();
+}
+
+void CemuleApp::QueueDebugLogLineEx(UINT uFlags, LPCTSTR line, ...)
+{
+	if (!thePrefs.GetVerbose())
+		return;
 
 	m_queueLock.Lock();
 
@@ -1272,7 +1529,26 @@ void CemuleApp::QueueLogLine(bool addtostatusbar, LPCTSTR line,...)
 	va_end(argptr);
 
 	SLogItem* newItem = new SLogItem;
-	newItem->addtostatusbar = addtostatusbar;
+	newItem->uFlags = uFlags | LOG_DEBUG;
+	newItem->line = bufferline;
+	m_QueueDebugLog.AddTail(newItem);
+
+	m_queueLock.Unlock();
+}
+
+void CemuleApp::QueueLogLineEx(UINT uFlags, LPCTSTR line, ...)
+{
+	m_queueLock.Lock();
+
+	TCHAR bufferline[1000];
+
+	va_list argptr;
+	va_start(argptr, line);
+	_vsntprintf(bufferline, ARRSIZE(bufferline), line, argptr);
+	va_end(argptr);
+
+	SLogItem* newItem = new SLogItem;
+	newItem->uFlags = uFlags;
 	newItem->line = bufferline;
 	m_QueueLog.AddTail(newItem);
 
@@ -1282,10 +1558,11 @@ void CemuleApp::QueueLogLine(bool addtostatusbar, LPCTSTR line,...)
 void CemuleApp::HandleDebugLogQueue()
 {
 	m_queueLock.Lock();
-	while(!m_QueueDebugLog.IsEmpty()) {
+	while (!m_QueueDebugLog.IsEmpty())
+	{
 		const SLogItem* newItem = m_QueueDebugLog.RemoveHead();
 		if (thePrefs.GetVerbose())
-			AddDebugLogLine(newItem->addtostatusbar, newItem->line);
+			Log(newItem->uFlags, _T("%s"), newItem->line);
 		delete newItem;
 	}
 	m_queueLock.Unlock();
@@ -1294,9 +1571,10 @@ void CemuleApp::HandleDebugLogQueue()
 void CemuleApp::HandleLogQueue()
 {
 	m_queueLock.Lock();
-	while(!m_QueueLog.IsEmpty()) {
+	while (!m_QueueLog.IsEmpty())
+	{
 		const SLogItem* newItem = m_QueueLog.RemoveHead();
-		AddLogLine(newItem->addtostatusbar, newItem->line);
+		Log(newItem->uFlags, _T("%s"), newItem->line);
 		delete newItem;
 	}
 	m_queueLock.Unlock();
@@ -1326,3 +1604,54 @@ void CemuleApp::ClearLogQueue(bool bDebugPendingMsgs)
 	m_queueLock.Unlock();
 }
 // Elandal:ThreadSafeLogging <--
+
+void CemuleApp::CreateAllFonts()
+{
+	///////////////////////////////////////////////////////////////////////////
+	// Symbol font
+	//
+	VERIFY( m_fontSymbol.CreatePointFont(10 * 10, _T("Marlett")) );
+
+
+	///////////////////////////////////////////////////////////////////////////
+	// Log-, Message- and IRC-Window fonts
+	//
+	LPLOGFONT plfHyperText = thePrefs.GetHyperTextLogFont();
+	if (plfHyperText==NULL || plfHyperText->lfFaceName[0]==_T('\0') || !m_fontHyperText.CreateFontIndirect(plfHyperText))
+		m_fontHyperText.CreatePointFont(10 * 10, _T("MS Shell Dlg"));
+
+	LPLOGFONT plfLog = thePrefs.GetLogFont();
+	if (plfLog!=NULL && plfLog->lfFaceName[0]!=_T('\0'))
+		m_fontLog.CreateFontIndirect(plfLog);
+
+	// Why can't this font set via the font dialog??
+//	HFONT hFontMono = CreateFont(10, 0, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T("Lucida Console"));
+//	m_fontLog.Attach(hFontMono);
+
+
+	///////////////////////////////////////////////////////////////////////////
+	// Default GUI Font (Bold)
+	//
+	CFont* pFont = CFont::FromHandle((HFONT)GetStockObject(DEFAULT_GUI_FONT));
+	if (pFont)
+	{
+		LOGFONT lf;
+		pFont->GetLogFont(&lf);
+		lf.lfWeight = FW_BOLD;
+		VERIFY( m_fontDefaultBold.CreateFontIndirect(&lf) );
+	}
+}
+
+void CemuleApp::CreateBackwardDiagonalBrush()
+{
+	static const WORD awBackwardDiagonalBrushPattern[8] = { 0x0f, 0x1e, 0x3c, 0x78, 0xf0, 0xe1, 0xc3, 0x87 };
+	CBitmap bm;
+	if (bm.CreateBitmap(8, 8, 1, 1, awBackwardDiagonalBrushPattern))
+	{
+		LOGBRUSH logBrush = {0};
+		logBrush.lbStyle = BS_PATTERN;
+		logBrush.lbHatch = (int)bm.GetSafeHandle();
+		logBrush.lbColor = RGB(0, 0, 0);
+		VERIFY( m_brushBackwardDiagonal.CreateBrushIndirect(&logBrush) );
+	}
+}

@@ -3,6 +3,9 @@
 #include "IrcNickListCtrl.h"
 #include "IrcChannelListCtrl.h"
 #include "IrcChannelTabCtrl.h"
+//MORPH START - Added by SiRoB, Splitting Bar [O²]
+#include "SplitterControl.h"
+//MORPH END   - Added by SiRoB, Splitting Bar [O²]
 
 class CIrcMain;
 
@@ -65,6 +68,12 @@ protected:
 	afx_msg void OnBnClickedBnIrcconnect();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	afx_msg void OnBnClickedChatsend();
+	//MORPH START - Added by SiRoB, Splitting Bar [O²]
+	CSplitterControl m_wndSplitterIRC; //bzubzusplitchat
+	void DoResize(int delta);
+	virtual LRESULT DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+	//MORPH END   - Added by SiRoB, Splitting Bar [O²]
+
 private:
 	void OnChatTextChange();
 	void AutoComplete();

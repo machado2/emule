@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -15,12 +15,11 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
-#include "Loggable.h"
 
 class CUpDownClient;
 typedef CTypedPtrList<CPtrList, CUpDownClient*> CUpDownClientPtrList;
 
-class CUploadQueue: public CLoggable
+class CUploadQueue
 {
 public:
 	CUploadQueue();
@@ -32,10 +31,15 @@ public:
 	bool	RemoveFromWaitingQueue(CUpDownClient* client,bool updatewindow = true);
 	bool	IsOnUploadQueue(CUpDownClient* client)	const {return (waitinglist.Find(client) != 0);}
 	bool	IsDownloading(CUpDownClient* client)	const {return (uploadinglist.Find(client) != 0);}
-	uint32	GetDatarate()							{return datarate;}
+
+    void    UpdateDatarates();
+	uint32	GetDatarate();
+    uint32  GetToNetworkDatarate();
+
 	bool	CheckForTimeOver(CUpDownClient* client);
 	int		GetWaitingUserCount()					{return waitinglist.GetCount();}
 	int		GetUploadQueueLength()					{return uploadinglist.GetCount();}
+	uint32	GetActiveUploadsCount()					{return m_MaxActiveClientsShortTime;}
 	
 	POSITION GetFirstFromUploadList()				{return uploadinglist.GetHeadPosition();}
 	CUpDownClient* GetNextFromUploadList(POSITION &curpos)	{return uploadinglist.GetNext(curpos);}
@@ -62,19 +66,29 @@ public:
 	uint32	GetAverageUpTime();
 //	void	FindSourcesForFileById(CUpDownClientPtrList* srclist, const uchar* filehash);
 
+    CUpDownClient* FindBestClientInQueue(bool allowLowIdAddNextConnectToBeSet = false);
+    void ReSortUploadSlots(bool force = false);
+
 protected:
 	void	RemoveFromWaitingQueue(POSITION pos, bool updatewindow);
 //	POSITION	GetWaitingClient(CUpDownClient* client);
 //	POSITION	GetWaitingClientByID(CUpDownClient* client);
 //	POSITION	GetDownloadingClient(CUpDownClient* client);
 	bool		AcceptNewClient();
-	void		AddUpNextClient(CUpDownClient* directadd = 0);
+	bool		AcceptNewClient(uint32 curUploadSlots);
+	bool		ForceNewClient(bool allowEmptyWaitingQueue = false);
+
+	bool		AddUpNextClient(CUpDownClient* directadd = 0);
 	
 	static VOID CALLBACK UploadTimer(HWND hWnd, UINT nMsg, UINT nId, DWORD dwTime);
 
 private:
 	void	UpdateMaxClientScore();
 	uint32	GetMaxClientScore()						{return m_imaxscore;}
+    void    UpdateActiveClientsInfo(DWORD curTick);
+
+    void InsertInUploadingList(CUpDownClient* newclient);
+    float GetAverageCombinedFilePrioAndCredit();
 
 	CUpDownClientPtrList waitinglist;
 	CUpDownClientPtrList uploadinglist;
@@ -84,9 +98,13 @@ private:
 		uint32	datalen;
 		DWORD	timestamp;
 	};
-	CList<TransferredData,TransferredData> avarage_dr_list;
-	uint32	datarate;   //datarate 
-	uint32	dataratems;
+	CList<uint64,uint64> avarage_dr_list;
+    CList<uint64,uint64> avarage_friend_dr_list;
+	CList<DWORD,DWORD> avarage_tick_list;
+	CList<int,int> activeClients_list;
+    CList<DWORD,DWORD> activeClients_tick_list;
+	uint32	datarate;   //datarate sent to network (including friends)
+    uint32  friendDatarate; // datarate of sent to friends (included in above total)
 	// By BadWolf - Accurate Speed Measurement
 
 	UINT_PTR h_timer;
@@ -95,7 +113,18 @@ private:
 	uint32	totaluploadtime;
 	uint32	m_nLastStartUpload;
 	bool	lastupslotHighID; // VQB lowID alternation
-	bool	m_bRemovedClientByScore;
+	uint32	m_dwRemovedClientByScore;
 
 	uint32	m_imaxscore;
+
+    DWORD   m_dwLastCalculatedAverageCombinedFilePrioAndCredit;
+    float   m_fAverageCombinedFilePrioAndCredit;
+    uint32  m_iHighestNumberOfFullyActivatedSlotsSinceLastCall;
+    uint32  m_MaxActiveClients;
+    uint32  m_MaxActiveClientsShortTime;
+
+    DWORD   m_lastCalculatedDataRateTick;
+    uint64  m_avarage_dr_sum;
+
+    DWORD   m_dwLastResortedUploadSlots;
 };

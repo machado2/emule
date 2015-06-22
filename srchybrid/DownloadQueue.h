@@ -1,4 +1,4 @@
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -14,9 +14,6 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
-#include "Loggable.h"
-
-//#define USE_ZZ_DDR
 
 class CSafeMemFile;
 class CSearchFile;
@@ -25,6 +22,8 @@ class CServer;
 class CPartFile;
 class CSharedFileList;
 class CKnownFile;
+struct SUnresolvedHostname;
+
 namespace Kademlia 
 {
 	class CUInt128;
@@ -57,7 +56,7 @@ private:
 };
 
 
-class CDownloadQueue: public CLoggable
+class CDownloadQueue
 {
 	friend class CAddFileThread;
 	friend class CServerSocket;
@@ -90,8 +89,8 @@ public:
 	CPartFile* GetFileByIndex(int index) const;
 	CPartFile* GetFileByKadFileSearchID(uint32 ID) const;
 
-	void	StartNextFile() { StartNextFile(-1); }
-	void	StartNextFile(int cat,bool force=false);
+    void    StartNextFileIfPrefs(int cat);
+	void	StartNextFile(int cat=-1,bool force=false);
 	void	DisableAllA4AFAuto(void);
 
 	// sources
@@ -100,12 +99,12 @@ public:
 	bool	IsInList(const CUpDownClient* client) const;
 
 	bool    CheckAndAddSource(CPartFile* sender,CUpDownClient* source);
-	bool    CheckAndAddKnownSource(CPartFile* sender,CUpDownClient* source);
+	bool    CheckAndAddKnownSource(CPartFile* sender,CUpDownClient* source, bool bIgnoreGlobDeadList = false);
 	bool	RemoveSource(CUpDownClient* toremove, bool bDoStatsUpdate = true);
 
 	// statistics
 	typedef struct{
-		int	a[19];
+		int	a[23];
 	} SDownloadStats;
 	void	GetDownloadStats(SDownloadStats& results);
 	void	GetDownloadStats(int results[],uint64& pui64TotFileSize,uint64& pui64TotBytesLeftToTransfer,uint64& pui64TotNeededSpace);
@@ -132,7 +131,7 @@ public:
 	// searching in Kad
 	void	SetLastKademliaFileRequest()				{lastkademliafilerequest = ::GetTickCount();}
 	bool	DoKademliaFileRequest();
-	void	KademliaSearchFile(uint32 searchID, const Kademlia::CUInt128* pcontactID, uint8 type, uint32 ip, uint16 tcp, uint16 udp, uint32 serverip, uint16 serverport, uint32 clientid);
+	void	KademliaSearchFile(uint32 searchID, const Kademlia::CUInt128* pcontactID, const Kademlia::CUInt128* pkadID, uint8 type, uint32 ip, uint16 tcp, uint16 udp, uint32 serverip, uint16 serverport, uint32 clientid);
 
 	// searching on global servers
 	void	StopUDPRequests();
@@ -144,6 +143,8 @@ public:
 
 	void	ExportPartMetFilesOverview() const;
 	void	OnConnectionState(bool bConnected);
+
+	void	AddToResolved( CPartFile* pFile, SUnresolvedHostname* pUH );
 
 	CServer* cur_udpserver;
 
@@ -184,9 +185,7 @@ private:
 		uint32	datalen;
 		DWORD	timestamp;
 	};
-#ifndef USE_ZZ_DDR
 	CList<TransferredData,TransferredData> avarage_dr_list;
-#endif
 	// END By BadWolf - Accurate Speed Measurement
 
 	CSourceHostnameResolveWnd m_srcwnd;

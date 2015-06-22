@@ -33,7 +33,6 @@ there client on the eMule forum..
 #include "../utils/UInt128.h"
 #include "../routing/Maps.h"
 
-
 ////////////////////////////////////////
 namespace Kademlia {
 ////////////////////////////////////////
@@ -42,13 +41,14 @@ class CSearch;
 class CRoutingZone;
 class CTag;
 typedef std::list<CTag*> TagList;
+void deleteTagListEntries(TagList* taglist);
 
 // If type is unknown it will be an empty string
 // If there are any properties about the file to report, there will follow LPCSTR key/value pairs.
 typedef void (CALLBACK *SEARCH_KEYWORD_CALLBACK)(uint32 searchID, CUInt128 fileID, LPCSTR name, uint32 size, LPCSTR type, uint16 numProperties, ...);
 typedef void (CALLBACK *SEARCH_ID_CALLBACK)(uint32 searchID, CUInt128 contactID, uint8 type, uint32 ip, uint16 tcp, uint16 udp, uint32 serverip, uint16 port);
 
-typedef std::list<CString> WordList;
+typedef std::list<CStringW> WordList;
 typedef std::map<CUInt128, CSearch*> SearchMap;
 
 #define SEARCH_IMAGE	"-image"
@@ -72,7 +72,7 @@ public:
 	static CSearch* prepareFindFile(uint32 type, bool start, const CUInt128 &id);
 
 	// Will return unique search id, returns zero if already searching for this keyword.
-	static CSearch* prepareFindKeywords(uint32 type, bool start, LPCTSTR keyword1, UINT uSearchTermsSize, LPBYTE pucSearchTermsData);
+	static CSearch* prepareFindKeywords(uint32 type, bool start, bool bUnicode, LPCTSTR keyword1, UINT uSearchTermsSize, LPBYTE pucSearchTermsData);
 
 	static bool startSearch(CSearch* pSearch);
 	static void deleteSearch(CSearch* pSearch);
@@ -86,15 +86,15 @@ public:
 	static void updateStats(void);
 
 	static bool isNodeSearch(const CUInt128 &target);
+
+	static bool alreadySearchingFor(const CUInt128 &target);
 private:
 
 	static void findNode(const CUInt128 &id);
 	static void findNodeComplete(const CUInt128 &id);
-	static bool alreadySearchingFor(const CUInt128 &target);
 
 	static uint32 m_nextID;
 	static SearchMap m_searches;
-	static CCriticalSection m_critical;
 
 	static void jumpStart(void);
 };

@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2004 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2004 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -23,6 +23,7 @@
 #include "HttpClientReqSocket.h"
 #include "Preferences.h"
 #include "Statistics.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -90,23 +91,27 @@ void CHttpClientReqSocket::DataReceived(const BYTE* pucData, UINT uSize)
 	{
 		strError.Format(_T("Error: HTTP socket: Memory exception; %s"), DbgGetClientInfo());
 		if (thePrefs.GetVerbose())
-			theApp.AddDebugLogLine(false, _T("%s"), strError);
+			AddDebugLogLine(false, _T("%s"), strError);
 		ex->Delete();
 	}
 	catch(CFileException* ex)
 	{
 		TCHAR szError[MAX_CFEXP_ERRORMSG];
 		ex->GetErrorMessage(szError, ARRSIZE(szError));
-		strError.Format(_T("Error: HTTP socket: File exception - %s; %s"), szError, DbgGetClientInfo());
+		strError.Format(_T("Error: HTTP socket: File exception - %s"), szError);
 		if (thePrefs.GetVerbose())
-			theApp.AddDebugLogLine(false, _T("%s"), strError);
+			AddDebugLogLine(false, _T("%s"), strError);
 		ex->Delete();
 	}
 	catch(CString ex)
 	{
+#ifdef _DEBUG
 		strError.Format(_T("Error: HTTP socket: %s; %s"), ex, DbgGetClientInfo());
+#else
+		strError.Format(_T("Error: HTTP socket: %s"), ex);
+#endif
 		if (thePrefs.GetVerbose())
-			theApp.AddDebugLogLine(false, _T("%s"), strError);
+			AddDebugLogLine(false, _T("%s"), strError);
 	}
 
 	if (!bResult && !deletethis)
@@ -114,7 +119,7 @@ void CHttpClientReqSocket::DataReceived(const BYTE* pucData, UINT uSize)
 		if (thePrefs.GetVerbose() && thePrefs.GetDebugClientTCPLevel() <= 0)
 		{
 			for (int i = 0; i < m_astrHttpHeaders.GetCount(); i++)
-				theApp.AddDebugLogLine(false, _T("<%s"), m_astrHttpHeaders.GetAt(i));
+				AddDebugLogLine(false, _T("<%hs"), m_astrHttpHeaders.GetAt(i));
 		}
 
 		// In case this socket is attached to an CUrlClient, we are dealing with the real CUpDownClient here

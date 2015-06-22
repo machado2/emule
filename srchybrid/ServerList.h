@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -15,11 +15,10 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
-#include "Loggable.h"
 
 class CServer;
 
-class CServerList: public CLoggable
+class CServerList
 {
 	friend class CServerListCtrl;
 public:
@@ -52,6 +51,7 @@ public:
 						  uint32& user, uint32& file, uint32& lowiduser, 
 						  uint32& totaluser, uint32& totalfile, 
 						  float& occ) const;
+	void		GetAvgFile( uint32& average ) const;
 	void		GetUserFileStatus(uint32& user, uint32& file) const;
 	
 	void		Sort();

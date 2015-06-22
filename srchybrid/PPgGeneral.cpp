@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -32,6 +32,8 @@
 #include "IrcWnd.h"
 #include "WebServices.h"
 #include "HelpIDs.h"
+#include "StringConversion.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -59,6 +61,7 @@ void CPPgGeneral::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CPPgGeneral, CPropertyPage)
 	ON_BN_CLICKED(IDC_STARTMIN, OnSettingsChange)
+	ON_BN_CLICKED(IDC_STARTWIN, OnSettingsChange)
 	ON_EN_CHANGE(IDC_NICK, OnSettingsChange)
 	ON_BN_CLICKED(IDC_BEEPER, OnSettingsChange)
 	ON_BN_CLICKED(IDC_EXIT, OnSettingsChange)
@@ -75,13 +78,17 @@ END_MESSAGE_MAP()
 
 void CPPgGeneral::LoadSettings(void)
 {
-	USES_CONVERSION;
-	GetDlgItem(IDC_NICK)->SetWindowText(A2CT(thePrefs.GetUserNick()));
+	GetDlgItem(IDC_NICK)->SetWindowText(thePrefs.GetUserNick());
 
 	for(int i = 0; i < m_language.GetCount(); i++)
 		if(m_language.GetItemData(i) == thePrefs.GetLanguageID())
 			m_language.SetCurSel(i);
 	
+	if(thePrefs.m_bAutoStart)
+		CheckDlgButton(IDC_STARTWIN,1);
+	else
+		CheckDlgButton(IDC_STARTWIN,0);
+
 	if(thePrefs.startMinimized)
 		CheckDlgButton(IDC_STARTMIN,1);
 	else
@@ -133,7 +140,11 @@ BOOL CPPgGeneral::OnInitDialog()
 	thePrefs.GetLanguages(aLanguageIDs);
 	for (int i = 0; i < aLanguageIDs.GetSize(); i++){
 		TCHAR szLang[128];
-		GetLocaleInfo(aLanguageIDs[i], LOCALE_SLANGUAGE, szLang, ARRSIZE(szLang));
+		int ret=GetLocaleInfo(aLanguageIDs[i], LOCALE_SLANGUAGE, szLang, ARRSIZE(szLang));
+
+		if (ret==0 && aLanguageIDs[i]==MAKELANGID(LANG_GALICIAN,SUBLANG_DEFAULT) )
+			_tcscpy(szLang,_T("Galician") );
+
 		m_language.SetItemData(m_language.AddString(szLang), aLanguageIDs[i]);
 	}
 
@@ -157,6 +168,8 @@ BOOL CPPgGeneral::OnApply()
 	CString strNick;
 	GetDlgItem(IDC_NICK)->GetWindowText(strNick);
 	strNick.Trim();
+	if (!IsValidEd2kString(strNick))
+		strNick.Empty();
 	if (strNick.IsEmpty())
 	{
 		strNick = DEFAULT_NICK;
@@ -188,6 +201,11 @@ BOOL CPPgGeneral::OnApply()
 	}
 
 	thePrefs.startMinimized= (uint8)IsDlgButtonChecked(IDC_STARTMIN);
+	thePrefs.m_bAutoStart= (uint8)IsDlgButtonChecked(IDC_STARTWIN);
+	if( thePrefs.m_bAutoStart )
+		AddAutoStart();
+	else
+		RemAutoStart();
 	thePrefs.beepOnError= (uint8)IsDlgButtonChecked(IDC_BEEPER);
 	thePrefs.confirmExit= (uint8)IsDlgButtonChecked(IDC_EXIT);
 	thePrefs.splashscreen = (uint8)IsDlgButtonChecked(IDC_SPLASHON);
@@ -238,6 +256,7 @@ void CPPgGeneral::Localize(void)
 		GetDlgItem(IDC_ED2KFIX)->SetWindowText(GetResString(IDS_ED2KLINKFIX));
 		GetDlgItem(IDC_CHECK4UPDATE)->SetWindowText(GetResString(IDS_CHECK4UPDATE));
 		GetDlgItem(IDC_STARTUP)->SetWindowText(GetResString(IDS_STARTUP));
+		GetDlgItem(IDC_STARTWIN)->SetWindowText(GetResString(IDS_STARTWITHWINDOWS));
 	}
 }
 
@@ -293,7 +312,7 @@ void CPPgGeneral::OnLangChange()
 				}
 				CString strErr;
 				strErr.Format(GetResString(IDS_ERR_FAILEDDOWNLOADLANG), strUrl);
-				AddLogLine(true, strErr);
+				LogError(LOG_STATUSBAR, _T("%s"), strErr);
 				AfxMessageBox(strErr, MB_ICONERROR | MB_OK);
 			}
 			// undo change selection

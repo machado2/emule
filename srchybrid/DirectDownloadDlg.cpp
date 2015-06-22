@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -124,12 +124,12 @@ BOOL CDirectDownloadDlg::OnInitDialog()
 {
 	CResizableDialog::OnInitDialog();
 	InitWindowStyles(this);
+	SetIcon(theApp.LoadIcon(_T("PASTELINK"),16,16),FALSE);
 
 	AddAnchor(IDC_DDOWN_FRM, TOP_LEFT, BOTTOM_RIGHT);
 	AddAnchor(IDC_ELINK, TOP_LEFT, BOTTOM_RIGHT);
 	AddAnchor(IDCANCEL, BOTTOM_RIGHT);
 	AddAnchor(IDOK, BOTTOM_RIGHT);
-
 	AddAnchor(IDC_CATLABEL, BOTTOM_LEFT);
 	AddAnchor(IDC_CATS, BOTTOM_LEFT,BOTTOM_RIGHT);
 
@@ -153,8 +153,8 @@ BOOL CDirectDownloadDlg::OnInitDialog()
 	}
 	else {
 		UpdateCatTabs();
-		if (theApp.emuledlg->m_fontMarlett.m_hObject){
-			GetDlgItem(IDC_CATLABEL)->SetFont(&theApp.emuledlg->m_fontMarlett);
+		if (theApp.m_fontSymbol.m_hObject){
+			GetDlgItem(IDC_CATLABEL)->SetFont(&theApp.m_fontSymbol);
 			GetDlgItem(IDC_CATLABEL)->SetWindowText(_T("8")); // show a right-arrow
 		}
 
@@ -169,8 +169,11 @@ BOOL CDirectDownloadDlg::OnInitDialog()
 void CDirectDownloadDlg::UpdateCatTabs() {
 	int oldsel=m_cattabs.GetCurSel();
 	m_cattabs.DeleteAllItems();
-	for (int ix=0;ix<thePrefs.GetCatCount();ix++)
-		m_cattabs.InsertItem(ix,(ix==0)?GetResString(IDS_ALL):thePrefs.GetCategory(ix)->title);
+	for (int ix=0;ix<thePrefs.GetCatCount();ix++) {
+		CString label=(ix==0)?GetResString(IDS_ALL):thePrefs.GetCategory(ix)->title;
+		label.Replace(_T("&"),_T("&&"));
+		m_cattabs.InsertItem(ix,label);
+	}
 	if (oldsel>=m_cattabs.GetItemCount() || oldsel==-1)
 		oldsel=0;
 

@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -44,9 +44,9 @@ END_MESSAGE_MAP()
 CPPgStats::CPPgStats()
 	: CPropertyPage(CPPgStats::IDD)
 {
-	mystats1 = 0;
-	mystats2 = 0;
-	mystats3 = 0;
+	m_iGraphsUpdate = 0;
+	m_iGraphsAvgTime = 0;
+	m_iStatsUpdate = 0;
 	m_bModified = FALSE;
 }
 
@@ -60,6 +60,9 @@ void CPPgStats::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COLORSELECTOR, m_colors);
 	DDX_Control(pDX, IDC_COLOR_BUTTON, m_ctlColor);
 	DDX_Control(pDX, IDC_CRATIO, m_cratio);
+	DDX_Control(pDX, IDC_SLIDER, m_ctlGraphsUpdate);
+	DDX_Control(pDX, IDC_SLIDER2, m_ctlStatsUpdate);
+	DDX_Control(pDX, IDC_SLIDER3, m_ctlGraphsAvgTime);
 }
 
 void CPPgStats::SetModified(BOOL bChanged)
@@ -73,17 +76,26 @@ BOOL CPPgStats::OnInitDialog()
 	CPropertyPage::OnInitDialog();
 	InitWindowStyles(this);
 
-	((CSliderCtrl*)GetDlgItem(IDC_SLIDER))->SetPos(thePrefs.GetTrafficOMeterInterval());
-	((CSliderCtrl*)GetDlgItem(IDC_SLIDER2))->SetPos(thePrefs.GetStatsInterval());
-	((CSliderCtrl*)GetDlgItem(IDC_SLIDER3))->SetPos(thePrefs.GetStatsAverageMinutes() - 1);
-	mystats1 = thePrefs.GetTrafficOMeterInterval();
-	mystats2 = thePrefs.GetStatsInterval();
-	mystats3 = thePrefs.GetStatsAverageMinutes();
+	m_ctlGraphsUpdate.SetPos(thePrefs.GetTrafficOMeterInterval());
+	m_ctlGraphsUpdate.SetTicFreq(10);
+	m_ctlGraphsUpdate.SetPageSize(10);
+
+	m_ctlStatsUpdate.SetPos(thePrefs.GetStatsInterval());
+	m_ctlStatsUpdate.SetTicFreq(10);
+	m_ctlStatsUpdate.SetPageSize(10);
+
+	m_ctlGraphsAvgTime.SetRange(0, 99);
+	m_ctlGraphsAvgTime.SetPos(thePrefs.GetStatsAverageMinutes() - 1);
+	for (int i = 10; i < 100; i += 10)
+		m_ctlGraphsAvgTime.SetTic(i - 1);
+	m_ctlGraphsAvgTime.SetPageSize(10);
+
+	m_iGraphsUpdate = thePrefs.GetTrafficOMeterInterval();
+	m_iGraphsAvgTime = thePrefs.GetStatsInterval();
+	m_iStatsUpdate = thePrefs.GetStatsAverageMinutes();
 
 	// Set the Connections Statistics Y-Axis Scale
-	CString graphScale;
-	graphScale.Format(_T("%u"), thePrefs.GetStatsMax());
-	GetDlgItem(IDC_CGRAPHSCALE)->SetWindowText(graphScale);
+	SetDlgItemInt(IDC_CGRAPHSCALE, thePrefs.GetStatsMax(), FALSE);
 
 	// Build our ratio combo and select the item corresponding to the currently set preference
 	m_cratio.AddString(_T("1:1"));
@@ -109,16 +121,16 @@ BOOL CPPgStats::OnApply()
 	if (m_bModified)
 	{
 		bool bInvalidateGraphs = false;
-		if (thePrefs.GetTrafficOMeterInterval() != mystats1){
-			thePrefs.SetTrafficOMeterInterval(mystats1);
+		if (thePrefs.GetTrafficOMeterInterval() != m_iGraphsUpdate){
+			thePrefs.SetTrafficOMeterInterval(m_iGraphsUpdate);
 			bInvalidateGraphs = true;
 		}
-		if (thePrefs.GetStatsInterval() != mystats2){
-			thePrefs.SetStatsInterval(mystats2);
+		if (thePrefs.GetStatsInterval() != m_iGraphsAvgTime){
+			thePrefs.SetStatsInterval(m_iGraphsAvgTime);
 			bInvalidateGraphs = true;
 		}
-		if (thePrefs.GetStatsAverageMinutes() != mystats3){
-			thePrefs.SetStatsAverageMinutes(mystats3);
+		if (thePrefs.GetStatsAverageMinutes() != m_iStatsUpdate){
+			thePrefs.SetStatsAverageMinutes(m_iStatsUpdate);
 			bInvalidateGraphs = true;
 		}
 
@@ -134,7 +146,8 @@ BOOL CPPgStats::OnApply()
 			_sntprintf(buffer, ARRSIZE(buffer), _T("%d"), thePrefs.GetStatsMax());
 			GetDlgItem(IDC_CGRAPHSCALE)->SetWindowText(buffer);
 		}
-		else {
+		else
+		{
 			if (thePrefs.GetStatsMax() != statsMax){
 				thePrefs.SetStatsMax(statsMax);
 				bInvalidateGraphs = true;
@@ -162,7 +175,7 @@ BOOL CPPgStats::OnApply()
 
 void CPPgStats::Localize(void)
 {
-	if(m_hWnd)
+	if (m_hWnd)
 	{
 		GetDlgItem(IDC_GRAPHS)->SetWindowText(GetResString(IDS_GRAPHS));
 		GetDlgItem(IDC_STREE)->SetWindowText(GetResString(IDS_STREE));
@@ -181,9 +194,12 @@ void CPPgStats::Localize(void)
 		m_colors.AddString(GetResString(IDS_SP_UL2));
 		m_colors.AddString(GetResString(IDS_SP_UL3));
 		m_colors.AddString(GetResString(IDS_SP_ACTCON));
-		m_colors.AddString(GetResString(IDS_SP_ACTDL));
+		m_colors.AddString(GetResString(IDS_SP_TOTALUL));
 		m_colors.AddString(GetResString(IDS_SP_ACTUL));
 		m_colors.AddString(GetResString(IDS_SP_ICONBAR));
+		m_colors.AddString(GetResString(IDS_SP_ACTDL));
+		m_colors.AddString(GetResString(IDS_SP_ULFRIENDS));
+		m_colors.AddString(GetResString(IDS_SP_ULSLOTSNOOVERHEAD));
 
 		m_ctlColor.CustomText = GetResString(IDS_COL_MORECOLORS);
 		m_ctlColor.DefaultText = NULL;
@@ -199,24 +215,25 @@ void CPPgStats::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CSliderCtrl* slider = (CSliderCtrl*)pScrollBar;
 	int position = slider->GetPos();
 
-	if (pScrollBar == GetDlgItem(IDC_SLIDER))
+	if (pScrollBar->GetSafeHwnd() == m_ctlGraphsUpdate.m_hWnd)
 	{
-		if (mystats1 != position){
-			mystats1 = position;
+		if (m_iGraphsUpdate != position){
+			m_iGraphsUpdate = position;
 			SetModified(TRUE);
 		}
 	}
-	else if (pScrollBar == GetDlgItem(IDC_SLIDER2))
+	else if (pScrollBar->GetSafeHwnd() == m_ctlStatsUpdate.m_hWnd)
 	{
-		if (mystats2 != position){
-			mystats2 = position;
+		if (m_iGraphsAvgTime != position){
+			m_iGraphsAvgTime = position;
 			SetModified(TRUE);
 		}
 	}
 	else
 	{
-		if (mystats3 != position + 1){
-			mystats3 = position + 1;
+		ASSERT( pScrollBar->GetSafeHwnd() == m_ctlGraphsAvgTime.m_hWnd );
+		if (m_iStatsUpdate != position + 1){
+			m_iStatsUpdate = position + 1;
 			SetModified(TRUE);
 		}
 	}
@@ -229,22 +246,22 @@ void CPPgStats::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 void CPPgStats::ShowInterval()
 {
-	CString SliderValue;
+	CString strLabel;
 	
-	if (mystats1 == 0)
-		SliderValue.Format(GetResString(IDS_DISABLED));
+	if (m_iGraphsUpdate == 0)
+		strLabel.Format(GetResString(IDS_DISABLED));
 	else
-		SliderValue.Format(GetResString(IDS_STATS_UPDATELABEL), mystats1);
-	GetDlgItem(IDC_SLIDERINFO)->SetWindowText(SliderValue);
+		strLabel.Format(GetResString(IDS_STATS_UPDATELABEL), m_iGraphsUpdate);
+	GetDlgItem(IDC_SLIDERINFO)->SetWindowText(strLabel);
 
-	if (mystats2 == 0)
-		SliderValue.Format(GetResString(IDS_DISABLED));
+	if (m_iGraphsAvgTime == 0)
+		strLabel.Format(GetResString(IDS_DISABLED));
 	else
-		SliderValue.Format(GetResString(IDS_STATS_UPDATELABEL), mystats2);
-	GetDlgItem(IDC_SLIDERINFO2)->SetWindowText(SliderValue);
+		strLabel.Format(GetResString(IDS_STATS_UPDATELABEL), m_iGraphsAvgTime);
+	GetDlgItem(IDC_SLIDERINFO2)->SetWindowText(strLabel);
 
-	SliderValue.Format(GetResString(IDS_STATS_AVGLABEL), mystats3);
-	GetDlgItem(IDC_SLIDERINFO3)->SetWindowText(SliderValue);
+	strLabel.Format(GetResString(IDS_STATS_AVGLABEL), m_iStatsUpdate);
+	GetDlgItem(IDC_SLIDERINFO3)->SetWindowText(strLabel);
 }
 
 void CPPgStats::OnCbnSelchangeColorselector()
@@ -260,6 +277,7 @@ LONG CPPgStats::OnColorPopupSelChange(UINT /*lParam*/, LONG /*wParam*/)
 	int iCurColor = thePrefs.GetStatsColor(m_colors.GetCurSel());
 	if (iCurColor != setcolor){
 		thePrefs.SetStatsColor(m_colors.GetCurSel(), setcolor);
+		theApp.emuledlg->ShowTransferRate(true);
 		SetModified(TRUE);
 	}
 	return TRUE;

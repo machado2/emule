@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -28,6 +28,7 @@
 #include "ServerWnd.h"
 #include "IrcWnd.h"
 #include "Opcodes.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -36,11 +37,19 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 
-// CServerListCtrl
-
 IMPLEMENT_DYNAMIC(CServerListCtrl, CMuleListCtrl)
-CServerListCtrl::CServerListCtrl() {
-	server_list = 0; // i_a 
+
+BEGIN_MESSAGE_MAP(CServerListCtrl, CMuleListCtrl)
+	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnClick)
+	ON_NOTIFY_REFLECT(NM_DBLCLK, OnNMLdblclk)
+	ON_NOTIFY_REFLECT(LVN_GETINFOTIP, OnLvnGetInfoTip)
+	ON_WM_CONTEXTMENU()
+	ON_WM_SYSCOLORCHANGE()
+END_MESSAGE_MAP()
+
+CServerListCtrl::CServerListCtrl()
+{
+	server_list = NULL;
 	SetGeneralPurposeFind(true);
 }
 
@@ -49,6 +58,7 @@ bool CServerListCtrl::Init(CServerList* in_list)
 	server_list = in_list;
 	ModifyStyle(0,LVS_SINGLESEL|LVS_REPORT);
 	ModifyStyle(LVS_SINGLESEL|LVS_LIST|LVS_ICON|LVS_SMALLICON,LVS_REPORT); //here the CListCtrl is set to report-style
+	SetExtendedStyle(GetExtendedStyle() | LVS_EX_INFOTIP);
 
 	InsertColumn(0, GetResString(IDS_SL_SERVERNAME),LVCFMT_LEFT, 150);
 	InsertColumn(1, GetResString(IDS_IP),			LVCFMT_LEFT, 140);
@@ -337,14 +347,6 @@ void CServerListCtrl::RefreshServer(const CServer* server)
 		SetItemText(itemnr, 13,_T(""));
 }
 
-BEGIN_MESSAGE_MAP(CServerListCtrl, CMuleListCtrl) 
-	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnClick) 
-	ON_NOTIFY_REFLECT (NM_DBLCLK, OnNMLdblclk) //<-- mod bb 27.09.02 
-	ON_WM_CONTEXTMENU()
-	ON_WM_SYSCOLORCHANGE()
-	ON_WM_KEYDOWN()
-END_MESSAGE_MAP()
-
 // CServerListCtrl message handlers
 
 void CServerListCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
@@ -381,9 +383,9 @@ void CServerListCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 
 	CTitleMenu ServerMenu;
 	ServerMenu.CreatePopupMenu();
-	ServerMenu.AddMenuTitle(GetResString(IDS_EM_SERVER));
+	ServerMenu.AddMenuTitle(GetResString(IDS_EM_SERVER), true);
 
-	ServerMenu.AppendMenu(MF_STRING | (iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED), MP_CONNECTTO, GetResString(IDS_CONNECTTHIS));
+	ServerMenu.AppendMenu(MF_STRING | (iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED), MP_CONNECTTO, GetResString(IDS_CONNECTTHIS), _T("CONNECT"));
 	ServerMenu.SetDefaultItem(iSelectedItems > 0 ? MP_CONNECTTO : -1);
 
 	CMenu ServerPrioMenu;
@@ -394,20 +396,20 @@ void CServerListCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 		ServerPrioMenu.AppendMenu(MF_STRING, MP_PRIOHIGH, GetResString(IDS_PRIOHIGH));
 		ServerPrioMenu.CheckMenuRadioItem(MP_PRIOLOW, MP_PRIOHIGH, uPrioMenuItem, 0);
 	}
-	ServerMenu.AppendMenu(MF_POPUP  | (iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED), (UINT_PTR)ServerPrioMenu.m_hMenu, GetResString(IDS_PRIORITY));
+	ServerMenu.AppendMenu(MF_POPUP  | (iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED), (UINT_PTR)ServerPrioMenu.m_hMenu, GetResString(IDS_PRIORITY), _T("PRIORITY"));
 
 	// enable add/remove from static server list, if there is at least one selected server which can be used for the action
-	ServerMenu.AppendMenu(MF_STRING | (iStaticServers < iSelectedItems ? MF_ENABLED : MF_GRAYED), MP_ADDTOSTATIC, GetResString(IDS_ADDTOSTATIC));
-	ServerMenu.AppendMenu(MF_STRING | (iStaticServers > 0 ? MF_ENABLED : MF_GRAYED), MP_REMOVEFROMSTATIC, GetResString(IDS_REMOVEFROMSTATIC));
+	ServerMenu.AppendMenu(MF_STRING | (iStaticServers < iSelectedItems ? MF_ENABLED : MF_GRAYED), MP_ADDTOSTATIC, GetResString(IDS_ADDTOSTATIC), _T("ListAdd"));
+	ServerMenu.AppendMenu(MF_STRING | (iStaticServers > 0 ? MF_ENABLED : MF_GRAYED), MP_REMOVEFROMSTATIC, GetResString(IDS_REMOVEFROMSTATIC), _T("ListRemove"));
 	ServerMenu.AppendMenu(MF_SEPARATOR);
 
-	ServerMenu.AppendMenu(MF_STRING | (iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED), MP_REMOVE, GetResString(IDS_REMOVETHIS));
-	ServerMenu.AppendMenu(MF_STRING | (GetItemCount() > 0 ? MF_ENABLED : MF_GRAYED), MP_REMOVEALL, GetResString(IDS_REMOVEALL));
-	ServerMenu.AppendMenu(MF_STRING | (iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED), MP_GETED2KLINK, GetResString(IDS_DL_LINK1));
-	ServerMenu.AppendMenu(MF_STRING | (theApp.IsEd2kServerLinkInClipboard() ? MF_ENABLED : MF_GRAYED), MP_PASTE, GetResString(IDS_PASTE));
+	ServerMenu.AppendMenu(MF_STRING | (iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED), MP_REMOVE, GetResString(IDS_REMOVETHIS), _T("DELETESELECTED"));
+	ServerMenu.AppendMenu(MF_STRING | (GetItemCount() > 0 ? MF_ENABLED : MF_GRAYED), MP_REMOVEALL, GetResString(IDS_REMOVEALL), _T("DELETE"));
+	ServerMenu.AppendMenu(MF_STRING | (iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED), MP_GETED2KLINK, GetResString(IDS_DL_LINK1), _T("ED2KLINK"));
+	ServerMenu.AppendMenu(MF_STRING | (theApp.IsEd2kServerLinkInClipboard() ? MF_ENABLED : MF_GRAYED), MP_PASTE, GetResString(IDS_PASTE), _T("PASTELINK"));
 
 	ServerMenu.AppendMenu(MF_SEPARATOR);
-	ServerMenu.AppendMenu(MF_ENABLED | (GetItemCount() > 0 ? MF_ENABLED : MF_GRAYED), MP_FIND, GetResString(IDS_FIND));
+	ServerMenu.AppendMenu(MF_ENABLED | (GetItemCount() > 0 ? MF_ENABLED : MF_GRAYED), MP_FIND, GetResString(IDS_FIND), _T("Search"));
 
 	GetPopupMenuPos(*this, point);
 	ServerMenu.TrackPopupMenu(TPM_LEFTALIGN |TPM_RIGHTBUTTON, point.x, point.y, this);
@@ -420,6 +422,8 @@ BOOL CServerListCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	if (wParam == MP_REMOVEALL)
 	{
+		if (AfxMessageBox(_T("Do you really want to remove all servers?"), MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2) != IDYES)
+			return TRUE;
 		if( theApp.serverconnect->IsConnecting() ){
 			theApp.downloadqueue->StopUDPRequests();
 			theApp.serverconnect->StopConnectionTry();
@@ -489,6 +493,7 @@ BOOL CServerListCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 					}
 					ShowServerCount();
 					ShowWindow(SW_SHOW);
+					SetFocus();
 					return TRUE;
 				}
 			case MP_ADDTOSTATIC:
@@ -545,6 +550,7 @@ BOOL CServerListCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 					}
 					return TRUE;
 				}
+			case MP_COPYSELECTED:
 			case MP_GETED2KLINK:
 				{
 					POSITION pos = GetFirstSelectedItemPosition();
@@ -758,7 +764,7 @@ bool CServerListCtrl::StaticServerFileAppend(CServer *server)
 		FILE* staticservers = _tfsopen(thePrefs.GetConfigDir() + _T("staticservers.dat"), _T("a"), _SH_DENYWR);
 		if (staticservers==NULL) 
 		{
-			AddLogLine(false, GetResString(IDS_ERROR_SSF));
+			LogError(LOG_STATUSBAR, GetResString(IDS_ERROR_SSF));
 			return false;
 		}
 		
@@ -807,7 +813,7 @@ bool CServerListCtrl::StaticServerFileRemove(const CServer *server)
 				fclose(staticservers);
 			if (statictemp)
 				fclose(statictemp);
-			AddLogLine( false, GetResString(IDS_ERROR_SSF));
+			LogError(LOG_STATUSBAR, GetResString(IDS_ERROR_SSF));
 			return false;
 		}
 
@@ -853,26 +859,74 @@ bool CServerListCtrl::StaticServerFileRemove(const CServer *server)
 	return true;
 }
 
-void CServerListCtrl::ShowServerCount() {
+void CServerListCtrl::ShowServerCount()
+{
 	CString counter;
 
 	counter.Format(_T(" (%i)"), GetItemCount());
 	theApp.emuledlg->serverwnd->GetDlgItem(IDC_SERVLIST_TEXT)->SetWindowText(GetResString(IDS_SV_SERVERLIST)+counter  );
 }
 
-void CServerListCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+void CServerListCtrl::OnLvnGetInfoTip(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	if (nChar == 'C' && (GetKeyState(VK_CONTROL) & 0x8000))
+	LPNMLVGETINFOTIP pGetInfoTip = reinterpret_cast<LPNMLVGETINFOTIP>(pNMHDR);
+	if (pGetInfoTip->iSubItem == 0)
 	{
-		// Ctrl+C: Copy listview items to clipboard
-		SendMessage(WM_COMMAND, MP_GETED2KLINK);
-		return;
+		LVHITTESTINFO hti = {0};
+		::GetCursorPos(&hti.pt);
+		ScreenToClient(&hti.pt);
+		bool bOverMainItem = (SubItemHitTest(&hti) != -1 && hti.iItem == pGetInfoTip->iItem && hti.iSubItem == 0);
+
+		// those tooltips are very nice for debugging/testing but pretty annoying for general usage
+		// enable tooltips only if Shift+Ctrl is currently pressed
+		bool bShowInfoTip = GetSelectedCount() > 1 || ((GetKeyState(VK_SHIFT) & 0x8000) && (GetKeyState(VK_CONTROL) & 0x8000));
+
+		if (!bShowInfoTip){
+			if (!bOverMainItem){
+				// don' show the default label tip for the main item, if the mouse is not over the main item
+				if ((pGetInfoTip->dwFlags & LVGIT_UNFOLDED) == 0 && pGetInfoTip->cchTextMax > 0 && pGetInfoTip->pszText[0] != '\0')
+					pGetInfoTip->pszText[0] = '\0';
+			}
+			return;
+		}
+
+		if (GetSelectedCount() == 1)
+		{
+			;
+		}
+		else
+		{
+			int iSelected = 0;
+			ULONGLONG ulTotalUsers = 0;
+			ULONGLONG ulTotalLowIdUsers = 0;
+			ULONGLONG ulTotalFiles = 0;
+			POSITION pos = GetFirstSelectedItemPosition();
+			while (pos)
+			{
+				const CServer* pServer = (CServer*)GetItemData(GetNextSelectedItem(pos));
+				if (pServer)
+				{
+					iSelected++;
+					ulTotalUsers += pServer->GetUsers();
+					ulTotalFiles += pServer->GetFiles();
+					ulTotalLowIdUsers += pServer->GetLowIDUsers();
+				}
+			}
+
+			if (iSelected > 0)
+			{
+				CString strInfo;
+				strInfo.Format(_T("%s: %u\r\n%s: %s\r\n%s: %s\r\n%s: %s"), 
+					GetResString(IDS_FSTAT_SERVERS), iSelected, 
+					GetResString(IDS_UUSERS), CastItoIShort(ulTotalUsers),
+					GetResString(IDS_IDLOW), CastItoIShort(ulTotalLowIdUsers),
+					GetResString(IDS_PW_FILES), CastItoIShort(ulTotalFiles));
+
+				_tcsncpy(pGetInfoTip->pszText, strInfo, pGetInfoTip->cchTextMax);
+				pGetInfoTip->pszText[pGetInfoTip->cchTextMax-1] = _T('\0');
+			}
+		}
 	}
-	else if (nChar == 'V' && (GetKeyState(VK_CONTROL) & 0x8000))
-	{
-		// Ctrl+C: Copy listview items to clipboard
-		SendMessage(WM_COMMAND, MP_PASTE);
-		return;
-	}
-	CMuleListCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
+
+	*pResult = 0;
 }

@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -22,6 +22,7 @@
 #include "Preferences.h"
 #include "OtherFunctions.h"
 #include "Statistics.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -91,27 +92,34 @@ void CIrcSocket::OnReceive(int nErrorCode)
 
 	int length;
 	char buffer[1024];
-	do
+	try
 	{
-		length = Receive(buffer, sizeof(buffer)-1);
-		if (length < 0){
-			if (thePrefs.GetVerbose())
-				AddDebugLogLine(false, _T("IRC socket: Failed to read - %s"), GetErrorMessage(GetLastError(), 1));
-			return;
+		do
+		{
+			length = Receive(buffer, sizeof(buffer)-1);
+			if (length < 0){
+				if (thePrefs.GetVerbose())
+					AddDebugLogLine(false, _T("IRC socket: Failed to read - %s"), GetErrorMessage(GetLastError(), 1));
+				return;
+			}
+			if (length > 0){
+				buffer[length] = '\0';
+				theStats.AddDownDataOverheadOther(length);
+				m_pIrcMain->PreParseMessage(buffer);
+			}
 		}
-		if (length > 0){
-			buffer[length] = '\0';
-			theStats.AddDownDataOverheadOther(length);
-			m_pIrcMain->PreParseMessage(buffer);
-		}
+		while( length > 1022 );
 	}
-	while( length > 1022 );
+	catch(...)
+	{
+		AddDebugLogLine(false, _T("IRC socket: Exception in OnReceive."), GetErrorMessage(nErrorCode, 1));
+	}
 }
 
 void CIrcSocket::OnConnect(int nErrorCode)
 {
 	if (nErrorCode){
-		AddLogLine(true, _T("IRC socket: Failed to connect - %s"), GetErrorMessage(nErrorCode, 1));
+		LogError(LOG_STATUSBAR, _T("IRC socket: Failed to connect - %s"), GetErrorMessage(nErrorCode, 1));
 		m_pIrcMain->Disconnect();
 		return;
 	}
@@ -161,7 +169,7 @@ int CIrcSocket::OnLayerCallback(const CAsyncSocketExLayer* pLayer, int nType, in
 					CString strErrInf;
 					if (nParam2 && GetErrorMessage(nParam2, strErrInf))
 						strError += _T(" - ") + strErrInf;
-					AddLogLine(true, _T("%s"), strError);
+					LogWarning(LOG_STATUSBAR, _T("%s"), strError);
 					break;
 				}
 				case PROXYERROR_REQUESTFAILED:{
@@ -170,23 +178,23 @@ int CIrcSocket::OnLayerCallback(const CAsyncSocketExLayer* pLayer, int nType, in
 						strError += _T(" - ");
 						strError += (LPCSTR)nParam2;
 					}
-					AddLogLine(true, _T("%s"), strError);
+					LogWarning(LOG_STATUSBAR, _T("%s"), strError);
 					break;
 				}
 				case PROXYERROR_AUTHTYPEUNKNOWN:
-					AddLogLine(true, _T("IRC socket: Required authentification type reported by proxy server is unknown or unsupported"));
+					LogWarning(LOG_STATUSBAR, _T("IRC socket: Required authentification type reported by proxy server is unknown or unsupported"));
 					break;
 				case PROXYERROR_AUTHFAILED:
-					AddLogLine(true, _T("IRC socket: Proxy server authentification failed"));
+					LogWarning(LOG_STATUSBAR, _T("IRC socket: Proxy server authentification failed"));
 					break;
 				case PROXYERROR_AUTHNOLOGON:
-					AddLogLine(true, _T("IRC socket: Proxy server requires authentification"));
+					LogWarning(LOG_STATUSBAR, _T("IRC socket: Proxy server requires authentification"));
 					break;
 				case PROXYERROR_CANTRESOLVEHOST:
-					AddLogLine(true, _T("IRC socket: Can't resolve host of proxy server"));
+					LogWarning(LOG_STATUSBAR, _T("IRC socket: Can't resolve host of proxy server"));
 					break;
 				default:{
-					AddLogLine(true, _T("IRC socket: Proxy server error - %s"), GetProxyError(nParam1));
+					LogWarning(LOG_STATUSBAR, _T("IRC socket: Proxy server error - %s"), GetProxyError(nParam1));
 				}
 			}
 		}

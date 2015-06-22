@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -53,16 +53,18 @@
 #define SOURCECLIENTREASKS		MIN2MS(40)	//40 mins
 #define SOURCECLIENTREASKF		MIN2MS(5)	//5 mins
 #define KADEMLIAASKTIME			SEC2MS(1)	//1 second
-#define KADEMLIATOTALFILE		5			//Total files to search sources for.
+#define KADEMLIATOTALFILE		7			//Total files to search sources for.
 #define KADEMLIAREASKTIME		HR2MS(1)	//1 hour
 #define KADEMLIAPUBLISHTIME		SEC2MS(2)	//2 second
 #define KADEMLIATOTALSTORESRC	2			//Total hashes to store.
 #define KADEMLIATOTALSTOREKEY	1			//Total hashes to store.
 #define KADEMLIAREPUBLISHTIMES	HR2S(5)		//5 hours
-#define KADEMLIAREPUBLISHTIMEK	HR2S(10)	//10 hours
+#define KADEMLIAREPUBLISHTIMEK	HR2S(24)	//24 hours
 #define KADEMLIADISCONNECTDELAY	MIN2S(20)	//20 mins
-#define	KADEMLIAMAXINDEX		5000		//Total index per key
+#define	KADEMLIAMAXINDEX		50000		//Total keyword indexes.
+#define	KADEMLIAMAXENTRIES		60000		//Total keyword entries.
 #define KADEMLIAMAXSOUCEPERFILE	300			//Max number of sources per file in index.
+#define KADEMLIAMAXNOTESPERETRY	50			//Max number of notes per entry in index.
 
 #define ED2KREPUBLISHTIME		MIN2MS(1)	//1 min
 #define MINCOMMONPENALTY		4
@@ -228,13 +230,21 @@
 #define	OP_PEERCACHE_ACK		0x96
 #define	OP_PUBLICIP_REQ			0x97
 #define	OP_PUBLICIP_ANSWER		0x98
+#define OP_CALLBACK				0x99	// <HASH 16><HASH 16><uint 16>
+#define OP_REASKCALLBACKTCP		0x9A
+#define OP_AICHREQUEST			0x9B	// <HASH 16><uint16><HASH aichhashlen>
+#define OP_AICHANSWER			0x9C	// <HASH 16><uint16><HASH aichhashlen> <data>
+#define OP_AICHFILEHASHANS		0x9D	  
+#define OP_AICHFILEHASHREQ		0x9E
 
 // extened prot client <-> extened prot client UDP
 #define OP_REASKFILEPING		0x90	// <HASH 16>
 #define OP_REASKACK				0x91	// <RANG 2>
 #define OP_FILENOTFOUND			0x92	// (null)
 #define OP_QUEUEFULL			0x93	// (null)
-	
+#define OP_REASKCALLBACKUDP		0x94
+#define OP_PORTTEST				0xFE	// Connection Test
+
 // server.met
 #define ST_SERVERNAME			0x01	// <string>
 #define ST_DESCRIPTION			0x0B	// <string>
@@ -297,6 +307,8 @@
 #define	FT_FLAGS				 0x22	// <uint32>
 #define	FT_DL_ACTIVE_TIME		 0x23	// <uint32>
 #define	FT_CORRUPTEDPARTS		 0x24	// <string>
+#define FT_DL_PREVIEW            0x25
+#define FT_AICH_HASH			 0x27
 #define	FT_COMPLETE_SOURCES		 0x30	// nr. of sources which share a complete version of the associated file (supported by eserver 16.46+)
 // statistic
 #define FT_ATTRANSFERED			 0x50	// <uint32>
@@ -316,6 +328,7 @@
 #define	 FT_MEDIA_BITRATE		 0xD4	// <uint32>
 #define	TAG_MEDIA_CODEC			"\xD5"	// <string>
 #define	 FT_MEDIA_CODEC			 0xD5	// <string>
+#define TAG_BUDDYHASH			"\xF8"	// <string>
 #define TAG_CLIENTLOWID			"\xF9"	// <uint32>
 #define TAG_SERVERPORT			"\xFA"	// <uint16>
 #define TAG_SERVERIP			"\xFB"	// <uint32>
@@ -333,6 +346,7 @@
 #define	TAGTYPE_BLOB			0x07
 #define	TAGTYPE_UINT16			0x08
 #define	TAGTYPE_UINT8			0x09
+#define	TAGTYPE_BSOB			0x0A
 
 #define TAGTYPE_STR1			0x11
 #define TAGTYPE_STR2			0x12
@@ -411,8 +425,8 @@
 #define	CT_EMULE_UDPPORTS		0xf9
 #define	CT_EMULE_MISCOPTIONS1	0xfa
 #define	CT_EMULE_VERSION		0xfb
-#define CT_EMULE_RESERVED10		0xfc
-#define CT_EMULE_RESERVED11		0xfd
+#define CT_EMULE_BUDDYIP		0xfc
+#define CT_EMULE_BUDDYUDP		0xfd
 #define CT_EMULE_RESERVED12		0xfe
 #define CT_EMULE_RESERVED13		0xff
 
@@ -421,6 +435,7 @@
 #define SRVCAP_IP_IN_LOGIN		0x02
 #define SRVCAP_AUXPORT			0x04
 #define SRVCAP_NEWTAGS			0x08
+#define	SRVCAP_UNICODE			0x10
 
 // emule tagnames
 #define ET_COMPRESSION			0x20
@@ -461,17 +476,21 @@
 #define KADEMLIA_RES			0x28	// <HASH (target) [16]> <CNT> <PEER [25]>*(CNT)
 
 #define KADEMLIA_SEARCH_REQ		0x30	// <HASH (key) [16]> <ext 0/1 [1]> <SEARCH_TREE>[ext]
+#define KADEMLIA_SRC_NOTES_REQ	0x31	// <HASH (key) [16]> <ext 0/1 [1]> <SEARCH_TREE>[ext]
 #define KADEMLIA_SEARCH_RES		0x38	// <HASH (key) [16]> <CNT1 [2]> (<HASH (answer) [16]> <CNT2 [2]> <META>*(CNT2))*(CNT1)
+#define KADEMLIA_SRC_NOTES_RES	0x39	// <HASH (key) [16]> <CNT1 [2]> (<HASH (answer) [16]> <CNT2 [2]> <META>*(CNT2))*(CNT1)
 
 #define KADEMLIA_PUBLISH_REQ	0x40	// <HASH (key) [16]> <CNT1 [2]> (<HASH (target) [16]> <CNT2 [2]> <META>*(CNT2))*(CNT1)
+#define KADEMLIA_PUB_NOTES_REQ	0x41	// <HASH (key) [16]> <CNT1 [2]> (<HASH (target) [16]> <CNT2 [2]> <META>*(CNT2))*(CNT1)
 #define KADEMLIA_PUBLISH_RES	0x48	// <HASH (key) [16]>
+#define KADEMLIA_PUB_NOTES_RES	0x49	// <HASH (key) [16]>
 
 #define KADEMLIA_FIREWALLED_REQ	0x50	// <TCPPORT (sender) [2]>
-#define KADEMLIA_BUDDY_REQ		0x51	// <TCPPORT (sender) [2]>
-#define KADEMLIA_BUDDY_CON		0x52	//
-#define KADEMLIA_BUDDY_ACK		0x57	// <TCPPORT (sender) [2]>
+#define KADEMLIA_FINDBUDDY_REQ	0x51	// <TCPPORT (sender) [2]>
+#define KADEMLIA_FINDSOURCE_REQ	0x52	// <TCPPORT (sender) [2]>
 #define KADEMLIA_FIREWALLED_RES	0x58	// <IP (sender) [4]>
 #define KADEMLIA_FIREWALLED_ACK	0x59	// (null)
+#define KADEMLIA_FINDBUDDY_RES	0x5A	// <TCPPORT (sender) [2]>
 
 // KADEMLIA (parameter)
 #define KADEMLIA_FIND_VALUE		0x02

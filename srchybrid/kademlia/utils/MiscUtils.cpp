@@ -27,10 +27,10 @@ what all it does can cause great harm to the network if released in mass form..
 Any mod that changes anything within the Kademlia side will not be allowed to advertise
 there client on the eMule forum..
 */
-
 #include "stdafx.h"
 #include "MiscUtils.h"
 #include "../kademlia/Kademlia.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -97,13 +97,14 @@ void CMiscUtils::debugHexDump(const byte *data, uint32 lenData)
 				single.Format("%c", (((c > 31) && (c < 127)) ? c : '.'));
 				line += single;
 			}
-			CKademlia::debugLine(line);
+			//JOHNTODO Is this method Unicode friendly?
+			AddDebugLogLine(false, _T("%s"), line);
 			pos += lenLine;
 		}
 	} 
 	catch (...)
 	{
-		CKademlia::debugLine("Exception in CMiscUtils::debugHexDump\n");
+		AddDebugLogLine(false, _T("Exception in CMiscUtils::debugHexDump\n"));
 	}
 #endif
 }

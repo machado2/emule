@@ -36,7 +36,7 @@ BEGIN
             VALUE "CompanyName", "http://www.emule-project.net"
             VALUE "FileDescription", "eMule Language DLL"
             VALUE "FileVersion", SZ_VERSION_NAME
-            VALUE "LegalCopyright", "Copyright © 2002-2003 Merkur - read license.txt for more infos"
+            VALUE "LegalCopyright", "Copyright © 2002-2004 Merkur - read license.txt for more infos"
             VALUE "ProductName", "eMule"
             VALUE "ProductVersion", SZ_VERSION_NAME
         END

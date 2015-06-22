@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -62,6 +62,7 @@ protected:
 	int m_nDragIndex;
 	int m_nDropIndex;
 	int m_nLastCatTT;
+	int	m_isetcatmenu;
 	bool m_bIsDragging;
 	CImageList* m_pDragImage;
 	HICON icon_download;
@@ -83,6 +84,7 @@ protected:
 	CString GetCatTitle(int catid);
 	int AddCategorie(CString newtitle,CString newincoming,CString newcomment,CString newautocat,bool addTab=true);
 	void EditCatTabLabel(int index,CString newlabel);
+	void EditCatTabLabel(int index);
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

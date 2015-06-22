@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -16,12 +16,11 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
 #include "ResizableLib\ResizableDialog.h"
-#include "Loggable.h"
 #include "ProgressCtrlX.h"
 
 struct ConvertJob;
 
-class CPartFileConvert: public CLoggable
+class CPartFileConvert
 {
 public:
 	static int	ScanFolderToAdd(CString folder,bool deletesource=false);
@@ -36,6 +35,7 @@ public:
 	static void RemoveAllSuccJobs();
 	static void RemoveJob(ConvertJob* job);
 	static CString GetReturncodeText(int ret);
+	static void Localize();
 
 private:
 	CPartFileConvert(void); // Just use static recover method

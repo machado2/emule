@@ -17,9 +17,9 @@
 #include "PPgDebug.h"
 #endif
 #include "otherfunctions.h"
-#include "ListBoxST.h"
+#include "TreePropSheet.h"
 
-class CPreferencesDlg : public CPropertySheet
+class CPreferencesDlg : public CTreePropSheet
 {
 	DECLARE_DYNAMIC(CPreferencesDlg)
 
@@ -45,15 +45,10 @@ public:
 	CPPgDebug		m_wndDebug;
 #endif
 
-	CListBoxST		m_listbox;
-	CButton			m_groupbox;
-	CImageList		ImageList;
-	int				m_iPrevPage;
-
 	void Localize();
-	void OpenPage(UINT uResourceID);
 
 protected:
+	int m_iPrevPage;
 	UINT m_nActiveWnd;
 
 	virtual BOOL OnInitDialog();
@@ -61,8 +56,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnDestroy();
-	afx_msg void OnSelChanged();
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnHelp();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 };

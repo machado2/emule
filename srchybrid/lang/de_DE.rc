@@ -85,22 +85,14 @@ BEGIN
     IDS_HTTPDOWNLOAD_PERCENTAGE "Download: %s%% von %s fertig"
     IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Datei wird empfangen"
     IDS_HTTPDOWNLOAD_OF     "%s von %s"
-    IDS_HTTPDOWNLOAD_SECONDS "%s sec"
-    IDS_HTTPDOWNLOAD_MINUTES "%s min"
-    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%s min %s sec"
-    IDS_HTTPDOWNLOAD_BYTES  "%s Bytes"
-    IDS_HTTPDOWNLOAD_KILOBYTES "%s KB"
     IDS_CANCEL              "Abbruch"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_HTTPDOWNLOAD_MEGABYTES "%s MB"
     IDS_HTTP_CAPTION        "Aktualisiere Serverliste"
     IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s kopiert)"
-    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s Bytes/s"
     IDS_HSAV                "Hashset vorhanden"
-    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s KB/s"
     IDS_FD_CORR             "Korrupt"
     IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
                             "Die Datei '%s' existiert bereits.\nSoll sie überschrieben werden?"
@@ -233,7 +225,7 @@ BEGIN
     IDS_DL_RESUME           "Fo&rtsetzen"
     IDS_DL_OPEN             "Datei &öffnen"
     IDS_DL_INFO             "Zeige &Dateidetails"
-    IDS_DL_CLEAR            "Entferne &fertige Dateien"
+    IDS_DL_CLEAR            "&Fertige Dateien ausblenden"
     IDS_DL_LINK1            "Kopiere ed2k-Link in Zwischenablage"
     IDS_DL_LINK2            "Kopiere ed2k-Link in Zwischenablage (&HTML)"
     IDS_SHOWDETAILS         "Zeige &Details"
@@ -329,8 +321,8 @@ BEGIN
     IDS_TIME                "Zeit"
     IDS_STATS_DDATA         "Heruntergeladen: %s"
     IDS_STATS_UDATA         "Hochgeladen: %s"
-    IDS_STATS_AVGDL         "Durchschnittliche Downloadrate: %.2f kB/s"
-    IDS_STATS_AVGUL         "Durchschnittliche Uploadrate: %.2f kB/s"
+    IDS_STATS_AVGDL         "Durchschnittliche Downloadrate: %s"
+    IDS_STATS_AVGUL         "Durchschnittliche Uploadrate: %s"
     IDS_STATS_FOUNDSRC      "Gefundene Quellen: %i"
     IDS_STATS_ACTDL         "Aktive Downloads: %i"
     IDS_STATS_ACTUL         "Aktive Uploads: %i"
@@ -528,13 +520,13 @@ BEGIN
     IDS_PW_INCOMING         "Eingehende Dateien"
     IDS_PW_TEMP             "Temporäre Dateien"
     IDS_PW_BROWSE           "Durchsuchen"
-    IDS_PW_SHARED           "Freigegebene Verzeichnisse"
+    IDS_PW_SHARED           "Freigegebene Verzeichnisse (Strg+Klick markiert alle Unterverzeichnisse)"
     IDS_PW_CONNECTION       "Verbindung"
     IDS_PW_DOWNC            "Download Kapazität"
     IDS_PW_DOWNL            "Download Limit"
     IDS_PW_UPC              "Upload Kapazität"
     IDS_PW_UPL              "Upload Limit"
-    IDS_PW_MAXC             "Max. Verbindungen"
+    IDS_PW_MAXC             "max. Verbindungen"
     IDS_PW_CLIENTPORT       "Clientport"
     IDS_PW_AUTOCON          "Automatisch Verbinden beim Start"
     IDS_PW_RECON            "Wiederverbinden nach Trennung "
@@ -591,7 +583,7 @@ BEGIN
     IDS_FD_STATUS           "Status:"
     IDS_FD_TRANSFER         "Transfer"
     IDS_FD_SOURCES          "Quellen:"
-    IDS_FD_PARTS            "Teile:"
+    IDS_FD_PARTS            "Teile"
     IDS_FD_TRANS            "Übertragen:"
     IDS_FD_DATARATE         "Datarate:"
     IDS_FD_TRANSI           "Übertragend:"
@@ -935,13 +927,13 @@ BEGIN
     IDS_UNIT                "Einheit:"
     IDS_WIZARD_CUSTOM       "manuell"
     IDS_WIZARD_ENTERBELOW   "(Eingabe unten)"
-    IDS_STATS_MAXAVGDL      "Max Downloadrate Durchschnitt: %.2f kB/s"
+    IDS_STATS_MAXAVGDL      "Max. Downloadrate Durchschnitt: %s"
     IDS_USS_MIN             "Warnung: USS unterstützt derzeit keine Uploadgeschwindigkeiten unter 10K. Wenn du weißt, dass deine Verbindung dies nicht schafft, dann schalte bitte USS ab"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATS_MAXDL         "max Downloadrate: %.2f kB/s"
+    IDS_STATS_MAXDL         "max. Downloadrate: %s"
     IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
                             "ignoriere eMule Protokollnachrichten für Freunde hinzufügen"
     IDS_PW_FASTSRVCON       "sicheres / langsameres Verbinden zu Servern"
@@ -1141,8 +1133,8 @@ BEGIN
     IDS_FIRSTAUTODOWN       "Soll eMule die Download-Prioritäten verwalten?\r\rIst diese Option aktiviert, ist es für eMule möglich sicherzustellen, dass Downloads mit vielen Quellen nicht Downloads mit wenigen Quellen stört.\r\rWenn von v0.26 und früher upgedatet wird, werden alle Downloads auf Autopriorität gestellt.\rDiese Einstellung wirkt sich auf zukünftige Downloads aus. (Standard: Ja)"
     IDS_FIRSTAUTOUP         "Soll eMule die Upload-Prioritäten verwalten?\r\rIst diese Option aktiviert, kann eMule seltene Dateien bevorzugen und fördern. (weit verbreitete Dateien werden damit etwas nach hinten gestellt).\rWird diese Option deaktiviert, verhält sich dies entgegengesetzt (Seltene Dateien für andere schwerer zu bekommen, weit verbreitete Dateien besser).\r\rWenn gerade von v0.26 oder früher upgedatet wird, werden alle freigegebene Dateien auf Auto-Priorität gestellt.\rDiese Einstellung wirkt sich auf zukünftige freigegebene Dateien aus. (Standart: Ja)"
     IDS_FIRSTCREDITSYSTEM   "Soll eMule Nutzer belohnen, die zu dir hochladen?\r\rDies ist das bekannte Kreditsystem (Credit System). Diese Option hilft gegen Leecher vorzugehen. Wenn du viel released, kann diese Option solange deaktiviert werden.\r\r(Standard: Ja)"
-    IDS_FIRSTFULLCHUNK      "Soll versucht werden, komplette Chunks hochzuladen?\r\rDies gibt eMule eine bessere Chance, Chunks zu komplettieren. Wird diese Option deaktiviert, wird die Warteschlange schneller durchlaufen. Wenn du viel released, sollte diese Option aktiviert sein.\r\r(Standard: Ja)"
-    IDS_FIRSTSAFECON        "Soll eMule beim Verbinden zum Server ""Sicheres Verbinden"" aktivieren?\r\rWird diese Option deaktiviert, kann eMule etwas schneller zu Servern Verbindung aufnehmen, aber kann auch mehr falsche niedrige IDs hervorrufen.\r\r(Standard: Nein)"
+    IDS_FIRSTFULLCHUNK      "Soll versucht werden, komplette Chunks hochzuladen?\r\rDies gibt eMule eine bessere Chance, Chunks zu komplettieren. Wird diese Option deaktiviert, wird die Warteschlange schneller durchlaufen. Wenn du viel released, sollte diese Option aktiviert sein.\r(Standard: Ja)"
+    IDS_FIRSTSAFECON        "Soll eMule beim Verbinden zum Server ""Sicheres Verbinden"" aktivieren?\r\rWird diese Option deaktiviert, kann eMule etwas schneller zu Servern Verbindung aufnehmen, aber kann auch mehr falsche niedrige IDs hervorrufen.\r(Standard: Nein)"
     IDS_FIRSTRUNASSIST      "Möchtest Du den Setup-Assistenten starten?"
     IDS_FIRSTAUTOCON        "Soll eMule sich beim Programmstart mit einem Server verbinden?\r\r(Standard: Nein)"
     IDS_FIRSTCOMPLETE       "Der Startassistent wurde nun durchgeführt.\r\rAlle diese Einstellungen und mehr können geändert werden, klicke dazu auf das Einstellungen-Symbol oben rechts in der Toolbar. Für Erklärungen und weitere Informationen schaue in die Hilfe, durch drücken der F1-Taste!"
@@ -1230,7 +1222,7 @@ BEGIN
     IDS_AUTH                "Authentifizierung"
     IDS_SHOWCATINFO         "Zeige Downloadinformation in den Kategorie-Reitern"
     IDS_SW_SEARCHINGINFO    "Die Suche wurde gestartet. Fragen sie die Resultate in einem Moment ab!"
-    IDS_LOGENTRY            "Log-Eintrag"
+    IDS_LOGENTRY            "Log"
 END
 
 STRINGTABLE 
@@ -1507,7 +1499,7 @@ BEGIN
     IDS_INSUFFICIENT        "zu wenig freier Festplattenplatz"
     IDS_MINFREEDISKSPACE    "min. freier Festplattenplatz [MB]"
     IDS_WARNING             "Warnung"
-    IDS_IMPORTSPLPF         "Importiere Downloads (eM, eD, ON)"
+    IDS_IMPORTSPLPF         "Importiere Downloads (eMule,eDonkey,Overnet)"
     IDS_IMP_STEPREADPF      "Lese Parts-Verzeichnis"
     IDS_IMP_STEPBASICINF    "Lese Grundinformationen aus dem Partfile"
     IDS_IMP_STEPCRDESTFILE  "Erstelle Ziel-Partfile"
@@ -1547,7 +1539,7 @@ BEGIN
     IDS_DYNUP_MINUPLOAD     "Upload Minimum"
     IDS_ESTTIMELEFT         "Restzeit:"
     IDS_TRANSFER_RATE_LABEL "Transferrate:"
-    IDS_SAVELOG             "Chat abspeichern"
+    IDS_SAVELOG             "Log abspeichern"
     IDS_CMT_COPYCLIPBOARD   "Kommentar in Zwischenablage kopieren"
     IDS_ASKDOWNLOADLANG     "Die ausgewählte Sprache ist nicht installiert. Soll eMule diese jetzt von emule-project.net herunterladen?"
     IDS_ASKDOWNLOADLANGCAP  "Downloade Sprachdateien"
@@ -1562,8 +1554,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_KAD_NODE            "Schlüsselsuche (%i:%i)"
-    IDS_KAD_STOREFILE       "Store File (%i:%i)"
-    IDS_KAD_STOREKW         "Store Keyword (%i:%i)"
+    IDS_KAD_STOREFILE       "Datei ablegen (%i:%i)"
+    IDS_KAD_STOREKW         "Schlüsselwort ablegen (%i:%i)"
     IDS_KAD_UNKNOWN         "unbekannt (%i:%i)"
     IDS_SRV_TCPCOMPR        "TCP-Kompression"
     IDS_KADSEARCHLAB        "aktuelle Suchanfragen"
@@ -1701,6 +1693,134 @@ BEGIN
     IDS_LOG_ULDL_EVENTS     "Logge Upload/Download Ereignisse"
     IDS_PEERCACHE_ENABLED   "Dein ISP unterstützt die PeerCache Technologie. Cache Downloads aktiviert."
     IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Erlaube dem Benutzer, dich als Freund aufzunehmen."
+    IDS_DL_TRY_TO_GET_PREVIEW_PARTS "zuerst Teile für eine Vorschau downloaden"
+
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_ERR_BADFORMAT   "unbekanntes oder fehlerhaftes Tempdatei-Format"
+    IDS_SEARCH_INVALIDCHAR  "Suchausdruck enthält ungültige Zeichen. Es wurde ein '?' oder ein Zeichen, welches im eD2K Netzwerk nicht verwendet werden kann, benutzt."
+    IDS_PORTSCON            "Ports und Verbindung"
+    IDS_PORTINFO            "eMule nutzt zwei Ports für die Kommunikation mit Servern und anderen Clients. Diese Ports müssen frei und von anderen Clients erreichbar sein. Der TCP Port muss verfügbar sein, um die Hauptfunktionalitäten zu gewährleisten. Der UDP Port wird für Kad (serverloses Netzwerk) und Netzwerkentlastung (Overhead-Verringerung) genutzt.\n\nDu kannst die Ports hier ändern, solange keine Netzwerkaktivitäten gestartet wurden."
+    IDS_STARTTEST           "Ports testen"
+    IDS_TESTINFO            "Hier kann ein Test gestartet werden, um zu erkunden, ob der eingestellte TCP und UDP Port von aussen erreichbar sind. Der Erfolg dieses Tests sagt aus, ob Server und andere Clients sich verbinden können. Der TCP-Port Test sollte unbedingt erfolgreich sein!"
+    IDS_CONNECTIONTEST      "Verbindungstest"
+    IDS_NOPORTCHANGEPOSSIBLE 
+                            "Ein Portwechsel ist nicht mehr möglich, nachdem zu anderen Clients verbunden wurde und solange keine Server/Kad-Verbindung herrscht!\n\nBitte starte eMule neu, um die geänderten Porteinstellungen zu übernehmen."
+    IDS_NETWORK_INFO        "Netzwerk Informationen"
+    IDS_SP_TOTALUL          "Upload Gesamtanzahl"
+    IDS_SP_ULFRIENDS        "akt. Freundesuploads"
+    IDS_SP_ULSLOTSNOOVERHEAD "akt. Upload, ohne Overhead (nur UL Slots)"
+    IDS_ST_ACTIVEU_ZZ       "aktive Uploads"
+    IDS_ST_ULCURRENT        "Upload+Overhead"
+    IDS_ST_ULSLOTSNOOVERHEAD "Upload"
+    IDS_ST_ULFRIEND         "Freundesupload"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ACTUL_ZZ      "Aktive uploads/nötig um Bandbreite auszunutzen: %i"
+    IDS_STATS_TOTALUL       "Gesamtanzahl der Uploads: %i"
+    IDS_CHAT_DOWNLOADED     "Heruntergeladen:"
+    IDS_CHAT_UPLOADED       "Hochgeladen:"
+    IDS_CHAT_IDENT          "Identifikation:"
+    IDS_CHAT_CLIENT         "Client:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MAXHALFOPENCONS     "maximale halboffene Verbindungen"
+    IDS_WIZ_STARTWITHWINDOWS 
+                            "Aktiviere dies, wenn eMule beim Windowsstart automatisch starten soll.\r\r[Standard: nein]"
+    IDS_KAD_WAITCBK         "warte auf Kad Rückruf"
+    IDS_KAD_TOOMANDYKADLKPS "zu viele Kad Suchen"
+    IDS_PCDS_CLIENTWAIT     "ClientWarte"
+    IDS_PCDS_CACHEWAIT      "CacheWarte"
+    IDS_CACHE               "Cache"
+    IDS_INDEXED             "Indexiert"
+    IDS_KADINFO_SRC         "\tQuelle: %u\r\n"
+    IDS_KADINFO_KEYW        "\tSchlüsselwort: %u\r\n"
+    IDS_STARTWITHWINDOWS    "Starte mit Windows"
+    IDS_ADDSRCMANUALLY      "Quelle manuell hinzufügen"
+    IDS_BUDDY               "Buddy"
+    IDS_BUDDYNONE           "keiner"
+    IDS_INFO                "Info"
+    IDS_HALF                "halb"
+    IDS_CONCOMPL            "komplett"
+    IDS_KADSTATUS_STOPPING  "stoppe"
+    IDS_KADSTATUS_ACTIVE    "aktiv"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FORMAT              "Format"
+    IDS_META_COLLECTION     "Kollektion"
+    IDS_META_PARTPATH       "Tempdatei Pfad"
+    IDS_META_PARTHASH       "Hash"
+    IDS_META_GAPSTART       "Lückenstart"
+    IDS_META_GAPEND         "Lückenende"
+    IDS_FAIL                "Fehler"
+    IDS_META_PREFERENCES    "Einstellungen"
+    IDS_META_VERSION        "Version"
+    IDS_META_TEMPFILE       "Temporäre Datei"
+    IDS_META_SERVERPORT     "Server Port"
+    IDS_META_SERVERIP       "Server IP"
+    IDS_META_SRCUDPPORT     "Quelle UDP Port"
+    IDS_META_SRCTCPPORT     "Quelle TCP Port"
+    IDS_META_SRCIP          "Quelle IP"
+    IDS_META_SRCTYPE        "Quellentyp"
+    IDS_SEARCH_UNICODE      "Suche mit Unicode"
+    IDS_PERSEC              "/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LD_ED2KLINK         "ED2K Link"
+    IDS_LD_COPYCLIPBOARD    "in Zwischenablage kopieren"
+    IDS_LD_HOSTNAME         "Benutze Hostnamen (aus den Einstellungen) anstatt der IP, wenn ED2K-Links mit Quelle erstellt werden"
+    IDS_SAVEACFAILED        "AICH Hashset konnte nicht gespeichert werden!"
+    IDS_IACHHASH            "AICH Hash"
+    IDS_BYTESPERSEC         "B/s"
+    IDS_KBYTESPERSEC        "KB/s"
+    IDS_MBYTESPERSEC        "MB/s"
+    IDS_GBYTESPERSEC        "GB/s"
+    IDS_TBYTESPERSEC        "TB/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MINORCLIENTS  "weitere"
+    IDS_LD_BASICOPT         "grundlegende Optionen"
+    IDS_LD_ADDSOURCE        "mich selber als Quelle hinzufügen"
+    IDS_LD_EMULEHASH        "füge eMule AICH Hash für bessere Korruptionsbehandlung hinzu"
+    IDS_LD_ADVANCEDOPT      "erweiterte Optionen"
+    IDS_LD_ADDHTML          "füge HTML-Tags hinzu"
+    IDS_LD_ADDHASHSET       "füge kompletten Hashset hinzu"
+    IDS_FILELINK            "Datei Link"
+    IDS_PF_ADVANCEDCALC     "nutze fortgeschrittene Methode für Restzeitbestimmung"
+    IDS_DL_SHOWED2KLINK     "zeige eD2K Link..."
+    IDS_AICH_SYNCTOTAL      "%i Dateien ohne gültigen AICH Hashset gefunden - werden jetzt gehasht"
+    IDS_AICH_CALCFILE       "Berechne AICH Hash für Datei %s"
+    IDS_AICH_WARNUSER       "Seit Version 0.44a nutzt eMule einen weiteren Dateihash, welcher den Datenverlust bei Datenkorruption drastisch senkt. Da du von einer früheren Version aktualisiert hast, muss eMule nun alle freigegebenen Dateien berechnen. Dies kann etwas dauern, ist aber ein einmaliger Vorgang."
+    IDS_AICH_WORKED         "AICH hat erfolgreich %s von %s von Teil %u der Datei %s wiederhergestellt"
+    IDS_TRICKLING           "Wartend"
+    IDS_SOURCECLIENT        "Quell-Client"
+    IDS_USERSIP             "Nutzers IP"
+    IDS_FEATURES            "Features"
+    IDS_IRC_NEWNICK         "Wähle einen IRC Nutzernamen"
+    IDS_IRC_NEWNICKDESC     "Der Nutzername sollte nur ein Wort mit weniger als 20 Zeichen sein, mit den Zeichen (A-Z, 0-9). Der Name kann auch in den Einstellungen (->IRC) geändert werden."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SPARSEPARTFILES     "Erstelle neue Tempdateien als 'sparse' (nur NTFS)"
+    IDS_ASPECTRATIO         "Bildratio"
+    IDS_NEGATEFILTER        "negiere Filter"
+    IDS_SEENCOMPL           "jemals komplett gesehen"
+    IDS_SELSKINPROFILEDIR   "wähle Verzeichnis der Skin Profile"
+    IDS_ASKDLINCOMPLETE     "Potentiell unvollständige Datei:\r\n\r\n%s\r\n\r\nDiese Datei ist vermutlich nicht komplett im Netzwerk und kann daher höchstwahrscheinlich nicht erfolgreich heruntergeladen werden! Möchtest du diese Datei dennoch herunterladen?"
+    IDS_DEADSOURCES         "tote Quelle"
 END
 
 #endif    // German (Germany) resources

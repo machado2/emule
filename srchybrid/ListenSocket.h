@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -20,6 +20,14 @@
 class CUpDownClient;
 class CPacket;
 class CTimerWnd;
+enum EDebugLogPriority;
+
+enum SocketState 
+{
+	SS_Other,		//These are sockets we created that may or may not be used.. Or incoming connections.
+	SS_Half,		//These are sockets that we called ->connect(..) and waiting for some kind of response.
+	SS_Complete	//These are sockets that have responded with either a connection or error.
+};
 
 class CClientReqSocket : public CEMSocket{
 	DECLARE_DYNCREATE(CClientReqSocket)
@@ -28,7 +36,7 @@ public:
 	CClientReqSocket(CUpDownClient* in_client = NULL);	
 	void	SetClient(CUpDownClient* pClient);
 	void	Disconnect(LPCTSTR pszReason);
-
+	void	WaitForOnConnect();
 	void	ResetTimeOutTimer();
 	bool	CheckTimeOut();
 	virtual UINT GetTimeOut();
@@ -36,7 +44,8 @@ public:
 	
 	bool	Create();
 	virtual void SendPacket(Packet* packet, bool delpacket = true, bool controlpacket = true, uint32 actualPayloadSize = 0);
-    virtual SocketSentBytes Send(uint32 maxNumberOfBytesToSend, uint32 overchargeMaxBytesToSend, bool onlyAllowedToSendControlPacket = false);
+    virtual SocketSentBytes SendControlData(uint32 maxNumberOfBytesToSend, uint32 overchargeMaxBytesToSend);
+    virtual SocketSentBytes SendFileAndControlData(uint32 maxNumberOfBytesToSend, uint32 overchargeMaxBytesToSend);
 
 	void	DbgAppendClientInfo(CString& str);
 	CString DbgGetClientInfo();
@@ -61,15 +70,19 @@ protected:
 	bool	ProcessPacket(char* packet, uint32 size, UINT opcode);
 	bool	ProcessExtPacket(char* packet, uint32 size, UINT opcode, UINT uRawSize);
 	void	PacketToDebugLogLine(LPCTSTR protocol, const char* packet, uint32 size, UINT opcode, EDebugLogPriority dlpPriority);
+	void	SetConState(SocketState val);
 
 	uint32	timeout_timer;
 	bool	deletethis;
 	uint32	deltimer;
+	bool	m_bPortTestCon;
+	uint32	m_nOnConnect;
 };
 
 
 class CListenSocket : public CAsyncSocketEx
 {
+	friend class CClientReqSocket;
 public:
 	CListenSocket();
 	~CListenSocket();
@@ -89,6 +102,8 @@ public:
 	void	RecalculateStats();
 	void	ReStartListening();
 	void	Debug_ClientDeleted(CUpDownClient* deleted);
+	bool	Rebind();
+	bool	SendPortTestReply(char result,bool disconnect=false);
 
 	void	UpdateConnectionsStatus();
 	float	GetMaxConperFiveModifier();
@@ -96,11 +111,13 @@ public:
 	uint32	GetTotalConnectionChecks()	{ return totalconnectionchecks; }
 	float	GetAverageConnections()		{ return averageconnections; }
 	uint32	GetActiveConnections()		{ return activeconnections; }
+	uint16	GetConnectedPort()			{ return m_port; }
+	uint32	GetTotalHalfCon()			{ return m_nHalfOpen; }
+	uint32	GetTotalComp()				{ return m_nComp; }
 
 private:
 	bool bListening;
 	CTypedPtrList<CPtrList, CClientReqSocket*> socket_list;
-	uint16	opensockets;
 	uint16	m_OpenSocketsInterval;
 	uint32	maxconnectionreached;
 	uint16	m_ConnectionStates[3];
@@ -109,4 +126,7 @@ private:
 	uint32	totalconnectionchecks;
 	float	averageconnections;
 	uint32	activeconnections;
+	uint16  m_port;
+	uint32	m_nHalfOpen;
+	uint32	m_nComp;
 };

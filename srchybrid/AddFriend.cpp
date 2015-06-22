@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -47,11 +47,14 @@ void CAddFriend::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 }
 
-BOOL CAddFriend::OnInitDialog(){
+BOOL CAddFriend::OnInitDialog()
+{
 	CDialog::OnInitDialog();
 	InitWindowStyles(this);
 	Localize();
-	if (m_pShowFriend){
+	if (m_pShowFriend)
+	{
+		SetIcon(theApp.LoadIcon(_T("CLIENTDETAILS")), FALSE);
 		SendDlgItemMessage(IDC_IP, EM_SETREADONLY, TRUE);
 		SendDlgItemMessage(IDC_PORT, EM_SETREADONLY, TRUE);
 		SendDlgItemMessage(IDC_USERNAME, EM_SETREADONLY, TRUE);
@@ -76,6 +79,7 @@ BOOL CAddFriend::OnInitDialog(){
 		GetDlgItem(IDC_ADD)->ShowWindow(SW_HIDE);
 	}
 	else{
+		SetIcon(theApp.LoadIcon(_T("AddFriend")), FALSE);
 		((CEdit*)GetDlgItem(IDC_USERNAME))->SetLimitText(thePrefs.GetMaxUserNickLength());
 		SetDlgItemText(IDC_USERHASH, _T(""));
 	}

@@ -18,6 +18,7 @@ public:
 
 	void AddEntry(LPCTSTR pszMsg);
 	void Add(LPCTSTR pszMsg, int iLen = -1);
+	void AddTyped(LPCTSTR pszMsg, int iLen, UINT uFlags);
 	void Reset();
 	CString GetLastLogEntry();
 	CString GetAllLogEntries();
@@ -36,7 +37,7 @@ public:
 protected:
 	bool m_bRichEdit;
 	CTitleMenu m_LogMenu;
-	int m_iMaxLogMessages;
+	int m_iLimitText;
 	bool m_bAutoScroll;
 	CStringArray m_astrBuff;
 	bool m_bNoPaint;
@@ -50,7 +51,7 @@ protected:
 	void SelectAllItems();
 	void CopySelectedItems();
 	int GetMaxSize();
-	void SafeAddLine(int nPos, LPCTSTR pszLine, long& nStartChar, long& nEndChar, bool bLink, COLORREF cr);
+	void SafeAddLine(int nPos, LPCTSTR pszLine, int iLen, long& nStartChar, long& nEndChar, bool bLink, COLORREF cr);
 	void FlushBuffer();
 	void AddString(int nPos, LPCTSTR pszString, bool bLink, COLORREF cr);
 	void ScrollToLastLine();

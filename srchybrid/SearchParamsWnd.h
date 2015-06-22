@@ -29,10 +29,14 @@ public:
 	CSearchParamsWnd();
 	virtual ~CSearchParamsWnd();
 
+// Dialog Data
+	enum { IDD = IDD_SEARCH_PARAMS };
+
 	CEditX m_ctlName;
 	CButton m_ctlStart;
 	CButton m_ctlCancel;
 	CButton m_ctlMore;
+	CButton m_ctlUnicode;
 	CSearchResultsWnd* m_searchdlg;
 
 	void Localize();
@@ -63,12 +67,14 @@ protected:
 	CRect m_rcStart;
 	CRect m_rcMore;
 	CRect m_rcCancel;
+	CRect m_rcUnicode;
 	CImageList m_imlSearchMethods;
 	CSize m_szMRU;
 	CSize m_szFloat;
 	CCustomAutoComplete* m_pacSearchString;
 
 	void UpdateControls();
+	void UpdateUnicodeCtrl();
 	BOOL SaveSearchStrings();
 	void SetAllIcons();
 	void InitMethodsCtrl();

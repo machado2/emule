@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2003-2004 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2003-2004 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -38,6 +38,7 @@
 #include "SearchParams.h"
 #include "kademlia/kademlia/kademlia.h"
 #include "emuledlg.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -183,7 +184,7 @@ void CMMServer::ProcessStatusRequest(CMMSocket* sender, CMMPacket* packet){
 	packet->WriteShort((uint16)((thePrefs.GetMaxGraphDownloadRate()*1024)/100));
 	packet->WriteByte((uint8)theApp.downloadqueue->GetDownloadingFileCount());
 	packet->WriteByte((uint8)theApp.downloadqueue->GetPausedFileCount());
-	packet->WriteInt(theApp.stat_sessionReceivedBytes/1048576);
+	packet->WriteInt(theStats.sessionReceivedBytes/1048576);
 	packet->WriteShort((uint16)((theStats.GetAvgDownloadRate(0)*1024)/100));
 	if (theApp.serverconnect->IsConnected()){
 		if(theApp.serverconnect->IsLowID())
@@ -326,8 +327,7 @@ void CMMServer::ProcessFileCommand(CMMData* data, CMMSocket* sender){
 					selFile->DeleteFile(); 
 					break;
 				default:
-					if (thePrefs.StartNextFile()) 
-						theApp.downloadqueue->StartNextFile();
+                    theApp.downloadqueue->StartNextFileIfPrefs(selFile->GetCategory());
 					selFile->DeleteFile(); 
 			}
 			break;
@@ -642,11 +642,11 @@ void CMMServer::Process(){
 	} 
 }
 
-CString CMMServer::GetContentType(){
+CStringA CMMServer::GetContentType(){
 	if (m_bUseFakeContent)
-		return CString("image/vnd.wap.wbmp");
+		return CStringA("image/vnd.wap.wbmp");
 	else
-		return CString("application/octet-stream");
+		return CStringA("application/octet-stream");
 }
 
 VOID CALLBACK CMMServer::CommandTimer(HWND hwnd, UINT uMsg,UINT_PTR idEvent,DWORD dwTime)
@@ -662,7 +662,7 @@ VOID CALLBACK CMMServer::CommandTimer(HWND hwnd, UINT uMsg,UINT_PTR idEvent,DWOR
 				TOKEN_PRIVILEGES tkp; 
 				try{
 					if (!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken)) 
-						throw; 
+						throw 1; 
 					LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid); 
 					tkp.PrivilegeCount = 1;  // one privilege to set    
 					tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED; 
@@ -736,7 +736,7 @@ void CMMServer::WriteFileInfo(CPartFile* selFile, CMMPacket* packet){
 		packet->WriteByte(selFile->GetDownPriority());
 	}
 	uint8* parts = selFile->MMCreatePartStatus();
-	packet->WriteByte(selFile->GetPartCount());
+	packet->WriteShort(selFile->GetPartCount());
 	for (int i = 0; i != selFile->GetPartCount(); i++){
 		packet->WriteByte(parts[i]);
 	}

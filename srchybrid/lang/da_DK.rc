@@ -85,22 +85,14 @@ BEGIN
     IDS_HTTPDOWNLOAD_PERCENTAGE "Opdaterer serverliste: %s%% af %s fuldført"
     IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Modtager filen"
     IDS_HTTPDOWNLOAD_OF     "%s af %s"
-    IDS_HTTPDOWNLOAD_SECONDS "%s sek"
-    IDS_HTTPDOWNLOAD_MINUTES "%s min"
-    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%s min %s sek"
-    IDS_HTTPDOWNLOAD_BYTES  "%s Bytes"
-    IDS_HTTPDOWNLOAD_KILOBYTES "%s KB"
     IDS_CANCEL              "Annuller"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_HTTPDOWNLOAD_MEGABYTES "%s MB"
     IDS_HTTP_CAPTION        "Opdaterer serverliste"
     IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s kopieret)"
-    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s Bytes/s"
-    IDS_HSAV                "Hashset tilrådigt"
-    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s KB/s"
+    IDS_HSAV                "Hashset tilgængeligt"
     IDS_FD_CORR             "Korrupt"
     IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
                             "Filen '%s' eksisterer allerede.\nØnsker du at overskrive den?"
@@ -122,8 +114,8 @@ BEGIN
     IDS_MAIN_BTN_DISCONNECT_TOOLTIP "Afbryd fra nuværende server"
     IDS_ERR_WRONGFILEID     "Forkert fileID sendt"
     IDS_ERR_BADHASHSET      "Fejlbehæftet eller ugyldigt Hashset modtaget"
-    IDS_ERR_BADDATABLOCK    "Fejlbehæftet eller ugyldig DataBlock modtaget"
-    IDS_ERR_ILLFORMEDHASH   "Ikke velformet hash"
+    IDS_ERR_BADDATABLOCK    "Fejlbehæftet eller ugyldig DataBlok modtaget"
+    IDS_ERR_ILLFORMEDHASH   "Ikke veludformet hash"
     IDS_ERR_BADED2KLINK     "Ukorrekt ed2k link"
     IDS_ERR_NOSLLINK        "Ikke en ED2K server eller fil link"
     IDS_ERR_WRONGPACKAGESIZE "Ugyldig OP_FILEREQUEST pakkestørrelse"
@@ -133,7 +125,7 @@ BEGIN
                             "Ukendte klienter sender extended protocol pakker"
     IDS_ERR_OPENMET         "Fejl: Kunne ikke åbne part.met fil! (%s => %s)"
     IDS_ERR_BADMETVERSION   "Fejl: Ukorrekt part.met filversion! (%s => %s)"
-    IDS_ERR_BADGAP          "Ukorrekt Gap-Tag i part.met fil     "
+    IDS_ERR_BADGAP          "Ukorrekt Gap-Tag i part.met fil"
 END
 
 STRINGTABLE 
@@ -150,7 +142,7 @@ BEGIN
     IDS_PASSIVE             "Passiv"
     IDS_MAIN_CONNECTEDTO    "Forbundet til:"
     IDS_MAIN_BTN_CANCEL     "&Annuller"
-    IDS_AVAIL               "Dele: %d , tilrådige: %d (%.1f%%)\n\n"
+    IDS_AVAIL               "Dele: %d , tilgængelige: %d (%.1f%%)\n\n"
     IDS_TYPE                "Type"
     IDS_FILEID              "Fil ID"
     IDS_FILE                "Fil"
@@ -269,6 +261,7 @@ BEGIN
     IDS_ERR_BADSERVERLISTRECEIVED "Fejlbehæftet serverlistepakke modtaget"
     IDS_STATUS              "Status"
     IDS_DL_REMAINS          "Mangler"
+    IDS_UPDATEFROM          "Updatér fra URL: (filter.dat- eller PeerGuardian-format)"
     IDS_QL_USERNAME         "Brugernavn"
     IDS_ERR_PACKAGEHANDLING "Ikke håndteret fejl mens pakke fra server blev behandlet (%s)"
     IDS_QL_RATING           "Bedømmelse"
@@ -295,7 +288,7 @@ BEGIN
     IDS_SRV_NOTADDED        "Server ikke tilføjet!"
     IDS_SRV_READD           "Server markeret som død, den er blevet tilføjet igen!"
     IDS_SRV_NOURLAV         "Ingen URL tilgængelig."
-    IDS_INVALIDURL          "Invalid URL"
+    IDS_INVALIDURL          "Ukorrekt URL"
 END
 
 STRINGTABLE 
@@ -326,8 +319,8 @@ BEGIN
     IDS_TIME                "Tid"
     IDS_STATS_DDATA         "Downloaded Data: %s"
     IDS_STATS_UDATA         "Uploaded Data: %s"
-    IDS_STATS_AVGDL         "Gennemsnitlig Downloadrate: %.2f kB/s"
-    IDS_STATS_AVGUL         "Gennemsnitlig Uploadrate: %.2f kB/s"
+    IDS_STATS_AVGDL         "Gennemsnitlig Downloadrate: %s"
+    IDS_STATS_AVGUL         "Gennemsnitlig Uploadrate: %s"
     IDS_STATS_FOUNDSRC      "Fundne kilder: %i"
     IDS_STATS_ACTDL         "Aktive Downloads (chunks): %i"
     IDS_STATS_ACTUL         "Aktive Uploads: %i"
@@ -349,8 +342,8 @@ BEGIN
     IDS_STOPPED             "Stoppet"
     IDS_STATS_UPDATELABEL   "Opdateringshastighed: %i sek"
     IDS_QUEUECOUNT          "%u (%u bandlyst)"
-    IDS_NICKNAME            "Nick: "
-    IDS_CLIENTSFILENAME     "\nKlientens filnavn: "
+    IDS_NICKNAME            "Øgenavn: "
+    IDS_CLIENTSFILENAME     "\nKlientens fil navn: "
     IDS_ASKEDFAF            "\nForespurgt på anden fil"
     IDS_WAITED              "Ventet"
     IDS_ERR_LOADCREDITFILE  "Kunne ikke indlæse kreditfil, opretter en ny"
@@ -473,6 +466,7 @@ BEGIN
     IDS_NOTHING             "ingenting"
     IDS_SETUPSPEED          "sæt uploadbegrænsning"
     IDS_SETDOWNSPEED        "sæt downloadbegrænsning"
+    IDS_UNDO                "Fortryd ændring"
     IDS_DAYLY               "dagligt"
 END
 
@@ -523,7 +517,7 @@ BEGIN
     IDS_PW_INCOMING         "Indkommende filer"
     IDS_PW_TEMP             "Temp filer"
     IDS_PW_BROWSE           "Gennemse"
-    IDS_PW_SHARED           "Delte mapper"
+    IDS_PW_SHARED           "Delte mapper (Ctrl+Klik inkluderer undermapper)"
     IDS_PW_CONNECTION       "Forbindelse"
     IDS_PW_DOWNC            "Download kapacitet"
     IDS_PW_DOWNL            "Download begrænsning"
@@ -753,6 +747,7 @@ BEGIN
     IDS_STREE               "Statistik træ"
     IDS_IRC_IGNOREQUITMESSAGE "Ignorer Afslut info beskeder"
     IDS_STATSSETUPINFO      "Statistikvisning"
+    IDS_IRC_SOUNDEVENTS     "Spil lyd begivenhed"
 END
 
 STRINGTABLE 
@@ -803,11 +798,6 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* Privat chatsession startet"
     IDS_IRC_SLAPMSG         "* %s slår %s med en stor Babelfish!"
     IDS_IRC_PRIVMESSAGE     "Privat besked"
-    IDS_IRC_OP              "Op"
-    IDS_IRC_DEOP            "DeOp"
-    IDS_IRC_VOICE           "Voice"
-    IDS_IRC_HALFOP          "HalfOp"
-    IDS_IRC_DEHALFOP        "DeHalfOp"
     IDS_IRC_KICK            "Kick"
     IDS_IRC_SLAP            "Slap"
     IDS_IRC_JOIN            "Deltag"
@@ -817,12 +807,25 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_FO_PREF_EXISTED     "eMule har opdaget eksisterende regler for de valgte porte, hvilke ikke er overskrevet eller udskiftet. Manglende regler blev vellykket tilføjet.\nBemærk venligst at 3. parter firewalls ellers routers ikke er omfattet af dette!"
+    IDS_FO_PREF_FAILED      "Mislykkedes at konfigurere den interne WinXP firewall for de valgte ports!"
+    IDS_FO_PREF_STARTUP     "Åben/Luk porte på WinXP firewall ved start/lukning af eMule"
+    IDS_LOG_LEVEL           "Log Niveau"
+    IDS_DISABLEPEERACHE     "Deaktivere downloading fra PeerCache"
+    IDS_NEWMSG              "Ny besked fra '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "kun i samme kategori"
+    IDS_LOG_ULDL_EVENTS     "Log upload/download begivenheder"
+    IDS_PEERCACHE_ENABLED   "Din ISP understøtter PeerCache teknologien, aktiverer cache downloads!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Tillad bruger at tilføje dig som ven."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_IRC_DISCONNECT      "Afbryd"
     IDS_IRC_HASJOINED       "* %s indtrådt i %s"
     IDS_IRC_HASPARTED       "* %s har forladt %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s blev kicked af %s (%s)"
     IDS_IRC_NICKUSED        "Dit nick benyttes allerede på IRC serveren. Skriv /nick nytnick for at ændre det."
-    IDS_IRC_DEVOICE         "DeVoice"
     IDS_IRC_HASQUIT         "* %s har forladt (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s kendes nu som %s"
     IDS_IRC_SETSMODE        "* %s sætter tilstande: %s %s"
@@ -932,13 +935,13 @@ BEGIN
     IDS_UNIT                "Enhed"
     IDS_WIZARD_CUSTOM       "Speciel"
     IDS_WIZARD_ENTERBELOW   "(indtast herunder!)"
-    IDS_STATS_MAXAVGDL      "Max. Downloadrate gennemsnit: %.2f kB/s"
+    IDS_STATS_MAXAVGDL      "Max. Downloadrate gennemsnit: %s"
     IDS_USS_MIN             "Advarsel: USS understøtter i øjeblikket ikke upload speeds på mindre end 10K. Hvis du ved at din forbindelse ikke kan klare dette, så deaktiver USS."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATS_MAXDL         "Max. Downloadrate: %.2f kB/s"
+    IDS_STATS_MAXDL         "Max. Downloadrate: %s"
     IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
                             "Ignorer eMule tilføj ven protokol besked"
     IDS_PW_FASTSRVCON       "Forbind hurtigt til servere"
@@ -1069,6 +1072,7 @@ BEGIN
     IDS_COMMENT             "Kommentar"
     IDS_IPFILTERED          "Filtreret IP: %s (%s)"
     IDS_DL_TRANSFCOMPL      "Færdiggjort"
+    IDS_DL_ACTIVE_TIME      "Download tid"
     IDS_STATS_FILTEREDCLIENTS "Filtreret: %i"
     IDS_FILTERLABEL         "Filtrer beskeder der indeholder: (Separator | )"
     IDS_ERR_LARGEREQBLOCK   "Klienten forespurgte på en for stor blok."
@@ -1237,7 +1241,7 @@ BEGIN
     IDS_WIZ1                "eMule førstegangsvejledning"
     IDS_WIZ1_END_BTN_HINT   "For at lukke denne vejledning, klik færdig."
     IDS_WIZ1_UPLOAD_SUBTITLE "Fuld chunk overførsel"
-    IDS_DL_RESUMENEXT       "Fortsæt næstede pausede"
+    IDS_DL_RESUMENEXT       "Fortsæt næste pausede fil"
     IDS_DONTCHANGE          "Skift ikke"
     IDS_STARTPRIO           "Priority for this category"
     IDS_PREF_STARTNEXTFILECAT "foretræk samme kategori"
@@ -1387,6 +1391,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_CUT                 "Klip"
     IDS_STATS_SECUREIDENT   "Sikker identifikation (OK : FEJLET )"
     IDS_ONDISK              "Størrelse på disk: "
     IDS_CLIENTCOL           "Advarsel: Fandt en matchende klient til en allerede forbundet klient: %s (%s) og %s (%s)"
@@ -1401,13 +1406,15 @@ BEGIN
     IDS_SEARCH_MISSINGNOTLEFT "Mangler venstre side til NOT operator"
     IDS_SEARCH_EXPRERROR    "Mislykkedes at overføre søgeudtrykket"
     IDS_SEARCH_TOOCOMPLEX   "Udtrykket er for komplekst"
-    IDS_SEARCH_INVALIDMINMAX "Forkert enhed i Min/Max filstørrelser specificeret"
+    IDS_SEARCH_INVALIDMINMAX 
+                            "Forkert enhed i Min/Max filstørrelser specificeret"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Version"
     IDS_ALL_A4AF_TO_THIS    "Byt alle kilder til denne fil nu"
+    IDS_PASTE               "Sæt ind"
     IDS_ALL_A4AF_TO_OTHER   "Byt alle kilder til alle andre filer nu"
     IDS_ALL_A4AF_AUTO       "Byt automatisk alle (A4AF) kilder til denne fil"
     IDS_SWAP_A4AF_TO_THIS   "Byt kilder til denne fil nu"
@@ -1480,9 +1487,11 @@ BEGIN
     IDS_DWTOT_TSN           "Total Plads Nødvendig til Downloads: %s"
     IDS_DWTOT_FS            "Fri Plads på Temp drevet: %s"
     IDS_NEEDFREEDISKSPACE   "%s (du skal frigøre %s!)"
-    IDS_SERVERKEEPALIVETIMEOUT "Genopfriskningsinterval for Server forbindelse [min.]"
+    IDS_SERVERKEEPALIVETIMEOUT 
+                            "Genopfriskningsinterval for Server forbindelse [min.]"
     IDS_MORE                "&Mere"
     IDS_TOOLS               "V&ærktøjer"
+    IDS_SEARCHPARAMS        "Søgningsparametre"
 END
 
 STRINGTABLE 
@@ -1494,7 +1503,7 @@ BEGIN
     IDS_INSUFFICIENT        "Utilstrækkelig Diskplads"
     IDS_MINFREEDISKSPACE    "Min. fri diskplads [MB]"
     IDS_WARNING             "Advarsel"
-    IDS_IMPORTSPLPF         "Importér part filer (eM, eD, ON)"
+    IDS_IMPORTSPLPF         "Importér part filer (eMule,eDonkey,Overnet)"
     IDS_IMP_STEPREADPF      "Læser part mappe"
     IDS_IMP_STEPBASICINF    "Genfinder grundlæggende information fra part fil"
     IDS_IMP_STEPCRDESTFILE  "Skaber destinations part fil"
@@ -1538,6 +1547,7 @@ BEGIN
     IDS_CMT_COPYCLIPBOARD   "Kopier kommentar til udklipsholderen"
     IDS_ASKDOWNLOADLANG     "Det valgte sprog er ikke installeret på din computer. Ønsker du at downloade det fra emule-project.net?"
     IDS_ASKDOWNLOADLANGCAP  "Download sprogfiler"
+    IDS_DELETESELECTED      "Slet"
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "MIslykkedes at downloade og installere den valgte sprog dll fil fra %s!"
     IDS_ERR_BADFOLDER       "Ugyldig mappe.\nFolder kan ikke skabes. Check venligst navn og placering."
@@ -1573,6 +1583,7 @@ BEGIN
     IDS_KADUDPPORTERR       "Kads UDP port er i konflikt med enten eMule's Eksterne UDP port eller eMule's Server UDP port. Port er blevet ændret til %u."
     IDS_CONFIRM_FILEDELETE  "Ønsker du virkelig at fjerne alle valgte filer fra disken?"
     IDS_OPENFOLDER          "Åben mappe"
+    IDS_RUNASUSER           "Kør eMule som uprivilegeret Bruger"
     IDS_DELETE              "Slet fra disk"
     IDS_BOOTSTRAP           "Bootstrap"
     IDS_VIAED2KSQ           "via ED2K Server/Kø"
@@ -1614,7 +1625,7 @@ BEGIN
     IDS_DELETEIPFILTERS     "Ønsker du virkelig at slette de valgte IP filtrer?"
     IDS_TOTAL_IPFILTER_LABEL "Total IP filtrer:"
     IDS_TOTAL_IPS_LABEL     "Total IP'er:"
-    IDS_DELETESELECTED             "Slet"
+    IDS_RAU_WARNING         "Denne indstilling vil give eMule yderligere sikkerhed mod angreb og udnyttelser og vi anbefaler brugen af denne mulighed.\nDet er dog stærkt anbefaleligt at læse manualen inden aktivering af det!\n\nÆndringer vil træde i kraft efter genstart af eMule."
     IDS_APPEND              "Vedlægge..."
     IDS_SAVE                "Gem"
     IDS_IP_START            "Start"
@@ -1629,67 +1640,175 @@ STRINGTABLE
 BEGIN
     IDS_ERR_NOTCONNECTEDKAD "Du er i øjeblikket ikke forbundet til Kad netværket!"
     IDS_IRC_NOSFS           "Ingen Delte Filer Valgt"
+    IDS_RESETLABEL          "Auto færdiggørelse (historie funktion)"
     IDS_IRC_IGNOREMISCMESSAGE "Ignorer forskellige info beskeder"
     IDS_KNOWN               "Kendte"
-    IDS_DL_ACTIVE_TIME      "Download tid"
-    IDS_RESETLABEL          "Auto færdiggørelse (historie funktion)"
-    IDS_PASTE               "Sæt ind"
-    IDS_UNDO                "Fortryd ændring"
-    IDS_CUT                 "Klip"
-    IDS_IRC_SOUNDEVENTS     "Spil lyd begivenhed"
-    IDS_KADCONTACTSREAD     "Læser %ld kontakter fra fil."
-    IDS_ERR_KADCONTACTS     "Ingen kontakter fundet, bootstrap venligst, eller download en nodes.dat fil."
-    IDS_RUNASUSER           "Kør eMule som uprivilegeret Bruger"
     IDS_RAU_RUNNING         "eMule kører som uprivilegeret bruger ""%s"""
     IDS_RAU_FAILED          "Mislykkedes at starte eMule som uprivilegeret bruger ""eMule_Secure"". Beholder privilegierne for den nuværende bruger (""%S"")."
-    IDS_RAU_WARNING         "Denne indstilling vil give eMule yderligere sikkerhed mod angreb og udnyttelser og vi anbefaler brugen af denne mulighed.\nDet er dog stærkt anbefaleligt at læse manualen inden aktivering af det!\n\nÆndringer vil træde i kraft efter genstart af eMule."
-END
-
-STRINGTABLE
-BEGIN
-    IDS_SEARCHPARAMS        "Søgningsparametre"
-    IDS_UPDATEFROM          "Updatér fra URL: (filter.dat- eller PeerGuardian-format)"
-    IDS_METATAGS            "Meta Tag Count:"
-    IDS_FILEFORMAT          "File format"
-    IDS_UDPREASKS           "UDP File Reasks"
-    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping tolerance (ms)"
-    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Method for ping tolerance"
-    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milliseconds (ms)"
-    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Percent (%)"
-    IDS_LOG_A4AF            "Log A4AF actions"
-    IDS_A4AF_SAVE_CPU       "Disable A4AF checks to save CPU"
-    IDS_SEARCH_DOC          "Document"
-    IDS_INSTALL_SKIN        "Install eMule Skin"
-    IDS_INSTALL_SKIN_NODIR  "No eMule Skin profile directory selected or directory is not accessible!"
-    IDS_INSTALL_SKIN_DIR_ERROR 
-                            "Failed to create directory ""%s"" for eMule Skin - %s"
-    IDS_INSTALL_SKIN_FILE_ERROR 
-                            "Failed to extract file ""%s"" from eMule Skin to local file ""%s"" - %s"
-    IDS_INSTALL_SKIN_PKG_ERROR "This is not a valid eMule Skin package file."
-    IDS_NEXT_REASK          "Next ask to this client"
-    IDS_A4AF_FILES          "A4AF files"
-    IDS_STATS_FRATIO        "Session UL:DL ratio (friends UL excluded):"
-    IDS_STATS_UDATA_FRIENDS "Uploaded data to friend slots (Session): %s"
+    IDS_KADCONTACTSREAD     "Læser %ld kontakter fra fil."
+    IDS_ERR_KADCONTACTS     "Ingen kontakter fundet, bootstrap venligst, eller download en nodes.dat fil."
+    IDS_METATAGS            "Meta Tag Tælling:"
+    IDS_FILEFORMAT          "Fil format"
+    IDS_UDPREASKS           "UDP Fil Genspørgsler"
+    IDS_DYNUP_PINGTOLERANCE_MS "Ping tolerance (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER "Metode til ping tolerance"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS "Millisekunder (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT "Procent (%)"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_FO_PREF_EXISTED     "eMule detected existing rules for the selected ports, which were not overwritten or replaced. Missing rules have been added successfully.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
-    IDS_FO_PREF_FAILED      "Failed to configure the internal WinXP firewall for the selected ports!"
-    IDS_FO_PREF_STARTUP     "Open/close ports on WinXP firewall when starting/exiting eMule"
-    IDS_LOG_LEVEL           "Log Level"
-    IDS_DISABLEPEERACHE     "Disable downloading from PeerCache"
-    IDS_FO_TEMPTCP_S        "Opened port %u (TCP) on internal WinXP firewall for this eMule session"
-    IDS_FO_TEMPTCP_F        "Failed to open port %u (TCP) on internal WinXP firewall for this eMule session"
-    IDS_FO_TEMPUDP_S        "Opened port %u (UDP) on internal WinXP firewall for this eMule session"
-    IDS_FO_TEMPUDP_F        "Failed to open port %u (UDP) on internal WinXP firewall for this eMule session"
-    IDS_FO_PREFBUTTON       "Open these ports on internal WinXP firewall"
-    IDS_FO_PREF_SUCCCEEDED  "Succeeded to open selected ports on the internal WinXP firewall.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
-    IDS_NEWMSG              "New Message from '%s' (IP:%s)"
-    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
-    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
-    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
-    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
+    IDS_LOG_A4AF            "Log A4AF handlinger"
+    IDS_A4AF_SAVE_CPU       "Slå A4AF checks fra for at spare CPU"
+    IDS_SEARCH_DOC          "Dokument"
+    IDS_INSTALL_SKIN        "Installér eMule Skin"
+    IDS_INSTALL_SKIN_NODIR  "Intet eMule Skin profil bibliotek valgt eller bibliotek ikke tilgængeligt!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            "Mislykkedes at skabe bibliotek ""%s"" til eMule Skin - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "Mislykkedes at udpakke fil ""%s"" fra eMule Skin til lokal fil ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "Dette er ikke en gyldig eMule Skin arkivfil."
+    IDS_NEXT_REASK          "Næste forspørgsel til denne klient"
+    IDS_A4AF_FILES          "A4AF filer"
+    IDS_FO_TEMPTCP_S        "Åbnede port %u (TCP) på interne WinXP firewall for denne eMule session"
+    IDS_FO_TEMPTCP_F        "Mislykkedes at åbne port %u (TCP) på interne WinXP firewall for denne eMule session"
+    IDS_FO_TEMPUDP_S        "Åbnede port %u (UDP) på interne WinXP firewall for denne eMule session"
+    IDS_FO_TEMPUDP_F        "Mislykkedes at åbne port %u (UDP) på interne WinXP firewall for denne eMule session"
+    IDS_FO_PREFBUTTON       "Åben disse porte på den interne WinXP firewall"
+    IDS_FO_PREF_SUCCCEEDED  "Lykkedes at åbne valgte porte på den interne WinXP firewall.\nBemærk venligst at 3. parter firewalls ellers routers ikke er omfattet af dette!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_FRATIO        "Session UL:DL ratio (Venner UL undladt):"
+    IDS_STATS_UDATA_FRIENDS "Uploaded data til venne-slots (Session): %s"
+    IDS_DL_TRY_TO_GET_PREVIEW_PARTS "Download dele til preview først"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_ERR_BADFORMAT   "Ukendt eller forkert fil format."
+    IDS_SEARCH_INVALIDCHAR  "Søgeudtryk indeholder invalide karakterer. Du har enten indtastet e '?' karakter eller karakterer som ikke kan bruges i eD2K netwærket."
+    IDS_PORTSCON            "Prote og Forbindelse"
+    IDS_PORTINFO            "eMule bruger to porte til kommunikation med servere og klienter. Disse porte skal være frie og tilgængelige for andre klienter. TCP porten skal være tilgængelig for at sikre den primære funktionalitet i eMule. UDP porten bruges til Kad (serverfrie netværk) og for at mindske netwærk brug (Overhead).\n\nDu kan ændre portene her mens ingen netwærkaktiviteter er påbegyndt."
+    IDS_STARTTEST           "Test porte"
+    IDS_TESTINFO            "Her kan du teste om dine TCP og UDP porte kan kontaktes fra en anden maskine. Succesen er påkrævet for at servere og klienter kan forbinde til dig. TCP porten skal være tilgængelig!"
+    IDS_CONNECTIONTEST      "Forbindelses test"
+    IDS_NOPORTCHANGEPOSSIBLE 
+                            "Ændringen af porte er ikke mulig efter du har forbundet til klienter eller mens forbundet til en server eller Kad!\n\nGenstart venligst eMule med de ændrede port indstillinger."
+    IDS_NETWORK_INFO        "Netværk Information"
+    IDS_SP_TOTALUL          "Totalt antal af uploads"
+    IDS_SP_ULFRIENDS        "Upload venne-slots"
+    IDS_SP_ULSLOTSNOOVERHEAD "Aktuel upload excl. overhead (UL Slots udelukkende)"
+    IDS_ST_ACTIVEU_ZZ       "Aktive Uploads"
+    IDS_ST_ULCURRENT        "Upload+Overhead"
+    IDS_ST_ULSLOTSNOOVERHEAD "Upload"
+    IDS_ST_ULFRIEND         "Venne-upload"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ACTUL_ZZ      "Aktive uploads/nødvendige for at udfylde båndbrede: %i"
+    IDS_STATS_TOTALUL       "Totalt antal af uploads: %i"
+    IDS_CHAT_DOWNLOADED     "Downloaded:"
+    IDS_CHAT_UPLOADED       "Uploaded:"
+    IDS_CHAT_IDENT          "Identifikation:"
+    IDS_CHAT_CLIENT         "Klient:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MAXHALFOPENCONS     "Max. Havle Åbne Forbindelser"
+    IDS_WIZ_STARTWITHWINDOWS 
+                            "Aktiver dette så eMule vil starte sammen med Windows. [Deaktiveret som standard]"
+    IDS_KAD_WAITCBK         "Afventer Callback Kad"
+    IDS_KAD_TOOMANDYKADLKPS "For mange Kad Lookups"
+    IDS_PCDS_CLIENTWAIT     "KlientVent"
+    IDS_PCDS_CACHEWAIT      "CacheVent"
+    IDS_CACHE               "Cache"
+    IDS_INDEXED             "Indekseret"
+    IDS_KADINFO_SRC         "\tKilde: %u\r\n"
+    IDS_KADINFO_KEYW        "\tNøgleord: %u\r\n"
+    IDS_STARTWITHWINDOWS    "Start med Windows"
+    IDS_ADDSRCMANUALLY      "Manuelt tilføje en kilde"
+    IDS_BUDDY               "Ven"
+    IDS_BUDDYNONE           "Ingen"
+    IDS_INFO                "Info"
+    IDS_HALF                "Halv"
+    IDS_CONCOMPL            "Compl"
+    IDS_KADSTATUS_STOPPING  "Stopper"
+    IDS_KADSTATUS_ACTIVE    "Aktiv"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FORMAT              "Format"
+    IDS_META_COLLECTION     "Kollektion"
+    IDS_META_PARTPATH       "Part sti"
+    IDS_META_PARTHASH       "Part hash"
+    IDS_META_GAPSTART       "Gap start"
+    IDS_META_GAPEND         "Gap slut"
+    IDS_FAIL                "Mislykke"
+    IDS_META_PREFERENCES    "Preferencer"
+    IDS_META_VERSION        "Version"
+    IDS_META_TEMPFILE       "Midlertidig fil"
+    IDS_META_SERVERPORT     "Server port"
+    IDS_META_SERVERIP       "Server IP"
+    IDS_META_SRCUDPPORT     "Kilde UDP port"
+    IDS_META_SRCTCPPORT     "Kilde TCP port"
+    IDS_META_SRCIP          "Kilde IP"
+    IDS_META_SRCTYPE        "Kilde type"
+    IDS_SEARCH_UNICODE      "Søg med Unicode"
+    IDS_PERSEC              "/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LD_ED2KLINK         "ED2K Link"
+    IDS_LD_COPYCLIPBOARD    "Kopier til Udklipsholder"
+    IDS_LD_HOSTNAME         "Brug hostnavn (fra indstillinger) istedet for når der skal genereres kildelink"
+    IDS_SAVEACFAILED        "Mislykkedes at gemme AICH Hashset!"
+    IDS_IACHHASH            "AICH Hash"
+    IDS_BYTESPERSEC         "B/s"
+    IDS_KBYTESPERSEC        "KB/s"
+    IDS_MBYTESPERSEC        "MB/s"
+    IDS_GBYTESPERSEC        "GB/s"
+    IDS_TBYTESPERSEC        "TB/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MINORCLIENTS  "Mindre"
+    IDS_LD_BASICOPT         "Grundlæggende Indstillinger"
+    IDS_LD_ADDSOURCE        "Tilføj dig selv som kilde"
+    IDS_LD_EMULEHASH        "Tilføj eMule AICH Hash til advanceret korruption behandling"
+    IDS_LD_ADVANCEDOPT      "Advanceret Indstillinger"
+    IDS_LD_ADDHTML          "Tilføj HTML-Tags"
+    IDS_LD_ADDHASHSET       "Tilføj Komplet hashset"
+    IDS_FILELINK            "Fil Link"
+    IDS_PF_ADVANCEDCALC     "Brug advanceret udregningsmetode for tilbageværende tid"
+    IDS_DL_SHOWED2KLINK     "Vis eD2K Link..."
+    IDS_AICH_SYNCTOTAL      "Fundet %i filer uden gyldigt AICH Hashset. Rehasher de filer nu"
+    IDS_AICH_CALCFILE       "Udregner AICH Hash for fil %s"
+    IDS_AICH_WARNUSER       "Siden version 0.44a bruger eMule et yderligere filehash, som i stor gra hjælper til at reducere datatabet når korruption opdages. Da du opgraderer fra en tidligere version er eMule nødt til at rehash alle dine delte filer for at udregne det nye hash. Dette tager måske noget tid, men er en engangshandling."
+    IDS_AICH_WORKED         "AICH har succesfuldt genvundet %s af %s fra part %u for %s"
+    IDS_TRICKLING           "Standby"
+    IDS_SOURCECLIENT        "Kilde Klient"
+    IDS_USERSIP             "Brugeres IP"
+    IDS_FEATURES            "Features"
+    IDS_IRC_NEWNICK         "Vælg et IRC øgenavn (nick)."
+    IDS_IRC_NEWNICKDESC     "Skal være et ord på mindre end 20 karakterer indeholdende (A-Z, 0-9). Det kan ændres igen i eMules Indstillinger -> Irc."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SPARSEPARTFILES     "Opret nye part filer som 'sparse' (kun NTFS)"
+    IDS_ASPECTRATIO         "Aspect Ratio"
+    IDS_NEGATEFILTER        "Negére filter"
+    IDS_SEENCOMPL           "Nogen sinde set færdig"
+    IDS_SELSKINPROFILEDIR   "Vælg skin profil mappe"
+    IDS_ASKDLINCOMPLETE     "Mulig ufuldstændig fil:\r\n\r\n%s\r\n\r\nDenne fil formodes at være ufuldstændig på netwærket og kan derfor sandsynligvis ikke downloades succuesfuldt! Ønsker du virkeligt at downloade denne fil?"
+    IDS_DEADSOURCES         "Døde Kilder"
 END
 
 #endif    // Danish resources
@@ -1707,3 +1826,4 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+

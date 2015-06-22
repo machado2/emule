@@ -18,6 +18,7 @@ protected:
 	UINT m_iFileBufferSize;
 	UINT m_iQueueSize;
 	int m_iMaxConnPerFive;
+	int m_iMaxHalfOpen;
 	int m_iAutoTakeEd2kLinks;
 	int m_iVerbose;
 	int m_iDebugSourceExchange;
@@ -35,13 +36,13 @@ protected:
 	int m_iFilterLANIPs;
 	int m_iExtControls;
 	UINT m_uServerKeepAliveTimeout;
+	int m_iSparsePartFiles;
 	int m_iCheckDiskspace;	// SLUGFILLER: checkDiskspace
 	float m_fMinFreeDiskSpaceMB;
 	CString m_sYourHostname;	// itsonlyme: hostnameSource
 	int m_iFirewallStartup;
 	int m_iLogLevel;
 	int m_iDisablePeerCache;
-
 	// ZZ:UploadSpeedSense -->
     int m_iDynUpEnabled;
     int m_iDynUpMinUpload;
@@ -52,12 +53,14 @@ protected:
     int m_iDynUpGoingDownDivider;
     int m_iDynUpNumberOfPings;
 	// ZZ:UploadSpeedSense <--
-
     int m_iA4AFSaveCpu; // ZZ:DownloadManager
 
+	CSliderCtrl m_ctlFileBuffSize;
+	CSliderCtrl m_ctlQueueSize;
     CTreeOptionsCtrlEx m_ctrlTreeOptions;
 	bool m_bInitializedTreeOpts;
 	HTREEITEM m_htiMaxCon5Sec;
+	HTREEITEM m_htiMaxHalfOpen;
 	HTREEITEM m_htiAutoTakeEd2kLinks;
 	HTREEITEM m_htiVerboseGroup;
 	HTREEITEM m_htiVerbose;
@@ -79,13 +82,13 @@ protected:
 	HTREEITEM m_htiFilterLANIPs;
 	HTREEITEM m_htiExtControls;
 	HTREEITEM m_htiServerKeepAliveTimeout;
+	HTREEITEM m_htiSparsePartFiles;
 	HTREEITEM m_htiCheckDiskspace;	// SLUGFILLER: checkDiskspace
 	HTREEITEM m_htiMinFreeDiskSpace;
 	HTREEITEM m_htiYourHostname;	// itsonlyme: hostnameSource
 	HTREEITEM m_htiFirewallStartup;
 	HTREEITEM m_htiLogLevel;
 	HTREEITEM m_htiDisablePeerCache;
-
 	// ZZ:UploadSpeedSense -->
     HTREEITEM m_htiDynUp;
 	HTREEITEM m_htiDynUpEnabled;
@@ -99,7 +102,6 @@ protected:
     HTREEITEM m_htiDynUpGoingDownDivider;
     HTREEITEM m_htiDynUpNumberOfPings;
 	// ZZ:UploadSpeedSense <--
-
 	// ZZ:DownloadManager -->
     HTREEITEM m_htiA4AFSaveCpu;
 	// ZZ:DownloadManager <--

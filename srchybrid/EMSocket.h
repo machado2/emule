@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -75,7 +75,8 @@ public:
     uint64 GetSentPayloadSinceLastCallAndReset();
     void TruncateQueues();
 
-    virtual SocketSentBytes Send(uint32 maxNumberOfBytesToSend, uint32 minFragSize, bool onlyAllowedToSendControlPacket);
+    virtual SocketSentBytes SendControlData(uint32 maxNumberOfBytesToSend, uint32 minFragSize) { return Send(maxNumberOfBytesToSend, minFragSize, true); };
+    virtual SocketSentBytes SendFileAndControlData(uint32 maxNumberOfBytesToSend, uint32 minFragSize) { return Send(maxNumberOfBytesToSend, minFragSize, false); };
 
     uint32	GetNeededBytes();
 #ifdef _DEBUG
@@ -102,6 +103,7 @@ protected:
 	CAsyncProxySocketLayer* m_pProxyLayer;
 
 private:
+    virtual SocketSentBytes Send(uint32 maxNumberOfBytesToSend, uint32 minFragSize, bool onlyAllowedToSendControlPacket);
 	void	ClearQueues();	
 	virtual int Receive(void* lpBuf, int nBufLen, int nFlags = 0);
 
@@ -156,6 +158,6 @@ private:
     uint32 m_actualPayloadSize;
     uint32 m_actualPayloadSizeSent;
 
-    boolean m_bBusy;
-    boolean m_hasSent;
+    bool m_bBusy;
+    bool m_hasSent;
 };

@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -16,7 +16,6 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
 #include "MapKey.h"
-#include "Loggable.h"
 #pragma warning(disable:4516) // access-declarations are deprecated; member using-declarations provide a better alternative
 #include <crypto51/rsa.h>
 #pragma warning(default:4516)
@@ -58,7 +57,7 @@ enum EIdentState{
 	IS_IDBADGUY,
 };
 
-class CClientCredits: public CLoggable
+class CClientCredits
 {
 	friend class CClientCreditsList;
 public:
@@ -66,21 +65,21 @@ public:
 	CClientCredits(const uchar* key);
 	~CClientCredits();
 
-	const uchar* GetKey()					{return m_pCredits->abyKey;}
-	uchar*	GetSecureIdent()				{return m_abyPublicKey;}
-	uint8	GetSecIDKeyLen()				{return m_nPublicKeyLen;}
-	CreditStruct* GetDataStruct()			{return m_pCredits;}
+	const uchar* GetKey() const					{return m_pCredits->abyKey;}
+	uchar*	GetSecureIdent()					{return m_abyPublicKey;}
+	uint8	GetSecIDKeyLen() const				{return m_nPublicKeyLen;}
+	CreditStruct* GetDataStruct() const			{return m_pCredits;}
 	void	ClearWaitStartTime();
 	void	AddDownloaded(uint32 bytes, uint32 dwForIP);
 	void	AddUploaded(uint32 bytes, uint32 dwForIP);
-	uint64	GetUploadedTotal();
-	uint64	GetDownloadedTotal();
-	float	GetScoreRatio(uint32 dwForIP);
+	uint64	GetUploadedTotal() const;
+	uint64	GetDownloadedTotal() const;
+	float	GetScoreRatio(uint32 dwForIP) const;
 	void	SetLastSeen()					{m_pCredits->nLastSeen = time(NULL);}
 	bool	SetSecureIdent(uchar* pachIdent, uint8 nIdentLen); // Public key cannot change, use only if there is not public key yet
 	uint32	m_dwCryptRndChallengeFor;
 	uint32	m_dwCryptRndChallengeFrom;
-	EIdentState	GetCurrentIdentState(uint32 dwForIP); // can be != IdentState
+	EIdentState	GetCurrentIdentState(uint32 dwForIP) const; // can be != IdentState
 	uint32	GetSecureWaitStartTime(uint32 dwForIP);
 	void	SetSecWaitStartTime(uint32 dwForIP);
 protected:
@@ -98,7 +97,7 @@ private:
 	uint32			m_dwWaitTimeIP;			   // client IP assigned to the waittime
 };
 
-class CClientCreditsList: public CLoggable
+class CClientCreditsList
 {
 public:
 	CClientCreditsList();
@@ -108,9 +107,9 @@ public:
 	uint8	CreateSignature(CClientCredits* pTarget, uchar* pachOutput, uint8 nMaxSize, uint32 ChallengeIP, uint8 byChaIPKind, CryptoPP::RSASSA_PKCS1v15_SHA_Signer* sigkey = NULL);
 	bool	VerifyIdent(CClientCredits* pTarget, uchar* pachSignature, uint8 nInputSize, uint32 dwForIP, uint8 byChaIPKind);	
 
-	CClientCredits* GetCredit(const uchar* key);
+	CClientCredits* GetCredit(const uchar* key) ;
 	void	Process();
-	uint8	GetPubKeyLen()					{return m_nMyPublicKeyLen;}
+	uint8	GetPubKeyLen() const			{return m_nMyPublicKeyLen;}
 	byte*	GetPublicKey()					{return m_abyMyPublicKey;}
 	bool	CryptoAvailable();
 protected:

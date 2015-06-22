@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2004 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2004 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -13,9 +13,6 @@
 //
 //You should have received a copy of the GNU General Public License
 //along with this program; if not, write to the Free Software
-
-// notes to myself, remove before release :)
-
 #include "StdAfx.h"
 #include <windns.h>
 #include "peercachefinder.h"
@@ -27,6 +24,7 @@
 #include "version.h"
 #include <crypto51/rsa.h>
 #include <crypto51/integer.h>
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -114,7 +112,7 @@ void CPeerCacheFinder::Init(uint32 dwLastSearch, bool bLastSearchSuccess, bool b
 			if (!bOK){
 				dwLastSearch = 0;
 				bLastSearchSuccess = false;
-				theApp.QueueDebugLogLine(false, _T("Sanitycheck for PeerCache-Port '%u' failed"), nPort);
+				DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("Sanitycheck for PeerCache-Port '%u' failed"), nPort));
 			}
 			else
 				m_nPCPort = nPort;
@@ -129,14 +127,14 @@ void CPeerCacheFinder::Init(uint32 dwLastSearch, bool bLastSearchSuccess, bool b
 					// no retry to find the cache
 					m_PCStatus = PCS_NOTFOUND;
 					m_bNotReSearched = true;
-					theApp.QueueDebugLogLine(false, _T("PeerCache: Not starting a search - last failed search is too near"));
+					DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Not starting a search - last failed search is too near")));
 					return;
 				}
 				else{
 					// no need to revaldite the cache yet
 					m_bValdited = true;
 					m_bNotReValdited = true;
-					theApp.QueueDebugLogLine(false, _T("PeerCache: CacheIdent still valid, not trying to revaldite this time"));
+					DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: CacheIdent still valid, not trying to revaldite this time")));
 				}
 			}
 			else
@@ -184,7 +182,7 @@ void CPeerCacheFinder::SearchForPC(){
 					ASSERT ( !m_strMyHostname.IsEmpty() );
 					// build string
 					m_posCurrentLookUp = m_strMyHostname.Find('.',m_posCurrentLookUp+1);
-					if (m_posCurrentLookUp == -1 || m_posCurrentLookUp+1 >= m_strMyHostname.GetLength() ){
+					if (m_posCurrentLookUp == -1 || m_posCurrentLookUp+1 >= m_strMyHostname.GetLength() || m_strMyHostname.Find('.',m_posCurrentLookUp+1) == (-1) ){
 						// failed:
 						m_PCLUState = LUS_NONE;
 						m_PCStatus = PCS_NOTFOUND;
@@ -204,7 +202,7 @@ void CPeerCacheFinder::SearchForPC(){
 						ValditeDescriptorFile();
 					}
 					else{
-						theApp.QueueLogLine(false, GetResString(IDS_PEERCACHE_ENABLED));
+						DEBUG_ONLY(theApp.QueueLogLine(false, GetResString(IDS_PEERCACHE_ENABLED)));
 						m_PCStatus = PCS_READY;
 					}
 					break;
@@ -223,14 +221,14 @@ LRESULT CPeerCacheFinder::OnPeerCacheCheckResponse(WPARAM wParam, LPARAM lParam)
 				LPHOSTENT pHost = (LPHOSTENT)_acDNSBuffer;
 				m_strMyHostname = pHost->h_name;
 				if (!m_strMyHostname.IsEmpty()){
-					AddDebugLogLine(false, _T("PeerCache: Found my Hostname: %s, continue search"), m_strMyHostname);
+					DEBUG_ONLY(AddDebugLogLine(false, _T("PeerCache: Found my Hostname: %s, continue search"), m_strMyHostname));
 					SearchForPC();
 					return 0;
 				}
 			}
 		}
 		m_PCStatus = PCS_NOTFOUND;
-		AddDebugLogLine(false, _T("DNS Reverse Lookup for own IP failed, aborting PC search"));
+		DEBUG_ONLY(AddDebugLogLine(false, _T("DNS Reverse Lookup for own IP failed, aborting PC search")));
 
 	}
 	else{
@@ -243,7 +241,7 @@ LRESULT CPeerCacheFinder::OnPeerCacheCheckResponse(WPARAM wParam, LPARAM lParam)
 				if (pHost->h_length == 4 && pHost->h_addr_list && pHost->h_addr_list[0])
 				{
 					m_dwPCIP = ((LPIN_ADDR)(pHost->h_addr_list[0]))->s_addr;
-					AddDebugLogLine(false, _T("Found PeerCache IP: %s"), ipstr(m_dwPCIP) );
+					DEBUG_ONLY(AddDebugLogLine(false, _T("Found PeerCache IP: %s"), ipstr(m_dwPCIP) ));
 					
 					m_PCLUState = LUS_FINISHED;
 					SearchForPC();
@@ -252,7 +250,7 @@ LRESULT CPeerCacheFinder::OnPeerCacheCheckResponse(WPARAM wParam, LPARAM lParam)
 			}
 		}
 		// no luck, continue search
-		AddDebugLogLine(false, _T("DNS Lookup for PC, state %i, failed - PC not found yet"), m_PCLUState);
+		DEBUG_ONLY(AddDebugLogLine(false, _T("DNS Lookup for PC, state %i, failed - PC not found yet"), m_PCLUState));
 		SearchForPC();
 	}
 	return 0;
@@ -260,7 +258,7 @@ LRESULT CPeerCacheFinder::OnPeerCacheCheckResponse(WPARAM wParam, LPARAM lParam)
 
 void CPeerCacheFinder::DoLookUp(CStringA strHostname){
 	if (WSAAsyncGetHostByName(theApp.emuledlg->m_hWnd, WM_PEERCHACHE_RESPONSE, strHostname, _acDNSBuffer, sizeof(_acDNSBuffer)) == 0){
-		AddDebugLogLine(false, _T("DNS Lookup for PC, state %i, failed (DoLookUP) - PC not found yet"), m_PCLUState);
+		DEBUG_ONLY(AddDebugLogLine(false, _T("DNS Lookup for PC, state %i, failed (DoLookUP) - PC not found yet"), m_PCLUState));
 	}
 }
 
@@ -315,7 +313,7 @@ CString ReverseDnsLookup(DWORD dwIP)
 			}
 			else{
 				if (thePrefs.GetVerbose())
-					theApp.QueueDebugLogLine(false, _T("ReverseDNS: Failed to get list of DNS servers - %s"), GetErrorMessage(nDnsState, 1));
+					DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("ReverseDNS: Failed to get list of DNS servers - %s"), GetErrorMessage(nDnsState, 1)));
 			}
 
 			CString strDnsQuery;
@@ -326,14 +324,16 @@ CString ReverseDnsLookup(DWORD dwIP)
 			nDnsState = (*pfnDnsQuery)(strDnsQuery, DNS_TYPE_PTR, DNS_QUERY_BYPASS_CACHE, pDnsServers, &pDnsRecords, NULL);
 			if (nDnsState == 0)
 			{
-				if (pDnsRecords)
-					strHostName = pDnsRecords->Data.PTR.pNameHost;
-				if (pDnsRecords)
+				if (AtlIsValidAddress(pDnsRecords, sizeof(*pDnsRecords) - sizeof(pDnsRecords->Data) + sizeof(pDnsRecords->Data.PTR), FALSE))
+				{
+					if (AtlIsValidAddress(pDnsRecords->Data.PTR.pNameHost, sizeof(TCHAR), FALSE))
+						strHostName = pDnsRecords->Data.PTR.pNameHost;
 					(*pfnDnsRecordListFree)(pDnsRecords, DnsFreeRecordListDeep);
+				}
 			}
 			else{
 				if (thePrefs.GetVerbose())
-					theApp.QueueDebugLogLine(false, _T("ReverseDNS: Failed to resolve address \"%s\" - %s"), strDnsQuery, GetErrorMessage(nDnsState, 1));
+					DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("ReverseDNS: Failed to resolve address \"%s\" - %s"), strDnsQuery, GetErrorMessage(nDnsState, 1)));
 			}
 
 			delete[] (BYTE*)pDnsServers;
@@ -390,7 +390,7 @@ bool CPeerCacheFinder::IsClientPCCompatible(const CClientVersionInfo& cviToCheck
 void CPeerCacheFinder::DownloadAttemptFailed(){
 	m_nFailedDownloads++;
 	if(m_nDownloadAttempts > 20 && m_nFailedDownloads > 0){
-		AddDebugLogLine(DLP_LOW, false, _T("PeerCache fail value: %0.2f"), (float)(m_nDownloadAttempts/m_nFailedDownloads));
+		DEBUG_ONLY(AddDebugLogLine(DLP_LOW, false, _T("PeerCache fail value: %0.2f"), (float)(m_nDownloadAttempts/m_nFailedDownloads)));
 		if ( (float)(m_nDownloadAttempts/m_nFailedDownloads) < (float)2)
 			AddDebugLogLine(DLP_LOW, false, _T("PeerCache fail value too high, disabling cache downloads"));
 	}
@@ -411,6 +411,7 @@ CPCValditeThread::~CPCValditeThread()
 
 BOOL CPCValditeThread::InitInstance()
 {
+	DbgSetThreadName("PCValditeThread");
 	InitThreadLocale();
 	return TRUE;
 }
@@ -421,8 +422,8 @@ BOOL CPCValditeThread::Run(){
 			m_pOwner->m_bValdited = true;
 			m_pOwner->m_nPCPort = m_nPCPort;
 			if (m_pOwner->m_PCStatus == PCS_VALDITING){
-				theApp.QueueDebugLogLine(false, _T("PeerCache: Valditing .p2pinfo succeeded"));
-				theApp.QueueLogLine(false, GetResString(IDS_PEERCACHE_ENABLED));
+				DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Valditing .p2pinfo succeeded")));
+				DEBUG_ONLY(theApp.QueueLogLine(false, GetResString(IDS_PEERCACHE_ENABLED)));
 				m_pOwner->m_PCStatus = PCS_READY;
 			}
 			else
@@ -434,7 +435,6 @@ BOOL CPCValditeThread::Run(){
 			m_pOwner->m_nPCPort = 0;
 		}
 	}
-	AfxEndThread(0,true);
 	return 0;
 }
 
@@ -460,13 +460,17 @@ bool CPCValditeThread::Valdite(){
 			m_nPCPort = anPeerCachPorts[i];
 			break;
 		}
-		catch (CInternetException* m_pException){
+		catch (CInternetException* pException){
 			// set file to NULL if there's an error
 			file = NULL;
-			m_pException->Delete();
-			theApp.QueueDebugLogLine(false, _T("PeerCache: Failed to retrieve .p2pinfo file on Port %u"),anPeerCachPorts[i]);
+			CString strError;
+			pException->GetErrorMessage(strError.GetBuffer(512), 512);
+			strError.ReleaseBuffer();
+			strError.Trim(_T(" \r\n"));
+			pException->Delete();
+			DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Failed to retrieve .p2pinfo file on Port %u - %s"),anPeerCachPorts[i], strError));
 			if (i == (ARRSIZE(anPeerCachPorts)-1)){ // was last try
-				theApp.QueueDebugLogLine(false, _T("PeerCache: Failed to retrieve .p2pinfo file, cache disabled"),anPeerCachPorts[i]);
+				DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Failed to retrieve .p2pinfo file, cache disabled"),anPeerCachPorts[i]));
 				return false;
 			}
 		}
@@ -481,14 +485,14 @@ bool CPCValditeThread::Valdite(){
 	if (file && nIFileSize > SIGNATURELENGTH){
 		// read content
 		CArray<uint32, uint32> adwCacheIPs;
-		CStringArray astrIPRanges;
+		CStringAArray astrIPRanges;
 		CStringA strLine;
 		bool bContentCheckFailed = false;
 
 		UINT uContentSize = nIFileSize - SIGNATURELENGTH;
 		char* pcContent = new char[uContentSize + 1];
 		if (file->Read(pcContent, uContentSize) != uContentSize)
-			theApp.QueueDebugLogLine(false, _T("PeerCache: Failed to read p2pinfo file content"));
+			DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Failed to read p2pinfo file content")));
 		pcContent[uContentSize] = '\0';
 
 		//----------- CHECKING .P2PINFO CONTENT
@@ -503,7 +507,7 @@ bool CPCValditeThread::Valdite(){
 				CStringA strTopic = strLine.Left(posSeperator).Trim();
 				CStringA strContent = strLine.Mid(posSeperator+1).Trim();
 
-				//theApp.QueueDebugLogLine(false, _T("PeerCache: Current line to be processed: %hs"),strLine);
+				//DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Current line to be processed: %hs"),strLine);
 
 				///////***** CacheIP
 				if (strTopic == "CacheIP"){
@@ -529,18 +533,18 @@ bool CPCValditeThread::Valdite(){
 					}
 					if (bDateCheckFailed){
 						bContentCheckFailed = true;
-						theApp.QueueDebugLogLine(false, _T("PeerCache: ExpireDate check failed. Expiring date: %hs"),strContent);
+						DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: ExpireDate check failed. Expiring date: %hs"),strContent));
 					}
 				}
 				///////***** EnableED2K
 				else if (strTopic == "EnableED2K"){
 					if (atol(strContent) != 1){
 						bContentCheckFailed = true;
-						theApp.QueueDebugLogLine(false, _T("PeerCache: EnableED2K check failed. Value: %hs"),strContent);
+						DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: EnableED2K check failed. Value: %hs"),strContent));
 					}
 				}
 				else{
-					theApp.QueueDebugLogLine(false, _T("PeerCache: Unused content tag for validity check: %hs"),strLine);
+					DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Unused content tag for validity check: %hs"),strLine));
 				}
 
 			}
@@ -557,12 +561,12 @@ bool CPCValditeThread::Valdite(){
 		}
 		if (bIPRangeCheckFailed){
 			bContentCheckFailed = true;
-			theApp.QueueDebugLogLine(false, _T("PeerCache: CacheIP check failed."));
+			DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: CacheIP check failed.")));
 		}
 		// finish the RangeChack
 		bool bIPCheckFailed = true;
 		for (int i = 0; i != astrIPRanges.GetCount(); i++){ 
-			CString strCurRange = astrIPRanges[i];
+			CStringA strCurRange = astrIPRanges[i];
 			int posContentSeperator = strCurRange.Find('-',7);
 			if ( !(posContentSeperator == -1 || strCurRange.GetLength() - posContentSeperator <= 7) ){
 				uint32 dwIPRangeStart = inet_addr(strCurRange.Left(posContentSeperator).Trim());
@@ -575,7 +579,7 @@ bool CPCValditeThread::Valdite(){
 		}
 		if (bIPCheckFailed){
 			bContentCheckFailed = true;
-			theApp.QueueDebugLogLine(false, _T("PeerCache: ClientIPRange check failed. my IP: %s"), ipstr(m_dwMyIP));
+			DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: ClientIPRange check failed. my IP: %s"), ipstr(m_dwMyIP)));
 		}
 
 		//----------- CHECKING SPECIAL HEADERS CONTENT
@@ -593,7 +597,7 @@ bool CPCValditeThread::Valdite(){
 					CStringA strTopic = strCurHeader.Left(posSeperator).Trim();
 					CStringA strContent = strCurHeader.Mid(posSeperator+1).Trim();
 
-					theApp.QueueDebugLogLine(false, _T("PeerCache: Current Header to be processed: %hs"),strCurHeader);
+					DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Current Header to be processed: %hs"),strCurHeader));
 					///////***** X-eMule-Require-Version
 					if (strTopic == "X-eMule-Require-Version"){
 						int curPos= 0;
@@ -622,11 +626,11 @@ bool CPCValditeThread::Valdite(){
 			///////***** Own version check
 			if (!m_pOwner->IsClientPCCompatible(CClientVersionInfo(VERSION_MJR, VERSION_MIN, VERSION_UPDATE, VERSION_BUILD, SO_EMULE))){
 				bContentCheckFailed = true;
-				theApp.QueueDebugLogLine(false, _T("PeerCache: Current Version not allowed to use this PC-Server, please update"));
+				DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Current Version not allowed to use this PC-Server, please update")));
 			}
 		}
 		else if (!bContentCheckFailed)
-			theApp.QueueDebugLogLine(false, _T("PeerCache Error: Failed to retrieve headers, Errornumber %s"),GetErrorMessage(GetLastError()) );
+			DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache Error: Failed to retrieve headers, Errornumber %s"),GetErrorMessage(GetLastError()) ));
 
 
 		//----------- CHECKING .P2PINFO SIGNATURE
@@ -663,7 +667,7 @@ bool CPCValditeThread::Valdite(){
 			}
 			delete[] pachCompleteFile;
 			if (!bSignatureCheckResult)
-				theApp.QueueDebugLogLine(false, _T("PeerCache: Failed to verify PeerCache Server, not using it"));
+				DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("PeerCache: Failed to verify PeerCache Server, not using it")));
 		}
 
 		delete[] pcContent;
@@ -734,7 +738,7 @@ BOOL CPCReverseDnsThread::InitInstance()
 		IPHost.s_addr = ntohl(ntohl(m_dwIP)+1);
 		if (WSAAsyncGetHostByAddr(theApp.emuledlg->m_hWnd, WM_PEERCHACHE_RESPONSE, (const char*) &IPHost, sizeof(struct in_addr), AF_INET, _acDNSBuffer, sizeof(_acDNSBuffer)) == 0){
 			if (thePrefs.GetVerbose())
-				theApp.QueueDebugLogLine(false, _T("DNS Reverse Lookup for own IP failed"));
+				DEBUG_ONLY(theApp.QueueDebugLogLine(false, _T("DNS Reverse Lookup for own IP failed")));
 		}	
 	}
 	return FALSE;

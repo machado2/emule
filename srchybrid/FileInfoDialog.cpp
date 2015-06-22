@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -21,6 +21,7 @@
 #include "FileInfoDialog.h"
 #include "OtherFunctions.h"
 #include "PartFile.h"
+#include "Preferences.h"
 
 // id3lib
 #include <id3/tag.h>
@@ -170,6 +171,7 @@ struct SMediaInfo
 		memset(&video, 0, sizeof video);
 		fVideoLengthSec = 0.0;
 		fVideoFrameRate = 0.0;
+		fVideoAspectRatio = 0.0;
 
 		iAudioStreams = 0;
 		(void)strAudioFormat;
@@ -186,6 +188,7 @@ struct SMediaInfo
 	VIDEOINFOHEADER	video;
 	double			fVideoLengthSec;
 	double			fVideoFrameRate;
+	double			fVideoAspectRatio;
 
 	int				iAudioStreams;
 	CString			strAudioFormat;
@@ -571,10 +574,11 @@ BOOL CFileInfoDialog::OnInitDialog()
 	SetDlgItemText(IDC_FILESIZE, strWait);
 	SetDlgItemText(IDC_LENGTH, strWait);
 	SetDlgItemText(IDC_VCODEC, strWait);
+	SetDlgItemText(IDC_VBITRATE, strWait);
 	SetDlgItemText(IDC_VWIDTH, strWait);
 	SetDlgItemText(IDC_VHEIGHT, strWait);
+	SetDlgItemText(IDC_VASPECT, strWait);
 	SetDlgItemText(IDC_VFPS, strWait);
-	SetDlgItemText(IDC_VBITRATE, strWait);
 	SetDlgItemText(IDC_ACODEC, strWait);
 	SetDlgItemText(IDC_ACHANNEL, strWait);
 	SetDlgItemText(IDC_ASAMPLERATE, strWait);
@@ -595,14 +599,13 @@ IMPLEMENT_DYNCREATE(CGetMediaInfoThread, CWinThread)
 
 BOOL CGetMediaInfoThread::InitInstance()
 {
+	DbgSetThreadName("GetMediaInfo");
 	InitThreadLocale();
 	return TRUE;
 }
 
 int CGetMediaInfoThread::Run()
 {
-	DbgSetThreadName("GetMediaInfo");
-
 	CoInitialize(NULL);
 
 	CArray<SMediaInfo, SMediaInfo>* paMediaInfo = new CArray<SMediaInfo, SMediaInfo>;
@@ -633,16 +636,28 @@ int CGetMediaInfoThread::Run()
 	return 0;
 }
 
+CString GetKnownAspectRatioDisplayString(float fAspectRatio)
+{
+	CString strAspectRatio;
+         if (fAspectRatio >= 1.00F && fAspectRatio < 1.50F) strAspectRatio = _T("4/3");
+    else if (fAspectRatio >= 1.50F && fAspectRatio < 2.00F) strAspectRatio = _T("16/9");
+    else if (fAspectRatio >= 2.00F && fAspectRatio < 2.22F) strAspectRatio = _T("2.2");
+    else if (fAspectRatio >= 2.22F && fAspectRatio < 2.30F) strAspectRatio = _T("2.25");
+    else if (fAspectRatio >= 2.30F && fAspectRatio < 2.50F) strAspectRatio = _T("2.35");
+	return strAspectRatio;
+}
+
 LRESULT CFileInfoDialog::OnMediaInfoResult(WPARAM, LPARAM lParam)
 {
 	SetDlgItemText(IDC_FORMAT, _T("-"));
 	SetDlgItemText(IDC_FILESIZE, _T("-"));
 	SetDlgItemText(IDC_LENGTH, _T("-"));
 	SetDlgItemText(IDC_VCODEC, _T("-"));
+	SetDlgItemText(IDC_VBITRATE, _T("-"));
 	SetDlgItemText(IDC_VWIDTH, _T("-"));
 	SetDlgItemText(IDC_VHEIGHT, _T("-"));
+	SetDlgItemText(IDC_VASPECT, _T("-"));
 	SetDlgItemText(IDC_VFPS, _T("-"));
-	SetDlgItemText(IDC_VBITRATE, _T("-"));
 	SetDlgItemText(IDC_ACODEC, _T("-"));
 	SetDlgItemText(IDC_ACHANNEL, _T("-"));
 	SetDlgItemText(IDC_ASAMPLERATE, _T("-"));
@@ -659,10 +674,11 @@ LRESULT CFileInfoDialog::OnMediaInfoResult(WPARAM, LPARAM lParam)
 		SetDlgItemText(IDC_FILESIZE, _T(""));
 		SetDlgItemText(IDC_LENGTH, _T(""));
 		SetDlgItemText(IDC_VCODEC, _T(""));
+		SetDlgItemText(IDC_VBITRATE, _T(""));
 		SetDlgItemText(IDC_VWIDTH, _T(""));
 		SetDlgItemText(IDC_VHEIGHT, _T(""));
+		SetDlgItemText(IDC_VASPECT, _T(""));
 		SetDlgItemText(IDC_VFPS, _T(""));
-		SetDlgItemText(IDC_VBITRATE, _T(""));
 		SetDlgItemText(IDC_ACODEC, _T(""));
 		SetDlgItemText(IDC_ACHANNEL, _T(""));
 		SetDlgItemText(IDC_ASAMPLERATE, _T(""));
@@ -679,6 +695,7 @@ LRESULT CFileInfoDialog::OnMediaInfoResult(WPARAM, LPARAM lParam)
 	bool bDiffVideoHeight = false;
 	bool bDiffVideoFrameRate = false;
 	bool bDiffVideoBitRate = false;
+	bool bDiffVideoAspectRatio = false;
 	bool bDiffAudioCompression = false;
 	bool bDiffAudioChannels = false;
 	bool bDiffAudioSamplesPerSec = false;
@@ -710,6 +727,7 @@ LRESULT CFileInfoDialog::OnMediaInfoResult(WPARAM, LPARAM lParam)
 				bDiffVideoHeight = true;
 				bDiffVideoFrameRate = true;
 				bDiffVideoBitRate = true;
+				bDiffVideoAspectRatio = true;
 			}
 			else
 			{
@@ -723,6 +741,8 @@ LRESULT CFileInfoDialog::OnMediaInfoResult(WPARAM, LPARAM lParam)
 					bDiffVideoFrameRate = true;
 				if (ami.video.dwBitRate != mi.video.dwBitRate)
 					bDiffVideoBitRate = true;
+				if (ami.fVideoAspectRatio != mi.fVideoAspectRatio)
+					bDiffVideoAspectRatio = true;
 			}
 
 			ami.fAudioLengthSec += mi.fAudioLengthSec;
@@ -765,7 +785,7 @@ LRESULT CFileInfoDialog::OnMediaInfoResult(WPARAM, LPARAM lParam)
 	SetDlgItemText(IDC_FORMAT, buffer);
 
 	if (uTotalFileSize)
-		SetDlgItemText(IDC_FILESIZE, CastItoXBytes(uTotalFileSize));
+		SetDlgItemText(IDC_FILESIZE, CastItoXBytes(uTotalFileSize, false, false));
 	if (ami.fVideoLengthSec)
 		SetDlgItemText(IDC_LENGTH, CastSecondsToHM(ami.fVideoLengthSec));
 	else if (ami.fAudioLengthSec)
@@ -778,6 +798,14 @@ LRESULT CFileInfoDialog::OnMediaInfoResult(WPARAM, LPARAM lParam)
 		else
 			SetDlgItemText(IDC_VCODEC, _T(""));
 
+		if (!bDiffVideoBitRate && ami.video.dwBitRate)
+		{
+			buffer.Format(_T("%u kBit/s"), (ami.video.dwBitRate + 500) / 1000);
+			SetDlgItemText(IDC_VBITRATE, buffer);
+		}
+		else
+			SetDlgItemText(IDC_VBITRATE, _T(""));
+
 		if (!bDiffVideoWidth && ami.video.bmiHeader.biWidth)
 			SetDlgItemInt(IDC_VWIDTH, abs(ami.video.bmiHeader.biWidth), FALSE);
 		else
@@ -788,6 +816,17 @@ LRESULT CFileInfoDialog::OnMediaInfoResult(WPARAM, LPARAM lParam)
 		else
 			SetDlgItemText(IDC_VHEIGHT, _T(""));
 
+		if (!bDiffVideoAspectRatio && ami.fVideoAspectRatio)
+		{
+			buffer.Format(_T("%.3f"), ami.fVideoAspectRatio);
+			CString strAR = GetKnownAspectRatioDisplayString(ami.fVideoAspectRatio);
+			if (!strAR.IsEmpty())
+				buffer.AppendFormat(_T("  (%s)"), strAR);
+			SetDlgItemText(IDC_VASPECT, buffer);
+		}
+		else
+			SetDlgItemText(IDC_VASPECT, _T(""));
+
 		if (!bDiffVideoFrameRate && ami.fVideoFrameRate)
 		{
 			buffer.Format(_T("%.2f"), ami.fVideoFrameRate);
@@ -795,14 +834,6 @@ LRESULT CFileInfoDialog::OnMediaInfoResult(WPARAM, LPARAM lParam)
 		}
 		else
 			SetDlgItemText(IDC_VFPS, _T(""));
-
-		if (!bDiffVideoBitRate && ami.video.dwBitRate)
-		{
-			buffer.Format(_T("%u kBit/s"), (ami.video.dwBitRate + 500) / 1000);
-			SetDlgItemText(IDC_VBITRATE, buffer);
-		}
-		else
-			SetDlgItemText(IDC_VBITRATE, _T(""));
 	}
 
 	if (ami.iAudioStreams)
@@ -1114,6 +1145,8 @@ static BOOL GetRIFFHeaders(LPCTSTR pszFileName, SMediaInfo* mi, bool& rbIsAVI)
 							{
 								mi->video.bmiHeader = *strmhdr.fmt.bmi;
 								mi->strVideoFormat = GetVideoFormatName(mi->video.bmiHeader.biCompression);
+								if (mi->video.bmiHeader.biWidth && mi->video.bmiHeader.biHeight)
+									mi->fVideoAspectRatio = (float)abs(mi->video.bmiHeader.biWidth) / (float)abs(mi->video.bmiHeader.biHeight);
 							}
 						}
 					}
@@ -1226,6 +1259,17 @@ inv_format_errno:
 	goto cleanup;
 }
 
+void WarnAboutWrongFileExtension(SMediaInfo* mi, LPCTSTR pszFileName, LPCTSTR pszExtensions)
+{
+	if (!mi->strInfo.str.IsEmpty())
+		mi->strInfo.str += _T("\r\n");
+	mi->strInfo.str.AppendFormat(
+		_T("Warning: The file extension of \"%s\" does not match the file extension\r\n") 
+		_T("typically used for that file format. You may want to rename the file to\r\n")
+		_T("use one of those file extension \"%s\"\r\n")
+		_T("for properly using or viewing that file format.\r\n"), pszFileName, pszExtensions);
+}
+
 bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool bSingleFile)
 {
 	if (!pFile)
@@ -1270,12 +1314,24 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 
 	mi->ulFileSize = pFile->GetFileSize();
 
+	TCHAR szExt[_MAX_EXT];
+	_tsplitpath(pFile->GetFileName(), NULL, NULL, NULL, szExt);
+	_tcslwr(szExt);
+
 	bool bResult = false;
+
+	////////////////////////////////////////////////////////////////////////////
+	// Check for AVI file
+	//
 	bool bIsAVI = false;
 	try
 	{
 		if (GetRIFFHeaders(pFile->GetFilePath(), mi, bIsAVI))
+		{
+			if (bIsAVI && _tcscmp(szExt, _T(".avi")) != 0)
+				WarnAboutWrongFileExtension(mi, pFile->GetFileName(), _T("avi"));
 			return true;
+		}
 	}
 	catch(...)
 	{
@@ -1284,9 +1340,9 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 	if (!IsWindow(hWndOwner))
 		return false;
 
-	TCHAR szExt[_MAX_EXT];
-	_tsplitpath(pFile->GetFileName(), NULL, NULL, NULL, szExt);
-	_tcslwr(szExt);
+	////////////////////////////////////////////////////////////////////////////
+	// Check for MPEG Audio file
+	//
 	if (_tcscmp(szExt, _T(".mp3"))==0 || _tcscmp(szExt, _T(".mp2"))==0 || _tcscmp(szExt, _T(".mp1"))==0 || _tcscmp(szExt, _T(".mpa"))==0)
 	{
 		try
@@ -1422,13 +1478,12 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 				LPCSTR desc = frame->GetDescription();
 				if (!desc)
 					desc = frame->GetTextID();
-				mi->strInfo << _T("   ") << A2CT(desc) << _T(":\t");
 
+				CStringStream strFidInfo;
 				ID3_FrameID eFrameID = frame->GetID();
 				switch (eFrameID)
 				{
 				case ID3FID_ALBUM:
-				case ID3FID_BPM:
 				case ID3FID_COMPOSER:
 				case ID3FID_CONTENTTYPE:
 				case ID3FID_COPYRIGHT:
@@ -1443,7 +1498,6 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 				case ID3FID_SUBTITLE:
 				case ID3FID_INITIALKEY:
 				case ID3FID_LANGUAGE:
-				case ID3FID_SONGLEN:
 				case ID3FID_MEDIATYPE:
 				case ID3FID_ORIGALBUM:
 				case ID3FID_ORIGFILENAME:
@@ -1467,7 +1521,31 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 				case ID3FID_YEAR:
 				{
 					char *sText = ID3_GetString(frame, ID3FN_TEXT);
-					mi->strInfo << sText << _T("\n");
+					CString strText(sText);
+					strText.Trim();
+					strFidInfo << strText;
+					delete [] sText;
+					break;
+				}
+				case ID3FID_BPM:
+				{
+					char *sText = ID3_GetString(frame, ID3FN_TEXT);
+					long lLength = atol(sText);
+					if (lLength) // check for != "0"
+						strFidInfo << sText;
+					delete [] sText;
+					break;
+				}
+				case ID3FID_SONGLEN:
+				{
+					char *sText = ID3_GetString(frame, ID3FN_TEXT);
+					long lLength = atol(sText) / 1000;
+					if (lLength)
+					{
+						CString strLength;
+						SecToTimeLength(lLength, strLength);
+						strFidInfo << strLength;
+					}
 					delete [] sText;
 					break;
 				}
@@ -1476,7 +1554,19 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 					char
 					*sText = ID3_GetString(frame, ID3FN_TEXT),
 					*sDesc = ID3_GetString(frame, ID3FN_DESCRIPTION);
-					mi->strInfo << _T("(") << sDesc << _T("): ") << sText << _T("\n");
+					CString strText(sText);
+					strText.Trim();
+					if (!strText.IsEmpty())
+					{
+						CString strDesc(sDesc);
+						strDesc.Trim();
+						if (!strDesc.IsEmpty())
+							strFidInfo << _T("(") << strDesc << _T(")");
+
+						if (!strDesc.IsEmpty())
+							strFidInfo << _T(": ");
+						strFidInfo << strText;
+					}
 					delete [] sText;
 					delete [] sDesc;
 					break;
@@ -1488,7 +1578,26 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 					*sText = ID3_GetString(frame, ID3FN_TEXT),
 					*sDesc = ID3_GetString(frame, ID3FN_DESCRIPTION),
 					*sLang = ID3_GetString(frame, ID3FN_LANGUAGE);
-					mi->strInfo << _T("(") << sDesc << _T(")[") << sLang << _T("]: ") << sText << _T("\n");
+					CString strText(sText);
+					strText.Trim();
+					if (!strText.IsEmpty())
+					{
+						CString strDesc(sDesc);
+						strDesc.Trim();
+						if (strDesc == _T("ID3v1 Comment"))
+							strDesc.Empty();
+						if (!strDesc.IsEmpty())
+							strFidInfo << _T("(") << strDesc << _T(")");
+
+						CString strLang(sLang);
+						strLang.Trim();
+						if (!strLang.IsEmpty())
+							strFidInfo << _T("[") << strLang << _T("]");
+
+						if (!strDesc.IsEmpty() || !strLang.IsEmpty())
+							strFidInfo << _T(": ");
+						strFidInfo << strText;
+					}
 					delete [] sText;
 					delete [] sDesc;
 					delete [] sLang;
@@ -1504,7 +1613,9 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 				case ID3FID_WWWRADIOPAGE:
 				{
 					char *sURL = ID3_GetString(frame, ID3FN_URL);
-					mi->strInfo << sURL << _T("\n");
+					CString strURL(sURL);
+					strURL.Trim();
+					strFidInfo << strURL;
 					delete [] sURL;
 					break;
 				}
@@ -1513,7 +1624,19 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 					char
 					*sURL = ID3_GetString(frame, ID3FN_URL),
 					*sDesc = ID3_GetString(frame, ID3FN_DESCRIPTION);
-					mi->strInfo << _T("(") << sDesc << _T("): ") << sURL << _T("\n");
+					CString strURL(sURL);
+					strURL.Trim();
+					if (!strURL.IsEmpty())
+					{
+						CString strDesc(sDesc);
+						strDesc.Trim();
+						if (!strDesc.IsEmpty())
+							strFidInfo << _T("(") << strDesc << _T(")");
+
+						if (!strDesc.IsEmpty())
+							strFidInfo << _T(": ");
+						strFidInfo << strURL;
+					}
 					delete [] sURL;
 					delete [] sDesc;
 					break;
@@ -1524,12 +1647,11 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 					for (size_t nIndex = 0; nIndex < nItems; nIndex++)
 					{
 						char *sPeople = ID3_GetString(frame, ID3FN_TEXT, nIndex);
-						mi->strInfo << sPeople;
+						strFidInfo << sPeople;
 						delete [] sPeople;
 						if (nIndex + 1 < nItems)
-							mi->strInfo << _T(", ");
+							strFidInfo << _T(", ");
 					}
-					mi->strInfo << _T("\n");
 					break;
 				}
 				case ID3FID_PICTURE:
@@ -1541,9 +1663,8 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 					size_t
 					nPicType   = frame->GetField(ID3FN_PICTURETYPE)->Get(),
 					nDataSize  = frame->GetField(ID3FN_DATA)->Size();
-					mi->strInfo << _T("(") << sDesc << _T(")[") << sFormat << _T(", ")
-						<< nPicType << _T("]: ") << sMimeType << _T(", ") << nDataSize
-						<< _T(" bytes") << _T("\n");
+					strFidInfo << _T("(") << sDesc << _T(")[") << sFormat << _T(", ")
+							   << nPicType << _T("]: ") << sMimeType << _T(", ") << nDataSize << _T(" bytes");
 					delete [] sMimeType;
 					delete [] sDesc;
 					delete [] sFormat;
@@ -1557,9 +1678,8 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 					*sFileName = ID3_GetString(frame, ID3FN_FILENAME);
 					size_t
 					nDataSize = frame->GetField(ID3FN_DATA)->Size();
-					mi->strInfo << _T("(") << sDesc << _T(")[")
-						<< sFileName << _T("]: ") << sMimeType << _T(", ") << nDataSize
-						<< _T(" bytes") << _T("\n");
+					strFidInfo << _T("(") << sDesc << _T(")[")
+						<< sFileName << _T("]: ") << sMimeType << _T(", ") << nDataSize << _T(" bytes");
 					delete [] sMimeType;
 					delete [] sDesc;
 					delete [] sFileName;
@@ -1569,15 +1689,14 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 				{
 					char *sOwner = ID3_GetString(frame, ID3FN_OWNER);
 					size_t nDataSize = frame->GetField(ID3FN_DATA)->Size();
-					mi->strInfo << sOwner << _T(", ") << nDataSize
-						<< _T(" bytes") << _T("\n");
+					strFidInfo << sOwner << _T(", ") << nDataSize << _T(" bytes");
 					delete [] sOwner;
 					break;
 				}
 				case ID3FID_PLAYCOUNTER:
 				{
 					size_t nCounter = frame->GetField(ID3FN_COUNTER)->Get();
-					mi->strInfo << nCounter << _T("\n");
+					strFidInfo << nCounter;
 					break;
 				}
 				case ID3FID_POPULARIMETER:
@@ -1586,8 +1705,7 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 					size_t
 					nCounter = frame->GetField(ID3FN_COUNTER)->Get(),
 					nRating = frame->GetField(ID3FN_RATING)->Get();
-					mi->strInfo << sEmail << _T(", counter=")
-						<< nCounter << _T(" rating=") << nRating << _T("\n");
+					strFidInfo << sEmail << _T(", counter=") << nCounter << _T(" rating=") << nRating;
 					delete [] sEmail;
 					break;
 				}
@@ -1598,8 +1716,7 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 					size_t
 					nSymbol = frame->GetField(ID3FN_ID)->Get(),
 					nDataSize = frame->GetField(ID3FN_DATA)->Size();
-					mi->strInfo << _T("(") << nSymbol << _T("): ") << sOwner
-						<< _T(", ") << nDataSize << _T(" bytes") << _T("\n");
+					strFidInfo << _T("(") << nSymbol << _T("): ") << sOwner << _T(", ") << nDataSize << _T(" bytes");
 					break;
 				}
 				case ID3FID_SYNCEDLYRICS:
@@ -1611,30 +1728,28 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 					//nTimestamp = frame->GetField(ID3FN_TIMESTAMPFORMAT)->Get(),
 					nRating = frame->GetField(ID3FN_CONTENTTYPE)->Get();
 					//const char* format = (2 == nTimestamp) ? "ms" : "frames";
-					mi->strInfo << _T("(") << sDesc << _T(")[") << sLang << _T("]: ");
+					strFidInfo << _T("(") << sDesc << _T(")[") << sLang << _T("]: ");
 					switch (nRating)
 					{
-					case ID3CT_OTHER:    mi->strInfo << _T("Other"); break;
-					case ID3CT_LYRICS:   mi->strInfo << _T("Lyrics"); break;
-					case ID3CT_TEXTTRANSCRIPTION:     mi->strInfo << _T("Text transcription"); break;
-					case ID3CT_MOVEMENT: mi->strInfo << _T("Movement/part name"); break;
-					case ID3CT_EVENTS:   mi->strInfo << _T("Events"); break;
-					case ID3CT_CHORD:    mi->strInfo << _T("Chord"); break;
-					case ID3CT_TRIVIA:   mi->strInfo << _T("Trivia/'pop up' information"); break;
+					case ID3CT_OTHER:    strFidInfo << _T("Other"); break;
+					case ID3CT_LYRICS:   strFidInfo << _T("Lyrics"); break;
+					case ID3CT_TEXTTRANSCRIPTION:     strFidInfo << _T("Text transcription"); break;
+					case ID3CT_MOVEMENT: strFidInfo << _T("Movement/part name"); break;
+					case ID3CT_EVENTS:   strFidInfo << _T("Events"); break;
+					case ID3CT_CHORD:    strFidInfo << _T("Chord"); break;
+					case ID3CT_TRIVIA:   strFidInfo << _T("Trivia/'pop up' information"); break;
 					}
-					mi->strInfo << _T("\n");
 					/*ID3_Field* fld = frame->GetField(ID3FN_DATA);
 					if (fld)
 					{
 						ID3_MemoryReader mr(fld->GetRawBinary(), fld->BinSize());
 						while (!mr.atEnd())
 						{
-							mi->strInfo << io::readString(mr).c_str();
-							mi->strInfo << " [" << io::readBENumber(mr, sizeof(uint32)) << " "
+							strFidInfo << io::readString(mr).c_str();
+							strFidInfo << " [" << io::readBENumber(mr, sizeof(uint32)) << " "
 								<< format << "] ";
 						}
-					}
-					mi->strInfo << "\n";*/
+					}*/
 					delete [] sDesc;
 					delete [] sLang;
 					break;
@@ -1652,11 +1767,16 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 				case ID3FID_REVERB:
 				case ID3FID_SYNCEDTEMPO:
 				case ID3FID_METACRYPTO:
-					mi->strInfo << _T(" (unimplemented)") << _T("\n");
+					//strFidInfo << _T(" (unimplemented)");
 					break;
 				default:
-					mi->strInfo << _T(" frame") << _T("\n");
+					//strFidInfo << _T(" frame");
 					break;
+				}
+
+				if (!strFidInfo.str.IsEmpty())
+				{
+					mi->strInfo << _T("   ") << A2CT(desc) << _T(":\t") << strFidInfo.str << _T("\n");
 				}
 			}
 			delete iter;
@@ -1665,308 +1785,351 @@ bool GetMediaInfo(HWND hWndOwner, const CKnownFile* pFile, SMediaInfo* mi, bool 
 		{
 			ASSERT(0);
 		}
+
+		if (bResult)
+			return true;
 	}
-	else
+
+	if (!IsWindow(hWndOwner))
+		return false;
+
+	// starting the MediaDet object takes a noticeable amount of time.. avoid starting that object
+	// for files which are not expected to contain any Audio/Video data.
+	// note also: MediaDet does not work well for too short files (e.g. 16K)
+	//
+	// same applies for MediaInfoLib, its even slower than MediaDet -> avoid calling for non AV files.
+	//
+	// since we have a thread here, this should not be a performance problem any longer.
+
+	// check again for AV type; MediaDet object has trouble with RAR files (?)
+	EED2KFileType eFileType = GetED2KFileTypeID(pFile->GetFileName());
+	if (thePrefs.GetInspectAllFileTypes() 
+		|| (eFileType == ED2KFT_AUDIO || eFileType == ED2KFT_VIDEO))
 	{
-		// starting the MediaDet object takes a noticeable amount of time.. avoid starting that object
-		// for files which are not expected to contain any Audio/Video data.
-		// note also: MediaDet does not work well for too short files (e.g. 16K)
+		/////////////////////////////////////////////////////////////////////////////
+		// Try MediaInfo lib
 		//
-		// same applies for MediaInfoLib, its even slower than MediaDet -> avoid calling for non AV files.
+		// Use MediaInfo only for non AVI files.. Reading potentially broken AVI files 
+		// with the VfW API (as MediaInfo is doing) is rather dangerous.
 		//
-		// since we have a thread here, this should not be a performance problem any longer.
-
-		// check again for AV type; MediaDet object has trouble with RAR files (?)
-		EED2KFileType eFileType = GetED2KFileTypeID(pFile->GetFileName());
-		if (eFileType == ED2KFT_AUDIO || eFileType == ED2KFT_VIDEO)
+		if (!bIsAVI)
 		{
-			// Use MediaInfo only for non AVI files.. Reading potentially broken AVI files with the VfW API (as MediaInfo
-			// is doing) is rather dangerous.
-			if (!bIsAVI)
+			try
 			{
-				try
+				USES_CONVERSION;
+				if (theMediaInfoDLL.Initialize())
 				{
-					USES_CONVERSION;
-					if (theMediaInfoDLL.Initialize())
+					void* Handle = (*theMediaInfoDLL.fpMediaInfo_Open)((LPSTR)T2CA(pFile->GetFilePath()));
+					if (Handle)
 					{
-						void* Handle = (*theMediaInfoDLL.fpMediaInfo_Open)((LPSTR)T2CA(pFile->GetFilePath()));
-						if (Handle)
+						CStringA str;
+
+						mi->strFileFormat = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_General, 0, "Format_String", Info_Text, Info_Name);
+
+						if (szExt[0] == '.' && szExt[1] != '\0')
 						{
-							CStringA str;
-
-							mi->strFileFormat = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_General, 0, "Format_String", Info_Text, Info_Name);
-
-							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_General, 0, "PlayTime", Info_Text, Info_Name);
-							float fFileLengthSec = atoi(str) / 1000.0;
-
-							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_General, 0, "VideoCount", Info_Text, Info_Name);
-							int iVideoStreams = atoi(str);
-							if (iVideoStreams > 0)
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_General, 0, "Format_Extensions", Info_Text, Info_Name);
+							if (!str.IsEmpty())
 							{
-								mi->iVideoStreams = iVideoStreams;
-								mi->fVideoLengthSec = fFileLengthSec;
+								// minor bug in MediaInfo lib.. some file extension lists have a ')' character in there..
+								str.Replace(")", "");
+								str.Replace("(", "");
 
-								CStringA strCodecA = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "Codec", Info_Text, Info_Name);
-								mi->strVideoFormat = strCodecA;
-								if (!strCodecA.IsEmpty())
-									mi->video.bmiHeader.biCompression = *(LPDWORD)(LPCSTR)strCodecA;
-								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "Codec_String", Info_Text, Info_Name);
-								if (!str.IsEmpty())
-									mi->strVideoFormat += _T(" (") + CString(str) + _T(")");
-
-								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "Width", Info_Text, Info_Name);
-								mi->video.bmiHeader.biWidth = atoi(str);
-
-								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "Height", Info_Text, Info_Name);
-								mi->video.bmiHeader.biHeight = atoi(str);
-
-								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "FrameRate", Info_Text, Info_Name);
-								mi->fVideoFrameRate = atof(str);
-
-								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "BitRate", Info_Text, Info_Name);
-								mi->video.dwBitRate = atoi(str);
-
-								bResult = true;
-							}
-
-							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_General, 0, "AudioCount", Info_Text, Info_Name);
-							int iAudioStreams = atoi(str);
-							if (iAudioStreams > 0)
-							{
-								mi->iAudioStreams = iAudioStreams;
-								mi->fAudioLengthSec = fFileLengthSec;
-
-								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Codec", Info_Text, Info_Name);
-								if (sscanf(str, "%hx", &mi->audio.wFormatTag) != 1)
+								str.MakeLower();
+								bool bFoundExt = false;
+								int iPos = 0;
+								CString strFmtExt(str.Tokenize(" ", iPos));
+								while (!strFmtExt.IsEmpty())
 								{
-									mi->strAudioFormat = str;
-									str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Codec_String", Info_Text, Info_Name);
-									if (!str.IsEmpty())
-										mi->strAudioFormat += _T(" (") + CString(str) + _T(")");
-								}
-								else
-								{
-									mi->strAudioFormat = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Codec_String", Info_Text, Info_Name);
-									str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Codec_Info", Info_Text, Info_Name);
-									if (!str.IsEmpty())
-										mi->strAudioFormat += _T(" (") + CString(str) + _T(")");
+									if (_tcscmp(strFmtExt, szExt + 1) == 0)
+									{
+										bFoundExt = true;
+										break;
+									}
+									strFmtExt = str.Tokenize(" ", iPos);
 								}
 
-								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Channels", Info_Text, Info_Name);
-								mi->audio.nChannels = atoi(str);
-
-								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "SamplingRate", Info_Text, Info_Name);
-								mi->audio.nSamplesPerSec = atoi(str);
-
-								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "BitRate", Info_Text, Info_Name);
-								mi->audio.nAvgBytesPerSec = atoi(str) / 8;
-
-								bResult = true;
+								if (!bFoundExt)
+									WarnAboutWrongFileExtension(mi, pFile->GetFileName(), CString(str));
 							}
-
-							(*theMediaInfoDLL.fpMediaInfo_Close)(Handle);
-
-							if (bResult)
-								return true;
 						}
+
+						str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_General, 0, "PlayTime", Info_Text, Info_Name);
+						float fFileLengthSec = atoi(str) / 1000.0;
+
+						str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_General, 0, "VideoCount", Info_Text, Info_Name);
+						int iVideoStreams = atoi(str);
+						if (iVideoStreams > 0)
+						{
+							mi->iVideoStreams = iVideoStreams;
+							mi->fVideoLengthSec = fFileLengthSec;
+
+							CStringA strCodecA = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "Codec", Info_Text, Info_Name);
+							mi->strVideoFormat = strCodecA;
+							if (!strCodecA.IsEmpty())
+								mi->video.bmiHeader.biCompression = *(LPDWORD)(LPCSTR)strCodecA;
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "Codec_String", Info_Text, Info_Name);
+							if (!str.IsEmpty())
+								mi->strVideoFormat += _T(" (") + CString(str) + _T(")");
+
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "Width", Info_Text, Info_Name);
+							mi->video.bmiHeader.biWidth = atoi(str);
+
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "Height", Info_Text, Info_Name);
+							mi->video.bmiHeader.biHeight = atoi(str);
+
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "FrameRate", Info_Text, Info_Name);
+							mi->fVideoFrameRate = atof(str);
+
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "BitRate", Info_Text, Info_Name);
+							mi->video.dwBitRate = atoi(str);
+
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Video, 0, "AspectRatio", Info_Text, Info_Name);
+							mi->fVideoAspectRatio = atof(str);
+
+							bResult = true;
+						}
+
+						str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_General, 0, "AudioCount", Info_Text, Info_Name);
+						int iAudioStreams = atoi(str);
+						if (iAudioStreams > 0)
+						{
+							mi->iAudioStreams = iAudioStreams;
+							mi->fAudioLengthSec = fFileLengthSec;
+
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Codec", Info_Text, Info_Name);
+							if (sscanf(str, "%hx", &mi->audio.wFormatTag) != 1)
+							{
+								mi->strAudioFormat = str;
+								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Codec_String", Info_Text, Info_Name);
+								if (!str.IsEmpty())
+									mi->strAudioFormat += _T(" (") + CString(str) + _T(")");
+							}
+							else
+							{
+								mi->strAudioFormat = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Codec_String", Info_Text, Info_Name);
+								str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Codec_Info", Info_Text, Info_Name);
+								if (!str.IsEmpty())
+									mi->strAudioFormat += _T(" (") + CString(str) + _T(")");
+							}
+
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "Channels", Info_Text, Info_Name);
+							mi->audio.nChannels = atoi(str);
+
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "SamplingRate", Info_Text, Info_Name);
+							mi->audio.nSamplesPerSec = atoi(str);
+
+							str = (*theMediaInfoDLL.fpMediaInfo_Get)(Handle, Stream_Audio, 0, "BitRate", Info_Text, Info_Name);
+							mi->audio.nAvgBytesPerSec = atoi(str) / 8;
+
+							bResult = true;
+						}
+
+						(*theMediaInfoDLL.fpMediaInfo_Close)(Handle);
+
+						if (bResult)
+							return true;
 					}
 				}
-				catch(...)
-				{
-					ASSERT(0);
-				}
 			}
-
-			if (!IsWindow(hWndOwner))
-				return false;
-
-			// Avoid processing of some file types which are known to crash due to bugged DirectShow filters.
-			TCHAR szExt[_MAX_EXT];
-			_tsplitpath(pFile->GetFilePath(), NULL, NULL, NULL, szExt);
-			_tcslwr(szExt);
-			if (_tcscmp(szExt, _T(".ogm"))!=0 && _tcscmp(szExt, _T(".ogg"))!=0 && _tcscmp(szExt, _T(".mkv"))!=0)
+			catch(...)
 			{
-				try
+				ASSERT(0);
+			}
+		}
+
+		if (!IsWindow(hWndOwner))
+			return false;
+
+		/////////////////////////////////////////////////////////////////////////////
+		// Try MediaDet object
+		//
+		// Avoid processing of some file types which are known to crash due to bugged DirectShow filters.
+		if (thePrefs.GetInspectAllFileTypes() 
+			|| (_tcscmp(szExt, _T(".ogm"))!=0 && _tcscmp(szExt, _T(".ogg"))!=0 && _tcscmp(szExt, _T(".mkv"))!=0))
+		{
+			try
+			{
+				CComPtr<IMediaDet> pMediaDet;
+				HRESULT hr = pMediaDet.CoCreateInstance(__uuidof(MediaDet));
+				if (SUCCEEDED(hr))
 				{
-					CComPtr<IMediaDet> pMediaDet;
-					HRESULT hr = pMediaDet.CoCreateInstance(__uuidof(MediaDet));
-					if (SUCCEEDED(hr))
+					USES_CONVERSION;
+					if (SUCCEEDED(hr = pMediaDet->put_Filename(CComBSTR(T2CW(pFile->GetFilePath())))))
 					{
-						USES_CONVERSION;
-						if (SUCCEEDED(hr = pMediaDet->put_Filename(CComBSTR(T2CW(pFile->GetFilePath())))))
+						long lStreams;
+						if (SUCCEEDED(hr = pMediaDet->get_OutputStreams(&lStreams)))
 						{
-							long lStreams;
-							if (SUCCEEDED(hr = pMediaDet->get_OutputStreams(&lStreams)))
+							for (long i = 0; i < lStreams; i++)
 							{
-								for (long i = 0; i < lStreams; i++)
+								if (SUCCEEDED(hr = pMediaDet->put_CurrentStream(i)))
 								{
-									if (SUCCEEDED(hr = pMediaDet->put_CurrentStream(i)))
+									GUID major_type;
+									if (SUCCEEDED(hr = pMediaDet->get_StreamType(&major_type)))
 									{
-										GUID major_type;
-										if (SUCCEEDED(hr = pMediaDet->get_StreamType(&major_type)))
+										if (major_type == MEDIATYPE_Video)
 										{
-											if (major_type == MEDIATYPE_Video)
+											mi->iVideoStreams++;
+
+											if (mi->iVideoStreams > 1)
 											{
-												mi->iVideoStreams++;
-
-												if (mi->iVideoStreams > 1)
+												if (!bSingleFile)
 												{
-													if (!bSingleFile)
-													{
-														if (!mi->strInfo.str.IsEmpty())
-															mi->strInfo << _T("\n\n");
-														mi->strInfo << _T("File: ") << pFile->GetFileName() << _T("\n");
-													}
-													mi->strInfo << _T("Additional Video Stream\n");
+													if (!mi->strInfo.str.IsEmpty())
+														mi->strInfo << _T("\n\n");
+													mi->strInfo << _T("File: ") << pFile->GetFileName() << _T("\n");
 												}
-
-												AM_MEDIA_TYPE mt = {0};
-												if (SUCCEEDED(hr = pMediaDet->get_StreamMediaType(&mt)))
-												{
-													if (mt.formattype == FORMAT_VideoInfo)
-													{
-														VIDEOINFOHEADER* pVIH = (VIDEOINFOHEADER*)mt.pbFormat;
-
-														if (mi->iVideoStreams == 1)
-														{
-															mi->video = *pVIH;
-															mi->video.dwBitRate = 0; // don't use this value
-															mi->strVideoFormat = GetVideoFormatName(mi->video.bmiHeader.biCompression);
-															pMediaDet->get_FrameRate(&mi->fVideoFrameRate);
-															bResult = true;
-														}
-														else
-														{
-															mi->strInfo << _T("   Codec:\t") << (LPCTSTR)GetVideoFormatName(pVIH->bmiHeader.biCompression) << _T("\n");
-															mi->strInfo << _T("   Width x Height:\t") << abs(pVIH->bmiHeader.biWidth) << _T(" x ") << abs(pVIH->bmiHeader.biHeight) << _T("\n");
-															// do not use that 'dwBitRate', whatever this number is, it's not
-															// the bitrate of the encoded video stream. seems to be the bitrate
-															// of the uncompressed stream divided by 2 !??
-															//if (pVIH->dwBitRate)
-															//	mi->strInfo << "   Bitrate:\t" << (UINT)(pVIH->dwBitRate / 1000) << " kBit/s\n";
-
-															double fFrameRate = 0.0;
-															if (SUCCEEDED(pMediaDet->get_FrameRate(&fFrameRate)) && fFrameRate)
-																mi->strInfo << _T("   Frames/sec:\t") << fFrameRate << _T("\n");
-														}
-													}
-												}
-
-												double fLength = 0.0;
-												if (SUCCEEDED(pMediaDet->get_StreamLength(&fLength)) && fLength)
-												{
-													if (mi->iVideoStreams == 1)
-														mi->fVideoLengthSec = fLength;
-													else
-													{
-														CString strLength;
-														SecToTimeLength(fLength, strLength);
-														mi->strInfo << _T("   Length:\t") << strLength;
-														if (pFile->IsPartFile()){
-															mi->strInfo << _T(" (This may not reflect the final total length!)");
-														}
-														mi->strInfo << _T("\n");
-													}
-												}
-
-												if (mt.pUnk != NULL)
-													mt.pUnk->Release();
-												if (mt.pbFormat != NULL)
-													CoTaskMemFree(mt.pbFormat);
-												if (mi->iVideoStreams > 1)
-													mi->strInfo << _T("\n");
+												mi->strInfo << _T("Additional Video Stream\n");
 											}
-											else if (major_type == MEDIATYPE_Audio)
+
+											AM_MEDIA_TYPE mt = {0};
+											if (SUCCEEDED(hr = pMediaDet->get_StreamMediaType(&mt)))
 											{
-												mi->iAudioStreams++;
-
-												if (mi->iAudioStreams > 1)
+												if (mt.formattype == FORMAT_VideoInfo)
 												{
-													if (!bSingleFile)
+													VIDEOINFOHEADER* pVIH = (VIDEOINFOHEADER*)mt.pbFormat;
+
+													if (mi->iVideoStreams == 1)
 													{
-														if (!mi->strInfo.str.IsEmpty())
-															mi->strInfo << _T("\n\n");
-														mi->strInfo << _T("File: ") << pFile->GetFileName() << _T("\n");
-													}
-													mi->strInfo << _T("Additional Audio Stream\n");
-												}
-
-												AM_MEDIA_TYPE mt = {0};
-												if (SUCCEEDED(hr = pMediaDet->get_StreamMediaType(&mt)))
-												{
-													if (mt.formattype == FORMAT_WaveFormatEx)
-													{
-														WAVEFORMATEX* wfx = (WAVEFORMATEX*)mt.pbFormat;
-
-														if (mi->iAudioStreams == 1)
-														{
-															memcpy(&mi->audio, wfx, sizeof mi->audio);
-															mi->strAudioFormat = GetWaveFormatTagName(wfx->wFormatTag);
-														}
-														else
-														{
-															CString strFormat = GetWaveFormatTagName(wfx->wFormatTag);
-															mi->strInfo << _T("   Format:\t") << strFormat << _T("\n");
-															if (wfx->nAvgBytesPerSec)
-																mi->strInfo << _T("   Bitrate:\t") << (UINT)(((wfx->nAvgBytesPerSec * 8.0) + 500.0) / 1000.0) << _T(" kBit/s\n");
-															if (wfx->nSamplesPerSec)
-																mi->strInfo << _T("   Samples/sec:\t") << wfx->nSamplesPerSec / 1000.0 << _T(" kHz\n");
-															if (wfx->wBitsPerSample)
-																mi->strInfo << _T("   Bit/sample:\t") << wfx->wBitsPerSample << _T(" Bit\n");
-
-															mi->strInfo << _T("   Mode:\t");
-															if (wfx->nChannels == 1)
-																mi->strInfo << _T("Mono");
-															else if (wfx->nChannels == 2)
-																mi->strInfo << _T("Stereo");
-															else
-																mi->strInfo << wfx->nChannels << _T(" channels");
-															mi->strInfo << _T("\n");
-														}
+														mi->video = *pVIH;
+														if (mi->video.bmiHeader.biWidth && mi->video.bmiHeader.biHeight)
+															mi->fVideoAspectRatio = (float)abs(mi->video.bmiHeader.biWidth) / (float)abs(mi->video.bmiHeader.biHeight);
+														mi->video.dwBitRate = 0; // don't use this value
+														mi->strVideoFormat = GetVideoFormatName(mi->video.bmiHeader.biCompression);
+														pMediaDet->get_FrameRate(&mi->fVideoFrameRate);
 														bResult = true;
 													}
-												}
-
-												double fLength = 0.0;
-												if (SUCCEEDED(pMediaDet->get_StreamLength(&fLength)) && fLength)
-												{
-													if (mi->iAudioStreams == 1)
-														mi->fAudioLengthSec = fLength;
 													else
 													{
-														CString strLength;
-														SecToTimeLength(fLength, strLength);
-														mi->strInfo << _T("   Length:\t") << strLength;
-														if (pFile->IsPartFile()){
-															mi->strInfo << _T(" (This may not reflect the final total length!)");
-														}
-														mi->strInfo << _T("\n");
+														mi->strInfo << _T("   Codec:\t") << (LPCTSTR)GetVideoFormatName(pVIH->bmiHeader.biCompression) << _T("\n");
+														mi->strInfo << _T("   Width x Height:\t") << abs(pVIH->bmiHeader.biWidth) << _T(" x ") << abs(pVIH->bmiHeader.biHeight) << _T("\n");
+														// do not use that 'dwBitRate', whatever this number is, it's not
+														// the bitrate of the encoded video stream. seems to be the bitrate
+														// of the uncompressed stream divided by 2 !??
+														//if (pVIH->dwBitRate)
+														//	mi->strInfo << "   Bitrate:\t" << (UINT)(pVIH->dwBitRate / 1000) << " kBit/s\n";
+
+														double fFrameRate = 0.0;
+														if (SUCCEEDED(pMediaDet->get_FrameRate(&fFrameRate)) && fFrameRate)
+															mi->strInfo << _T("   Frames/sec:\t") << fFrameRate << _T("\n");
 													}
 												}
+											}
 
-												if (mt.pUnk != NULL)
-													mt.pUnk->Release();
-												if (mt.pbFormat != NULL)
-													CoTaskMemFree(mt.pbFormat);
-												if (mi->iAudioStreams > 1)
+											double fLength = 0.0;
+											if (SUCCEEDED(pMediaDet->get_StreamLength(&fLength)) && fLength)
+											{
+												if (mi->iVideoStreams == 1)
+													mi->fVideoLengthSec = fLength;
+												else
+												{
+													CString strLength;
+													SecToTimeLength(fLength, strLength);
+													mi->strInfo << _T("   Length:\t") << strLength;
+													if (pFile->IsPartFile()){
+														mi->strInfo << _T(" (This may not reflect the final total length!)");
+													}
 													mi->strInfo << _T("\n");
+												}
 											}
-											else{
-												TRACE("%s - Unknown stream type\n", pFile->GetFileName());
+
+											if (mt.pUnk != NULL)
+												mt.pUnk->Release();
+											if (mt.pbFormat != NULL)
+												CoTaskMemFree(mt.pbFormat);
+											if (mi->iVideoStreams > 1)
+												mi->strInfo << _T("\n");
+										}
+										else if (major_type == MEDIATYPE_Audio)
+										{
+											mi->iAudioStreams++;
+
+											if (mi->iAudioStreams > 1)
+											{
+												if (!bSingleFile)
+												{
+													if (!mi->strInfo.str.IsEmpty())
+														mi->strInfo << _T("\n\n");
+													mi->strInfo << _T("File: ") << pFile->GetFileName() << _T("\n");
+												}
+												mi->strInfo << _T("Additional Audio Stream\n");
 											}
+
+											AM_MEDIA_TYPE mt = {0};
+											if (SUCCEEDED(hr = pMediaDet->get_StreamMediaType(&mt)))
+											{
+												if (mt.formattype == FORMAT_WaveFormatEx)
+												{
+													WAVEFORMATEX* wfx = (WAVEFORMATEX*)mt.pbFormat;
+
+													if (mi->iAudioStreams == 1)
+													{
+														memcpy(&mi->audio, wfx, sizeof mi->audio);
+														mi->strAudioFormat = GetWaveFormatTagName(wfx->wFormatTag);
+													}
+													else
+													{
+														CString strFormat = GetWaveFormatTagName(wfx->wFormatTag);
+														mi->strInfo << _T("   Format:\t") << strFormat << _T("\n");
+														if (wfx->nAvgBytesPerSec)
+															mi->strInfo << _T("   Bitrate:\t") << (UINT)(((wfx->nAvgBytesPerSec * 8.0) + 500.0) / 1000.0) << _T(" kBit/s\n");
+														if (wfx->nSamplesPerSec)
+															mi->strInfo << _T("   Samples/sec:\t") << wfx->nSamplesPerSec / 1000.0 << _T(" kHz\n");
+														if (wfx->wBitsPerSample)
+															mi->strInfo << _T("   Bit/sample:\t") << wfx->wBitsPerSample << _T(" Bit\n");
+
+														mi->strInfo << _T("   Mode:\t");
+														if (wfx->nChannels == 1)
+															mi->strInfo << _T("Mono");
+														else if (wfx->nChannels == 2)
+															mi->strInfo << _T("Stereo");
+														else
+															mi->strInfo << wfx->nChannels << _T(" channels");
+														mi->strInfo << _T("\n");
+													}
+													bResult = true;
+												}
+											}
+
+											double fLength = 0.0;
+											if (SUCCEEDED(pMediaDet->get_StreamLength(&fLength)) && fLength)
+											{
+												if (mi->iAudioStreams == 1)
+													mi->fAudioLengthSec = fLength;
+												else
+												{
+													CString strLength;
+													SecToTimeLength(fLength, strLength);
+													mi->strInfo << _T("   Length:\t") << strLength;
+													if (pFile->IsPartFile()){
+														mi->strInfo << _T(" (This may not reflect the final total length!)");
+													}
+													mi->strInfo << _T("\n");
+												}
+											}
+
+											if (mt.pUnk != NULL)
+												mt.pUnk->Release();
+											if (mt.pbFormat != NULL)
+												CoTaskMemFree(mt.pbFormat);
+											if (mi->iAudioStreams > 1)
+												mi->strInfo << _T("\n");
+										}
+										else{
+											TRACE(_T("%s - Unknown stream type\n"), pFile->GetFileName());
 										}
 									}
 								}
 							}
 						}
-						else{
-							TRACE("Failed to open \"%s\" - %s\n", pFile->GetFilePath(), GetErrorMessage(hr, 1));
-						}
+					}
+					else{
+						TRACE(_T("Failed to open \"%s\" - %s\n"), pFile->GetFilePath(), GetErrorMessage(hr, 1));
 					}
 				}
-				catch(...){
-					ASSERT(0);
-				}
+			}
+			catch(...){
+				ASSERT(0);
 			}
 		}
 	}
@@ -2000,6 +2163,7 @@ void CFileInfoDialog::Localize()
 	GetDlgItem(IDC_FD_XI12)->SetWindowText( GetResString(IDS_SAMPLERATE)+_T(":"));
 
 	GetDlgItem(IDC_STATICFI)->SetWindowText( GetResString(IDS_FILEFORMAT)+_T(":"));
+	GetDlgItem(IDC_FD_XI14)->SetWindowText( GetResString(IDS_ASPECTRATIO)+_T(":"));
 }
 
 void CFileInfoDialog::AddFileInfo(LPCTSTR pszFmt, ...)

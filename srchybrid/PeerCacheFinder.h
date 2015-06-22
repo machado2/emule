@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2004 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2004 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -15,7 +15,6 @@
 //along with this program; if not, write to the Free Software
 
 #pragma once
-#include "loggable.h"
 #include <afxinet.h>
 #include "ClientVersionInfo.h"
 
@@ -46,7 +45,7 @@ enum EPCLookUpState{
 ////////////////////////////////////////////////////////////////////////////////////
 /// CPeerCacheFinder
 
-class CPeerCacheFinder: public CLoggable
+class CPeerCacheFinder
 {
 	friend class CPCValditeThread;
 public:

@@ -1,5 +1,4 @@
 #pragma once
-#include "Loggable.h"
 
 class CWebSocket;
 class CUpDownClient;
@@ -7,7 +6,6 @@ class CUpDownClient;
 #define WEB_GRAPH_HEIGHT		120
 #define WEB_GRAPH_WIDTH			500
 
-#define SESSION_TIMEOUT_SECS	300	// 5 minutes session expiration
 #define SHORT_FILENAME_LENGTH	40	// Max size of file name.
 
 typedef struct { float download; float upload;  long connections; } UpDown;
@@ -170,7 +168,7 @@ typedef struct
 	CString sKad;
 } WebTemplates;
 
-class CWebServer: public CLoggable
+class CWebServer
 {
 	friend class CWebSocket;
 
@@ -210,6 +208,9 @@ private:
     static CString	_GetWebSearch(ThreadData Data);
     static CString	_GetSearch(ThreadData Data);
 	static CString	_GetKadPage(ThreadData Data);
+
+    static CString  _GetRemoteLinkAddedOk(ThreadData Data);
+    static CString  _GetRemoteLinkAddedFailed(ThreadData Data);
 
 	static CString	_ParseURL(CString URL, CString fieldname); 
 	static CString	_ParseURLArray(CString URL, CString fieldname);

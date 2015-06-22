@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@ struct SSearchParams;
 ///////////////////////////////////////////////////////////////////////////////
 // CSearchResultsWnd dialog
 
-class CSearchResultsWnd : public CResizableFormView, public CLoggable
+class CSearchResultsWnd : public CResizableFormView
 {
 	DECLARE_DYNCREATE(CSearchResultsWnd)
 
@@ -112,7 +112,8 @@ protected:
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnBnClickedSdownload();
 	afx_msg void OnBnClickedClearall();
-	afx_msg LRESULT OnCloseTab(WPARAM wparam, LPARAM lparam);
+	afx_msg LRESULT OnCloseTab(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnDblClickTab(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnClose();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);

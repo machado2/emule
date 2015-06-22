@@ -81,22 +81,14 @@ BEGIN
     IDS_HTTPDOWNLOAD_PERCENTAGE "서버 목록 갱신: %s%% 중 %s 완료"
     IDS_HTTPDOWNLOAD_RETREIVEING_FILE "파일을 받는 중"
     IDS_HTTPDOWNLOAD_OF     "%s 중 %s"
-    IDS_HTTPDOWNLOAD_SECONDS "%1초"
-    IDS_HTTPDOWNLOAD_MINUTES "%1분"
-    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%1분 %2초"
-    IDS_HTTPDOWNLOAD_BYTES  "%s Bytes"
-    IDS_HTTPDOWNLOAD_KILOBYTES "%s KB"
     IDS_CANCEL              "취소"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_HTTPDOWNLOAD_MEGABYTES "%s MB"
     IDS_HTTP_CAPTION        "서버 목록 갱신"
     IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s 복사됨)"
-    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s Bytes/Sec"
     IDS_HSAV                "해시셋 사용 가능"
-    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s KB/Sec"
     IDS_FD_CORR             "깨짐"
     IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
                             "파일 '%s'가 이미 존재합니다.\n대치하시겠습니까?"
@@ -322,8 +314,8 @@ BEGIN
     IDS_TIME                "시간"
     IDS_STATS_DDATA         "받은 데이터: %s"
     IDS_STATS_UDATA         "보낸 데이터 (세션): %s"
-    IDS_STATS_AVGDL         "평균 다운로드 속도 (세션): %.2f kB/s"
-    IDS_STATS_AVGUL         "평균 업로드 속도 (세션): %.2f kB/s"
+    IDS_STATS_AVGDL         "평균 다운로드 속도 (세션): %s"
+    IDS_STATS_AVGUL         "평균 업로드 속도 (세션): %s"
     IDS_STATS_FOUNDSRC      "찾은 소스: %i"
     IDS_STATS_ACTDL         "진행중인 다운로드 (부분): %i"
     IDS_STATS_ACTUL         "진행중인 업로드: %i"
@@ -923,13 +915,13 @@ BEGIN
     IDS_UNIT                "단위:"
     IDS_WIZARD_CUSTOM       "Custom"
     IDS_WIZARD_ENTERBELOW   "(아래에 입력!)"
-    IDS_STATS_MAXAVGDL      "최대 다운로드 속도 평균 (세션): %.2f kB/s"
+    IDS_STATS_MAXAVGDL      "최대 다운로드 속도 평균 (세션): %s"
     IDS_USS_MIN             "경고: 현재 USS는 10K 이하의 업로드 속도를 지원하지 않습니다. 만약 현재 연결로서 감당하기 힘들다면 USS 기능을 꺼 주십시요."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATS_MAXDL         "최대 다운로드 속도 (세션): %.2f kB/s"
+    IDS_STATS_MAXDL         "최대 다운로드 속도 (세션): %s"
     IDS_IRC_EMULEPROTO_IGNOREADDFRIEND "eMule 친구 추가 프로토콜 메시지 무시"
     IDS_PW_FASTSRVCON       "빠른 서버 접속"
     IDS_SOURCELINKFAILED    "유효한 소스 링크를 생성하려면 HighID여야 합니다"
@@ -1484,7 +1476,7 @@ BEGIN
     IDS_INSUFFICIENT        "디스크 공간 부족"
     IDS_MINFREEDISKSPACE    "최소 여유 디스크 공간 [MB]"
     IDS_WARNING             "경고"
-    IDS_IMPORTSPLPF         "part 파일 가져 오기 (eM, eD, ON)"
+    IDS_IMPORTSPLPF         "part 파일 가져 오기 (eMule,eDonkey,Overnet)"
     IDS_IMP_STEPREADPF      "part 폴더 읽는 중"
     IDS_IMP_STEPBASICINF    "part 파일 기본 정보 추출 중"
     IDS_IMP_STEPCRDESTFILE  "대상 part 파일 생성 중"
@@ -1669,9 +1661,136 @@ BEGIN
     IDS_SOURCEEXCHANGESWAP  "임시 소스 교환 스왑"
     IDS_NEWMSG              "'%s'의 새로운 메시지 (IP:%s)"
     IDS_PREF_STARTNEXTFILECATONLY "같은 분류에서만"
-    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
-    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
-    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
+    IDS_LOG_ULDL_EVENTS     "업/다운 이벤트 로그"
+    IDS_PEERCACHE_ENABLED   "ISP에서 PeerCache 기술을 지원하므로 캐시 다운로드를 활성화 합니다!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "다른 사용자가 친구로 추가할 수 있게 허용."
+    IDS_DL_TRY_TO_GET_PREVIEW_PARTS "미리보기에 필요한 part 부터 다운로드"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_ERR_BADFORMAT   "알 수 없거나 깨진 임시 파일 포맷."
+    IDS_SEARCH_INVALIDCHAR  "검색식에 잘못된 문자가 포함되어 있습니다. '?' 문자를 넣었거나, eD2K 네트웍에서 허용되지 않는 문자를 넣었습니다."
+    IDS_PORTSCON            "포트와 연결"
+    IDS_PORTINFO            "eMule은 서버와 클라언트들과의 통신을 위해 두개의 포트를 사용합니다. 이 포트들은 원격 클라이언트들을 위해 비어있고 사용가능해야 합니다. TCP 포트는 eMule의 주요 기능들이 동작하기 위해 반드시 필요하고, UDP 포트는 Kad (서버 없는 네트웍)가 사용하고, 네트웍 사용량 (오버헤드)를 줄여줍니다.\n\n네트웍 활동이 시작되기 전에 여기서 포트를 변경할 수 있습니다."
+    IDS_STARTTEST           "포트 시험"
+    IDS_TESTINFO            "여기서 TCP와 UDP 포트가 원격에서 접속이 가능한지 시험할 수 있습니다. 이 시험은 서버나 클라이언트가 접속해 올 수 있기 위해서는 꼭 성공해야 합니다!"
+    IDS_CONNECTIONTEST      "연결 시험"
+    IDS_NOPORTCHANGEPOSSIBLE 
+                            "다른 클라이언트와 연결되었거나 서버/Kad에 접속해 있는 상태에서는 포트를 변경할 수 없습니다!\n\neMule을 다시 시작해서 변경된 포트 설정을 적용하십시요."
+    IDS_NETWORK_INFO        "네트웍 정보"
+    IDS_SP_TOTALUL          "총 업로드 수"
+    IDS_SP_ULFRIENDS        "친구 슬롯 업로드"
+    IDS_SP_ULSLOTSNOOVERHEAD "오버헤드를 제외한 현재 업로드 (UL 슬롯만)"
+    IDS_ST_ACTIVEU_ZZ       "활성 업로드"
+    IDS_ST_ULCURRENT        "업로드+오버헤드"
+    IDS_ST_ULSLOTSNOOVERHEAD "업로드"
+    IDS_ST_ULFRIEND         "친구 업로드"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ACTUL_ZZ      "활성 업로드/대역폭을 채우기 위한: %i"
+    IDS_STATS_TOTALUL       "총 업로드 개수: %i"
+    IDS_CHAT_DOWNLOADED     "다운로드 양:"
+    IDS_CHAT_UPLOADED       "업로드 양:"
+    IDS_CHAT_IDENT          "아이디:"
+    IDS_CHAT_CLIENT         "클라이언트:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MAXHALFOPENCONS     "최대 하프 오픈(Half Open) 연결"
+    IDS_WIZ_STARTWITHWINDOWS 
+                            "윈도우를 시작할 때 실행되게 하려면 이곳을 체크하세요. [기본값 사용안함]"
+    IDS_KAD_WAITCBK         "콜백 Kad 대기"
+    IDS_KAD_TOOMANDYKADLKPS "Kad 찾기가 너무 많음"
+    IDS_PCDS_CLIENTWAIT     "ClientWait"
+    IDS_PCDS_CACHEWAIT      "CacheWait"
+    IDS_CACHE               "캐시"
+    IDS_INDEXED             "인덱스 됨"
+    IDS_KADINFO_SRC         "\t소스: %u\r\n"
+    IDS_KADINFO_KEYW        "\t키워드: %u\r\n"
+    IDS_STARTWITHWINDOWS    "윈도우와 함께 시작"
+    IDS_ADDSRCMANUALLY      "직접 소스 추가"
+    IDS_BUDDY               "Buddy"
+    IDS_BUDDYNONE           "None"
+    IDS_INFO                "Info"
+    IDS_HALF                "Half"
+    IDS_CONCOMPL            "Compl"
+    IDS_KADSTATUS_STOPPING  "중지 중"
+    IDS_KADSTATUS_ACTIVE    "활성"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FORMAT              "형식"
+    IDS_META_COLLECTION     "콜렉션"
+    IDS_META_PARTPATH       "Part 경로"
+    IDS_META_PARTHASH       "Part 해시"
+    IDS_META_GAPSTART       "Gap 시작"
+    IDS_META_GAPEND         "Gap 끝"
+    IDS_FAIL                "실패"
+    IDS_META_PREFERENCES    "선호도"
+    IDS_META_VERSION        "버전"
+    IDS_META_TEMPFILE       "임시 파일"
+    IDS_META_SERVERPORT     "서버 포트"
+    IDS_META_SERVERIP       "서버 IP"
+    IDS_META_SRCUDPPORT     "소스 UDP 포트"
+    IDS_META_SRCTCPPORT     "소스 TCP 포트"
+    IDS_META_SRCIP          "소스 IP"
+    IDS_META_SRCTYPE        "소스 유형"
+    IDS_SEARCH_UNICODE      "Unicode로 검색"
+    IDS_PERSEC              "/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LD_ED2KLINK         "ED2K 링크"
+    IDS_LD_COPYCLIPBOARD    "클립보드에 복사"
+    IDS_LD_HOSTNAME         "소스 링크를 생성할 때 IP 대신 (환경설정된) 호스트명 사용"
+    IDS_SAVEACFAILED        "AICH 해시셋 저장 실패!"
+    IDS_IACHHASH            "AICH 해시"
+    IDS_BYTESPERSEC         "B/s"
+    IDS_KBYTESPERSEC        "KB/s"
+    IDS_MBYTESPERSEC        "MB/s"
+    IDS_GBYTESPERSEC        "GB/s"
+    IDS_TBYTESPERSEC        "TB/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MINORCLIENTS  "Minor"
+    IDS_LD_BASICOPT         "기본 옵션"
+    IDS_LD_ADDSOURCE        "나를 소스로 추가"
+    IDS_LD_EMULEHASH        "진보한 깨짐 처리를 위해 eMule AICH 해시 추가"
+    IDS_LD_ADVANCEDOPT      "고급 옵션"
+    IDS_LD_ADDHTML          "HTML 태그 추가"
+    IDS_LD_ADDHASHSET       "완전한 해시셋 추가"
+    IDS_FILELINK            "파일 링크"
+    IDS_PF_ADVANCEDCALC     "남은 시간에 진보된 계산 방식 사용"
+    IDS_DL_SHOWED2KLINK     "eD2K 링크 보기..."
+    IDS_AICH_SYNCTOTAL      "AICH 해시셋이 올바르지 않은 %i개 파일을 발견했습니다, 해당 파일을 지금 다시 해시합니다"
+    IDS_AICH_CALCFILE       "%s 파일의 AICH 해시 계산 중"
+    IDS_AICH_WARNUSER       "eMule 0.44a 버전 부터는 깨짐이 발견될 때 데이터 손실을 크게 줄일 수 있는 추가적인 파일 해시를 사용하고 있습니다. 지금 이전 버전에서 업데이트 하려고 하고 있으므로, eMule은 새로운 해시 계산을 위해 모든 공유된 파일을 다시 해시 해야 합니다. 작업은 시간이 좀 걸리나 한번만 해 주시면 됩니다.  "
+    IDS_AICH_WORKED         "AICH가 part를 성공적으로 복구했습니다 (%s of %s, part %u, 파일 %s)"
+    IDS_TRICKLING           "Standby"
+    IDS_SOURCECLIENT        "Source Client"
+    IDS_USERSIP             "Users IP"
+    IDS_FEATURES            "Features"
+    IDS_IRC_NEWNICK         "Select a IRC nick."
+    IDS_IRC_NEWNICKDESC     "Should be one word less then 20 characters containing (A-Z, 0-9). It can be changed again in Preferences->Irc."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SPARSEPARTFILES     "Create new part files as 'sparse' (NTFS only)"
+    IDS_ASPECTRATIO         "Aspect Ratio"
+    IDS_NEGATEFILTER        "negate filter"
+    IDS_SEENCOMPL           "Ever seen complete"
+    IDS_SELSKINPROFILEDIR   "Select skin profile directory"
+    IDS_ASKDLINCOMPLETE     "Potentially incomplete file:\r\n\r\n%s\r\n\r\nThis file is supposed to be incomplete in the network and can therefore most likely not downloaded successfully! Do you really want to download this file?"
+    IDS_DEADSOURCES         "Dead Sources"
 END
 
 #endif    // Korean resources

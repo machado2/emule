@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -37,6 +37,7 @@
 #include "DownloadQueue.h"
 #include "emuledlg.h"
 #include "TransferWnd.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -52,8 +53,24 @@ CBarShader CUpDownClient::s_UpStatusBar(16);
 
 void CUpDownClient::DrawUpStatusBar(CDC* dc, RECT* rect, bool onlygreyrect, bool  bFlat) const
 {
-	const COLORREF crNeither = RGB(224, 224, 224);
-	const COLORREF crNextSending = RGB(255,208,0);
+    COLORREF crNeither;
+	COLORREF crNextSending;
+	COLORREF crBoth;
+	COLORREF crSending;
+
+    if(GetSlotNumber() <= theApp.uploadqueue->GetActiveUploadsCount() ||
+       (GetUploadState() != US_UPLOADING && GetUploadState() != US_CONNECTING) ) {
+        crNeither = RGB(224, 224, 224);
+	    crNextSending = RGB(255,208,0);
+	    crBoth = bFlat ? RGB(0, 0, 0) : RGB(104, 104, 104);
+	    crSending = RGB(0, 150, 0);
+    } else {
+        // grayed out
+        crNeither = RGB(248, 248, 248);
+	    crNextSending = RGB(255,244,191);
+	    crBoth = bFlat ? RGB(191, 191, 191) : RGB(191, 191, 191);
+	    crSending = RGB(191, 229, 191);
+    }
 
 	// wistily: UpStatusFix
 	CKnownFile* currequpfile = theApp.sharedfiles->GetFileByID(requpfileid);
@@ -70,7 +87,6 @@ void CUpDownClient::DrawUpStatusBar(CDC* dc, RECT* rect, bool onlygreyrect, bool
 	    s_UpStatusBar.SetWidth(rect->right - rect->left); 
 	    s_UpStatusBar.Fill(crNeither); 
 	    if (!onlygreyrect && m_abyUpPartStatus) { 
-		    const COLORREF crBoth = bFlat ? RGB(0, 0, 0) : RGB(104, 104, 104);
 		    for (uint32 i = 0;i < m_nUpPartCount;i++)
 			    if(m_abyUpPartStatus[i])
 				    s_UpStatusBar.FillRange(PARTSIZE*(i),PARTSIZE*(i+1),crBoth);
@@ -91,7 +107,6 @@ void CUpDownClient::DrawUpStatusBar(CDC* dc, RECT* rect, bool onlygreyrect, bool
 		    }
 	    }
 	    if (!m_DoneBlocks_list.IsEmpty()){
-		    const COLORREF crSending = RGB(0, 150, 0);
 		    for(POSITION pos=m_DoneBlocks_list.GetHeadPosition();pos!=0;){
 			    block = m_DoneBlocks_list.GetNext(pos);
 			    s_UpStatusBar.FillRange(block->StartOffset, block->EndOffset + 1, crSending);
@@ -101,12 +116,76 @@ void CUpDownClient::DrawUpStatusBar(CDC* dc, RECT* rect, bool onlygreyrect, bool
     }
 } 
 
-void CUpDownClient::SetUploadState(EUploadState news){
-	// don't add any final cleanups for US_NONE here
-	m_nUploadState = news;
-	theApp.emuledlg->transferwnd->clientlistctrl.RefreshClient(this);
+void CUpDownClient::SetUploadState(EUploadState eNewState)
+{
+	if (eNewState != m_nUploadState)
+	{
+		if (m_nUploadState == US_UPLOADING)
+		{
+			// Reset upload data rate computation
+			m_nUpDatarate = 0;
+			m_nSumForAvgUpDataRate = 0;
+			m_AvarageUDR_list.RemoveAll();
+		}
+
+		// don't add any final cleanups for US_NONE here
+		m_nUploadState = eNewState;
+		theApp.emuledlg->transferwnd->clientlistctrl.RefreshClient(this);
+	}
 }
 
+/**
+ * Gets the queue score multiplier for this client, taking into consideration client's credits
+ * and the requested file's priority.
+ */
+float CUpDownClient::GetCombinedFilePrioAndCredit() {
+	if (credits == 0){
+		ASSERT ( IsKindOf(RUNTIME_CLASS(CUrlClient)) );
+		return 0;
+	}
+
+    return (uint32)(10.0f*credits->GetScoreRatio(GetIP())*float(GetFilePrioAsNumber()));
+}
+
+/**
+ * Gets the file multiplier for the file this client has requested.
+ */
+int CUpDownClient::GetFilePrioAsNumber() const {
+	CKnownFile* currequpfile = theApp.sharedfiles->GetFileByID(requpfileid);
+	if(!currequpfile)
+		return 0;
+	
+	// TODO coded by tecxx & herbert, one yet unsolved problem here:
+	// sometimes a client asks for 2 files and there is no way to decide, which file the 
+	// client finally gets. so it could happen that he is queued first because of a 
+	// high prio file, but then asks for something completely different.
+	int filepriority = 10; // standard
+	switch(currequpfile->GetUpPriority()){
+		case PR_VERYHIGH:
+			filepriority = 18;
+			break;
+		case PR_HIGH: 
+			filepriority = 9; 
+			break; 
+		case PR_LOW: 
+			filepriority = 6; 
+			break; 
+		case PR_VERYLOW:
+			filepriority = 2;
+			break;
+		case PR_NORMAL: 
+			default: 
+			filepriority = 7; 
+		break; 
+	} 
+
+    return filepriority;
+}
+
+/**
+ * Gets the current waiting score for this client, taking into consideration waiting
+ * time, priority of requested file, and the client's credits.
+ */
 uint32 CUpDownClient::GetScore(bool sysvalue, bool isdownloading, bool onlybasevalue) const
 {
 	if (!m_pszUsername)
@@ -134,29 +213,7 @@ uint32 CUpDownClient::GetScore(bool sysvalue, bool isdownloading, bool onlybasev
 		return 0;
 	}
 
-	// TODO coded by tecxx & herbert, one yet unsolved problem here:
-	// sometimes a client asks for 2 files and there is no way to decide, which file the 
-	// client finally gets. so it could happen that he is queued first because of a 
-	// high prio file, but then asks for something completely different.
-	int filepriority = 10; // standard
-	switch(currequpfile->GetUpPriority()){
-		case PR_VERYHIGH:
-			filepriority = 18;
-			break;
-		case PR_HIGH: 
-			filepriority = 9; 
-			break; 
-		case PR_LOW: 
-			filepriority = 6; 
-			break; 
-		case PR_VERYLOW:
-			filepriority = 2;
-			break;
-		case PR_NORMAL: 
-			default: 
-			filepriority = 7; 
-		break; 
-	} 
+    int filepriority = GetFilePrioAsNumber();
 
 	// calculate score, based on waitingtime and other factors
 	float fBaseValue;
@@ -179,13 +236,8 @@ uint32 CUpDownClient::GetScore(bool sysvalue, bool isdownloading, bool onlybasev
 		fBaseValue *= modif;
 	}
 	if (!onlybasevalue)
-		fBaseValue *= (float(filepriority)/10.0f); 
-	if (!isdownloading && !onlybasevalue){
-		if (sysvalue && HasLowID() && !(socket && socket->IsConnected()) ){
-			if (!theApp.serverconnect->IsConnected() || theApp.serverconnect->IsLowID() || theApp.listensocket->TooManySockets()) //This may have to change when I add firewall support to Kad
-				return 0;
-		}
-	}
+		fBaseValue *= (float(filepriority)/10.0f);
+
 	if( (IsEmuleClient() || this->GetClientSoft() < 10) && m_byEmuleVersion <= 0x19 )
 		fBaseValue *= 0.5f;
 	return (uint32)fBaseValue;
@@ -291,11 +343,14 @@ void CUpDownClient::CreateNextBlockPackage(){
 			SetUploadFileID(srcfile);
 
 			// check extention to decide whether to compress or not
-			CString ext=srcfile->GetFileName();ext.MakeLower();
-			int pos=ext.ReverseFind('.');
-			if (pos>-1) ext=ext.Mid(pos);
-			bool compFlag=(ext!=".zip" && ext!=".rar" && ext!=".ace" && ext!=".ogm" );
-			if (ext==".avi" && thePrefs.GetDontCompressAvi()) compFlag=false;
+			CString ext = srcfile->GetFileName();
+			ext.MakeLower();
+			int pos = ext.ReverseFind(_T('.'));
+			if (pos>-1)
+				ext = ext.Mid(pos);
+			bool compFlag = (ext!=_T(".zip") && ext!=_T(".rar") && ext!=_T(".ace") && ext!=_T(".ogm"));
+			if (ext==_T(".avi") && thePrefs.GetDontCompressAvi())
+				compFlag=false;
 
 			if (!IsUploadingToPeerCache() && m_byDataCompVer == 1 && compFlag)
 				CreatePackedPackets(filedata,togo,currentblock,bFromPF);
@@ -315,10 +370,9 @@ void CUpDownClient::CreateNextBlockPackage(){
 	catch(CString error)
 	{
 		if (thePrefs.GetVerbose())
-			AddDebugLogLine(false,GetResString(IDS_ERR_CLIENTERRORED),GetUserName(),error.GetBuffer());
+			DebugLogWarning(GetResString(IDS_ERR_CLIENTERRORED), GetUserName(), error);
 		theApp.uploadqueue->RemoveFromUploadQueue(this, _T("Client error: ") + error);
-		if (filedata)
-			delete[] filedata;
+		delete[] filedata;
 		return;
 	}
 	catch(CFileException* e)
@@ -326,18 +380,12 @@ void CUpDownClient::CreateNextBlockPackage(){
 		TCHAR szError[MAX_CFEXP_ERRORMSG];
 		e->GetErrorMessage(szError, ARRSIZE(szError));
 		if (thePrefs.GetVerbose())
-		{
-			AddDebugLogLine(false,_T("Failed to create upload package for %s - %s"),GetUserName(),szError);
-		}
+			DebugLogWarning(_T("Failed to create upload package for %s - %s"), GetUserName(), szError);
 		theApp.uploadqueue->RemoveFromUploadQueue(this, ((CString)_T("Failed to create upload package.")) + szError);
-		if (filedata)
-			delete[] filedata;
+		delete[] filedata;
 		e->Delete();
 		return;
 	}
-	//if (thePrefs.GetVerbose())
-	//	AddDebugLogLine(false,"Debug: Packet done. Size: %i",blockpack->GetLength());
-	//return true;
 }
 
 void CUpDownClient::ProcessExtendedInfo(CSafeMemFile* data, CKnownFile* tempreqfile)
@@ -406,12 +454,19 @@ void CUpDownClient::CreateStandartPackets(byte* data,uint32 togo, Requested_Bloc
 	while (togo){
 		if (togo < nPacketSize*2)
 			nPacketSize = togo;
+		ASSERT( nPacketSize );
 		togo -= nPacketSize;
 
 		uint32 statpos = (currentblock->EndOffset - togo) - nPacketSize;
 		uint32 endpos = (currentblock->EndOffset - togo);
 		if (IsUploadingToPeerCache())
 		{
+			if (m_pPCUpSocket == NULL){
+				ASSERT(0);
+				CString strError;
+				strError.Format(_T("Failed to upload to PeerCache - missing socket; %s"), DbgGetClientInfo());
+				throw strError;
+			}
 			USES_CONVERSION;
 			CSafeMemFile dataHttp(10240);
 			if (m_iHttpSendState == 0)
@@ -490,6 +545,7 @@ void CUpDownClient::CreatePackedPackets(byte* data,uint32 togo, Requested_Block_
     while (togo){
 		if (togo < nPacketSize*2)
 			nPacketSize = togo;
+		ASSERT( nPacketSize );
 		togo -= nPacketSize;
 		Packet* packet = new Packet(OP_COMPRESSEDPART,nPacketSize+24,OP_EMULEPROT,bFromPF);
 		md4cpy(&packet->pBuffer[0],GetUploadFileID());
@@ -529,6 +585,15 @@ void CUpDownClient::SetUploadFileID(CKnownFile* newreqfile)
 	if (newreqfile == oldreqfile)
 		return;
 
+	// clear old status
+	if (m_abyUpPartStatus) 
+	{
+		delete[] m_abyUpPartStatus;
+		m_abyUpPartStatus = NULL;
+	}
+	m_nUpPartCount = 0;
+	m_nUpCompleteSourcesCount= 0;
+
 	if (newreqfile){
 		newreqfile->AddUploadingClient(this);
 		md4cpy(requpfileid, newreqfile->GetFileHash());
@@ -542,22 +607,29 @@ void CUpDownClient::SetUploadFileID(CKnownFile* newreqfile)
 
 void CUpDownClient::AddReqBlock(Requested_Block_Struct* reqblock)
 {
-	for (POSITION pos = m_DoneBlocks_list.GetHeadPosition(); pos != 0; ){
-		const Requested_Block_Struct* cur_reqblock = m_DoneBlocks_list.GetNext(pos);
-		if (reqblock->StartOffset == cur_reqblock->StartOffset && reqblock->EndOffset == cur_reqblock->EndOffset){
-			delete reqblock;
-			return;
-		}
-	}
-	for (POSITION pos = m_BlockRequests_queue.GetHeadPosition(); pos != 0; ){
-		const Requested_Block_Struct* cur_reqblock = m_BlockRequests_queue.GetNext(pos);
-		if (reqblock->StartOffset == cur_reqblock->StartOffset && reqblock->EndOffset == cur_reqblock->EndOffset){
-			delete reqblock;
-			return;
-		}
-	}
-	m_BlockRequests_queue.AddTail(reqblock);
+    if(GetUploadState() != US_UPLOADING) {
+        if(thePrefs.GetLogUlDlEvents())
+            AddDebugLogLine(DLP_LOW, false, _T("UploadClient: Client tried to add req block when not in upload slot! Prevented req blocks from being added. %s"), DbgGetClientInfo());
+		delete reqblock;
+        return;
+    }
 
+    for (POSITION pos = m_DoneBlocks_list.GetHeadPosition(); pos != 0; ){
+        const Requested_Block_Struct* cur_reqblock = m_DoneBlocks_list.GetNext(pos);
+        if (reqblock->StartOffset == cur_reqblock->StartOffset && reqblock->EndOffset == cur_reqblock->EndOffset){
+            delete reqblock;
+            return;
+        }
+    }
+    for (POSITION pos = m_BlockRequests_queue.GetHeadPosition(); pos != 0; ){
+        const Requested_Block_Struct* cur_reqblock = m_BlockRequests_queue.GetNext(pos);
+        if (reqblock->StartOffset == cur_reqblock->StartOffset && reqblock->EndOffset == cur_reqblock->EndOffset){
+            delete reqblock;
+            return;
+        }
+    }
+
+    m_BlockRequests_queue.AddTail(reqblock);
 }
 
 uint32 CUpDownClient::SendBlockData(){
@@ -567,8 +639,18 @@ uint32 CUpDownClient::SendBlockData(){
     uint64 sentBytesPartFile = 0;
     uint64 sentBytesPayload = 0;
 
-    if(socket || m_pPCUpSocket && IsUploadingToPeerCache()) {
-		CEMSocket* s = (m_pPCUpSocket && IsUploadingToPeerCache()) ? m_pPCUpSocket : socket;
+    if(GetFileUploadSocket() && (m_ePeerCacheUpState != PCUS_WAIT_CACHE_REPLY)) {
+		CEMSocket* s = GetFileUploadSocket();
+
+        if(m_pPCUpSocket && IsUploadingToPeerCache()) {
+            // Check if filedata has been sent via the normal socket since last call.
+            uint64 sentBytesCompleteFileNormalSocket = socket->GetSentBytesCompleteFileSinceLastCallAndReset();
+            uint64 sentBytesPartFileNormalSocket = socket->GetSentBytesPartFileSinceLastCallAndReset();
+
+			if(thePrefs.GetVerbose() && (sentBytesCompleteFileNormalSocket + sentBytesPartFileNormalSocket > 0)) {
+                AddDebugLogLine(false, _T("Sent file data via normal socket when in PC mode. Bytes: %I64i."), sentBytesCompleteFileNormalSocket + sentBytesPartFileNormalSocket);
+			}
+        }
 
 	    // Extended statistics information based on which client software and which port we sent this data to...
 	    // This also updates the grand total for sent bytes, etc.  And where this data came from.
@@ -583,8 +665,19 @@ uint32 CUpDownClient::SendBlockData(){
         sentBytesPayload = s->GetSentPayloadSinceLastCallAndReset();
         m_nCurQueueSessionPayloadUp += sentBytesPayload;
 
-        if(!GetFriendSlot() && theApp.uploadqueue->CheckForTimeOver(this)) {
+        if(theApp.uploadqueue->CheckForTimeOver(this)) {
             theApp.uploadqueue->RemoveFromUploadQueue(this, _T("Completed transfer"), true);
+			//OP_OUTOFPARTREQS will tell the downloading client to go back to OnQueue..
+			//The main reason for this is that if we put the client back on queue and it goes
+			//back to the upload before the socket times out... We get a situation where the
+			//downloader things it already send the requested blocks and the uploader thinks
+			//the downloader didn't send any reqeust blocks. Then the connection times out..
+			//I did some tests with eDonkey also and it seems to work well with them also..
+			if (thePrefs.GetDebugClientTCPLevel() > 0)
+				DebugSend("OP__OutOfPartReqs", this);
+			Packet* pCancelTransferPacket = new Packet(OP_OUTOFPARTREQS, 0);
+			theStats.AddUpDataOverheadFileRequest(pCancelTransferPacket->size);
+			socket->SendPacket(pCancelTransferPacket,true,true);
             theApp.uploadqueue->AddClientToQueue(this,true);
         } 
 		else {
@@ -600,18 +693,18 @@ uint32 CUpDownClient::SendBlockData(){
         // keep sum of all values in list up to date
         TransferredData newitem = {sentBytesCompleteFile + sentBytesPartFile, curTick};
         m_AvarageUDR_list.AddTail(newitem);
-        sumavgUDR += sentBytesCompleteFile + sentBytesPartFile;
+        m_nSumForAvgUpDataRate += sentBytesCompleteFile + sentBytesPartFile;
     }
 
     // remove to old values in list
     while (m_AvarageUDR_list.GetCount() > 0 && (curTick - m_AvarageUDR_list.GetHead().timestamp) > 10*1000) {
         // keep sum of all values in list up to date
-        sumavgUDR -= m_AvarageUDR_list.RemoveHead().datalen;
+        m_nSumForAvgUpDataRate -= m_AvarageUDR_list.RemoveHead().datalen;
     }
 
     // Calculate average speed for this slot
     if(m_AvarageUDR_list.GetCount() > 0 && (curTick - m_AvarageUDR_list.GetHead().timestamp) > 0 && GetUpStartTimeDelay() > 2*1000) {
-        m_nUpDatarate = ((ULONGLONG)sumavgUDR*1000) / (curTick-m_AvarageUDR_list.GetHead().timestamp);
+        m_nUpDatarate = ((ULONGLONG)m_nSumForAvgUpDataRate*1000) / (curTick-m_AvarageUDR_list.GetHead().timestamp);
     } else {
         // not enough values to calculate trustworthy speed. Use -1 to tell this
         m_nUpDatarate = 0; //-1;
@@ -628,6 +721,9 @@ uint32 CUpDownClient::SendBlockData(){
     return sentBytesCompleteFile + sentBytesPartFile;
 }
 
+/**
+ * See description for CEMSocket::TruncateQueues().
+ */
 void CUpDownClient::FlushSendBlocks(){ // call this when you stop upload, or the socket might be not able to send
     if (socket)      //socket may be NULL...
         socket->TruncateQueues();
@@ -688,19 +784,14 @@ void CUpDownClient::SendCommentInfo(/*const*/ CKnownFile *file)
 		return;
 	m_bCommentDirty = false;
 
-	uint8 rating = file->GetFileRate();
-	CStringA desc(file->GetFileComment());
-	if (file->GetFileRate() == 0 && desc.IsEmpty())
+	uint8 rating = file->GetFileRating();
+	const CString& desc = file->GetFileComment();
+	if (file->GetFileRating() == 0 && desc.IsEmpty())
 		return;
 
 	CSafeMemFile data(256);
 	data.WriteUInt8(rating);
-	int length = desc.GetLength();
-	if (length > MAXFILECOMMENTLEN)
-		length = MAXFILECOMMENTLEN;
-	data.WriteUInt32(length);
-	if (length > 0)
-		data.Write(desc, length);
+	data.WriteLongString(desc, GetUnicodeSupport());
 	if (thePrefs.GetDebugClientTCPLevel() > 0)
 		DebugSend("OP__FileDesc", this, (char*)file->GetFileHash());
 	Packet *packet = new Packet(&data,OP_EMULEPROT);
@@ -709,7 +800,7 @@ void CUpDownClient::SendCommentInfo(/*const*/ CKnownFile *file)
 	socket->SendPacket(packet,true);
 }
 
-void  CUpDownClient::AddRequestCount(const uchar* fileid)
+void CUpDownClient::AddRequestCount(const uchar* fileid)
 {
 	for (POSITION pos = m_RequestedFiles_list.GetHeadPosition(); pos != 0; ){
 		Requested_File_Struct* cur_struct = m_RequestedFiles_list.GetNext(pos);
@@ -768,6 +859,8 @@ void CUpDownClient::Ban(LPCTSTR pszReason)
 	SetUploadState(US_BANNED);
 	theApp.emuledlg->transferwnd->ShowQueueCount(theApp.uploadqueue->GetWaitingUserCount());
 	theApp.emuledlg->transferwnd->queuelistctrl.RefreshClient(this);
+	if (socket != NULL && socket->IsConnected())
+		socket->ShutDown(SD_RECEIVE); // let the socket timeout, since we dont want to risk to delete the client right now. This isnt acutally perfect, could be changed later
 }
 
 uint32 CUpDownClient::GetWaitStartTime() const
@@ -801,7 +894,6 @@ void CUpDownClient::ClearWaitStartTime(){
 	credits->ClearWaitStartTime();
 }
 
-
 bool CUpDownClient::GetFriendSlot() const
 {
 	if (credits && theApp.clientcredits->CryptoAvailable()){
@@ -813,4 +905,18 @@ bool CUpDownClient::GetFriendSlot() const
 		}
 	}
 	return m_bFriendSlot;
+}
+
+CEMSocket* CUpDownClient::GetFileUploadSocket(bool log) {
+    if(m_pPCUpSocket && (IsUploadingToPeerCache() || m_ePeerCacheUpState == PCUS_WAIT_CACHE_REPLY)) {
+        if(thePrefs.GetVerbose() && log)
+            AddDebugLogLine(false, _T("%s got peercache socket."), DbgGetClientInfo());
+
+        return m_pPCUpSocket;
+    } else {
+        if(thePrefs.GetVerbose() && log)
+            AddDebugLogLine(false, _T("%s got normal socket."), DbgGetClientInfo());
+
+        return socket;
+    }
 }

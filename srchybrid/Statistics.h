@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -133,13 +133,22 @@ public:
 	static uint32	timeServerDuration;
 	static uint32	time_thisServerDuration;
 
+	static uint64	sessionReceivedBytes;
+	static uint64	sessionSentBytes;
+    static uint64	sessionSentBytesToFriend;
+	static uint16	reconnects;
+	static DWORD	transferStarttime;
+	static DWORD	serverConnectTime;
+	static uint32	filteredclients;
+	static DWORD	starttime;
+
 private:
 	typedef struct TransferredData {
 		uint32	datalen;
 		DWORD	timestamp;
 	};
-	std::list<TransferredData> uprateHistory; // By BadWolf
-	std::list<TransferredData> downrateHistory; // By BadWolf
+	std::list<TransferredData> uprateHistory;
+	std::list<TransferredData> downrateHistory;
 
 	static uint32	m_nDownDatarateOverhead;
 	static uint32	m_nDownDataRateMSOverhead;
@@ -167,12 +176,10 @@ private:
 	static uint64	m_nUpDataOverheadOther;
 	static uint64	m_nUpDataOverheadOtherPackets;
 
-	// By BadWolf - Accurate Speed Measurement
 	static uint32	m_sumavgDDRO;
 	static uint32	m_sumavgUDRO;
 	CList<TransferredData,TransferredData>	m_AvarageDDRO_list;
 	CList<TransferredData,TransferredData>	m_AvarageUDRO_list;
-	// By BadWolf - Accurate Speed Measurement
 };
 
 extern CStatistics theStats;

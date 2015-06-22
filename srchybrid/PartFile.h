@@ -1,4 +1,4 @@
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -15,8 +15,8 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
 #include "KnownFile.h"
-
-#define	PARTSIZE			9728000
+#include "DeadSourceList.h"
+#include "CorruptionBlackBox.h"
 
 enum EPartFileStatus{
 	PS_READY			= 0,
@@ -44,12 +44,16 @@ enum EPartFileStatus{
 #define	PARTMET_BAK_EXT	_T(".bak")
 #define	PARTMET_TMP_EXT	_T(".backup")
 
-#define STATES_COUNT		13
+#define STATES_COUNT		17
 
-#define PMT_UNKNOWN			0
-#define PMT_DEFAULTOLD		1
-#define PMT_SPLITTED		2
-#define PMT_NEWOLD			3
+enum EPartFileFormat{
+	PMT_UNKNOWN			= 0,
+	PMT_DEFAULTOLD,
+	PMT_SPLITTED,
+	PMT_NEWOLD,
+	PMT_SHAREAZA,
+	PMT_BADFORMAT	
+};
 
 #define	FILE_COMPLETION_THREAD_FAILED	0x0000
 #define	FILE_COMPLETION_THREAD_SUCCESS	0x0001
@@ -138,6 +142,8 @@ public:
 	bool	WriteToFile(FILE* file) { return false; }
 	uint32	Process(uint32 reducedownload, uint8 m_icounter);
 	uint8	LoadPartFile(LPCTSTR in_directory, LPCTSTR filename, bool getsizeonly = false); //filename = *.part.met
+//	uint8	ImportShareazaTempfile(LPCTSTR in_directory,LPCTSTR in_filename , bool getsizeonly);
+
 	bool	SavePartFile();
 	void	PartFileHashFinished(CKnownFile* result);
 	bool	HashSinglePart(uint16 partnumber); // true = ok , false = corrupted
@@ -173,7 +179,7 @@ public:
 	void	SetActive(bool bActive);
 
 	uint8	GetDownPriority() const { return m_iDownPriority; }
-	void	SetDownPriority(uint8 iNewDownPriority);
+	void	SetDownPriority(uint8 iNewDownPriority, bool resort = true);
 	bool	IsAutoDownPriority(void) const { return m_bAutoDownPriority; }
 	void	SetAutoDownPriority(bool NewAutoDownPriority) { m_bAutoDownPriority = NewAutoDownPriority; }
 	void	UpdateAutoDownPriority();
@@ -188,13 +194,14 @@ public:
 	uint16	GetNotCurrentSourcesCount() const;
 	int		GetValidSourcesCount() const;
 	bool	IsArchive(bool onlyPreviewable = false) const; // Barry - Also want to preview archives
+    bool    IsPreviewableFileType() const;
 	sint32	getTimeRemaining() const;
 	sint32	getTimeRemainingSimple() const;
 	uint32	GetDlActiveTime() const;
 
 	// Barry - Added as replacement for BlockReceived to buffer data before writing to disk
-	uint32	WriteToBuffer(uint32 transize, const BYTE *data, uint32 start, uint32 end, Requested_Block_Struct *block);
-	void	FlushBuffer(bool forcewait=false);
+	uint32	WriteToBuffer(uint32 transize, const BYTE *data, uint32 start, uint32 end, Requested_Block_Struct *block, const CUpDownClient* client);
+	void	FlushBuffer(bool forcewait=false, bool bForceICH = false, bool bNoAICH = false);
 	// Barry - This will invert the gap list, up to caller to delete gaps when done
 	// 'Gaps' returned are really the filled areas, and guaranteed to be in order
 	void	GetFilledList(CTypedPtrList<CPtrList, Gap_Struct*> *filled) const;
@@ -206,7 +213,7 @@ public:
 	void	RemoveAllSources(bool bTryToSwap);
 
 	bool	CanOpenFile() const;
-	bool	CanPreviewFile() const;
+	bool	IsReadyForPreview() const;
 	bool	CanStopFile() const;
 	bool	CanPauseFile() const;
 	bool	CanResumeFile() const;
@@ -214,14 +221,14 @@ public:
 	void	OpenFile() const;
 	void	PreviewFile();
 	void	DeleteFile();
-	void	StopFile(bool bCancel = false);
-	void	PauseFile(bool bInsufficient = false);
+	void	StopFile(bool bCancel = false, bool resort = true);
+	void	PauseFile(bool bInsufficient = false, bool resort = true);
 	void	StopPausedFile();
-	void	ResumeFile();
+	void	ResumeFile(bool resort = true);
 	void	ResumeFileInsufficient();
 
 	virtual Packet* CreateSrcInfoPacket(CUpDownClient* forClient) const;
-	void	AddClientSources(CSafeMemFile* sources, uint8 sourceexchangeversion);
+	void	AddClientSources(CSafeMemFile* sources, uint8 sourceexchangeversion, CUpDownClient* pClient = NULL);
 
 	uint16	GetAvailablePartCount() const { return availablePartsCount; }
 	void	UpdateAvailablePartsCount();
@@ -252,7 +259,7 @@ public:
 	CString GetInfoSummary(CPartFile* partfile) const;
 
 //	int		GetCommonFilePenalty() const;
-	void	UpdateDisplayedInfo(boolean force = false);
+	void	UpdateDisplayedInfo(bool force = false);
 
 	uint8	GetCategory() /*const*/;
 	void	SetCategory(uint8 cat,bool setprio=true);
@@ -274,6 +281,9 @@ public:
 	void	SetFileOpProgress(UINT uProgress);
 	UINT	GetFileOpProgress() const { return m_uFileOpProgress; }
 
+	void	RequestAICHRecovery(uint16 nPart);
+	void	AICHRecoveryDataAvailable(uint16 nPart);
+
 	uint32	lastsearchtime;
 	uint32	lastsearchtimeKad;
 	uint32	m_iAllocinfo;
@@ -283,6 +293,7 @@ public:
 	CFile	m_hpartfile;				// permanent opened handle to avoid write conflicts
 	CMutex 	m_FileCompleteMutex;		// Lord KiRon - Mutex for file completion
 	uint16	src_stats[4];
+	uint16  net_stats[3];
 	volatile bool m_bPreviewing;
 	volatile bool m_bRecoveringArchive; // Is archive recovery in progress
 	bool	m_bLocalSrcReqQueued;
@@ -290,6 +301,13 @@ public:
 	bool	hashsetneeded;
     bool    AllowSwapForSourceExchange() { return ::GetTickCount()-lastSwapForSourceExchangeTick > 30*1000; } // ZZ:DownloadManager
     void    SetSwapForSourceExchangeTick() { lastSwapForSourceExchangeTick = ::GetTickCount(); } // ZZ:DownloadManager
+
+    bool    GetPreviewPrio() const { return m_bpreviewprio; }
+	void    SetPreviewPrio(bool in) { m_bpreviewprio=in; }
+
+    static int RightFileHasHigherPrio(CPartFile* left, CPartFile* right);
+
+	CDeadSourceList	m_DeadSourceList;
 
 #ifdef _DEBUG
 	// Diagnostic Support
@@ -304,6 +322,12 @@ protected:
 	void	Init();
 
 private:
+	BOOL 		PerformFileComplete(); // Lord KiRon
+	static UINT CompleteThreadProc(LPVOID pvParams); // Lord KiRon - Used as separate thread to complete file
+	static UINT AFX_CDECL AllocateSpaceThread(LPVOID lpParam);
+	void		CharFillRange(CString* buffer,uint32 start, uint32 end, char color) const;
+
+	CCorruptionBlackBox	m_CorruptionBlackBox;
 	static CBarShader s_LoadBar;
 	static CBarShader s_ChunkBar;
 	uint32	m_iLastPausePurge;
@@ -342,6 +366,7 @@ private:
 	DWORD	m_lastRefreshedDLDisplay;
 	CUpDownClientPtrList m_downloadingSourceList;
 	bool	m_bDeleteAfterAlloc;
+    bool	m_bpreviewprio;
 	// Barry - Buffered data to be written
 	CTypedPtrList<CPtrList, PartFileBufferedData*> m_BufferedData_list;
 	uint32	m_nTotalBufferData;
@@ -352,15 +377,10 @@ private:
 	uint32	m_nDlActiveTime;
 	uint32	m_tLastModified;	// last file modification time (NT's version of UTC), to be used for stats only!
 	uint32	m_tCreated;			// file creation time (NT's version of UTC), to be used for stats only!
+    uint32	m_random_update_wait;	
 	volatile EPartFileOp m_eFileOp;
 	volatile UINT m_uFileOpProgress;
 
-
-	BOOL 	PerformFileComplete(); // Lord KiRon
-	static UINT CompleteThreadProc(LPVOID pvParams); // Lord KiRon - Used as separate thread to complete file
-	static UINT AFX_CDECL AllocateSpaceThread(LPVOID lpParam);
-
-	void	CharFillRange(CString* buffer,uint32 start, uint32 end, char color) const;
-
     DWORD   lastSwapForSourceExchangeTick; // ZZ:DownloadManaager
+
 };

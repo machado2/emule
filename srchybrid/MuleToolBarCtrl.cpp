@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -93,7 +93,7 @@ void CMuleToolbarCtrl::Init(void)
 {
 	bitmappaths.RemoveAll();
 
-	ModifyStyle(0, TBSTYLE_FLAT | CCS_ADJUSTABLE | TBSTYLE_TRANSPARENT | CCS_NODIVIDER);
+	ModifyStyle(0, TBSTYLE_FLAT | TBSTYLE_ALTDRAG | CCS_ADJUSTABLE | TBSTYLE_TRANSPARENT | CCS_NODIVIDER);
 	ChangeToolbarBitmap(thePrefs.GetToolbarBitmapSettings(), false);
 	// add button-text:
 	TCHAR cButtonStrings[2000];
@@ -105,62 +105,62 @@ void CMuleToolbarCtrl::Init(void)
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_EM_KADEMLIA)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_KADEMLIA), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_KADEMLIA), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_EM_SERVER)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_SERVER), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_SERVER), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_EM_TRANS)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_TRANS), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_TRANS), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_EM_SEARCH)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_SEARCH), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_SEARCH), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_EM_FILES)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_FILES), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_FILES), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_EM_MESSAGES)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_MESSAGES), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_MESSAGES), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_IRC)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_IRC), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_IRC), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_EM_STATISTIC)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_STATISTIC), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_STATISTIC), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_EM_PREFS)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_PREFS), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_PREFS), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_TOOLS)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_TOOLS), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_TOOLS), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	lLen2 = _tcslen(GetResString(IDS_EM_HELP)) + 1;
-	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_HELP), lLen2);
+	memcpy(cButtonStrings+lLen, GetResString(IDS_EM_HELP), lLen2*sizeof(TCHAR));
 	lLen += lLen2;
 	++m_buttoncount;
 
 	// terminate
-	memcpy(cButtonStrings+lLen, "\0", 1);
+	memcpy(cButtonStrings+lLen, _T("\0"), sizeof(TCHAR));
 
 	AddStrings(cButtonStrings);
 
@@ -194,7 +194,7 @@ void CMuleToolbarCtrl::Init(void)
 			iBitmap += 1;
 	}
 	
-	TBBUTTON sepButton;
+	TBBUTTON sepButton = {0};
 	sepButton.idCommand = 0;
 	sepButton.fsStyle = TBSTYLE_SEP;
 	sepButton.fsState = TBSTATE_ENABLED;
@@ -233,9 +233,6 @@ void CMuleToolbarCtrl::Init(void)
 	CRect rcWnd;
 	GetWindowRect(&rcWnd);
 	OnSize(0, rcWnd.Width(), rcWnd.Height());
-
-	theApp.emuledlg->SetKadButtonState();
-
 	GetWindowRect(&rcWnd);
 	_iPreviousHeight = rcWnd.Height();
 }
@@ -509,6 +506,8 @@ void CMuleToolbarCtrl::OnTbnGetButtonInfo(NMHDR *pNMHDR, LRESULT *pResult)
 		_tcsncpy(pNMTB->pszText, strText, pNMTB->cchText - 1);
 		pNMTB->pszText[pNMTB->cchText - 1] = _T('\0');
 		pNMTB->tbButton = TBButtons[pNMTB->iItem];
+		if (m_iToolbarLabelSettings == 2)
+			pNMTB->tbButton.fsStyle |= TBSTYLE_AUTOSIZE;
 		*pResult = TRUE;
 	}
 }
@@ -564,20 +563,20 @@ void CMuleToolbarCtrl::ChangeToolbarBitmap(CString path, bool refresh)
 	{
 		// load from icon ressources
 		ImageList.Create(32, 32, theApp.m_iDfltImageListColorFlags | ILC_MASK, 0, 1);
-		ImageList.Add(CTempIconLoader(_T("BN_CONNECT"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_DISCONNECT"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_STOPCONNECTING"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_KADEMLIA"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_SERVER"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_DOWNLOAD"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_SEARCH"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_FILES"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_MESSAGES"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_IRC"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_STATISTICS"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_PREFERENCES"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_TOOLS"), 32, 32));
-		ImageList.Add(CTempIconLoader(_T("BN_HELP"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("CONNECT"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("DISCONNECT"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("STOPCONNECTING"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("KADEMLIA"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("SERVER"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("TRANSFER"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("SEARCH"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("SharedFiles"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("MESSAGES"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("IRC"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("STATISTICS"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("PREFERENCES"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("TOOLS"), 32, 32));
+		ImageList.Add(CTempIconLoader(_T("HELP"), 32, 32));
 		CImageList* pimlOld = SetImageList(&ImageList);
 		ImageList.Detach();
 		if (pimlOld)
@@ -648,7 +647,7 @@ BOOL CMuleToolbarCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 		case MP_SELECT_SKIN_DIR:{
 			TCHAR buffer[MAX_PATH];
 			_sntprintf(buffer,ARRSIZE(buffer),_T("%s"), thePrefs.GetSkinProfileDir());
-			if(SelectDir(m_hWnd, buffer, _T("Select skin profile directory")))
+			if(SelectDir(m_hWnd, buffer, GetResString(IDS_SELSKINPROFILEDIR)))
 				thePrefs.SetSkinProfileDir(buffer);
 			break;
 		}

@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -25,6 +25,7 @@
 #include "emuledlg.h"
 #include "HelpIDs.h"
 #include "ZipFile.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -132,8 +133,8 @@ BOOL CPPgSecurity::OnInitDialog()
 				m_pacIPFilterURL->LoadList(CString(thePrefs.GetConfigDir()) +  _T("\\") IPFILTERUPDATEURL_STRINGS_PROFILE);
 		}
 		SetDlgItemText(IDC_UPDATEURL,m_pacIPFilterURL->GetItem(0));
-		if (theApp.emuledlg->m_fontMarlett.m_hObject){
-			GetDlgItem(IDC_DD)->SetFont(&theApp.emuledlg->m_fontMarlett);
+		if (theApp.m_fontSymbol.m_hObject){
+			GetDlgItem(IDC_DD)->SetFont(&theApp.m_fontSymbol);
 			GetDlgItem(IDC_DD)->SetWindowText(_T("6")); // show a down-arrow
 		}
 	}
@@ -160,8 +161,25 @@ BOOL CPPgSecurity::OnApply()
 	thePrefs.m_bUseSecureIdent = IsDlgButtonChecked(IDC_USESECIDENT);
 	thePrefs.m_bRunAsUser = (uint8)IsDlgButtonChecked(IDC_RUNASUSER);
 
-	GetDlgItem(IDC_FILTER)->GetWindowText(thePrefs.messageFilter,511);
-	GetDlgItem(IDC_COMMENTFILTER)->GetWindowText(thePrefs.commentFilter,511);
+	GetDlgItem(IDC_FILTER)->GetWindowText(thePrefs.messageFilter,ARRSIZE(thePrefs.messageFilter));
+
+	CString strCommentFilters;
+	GetDlgItem(IDC_COMMENTFILTER)->GetWindowText(strCommentFilters);
+	strCommentFilters.MakeLower();
+	CString strNewCommentFilters;
+	int curPos = 0;
+	CString strFilter(strCommentFilters.Tokenize(_T("|"), curPos));
+	while (!strFilter.IsEmpty())
+	{
+		strFilter.Trim();
+		if (!strNewCommentFilters.IsEmpty())
+			strNewCommentFilters += _T('|');
+		strNewCommentFilters += strFilter;
+		strFilter = strCommentFilters.Tokenize(_T("|"), curPos);
+	}
+	thePrefs.commentFilter = strNewCommentFilters;
+	if (thePrefs.commentFilter != strCommentFilters)
+		SetDlgItemText(IDC_COMMENTFILTER, thePrefs.commentFilter);
 
 	LoadSettings();
 	SetModified(FALSE);
@@ -215,6 +233,10 @@ void CPPgSecurity::OnLoadIPFFromURL() {
 	GetDlgItemText(IDC_UPDATEURL,url);
 	if (!url.IsEmpty())
 	{
+		// add entered URL to LRU list even if it's not yet known whether we can download from this URL (it's just more convenient this way)
+		if (m_pacIPFilterURL && m_pacIPFilterURL->IsBound())
+			m_pacIPFilterURL->AddItem(url, 0);
+
 		TCHAR szTempFilePath[MAX_PATH];
 		_tmakepath(szTempFilePath, NULL, thePrefs.GetConfigDir(), DFLT_IPFILTER_FILENAME, _T("tmp"));
 
@@ -225,7 +247,7 @@ void CPPgSecurity::OnLoadIPFFromURL() {
 		if (dlgDownload.DoModal() != IDOK)
 		{
 			_tremove(szTempFilePath);
-			AddLogLine(true, _T("IP Filter download failed"));
+			LogWarning(LOG_STATUSBAR, _T("IP Filter download failed"));
 			return;
 		}
 
@@ -255,10 +277,10 @@ void CPPgSecurity::OnLoadIPFFromURL() {
 					bUnzipped = true;
 				}
 				else
-					AddLogLine(true, _T("Failed to extract IP filter file from downloaded IP filter ZIP file \"%s\"."), szTempFilePath);
+					LogError(LOG_STATUSBAR, _T("Failed to extract IP filter file from downloaded IP filter ZIP file \"%s\"."), szTempFilePath);
 			}
 			else
-				AddLogLine(true, _T("Downloaded IP filter file \"%s\" is a ZIP file with unexpected content."), szTempFilePath);
+				LogError(LOG_STATUSBAR, _T("Downloaded IP filter file \"%s\" is a ZIP file with unexpected content."), szTempFilePath);
 
 			zip.Close();
 		}
@@ -268,9 +290,6 @@ void CPPgSecurity::OnLoadIPFFromURL() {
 			_tremove(theApp.ipfilter->GetDefaultFilePath());
 			_trename(szTempFilePath, theApp.ipfilter->GetDefaultFilePath());
 		}
-
-		if (m_pacIPFilterURL && m_pacIPFilterURL->IsBound())
-			m_pacIPFilterURL->AddItem(url,0);
 	}
 	OnReloadIPFilter();
 }

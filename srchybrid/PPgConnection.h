@@ -16,8 +16,11 @@ public:
 
 protected:
 	bool guardian;
+	CSliderCtrl m_ctlMaxDown;
+	CSliderCtrl m_ctlMaxUp;
 
 	void ShowLimitValues();
+	void SetRateSliderTicks(CSliderCtrl& rRate);
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
@@ -34,4 +37,8 @@ protected:
 	afx_msg void OnHelp();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	afx_msg void OnBnClickedOpenports();
+	afx_msg void OnStartPortTest();
+	afx_msg void OnEnChangeTCP();
+	afx_msg void OnEnChangeUDP();
+	afx_msg void OnEnChangePorts(uint8 istcpport);
 };

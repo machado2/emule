@@ -23,7 +23,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..;..\jpeg;..\png;..\mng;..\tiff;..\j2k;..\jasper\include"
+				AdditionalIncludeDirectories="..\..;..\..\zlib;..\jpeg;..\png;..\mng;..\tiff;..\j2k;..\jasper\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;JAS_WIN_MSVC_BUILD"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
@@ -68,7 +68,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..;..\jpeg;..\png;..\mng;..\tiff;..\j2k;..\jasper\include"
+				AdditionalIncludeDirectories="..\..;..\..\zlib;..\jpeg;..\png;..\mng;..\tiff;..\j2k;..\jasper\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;JAS_WIN_MSVC_BUILD"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"

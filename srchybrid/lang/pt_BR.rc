@@ -85,22 +85,14 @@ BEGIN
                             "Atualizando lista de servidores: %s%% de %s concluído"
     IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Recuperando o arquivo"
     IDS_HTTPDOWNLOAD_OF     "%s de %s"
-    IDS_HTTPDOWNLOAD_SECONDS "%s seg"
-    IDS_HTTPDOWNLOAD_MINUTES "%s min"
-    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%s min %s seg"
-    IDS_HTTPDOWNLOAD_BYTES  "%s Bytes"
-    IDS_HTTPDOWNLOAD_KILOBYTES "%s KB"
     IDS_CANCEL              "Cancelar"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_HTTPDOWNLOAD_MEGABYTES "%s MB"
     IDS_HTTP_CAPTION        "Atualizando lista de servidores"
     IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s copiados)"
-    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s Bytes/Seg"
     IDS_HSAV                "Hashset Disponível"
-    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s KB/Seg"
     IDS_FD_CORR             "Corrompido"
     IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
                             "O arquivo '%s' já existe.\nVocê deseja substituí-lo?"
@@ -112,7 +104,7 @@ BEGIN
     IDS_WIZARD_NETWORK      "Escolha qual(is) rede(s) você deseja utilizar."
     IDS_MAIN_READY          "Versão do eMule %s Carregado"
     IDS_WIZARD_ED2K         "Configurações ED2k"
-    IDS_SEL_SKIN            "Selecionar Skin..."
+    IDS_SEL_SKIN            "Selecionar Skin"
 END
 
 STRINGTABLE 
@@ -328,8 +320,8 @@ BEGIN
     IDS_TIME                "Tempo"
     IDS_STATS_DDATA         "Dados recebidos: %s"
     IDS_STATS_UDATA         "Dados Enviados [Sessão]: %s"
-    IDS_STATS_AVGDL         "Média de dados recebidos (Sessão): %.2f KB/s"
-    IDS_STATS_AVGUL         "Média de arquivos enviados (Sessão): %.2f KB/s"
+    IDS_STATS_AVGDL         "Média de dados recebidos (Sessão): %s"
+    IDS_STATS_AVGUL         "Média de arquivos enviados (Sessão): %s"
     IDS_STATS_FOUNDSRC      "Fontes encontradas: %i"
     IDS_STATS_ACTDL         "Downloads ativos (amostra): %i"
     IDS_STATS_ACTUL         "Uploads ativos: %i"
@@ -405,7 +397,7 @@ BEGIN
     IDS_ERR_METCORRUPT      "Erro: %s (%s) esta corrompido, impossível carregar o arquivo"
     IDS_ERR_FILEERROR       "Erro de arquivo inesperado ao carregar %s (%s): %s"
     IDS_ERR_FILEOPEN        "Falha ao abrir %s (%s)"
-    IDS_SEL_SKINDIR         "Selecionar Diretório de Skins..."
+    IDS_SEL_SKINDIR         "Selecionar Diretório de Skins"
     IDS_ERR_REHASH          "Cuidado: %s Pode estar corrompido, fazendo novo hash das partes completas"
     IDS_SKIN_PROF           "Perfis de Skin"
     IDS_ERR_PART_FNF        "Arquivo .part não foi encontrado"
@@ -764,7 +756,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_DOWNLOADMOVIECHUNKS "Tentar download das primeiras/ultimas partes"
-    IDS_UPDATEQUEUE         "Atualizar lista de filas em tempo real"
+    IDS_UPDATEQUEUE         "Não atualizar lista de filas em tempo real"
     IDS_RECOVER_SINGLE      "1 arquivo recuperado."
     IDS_RECOVER_MULTIPLE    "%ld arquivos recuperados."
     IDS_ATTEMPTING_RECOVERY "Atençao recuperação de arquivo..."
@@ -923,7 +915,7 @@ BEGIN
     IDS_SHAREDFILES_FAILED  "Impossível receber lista de arquivos compartilhados de '%s'"
     IDS_SHAREDFILES_REQUEST "Solicitando lista de arquivos compartilhados de '%s'"
     IDS_VIEWFILES           "Visualizar arquivos"
-    IDS_FRIENDSLOT          "Estabelecer conexão com o Amigo"
+    IDS_FRIENDSLOT          "Abrir slot para este Amigo"
     IDS_FRIENDDETAIL        "(Conexão com o Amigo)"
     IDS_ASCWOP_PROXYSUPPORT "Conexão automatica sem uso de Proxy"
     IDS_UDPDISABLED         "desativado"
@@ -933,13 +925,13 @@ BEGIN
     IDS_UNIT                "Unidade:"
     IDS_WIZARD_CUSTOM       "Customizável"
     IDS_WIZARD_ENTERBELOW   "(escolha baixo)"
-    IDS_STATS_MAXAVGDL      "Taxa média máx. de Download (Sessão): %.2f kB/s"
+    IDS_STATS_MAXAVGDL      "Taxa média máx. de Download (Sessão): %s"
     IDS_USS_MIN             "Warning: USS currently does not support upload speeds less then 10K. If you know your connection is not able to handle this, please disable USS."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATS_MAXDL         "Taxa máx. de Download (Sessão): %.2f kB/s"
+    IDS_STATS_MAXDL         "Taxa máx. de Download (Sessão): %s"
     IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
                             "Ignorar mensagens de adição de amigos do eMule"
     IDS_PW_FASTSRVCON       "Conexão rápida com os servidores"
@@ -1503,7 +1495,7 @@ BEGIN
     IDS_INSUFFICIENT        "Espaço Insuficiente em disco"
     IDS_MINFREEDISKSPACE    "Espaço Min. em disco [MB]"
     IDS_WARNING             "Atenção"
-    IDS_IMPORTSPLPF         "Importar arquivos part (eM, eD, ON)"
+    IDS_IMPORTSPLPF         "Importar arquivos part (eMule,eDonkey,Overnet)"
     IDS_IMP_STEPREADPF      "Lendo pasta de arquivos part"
     IDS_IMP_STEPBASICINF    "Recebendo informações basicas do arquivo part"
     IDS_IMP_STEPCRDESTFILE  "Criando destino do arquivo part"
@@ -1692,10 +1684,137 @@ BEGIN
     IDS_A4AF_CHECK_THIS_NOW "Verificar esta fonte agora (debug)"
     IDS_SOURCEEXCHANGESWAP  "Troca de Fontes Temporárias"
     IDS_NEWMSG              "Nova mensagem de '%s' (IP:%s)"
-    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
-    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
-    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
-    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
+    IDS_PREF_STARTNEXTFILECATONLY "Somente na mesma Categoria"
+    IDS_LOG_ULDL_EVENTS     "Registrar eventos de upload/download"
+    IDS_PEERCACHE_ENABLED   "O seu ISP suporta a tecnologia PeerCache, habilitando downloads em cache!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Permitir que o usuário adicione você como Amigo."
+    IDS_DL_TRY_TO_GET_PREVIEW_PARTS "Os arquivos Parts baixados necessitaram de uma inspecção prévia inicialmente"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_ERR_BADFORMAT   "Formato de Arquivo temporário desconhecido ou corrompido."
+    IDS_SEARCH_INVALIDCHAR  "A expressão da busca contem caráteres inválidos. Você inseriu uma '?' como caracter ou inseriu caracteres que não podem ser usados com a Rede ED2K."
+    IDS_PORTSCON            "Portas e Conexão"
+    IDS_PORTINFO            "eMule uses two ports for communication with servers and clients. These ports must be free and available for remote clients. The TCP port must be available to ensure the main functionality of eMule. The UDP port is used for Kad (serverless network) and to reduce network usage (Overhead).\n\nYou can change the ports here while no network activities have started."
+    IDS_STARTTEST           "Teste de portas"
+    IDS_TESTINFO            "Here you can test, if your TCP and UDP port can be connected to from remote. This success of this test is required for servers and clients to connect you. The TCP port have to succeed!"
+    IDS_CONNECTIONTEST      "Teste de Conexão"
+    IDS_NOPORTCHANGEPOSSIBLE 
+                            "A mudança de portas não é possível após você conectar com os clientes ou quando conectado a um Servidor/Kad!\n\nReinicie por favor o eMule após ter alterado os ajustes de portas ."
+    IDS_NETWORK_INFO        "Informação da Rede"
+    IDS_SP_TOTALUL          "Número total de uploads"
+    IDS_SP_ULFRIENDS        "Slots de amigos enviados"
+    IDS_SP_ULSLOTSNOOVERHEAD "Upload atual excluindo overhead (UL somente em Slots)"
+    IDS_ST_ACTIVEU_ZZ       "Uploads ativos"
+    IDS_ST_ULCURRENT        "Upload+Overhead"
+    IDS_ST_ULSLOTSNOOVERHEAD "Upload"
+    IDS_ST_ULFRIEND         "Upload do amigo"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ACTUL_ZZ      "Uploads necessários ativos para aumentar largura da banda: %i"
+    IDS_STATS_TOTALUL       "Número total de uploads: %i"
+    IDS_CHAT_DOWNLOADED     "Transferido:"
+    IDS_CHAT_UPLOADED       "Enviado:"
+    IDS_CHAT_IDENT          "Identificação:"
+    IDS_CHAT_CLIENT         "Cliente:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MAXHALFOPENCONS     "Méia max. de Conexões Abertas"
+    IDS_WIZ_STARTWITHWINDOWS 
+                            "Ativar isto de modo que o eMule funcione quando você iniciar o Windows. [Padrão: Desativado]"
+    IDS_KAD_WAITCBK         "Aguardar nova chamada no Kad"
+    IDS_KAD_TOOMANDYKADLKPS "Muitas procuras no Kad"
+    IDS_PCDS_CLIENTWAIT     "Espera do Cliente"
+    IDS_PCDS_CACHEWAIT      "Espera de Cache"
+    IDS_CACHE               "Cache"
+    IDS_INDEXED             "Indexado"
+    IDS_KADINFO_SRC         "\tFonte: %u\r\n"
+    IDS_KADINFO_KEYW        "\tPalavra-Chave: %u\r\n"
+    IDS_STARTWITHWINDOWS    "Iniciar com o Windows"
+    IDS_ADDSRCMANUALLY      "Adicionar manualmente uma fonte"
+    IDS_BUDDY               "Amigo"
+    IDS_BUDDYNONE           "Nenhum"
+    IDS_INFO                "Info"
+    IDS_HALF                "Meio"
+    IDS_CONCOMPL            "Compl"
+    IDS_KADSTATUS_STOPPING  "Parado"
+    IDS_KADSTATUS_ACTIVE    "Ativo"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FORMAT              "Formato"
+    IDS_META_COLLECTION     "Coleção"
+    IDS_META_PARTPATH       "Diretório do arquivo Part"
+    IDS_META_PARTHASH       "Hash do arquivo Part"
+    IDS_META_GAPSTART       "Abertura inicial"
+    IDS_META_GAPEND         "Abertura final"
+    IDS_FAIL                "Falha"
+    IDS_META_PREFERENCES    "Preferências"
+    IDS_META_VERSION        "Versão"
+    IDS_META_TEMPFILE       "Arquivo Temporário"
+    IDS_META_SERVERPORT     "Porta do Servidor"
+    IDS_META_SERVERIP       "IP do Servidor"
+    IDS_META_SRCUDPPORT     "Porta UDP da Fonte"
+    IDS_META_SRCTCPPORT     "Porta TCP da Fonte"
+    IDS_META_SRCIP          "IP da Fonte"
+    IDS_META_SRCTYPE        "Tipo de Fonte"
+    IDS_SEARCH_UNICODE      "Procurar com Unicode"
+    IDS_PERSEC              "/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LD_ED2KLINK         "Link ED2K"
+    IDS_LD_COPYCLIPBOARD    "Copiar da área de transferência"
+    IDS_LD_HOSTNAME         "Usar nome host (das preferências) ao invéz do IP ao criar um link de fonte"
+    IDS_SAVEACFAILED        "Falha para salvar o AICH Hashset!"
+    IDS_IACHHASH            "AICH Hash"
+    IDS_BYTESPERSEC         "B/s"
+    IDS_KBYTESPERSEC        "KB/s"
+    IDS_MBYTESPERSEC        "MB/s"
+    IDS_GBYTESPERSEC        "GB/s"
+    IDS_TBYTESPERSEC        "TB/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MINORCLIENTS  "Menor"
+    IDS_LD_BASICOPT         "Opções Basicas"
+    IDS_LD_ADDSOURCE        "Adicionar você mesmo como fonte"
+    IDS_LD_EMULEHASH        "Adicionar o AICH Hash eMule para manipulação avançada de corrupção"
+    IDS_LD_ADVANCEDOPT      "Opções Avançadas"
+    IDS_LD_ADDHTML          "Adicionar tags em HTML"
+    IDS_LD_ADDHASHSET       "Adicionar os hashset completos"
+    IDS_FILELINK            "Link do Arquivo"
+    IDS_PF_ADVANCEDCALC     "Usar o método avançado de cálculo para o tempo restante"
+    IDS_DL_SHOWED2KLINK     "Exibir Link ED2K..."
+    IDS_AICH_SYNCTOTAL      "Encontrado %i arquivos sem um AICH Hashset válido, iniciando novo cálculo de hash para estes arquivos agora"
+    IDS_AICH_CALCFILE       "Calculando o AICH Hash para o arquivo %s"
+    IDS_AICH_WARNUSER       "O eMule desde a versão 0.44a usa um filehash adicional que ajuda a reduzir extremamente a perda de dados quando corrupções forem detectadas. Como você está atualizando de uma versão antiga, o eMule necessita recalcular o novo hash de todos os seus arquivos compartilhados. Isto pode demorar, mas será realizado em uma única ação.  "
+    IDS_AICH_WORKED         "AICH recuperado com sucesso %s de %s da parte %u para %s"
+    IDS_TRICKLING           "Em espera"
+    IDS_SOURCECLIENT        "Cliente Fonte"
+    IDS_USERSIP             "IP dos Usuarios"
+    IDS_FEATURES            "Características"
+    IDS_IRC_NEWNICK         "Escolha um apelido para o IRC."
+    IDS_IRC_NEWNICKDESC     "Deve ser uma palavra menor que 20 caráteres contendo (A-Z, 0-9). Poderá ser modificado em Preferências->Irc."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SPARSEPARTFILES     "Criar novos arquivos part quando escassos (somente NTFS)"
+    IDS_ASPECTRATIO         "Aspect Ratio"
+    IDS_NEGATEFILTER        "Negar Filtro"
+    IDS_SEENCOMPL           "Sempre visualizar arquivos completos"
+    IDS_SELSKINPROFILEDIR   "Selecionar Diretório de Perfis"
+    IDS_ASKDLINCOMPLETE     "Potentially incomplete file:\r\n\r\n%s\r\n\r\nThis file is supposed to be incomplete in the network and can therefore most likely not downloaded successfully! Do you really want to download this file?"
+    IDS_DEADSOURCES         "Dead Sources"
 END
 
 #endif    // Portuguese (Brazil) resources

@@ -109,6 +109,9 @@ copy &quot;$(TargetPath)&quot; ..\DebugUnicode\lang\$(TargetFileName)
 	</Configurations>
 	<Files>
 		<File
+			RelativePath="de_DE.h">
+		</File>
+		<File
 			RelativePath="ro_RO.h">
 		</File>
 		<File

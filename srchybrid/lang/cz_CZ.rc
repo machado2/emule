@@ -85,22 +85,14 @@ BEGIN
                             "Aktualizace seznamu serverù: %s%% z %s dokonèeno"
     IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Zachraòování souboru"
     IDS_HTTPDOWNLOAD_OF     "%s z %s"
-    IDS_HTTPDOWNLOAD_SECONDS "%s sec"
-    IDS_HTTPDOWNLOAD_MINUTES "%s min"
-    IDS_HTTPDOWNLOAD_MINUTES_AND_SECONDS "%s min %s sec"
-    IDS_HTTPDOWNLOAD_BYTES  "%s Bytù"
-    IDS_HTTPDOWNLOAD_KILOBYTES "%s KB"
     IDS_CANCEL              "Zrušit"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_HTTPDOWNLOAD_MEGABYTES "%s MB"
     IDS_HTTP_CAPTION        "Aktualizace seznamu serverù"
     IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s zkopírováno)"
-    IDS_HTTPDOWNLOAD_BYTESPERSECOND "%s Bytù/Sec"
     IDS_HSAV                "Hashset povolený"
-    IDS_HTTPDOWNLOAD_KILOBYTESPERSECOND "%s KB/Sec"
     IDS_FD_CORR             "Pokažené"
     IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE 
                             "Soubor '%s' už existuje.\nChcete ho pøepsat?"
@@ -327,8 +319,8 @@ BEGIN
     IDS_TIME                "Èas"
     IDS_STATS_DDATA         "Stažená data: %s"
     IDS_STATS_UDATA         "Uploadovaná data: %s"
-    IDS_STATS_AVGDL         "Prùmìrná rychlost stahování: %.2f kB/s"
-    IDS_STATS_AVGUL         "Prùmìrná rychlost uploadování: %.2f kB/s"
+    IDS_STATS_AVGDL         "Prùmìrná rychlost stahování: %s"
+    IDS_STATS_AVGUL         "Prùmìrná rychlost uploadování: %s"
     IDS_STATS_FOUNDSRC      "Nalezené zdroje: %i"
     IDS_STATS_ACTDL         "Aktivní downloady (díly): %i"
     IDS_STATS_ACTUL         "Aktivní uploady: %i"
@@ -751,7 +743,7 @@ BEGIN
     IDS_SF_AVGCON           "Prùmìrné pøipojení (odhadem)"
     IDS_SF_PEAKCON          "Maximum pøipojení (odhadem)"
     IDS_ST_ACTIVEC          "aktivní pøipojení"
-    IDS_NETWORK             "Sí"
+    IDS_NETWORK             "Sí?"
     IDS_SF_DELCOUNT         "Smazané servery"
     IDS_QUEUEFULL           "Plná fronta"
     IDS_AVG                 "Prùmìr"
@@ -850,6 +842,8 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* Zaèal soukromý chat"
     IDS_IRC_SLAPMSG         "* %s slaps %s around with a large Babelfish!"
     IDS_IRC_PRIVMESSAGE     "Soukromá zpráva"
+    IDS_SOURCEEXCHANGESWAP  "Doèasná výmìna zdrojù"
+    IDS_DL_TRY_TO_GET_PREVIEW_PARTS "Download parts needed for preview first"
     IDS_IRC_KICK            "Kopnout"
     IDS_IRC_SLAP            "Plesknout"
     IDS_IRC_JOIN            "Pøipojit"
@@ -864,6 +858,7 @@ BEGIN
     IDS_IRC_HASPARTED       "* %s odlouèil %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s byl kopnut %s (%s)"
     IDS_IRC_NICKUSED        "Vaše pøezdívka je již používaná na IRC serveru. Zvolte si prosím jinou pøezdívku v záložce IRC v Možnostech."
+    IDS_DOWNLOAD_ALPHABETICAL "Stáhnout v abecedním poøadí"
     IDS_IRC_HASQUIT         "* %s odešel (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s je známý jako %s"
     IDS_IRC_SETSMODE        "* %s øežimy setù: %s %s"
@@ -972,13 +967,13 @@ BEGIN
     IDS_UNIT                "Jednotky:"
     IDS_WIZARD_CUSTOM       "Vlastní"
     IDS_WIZARD_ENTERBELOW   "(vlož níže!)"
-    IDS_STATS_MAXAVGDL      "Max. prùmìr rychlosti stahování: %.2f kB/s"
+    IDS_STATS_MAXAVGDL      "Max. prùmìr rychlosti stahování: %s"
     IDS_USS_MIN             "Warning: USS currently does not support upload speeds less then 10K. If you know your connection is not able to handle this, please disable USS."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATS_MAXDL         "Max. rychlost stahování: %.2f kB/s"
+    IDS_STATS_MAXDL         "Max. rychlost stahování: %s"
     IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
                             "Ignore eMule add friend protocol messages"
     IDS_PW_FASTSRVCON       "Bezpeèné pøipojení"
@@ -1497,7 +1492,7 @@ BEGIN
     IDS_INSUFFICIENT        "Nedostaèující prostor na disku"
     IDS_MINFREEDISKSPACE    "Min. volného prostoru na disku [MB]"
     IDS_WARNING             "Varování"
-    IDS_IMPORTSPLPF         "Iportovat .part soubory (eM, eD, ON)"
+    IDS_IMPORTSPLPF         "Iportovat .part soubory (eMule,eDonkey,Overnet)"
     IDS_IMP_STEPREADPF      "Ètení .part složky"
     IDS_IMP_STEPBASICINF    "Získávání základních informací s .part souboru"
     IDS_IMP_STEPCRDESTFILE  "Vytváøení cílového .part souboru"
@@ -1640,22 +1635,21 @@ BEGIN
     IDS_RAU_RUNNING         "eMule bìží jako uživatel bez oprávnìní: ""%s"""
     IDS_RAU_FAILED          "Nepodaøilo se spustit eMule jako uživatele bez oprávnìní ""eMule_Secure"". Oprávnìní souèasného uživatele (""%S"") zùstávají zachována."
     IDS_KADCONTACTSREAD     "Pøeèíst %ld kontaktù ze souboru."
-    IDS_ERR_KADCONTACTS     "Žádné kontakty nenalezeny, prosím spuse bootstrap nebo stáhnìte soubor nodes.dat."
+    IDS_ERR_KADCONTACTS     "Žádné kontakty nenalezeny, prosím spus?e bootstrap nebo stáhnìte soubor nodes.dat."
     IDS_METATAGS            "Poèet meta tagù:"
     IDS_FILEFORMAT          "Formát souboru"
     IDS_UDPREASKS           "UDP File Reasks"
+    IDS_DYNUP_PINGTOLERANCE_MS "Tolerance pingù (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER "Metoda pro toleranci pingù"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS "Milisekund (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT "Procent (%)"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
-    IDS_DYNUP_PINGTOLERANCE_MS 			"Tolerance pingù (ms)"
-    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Metoda pro toleranci pingù"
-    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milisekund (ms)"
-    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Procent (%)"
     IDS_LOG_A4AF            "Logovat A4AF akce"
     IDS_A4AF_SAVE_CPU       "Zakázat kontorly A4AF pro odlehèení CPU"
     IDS_SEARCH_DOC          "Dokument"
-    IDS_DOWNLOAD_ALPHABETICAL "Stáhnout v abecedním poøadí"
     IDS_INSTALL_SKIN        "Instalovat eMule Skin"
     IDS_INSTALL_SKIN_NODIR  "Nebyl vybrán žádný adresáø s profilem Skinu nebo není pøístupný!"
     IDS_INSTALL_SKIN_DIR_ERROR 
@@ -1665,8 +1659,12 @@ BEGIN
     IDS_INSTALL_SKIN_PKG_ERROR "Tento soubor není platný pack eMule Skinu."
     IDS_NEXT_REASK          "Pøíští požadavek tomuto klientovi"
     IDS_A4AF_FILES          "A4AF soubory"
-    IDS_STATS_FRATIO        "Pomìr UL:DL za etapu (pøátelské UL vynechány):"
-    IDS_STATS_UDATA_FRIENDS "Uploadovaná data pøátelským slotùm (Etapa): %s"
+    IDS_FO_TEMPTCP_S        "Otevøen port %u (TCP) v interním WinXP firewallu pro tuto etapu bìhu eMule"
+    IDS_FO_TEMPTCP_F        "Nepodaøilo se otevøít port %u (TCP) v interním WinXP firewallu pro tuto etapu bìhu eMule"
+    IDS_FO_TEMPUDP_S        "Otevøen port %u (UDP) v interním WinXP firewallu pro tuto etapu bìhu eMule"
+    IDS_FO_TEMPUDP_F        "Nepodaøilo se otevøít port %u (UDP) v interním WinXP firewallu pro tuto etapu bìhu eMule"
+    IDS_FO_PREFBUTTON       "Otevøít tyto porty v interním WinXP firewallu"
+    IDS_FO_PREF_SUCCCEEDED  "Podaøilo se otevøít vybrané porty v interním WinXP firewallu.\nZkontrolujte prosím, jestli to nemá vliv na fireally tøetích stran nebo routery!"
 END
 
 STRINGTABLE 
@@ -1676,20 +1674,141 @@ BEGIN
     IDS_FO_PREF_STARTUP     "Otevøít/zavøít porty WinXP firewallu bìhem spouštìní/ukonèování eMule"
     IDS_LOG_LEVEL           "Úroveò Logu"
     IDS_DISABLEPEERACHE     "Zakázat downloadování z PeerCache"
-    IDS_FO_TEMPTCP_S        "Otevøen port %u (TCP) v interním WinXP firewallu pro tuto etapu bìhu eMule"
-    IDS_FO_TEMPTCP_F        "Nepodaøilo se otevøít port %u (TCP) v interním WinXP firewallu pro tuto etapu bìhu eMule"
-    IDS_FO_TEMPUDP_S        "Otevøen port %u (UDP) v interním WinXP firewallu pro tuto etapu bìhu eMule"
-    IDS_FO_TEMPUDP_F        "Nepodaøilo se otevøít port %u (UDP) v interním WinXP firewallu pro tuto etapu bìhu eMule"
-    IDS_FO_PREFBUTTON       "Otevøít tyto porty v interním WinXP firewallu"
-    IDS_FO_PREF_SUCCCEEDED  "Podaøilo se otevøít vybrané porty v interním WinXP firewallu.\nZkontrolujte prosím, jestli to nemá vliv na fireally tøetích stran nebo routery!"
+    IDS_NEWMSG              "Zpráva od '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "pouze ve stejné kategorii"
+    IDS_LOG_ULDL_EVENTS     "Logovat udílosti uploadu/downloadu"
+    IDS_PEERCACHE_ENABLED   "Váš ISP podporuje technologii PeerCache, která umožòuje cashovat downloady!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Povolit uživateli, aby si vás pøidal mezi pøítele."
     IDS_SOURCESWAPBLOCKED   "Výmìna zdrojù zablokována"
     IDS_A4AF_CHECK_THIS_NOW "Zkontrolujte tento zdroj (debug)"
-    IDS_SOURCEEXCHANGESWAP  "Doèasná výmìna zdrojù"
-    IDS_NEWMSG              "Zpráva od '%s' (IP:%s)"
-    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
-    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
-    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
-    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
+    IDS_STATS_FRATIO        "Pomìr UL:DL za etapu (pøátelské UL vynechány):"
+    IDS_STATS_UDATA_FRIENDS "Uploadovaná data pøátelským slotùm (Etapa): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IMP_ERR_BADFORMAT   "Neznámý neba špatný formát doèasného souboru."
+    IDS_SEARCH_INVALIDCHAR  "Vyhledávací øetìzec obsahuje neplatné znaky. Zadal jste buï znak '?' nebo jiný znak, která nelze použít v síti eD2K."
+    IDS_PORTSCON            "Porty a pøipojení"
+    IDS_PORTINFO            "eMule používá dva porty pro komunikaci se servery a klienty. Tyto porty musí být volné a dostupné pro vzdálené klienty. TCP port musí být dostupný pro zajištìní hlavní funkènosti eMule. UDP port je používán pro Kad (bezserverovou sí) a pro snížení používání sítì (Overhead).\n\nPorty mùžete mìnit zde, dokud nebìží žádné síové aktivity."
+    IDS_STARTTEST           "Testovat porty"
+    IDS_TESTINFO            "Zde mùžete otestovat, zdali jsou vaše TCP a UDP porty dostupné zvenèí. Pozitivní výsledek testu je zapotøebí k vaší dostupnosti pro ostatní klienty. TCP port by mìl být dostupný v každém pøipadì.!"
+    IDS_CONNECTIONTEST      "Test pøipojení"
+    IDS_NOPORTCHANGEPOSSIBLE 
+                            "Bìhem pøipojení k jiným klientùm nebo serveru není možné mìnit porty!\n\nProsím restartujte eMule se zmìnìným nastavením portù."
+    IDS_NETWORK_INFO        "Informace ze sítì"
+    IDS_SP_TOTALUL          "Celkové množství uploadù"
+    IDS_SP_ULFRIENDS        "Pøátelské upload sloty"
+    IDS_SP_ULSLOTSNOOVERHEAD "souèasné uploady vyjma overheadù (pouze UL Sloty)"
+    IDS_ST_ACTIVEU_ZZ       "Activní uploady"
+    IDS_ST_ULCURRENT        "Upload+Overhead"
+    IDS_ST_ULSLOTSNOOVERHEAD "Upload"
+    IDS_ST_ULFRIEND         "Pøátelský upload"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_ACTUL_ZZ      "Aktivní uploady/potøebné k zaplnìní bandwidth: %i"
+    IDS_STATS_TOTALUL       "Total number of uploads: %i"
+    IDS_CHAT_DOWNLOADED     "Downloadováno:"
+    IDS_CHAT_UPLOADED       "Uploadováno:"
+    IDS_CHAT_IDENT          "Identifikace:"
+    IDS_CHAT_CLIENT         "Klient:"
+    IDS_MAXHALFOPENCONS     "Max. polootevøwných pøipojení"
+    IDS_WIZ_STARTWITHWINDOWS 
+                            "Povolte tuto možnost, pokovaï máte zájem, aby se eMule spouštìl se startem windows. [Implicitnì zakázáno]"
+    IDS_KAD_WAITCBK         "Wait Callback Kad"
+    IDS_KAD_TOOMANDYKADLKPS "Pøíliš mnoho Kad vyhledávání"
+    IDS_PCDS_CLIENTWAIT     "ClientWait"
+    IDS_PCDS_CACHEWAIT      "CacheWait"
+    IDS_CACHE               "Cache"
+    IDS_INDEXED             "Indexován"
+    IDS_KADINFO_SRC         "\tZdroj: %u\r\n"
+    IDS_KADINFO_KEYW        "\tKlíèové slovo: %u\r\n"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STARTWITHWINDOWS    "Spouštìt se startem Windows"
+    IDS_ADDSRCMANUALLY      "Manuálnì pøidat zdroj"
+    IDS_BUDDY               "Pèítel"
+    IDS_BUDDYNONE           "Nic"
+    IDS_INFO                "Info"
+    IDS_HALF                "Pùl"
+    IDS_CONCOMPL            "Compl"
+    IDS_KADSTATUS_STOPPING  "Zastavuje"
+    IDS_KADSTATUS_ACTIVE    "Aktivní"
+    IDS_FORMAT              "Formát"
+    IDS_META_COLLECTION     "Kolekce"
+    IDS_META_PARTPATH       "Part stezka"
+    IDS_META_PARTHASH       "Part hash"
+    IDS_META_GAPSTART       "Gap start"
+    IDS_META_GAPEND         "Gap end"
+    IDS_FAIL                "Selhal"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_META_PREFERENCES    "Preference"
+    IDS_META_VERSION        "Verze"
+    IDS_META_TEMPFILE       "Doèasný file"
+    IDS_META_SERVERPORT     "Port serveru"
+    IDS_META_SERVERIP       "IP serveru"
+    IDS_META_SRCUDPPORT     "UDP port zdroje"
+    IDS_META_SRCTCPPORT     "TCP port zdroje"
+    IDS_META_SRCIP          "IP zdroje"
+    IDS_META_SRCTYPE        "Type zdroje"
+    IDS_SEARCH_UNICODE      "Hledat v Unicode"
+    IDS_PERSEC              "/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LD_ED2KLINK         "ED2K odkaz"
+    IDS_LD_COPYCLIPBOARD    "Zkopírovat do schránky"
+    IDS_LD_HOSTNAME         "Pøi vytvážení odkazu na zdroj použít hostname (z preferencí) namísto IP."
+    IDS_SAVEACFAILED        "Nepodaøilo se uložit AICH Hashset!"
+    IDS_IACHHASH            "AICH Hash"
+    IDS_BYTESPERSEC         "B/s"
+    IDS_KBYTESPERSEC        "KB/s"
+    IDS_MBYTESPERSEC        "MB/s"
+    IDS_GBYTESPERSEC        "GB/s"
+    IDS_TBYTESPERSEC        "TB/s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_MINORCLIENTS  "Minoritní"
+    IDS_LD_BASICOPT         "Základní možnosti"
+    IDS_LD_ADDSOURCE        "Pøidat sebe jako zdroj"
+    IDS_LD_EMULEHASH        "Pøidat eMule AICH Hash pro pokroèilé øízení chyb"
+    IDS_LD_ADVANCEDOPT      "Pokroèilé možnosti"
+    IDS_LD_ADDHTML          "Pøidat HTML-Tagy"
+    IDS_LD_ADDHASHSET       "Pøidat kompletní hashset"
+    IDS_FILELINK            "Odkaz souboru"
+    IDS_PF_ADVANCEDCALC     "Použít pokroèilou metodu pro kalkulaci zývajícího èasu"
+    IDS_DL_SHOWED2KLINK     "Zobrazit eD2K odkaz..."
+    IDS_AICH_SYNCTOTAL      "Nalezeno %i souborù bez platného AICH Hashsetu, tyto soubory budou nyní rehashovány"
+    IDS_AICH_CALCFILE       "Výpoèet AICH Hashe pro soubor %s"
+    IDS_AICH_WARNUSER       "eMule od verze 0.44a používá pokroèilé hashování souborù, které napomáhá k výraznému snížení ztrátovosti dat pøi zjištìní poškození. Jelikož updatujete eMule z døívìjší verze, bude potøeba rehashovat všechny vaše sdílené soubory pro zjišøìní nového hashe. Mùže to sice chvíly trvat, ale jedná se o jednorázovou akci.  "
+    IDS_AICH_WORKED         "AICH úspìšnì obnovilo %s z %s z èásti %u pro %s"
+    IDS_TRICKLING           "Standby"
+    IDS_SOURCECLIENT        "Zdrojový klient"
+    IDS_USERSIP             "IP uživatelù"
+    IDS_FEATURES            "Vlastnosti"
+    IDS_IRC_NEWNICK         "Vyberte si pøezdívku pro IRC."
+    IDS_IRC_NEWNICKDESC     "Mìla by sestávat z jednoho slova kratšího 20 znakù obsahujících jenom (A-Z, 0-9). Pozdìji mùže být zmìnìna v nabídce Možnosti -> Irc."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SPARSEPARTFILES     "Vytváøet nové part soubory jako 'sparse' (poze NTFS)"
+    IDS_ASPECTRATIO         "Pomìr stran"
+    IDS_NEGATEFILTER        "negovat filtr"
+    IDS_SEENCOMPL           "Již nìkdy spatøen kompletní"
+    IDS_SELSKINPROFILEDIR   "Vyberte adresáø s profily skinù"
+    IDS_ASKDLINCOMPLETE     "Potenciálnì nekompletní soubor:\r\n\r\n%s\r\n\r\nTento soubor vypadá, že není v síti kompletní a proto velmi pravdìpodobnì ani nepùjde úspìšnì downloadovat! Chcete se pøesto pokusit o download tohoto souboru?"
+    IDS_DEADSOURCES         "Mrtvé zdroje"
 END
 
 #endif    // Czech resources

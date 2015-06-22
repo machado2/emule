@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -23,8 +23,6 @@
 #include "Kademlia/Kademlia/Kademlia.h"
 #include "kademlia/kademlia/search.h"
 #include "kademlia/kademlia/prefs.h"
-#define NOMD4MACROS
-#include "kademlia/utils/md4.h"
 #include "DownloadQueue.h"
 #include "Statistics.h"
 #include "Preferences.h"
@@ -37,6 +35,9 @@
 #include "PartFile.h"
 #include "emuledlg.h"
 #include "SharedFilesWnd.h"
+#include "StringConversion.h"
+#include "ClientList.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -54,22 +55,17 @@ typedef CSimpleArray<CKnownFile*> CSimpleKnownFileArray;
 class CPublishKeyword
 {
 public:
-	CPublishKeyword(const CString& rstrKeyword)
+	CPublishKeyword(const CStringW& rstrKeyword)
 	{
 		m_strKeyword = rstrKeyword;
 		ASSERT( rstrKeyword.GetLength() >= 3 );
-#ifdef _UNICODE
-		CStringA strA(rstrKeyword);
-		Kademlia::CMD4::hash((byte*)(LPCSTR)strA, strA.GetLength(), &m_nKadID);
-#else
-		Kademlia::CMD4::hash((byte*)(LPCSTR)rstrKeyword, rstrKeyword.GetLength(), &m_nKadID);
-#endif
+		KadGetKeywordHash(rstrKeyword, &m_nKadID);
 		SetNextPublishTime(0);
 		SetPublishedCount(0);
 	}
 
 	const Kademlia::CUInt128& GetKadID() const { return m_nKadID; }
-	const CString& GetKeyword() const { return m_strKeyword; }
+	const CStringW& GetKeyword() const { return m_strKeyword; }
 	int GetRefCount() const { return m_aFiles.GetSize(); }
 	const CSimpleKnownFileArray& GetReferences() const { return m_aFiles; }
 
@@ -117,7 +113,7 @@ public:
 	}
 
 protected:
-	CString m_strKeyword;
+	CStringW m_strKeyword;
 	Kademlia::CUInt128 m_nKadID;
 	UINT m_tNextPublishTime;
 	UINT m_uPublishedCount;
@@ -160,7 +156,7 @@ protected:
 	POSITION m_posNextKeyword;
 	UINT m_tNextPublishKeywordTime;
 
-	CPublishKeyword* FindKeyword(const CString& rstrKeyword, POSITION* ppos = NULL) const;
+	CPublishKeyword* FindKeyword(const CStringW& rstrKeyword, POSITION* ppos = NULL) const;
 };
 
 CPublishKeywordList::CPublishKeywordList()
@@ -190,7 +186,7 @@ void CPublishKeywordList::ResetNextKeyword()
 	m_posNextKeyword = m_lstKeywords.GetHeadPosition();
 }
 
-CPublishKeyword* CPublishKeywordList::FindKeyword(const CString& rstrKeyword, POSITION* ppos) const
+CPublishKeyword* CPublishKeywordList::FindKeyword(const CStringW& rstrKeyword, POSITION* ppos) const
 {
 	POSITION pos = m_lstKeywords.GetHeadPosition();
 	while (pos)
@@ -214,7 +210,7 @@ void CPublishKeywordList::AddKeywords(CKnownFile* pFile)
 	Kademlia::WordList::const_iterator it;
 	for (it = wordlist.begin(); it != wordlist.end(); it++)
 	{
-		const CString& strKeyword = *it;
+		const CStringW& strKeyword = *it;
 		CPublishKeyword* pPubKw = FindKeyword(strKeyword);
 		if (pPubKw == NULL)
 		{
@@ -233,7 +229,7 @@ void CPublishKeywordList::RemoveKeywords(CKnownFile* pFile)
 	Kademlia::WordList::const_iterator it;
 	for (it = wordlist.begin(); it != wordlist.end(); it++)
 	{
-		const CString& strKeyword = *it;
+		const CStringW& strKeyword = *it;
 		POSITION pos;
 		CPublishKeyword* pPubKw = FindKeyword(strKeyword, &pos);
 		if (pPubKw != NULL)
@@ -293,7 +289,7 @@ void CPublishKeywordList::Dump()
 	while (pos)
 	{
 		CPublishKeyword* pPubKw = m_lstKeywords.GetNext(pos);
-		TRACE(_T("%3u: %-10s  ref=%u  %s\n"), i, pPubKw->GetKeyword(), pPubKw->GetRefCount(), CastSecondsToHM(pPubKw->GetNextPublishTime()));
+		TRACE(_T("%3u: %-10ls  ref=%u  %s\n"), i, pPubKw->GetKeyword(), pPubKw->GetRefCount(), CastSecondsToHM(pPubKw->GetNextPublishTime()));
 		i++;
 	}
 }
@@ -492,7 +488,7 @@ void CSharedFileList::AddFilesFromDirectory(const CString& rstrDirectory)
 				TRACE(_T("%hs: File already in shared file list: %s \"%s\"\n"), __FUNCTION__, md4str(pFileInMap->GetFileHash()), pFileInMap->GetFilePath());
 				TRACE(_T("%hs: File to add:                      %s \"%s\"\n"), __FUNCTION__, md4str(toadd->GetFileHash()), ff.GetFilePath());
 				if (!pFileInMap->IsKindOf(RUNTIME_CLASS(CPartFile)) || theApp.downloadqueue->IsPartFile(pFileInMap))
-					AddLogLine(false, _T("Duplicate shared files: \"%s\" and \"%s\""), pFileInMap->GetFilePath(), ff.GetFilePath());
+					LogWarning(_T("Duplicate shared files: \"%s\" and \"%s\""), pFileInMap->GetFilePath(), ff.GetFilePath());
 			}
 			else
 			{
@@ -554,7 +550,7 @@ bool CSharedFileList::AddFile(CKnownFile* pFile)
 		TRACE(_T("%hs: File already in shared file list: %s \"%s\" \"%s\"\n"), __FUNCTION__, md4str(pFileInMap->GetFileHash()), pFileInMap->GetFileName(), pFileInMap->GetFilePath());
 		TRACE(_T("%hs: File to add:                      %s \"%s\" \"%s\"\n"), __FUNCTION__, md4str(pFile->GetFileHash()), pFile->GetFileName(), pFile->GetFilePath());
 		if (!pFileInMap->IsKindOf(RUNTIME_CLASS(CPartFile)) || theApp.downloadqueue->IsPartFile(pFileInMap))
-			AddLogLine(false, _T("Duplicate shared files: \"%s\" and \"%s\""), pFileInMap->GetFilePath(), pFile->GetFilePath());
+			LogWarning(_T("Duplicate shared files: \"%s\" and \"%s\""), pFileInMap->GetFilePath(), pFile->GetFilePath());
 		return false;
 	}
 	m_UnsharedFiles_map.RemoveKey(CSKey(pFile->GetFileHash()));
@@ -583,7 +579,7 @@ void CSharedFileList::FileHashingFinished(CKnownFile* file)
 	{
 		TRACE(_T("%hs: File already in shared file list: %s \"%s\"\n"), __FUNCTION__, md4str(found_file->GetFileHash()), found_file->GetFilePath());
 		TRACE(_T("%hs: File to add:                      %s \"%s\"\n"), __FUNCTION__, md4str(file->GetFileHash()), file->GetFilePath());
-		AddLogLine(false, _T("Duplicate shared files: \"%s\" and \"%s\""), found_file->GetFilePath(), file->GetFilePath());
+		LogWarning(_T("Duplicate shared files: \"%s\" and \"%s\""), found_file->GetFilePath(), file->GetFilePath());
 
 		RemoveFromHashing(file);
 		if (!IsFilePtrInList(file) && !theApp.knownfiles->IsFilePtrInList(file))
@@ -737,8 +733,10 @@ void CSharedFileList::ClearED2KPublishInfo(){
 }
 
 void CSharedFileList::CreateOfferedFilePacket(const CKnownFile* cur_file, CSafeMemFile* files, 
-											  CServer* pServer, UINT uEmuleVer)
+											  CServer* pServer, CUpDownClient* pClient)
 {
+	UINT uEmuleVer = (pClient && pClient->IsEmuleClient()) ? pClient->GetVersion() : 0;
+
 	// NOTE: This function is used for creating the offered file packet for Servers _and_ for Clients..
 	files->WriteHash16(cur_file->GetFileHash());
 
@@ -790,13 +788,7 @@ void CSharedFileList::CreateOfferedFilePacket(const CKnownFile* cur_file, CSafeM
 
 	CSimpleArray<CTag*> tags;
 
-#ifdef _UNICODE
-
-#else
-#define CTAG(n, s)	CTag(n, s)
-#endif
-
-	tags.Add(new CTAG(FT_FILENAME, cur_file->GetFileName()));
+	tags.Add(new CTag(FT_FILENAME, cur_file->GetFileName()));
 	tags.Add(new CTag(FT_FILESIZE, cur_file->GetFileSize()));
 
 	// NOTE: Archives and CD-Images are published with file type "Pro"
@@ -812,7 +804,7 @@ void CSharedFileList::CreateOfferedFilePacket(const CKnownFile* cur_file, CSafeM
 			strExt = strExt.Mid(1);
 			if (!strExt.IsEmpty()){
 				strExt.MakeLower();
-				tags.Add(new CTAG(FT_FILEFORMAT, strExt)); // file extension without a "."
+				tags.Add(new CTag(FT_FILEFORMAT, strExt)); // file extension without a "."
 			}
 		}
 	}
@@ -846,26 +838,26 @@ void CSharedFileList::CreateOfferedFilePacket(const CKnownFile* cur_file, CSafeM
 			if (pTag != NULL)
 			{
 				// skip string tags with empty string values
-				if (pTag->IsStr() && (pTag->tag.stringvalue == NULL || pTag->tag.stringvalue[0] == '\0'))
+				if (pTag->IsStr() && pTag->GetStr().IsEmpty())
 					continue;
 				
 				// skip integer tags with '0' values
-				if (pTag->IsInt() && pTag->tag.intvalue == 0)
+				if (pTag->IsInt() && pTag->GetInt() == 0)
 					continue;
 				
 				if (_aMetaTags[i].nED2KType == TAGTYPE_STRING && pTag->IsStr())
 				{
 					if (pServer && (pServer->GetTCPFlags() & SRV_TCPFLG_NEWTAGS))
-						tags.Add(new CTAG(_aMetaTags[i].nName, pTag->GetStr()));
+						tags.Add(new CTag(_aMetaTags[i].nName, pTag->GetStr()));
 					else
-						tags.Add(new CTAG(_aMetaTags[i].pszED2KName, pTag->GetStr()));
+						tags.Add(new CTag(_aMetaTags[i].pszED2KName, pTag->GetStr()));
 				}
 				else if (_aMetaTags[i].nED2KType == TAGTYPE_UINT32 && pTag->IsInt())
 				{
 					if (pServer && (pServer->GetTCPFlags() & SRV_TCPFLG_NEWTAGS))
-						tags.Add(new CTag(_aMetaTags[i].nName, pTag->tag.intvalue));
+						tags.Add(new CTag(_aMetaTags[i].nName, pTag->GetInt()));
 					else
-						tags.Add(new CTag(_aMetaTags[i].pszED2KName, pTag->tag.intvalue));
+						tags.Add(new CTag(_aMetaTags[i].pszED2KName, pTag->GetInt()));
 				}
 				else if (_aMetaTags[i].nName == FT_MEDIA_LENGTH && pTag->IsInt())
 				{
@@ -875,14 +867,14 @@ void CSharedFileList::CreateOfferedFilePacket(const CKnownFile* cur_file, CSafeM
 						|| uEmuleVer >= MAKE_CLIENT_VERSION(0,42,4))
 					{
 						if (pServer && (pServer->GetTCPFlags() & SRV_TCPFLG_NEWTAGS))
-							tags.Add(new CTag(_aMetaTags[i].nName, pTag->tag.intvalue));
+							tags.Add(new CTag(_aMetaTags[i].nName, pTag->GetInt()));
 						else
-							tags.Add(new CTag(_aMetaTags[i].pszED2KName, pTag->tag.intvalue));
+							tags.Add(new CTag(_aMetaTags[i].pszED2KName, pTag->GetInt()));
 					}
 					else
 					{
-						CStringA strValue;
-						SecToTimeLength(pTag->tag.intvalue, strValue);
+						CString strValue;
+						SecToTimeLength(pTag->GetInt(), strValue);
 						tags.Add(new CTag(_aMetaTags[i].pszED2KName, strValue));
 					}
 				}
@@ -892,15 +884,30 @@ void CSharedFileList::CreateOfferedFilePacket(const CKnownFile* cur_file, CSafeM
 		}
 	}
 
+	EUtf8Str eStrEncode;
+#ifdef _UNICODE
+	if (pServer != NULL && (pServer->GetTCPFlags() & SRV_TCPFLG_UNICODE)){
+		// eserver doesn't properly support searching with ASCII-7 strings in BOM-UTF8 published strings
+		//eStrEncode = utf8strOptBOM;
+		eStrEncode = utf8strRaw;
+	}
+	else if (pClient && !pClient->GetUnicodeSupport())
+		eStrEncode = utf8strNone;
+	else
+		eStrEncode = utf8strRaw;
+#else
+	eStrEncode = utf8strNone;
+#endif
+
 	files->WriteUInt32(tags.GetSize());
 	for (int i = 0; i < tags.GetSize(); i++)
 	{
 		const CTag* pTag = tags[i];
 		//TRACE("  %s\n", pTag->GetFullInfo());
-		if (pServer && (pServer->GetTCPFlags() & SRV_TCPFLG_NEWTAGS))
-			pTag->WriteNewEd2kTag(files);
+		if (pServer && (pServer->GetTCPFlags() & SRV_TCPFLG_NEWTAGS) || (uEmuleVer >= MAKE_CLIENT_VERSION(0,42,7)))
+			pTag->WriteNewEd2kTag(files, eStrEncode);
 		else
-			pTag->WriteTagToFile(files);
+			pTag->WriteTagToFile(files, eStrEncode);
 		delete pTag;
 	}
 }
@@ -1017,7 +1024,6 @@ void CSharedFileList::HashFailed(UnknownFile_Struct* hashed){
 			break;
 		}
 	}
-	ASSERT(0);
 	delete hashed;
 }
 // SLUGFILLER: SafeHash
@@ -1062,9 +1068,9 @@ int CAddFileThread::Run()
 	_tmakepath(strFilePath.GetBuffer(MAX_PATH), NULL, m_strDirectory, m_strFilename, NULL);
 	strFilePath.ReleaseBuffer();
 	if (m_partfile)
-		theApp.QueueLogLine(false, GetResString(IDS_HASHINGFILE) + _T(" \"%s\" \"%s\""), m_partfile->GetFileName(), strFilePath);
+		Log(GetResString(IDS_HASHINGFILE) + _T(" \"%s\" \"%s\""), m_partfile->GetFileName(), strFilePath);
 	else
-		theApp.QueueLogLine(false, GetResString(IDS_HASHINGFILE) + _T(" \"%s\""), strFilePath);
+		Log(GetResString(IDS_HASHINGFILE) + _T(" \"%s\""), strFilePath);
 	
 	CKnownFile* newrecord = new CKnownFile();
 	if (newrecord->CreateFromFile(m_strDirectory, m_strFilename, m_partfile) && theApp.emuledlg && theApp.emuledlg->IsRunning()) // SLUGFILLER: SafeHash - in case of shutdown while still hashing
@@ -1118,7 +1124,8 @@ void CSharedFileList::Publish()
 {
 	UINT tNow = time(NULL);
 
-	if( Kademlia::CKademlia::isConnected() && !theApp.IsFirewalled() && GetCount() && Kademlia::CKademlia::getPublish())
+	bool isFirewalled = theApp.IsFirewalled();
+	if( Kademlia::CKademlia::isConnected() && ( !isFirewalled || ( isFirewalled && theApp.clientlist->GetBuddyStatus() == 2)) && GetCount() && Kademlia::CKademlia::getPublish())
 	{ 
 		if( Kademlia::CKademlia::getTotalStoreKey() < KADEMLIATOTALSTOREKEY)
 		{
@@ -1143,7 +1150,7 @@ void CSharedFileList::Publish()
 
 						if (tNextKwPublishTime == 0 || tNextKwPublishTime <= tNow)
 						{
-							DEBUG_ONLY( Debug(_T("pkwlst: %-18s  Refs=%3u  Published=%2u  NextPublish=%s  Publishing\n"), pPubKw->GetKeyword(), pPubKw->GetRefCount(), pPubKw->GetPublishedCount(), CastSecondsToHM(tNextKwPublishTime - tNow)) );
+							DEBUG_ONLY( Debug(_T("pkwlst: %-18ls  Refs=%3u  Published=%2u  NextPublish=%s  Publishing\n"), pPubKw->GetKeyword(), pPubKw->GetRefCount(), pPubKw->GetPublishedCount(), CastSecondsToHM(tNextKwPublishTime - tNow)) );
 
 							Kademlia::CSearch* pSearch = Kademlia::CSearchManager::prepareFindFile(Kademlia::CSearch::STOREKEYWORD, false, pPubKw->GetKadID());
 							if (pSearch)
@@ -1220,12 +1227,17 @@ void CSharedFileList::Publish()
 				CKnownFile* pCurKnownFile = GetFileByIndex(m_currFileSrc);
 				if(pCurKnownFile)
 				{
-					Kademlia::CUInt128 testID;
-					if (pCurKnownFile->PublishSrc(&testID))
+					//Only publish source if two conditions.
+					//1) We are not firewalled..
+					//2) We are firewalled, but it's a complete source..
+					//
+					//HighID users will find incomplete sources passively..
+					//If the overhead of lowID is not to high, maybe we can start publishing all lowID sources..
+					if (pCurKnownFile->PublishSrc() && (!theApp.IsFirewalled() || (theApp.IsFirewalled() && !pCurKnownFile->IsPartFile())))
 					{
 						Kademlia::CUInt128 kadFileID;
 						kadFileID.setValue(pCurKnownFile->GetFileHash());
-						Kademlia::CSearchManager::prepareFindFile(Kademlia::CSearch::STOREFILE, true, kadFileID);
+						Kademlia::CSearchManager::prepareFindFile(Kademlia::CSearch::STOREFILE, true, kadFileID );
 					}	
 				}
 				m_currFileSrc++;

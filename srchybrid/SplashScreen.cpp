@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -104,7 +104,7 @@ void CSplashScreen::OnPaint()
 			if (pOldBM)
 				dcMem.SelectObject(pOldBM);
 
-			CRect rc(0, BM.bmHeight * 0.65, BM.bmWidth, BM.bmHeight);
+			CRect rc(0, BM.bmHeight * 0.73/*0.65*/, BM.bmWidth, BM.bmHeight);
 			dc.FillSolidRect(rc.left+1, rc.top+1, rc.Width()-2, rc.Height()-2, RGB(255,255,255));
 
 			LOGFONT lf = {0};
@@ -115,7 +115,11 @@ void CSplashScreen::OnPaint()
 			CFont font;
 			font.CreateFontIndirect(&lf);
 			CFont* pOldFont = dc.SelectObject(&font);
-			rc.top += dc.DrawText(_T("eMule ") + theApp.m_strCurVersionLong, &rc, DT_CENTER | DT_NOPREFIX);
+			CString strAppVersion(_T("eMule ") + theApp.m_strCurVersionLong);
+#ifdef _UNICODE
+			strAppVersion += _T(" Unicode");
+#endif
+			rc.top += dc.DrawText(strAppVersion, &rc, DT_CENTER | DT_NOPREFIX);
 			if (pOldFont)
 				dc.SelectObject(pOldFont);
 			font.DeleteObject();

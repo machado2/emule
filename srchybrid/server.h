@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -35,6 +35,7 @@ struct ServerMet_Struct {
 // Server TCP flags
 #define	SRV_TCPFLG_COMPRESSION		0x00000001
 #define	SRV_TCPFLG_NEWTAGS			0x00000008
+#define	SRV_TCPFLG_UNICODE			0x00000010
 
 // Server UDP flags
 #define	SRV_UDPFLG_EXT_GETSOURCES	0x00000001
@@ -120,6 +121,8 @@ public:
 
 	uint32	GetLowIDUsers() const					{return m_uLowIDUsers;}
 	void	SetLowIDUsers(uint32 uLowIDUsers)		{m_uLowIDUsers = uLowIDUsers;}
+
+	bool	GetUnicodeSupport() const				{return GetTCPFlags() & SRV_TCPFLG_UNICODE;}
 
 private:
 	uint32		challenge;

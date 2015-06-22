@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -19,28 +19,30 @@
 class InputBox : public CDialog
 {
 	DECLARE_DYNAMIC(InputBox)
-
 public:
 	InputBox(CWnd* pParent = NULL);   // standard constructor
 	virtual ~InputBox();
-	virtual BOOL OnInitDialog();
-	afx_msg void OnOK();
+
 // Dialog Data
 	enum { IDD = IDD_INPUTBOX };
+
+	void	SetLabels(CString title, CString label, CString defaultStr);
+	const CString& GetInput() const { return m_return; }
+	bool	WasCancelled() const { return m_cancel;}
+	void	SetEditFilenameMode(bool isfilenamemode = true) { m_bFilenameMode = isfilenamemode; }
+
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	afx_msg void OnCleanFilename();
-	DECLARE_MESSAGE_MAP()
-public:
-	void SetLabels(CString title,CString label, CString defaultStr);
-	CString GetInput();
-	bool	WasCancelled() { return m_cancel;}
-	void	SetEditFilenameMode(bool isfilenamemode=true) {m_bFilenameMode=isfilenamemode;}
-private:
 	CString m_label;
 	CString m_title;
 	CString m_default;
 	CString m_return;
 	bool	m_cancel;
 	bool	m_bFilenameMode;
+
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual BOOL OnInitDialog();
+
+	afx_msg void OnOK();
+	afx_msg void OnCleanFilename();
+	DECLARE_MESSAGE_MAP()
 };

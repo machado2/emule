@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -28,6 +28,7 @@
 #include <crypto51/files.h>
 #include <crypto51/sha.h>
 #include "emuledlg.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -88,15 +89,15 @@ void CClientCredits::AddUploaded(uint32 bytes, uint32 dwForIP) {
 	m_pCredits->nUploadedHi=(uint32)(current>>32);
 }
 
-uint64	CClientCredits::GetUploadedTotal(){
+uint64	CClientCredits::GetUploadedTotal() const{
 	return ( (uint64)m_pCredits->nUploadedHi<<32)+m_pCredits->nUploadedLo;
 }
 
-uint64	CClientCredits::GetDownloadedTotal(){
+uint64	CClientCredits::GetDownloadedTotal() const{
 	return ( (uint64)m_pCredits->nDownloadedHi<<32)+m_pCredits->nDownloadedLo;
 }
 
-float CClientCredits::GetScoreRatio(uint32 dwForIP)
+float CClientCredits::GetScoreRatio(uint32 dwForIP) const
 {
 	// check the client ident status
 	if ( ( GetCurrentIdentState(dwForIP) == IS_IDFAILED || GetCurrentIdentState(dwForIP) == IS_IDBADGUY || GetCurrentIdentState(dwForIP) == IS_IDNEEDED) && theApp.clientcredits->CryptoAvailable() ){
@@ -162,7 +163,7 @@ void CClientCreditsList::LoadList()
 				strError += _T(" - ");
 				strError += szError;
 			}
-			AddLogLine(true, _T("%s"), strError);
+			LogError(LOG_STATUSBAR, _T("%s"), strError);
 		}
 		return;
 	}
@@ -171,7 +172,7 @@ void CClientCreditsList::LoadList()
 	try{
 		uint8 version = file.ReadUInt8();
 		if (version != CREDITFILE_VERSION && version != CREDITFILE_VERSION_29){
-			AddLogLine(false, GetResString(IDS_ERR_CREDITFILEOLD));
+			LogWarning(GetResString(IDS_ERR_CREDITFILEOLD));
 			file.Close();
 			return;
 		}
@@ -204,7 +205,7 @@ void CClientCreditsList::LoadList()
 			file.Close(); // close the file before copying
 
 			if (!::CopyFile(strFileName, strBakFileName, FALSE))
-				AddLogLine(false, GetResString(IDS_ERR_MAKEBAKCREDITFILE));
+				LogError(GetResString(IDS_ERR_MAKEBAKCREDITFILE));
 
 			// reopen file
 			CFileException fexp;
@@ -215,7 +216,7 @@ void CClientCreditsList::LoadList()
 					strError += _T(" - ");
 					strError += szError;
 				}
-				AddLogLine(true, _T("%s"), strError);
+				LogError(LOG_STATUSBAR, _T("%s"), strError);
 				return;
 			}
 			setvbuf(file.m_pStream, NULL, _IOFBF, 16384);
@@ -246,17 +247,18 @@ void CClientCreditsList::LoadList()
 		}
 		file.Close();
 
-		if (cDeleted>0) AddLogLine(false, GetResString(IDS_CREDITFILELOADED) + GetResString(IDS_CREDITSEXPIRED), count-cDeleted,cDeleted);
-			else AddLogLine(false, GetResString(IDS_CREDITFILELOADED), count);
-
+		if (cDeleted>0)
+			AddLogLine(false, GetResString(IDS_CREDITFILELOADED) + GetResString(IDS_CREDITSEXPIRED), count-cDeleted,cDeleted);
+		else
+			AddLogLine(false, GetResString(IDS_CREDITFILELOADED), count);
 	}
 	catch(CFileException* error){
 		if (error->m_cause == CFileException::endOfFile)
-			AddLogLine(true, GetResString(IDS_CREDITFILECORRUPT));
+			LogError(LOG_STATUSBAR, GetResString(IDS_CREDITFILECORRUPT));
 		else{
 			TCHAR buffer[MAX_CFEXP_ERRORMSG];
 			error->GetErrorMessage(buffer, ARRSIZE(buffer));
-			AddLogLine(true, GetResString(IDS_ERR_CREDITFILEREAD), buffer);
+			LogError(LOG_STATUSBAR, GetResString(IDS_ERR_CREDITFILEREAD), buffer);
 		}
 		error->Delete();
 	}
@@ -278,7 +280,7 @@ void CClientCreditsList::SaveList()
 			strError += _T(" - ");
 			strError += szError;
 		}
-		AddLogLine(true, _T("%s"), strError);
+		LogError(LOG_STATUSBAR, _T("%s"), strError);
 		return;
 	}
 
@@ -314,7 +316,7 @@ void CClientCreditsList::SaveList()
 			strError += _T(" - ");
 			strError += szError;
 		}
-		AddLogLine(true, _T("%s"), strError);
+		LogError(LOG_STATUSBAR, _T("%s"), strError);
 		error->Delete();
 	}
 
@@ -383,7 +385,7 @@ bool CClientCredits::SetSecureIdent(uchar* pachIdent, uint8 nIdentLen){ // verif
 	return true;
 }
 
-EIdentState	CClientCredits::GetCurrentIdentState(uint32 dwForIP){
+EIdentState	CClientCredits::GetCurrentIdentState(uint32 dwForIP) const{
 	if (IdentState != IS_IDENTIFIED)
 		return IdentState;
 	else{
@@ -437,7 +439,7 @@ void CClientCreditsList::InitalizeCrypting(){
 			delete m_pSignkey;
 			m_pSignkey = NULL;
 		}
-		AddLogLine(false, GetResString(IDS_CRYPT_INITFAILED));
+		LogError(LOG_STATUSBAR, GetResString(IDS_CRYPT_INITFAILED));
 		ASSERT(0);
 	}
 	//Debug_CheckCrypting();

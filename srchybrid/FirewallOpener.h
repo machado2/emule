@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2004 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2004 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@
 #include <comdef.h>
 #include <initguid.h>
 #include <Netcon.h>
-#include "loggable.h"
 
 typedef _com_ptr_t<_com_IIID<INetSharingEveryConnectionCollection,&IID_INetSharingEveryConnectionCollection>	>	INetSharingEveryConnectionCollectionPtr;
 typedef _com_ptr_t<_com_IIID<INetConnection,&IID_INetConnection>	>												INetConnectionPtr;
@@ -77,7 +76,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////
 /// CFirewallOpener
 
-class CFirewallOpener: public CLoggable
+class CFirewallOpener
 {
 public:
 	CFirewallOpener(void);

@@ -5,7 +5,7 @@
 		Copyright (C) 2001-2002 Magomed G. Abdurakhmanov			
 ********************************************************************/
 
-//edited by (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//edited by (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //-> converted it to MFC
 //-> included colored keywords
 //-> fixed GPF bugs
@@ -951,7 +951,7 @@ LRESULT CHyperTextCtrl::OnCreate(WPARAM wParam, LPARAM lParam){
 	m_bDontUpdateSizeInfo = false;
 	m_iHorzPos = 0;
 	m_iVertPos = 0;
-	m_Font = &theApp.emuledlg->m_fontHyperText;
+	m_Font = &theApp.m_fontHyperText;
 	SetColors(); 
 	LoadHandCursor();
 	m_DefaultCursor = LoadCursor(NULL,IDC_ARROW);
@@ -1393,9 +1393,9 @@ void CHyperTextCtrl::UpdateSize(bool bRepaint){
 
 			if(rll>0)
 			{
-				if((rll < len) && !_istspace(s[rll]))
+				if((rll < len) && !_istspace((_TUCHAR)s[rll]))
 					for(int i = rll - 1; i >= 0; i--)
-						if(_istspace(s[i]))
+						if(_istspace((_TUCHAR)s[i]))
 						{
 							rll = i;
 							npos = i + 1;

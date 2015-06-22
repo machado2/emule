@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -21,6 +21,7 @@
 #include "Preferences.h"
 #include "PartFile.h"
 #include <zlib/zlib.h>
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -31,27 +32,39 @@ static char THIS_FILE[]=__FILE__;
 
 // At some point it may be worth displaying messages to alert the user if there were errors, or where to find the file.
 
-void CArchiveRecovery::recover(CPartFile *partFile, bool preview)
+void CArchiveRecovery::recover(CPartFile *partFile, bool preview, bool bCreatePartFileCopy)
 {
 	if (partFile->m_bPreviewing || partFile->m_bRecoveringArchive)
 		return;
 	partFile->m_bRecoveringArchive = true;
 
-	AddLogLine(true, GetResString(IDS_ATTEMPTING_RECOVERY) );
+	AddLogLine(true, _T("%s \"%s\""), GetResString(IDS_ATTEMPTING_RECOVERY), partFile->GetFileName());
 
 	// Get the current filled list for this file
 	CTypedPtrList<CPtrList, Gap_Struct*> *filled = new CTypedPtrList<CPtrList, Gap_Struct*>;
 	partFile->GetFilledList(filled);
+#ifdef _DEBUG
+	{
+		int i = 0;
+		TRACE("%s: filled\n", __FUNCTION__);
+		POSITION pos = filled->GetHeadPosition();
+		while (pos){
+			Gap_Struct* gap = filled->GetNext(pos);
+			TRACE("%3u: %10u  %10u  (%u)\n", i++, gap->start, gap->end, gap->end - gap->start + 1);
+		}
+	}
+#endif
 
 	// The rest of the work can be safely done in a new thread
 	ThreadParam *tp = new ThreadParam;
 	tp->partFile = partFile;
 	tp->filled = filled;
 	tp->preview = preview;
+	tp->bCreatePartFileCopy = bCreatePartFileCopy;
 	// - do NOT use Windows API 'CreateThread' to create a thread which uses MFC/CRT -> lot of mem leaks!
 	if (!AfxBeginThread(run, (LPVOID)tp)){
 		partFile->m_bRecoveringArchive = false;
-		AddLogLine(true, GetResString(IDS_RECOVERY_FAILED));
+		LogError(LOG_STATUSBAR, _T("%s \"%s\""), GetResString(IDS_RECOVERY_FAILED), partFile->GetFileName());
 		// Need to delete the memory here as won't be done in thread
 		DeleteMemory(tp);
 	}
@@ -63,8 +76,8 @@ UINT AFX_CDECL CArchiveRecovery::run(LPVOID lpParam)
 	DbgSetThreadName("ArchiveRecovery");
 	InitThreadLocale();
 
-	if (!performRecovery(tp->partFile, tp->filled, tp->preview))
-		AddLogLine(true, GetResString(IDS_RECOVERY_FAILED));
+	if (!performRecovery(tp->partFile, tp->filled, tp->preview, tp->bCreatePartFileCopy))
+		theApp.QueueLogLine(true, GetResString(IDS_RECOVERY_FAILED));
 
 	tp->partFile->m_bRecoveringArchive = false;
 
@@ -74,25 +87,36 @@ UINT AFX_CDECL CArchiveRecovery::run(LPVOID lpParam)
 	return 0;
 }
 
-bool CArchiveRecovery::performRecovery(CPartFile *partFile, CTypedPtrList<CPtrList, Gap_Struct*> *filled, bool preview)
+bool CArchiveRecovery::performRecovery(CPartFile *partFile, CTypedPtrList<CPtrList, Gap_Struct*> *filled, 
+									   bool preview, bool bCreatePartFileCopy)
 {
 	bool success = false;
 	try
 	{
-		// Copy the file
-		CString tempFileName = CString(thePrefs.GetTempDir()) + CString("\\") + CString(partFile->GetFileName()).Mid(0,5) + CString("-rec.tmp");
-		if (!CopyFile(partFile, filled, tempFileName))
-			return false;
-
-		// Open temp file for reading
 		CFile temp;
-		if (!temp.Open(tempFileName, CFile::modeRead|CFile::shareDenyWrite))
-			return false;
+		CString tempFileName;
+		if (bCreatePartFileCopy)
+		{
+			// Copy the file
+			tempFileName = CString(thePrefs.GetTempDir()) + _T("\\") + partFile->GetFileName().Mid(0, 5) + _T("-rec.tmp");
+			if (!CopyFile(partFile, filled, tempFileName))
+				return false;
+
+			// Open temp file for reading
+			if (!temp.Open(tempFileName, CFile::modeRead|CFile::shareDenyWrite))
+				return false;
+		}
+		else
+		{
+			if (!temp.Open(partFile->GetFilePath(), CFile::modeRead | CFile::shareDenyNone))
+				return false;
+		}
 
 		// Open the output file
-		CString ext = CString(partFile->GetFileName()).Right(4);
-		CString outputFileName = CString(thePrefs.GetTempDir()) + CString("\\") + CString(partFile->GetFileName()).Mid(0,5) + CString("-rec") + ext;
+		CString ext = partFile->GetFileName().Right(4);
+		CString outputFileName = CString(thePrefs.GetTempDir()) + _T("\\") + partFile->GetFileName().Mid(0, 5) + _T("-rec") + ext;
 		CFile output;
+		ULONGLONG ulTempFileSize = 0;
 		if (output.Open(outputFileName, CFile::modeWrite | CFile::shareDenyWrite | CFile::modeCreate))
 		{
 			// Process the output file
@@ -101,16 +125,24 @@ bool CArchiveRecovery::performRecovery(CPartFile *partFile, CTypedPtrList<CPtrLi
 			else if (ext.CompareNoCase(_T(".rar")) == 0)
 				success = recoverRar(&temp, &output, filled);
 
+			ulTempFileSize = output.GetLength();
+
 			// Close output
 			output.Close();
 		}
 		// Close temp file
 		temp.Close();
 
+		// Remove temp file
+		if (!tempFileName.IsEmpty())
+			CFile::Remove(tempFileName);
+
 		// Report success
 		if (success)
 		{
-			AddLogLine(true, GetResString(IDS_RECOVERY_SUCCESSFUL));
+			theApp.QueueLogLine(true, _T("%s \"%s\""), GetResString(IDS_RECOVERY_SUCCESSFUL), partFile->GetFileName());
+			theApp.QueueDebugLogLine(false, _T("Part file size: %s, temp. archive file size: %s (%.1f%%)"), CastItoXBytes(partFile->GetFileSize()), CastItoXBytes(ulTempFileSize), partFile->GetFileSize() ? (ulTempFileSize * 100.0 / partFile->GetFileSize()) : 0.0);
+
 			// Preview file if required
 			if (preview)
 			{
@@ -130,9 +162,6 @@ bool CArchiveRecovery::performRecovery(CPartFile *partFile, CTypedPtrList<CPtrLi
 				CFile::Remove(outputFileName);
 			}
 		}
-
-		// Remove temp file
-		CFile::Remove(tempFileName);
 	}
 	catch (CFileException* error){
 		error->Delete();
@@ -295,8 +324,7 @@ bool CArchiveRecovery::recoverZip(CFile *zipInput, CFile *zipOutput, CTypedPtrLi
 		msg = GetResString(IDS_RECOVER_SINGLE);
 	else
 		msg.Format(GetResString(IDS_RECOVER_MULTIPLE), fileCount);
-	//AfxMessageBox(msg, MB_OK | MB_ICONINFORMATION);
-	AddLogLine(true, _T("%s"), msg);
+	theApp.QueueLogLine(true, _T("%s"), msg);
 
 	return retVal;
 }
@@ -542,11 +570,11 @@ void CArchiveRecovery::DeleteMemory(ThreadParam *tp)
 bool CArchiveRecovery::CopyFile(CPartFile *partFile, CTypedPtrList<CPtrList, Gap_Struct*> *filled, CString tempFileName)
 {
 	bool retVal = false;
-	CFile *srcFile = NULL;
 	try
 	{
-		// Get a new handle to the part file
-		srcFile = partFile->m_hpartfile.Duplicate();
+		CFile srcFile;
+		if (!srcFile.Open(partFile->GetFilePath(), CFile::modeRead | CFile::shareDenyNone))
+			return false;
 
 		// Open destination file and set length to last filled end position
 		CFile destFile;
@@ -565,19 +593,19 @@ bool CArchiveRecovery::CopyFile(CPartFile *partFile, CTypedPtrList<CPtrList, Gap
 		{
 			fill = filled->GetNext(pos);
 			copied = 0;
-			srcFile->Seek(fill->start, CFile::begin);
+			srcFile.Seek(fill->start, CFile::begin);
 			destFile.Seek(fill->start, CFile::begin);
-			while ((read = srcFile->Read(buffer, 4096)) > 0)
+			while ((read = srcFile.Read(buffer, 4096)) > 0)
 			{
 				destFile.Write(buffer, read);
 				copied += read;
-				// Stop when finished fill (don't worry abuot extra)
+				// Stop when finished fill (don't worry about extra)
 				if (fill->start + copied >= fill->end)
 					break;
 			}
 		}
 		destFile.Close();
-		srcFile->Close();
+		srcFile.Close();
 		partFile->m_bPreviewing = false;
 
 		retVal = true;
@@ -588,9 +616,6 @@ bool CArchiveRecovery::CopyFile(CPartFile *partFile, CTypedPtrList<CPtrList, Gap
 	catch (...){
 		ASSERT(0);
 	}
-
-	if (srcFile)
-		delete srcFile;
 
 	return retVal;
 }
@@ -636,8 +661,7 @@ bool CArchiveRecovery::recoverRar(CFile *rarInput, CFile *rarOutput, CTypedPtrLi
 		msg = GetResString(IDS_RECOVER_SINGLE);
 	else
 		msg.Format(GetResString(IDS_RECOVER_MULTIPLE), fileCount);
-	//AfxMessageBox(msg, MB_OK | MB_ICONINFORMATION);
-	AddLogLine(true, _T("%s"), msg);
+	theApp.QueueLogLine(true, _T("%s"), msg);
 
 	return retVal;
 }

@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -19,10 +19,10 @@
 	#error include 'stdafx.h' before including this file for PCH
 #endif
 #include "resource.h"
-#include "loggable.h"
 
 #define	DEFAULT_NICK		thePrefs.GetHomepageBaseURL()
 #define	DEFAULT_TCP_PORT	4662
+#define	DEFAULT_UDP_PORT	(DEFAULT_TCP_PORT+10)
 
 class CSearchList;
 class CUploadQueue;
@@ -56,7 +56,7 @@ enum AppState{
 	APP_STATE_DONE
 };
 
-class CemuleApp : public CWinApp, public CLoggable
+class CemuleApp : public CWinApp
 {
 public:
 	CemuleApp(LPCTSTR lpszAppName = NULL);
@@ -85,16 +85,13 @@ public:
 	CPeerCacheFinder*	m_pPeerCache;
 	CFirewallOpener*	m_pFirewallOpener;
 
-	uint64				stat_sessionReceivedBytes;
-	uint64				stat_sessionSentBytes;
-	uint64				stat_sessionSentBytesToFriend;
-	uint16				stat_reconnects;
-	DWORD				stat_transferStarttime;
-	DWORD				stat_serverConnectTime;
-	DWORD				stat_starttime;
 	HANDLE				m_hMutexOneInstance;
-	uint16				stat_filteredclients;
 	int					m_iDfltImageListColorFlags;
+	CFont				m_fontHyperText;
+	CFont				m_fontDefaultBold;
+	CFont				m_fontSymbol;
+	CFont				m_fontLog;
+	CBrush				m_brushBackwardDiagonal;
 	DWORD				m_dwProductVersionMS;
 	DWORD				m_dwProductVersionLS;
 	CString				m_strCurVersionLong;
@@ -119,7 +116,8 @@ public:
 	bool		IsEd2kLinkInClipboard(LPCSTR pszLinkType, int iLinkTypeLen);
 
 	CString		CreateED2kSourceLink(const CAbstractFile* f);
-	CString		CreateED2kHostnameSourceLink(const CAbstractFile* f);
+//	CString		CreateED2kHostnameSourceLink(const CAbstractFile* f);
+	CString		CreateKadSourceLink(const CAbstractFile* f);
 
 	// clipboard (text)
 	bool		CopyTextToClipboard(CString strText);
@@ -131,6 +129,9 @@ public:
 	int			GetFileTypeSystemImageIdx(LPCTSTR pszFilePath, int iLength = -1);
 	HIMAGELIST	GetSystemImageList() { return m_hSystemImageList; }
 	CSize		GetSmallSytemIconSize() { return m_sizSmallSystemIcon; }
+	void		CreateBackwardDiagonalBrush();
+	void		CreateAllFonts();
+	bool		IsPortchangeAllowed();
 	bool		IsConnected();
 	bool		IsFirewalled();
 	bool		DoCallback( CUpDownClient *client );
@@ -146,20 +147,25 @@ public:
 	bool		LoadSkinColor(LPCTSTR pszKey, COLORREF& crColor);
 	void		ApplySkin(LPCTSTR pszSkinProfile);
 
-	CString		GetLangHelpFilePath();
+	bool		GetLangHelpFilePath(CString& strResult);
 	void		SetHelpFilePath(LPCTSTR pszHelpFilePath);
 	void		ShowHelp(UINT uTopic, UINT uCmd = HELP_CONTEXT);
+	bool		ShowWebHelp();
 
     // Elandal:ThreadSafeLogging -->
     // thread safe log calls
-    void			QueueDebugLogLine(bool addtostatusbar, LPCTSTR line,...);
+    void			QueueDebugLogLine(bool bAddToStatusBar, LPCTSTR line,...);
+    void			QueueDebugLogLineEx(UINT uFlags, LPCTSTR line,...);
     void			HandleDebugLogQueue();
     void			ClearDebugLogQueue(bool bDebugPendingMsgs = false);
-    void			QueueLogLine(bool addtostatusbar, LPCTSTR line,...);
+
+	void			QueueLogLine(bool bAddToStatusBar, LPCTSTR line,...);
+    void			QueueLogLineEx(UINT uFlags, LPCTSTR line,...);
     void			HandleLogQueue();
     void			ClearLogQueue(bool bDebugPendingMsgs = false);
     // Elandal:ThreadSafeLogging <--
 
+	bool			DidWeAutoStart() { return m_bAutoStart; }
 
 protected:
 	bool ProcessCommandline();
@@ -184,7 +190,7 @@ protected:
     // Elandal:ThreadSafeLogging <--
 
 	uint32 m_dwPublicIP;
-
+	bool m_bAutoStart;
 };
 
 extern CemuleApp theApp;
@@ -207,6 +213,3 @@ public:
 protected:
 	HICON m_hIcon;
 };
-
-extern CLog theLog;
-extern CLog theVerboseLog;

@@ -33,6 +33,7 @@ there client on the eMule forum..
 
 class CKnownFile;
 class CSafeMemFile;
+struct SSearchTerm;
 
 
 // Thread messages recognized by an UDP Socket Listener thread
@@ -71,6 +72,8 @@ public:
 private:
 	void addContact (const byte* data, uint32 lenData, uint32 ip, uint16 port, uint16 tport = 0);
 	void addContacts(const byte* data, uint32 lenData, uint16 numContacts);
+	static SSearchTerm* CreateSearchExpressionTree(CSafeMemFile& bio, int iLevel);
+	static void Free(SSearchTerm* pSearchTerms);
 
 	void processBootstrapRequest		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
 	void processBootstrapResponse		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
@@ -82,9 +85,16 @@ private:
 	void processSearchResponse			(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
 	void processPublishRequest			(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
 	void processPublishResponse			(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
+	void processSearchNotesRequest		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
+	void processSearchNotesResponse		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
+	void processPublishNotesRequest		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
+	void processPublishNotesResponse	(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
 	void processFirewalledRequest		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
 	void processFirewalledResponse		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
 	void processFirewalledResponse2		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
+	void processFindBuddyRequest		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
+	void processFindBuddyResponse		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
+	void processFindSourceRequest		(const byte* packetData, uint32 lenPacket, uint32 ip, uint16 port);
 };
 
 } // End namespace

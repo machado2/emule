@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -51,7 +51,7 @@ class CMuleSystrayDlg;
 #define	EMULE_HOTMENU_ACCEL		'x'
 #define	EMULSKIN_BASEEXT		_T("eMuleSkin")
 
-class CemuleDlg : public CTrayDialog, public CLoggable
+class CemuleDlg : public CTrayDialog
 {
 	friend class CMuleToolbarCtrl;
 // Konstruktion
@@ -62,7 +62,7 @@ public:
 
 	void			AddServerMessageLine(LPCTSTR line);
 	void			ShowConnectionState();
-	void			ShowNotifier(CString Text, int MsgType, bool ForceSoundOFF = false); 
+	void			ShowNotifier(CString Text, int MsgType, LPCTSTR pszLink = NULL, bool ForceSoundOFF = false);
 	void			ShowUserCount();
 	void			ShowMessageState(uint8 iconnr);
 	void			SetActiveDialog(CWnd* dlg);
@@ -73,7 +73,7 @@ public:
 	void			Localize();
 
 	// Logging
-	void			AddLogText(bool addtostatusbar,const CString& txt, bool bDebug);
+	void			AddLogText(UINT uFlags, LPCTSTR pszText);
 	void			ResetLog();
 	void			ResetDebugLog();
 	CString			GetLastLogEntry();
@@ -88,7 +88,6 @@ public:
 	void			DoVersioncheck(bool manual);
 	void			ApplyHyperTextFont(LPLOGFONT pFont);
 	void			ApplyLogFont(LPLOGFONT pFont);
-	void			SetKadButtonState();
 	void			ProcessED2KLink(LPCTSTR pszData);
 	void			SetStatusBarPartsSize();
 
@@ -108,9 +107,6 @@ public:
 	CKademliaWnd*	kademliawnd;
 	CWnd*			activewnd;
 	uint8			status;
-	CFont			m_fontHyperText;
-	CFont			m_fontMarlett;
-	CFont			m_fontLog;
 
 protected:
 	HICON m_hIcon;
@@ -140,6 +136,7 @@ protected:
 	afx_msg BOOL OnQueryEndSession();
 	afx_msg void OnEndSession(BOOL bEnding);
 	afx_msg LRESULT OnKickIdle(UINT nWhy, long lIdleCount);
+	afx_msg void OnShowWindow( BOOL bShow, UINT nStatus );
 
 	// quick-speed changer -- based on xrmb
 	afx_msg void QuickSpeedUpload(UINT nID);
@@ -190,7 +187,7 @@ private:
 	HICON			sourceTrayIconGrey;	// do not use those icons for anything else than the traybar!!!
 	HICON			sourceTrayIconLow;	// do not use those icons for anything else than the traybar!!!
 	int				m_iMsgIcon;
-
+	uint8			m_lasticoninfo;
 	uint32			lastuprate;
 	uint32			lastdownrate;
 	CImageList		imagelist;
@@ -200,6 +197,7 @@ private:
 	CMenu			m_SysMenuOptions;
 	CMenu			m_menuUploadCtrl;
 	CMenu			m_menuDownloadCtrl;
+	char			m_acVCDNSBuffer[MAXGETHOSTSTRUCT];
 
 	UINT_PTR m_hTimer;
 	static void CALLBACK StartupTimer(HWND hwnd, UINT uiMsg, UINT idEvent, DWORD dwTime);
@@ -217,9 +215,6 @@ private:
 	bool notifierenabled;					  //<<-- enkeyDEV(kei-kun) -Quick disable/enable notifier-
 	void ShowToolPopup(bool toolsonly=false);
 	void SetAllIcons();
-
-	char m_acVCDNSBuffer[MAXGETHOSTSTRUCT];
-
 };
 
 

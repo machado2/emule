@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -28,6 +28,7 @@
 #include "DownloadQueue.h"
 #include "emuledlg.h"
 #include "TransferWnd.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -68,7 +69,7 @@ bool CKnownFileList::Init()
 				strError += _T(" - ");
 				strError += szError;
 			}
-			AddLogLine(true, _T("%s"), strError);
+			LogError(LOG_STATUSBAR, _T("%s"), strError);
 		}
 		return false;
 	}
@@ -99,11 +100,11 @@ bool CKnownFileList::Init()
 	}
 	catch(CFileException* error){
 		if (error->m_cause == CFileException::endOfFile)
-			AddLogLine(true,GetResString(IDS_ERR_SERVERMET_BAD));
+			LogError(LOG_STATUSBAR, GetResString(IDS_ERR_SERVERMET_BAD));
 		else{
 			TCHAR buffer[MAX_CFEXP_ERRORMSG];
 			error->GetErrorMessage(buffer, ARRSIZE(buffer));
-			AddLogLine(true,GetResString(IDS_ERR_SERVERMET_UNKNOWN),buffer);
+			LogError(LOG_STATUSBAR, GetResString(IDS_ERR_SERVERMET_UNKNOWN),buffer);
 		}
 		error->Delete();
 		delete pRecord;
@@ -129,7 +130,7 @@ void CKnownFileList::Save()
 			strError += _T(" - ");
 			strError += szError;
 		}
-		AddLogLine(true, _T("%s"), strError);
+		LogError(LOG_STATUSBAR, _T("%s"), strError);
 		return;
 	}
 	setvbuf(file.m_pStream, NULL, _IOFBF, 16384);
@@ -161,7 +162,7 @@ void CKnownFileList::Save()
 			strError += _T(" - ");
 			strError += szError;
 		}
-		AddLogLine(true, _T("%s"), strError);
+		LogError(LOG_STATUSBAR, _T("%s"), strError);
 		error->Delete();
 	}
 }

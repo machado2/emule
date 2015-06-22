@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2004 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2004 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@
 #include <activeds.h>
 #include <comdef.h>
 #include <initguid.h>
-#include "loggable.h"
 
 #define LOGON_WITH_PROFILE              0x00000001
 #define LOGON_NETCREDENTIALS_ONLY       0x00000002
@@ -146,7 +145,7 @@ typedef _com_ptr_t<_com_IIID<IADsWinNTSystemInfo,&IID_IADsWinNTSystemInfo>	>  IA
 #define EMULEACCOUNT _T("eMule_Secure")
 #define EMULEACCOUNTW T2W(EMULEACCOUNT)
 
-class CSecRunAsUser: public CLoggable
+class CSecRunAsUser
 {
 public:
 	CSecRunAsUser();

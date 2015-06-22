@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -21,6 +21,7 @@
 #include "OtherFunctions.h"
 #include "Preferences.h"
 #include "MenuCmds.h"
+#include "Log.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -63,15 +64,6 @@ void CHTRichEditCtrl::Init(LPCTSTR pszTitle, LPCTSTR pszSkinKey)
 	SetProfileSkinKey(pszSkinKey);
 	SetTitle(pszTitle);
 
-	m_LogMenu.CreatePopupMenu();
-	m_LogMenu.AddMenuTitle(GetResString(IDS_LOGENTRY));
-	m_LogMenu.AppendMenu(MF_STRING, MP_COPYSELECTED, GetResString(IDS_COPY));
-	m_LogMenu.AppendMenu(MF_SEPARATOR);
-	m_LogMenu.AppendMenu(MF_STRING, MP_SELECTALL, GetResString(IDS_SELECTALL));
-	m_LogMenu.AppendMenu(MF_STRING, MP_REMOVEALL, GetResString(IDS_PW_RESET));
-	m_LogMenu.AppendMenu(MF_STRING, MP_SAVELOG, GetResString(IDS_SAVELOG) + _T("..."));
-	m_LogMenu.AppendMenu(MF_SEPARATOR);
-	m_LogMenu.AppendMenu(MF_STRING, MP_AUTOSCROLL, GetResString(IDS_AUTOSCROLL));
 
 	VERIFY( SendMessage(EM_SETUNDOLIMIT, 0, 0) == 0 );
 	int iMaxLogBuff = thePrefs.GetMaxLogBuff();
@@ -79,8 +71,13 @@ void CHTRichEditCtrl::Init(LPCTSTR pszTitle, LPCTSTR pszSkinKey)
 		LimitText(iMaxLogBuff > 0xFFFF ? 0xFFFF : iMaxLogBuff);
 	else
 		LimitText(iMaxLogBuff ? iMaxLogBuff : 128*1024);
+	m_iLimitText = GetLimitText();
 
 	VERIFY( GetSelectionCharFormat(m_cfDefault) );
+
+	// prevent the RE control to change the font height within single log lines (may happen with some Unicode chars)
+	DWORD dwLangOpts = SendMessage(EM_GETLANGOPTIONS);
+	SendMessage(EM_SETLANGOPTIONS, 0, dwLangOpts & ~IMF_AUTOFONT);
 }
 
 void CHTRichEditCtrl::SetProfileSkinKey(LPCTSTR pszSkinKey)
@@ -114,11 +111,33 @@ LRESULT CHTRichEditCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	return CRichEditCtrl::WindowProc(message, wParam, lParam);
 }
 
+COLORREF GetLogLineColor(UINT eMsgType)
+{
+	if (eMsgType == LOG_ERROR)
+		return thePrefs.m_crLogError;
+	if (eMsgType == LOG_WARNING)
+		return thePrefs.m_crLogWarning;
+	if (eMsgType == LOG_SUCCESS)
+		return thePrefs.m_crLogSuccess;
+	ASSERT( eMsgType == LOG_INFO );
+	return CLR_DEFAULT;
+}
+
 void CHTRichEditCtrl::FlushBuffer()
 {
-	if (m_astrBuff.GetSize() > 0){ // flush buffer
+	if (m_astrBuff.GetSize() > 0) // flush buffer
+	{
 		for (int i = 0; i < m_astrBuff.GetSize(); i++)
-			AddLine(m_astrBuff[i], m_astrBuff[i].GetLength());
+		{
+			const CString& rstrLine = m_astrBuff[i];
+			if (!rstrLine.IsEmpty())
+			{
+				if ((_TUCHAR)rstrLine[0] < 8)
+					AddLine((LPCTSTR)rstrLine + 1, rstrLine.GetLength() - 1, false, GetLogLineColor((_TUCHAR)rstrLine[0]));
+				else
+					AddLine((LPCTSTR)rstrLine, rstrLine.GetLength());
+			}
+		}
 		m_astrBuff.RemoveAll();
 	}
 }
@@ -148,6 +167,22 @@ void CHTRichEditCtrl::Add(LPCTSTR pszMsg, int iLen)
 	}
 }
 
+void CHTRichEditCtrl::AddTyped(LPCTSTR pszMsg, int iLen, UINT eMsgType)
+{
+	if (m_hWnd == NULL)
+	{
+		CString strLine;
+		strLine = (TCHAR)(eMsgType & LOGMSGTYPEMASK);
+		strLine += pszMsg;
+		m_astrBuff.Add(strLine);
+	}
+	else
+	{
+		FlushBuffer();
+		AddLine(pszMsg, iLen, false, GetLogLineColor(eMsgType & LOGMSGTYPEMASK));
+	}
+}
+
 void CHTRichEditCtrl::AddLine(LPCTSTR pszMsg, int iLen, bool bLink, COLORREF cr)
 {
 	int iMsgLen = (iLen == -1) ? _tcslen(pszMsg) : iLen;
@@ -172,7 +207,7 @@ void CHTRichEditCtrl::AddLine(LPCTSTR pszMsg, int iLen, bool bLink, COLORREF cr)
 		if (m_bAutoScroll && GetScrollInfo(SB_VERT, &si) && si.nPos >= (int)(si.nMax - si.nPage + 1))
 		{
 			// Not scrolled away
-			SafeAddLine(iSize, pszMsg, iStartChar, iEndChar, bLink, cr);
+			SafeAddLine(iSize, pszMsg, iLen, iStartChar, iEndChar, bLink, cr);
 			if (m_bAutoScroll && !IsWindowVisible())
 				ScrollToLastLine();
 		}
@@ -189,7 +224,9 @@ void CHTRichEditCtrl::AddLine(LPCTSTR pszMsg, int iLen, bool bLink, COLORREF cr)
 		
 			// Select at the end of text and replace the selection
 			// This is a very fast way to add text to an edit control
-			SafeAddLine(iSize, pszMsg, iStartChar, iEndChar, bLink, cr);
+			SafeAddLine(iSize, pszMsg, iLen, iStartChar, iEndChar, bLink, cr);
+			//if (m_bAutoScroll && iStartChar == iEndChar)
+			//	iStartChar = iEndChar = -1;
 			SetSel(iStartChar, iEndChar); // Restore our previous selection
 
 			if (!m_bAutoScroll)
@@ -248,7 +285,9 @@ void CHTRichEditCtrl::AddLine(LPCTSTR pszMsg, int iLen, bool bLink, COLORREF cr)
 		
 		// Select at the end of text and replace the selection
 		// This is a very fast way to add text to an edit control
-		SafeAddLine(iSize, pszMsg, iStartChar, iEndChar, bLink, cr);
+		SafeAddLine(iSize, pszMsg, iLen, iStartChar, iEndChar, bLink, cr);
+		//if (m_bAutoScroll && iStartChar == iEndChar)
+		//	iStartChar = iEndChar = -1;
 		SetSel(iStartChar, iEndChar); // Restore our previous selection
 
 		if (!m_bAutoScroll){
@@ -321,8 +360,45 @@ void CHTRichEditCtrl::AddString(int nPos, LPCTSTR pszString, bool bLink, COLORRE
 	m_bRestoreFormat = bRestoreFormat;
 }
 
-void CHTRichEditCtrl::SafeAddLine(int nPos, LPCTSTR pszLine, long& iStartChar, long& iEndChar, bool bLink, COLORREF cr)
+void CHTRichEditCtrl::SafeAddLine(int nPos, LPCTSTR pszLine, int iLen, long& iStartChar, long& iEndChar, bool bLink, COLORREF cr)
 {
+	// EN_ERRSPACE and EN_MAXTEXT are not working for rich edit control (at least not same as for standard control),
+	// need to explicitly check the log buffer limit..
+	int iCurSize = nPos;
+	if (iCurSize + iLen >= m_iLimitText)
+	{
+		bool bOldNoPaint = m_bNoPaint;
+		m_bNoPaint = true;
+		BOOL bIsVisible = IsWindowVisible();
+		if (bIsVisible)
+			SetRedraw(FALSE);
+
+		while (iCurSize > 0 && iCurSize + iLen > m_iLimitText)
+		{
+			// delete 1st line
+			int iLine0Len = LineLength(0) + 1; // add NL character
+			SetSel(0, iLine0Len);
+			ReplaceSel(_T(""));
+
+			// update any possible available selection
+			iStartChar -= iLine0Len;
+			if (iStartChar < 0)
+				iStartChar = 0;
+			iEndChar -= iLine0Len;
+			if (iEndChar < 0)
+				iEndChar = 0;
+
+			iCurSize = GetWindowTextLength();
+		}
+
+		m_bNoPaint = bOldNoPaint;
+		if (bIsVisible && !m_bNoPaint){
+			SetRedraw();
+			if (m_bRichEdit)
+				Invalidate();
+		}
+	}
+
 	AddString(nPos, pszLine, bLink, cr);
 
 	if (m_bEnErrSpace)
@@ -342,7 +418,7 @@ void CHTRichEditCtrl::SafeAddLine(int nPos, LPCTSTR pszLine, long& iStartChar, l
 			ReplaceSel(_T(""));
 
 			// delete 1st line
-			int iLine0Len = LineLength(0) + 2; // add NL character
+			int iLine0Len = LineLength(0) + 1; // add NL character
 			SetSel(0, iLine0Len);
 			ReplaceSel(_T(""));
 
@@ -383,22 +459,45 @@ void CHTRichEditCtrl::Reset(){
 		Invalidate();
 }
 
-void CHTRichEditCtrl::OnContextMenu(CWnd* pWnd, CPoint point){
+void CHTRichEditCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
+{
 	long iSelStart, iSelEnd;
 	GetSel(iSelStart, iSelEnd);
+
+	// ugly, simulate a left click to get around the text cursor problem when right clicking.
+	if (point.x != -1 && point.y != -1 && iSelStart == iSelEnd)
+	{
+		CPoint ptMouse(point);
+		ScreenToClient(&ptMouse);
+		SendMessage(WM_LBUTTONDOWN, MK_LBUTTON, MAKELONG(ptMouse.x, ptMouse.y));
+		SendMessage(WM_LBUTTONUP, MK_LBUTTON, MAKELONG(ptMouse.x, ptMouse.y));
+	}
+
 	int iTextLen = GetWindowTextLength();
 
-	m_LogMenu.EnableMenuItem(MP_COPYSELECTED, iSelEnd > iSelStart ? MF_ENABLED : MF_GRAYED);
-	m_LogMenu.EnableMenuItem(MP_REMOVEALL, iTextLen > 0 ? MF_ENABLED : MF_GRAYED);
-	m_LogMenu.EnableMenuItem(MP_SELECTALL, iTextLen > 0 ? MF_ENABLED : MF_GRAYED);
-	m_LogMenu.EnableMenuItem(MP_SAVELOG, iTextLen > 0 ? MF_ENABLED : MF_GRAYED);
+	// create menu here for runtime localisation
+
+	m_LogMenu.CreatePopupMenu();
+	m_LogMenu.AddMenuTitle(GetResString(IDS_LOGENTRY));
+	m_LogMenu.AppendMenu(MF_STRING | (iSelEnd > iSelStart ? MF_ENABLED : MF_GRAYED), MP_COPYSELECTED, GetResString(IDS_COPY));
+	m_LogMenu.AppendMenu(MF_SEPARATOR);
+	m_LogMenu.AppendMenu(MF_STRING | (iTextLen > 0 ? MF_ENABLED : MF_GRAYED), MP_SELECTALL, GetResString(IDS_SELECTALL));
+	m_LogMenu.AppendMenu(MF_STRING | (iTextLen > 0 ? MF_ENABLED : MF_GRAYED), MP_REMOVEALL , GetResString(IDS_PW_RESET));
+	m_LogMenu.AppendMenu(MF_STRING | (iTextLen > 0 ? MF_ENABLED : MF_GRAYED), MP_SAVELOG, GetResString(IDS_SAVELOG) + _T("..."));
+	m_LogMenu.AppendMenu(MF_SEPARATOR);
+	m_LogMenu.AppendMenu(MF_STRING, MP_AUTOSCROLL, GetResString(IDS_AUTOSCROLL));
+
 	m_LogMenu.CheckMenuItem(MP_AUTOSCROLL, m_bAutoScroll ? MF_CHECKED : MF_UNCHECKED);
-	if (point.x == -1 && point.y == -1){
+
+	if (point.x == -1 && point.y == -1)
+	{
 		point.x = 16;
 		point.y = 32;
 		ClientToScreen(&point);
 	}
 	m_LogMenu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+
+	m_LogMenu.DestroyMenu();
 }
 
 BOOL CHTRichEditCtrl::OnCommand(WPARAM wParam, LPARAM lParam){
@@ -428,12 +527,16 @@ bool CHTRichEditCtrl::SaveLog(LPCTSTR pszDefName)
 	CFileDialog dlg(FALSE, _T("log"), pszDefName ? pszDefName : (LPCTSTR)m_strTitle, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("Log Files (*.log)|*.log||"), this, 0);
 	if (dlg.DoModal() == IDOK)
 	{
-		FILE* fp = _tfsopen(dlg.GetPathName(), _T("wt"), _SH_DENYWR);
+		FILE* fp = _tfsopen(dlg.GetPathName(), _T("wb"), _SH_DENYWR);
 		if (fp)
 		{
+#ifdef _UNICODE
+			// write Unicode byte-order mark 0xFEFF
+			fputwc(0xFEFF, fp);
+#endif
 			CString strText;
 			GetWindowText(strText);
-			fwrite(strText, strText.GetLength(), 1, fp);
+			fwrite(strText, sizeof(TCHAR), strText.GetLength(), fp);
 			if (ferror(fp)){
 				CString strError;
 				strError.Format(_T("Failed to write log file \"%s\" - %s"), dlg.GetPathName(), strerror(errno));

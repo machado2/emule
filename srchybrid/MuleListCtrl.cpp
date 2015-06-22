@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -107,9 +107,13 @@ void CMuleListCtrl::SetName(LPCTSTR lpszName) {
 	m_Name = lpszName;
 }
 
-void CMuleListCtrl::PreSubclassWindow() {
+void CMuleListCtrl::PreSubclassWindow()
+{
 	SetColors();
 	CListCtrl::PreSubclassWindow();
+#ifdef _UNICODE
+	SendMessage(CCM_SETUNICODEFORMAT, TRUE);
+#endif
 	ModifyStyle(LVS_SINGLESEL|LVS_LIST|LVS_ICON|LVS_SMALLICON,LVS_REPORT|LVS_SINGLESEL|LVS_REPORT);
 	SetExtendedStyle(LVS_EX_HEADERDRAGDROP);
 }
@@ -957,10 +961,10 @@ BOOL CMuleListCtrl::OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT
 	return CListCtrl::OnWndMsg(message, wParam, lParam, pResult);
 }
 
-
-void CMuleListCtrl::OnKeyDown(UINT nChar,UINT nRepCnt,UINT nFlags){
-	
-	if ( nChar=='A' && ::GetAsyncKeyState(VK_CONTROL)<0) {
+void CMuleListCtrl::OnKeyDown(UINT nChar,UINT nRepCnt,UINT nFlags)
+{
+	if (nChar == 'A' && ::GetAsyncKeyState(VK_CONTROL)<0)
+	{
 		// Ctrl+A: Select all items
 		LV_ITEM theItem;
 		theItem.mask= LVIF_STATE;
@@ -974,6 +978,16 @@ void CMuleListCtrl::OnKeyDown(UINT nChar,UINT nRepCnt,UINT nFlags){
 		PostMessage(WM_COMMAND, MPG_DELETE, 0);
 	else if (nChar==VK_F2)
 		PostMessage(WM_COMMAND, MPG_F2, 0);
+	else if (nChar == 'C' && (GetKeyState(VK_CONTROL) & 0x8000))
+	{
+		// Ctrl+C: Copy keycombo
+		SendMessage(WM_COMMAND, MP_COPYSELECTED);
+	}
+	if (nChar == 'V' && (GetKeyState(VK_CONTROL) & 0x8000))
+	{
+		// Ctrl+V: Paste keycombo
+		SendMessage(WM_COMMAND, MP_PASTE);
+	}
 	else if (m_bGeneralPurposeFind){
 		if (nChar == 'F' && (GetKeyState(VK_CONTROL) & 0x8000)){
 			// Ctrl+F: Search item

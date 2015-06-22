@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -26,14 +26,17 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 
-// InputBox dialog
-
 IMPLEMENT_DYNAMIC(InputBox, CDialog)
+
+BEGIN_MESSAGE_MAP(InputBox, CDialog)
+	ON_BN_CLICKED(IDC_CLEANFILENAME, OnCleanFilename)
+END_MESSAGE_MAP()
+
 InputBox::InputBox(CWnd* pParent /*=NULL*/)
 	: CDialog(InputBox::IDD, pParent)
 {
-	m_cancel=true;
-	m_bFilenameMode=false;
+	m_cancel = true;
+	m_bFilenameMode = false;
 }
 
 InputBox::~InputBox()
@@ -45,49 +48,38 @@ void InputBox::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(InputBox, CDialog)
-	ON_BN_CLICKED(IDC_CLEANFILENAME, OnCleanFilename)
-END_MESSAGE_MAP()
-
 void InputBox::OnOK()
-{	
-	TCHAR buffer[510];
-	m_cancel=false;
-	if(GetDlgItem(IDC_TEXT)->GetWindowTextLength())
-	{ 
-		GetDlgItem(IDC_TEXT)->GetWindowText(buffer,ARRSIZE(buffer));
-		m_return.Format(_T("%s"),buffer);
-	}
+{
+	m_cancel = false;
+	GetDlgItemText(IDC_TEXT, m_return);
 	CDialog::OnOK();
 }
 
-void InputBox::SetLabels(CString title,CString label,CString defaultStr){
-	m_label=label;
-	m_title=title;
-	m_default=defaultStr;
+void InputBox::SetLabels(CString title, CString label, CString defaultStr)
+{
+	m_label = label;
+	m_title = title;
+	m_default = defaultStr;
 }
 
-CString InputBox::GetInput(){
-	return m_return;
-}
-
-BOOL InputBox::OnInitDialog(){
+BOOL InputBox::OnInitDialog()
+{
 	CDialog::OnInitDialog();
 	InitWindowStyles(this);
 
-	GetDlgItem(IDC_IBLABEL)->SetWindowText( m_label);
+	GetDlgItem(IDC_IBLABEL)->SetWindowText(m_label);
 	GetDlgItem(IDC_TEXT)->SetWindowText(m_default);
 	SetWindowText(m_title);
 
 	GetDlgItem(IDCANCEL)->SetWindowText(GetResString(IDS_CANCEL));
 	SetDlgItemText(IDC_CLEANFILENAME,GetResString(IDS_CLEANUP));
-	GetDlgItem(IDC_CLEANFILENAME)->ShowWindow( m_bFilenameMode?SW_NORMAL:SW_HIDE);
-
+	GetDlgItem(IDC_CLEANFILENAME)->ShowWindow(m_bFilenameMode ? SW_NORMAL : SW_HIDE);
 	return TRUE;
 }
 
-void InputBox::OnCleanFilename() {
+void InputBox::OnCleanFilename()
+{
 	CString filename;
 	GetDlgItem(IDC_TEXT)->GetWindowText(filename);
-	GetDlgItem(IDC_TEXT)->SetWindowText( CleanupFilename(filename) );
+	GetDlgItem(IDC_TEXT)->SetWindowText(CleanupFilename(filename));
 }

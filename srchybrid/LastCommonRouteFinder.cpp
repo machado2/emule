@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -204,7 +204,7 @@ void LastCommonRouteFinder::SetPrefs(bool pEnabled, uint32 pCurUpload, uint32 pM
             minUpload = maxUpload;
 		}
 	} else {
-		maxUpload = _UI32_MAX;
+		maxUpload = pCurUpload+10*1024; //_UI32_MAX;
 	}
 
 	if(pEnabled && m_enabled == false) {
@@ -503,9 +503,9 @@ UINT LastCommonRouteFinder::RunInternal() {
 									if(lastCommonHost != 0) {
 										theApp.QueueDebugLogLine(false,_T("UploadSpeedSense: Found differing host at TTL %i: %s. This will be the host to ping."), ttl, hostToPingString);
 									} else {
-										CString lastCommonHostString = ipstr(curHost);
+										CString lastCommonHostString = ipstr(lastDestinationAddress);
 
-										lastCommonHost = curHost;
+										lastCommonHost = lastDestinationAddress;
 										lastCommonTTL = ttl;
 										theApp.QueueDebugLogLine(false,_T("UploadSpeedSense: Found differing host at TTL %i, but last ttl couldn't be pinged so we don't know last common host. Taking a chance and using first differing ip as last commonhost. Host to ping: %s. Faked LastCommonHost: %s"), ttl, hostToPingString, lastCommonHostString);
 									}
@@ -784,7 +784,7 @@ UINT LastCommonRouteFinder::RunInternal() {
 
 					pingDelaysTotal += raw_ping;
 					pingDelays.AddTail(raw_ping);
-					while((uint32)pingDelays.GetCount() > numberOfPingsForAverage) {
+					while(!pingDelays.IsEmpty() && (uint32)pingDelays.GetCount() > numberOfPingsForAverage) {
 						uint32 pingDelay = pingDelays.RemoveHead();
 						pingDelaysTotal -= pingDelay;
 					}

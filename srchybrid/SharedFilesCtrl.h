@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -38,11 +38,13 @@ public:
 	void	Localize();
 	void	ShowFilesCount();
 	void	ShowComments(CKnownFile* file);
+	void	SetAICHHashing(uint32 nVal)				{ nAICHHashing = nVal; } 
 
 protected:
 	CTitleMenu	m_SharedFilesMenu;
 	CMenu		m_PrioMenu;
 	bool		sortstat[4];
+	volatile uint32 nAICHHashing;
 
 	static int CALLBACK SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
 	void UpdateItem(CKnownFile* file);

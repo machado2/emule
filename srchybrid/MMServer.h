@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2003 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2003 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -15,7 +15,6 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
-#include "Loggable.h"
 
 class CMMSocket;
 class CMMData;
@@ -29,7 +28,7 @@ class CPartFile;
 #define  MMS_BLOCKTIME	600000	
 #define  MMS_SEARCHID	500
 
-class CMMServer: public CLoggable
+class CMMServer
 {
 public:
 	CMMServer(void);
@@ -55,7 +54,7 @@ public:
 	void	PreviewFinished(CxImage** imgFrames, uint8 nCount);
 	void	Process();
 	void	AddFinishedFile(CKnownFile* file)	{m_SentFinishedList.Add(file);}
-	CString GetContentType();
+	CStringA GetContentType();
 
 	UINT_PTR h_timer;
 	uint8	m_byPendingCommand;

@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -294,7 +294,7 @@ void CClientListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 				}
 				case 2:{
 					if(client->credits)
-						Sbuffer = CastItoXBytes(client->credits->GetUploadedTotal());
+						Sbuffer = CastItoXBytes(client->credits->GetUploadedTotal(), false, false);
 					else
 						Sbuffer.Empty();
 					break;
@@ -305,7 +305,7 @@ void CClientListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 				}
 				case 4:{
 					if(client->credits)
-						Sbuffer = CastItoXBytes(client->credits->GetDownloadedTotal());
+						Sbuffer = CastItoXBytes(client->credits->GetDownloadedTotal(), false, false);
 					else
 						Sbuffer.Empty();
 					break;
@@ -377,12 +377,12 @@ void CClientListCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 
 	CTitleMenu ClientMenu;
 	ClientMenu.CreatePopupMenu();
-	ClientMenu.AddMenuTitle(GetResString(IDS_CLIENTS));
-	ClientMenu.AppendMenu(MF_STRING | (client ? MF_ENABLED : MF_GRAYED), MP_DETAIL, GetResString(IDS_SHOWDETAILS));
+	ClientMenu.AddMenuTitle(GetResString(IDS_CLIENTS), true);
+	ClientMenu.AppendMenu(MF_STRING | (client ? MF_ENABLED : MF_GRAYED), MP_DETAIL, GetResString(IDS_SHOWDETAILS), _T("CLIENTDETAILS"));
 	ClientMenu.SetDefaultItem(MP_DETAIL);
-	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && !client->IsFriend()) ? MF_ENABLED : MF_GRAYED), MP_ADDFRIEND, GetResString(IDS_ADDFRIEND));
-	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient()) ? MF_ENABLED : MF_GRAYED), MP_MESSAGE, GetResString(IDS_SEND_MSG));
-	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetViewSharedFilesSupport()) ? MF_ENABLED : MF_GRAYED), MP_SHOWLIST, GetResString(IDS_VIEWFILES));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && !client->IsFriend()) ? MF_ENABLED : MF_GRAYED), MP_ADDFRIEND, GetResString(IDS_ADDFRIEND), _T("ADDFRIEND"));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient()) ? MF_ENABLED : MF_GRAYED), MP_MESSAGE, GetResString(IDS_SEND_MSG), _T("SENDMESSAGE"));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetViewSharedFilesSupport()) ? MF_ENABLED : MF_GRAYED), MP_SHOWLIST, GetResString(IDS_VIEWFILES), _T("VIEWFILES"));
 	if (Kademlia::CKademlia::isRunning() && !Kademlia::CKademlia::isConnected())
 		ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetKadPort()!=0) ? MF_ENABLED : MF_GRAYED), MP_BOOT, GetResString(IDS_BOOTSTRAP));
 	GetPopupMenuPos(*this, point);
@@ -453,14 +453,14 @@ int CClientListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 	switch(lParamSort){
 		case 0: 
 			if(item1->GetUserName() && item2->GetUserName())
-				return _tcsicmp(item1->GetUserName(), item2->GetUserName());
+				return CompareLocaleStringNoCase(item1->GetUserName(), item2->GetUserName());
 			else if(item1->GetUserName())
 				return 1;
 			else
 				return -1;
 		case 100:
 			if(item1->GetUserName() && item2->GetUserName())
-				return _tcsicmp(item2->GetUserName(), item1->GetUserName());
+				return CompareLocaleStringNoCase(item2->GetUserName(), item1->GetUserName());
 			else if(item2->GetUserName())
 				return 1;
 			else

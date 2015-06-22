@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -31,8 +31,8 @@
 #include "ClientCredits.h"
 #include "ChatWnd.h"
 #include "kademlia/kademlia/Kademlia.h"
-#include "kademlia/kademlia/prefs.h"
 #include "kademlia/net/KademliaUDPListener.h"
+#include "UploadQueue.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -231,6 +231,9 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CFont* pOldFont = dc.SelectObject(GetFont());
 	RECT cur_rec = lpDrawItemStruct->rcItem;
 	COLORREF crOldTextColor = dc.SetTextColor(m_crWindowText);
+    if(client->GetSlotNumber() > theApp.uploadqueue->GetActiveUploadsCount()) {
+        dc.SetTextColor(::GetSysColor(COLOR_GRAYTEXT));
+    }
 
 	int iOldBkMode;
 	if (m_crWindowTextBk == CLR_NONE){
@@ -314,14 +317,14 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 						Sbuffer = _T("?");
 					break;
 				case 2:
-					Sbuffer.Format(_T("%.1f %s"),(float)client->GetDatarate()/1024,GetResString(IDS_KBYTESEC));
+					Sbuffer.Format(_T("%s"), CastItoXBytes(client->GetDatarate(), false, true));
 					break;
 				case 3:
-					Sbuffer.Format(_T("%s"), CastItoXBytes(client->GetQueueSessionPayloadUp()));
+					Sbuffer.Format(_T("%s"), CastItoXBytes(client->GetQueueSessionPayloadUp(), false, false));
 					break;
 				case 4:
 					if (client->HasLowID())
-						Sbuffer.Format(_T("%s LowID"),CastSecondsToHM((client->GetWaitTime())/1000));
+						Sbuffer.Format(_T("%s (%s)"),CastSecondsToHM((client->GetWaitTime())/1000),GetResString(IDS_IDLOW) );
 					else
 						Sbuffer = CastSecondsToHM((client->GetWaitTime())/1000);
 					break;
@@ -388,13 +391,13 @@ void CUploadListCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 
 	CTitleMenu ClientMenu;
 	ClientMenu.CreatePopupMenu();
-	ClientMenu.AddMenuTitle(GetResString(IDS_CLIENTS));
-	ClientMenu.AppendMenu(MF_STRING | (client ? MF_ENABLED : MF_GRAYED), MP_DETAIL, GetResString(IDS_SHOWDETAILS));
+	ClientMenu.AddMenuTitle(GetResString(IDS_CLIENTS), true);
+	ClientMenu.AppendMenu(MF_STRING | (client ? MF_ENABLED : MF_GRAYED), MP_DETAIL, GetResString(IDS_SHOWDETAILS), _T("CLIENTDETAILS"));
 	ClientMenu.SetDefaultItem(MP_DETAIL);
-	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && !client->IsFriend()) ? MF_ENABLED : MF_GRAYED), MP_ADDFRIEND, GetResString(IDS_ADDFRIEND));
-	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient()) ? MF_ENABLED : MF_GRAYED), MP_MESSAGE, GetResString(IDS_SEND_MSG));
-	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetViewSharedFilesSupport()) ? MF_ENABLED : MF_GRAYED), MP_SHOWLIST, GetResString(IDS_VIEWFILES));
-	if (Kademlia::CKademlia::isRunning() && !Kademlia::CKademlia::getPrefs()->getLastContact())
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && !client->IsFriend()) ? MF_ENABLED : MF_GRAYED), MP_ADDFRIEND, GetResString(IDS_ADDFRIEND), _T("ADDFRIEND"));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient()) ? MF_ENABLED : MF_GRAYED), MP_MESSAGE, GetResString(IDS_SEND_MSG), _T("SENDMESSAGE"));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetViewSharedFilesSupport()) ? MF_ENABLED : MF_GRAYED), MP_SHOWLIST, GetResString(IDS_VIEWFILES), _T("VIEWFILES"));
+	if (Kademlia::CKademlia::isRunning() && !Kademlia::CKademlia::isConnected())
 		ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetKadPort()!=0) ? MF_ENABLED : MF_GRAYED), MP_BOOT, GetResString(IDS_BOOTSTRAP));
 	GetPopupMenuPos(*this, point);
 	ClientMenu.TrackPopupMenu(TPM_LEFTALIGN |TPM_RIGHTBUTTON, point.x, point.y, this);
@@ -461,14 +464,14 @@ int CUploadListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 	switch(lParamSort){
 		case 0: 
 			if(item1->GetUserName() && item2->GetUserName())
-				return _tcsicmp(item1->GetUserName(), item2->GetUserName());
+				return CompareLocaleStringNoCase(item1->GetUserName(), item2->GetUserName());
 			else if(item1->GetUserName())
 				return 1;
 			else
 				return -1;
 		case 100:
 			if(item1->GetUserName() && item2->GetUserName())
-				return _tcsicmp(item2->GetUserName(), item1->GetUserName());
+				return CompareLocaleStringNoCase(item2->GetUserName(), item1->GetUserName());
 			else if(item2->GetUserName())
 				return 1;
 			else
@@ -477,7 +480,7 @@ int CUploadListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
 			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
 			if( (file1 != NULL) && (file2 != NULL))
-				return _tcsicmp(file1->GetFileName(), file2->GetFileName());
+				return CompareLocaleStringNoCase(file1->GetFileName(), file2->GetFileName());
 			else if( file1 == NULL )
 				return 1;
 			else
@@ -487,7 +490,7 @@ int CUploadListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
 			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
 			if( (file1 != NULL) && (file2 != NULL))
-				return _tcsicmp(file2->GetFileName(), file1->GetFileName());
+				return CompareLocaleStringNoCase(file2->GetFileName(), file1->GetFileName());
 			else if( file1 == NULL )
 				return 1;
 			else
@@ -623,8 +626,8 @@ void CUploadListCtrl::OnLvnGetInfoTip(NMHDR *pNMHDR, LRESULT *pResult)
 				info += GetResString(IDS_SF_REQUESTED) + _T(" ") + CString(file->GetFileName()) + _T("\n");
 				CString stat;
 				stat.Format(GetResString(IDS_FILESTATS_SESSION)+GetResString(IDS_FILESTATS_TOTAL),
-							file->statistic.GetAccepts(), file->statistic.GetRequests(), CastItoXBytes(file->statistic.GetTransferred()),
-							file->statistic.GetAllTimeAccepts(), file->statistic.GetAllTimeRequests(), CastItoXBytes(file->statistic.GetAllTimeTransferred()) );
+							file->statistic.GetAccepts(), file->statistic.GetRequests(), CastItoXBytes(file->statistic.GetTransferred(), false, false),
+							file->statistic.GetAllTimeAccepts(), file->statistic.GetAllTimeRequests(), CastItoXBytes(file->statistic.GetAllTimeTransferred(), false, false) );
 				info += stat;
 			}
 			else

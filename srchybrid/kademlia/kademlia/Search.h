@@ -41,6 +41,7 @@ namespace Kademlia {
 ////////////////////////////////////////
 
 typedef std::list<CTag*> TagList;
+void deleteTagListEntries(TagList* taglist);
 
 class CSearch
 {
@@ -50,6 +51,7 @@ public:
 	uint32 getSearchID() const {return m_searchID;}
 	uint32 getSearchTypes() const {return m_type;}
 	void setSearchTypes( uint32 val ) {m_type = val;}
+	void setTargetID( CUInt128 val ) {m_target = val;}
 	uint32 getCount() const {if(bio2 == NULL)return m_count;else if(bio3 == NULL)return m_count/2;else return m_count/3;}
 	uint32 getCountSent() const {return m_countSent;}
 	CUInt128 m_keywordPublish; //Need to make this private...
@@ -73,7 +75,9 @@ public:
 		FILE,
 		KEYWORD,
 		STOREFILE,
-		STOREKEYWORD
+		STOREKEYWORD,
+		FINDBUDDY,
+		FINDSOURCE
 	};
 
 	CSearch();
@@ -107,6 +111,10 @@ private:
 	ContactMap	m_responded;
 	ContactMap	m_best;
 	ContactList	m_delete;
+	ContactMap	m_inUse;
 };
 
 } // End namespace
+
+void KadGetKeywordHash(const CStringW& rstrKeywordW, Kademlia::CUInt128* pKadID);
+void KadGetKeywordHash(const CStringA& rstrKeywordA, Kademlia::CUInt128* pKadID);

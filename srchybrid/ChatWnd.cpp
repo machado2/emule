@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -22,9 +22,11 @@
 #include "emuledlg.h"
 #include "UpDownClient.h"
 #include "OtherFunctions.h"
-#include "MenuCmds.h"
 #include "HelpIDs.h"
 #include "Opcodes.h"
+#include "friend.h"
+#include "ClientCredits.h"
+#include "IconStatic.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -32,10 +34,28 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+#define	SPLITTER_RANGE_WIDTH	200
+#define	SPLITTER_RANGE_HEIGHT	700
+
+#define	SPLITTER_MARGIN			2
+#define	SPLITTER_WIDTH			4
+
 
 // CChatWnd dialog
 
 IMPLEMENT_DYNAMIC(CChatWnd, CDialog)
+
+BEGIN_MESSAGE_MAP(CChatWnd, CResizableDialog)
+	ON_WM_KEYDOWN()
+	ON_WM_SHOWWINDOW()
+	ON_MESSAGE(WM_CLOSETAB, OnCloseTab)
+	ON_WM_SYSCOLORCHANGE()
+    ON_WM_CONTEXTMENU()
+	ON_WM_HELPINFO()
+	ON_NOTIFY(LVN_ITEMACTIVATE, IDC_LIST2, OnLvnItemActivateFrlist)
+	ON_NOTIFY(NM_CLICK, IDC_LIST2, OnNMClickFrlist)
+END_MESSAGE_MAP()
+
 CChatWnd::CChatWnd(CWnd* pParent /*=NULL*/)
 	: CResizableDialog(CChatWnd::IDD, pParent)
 {
@@ -57,18 +77,102 @@ void CChatWnd::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHATSEL, chatselector);
 	DDX_Control(pDX, IDC_LIST2, m_FriendListCtrl);
 	DDX_Control(pDX, IDC_CMESSAGE, inputtext);
+	DDX_Control(pDX, IDC_FRIENDS_MSG, m_cUserInfo);
 }
 
-BEGIN_MESSAGE_MAP(CChatWnd, CResizableDialog)
-	ON_WM_KEYDOWN()
-	ON_WM_SHOWWINDOW()
-	ON_MESSAGE(WM_CLOSETAB, OnCloseTab)
-	ON_WM_SYSCOLORCHANGE()
-    ON_WM_CONTEXTMENU()
-	ON_WM_HELPINFO()
-END_MESSAGE_MAP()
+void CChatWnd::OnLvnItemActivateFrlist(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	if (m_FriendListCtrl.GetSelectionMark() != (-1) ) {
+		CFriend* mFriend = (CFriend*)m_FriendListCtrl.GetItemData(m_FriendListCtrl.GetSelectionMark());
+		ShowFriendMsgDetails(mFriend);
+	}
+}
 
-// CChatWnd message handlers
+void CChatWnd::ShowFriendMsgDetails(CFriend* pFriend) 
+{
+	if (pFriend)
+	{
+		ASSERT( pFriend != NULL);
+		CString buffer;
+
+		// Name
+		if (pFriend->GetLinkedClient())
+		{
+			GetDlgItem(IDC_FRIENDS_NAME_EDIT)->SetWindowText(pFriend->GetLinkedClient()->GetUserName());
+		}
+		else if (pFriend->m_strName != _T(""))
+		{
+			GetDlgItem(IDC_FRIENDS_NAME_EDIT)->SetWindowText(pFriend->m_strName);
+		}
+		else
+		{
+			GetDlgItem(IDC_FRIENDS_NAME_EDIT)->SetWindowText(_T("?"));
+		}
+
+		// Hash
+		if (pFriend->GetLinkedClient())
+		{
+			GetDlgItem(IDC_FRIENDS_USERHASH_EDIT)->SetWindowText(md4str(pFriend->GetLinkedClient()->GetUserHash()));
+		}
+		else if (pFriend->m_dwHasHash)
+		{
+			GetDlgItem(IDC_FRIENDS_USERHASH_EDIT)->SetWindowText(md4str(pFriend->m_abyUserhash));
+		}
+		else
+		{
+			GetDlgItem(IDC_FRIENDS_USERHASH_EDIT)->SetWindowText(_T("?"));
+		}
+
+		// Client
+		if (pFriend->GetLinkedClient())
+		{
+			GetDlgItem(IDC_FRIENDS_CLIENTE_EDIT)->SetWindowText(pFriend->GetLinkedClient()->DbgGetFullClientSoftVer());
+		}
+		else
+			GetDlgItem(IDC_FRIENDS_CLIENTE_EDIT)->SetWindowText(_T("?"));
+
+		// Identification
+		if (pFriend->GetLinkedClient())
+		{
+			if (theApp.clientcredits->CryptoAvailable())
+			{
+				switch(pFriend->GetLinkedClient()->Credits()->GetCurrentIdentState(pFriend->GetLinkedClient()->GetIP()))
+				{
+				case IS_NOTAVAILABLE:
+					GetDlgItem(IDC_FRIENDS_IDENTIFICACION_EDIT)->SetWindowText(GetResString(IDS_IDENTNOSUPPORT));
+					break;
+				case IS_IDFAILED:
+				case IS_IDNEEDED:
+				case IS_IDBADGUY:
+					GetDlgItem(IDC_FRIENDS_IDENTIFICACION_EDIT)->SetWindowText(GetResString(IDS_IDENTFAILED));
+					break;
+				case IS_IDENTIFIED:
+					GetDlgItem(IDC_FRIENDS_IDENTIFICACION_EDIT)->SetWindowText(GetResString(IDS_IDENTOK));
+					break;
+				}
+			}
+			else
+				GetDlgItem(IDC_FRIENDS_IDENTIFICACION_EDIT)->SetWindowText(GetResString(IDS_IDENTNOSUPPORT));
+		}
+		else
+			GetDlgItem(IDC_FRIENDS_IDENTIFICACION_EDIT)->SetWindowText(_T("?"));
+
+		// Upoload and downloaded
+		if (pFriend->GetLinkedClient())
+		{
+			GetDlgItem(IDC_FRIENDS_DESCARGADO_EDIT)->SetWindowText(CastItoXBytes(pFriend->GetLinkedClient()->Credits()->GetDownloadedTotal(), false, false));
+		}
+		else
+			GetDlgItem(IDC_FRIENDS_DESCARGADO_EDIT)->SetWindowText(_T("?"));
+
+		if (pFriend->GetLinkedClient())
+		{
+			GetDlgItem(IDC_FRIENDS_SUBIDO_EDIT)->SetWindowText(CastItoXBytes(pFriend->GetLinkedClient()->Credits()->GetUploadedTotal(), false, false));
+		}
+		else
+			GetDlgItem(IDC_FRIENDS_SUBIDO_EDIT)->SetWindowText(_T("?"));
+	}
+}
 
 BOOL CChatWnd::OnInitDialog()
 {
@@ -78,15 +182,172 @@ BOOL CChatWnd::OnInitDialog()
 	chatselector.Init();
 	m_FriendListCtrl.Init();
 
-	AddAnchor(IDC_CHATSEL,TOP_LEFT,BOTTOM_RIGHT);
-	AddAnchor(IDC_LIST2,TOP_LEFT,BOTTOM_LEFT);
-	AddAnchor(IDC_FRIENDS_LBL,TOP_LEFT);
-
 	SetAllIcons();
+
+	CRect rcSpl;
+	CWnd* pWnd = GetDlgItem(IDC_LIST2);
+	pWnd->GetWindowRect(rcSpl);
+	ScreenToClient(rcSpl);
+
+	CRect rc;
+	GetWindowRect(rc);
+	ScreenToClient(rc);
+
+	rcSpl.bottom = rc.bottom - 5;
+	rcSpl.left = rcSpl.right + SPLITTER_MARGIN;
+	rcSpl.right = rcSpl.left + SPLITTER_WIDTH;
+	m_wndSplitterchat.Create(WS_CHILD | WS_VISIBLE, rcSpl, this, IDC_SPLITTER_FRIEND);
+
+	int PosStatVinit = rcSpl.left;
+	int PosStatVnew = thePrefs.GetSplitterbarPositionFriend();
+	int max = SPLITTER_RANGE_HEIGHT;
+	int min = SPLITTER_RANGE_WIDTH;
+	if (thePrefs.GetSplitterbarPositionFriend() > max)
+		PosStatVnew = max;
+	else if (thePrefs.GetSplitterbarPositionFriend() < min)
+		PosStatVnew = min;
+	rcSpl.left = PosStatVnew;
+	rcSpl.right = PosStatVnew + SPLITTER_WIDTH;
+	m_wndSplitterchat.MoveWindow(rcSpl);
+
+	DoResize(PosStatVnew - PosStatVinit);
+
+	AddAnchor(IDC_FRIENDS_NAME, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_USERHASH, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_CLIENT, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_IDENT, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_UPLOADED, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_DOWNLOADED, BOTTOM_LEFT);
+
+	m_cUserInfo.Init(_T("Info"));
+
 	Localize();
 	theApp.friendlist->ShowFriends();
 
-	return true;
+	return TRUE;
+}
+
+void CChatWnd::DoResize(int delta)
+{
+	CSplitterControl::ChangeWidth(GetDlgItem(IDC_LIST2), delta);
+	CSplitterControl::ChangeWidth(GetDlgItem(IDC_FRIENDS_MSG), delta);
+	CSplitterControl::ChangeWidth(GetDlgItem(IDC_FRIENDS_NAME_EDIT), delta);
+	CSplitterControl::ChangeWidth(GetDlgItem(IDC_FRIENDS_USERHASH_EDIT), delta);
+	CSplitterControl::ChangeWidth(GetDlgItem(IDC_FRIENDS_CLIENTE_EDIT), delta);
+	CSplitterControl::ChangeWidth(GetDlgItem(IDC_FRIENDS_IDENTIFICACION_EDIT), delta);
+	CSplitterControl::ChangeWidth(GetDlgItem(IDC_FRIENDS_SUBIDO_EDIT), delta);
+	CSplitterControl::ChangeWidth(GetDlgItem(IDC_FRIENDS_DESCARGADO_EDIT), delta);
+	CSplitterControl::ChangeWidth(GetDlgItem(IDC_CHATSEL), -delta, CW_RIGHTALIGN);
+	CSplitterControl::ChangePos(GetDlgItem(IDC_MESSAGES_LBL), -delta, 0);
+	CSplitterControl::ChangePos(GetDlgItem(IDC_MESSAGEICON), -delta, 0);
+
+	CRect rcW;
+	GetWindowRect(rcW);
+	ScreenToClient(rcW);
+
+	CRect rcspl;
+	GetDlgItem(IDC_LIST2)->GetClientRect(rcspl);
+
+	thePrefs.SetSplitterbarPositionFriend(rcspl.right);
+
+	RemoveAnchor(m_wndSplitterchat);
+	AddAnchor(m_wndSplitterchat, TOP_LEFT);
+
+	RemoveAnchor(IDC_LIST2);
+	AddAnchor(IDC_LIST2, TOP_LEFT, BOTTOM_LEFT);
+
+	RemoveAnchor(IDC_FRIENDS_MSG);
+	AddAnchor(IDC_FRIENDS_MSG, BOTTOM_LEFT, BOTTOM_LEFT);
+
+	RemoveAnchor(IDC_CHATSEL);
+	AddAnchor(IDC_CHATSEL, TOP_LEFT, BOTTOM_RIGHT);
+
+	RemoveAnchor(IDC_MESSAGES_LBL);
+	AddAnchor(IDC_MESSAGES_LBL, TOP_LEFT);
+
+	RemoveAnchor(IDC_MESSAGEICON);
+	AddAnchor(IDC_MESSAGEICON, TOP_LEFT);
+
+	RemoveAnchor(IDC_FRIENDS_NAME_EDIT);
+	RemoveAnchor(IDC_FRIENDS_USERHASH_EDIT);
+	RemoveAnchor(IDC_FRIENDS_CLIENTE_EDIT);
+	RemoveAnchor(IDC_FRIENDS_IDENTIFICACION_EDIT);
+	RemoveAnchor(IDC_FRIENDS_SUBIDO_EDIT);
+	RemoveAnchor(IDC_FRIENDS_DESCARGADO_EDIT);
+	AddAnchor(IDC_FRIENDS_NAME_EDIT, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_USERHASH_EDIT, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_CLIENTE_EDIT, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_IDENTIFICACION_EDIT, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_SUBIDO_EDIT, BOTTOM_LEFT);
+	AddAnchor(IDC_FRIENDS_DESCARGADO_EDIT, BOTTOM_LEFT);
+
+	m_wndSplitterchat.SetRange(rcW.left+SPLITTER_RANGE_WIDTH, rcW.left+SPLITTER_RANGE_HEIGHT);
+
+	m_FriendListCtrl.DeleteColumn(0);
+	m_FriendListCtrl.Init();
+
+	Invalidate();
+	UpdateWindow();
+}
+
+LRESULT CChatWnd::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
+{
+	switch (message)
+	{
+	case WM_PAINT:
+		if (m_wndSplitterchat)
+		{
+			CRect rcW;
+			GetWindowRect(rcW);
+			ScreenToClient(rcW);
+			if (rcW.Width() > 0)
+			{
+				CWnd* pWnd = GetDlgItem(IDC_LIST2);
+				CRect rctree;
+				pWnd->GetWindowRect(rctree);
+				ScreenToClient(rctree);
+
+				CRect rcSpl;
+				rcSpl.left = rctree.right + SPLITTER_MARGIN;
+				rcSpl.right = rcSpl.left + SPLITTER_WIDTH;
+				rcSpl.top = rctree.top;
+				rcSpl.bottom = rcW.bottom - 5;
+
+				m_wndSplitterchat.MoveWindow(rcSpl, TRUE);
+				m_FriendListCtrl.DeleteColumn(0);
+				m_FriendListCtrl.Init();
+			}
+		}
+		break;
+
+	case WM_NOTIFY:
+		if (wParam == IDC_SPLITTER_FRIEND)
+		{ 
+			SPC_NMHDR* pHdr = (SPC_NMHDR*)lParam;
+			DoResize(pHdr->delta);
+		}
+		break;
+
+	case WM_WINDOWPOSCHANGED:
+		{
+			CRect rcW;
+			GetWindowRect(rcW);
+			ScreenToClient(rcW);
+			if (m_wndSplitterchat && rcW.Width()>0)
+				Invalidate();
+			break;
+		}
+	case WM_SIZE:
+		if (m_wndSplitterchat)
+		{
+			CRect rc;
+			GetWindowRect(rc);
+			ScreenToClient(rc);
+			m_wndSplitterchat.SetRange(rc.left+SPLITTER_RANGE_WIDTH, rc.left+SPLITTER_RANGE_HEIGHT);
+		}
+		break;
+	}
+	return CResizableDialog::DefWindowProc(message, wParam, lParam);
 }
 
 void CChatWnd::StartSession(CUpDownClient* client){
@@ -103,7 +364,17 @@ void CChatWnd::OnShowWindow(BOOL bShow,UINT nStatus){
 
 BOOL CChatWnd::PreTranslateMessage(MSG* pMsg) 
 {
+	if(pMsg->message == WM_KEYUP){
+		if (pMsg->hwnd == GetDlgItem(IDC_LIST2)->m_hWnd)
+			OnLvnItemActivateFrlist(0,0);
+	}
+
 	return CResizableDialog::PreTranslateMessage(pMsg);
+}
+
+void CChatWnd::OnNMClickFrlist(NMHDR *pNMHDR, LRESULT *pResult){
+	OnLvnItemActivateFrlist(pNMHDR,pResult);
+	*pResult = 0;
 }
 
 void CChatWnd::SetAllIcons()
@@ -124,6 +395,14 @@ void CChatWnd::Localize()
 {
 	GetDlgItem(IDC_FRIENDS_LBL)->SetWindowText(GetResString(IDS_CW_FRIENDS));
 	GetDlgItem(IDC_MESSAGES_LBL)->SetWindowText(GetResString(IDS_CW_MESSAGES));
+	GetDlgItem(IDC_FRIENDS_DOWNLOADED)->SetWindowText(GetResString(IDS_CHAT_DOWNLOADED));
+	GetDlgItem(IDC_FRIENDS_UPLOADED)->SetWindowText(GetResString(IDS_CHAT_UPLOADED));
+	GetDlgItem(IDC_FRIENDS_IDENT)->SetWindowText(GetResString(IDS_CHAT_IDENT));
+	GetDlgItem(IDC_FRIENDS_CLIENT)->SetWindowText(GetResString(IDS_CHAT_CLIENT));
+	GetDlgItem(IDC_FRIENDS_NAME)->SetWindowText(GetResString(IDS_NICKNAME));
+	GetDlgItem(IDC_FRIENDS_MSG)->SetWindowText(GetResString(IDS_INFO));
+	GetDlgItem(IDC_FRIENDS_USERHASH)->SetWindowText(GetResString(IDS_CD_UHASH));	
+
 	chatselector.Localize();
 	m_FriendListCtrl.Localize();
 }
@@ -157,32 +436,6 @@ void CChatWnd::OnSysColorChange()
 {
 	CResizableDialog::OnSysColorChange();
 	SetAllIcons();
-}
-
-BOOL CChatWnd::OnCommand(WPARAM wParam, LPARAM lParam)
-{
-	switch (wParam){ 
-		case MP_REMOVE:{
-			const CChatItem* ci = chatselector.GetCurrentChatItem();
-			if (ci)
-				chatselector.EndSession(ci->client);
-			break;
-		}
-	}
-	return TRUE;
-}
-
-void CChatWnd::OnContextMenu(CWnd* pWnd, CPoint point)
-{ 
-	if (!chatselector.GetCurrentChatItem())
-		return;
-
-	CTitleMenu ChatMenu;
-	ChatMenu.CreatePopupMenu(); 
-	ChatMenu.AddMenuTitle(GetResString(IDS_CW_MESSAGES));
-	ChatMenu.AppendMenu(MF_STRING, MP_REMOVE, GetResString(IDS_FD_CLOSE));
-	ChatMenu.TrackPopupMenu(TPM_LEFTALIGN |TPM_RIGHTBUTTON, point.x, point.y, this);
- 	VERIFY( ChatMenu.DestroyMenu() );
 }
 
 void CChatWnd::UpdateFriendlistCount(uint16 count) {

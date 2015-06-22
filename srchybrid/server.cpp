@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -116,8 +116,8 @@ bool CServer::AddTagFromFile(CFileDataIO* servermet)
 {
 	if (servermet == NULL)
 		return false;
-	CTag* tag = new CTag(servermet);
-	switch(tag->tag.specialtag){		
+	CTag* tag = new CTag(servermet, false);
+	switch(tag->GetNameID()){		
 	case ST_SERVERNAME:
 		ASSERT( tag->IsStr() );
 		if (tag->IsStr()){
@@ -139,17 +139,17 @@ bool CServer::AddTagFromFile(CFileDataIO* servermet)
 	case ST_PING:
 		ASSERT( tag->IsInt() );
 		if (tag->IsInt())
-			ping = tag->tag.intvalue;
+			ping = tag->GetInt();
 		break;
 	case ST_FAIL:
 		ASSERT( tag->IsInt() );
 		if (tag->IsInt())
-			failedcount = tag->tag.intvalue;
+			failedcount = tag->GetInt();
 		break;
 	case ST_PREFERENCE:
 		ASSERT( tag->IsInt() );
 		if (tag->IsInt())
-			preferences = tag->tag.intvalue;
+			preferences = tag->GetInt();
 		break;
 	case ST_DYNIP:
 		ASSERT( tag->IsStr() );
@@ -163,22 +163,22 @@ bool CServer::AddTagFromFile(CFileDataIO* servermet)
 	case ST_MAXUSERS:
 		ASSERT( tag->IsInt() );
 		if (tag->IsInt())
-			maxusers = tag->tag.intvalue;
+			maxusers = tag->GetInt();
 		break;
 	case ST_SOFTFILES:
 		ASSERT( tag->IsInt() );
 		if (tag->IsInt())
-			softfiles = tag->tag.intvalue;
+			softfiles = tag->GetInt();
 		break;
 	case ST_HARDFILES:
 		ASSERT( tag->IsInt() );
 		if (tag->IsInt())
-			hardfiles = tag->tag.intvalue;
+			hardfiles = tag->GetInt();
 		break;
 	case ST_LASTPING:
 		ASSERT( tag->IsInt() );
 		if (tag->IsInt())
-			lastpingedtime = tag->tag.intvalue;
+			lastpingedtime = tag->GetInt();
 		break;
 	case ST_VERSION:
 		if (tag->IsStr()){
@@ -188,33 +188,33 @@ bool CServer::AddTagFromFile(CFileDataIO* servermet)
 				m_strVersion = tag->GetStr();
 		}
 		else if (tag->IsInt())
-			m_strVersion.Format(_T("%u.%u"), tag->tag.intvalue >> 16, tag->tag.intvalue & 0xFFFF);
+			m_strVersion.Format(_T("%u.%u"), tag->GetInt() >> 16, tag->GetInt() & 0xFFFF);
 		else
 			ASSERT(0);
 		break;
 	case ST_UDPFLAGS:
 		ASSERT( tag->IsInt() );
 		if (tag->IsInt())
-			m_uUDPFlags = tag->tag.intvalue;
+			m_uUDPFlags = tag->GetInt();
 		break;
 	case ST_LOWIDUSERS:
 		ASSERT( tag->IsInt() );
 		if (tag->IsInt())
-			m_uLowIDUsers = tag->tag.intvalue;
+			m_uLowIDUsers = tag->GetInt();
 		break;
 	default:
-		if (tag->tag.specialtag){
+		if (tag->GetNameID()){
 			ASSERT( 0 );
 		}
-		else if (!CmpED2KTagName(tag->tag.tagname,"files")){
+		else if (!CmpED2KTagName(tag->GetName(), "files")){
 			ASSERT( tag->IsInt() );
 			if (tag->IsInt())
-				files = tag->tag.intvalue;
+				files = tag->GetInt();
 		}
-		else if (!CmpED2KTagName(tag->tag.tagname,"users")){
+		else if (!CmpED2KTagName(tag->GetName(), "users")){
 			ASSERT( tag->IsInt() );
 			if (tag->IsInt())
-				users = tag->tag.intvalue;
+				users = tag->GetInt();
 		}
 	}
 	delete tag;

@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -18,6 +18,8 @@
 #include "ResizableLib\ResizableDialog.h"
 #include "ChatSelector.h"
 #include "FriendListCtrl.h"
+#include "SplitterControl.h"
+#include "IconStatic.h"
 
 class CChatWnd : public CResizableDialog
 {
@@ -47,13 +49,20 @@ protected:
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support	
 	virtual BOOL OnInitDialog(); 
-	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	afx_msg void OnSysColorChange();
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg LRESULT OnCloseTab(WPARAM wparam, LPARAM lparam);
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
+	afx_msg void OnLvnItemActivateFrlist(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMClickFrlist(NMHDR *pNMHDR, LRESULT *pResult);
+	CSplitterControl m_wndSplitterchat; //bzubzusplitchat
+	void DoResize(int delta);
+	virtual LRESULT DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+
+private:
+	void ShowFriendMsgDetails(CFriend* pFriend); // [TPT] - New friend message window
+	CIconStatic m_cUserInfo;
 };

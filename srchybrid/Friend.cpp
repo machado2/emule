@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -97,8 +97,8 @@ void CFriend::LoadFromFile(CFileDataIO* file)
 
 	UINT tagcount = file->ReadUInt32();
 	for (UINT j = 0; j < tagcount; j++){
-		CTag* newtag = new CTag(file);
-		switch(newtag->tag.specialtag){
+		CTag* newtag = new CTag(file, false);
+		switch (newtag->GetNameID()){
 			case FF_NAME:{
 				ASSERT( newtag->IsStr() );
 				if (newtag->IsStr()){

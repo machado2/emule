@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -28,6 +28,11 @@
 #include "ListenSocket.h"
 #include "ChatWnd.h"
 #include "SafeFile.h"
+#include "Log.h"
+#include "MenuCmds.h"
+#include "ClientDetailDialog.h"
+#include "FriendList.h"
+#include "ClientList.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -68,6 +73,7 @@ BEGIN_MESSAGE_MAP(CChatSelector, CClosableTabCtrl)
 	ON_NOTIFY_REFLECT(TCN_SELCHANGE, OnTcnSelchangeChatsel)
 	ON_BN_CLICKED(IDC_CCLOSE, OnBnClickedCclose)
 	ON_BN_CLICKED(IDC_CSEND, OnBnClickedCsend)
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
 CChatSelector::CChatSelector()
@@ -78,7 +84,7 @@ CChatSelector::CChatSelector()
 	m_lastemptyicon = false;
 	m_blinkstate = false;
 	m_Timer = 0;
-	m_bCloseable = true;
+	m_bCloseable = false;
 }
 
 CChatSelector::~CChatSelector()
@@ -156,7 +162,7 @@ CChatItem* CChatSelector::StartSession(CUpDownClient* client, bool show)
 	chatitem->log->ModifyStyleEx(0, WS_EX_STATICEDGE, SWP_FRAMECHANGED);
 	chatitem->log->SendMessage(EM_SETMARGINS, EC_LEFTMARGIN | EC_RIGHTMARGIN, MAKELONG(3, 3));
 	chatitem->log->SetEventMask(chatitem->log->GetEventMask() | ENM_LINK);
-	chatitem->log->SetFont(&theApp.emuledlg->m_fontHyperText);
+	chatitem->log->SetFont(&theApp.m_fontHyperText);
 	chatitem->log->SetProfileSkinKey(_T("Chat"));
 	chatitem->log->ApplySkin();
 
@@ -207,16 +213,18 @@ CChatItem* CChatSelector::GetItemByClient(CUpDownClient* client)
 	return NULL;
 }
 
-void CChatSelector::ProcessMessage(CUpDownClient* sender, char* message)
+void CChatSelector::ProcessMessage(CUpDownClient* sender, const CString& message)
 {
 	sender->IncMessagesReceived();
 
-	CString strMessage = CString(message).MakeLower();
+	CString strMessage(message);
+	strMessage.MakeLower();
 	CString resToken;
 	int curPos = 0;
 	resToken = thePrefs.GetMessageFilter().Tokenize(_T("|"), curPos);
-	while (resToken != _T(""))
+	while (!resToken.IsEmpty())
 	{
+		resToken.Trim();
 		if (strMessage.Find(resToken.MakeLower()) > -1)
 			return;
 		resToken = thePrefs.GetMessageFilter().Tokenize(_T("|"), curPos);
@@ -229,7 +237,7 @@ void CChatSelector::ProcessMessage(CUpDownClient* sender, char* message)
 	{
 		if (!sender->IsSpammer()){
 			if (thePrefs.GetVerbose())
-				theApp.emuledlg->AddDebugLogLine(false, _T("'%s' has been marked as spammer"), sender->GetUserName());
+				AddDebugLogLine(false, _T("'%s' has been marked as spammer"), sender->GetUserName());
 		}
 		sender->SetSpammer(true);
 		if (ci)
@@ -249,7 +257,7 @@ void CChatSelector::ProcessMessage(CUpDownClient* sender, char* message)
 		AddTimeStamp(ci);
 	ci->log->AppendKeyWord(sender->GetUserName(), RGB(50,200,250));
 	ci->log->AppendText(_T(": "));
-	ci->log->AppendText(CString(message) + _T("\n"));
+	ci->log->AppendText(message + _T("\n"));
 	int iTabItem = GetTabByClient(sender);
 	if (GetCurSel() == iTabItem && GetParent()->IsWindowVisible())
 	{
@@ -265,21 +273,20 @@ void CChatSelector::ProcessMessage(CUpDownClient* sender, char* message)
 	{
 		ci->notify = true;
         if (isNewChatWindow || thePrefs.GetNotifierPopsEveryChatMsg())
-			theApp.emuledlg->ShowNotifier(GetResString(IDS_TBN_NEWCHATMSG) + _T(" ") + CString(sender->GetUserName()) + _T(":'") + CString(message) + _T("'\n"), TBN_CHAT);
+			theApp.emuledlg->ShowNotifier(GetResString(IDS_TBN_NEWCHATMSG) + _T(" ") + CString(sender->GetUserName()) + _T(":'") + message + _T("'\n"), TBN_CHAT);
 		isNewChatWindow = false;
 	}
 }
 
-bool CChatSelector::SendMessage(LPCTSTR message)
+bool CChatSelector::SendMessage(const CString& rstrMessage)
 {
-	USES_CONVERSION;
 	CChatItem* ci = GetCurrentChatItem();
 	if (!ci)
 		return false;
 
 	if (ci->history.GetCount() == thePrefs.GetMaxChatHistoryLines())
 		ci->history.RemoveAt(0);
-	ci->history.Add(CString(message));
+	ci->history.Add(rstrMessage);
 	ci->history_pos = ci->history.GetCount();
 
 	// advance spamfilter stuff
@@ -292,22 +299,20 @@ bool CChatSelector::SendMessage(LPCTSTR message)
 		AddTimeStamp(ci);
 	if (ci->client->socket && ci->client->socket->IsConnected())
 	{
-		CStringA strMsgA(message);
-		uint16 mlen = strMsgA.GetLength();
-		Packet* packet = new Packet(OP_MESSAGE, mlen+2);
-		PokeUInt16(packet->pBuffer, mlen);
-		memcpy(packet->pBuffer + 2, strMsgA, mlen);
+		CSafeMemFile data;
+		data.WriteString(rstrMessage, ci->client->GetUnicodeSupport());
+		Packet* packet = new Packet(&data, OP_EDONKEYPROT, OP_MESSAGE);
 		theStats.AddUpDataOverheadOther(packet->size);
 		ci->client->socket->SendPacket(packet, true, true);
 
-		ci->log->AppendKeyWord(A2CT(thePrefs.GetUserNick()), RGB(1,180,20));
+		ci->log->AppendKeyWord(thePrefs.GetUserNick(), RGB(1,180,20));
 		ci->log->AppendText(_T(": "));
-		ci->log->AppendText(CString(message) + _T("\n"));
+		ci->log->AppendText(rstrMessage + _T("\n"));
 	}
 	else
 	{
 		ci->log->AppendKeyWord(_T("*** ") + GetResString(IDS_CONNECTING), RGB(255,0,0));
-		ci->strMessagePendingA = message;
+		ci->strMessagePending = rstrMessage;
 		ci->client->SetChatState(MS_CONNECTING);
 		ci->client->TryToConnect();
 	}
@@ -316,16 +321,15 @@ bool CChatSelector::SendMessage(LPCTSTR message)
 
 void CChatSelector::ConnectingResult(CUpDownClient* sender, bool success)
 {
-	USES_CONVERSION;
 	CChatItem* ci = GetItemByClient(sender);
 	if (!ci)
 		return;
 
 	ci->client->SetChatState(MS_CHATTING);
 	if (!success){
-		if (!ci->strMessagePendingA.IsEmpty()){
+		if (!ci->strMessagePending.IsEmpty()){
 			ci->log->AppendKeyWord(_T(" ") + GetResString(IDS_FAILED) + _T("\n"), RGB(255,0,0));
-			ci->strMessagePendingA.Empty();
+			ci->strMessagePending.Empty();
 		}
 		else{
 			if (thePrefs.GetIRCAddTimestamp())
@@ -333,23 +337,22 @@ void CChatSelector::ConnectingResult(CUpDownClient* sender, bool success)
 			ci->log->AppendKeyWord(GetResString(IDS_CHATDISCONNECTED) + _T("\n"), RGB(255,0,0));
 		}
 	}
-	else if (!ci->strMessagePendingA.IsEmpty()){
+	else if (!ci->strMessagePending.IsEmpty()){
 		ci->log->AppendKeyWord(_T(" ok\n"), RGB(255,0,0));
 		
-		uint16 mlen = ci->strMessagePendingA.GetLength();
-		Packet* packet = new Packet(OP_MESSAGE, mlen+2);
-		PokeUInt16(packet->pBuffer, mlen);
-		memcpy(packet->pBuffer + 2, ci->strMessagePendingA, mlen);
+		CSafeMemFile data;
+		data.WriteString(ci->strMessagePending, ci->client->GetUnicodeSupport());
+		Packet* packet = new Packet(&data, OP_EDONKEYPROT, OP_MESSAGE);
 		theStats.AddUpDataOverheadOther(packet->size);
 		ci->client->socket->SendPacket(packet, true, true);
 
 		if (thePrefs.GetIRCAddTimestamp())
 			AddTimeStamp(ci);
-		ci->log->AppendKeyWord(A2CT(thePrefs.GetUserNick()), RGB(1,180,20));
+		ci->log->AppendKeyWord(thePrefs.GetUserNick(), RGB(1,180,20));
 		ci->log->AppendText(_T(": "));
-		ci->log->AppendText(CString(ci->strMessagePendingA) + _T("\n"));
+		ci->log->AppendText(ci->strMessagePending + _T("\n"));
 		
-		ci->strMessagePendingA.Empty();
+		ci->strMessagePending.Empty();
 	}
 	else{
 		if (thePrefs.GetIRCAddTimestamp())
@@ -648,4 +651,55 @@ void CChatSelector::OnDestroy()
 		m_Timer = NULL;
 	}
 	CClosableTabCtrl::OnDestroy();
+}
+
+void CChatSelector::OnContextMenu(CWnd* pWnd, CPoint point)
+{ 
+	const CChatItem* ci = GetCurrentChatItem();
+	if (!ci)
+		return;
+
+
+	bool  isvalidconclient=false;
+	if (ci->client &&  ci->client->HasValidHash())
+		isvalidconclient=true;
+
+	CTitleMenu ChatMenu;
+	ChatMenu.CreatePopupMenu(); 
+	ChatMenu.AddMenuTitle(GetResString(IDS_CW_MESSAGES),true);
+
+	ChatMenu.AppendMenu(MF_STRING | isvalidconclient?MF_ENABLED : MF_GRAYED, MP_DETAIL, GetResString(IDS_SHOWDETAILS),_T("CLIENTDETAILS"));
+	ChatMenu.AppendMenu(MF_STRING | (isvalidconclient && !ci->client->IsFriend() )? MF_ENABLED : MF_GRAYED , MP_ADDFRIEND, GetResString(IDS_ADDAFRIEND),_T("ADDFRIEND"));
+	ChatMenu.AppendMenu(MF_STRING, MP_REMOVE, GetResString(IDS_FD_CLOSE), _T("DELETE") );
+
+	ChatMenu.TrackPopupMenu(TPM_LEFTALIGN |TPM_RIGHTBUTTON, point.x, point.y, this);
+ 	VERIFY( ChatMenu.DestroyMenu() );
+	
+}
+
+BOOL CChatSelector::OnCommand(WPARAM wParam, LPARAM lParam)
+{
+	switch (wParam){ 
+		case MP_DETAIL:{
+			const CChatItem* ci = GetCurrentChatItem();
+			if (ci) {
+				CClientDetailDialog dialog(ci->client);
+				dialog.DoModal();
+			}
+			break;
+		}
+		case MP_ADDFRIEND:{
+			const CChatItem* ci = GetCurrentChatItem();
+			if (ci && !ci->client->IsFriend() )
+				theApp.friendlist->AddFriend(ci->client);
+			break;
+		}
+		case MP_REMOVE:{
+			const CChatItem* ci = GetCurrentChatItem();
+			if (ci)
+				EndSession(ci->client);
+			break;
+		}
+	}
+	return TRUE;
 }

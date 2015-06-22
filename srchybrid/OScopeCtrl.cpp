@@ -1,5 +1,5 @@
 //this file is part of eMule
-//Copyright (C)2002 Merkur ( merkur-@users.sourceforge.net / http://www.emule-project.net )
+//Copyright (C)2002 Merkur ( devs@emule-project.net / http://www.emule-project.net )
 //
 //This program is free software; you can redistribute it and/or
 //modify it under the terms of the GNU General Public License
@@ -82,9 +82,10 @@ COScopeCtrl::COScopeCtrl(int NTrends)
 		m_PlotData[i].dRange      =   m_PlotData[i].dUpperLimit - 
 		m_PlotData[i].dLowerLimit;   // protected member variable
 		m_PlotData[i].lstPoints.AddTail(0.0);
-		// -khaos--+++> Initialize our new trend ratio variable to 1
+		// Initialize our new trend ratio variable to 1
 		m_PlotData[i].iTrendRatio = 1;
-		// <-----khaos-
+		m_PlotData[i].LegendLabel.Format(_T("Legend %i"),i);
+		m_PlotData[i].BarsPlot = false;
 	}
 	
 	// public variable for the number of decimal places on the y axis
@@ -137,8 +138,6 @@ COScopeCtrl::COScopeCtrl(int NTrends)
 	m_bDoUpdate = true;
 	m_nRedrawTimer = 0;
 
-	m_oldcx = 0;
-	m_oldcy = 0;
 	ready = false;
 }  // COScopeCtrl
 
@@ -188,7 +187,7 @@ BOOL COScopeCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT
 } // Create
 
 /////////////////////////////////////////////////////////////////////////////
-// -khaos--+++> Set Trend Ratio
+// Set Trend Ratio
 // This allows us to set a ratio for a trend in our plot.  Basically, this
 // trend will be divided by whatever the ratio was set to, so that we can have
 // big numbers and little numbers in the same plot.  Wrote this especially for
@@ -219,9 +218,19 @@ void COScopeCtrl::SetTrendRatio(int iTrend, unsigned int iRatio)
 		InvalidateCtrl();
 	}
 }
-// <-----khaos-
 
-/////////////////////////////////////////////////////////////////////////////
+void COScopeCtrl::SetLegendLabel(CString string, int iTrend)
+{
+	m_PlotData[iTrend].LegendLabel = string;
+	InvalidateCtrl(false);
+}
+
+void COScopeCtrl::SetBarsPlot(bool BarsPlot, int iTrend)
+{
+	m_PlotData[iTrend].BarsPlot = BarsPlot;
+	InvalidateCtrl(false);
+}
+
 void COScopeCtrl::SetRange(double dLower, double dUpper, int iTrend)
 {
 	ASSERT(dUpper > dLower);
@@ -330,7 +339,7 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 	
 	CPen *oldPen;
 	CPen solidPen(PS_SOLID, 0, m_crGridColor);
-	CFont axisFont, yUnitFont, *oldFont;
+	CFont axisFont, yUnitFont, *oldFont, LegendFont;
 	CString strTemp;
 	
 	// in case we haven't established the memory dc's
@@ -368,9 +377,8 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 	
 	// adjust the plot rectangle dimensions
 	// assume 6 pixels per character (this may need to be adjusted)
-	// -khaos--+++> From eMule+: Changed this so that the Y-Units wouldn't overlap the Y-Scale.
-	m_rectPlot.left = m_rectClient.left + 8*7+4;//(nCharacters) ; // DonGato 8 was 6
-	// <-----khaos-
+	// Changed this so that the Y-Units wouldn't overlap the Y-Scale.
+	m_rectPlot.left = m_rectClient.left + 8*7+4;//(nCharacters) ;
 	m_nPlotWidth    = m_rectPlot.Width();
 	
 	// draw the plot rectangle
@@ -393,32 +401,21 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 			m_dcGrid.SetPixel(i, GridPos, m_crGridColor);
 	}
 	
-	/*
-	for(j = 1; j < (m_nXGrids + 1); j++)
-	{
-	GridPos = m_rectPlot.Width()*j/ (m_nXGrids + 1) + m_rectPlot.left;
-	for(i = m_rectPlot.top; i < m_rectPlot.bottom; i += 4)
-	m_dcGrid.SetPixel(GridPos, i, m_crGridColor);
-	}
-	*/
-	
 	// create some fonts (horizontal and vertical)
 	// use a height of 14 pixels and 300 weight 
 	// (these may need to be adjusted depending on the display)
-	axisFont.CreateFont(14, 0, 0, 0, 300,
-		//FALSE, FALSE, 0, ANSI_CHARSET,
+	axisFont.CreateFont(14, 0, 0, 0, FW_LIGHT,
 		FALSE, FALSE, 0, DEFAULT_CHARSET, // EC
 		OUT_DEFAULT_PRECIS, 
 		CLIP_DEFAULT_PRECIS,
 		DEFAULT_QUALITY, 
-		DEFAULT_PITCH | FF_SWISS, _T("Arial"));
-	yUnitFont.CreateFont(14, 0, 900, 0, 300,
-		//FALSE, FALSE, 0, ANSI_CHARSET,
+		DEFAULT_PITCH | FF_SWISS, _T("MS Shell Dlg"));
+	yUnitFont.CreateFont(14, 0, 900, 0, FW_LIGHT,
 		FALSE, FALSE, 0, DEFAULT_CHARSET, // EC
 		OUT_DEFAULT_PRECIS, 
 		CLIP_DEFAULT_PRECIS,
 		DEFAULT_QUALITY, 
-		DEFAULT_PITCH | FF_SWISS, _T("Arial"));
+		DEFAULT_PITCH | FF_SWISS, _T("MS Shell Dlg"));
 	
 	// grab the horizontal font
 	oldFont = m_dcGrid.SelectObject(&axisFont);
@@ -451,32 +448,11 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 	else
 		strTemp = m_str.YMin;
 	m_dcGrid.TextOut(m_rectPlot.left - 4, m_rectPlot.bottom-7, strTemp);
-	/*
-	// x min
-	m_dcGrid.SetTextAlign(TA_LEFT | TA_TOP);
-	if(m_str.XMin.IsEmpty())
-	m_dcGrid.TextOut(m_rectPlot.left, m_rectPlot.bottom + 4, "0");
-	else
-	m_dcGrid.TextOut(m_rectPlot.left, m_rectPlot.bottom + 4, (LPCTSTR)m_str.XMin);
-	
-	  // x max
-	  m_dcGrid.SetTextAlign(TA_RIGHT | TA_TOP);
-	  if(m_str.XMax.IsEmpty())
-	  {
-	  if(m_nTrendPoints < 0)
-	  strTemp.Format("%d", m_nPlotWidth/m_nShiftPixels); 
-	  else
-	  strTemp.Format("%d", m_nTrendPoints - 1); 
-	  }
-	  else
-	  strTemp = m_str.XMax;
-	  m_dcGrid.TextOut(m_rectPlot.right, m_rectPlot.bottom + 4, strTemp);
-	*/
+
 	// x units
-	m_dcGrid.SetTextAlign(TA_CENTER | TA_TOP);
-	m_dcGrid.TextOut((m_rectPlot.left + m_rectPlot.right)/2, 
-		m_rectPlot.bottom + 4, m_str.XUnits);
-	
+	m_dcGrid.SetTextAlign(TA_RIGHT | TA_BOTTOM);
+	m_dcGrid.TextOut (m_rectClient.right-2,m_rectClient.bottom-2,m_str.XUnits);
+
 	// restore the font
 	m_dcGrid.SelectObject(oldFont);
 	
@@ -488,6 +464,35 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 	m_dcGrid.DrawText(m_str.YUnits, rText, DT_CALCRECT);
 	m_dcGrid.TextOut ((m_rectClient.left+m_rectPlot.left+4)/2-rText.Height() / 2, 
 		((m_rectPlot.bottom+m_rectPlot.top)/2)-rText.Height()/2, m_str.YUnits) ;
+	m_dcGrid.SelectObject(oldFont);
+	
+	LegendFont.CreateFont(12, 0, 0, 0, FW_LIGHT,
+		FALSE, FALSE, 0, DEFAULT_CHARSET, // EC
+		OUT_DEFAULT_PRECIS, 
+		CLIP_DEFAULT_PRECIS,
+		DEFAULT_QUALITY, 
+		DEFAULT_PITCH | FF_SWISS, _T("MS Shell Dlg"));
+	oldFont = m_dcGrid.SelectObject(&LegendFont);
+	m_dcGrid.SetTextAlign(TA_LEFT | TA_TOP);
+	
+	int xpos,ypos;
+	xpos = m_rectPlot.left + 2;
+	ypos = m_rectPlot.bottom+2;
+	for (i=0 ; i < m_NTrends; i++){
+		int iLabelPixelSize = m_dcGrid.GetTextExtent(m_PlotData[i].LegendLabel).cx;
+		if (xpos+12+iLabelPixelSize+12>m_rectPlot.right){
+			xpos = m_rectPlot.left + 2;
+			ypos = m_rectPlot.bottom+12;
+		}
+		CPen LegendPen(PS_SOLID, 3,m_PlotData[i].crPlotColor);
+		oldPen = m_dcGrid.SelectObject(&LegendPen);
+		m_dcGrid.MoveTo(xpos, ypos+8);
+		m_dcGrid.LineTo(xpos + 8, ypos+4);
+		m_dcGrid.TextOut(xpos + 12 ,ypos, m_PlotData[i].LegendLabel);
+		xpos += 12+iLabelPixelSize+12;
+		m_dcGrid.SelectObject(oldPen);
+	}
+	
 	m_dcGrid.SelectObject(oldFont);
 	
 	// at this point we are done filling the the grid bitmap, 
@@ -512,14 +517,15 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 	int iNewSize = m_rectClient.Width() / m_nShiftPixels + 10;		// +10 just in case :)
 	if(m_nMaxPointCnt < iNewSize)
 		m_nMaxPointCnt = iNewSize;									// keep the bigest value
-	m_bDoUpdate = false;
 
 	if (theApp.emuledlg->IsRunning()) 
 	{
-		if (!thePrefs.IsGraphRecreateDisabled()) {
+			if (thePrefs.IsGraphRecreateDisabled() == false) {
+				// The timer will redraw the previous points in 200ms
+				m_bDoUpdate = false;
 			if(m_nRedrawTimer)
 				KillTimer(m_nRedrawTimer);
-			VERIFY( (m_nRedrawTimer = SetTimer(1612, 200, NULL)) != NULL ); // reduce flickering
+				VERIFY( (m_nRedrawTimer = SetTimer(1612, 200, NULL)) ); // reduce flickering
 		}
 	}
 
@@ -531,7 +537,7 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 /////////////////////////////////////////////////////////////////////////////
 // G.Hayduk: now, there are two methods: AppendPoints and AppendEmptyPoints
 
-// -khaos--+++> Added new parameter: bool bUseTrendRatio (TRUE by default)
+// Added new parameter: bool bUseTrendRatio (TRUE by default)
 void COScopeCtrl::AppendPoints(double dNewPoint[], bool bInvalidate, bool bAdd2List, bool bUseTrendRatio)
 {
 	int iTrend;
@@ -539,7 +545,7 @@ void COScopeCtrl::AppendPoints(double dNewPoint[], bool bInvalidate, bool bAdd2L
 	// append a data point to the plot
 	for(iTrend = 0; iTrend < m_NTrends; iTrend ++)
 	{
-		// -khaos--+++> Changed this to support the new TrendRatio var
+		// Changed this to support the new TrendRatio var
 		if (bUseTrendRatio)
 			m_PlotData[iTrend].dCurrentPosition = (double) dNewPoint[iTrend] / m_PlotData[iTrend].iTrendRatio;
 		else
@@ -547,12 +553,15 @@ void COScopeCtrl::AppendPoints(double dNewPoint[], bool bInvalidate, bool bAdd2L
 		if(bAdd2List)
 		{
 			m_PlotData[iTrend].lstPoints.AddTail(m_PlotData[iTrend].dCurrentPosition);
-			// <-----khaos-
 			while(m_PlotData[iTrend].lstPoints.GetCount() > m_nMaxPointCnt)
 				m_PlotData[iTrend].lstPoints.RemoveHead();
 		}
 	}
 	
+	// Sometime responsible for 'ghost' point on the left after a resize
+	if(m_bDoUpdate == false)		
+		return;
+
 	if(m_nTrendPoints > 0)
 	{
 		if(CustShift.m_nPointsToDo == 0)
@@ -586,24 +595,22 @@ void COScopeCtrl::AppendPoints(double dNewPoint[], bool bInvalidate, bool bAdd2L
 // for first valid vector of data points, and then call AppendPoints again and again 
 // for valid points
 
-// -khaos--+++> Added parameter: bool bUseTrendRatio (TRUE by default)
+// Added parameter: bool bUseTrendRatio (TRUE by default)
 void COScopeCtrl::AppendEmptyPoints(double dNewPoint[], bool bInvalidate, bool bAdd2List, bool bUseTrendRatio)
 {
-// <-----khaos-
 	int iTrend, currY;
 	CRect ScrollRect, rectCleanUp;
 	// append a data point to the plot
 	// return the previous point
 	for(iTrend = 0; iTrend < m_NTrends; iTrend ++)
 	{
-		// -khaos--+++> Changed to support new Trend Ratio var and bUseTrendRatio parameter.
+		// Changed to support new Trend Ratio var and bUseTrendRatio parameter.
 		if (bUseTrendRatio)
 			m_PlotData[iTrend].dCurrentPosition = (double) dNewPoint[iTrend] / m_PlotData[iTrend].iTrendRatio;
 		else
 			m_PlotData[iTrend].dCurrentPosition = dNewPoint[iTrend];
 		if(bAdd2List)
 			m_PlotData[iTrend].lstPoints.AddTail(m_PlotData[iTrend].dCurrentPosition);
-		// <-----khaos-
 	}
 	if(m_nTrendPoints > 0)
 	{
@@ -694,7 +701,7 @@ void COScopeCtrl::OnPaint()
 		dc.BitBlt(0, 0, m_nClientWidth, m_nClientHeight, 
 		          &memDC, 0, 0, SRCCOPY);
 	}
-	memDC.SelectObject(oldBitmap); // FoRcHa
+	memDC.SelectObject(oldBitmap);
 	memBitmap.DeleteObject();
 } // OnPaint
 
@@ -713,11 +720,6 @@ void COScopeCtrl::DrawPoint()
 	
 	if(m_dcPlot.GetSafeHdc() != NULL)
 	{
-		//	BitBlt was replaced by call to ScrollDC
-		//		m_dcPlot.BitBlt(m_rectPlot.left, m_rectPlot.top+1, 
-		//		                m_nPlotWidth, m_nPlotHeight, &m_dcPlot, 
-		//		                m_rectPlot.left+m_nShiftPixels, m_rectPlot.top+1, 
-		//		                SRCCOPY) ;
 		if(m_nShiftPixels > 0)
 		{
 			ScrollRect.left = m_rectPlot.left;
@@ -727,7 +729,7 @@ void COScopeCtrl::DrawPoint()
 			ScrollRect = m_rectPlot;
 			ScrollRect.right ++;
 			m_dcPlot.ScrollDC(-m_nShiftPixels, 0, (LPCRECT)&ScrollRect, (LPCRECT)&ScrollRect, NULL, NULL);
-			
+
 			// establish a rectangle over the right side of plot
 			// which now needs to be cleaned up proir to adding the new point
 			rectCleanUp = m_rectPlot;
@@ -754,23 +756,30 @@ void COScopeCtrl::DrawPoint()
 				prevY = m_rectPlot.bottom - 
 				(long)((m_PlotData[iTrend].dPreviousPosition - m_PlotData[iTrend].dLowerLimit) * m_PlotData[iTrend].dVerticalFactor);
 			}
-			m_dcPlot.MoveTo(prevX - 1, prevY);
+			if(!m_PlotData[iTrend].BarsPlot)
+				m_dcPlot.MoveTo(prevX - 1, prevY);
 			// draw to the current point
 			currX = m_rectPlot.right;
 			currY = m_rectPlot.bottom -
 				(long)((m_PlotData[iTrend].dCurrentPosition - m_PlotData[iTrend].dLowerLimit) * m_PlotData[iTrend].dVerticalFactor);
 			m_PlotData[iTrend].nPrevY = currY;
-			if(abs(prevX - currX) > abs(prevY - currY))
+			if(m_PlotData[iTrend].BarsPlot)
+				m_dcPlot.MoveTo(currX - 1, m_rectPlot.bottom);
+			else
 			{
-				currX += prevX - currX>0 ? -1 : 1;
-			}
-			else 
-			{
-				currY += prevY - currY>0 ? -1 : 1;
+				if(abs(prevX - currX) > abs(prevY - currY))
+				{
+					currX += prevX - currX>0 ? -1 : 1;
+				}
+				else 
+				{
+					currY += prevY - currY>0 ? -1 : 1;
+				}
 			}
 			m_dcPlot.LineTo(currX - 1, currY);
-			if(drawBars)
-				m_dcPlot.LineTo(currX - 1, m_rectPlot.bottom);
+			//if(drawBars) || m_PlotData[iTrend].BarsPlot)
+			//	m_dcPlot.LineTo(currX - 1, m_rectPlot.bottom);
+			
 			// m_dcPlot.Rectangle(currX-1,currY,currX-1,m_rectPlot.bottom);
 			
 			// restore the pen 
@@ -794,12 +803,11 @@ void COScopeCtrl::DrawPoint()
 /////////////////////////////////////////////////////////////////////////////
 void COScopeCtrl::OnSize(UINT nType, int cx, int cy)
 {
-	if ((!cx && !cy) || (cx==m_oldcx && cy==m_oldcy))
+	if (!cx && !cy)
 		return;
 
 	int iTrend;
 	CWnd::OnSize(nType, cx, cy);
-	m_oldcx=cx;m_oldcy=cy;
 	
 	// NOTE: OnSize automatically gets called during the setup of the control
 	
@@ -851,6 +859,18 @@ void COScopeCtrl::OnSize(UINT nType, int cx, int cy)
 /////////////////////////////////////////////////////////////////////////////
 void COScopeCtrl::Reset()
 {
+	// simply invalidate the entire control
+	for(int i = 0; i < m_NTrends; i++)
+	{
+		// Clear all points
+		m_PlotData[i].dPreviousPosition = 0.0;
+		m_PlotData[i].nPrevY = -1;
+
+		for(int iTrend = 0; iTrend < m_NTrends; iTrend++){
+			m_PlotData[iTrend].lstPoints.RemoveAll();
+		}
+	}
+
 	// to clear the existing data (in the form of a bitmap)
 	// simply invalidate the entire control
 	InvalidateCtrl();
@@ -858,32 +878,44 @@ void COScopeCtrl::Reset()
 
 int COScopeCtrl::ReCreateGraph(void)
 {
-	int i;
-	for(i = 0; i < m_NTrends; i++)
+	for(int i = 0; i < m_NTrends; i++)
 	{
 		m_PlotData[i].dPreviousPosition = 0.0;
 		m_PlotData[i].nPrevY = -1;
 	}
 	
 	double *pAddPoints = new double[m_NTrends];
+	POSITION* pPosArray = new POSITION[m_NTrends];
 	
-	int iCnt = m_PlotData[0].lstPoints.GetCount();
-	for(i = 0; i < iCnt; i++)
+	// Try to avoid to call the method AppendPoints() more than necessary
+	// Remark: the default size of the list is 1024
+	int pointToDraw = m_PlotData[0].lstPoints.GetCount();
+	if(pointToDraw > (m_nPlotWidth/m_nShiftPixels)+1)
 	{	
-		for(int iTrend = 0; iTrend < m_NTrends; iTrend++)
-		{
-			POSITION pos = m_PlotData[iTrend].lstPoints.FindIndex(i);
-			if(pos)
-				pAddPoints[iTrend] = m_PlotData[iTrend].lstPoints.GetAt(pos);
-			else
-				pAddPoints[iTrend] = 0;
+		pointToDraw = (m_nPlotWidth/m_nShiftPixels)+1;
+	}
+	int startIndex = m_PlotData[0].lstPoints.GetCount() - pointToDraw;
+
+	// Prepare to go through the elements on n lists in parallel
+	for(int iTrend = 0; iTrend < m_NTrends; iTrend++)
+	{
+		pPosArray[iTrend] = m_PlotData[iTrend].lstPoints.FindIndex(startIndex);
+	}	
+	
+	// We will assume that each trends have the same among of points, so we test only the first iterator
+	while(pPosArray[0] != 0){
+		for(int iTrend = 0; iTrend < m_NTrends; iTrend++){
+			pAddPoints[iTrend] = m_PlotData[iTrend].lstPoints.GetNext(pPosArray[iTrend]);
 		}
-		// -khaos--+++> Pass false for new bUseTrendRatio parameter so that graph is recreated correctly...
+		// Pass false for new bUseTrendRatio parameter so that graph is recreated correctly...
 		AppendPoints(pAddPoints, false, false, false);
-		// <-----khaos-
 	}
 	
 	delete[] pAddPoints;
+	delete[] pPosArray;
+
+	// Draw the new graph without waiting on the next AppendPoints()
+	Invalidate();
 
 	return 0;
 }

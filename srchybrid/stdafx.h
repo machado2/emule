@@ -78,7 +78,9 @@
 
 #ifdef _UNICODE
 typedef	CArray<CStringA,CStringA> CStringAArray;
+typedef	CStringArray CStringWArray;
 #else
+typedef	CArray<CStringW,CStringW> CStringWArray;
 typedef	CStringArray CStringAArray;
 #endif
 
