@@ -20,9 +20,9 @@
 #include "OtherFunctions.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -104,7 +104,7 @@ void CSplashScreen::OnPaint()
 			if (pOldBM)
 				dcMem.SelectObject(pOldBM);
 
-			CRect rc(0, BM.bmHeight * 0.73/*0.65*/, BM.bmWidth, BM.bmHeight);
+			CRect rc(0, BM.bmHeight * 0.65, BM.bmWidth, BM.bmHeight);
 			dc.FillSolidRect(rc.left+1, rc.top+1, rc.Width()-2, rc.Height()-2, RGB(255,255,255));
 
 			LOGFONT lf = {0};
@@ -116,9 +116,6 @@ void CSplashScreen::OnPaint()
 			font.CreateFontIndirect(&lf);
 			CFont* pOldFont = dc.SelectObject(&font);
 			CString strAppVersion(_T("eMule ") + theApp.m_strCurVersionLong);
-#ifdef _UNICODE
-			strAppVersion += _T(" Unicode");
-#endif
 			rc.top += dc.DrawText(strAppVersion, &rc, DT_CENTER | DT_NOPREFIX);
 			if (pOldFont)
 				dc.SelectObject(pOldFont);
@@ -132,7 +129,7 @@ void CSplashScreen::OnPaint()
 			_tcscpy(lf.lfFaceName, _T("Arial"));
 			font.CreateFontIndirect(&lf);
 			pOldFont = dc.SelectObject(&font);
-			dc.DrawText(_T("Copyright (C) 2002-2004 Merkur"), &rc, DT_CENTER | DT_NOPREFIX);
+			dc.DrawText(_T("Copyright (C) 2002-2005 Merkur"), &rc, DT_CENTER | DT_NOPREFIX);
 			if (pOldFont)
 				dc.SelectObject(pOldFont);
 			font.DeleteObject();

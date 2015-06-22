@@ -19,11 +19,13 @@
 #include <list>
 
 #define	PARTSIZE			9728000
+#define	MAX_EMULE_FILE_SIZE	4290048000	// (4294967295/PARTSIZE)*PARTSIZE
 
 class CTag;
 class CxImage;
 namespace Kademlia{
 	class CUInt128;
+	class CEntry;
 	typedef std::list<CStringW> WordList;
 };
 class CUpDownClient;
@@ -117,6 +119,8 @@ public:
 	CTag* GetTag(LPCSTR tagname) const;
 	void AddTagUnique(CTag* pTag);
 	const CArray<CTag*,CTag*>& GetTags() const { return taglist; }
+	void AddNote(Kademlia::CEntry* pEntry);
+	const CTypedPtrList<CPtrList, Kademlia::CEntry*>& getNotes() const { return CKadEntryPtrList; }
 
 #ifdef _DEBUG
 	// Diagnostic Support
@@ -132,6 +136,7 @@ protected:
 	uint8	m_uRating;
 	CString m_strFileType;
 	CArray<CTag*,CTag*> taglist;
+	CTypedPtrList<CPtrList, Kademlia::CEntry*> CKadEntryPtrList;
 };
 
 class CKnownFile : public CAbstractFile
@@ -210,15 +215,16 @@ public:
 	uint32	GetKadFileSearchID() const { return kadFileSearchID; }
 	void	SetKadFileSearchID(uint32 id) { kadFileSearchID = id; } //Don't use this unless you know what your are DOING!! (Hopefully I do.. :)
 
-	uint32	GetPublishedKadSrc() const { return m_PublishedKadSrc; }
-	void	SetPublishedKadSrc();
-
 	const Kademlia::WordList& GetKadKeywords() const { return wordlist; }
 
 	uint32	GetLastPublishTimeKadSrc() const { return m_lastPublishTimeKadSrc; }
-	void	SetLastPublishTimeKadSrc(uint32 val) { m_lastPublishTimeKadSrc = val; }
+	void	SetLastPublishTimeKadSrc(uint32 time, uint32 buddyip) { m_lastPublishTimeKadSrc = time; m_lastBuddyIP = buddyip;}
+	uint32	GetLastPublishBuddy() const { return m_lastBuddyIP; }
+	void	SetLastPublishTimeKadNotes(uint32 time) {m_lastPublishTimeKadNotes = time;}
+	uint32	GetLastPublishTimeKadNotes() const { return m_lastPublishTimeKadNotes; }
 
 	bool	PublishSrc();
+	bool	PublishNotes();
 
 	// file sharing
 	virtual Packet* CreateSrcInfoPacket(CUpDownClient* forClient) const;
@@ -278,7 +284,8 @@ private:
 	bool	m_PublishedED2K;
 	uint32	kadFileSearchID;
 	uint32	m_lastPublishTimeKadSrc;
-	uint32	m_PublishedKadSrc;
+	uint32	m_lastPublishTimeKadNotes;
+	uint32	m_lastBuddyIP;
 	Kademlia::WordList wordlist;
 	UINT	m_uMetaDataVer;
 };

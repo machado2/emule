@@ -60,12 +60,27 @@ public:
 	CHTRichEditCtrl* debuglog;
 	CClosableTabCtrl StatusSelector;
 
+private:
+	CIconStatic m_ctrlNewServerFrm;
+	CIconStatic m_ctrlUpdateServerFrm;
+	CIconStatic m_ctrlMyInfoFrm;
+	CImageList m_imlLogPanes;
+	HICON icon_srvlist;
+	bool	debug;
+	CRichEditCtrlX m_MyInfo;
+	CHARFORMAT m_cfDef;
+	CHARFORMAT m_cfBold;
+	CCustomAutoComplete* m_pacServerMetURL;
+	CString m_strClickNewVersion;
+	LCID m_uLangID;
+
 protected:
 	void SetAllIcons();
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnBnClickedAddserver();
 	afx_msg void OnBnClickedUpdateservermetfromurl();
@@ -77,18 +92,5 @@ protected:
 	afx_msg void OnDDClicked();
 	afx_msg void OnSvrTextChange();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-
-private:
-	CIconStatic m_ctrlNewServerFrm;
-	CIconStatic m_ctrlUpdateServerFrm;
-	CIconStatic m_ctrlMyInfo;
-	CImageList m_imlLogPanes;
-	HICON icon_srvlist;
-	bool	debug;
-	CRichEditCtrlX m_MyInfo;
-	CHARFORMAT m_cfDef;
-	CHARFORMAT m_cfBold;
-	CCustomAutoComplete* m_pacServerMetURL;
-	CString m_strClickNewVersion;
-	LCID m_uLangID;
+	afx_msg void OnStnDblclickServlstIco();
 };

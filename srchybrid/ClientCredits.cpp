@@ -31,9 +31,9 @@
 #include "Log.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 #define CLIENTS_MET_FILENAME	_T("clients.met")
@@ -179,7 +179,7 @@ void CClientCreditsList::LoadList()
 
 		// everything is ok, lets see if the backup exist...
 		CString strBakFileName;
-		strBakFileName.Format(_T("%s") CLIENTS_MET_FILENAME _T(".BAK"), thePrefs.GetConfigDir());
+		strBakFileName.Format(_T("%s") CLIENTS_MET_FILENAME _T(".bak"), thePrefs.GetConfigDir());
 		
 		DWORD dwBakFileSize = 0;
 		BOOL bCreateBackup = TRUE;
@@ -408,7 +408,7 @@ void CClientCreditsList::InitalizeCrypting(){
 		return;
 	// check if keyfile is there
 	bool bCreateNewKey = false;
-	HANDLE hKeyFile = ::CreateFile(thePrefs.GetConfigDir() + CString("cryptkey.dat"), GENERIC_READ, FILE_SHARE_READ, NULL,
+	HANDLE hKeyFile = ::CreateFile(thePrefs.GetConfigDir() + _T("cryptkey.dat"), GENERIC_READ, FILE_SHARE_READ, NULL,
 										OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hKeyFile != INVALID_HANDLE_VALUE)
 	{

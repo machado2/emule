@@ -18,37 +18,37 @@
 #include "ColorButton.h"
 
 struct Category_Struct;
+class CCustomAutoComplete;
 
 class CCatDialog : public CDialog
 {
 	DECLARE_DYNAMIC(CCatDialog)
-
 public:
 	CCatDialog(int catindex);   // standard constructor
 	virtual ~CCatDialog();
-	virtual BOOL OnInitDialog();
 
-	bool WasCancelled()		{ return m_bCancelled; }
-
-// Dialog Data
 	enum { IDD = IDD_CAT };
 
+	bool WasCancelled() const { return m_bCancelled; }
+
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-//	afx_msg void OnCbnSelchangeColorselector();
-	afx_msg LONG OnSelChange(UINT lParam, LONG wParam);
-	DECLARE_MESSAGE_MAP()
-	CColorButton m_ctlColor;
-private:
-	void UpdateData();
 	Category_Struct* m_myCat;
-	void Localize();
 	DWORD newcolor;
 	bool m_bCancelled;
-
+	CColorButton m_ctlColor;
 	CComboBox m_prio;
-public:
+	CCustomAutoComplete* m_pacRegExp;
+
+	void Localize();
+	void UpdateData();
+
+	virtual BOOL OnInitDialog();
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+
+	DECLARE_MESSAGE_MAP()
+	afx_msg LONG OnSelChange(UINT lParam, LONG wParam);
 	afx_msg void OnBnClickedBrowse();
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
+	afx_msg void OnDDBnClickedCancel();
 };

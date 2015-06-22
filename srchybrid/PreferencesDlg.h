@@ -46,10 +46,10 @@ public:
 #endif
 
 	void Localize();
+	void SetStartPage(UINT uStartPageID);
 
 protected:
-	int m_iPrevPage;
-	UINT m_nActiveWnd;
+	LPCTSTR m_pPshStartPage;
 
 	virtual BOOL OnInitDialog();
 	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);

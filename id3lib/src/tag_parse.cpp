@@ -103,13 +103,7 @@ namespace
           }
           else
           {
-            uint32 newSize = io::readBENumber(mr, sizeof(uint32));
-			// allocate 2MB instead 4GB max in the decompressor later on (TODO decompressor should actually do the sanitycheck)
-			if (newSize > 2 * 1024 * 1024){
-				ID3D_WARNING( "id3::v2::parseFrames(): 'newSize' exeeds sanity limit" );
-				delete f;
-				return false;
-			}
+            uint32 newSize = min(io::readBENumber(mr, sizeof(uint32)), 2*1024*1024);
             size_t oldSize = f->GetDataSize() - sizeof(uint32) - 1;
             io::CompressedReader cr(mr, newSize);
             parseFrames(tag, cr);

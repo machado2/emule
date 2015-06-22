@@ -14,7 +14,6 @@
 //You should have received a copy of the GNU General Public License
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
 #include "stdafx.h" 
 #include "emule.h"
 #include "ED2kLinkDlg.h"
@@ -23,11 +22,12 @@
 #include "OtherFunctions.h"
 #include "preferences.h"
 #include "shahashset.h"
+#include "UserMsgs.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -40,11 +40,14 @@ BEGIN_MESSAGE_MAP(CED2kLinkDlg, CResizablePage)
 	ON_BN_CLICKED(IDC_LD_HTMLCHE, OnSettingsChange)
 	ON_BN_CLICKED(IDC_LD_HOSTNAMECHE, OnSettingsChange)
 	ON_BN_CLICKED(IDC_LD_HASHSETCHE, OnSettingsChange)
+	ON_MESSAGE(UM_DATA_CHANGED, OnDataChanged)
 END_MESSAGE_MAP() 
 
 CED2kLinkDlg::CED2kLinkDlg() 
    : CResizablePage(CED2kLinkDlg::IDD, IDS_CMT_READALL) 
 { 
+	m_paFiles = NULL;
+	m_bDataChanged = false;
 	m_strCaption = GetResString(IDS_FILELINK);
 	m_psp.pszTitle = m_strCaption;
 	m_psp.dwFlags |= PSP_USETITLE;
@@ -60,7 +63,6 @@ void CED2kLinkDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LD_LINKEDI, m_ctrlLinkEdit);
 } 
 
-
 BOOL CED2kLinkDlg::OnInitDialog()
 { 
 	CResizablePage::OnInitDialog(); 
@@ -69,14 +71,12 @@ BOOL CED2kLinkDlg::OnInitDialog()
 	AddAnchor(IDC_LD_LINKGROUP,TOP_LEFT,BOTTOM_RIGHT);
 	AddAnchor(IDC_LD_LINKEDI,TOP_LEFT,BOTTOM_RIGHT);
 	AddAnchor(IDC_LD_CLIPBOARDBUT,BOTTOM_RIGHT);
-
-	AddAnchor(IDC_LD_BASICGROUP,BOTTOM_LEFT,BOTTOM_LEFT);
+	AddAnchor(IDC_LD_BASICGROUP,BOTTOM_LEFT,BOTTOM_RIGHT);
 	AddAnchor(IDC_LD_SOURCECHE,BOTTOM_LEFT,BOTTOM_LEFT);
 	AddAnchor(IDC_LD_EMULEHASHCHE,BOTTOM_LEFT,BOTTOM_LEFT);
-	AddAnchor(IDC_LD_ADVANCEDGROUP,BOTTOM_LEFT,BOTTOM_LEFT);
+	AddAnchor(IDC_LD_ADVANCEDGROUP,BOTTOM_LEFT,BOTTOM_RIGHT);
 	AddAnchor(IDC_LD_HTMLCHE,BOTTOM_LEFT,BOTTOM_LEFT);
 	AddAnchor(IDC_LD_HASHSETCHE,BOTTOM_LEFT,BOTTOM_LEFT);
-	//AddAnchor(IDC_LD_KADLOWIDCHE,BOTTOM_LEFT,BOTTOM_LEFT);
 	AddAnchor(IDC_LD_HOSTNAMECHE,BOTTOM_LEFT,BOTTOM_LEFT);
 
 	// enabled/disable checkbox depending on situation
@@ -86,46 +86,68 @@ BOOL CED2kLinkDlg::OnInitDialog()
 		GetDlgItem(IDC_LD_SOURCECHE)->EnableWindow(FALSE);
 		((CButton*)GetDlgItem(IDC_LD_SOURCECHE))->SetCheck(BST_UNCHECKED);
 	}
-	if (theApp.IsConnected() && !theApp.IsFirewalled() && !CString(thePrefs.GetYourHostname()).IsEmpty() && CString(thePrefs.GetYourHostname()).Find(_T(".")) != -1)
+	if (theApp.IsConnected() && !theApp.IsFirewalled() && !thePrefs.GetYourHostname().IsEmpty() && thePrefs.GetYourHostname().Find(_T('.')) != -1)
 		GetDlgItem(IDC_LD_HOSTNAMECHE)->EnableWindow(TRUE);
 	else{
 		GetDlgItem(IDC_LD_HOSTNAMECHE)->EnableWindow(FALSE);
 		((CButton*)GetDlgItem(IDC_LD_HOSTNAMECHE))->SetCheck(BST_UNCHECKED);
 	}
-	//hashsetlink - check if at least one file has a hasset
-	BOOL bShow = FALSE;
-	for (int i = 0; i != m_paFiles->GetSize(); i++){
-		if (!((*m_paFiles)[i]->GetHashCount() > 0 && (*m_paFiles)[i]->GetHashCount() == (*m_paFiles)[i]->GetED2KPartHashCount())){
-			continue;
-		}
-		bShow = TRUE;
-		break;
-	}
-	GetDlgItem(IDC_LD_HASHSETCHE)->EnableWindow(bShow);
-	if (!bShow)
-		((CButton*)GetDlgItem(IDC_LD_HASHSETCHE))->SetCheck(BST_UNCHECKED);
-
-	//aich hash - check if at least one file has a valid hash
-	bShow = FALSE;
-	for (int i = 0; i != m_paFiles->GetSize(); i++){
-		if ((*m_paFiles)[i]->GetAICHHashset()->HasValidMasterHash() 
-			&& ((*m_paFiles)[i]->GetAICHHashset()->GetStatus() == AICH_VERIFIED || (*m_paFiles)[i]->GetAICHHashset()->GetStatus() == AICH_HASHSETCOMPLETE))
-		{	
-			bShow = TRUE;
-			break;
-		}
-	}
-	GetDlgItem(IDC_LD_EMULEHASHCHE)->EnableWindow(bShow);
-	if (!bShow)
-		((CButton*)GetDlgItem(IDC_LD_EMULEHASHCHE))->SetCheck(BST_UNCHECKED);
-	else
-		((CButton*)GetDlgItem(IDC_LD_EMULEHASHCHE))->SetCheck(BST_CHECKED);
 
 	Localize(); 
-	UpdateLink();
 
 	return TRUE; 
 } 
+
+BOOL CED2kLinkDlg::OnSetActive()
+{
+	if (!CResizablePage::OnSetActive())
+		return FALSE;
+
+	if (m_bDataChanged)
+	{
+		//hashsetlink - check if at least one file has a hasset
+		BOOL bShow = FALSE;
+		for (int i = 0; i != m_paFiles->GetSize(); i++){
+			const CKnownFile* file = STATIC_DOWNCAST(CKnownFile, (*m_paFiles)[i]);
+			if (!(file->GetHashCount() > 0 && file->GetHashCount() == file->GetED2KPartHashCount())){
+				continue;
+			}
+			bShow = TRUE;
+			break;
+		}
+		GetDlgItem(IDC_LD_HASHSETCHE)->EnableWindow(bShow);
+		if (!bShow)
+			((CButton*)GetDlgItem(IDC_LD_HASHSETCHE))->SetCheck(BST_UNCHECKED);
+
+		//aich hash - check if at least one file has a valid hash
+		bShow = FALSE;
+		for (int i = 0; i != m_paFiles->GetSize(); i++){
+			const CKnownFile* file = STATIC_DOWNCAST(CKnownFile, (*m_paFiles)[i]);
+			if (file->GetAICHHashset()->HasValidMasterHash() 
+				&& (file->GetAICHHashset()->GetStatus() == AICH_VERIFIED || file->GetAICHHashset()->GetStatus() == AICH_HASHSETCOMPLETE))
+			{	
+				bShow = TRUE;
+				break;
+			}
+		}
+		GetDlgItem(IDC_LD_EMULEHASHCHE)->EnableWindow(bShow);
+		if (!bShow)
+			((CButton*)GetDlgItem(IDC_LD_EMULEHASHCHE))->SetCheck(BST_UNCHECKED);
+		else
+			((CButton*)GetDlgItem(IDC_LD_EMULEHASHCHE))->SetCheck(BST_CHECKED);
+
+		UpdateLink();
+		m_bDataChanged = false;
+	}
+
+	return TRUE;
+}
+
+LRESULT CED2kLinkDlg::OnDataChanged(WPARAM, LPARAM)
+{
+	m_bDataChanged = true;
+	return 1;
+}
 
 void CED2kLinkDlg::Localize(void)
 { 
@@ -141,14 +163,15 @@ void CED2kLinkDlg::Localize(void)
 	GetDlgItem(IDC_LD_HOSTNAMECHE)->SetWindowText(GetResString(IDS_LD_HOSTNAME)); 
 }
 
-void CED2kLinkDlg::UpdateLink(){
+void CED2kLinkDlg::UpdateLink()
+{
 	CString strLinks;
 	CString strBuffer;
 	const bool bHashset = ((CButton*)GetDlgItem(IDC_LD_HASHSETCHE))->GetCheck() == BST_CHECKED;
 	const bool bHTML = ((CButton*)GetDlgItem(IDC_LD_HTMLCHE))->GetCheck() == BST_CHECKED;
 	const bool bSource = ((CButton*)GetDlgItem(IDC_LD_SOURCECHE))->GetCheck() == BST_CHECKED && theApp.IsConnected() && !theApp.IsFirewalled();
 	const bool bHostname = ((CButton*)GetDlgItem(IDC_LD_HOSTNAMECHE))->GetCheck() == BST_CHECKED && theApp.IsConnected() && !theApp.IsFirewalled()
-		&& !CString(thePrefs.GetYourHostname()).IsEmpty() && CString(thePrefs.GetYourHostname()).Find(_T(".")) != -1;
+		&& !thePrefs.GetYourHostname().IsEmpty() && thePrefs.GetYourHostname().Find(_T('.')) != -1;
 	const bool bEMHash = ((CButton*)GetDlgItem(IDC_LD_EMULEHASHCHE))->GetCheck() == BST_CHECKED;
 
 	for (int i = 0; i != m_paFiles->GetSize(); i++){
@@ -158,23 +181,24 @@ void CED2kLinkDlg::UpdateLink(){
 		if (bHTML)
 			strLinks += _T("<a href=\"");
 		
-		strLinks += CreateED2kLink((*m_paFiles)[i], false);
+		const CKnownFile* file = STATIC_DOWNCAST(CKnownFile, (*m_paFiles)[i]);
+		strLinks += CreateED2kLink(file, false);
 		
-		if (bHashset && (*m_paFiles)[i]->GetHashCount() > 0 && (*m_paFiles)[i]->GetHashCount() == (*m_paFiles)[i]->GetED2KPartHashCount()){
+		if (bHashset && file->GetHashCount() > 0 && file->GetHashCount() == file->GetED2KPartHashCount()){
 			strLinks += _T("p=");
-			for (int j = 0; j < (*m_paFiles)[i]->GetHashCount(); j++)
+			for (int j = 0; j < file->GetHashCount(); j++)
 			{
 				if (j > 0)
 					strLinks += _T(':');
-				strLinks += EncodeBase16((*m_paFiles)[i]->GetPartHash(j), 16);
+				strLinks += EncodeBase16(file->GetPartHash(j), 16);
 			}
 			strLinks += _T('|');
 		}
 
-		if (bEMHash && (*m_paFiles)[i]->GetAICHHashset()->HasValidMasterHash() && 
-			((*m_paFiles)[i]->GetAICHHashset()->GetStatus() == AICH_VERIFIED || (*m_paFiles)[i]->GetAICHHashset()->GetStatus() == AICH_HASHSETCOMPLETE))
+		if (bEMHash && file->GetAICHHashset()->HasValidMasterHash() && 
+			(file->GetAICHHashset()->GetStatus() == AICH_VERIFIED || file->GetAICHHashset()->GetStatus() == AICH_HASHSETCOMPLETE))
 		{
-			strBuffer.Format(_T("h=%s|"), (*m_paFiles)[i]->GetAICHHashset()->GetMasterHash().GetString() );
+			strBuffer.Format(_T("h=%s|"), file->GetAICHHashset()->GetMasterHash().GetString() );
 			strLinks += strBuffer;			
 		}
 
@@ -190,7 +214,7 @@ void CED2kLinkDlg::UpdateLink(){
 		}
 
 		if (bHTML)
-			strLinks += _T("\">") + StripInvalidFilenameChars((*m_paFiles)[i]->GetFileName(), true) + _T("</a>");
+			strLinks += _T("\">") + StripInvalidFilenameChars(file->GetFileName(), true) + _T("</a>");
 	}
 	m_ctrlLinkEdit.SetWindowText(strLinks);
 

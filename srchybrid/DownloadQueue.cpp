@@ -16,6 +16,7 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include "stdafx.h"
 #include <io.h>
+
 #include "emule.h"
 #include "DownloadQueue.h"
 #include "UpDownClient.h"
@@ -41,15 +42,14 @@
 #include "Log.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
-CDownloadQueue::CDownloadQueue(CSharedFileList* in_sharedfilelist)
+CDownloadQueue::CDownloadQueue()
 {
-	sharedfilelist = in_sharedfilelist;
 	filesrdy = 0;
 	datarate = 0;
 	cur_udpserver = 0;
@@ -75,7 +75,7 @@ void CDownloadQueue::AddPartFilesToShare()
 	{
 		CPartFile* cur_file = filelist.GetNext(pos);
 		if (cur_file->GetStatus(true) == PS_READY)
-			sharedfilelist->SafeAddKFile(cur_file,true);
+			theApp.sharedfiles->SafeAddKFile(cur_file, true);
 	}
 }
 
@@ -98,7 +98,7 @@ void CDownloadQueue::Init(){
 			count++;
 			filelist.AddTail(toadd);			// to downloadqueue
 			if (toadd->GetStatus(true) == PS_READY)
-				sharedfilelist->SafeAddKFile(toadd); // part files are always shared files
+				theApp.sharedfiles->SafeAddKFile(toadd); // part files are always shared files
 			theApp.emuledlg->transferwnd->downloadlistctrl.AddFile(toadd);// show in downloadwindow
 		}
 		else
@@ -119,7 +119,7 @@ void CDownloadQueue::Init(){
 			count++;
 			filelist.AddTail(toadd);			// to downloadqueue
 			if (toadd->GetStatus(true) == PS_READY)
-				sharedfilelist->SafeAddKFile(toadd); // part files are always shared files
+				theApp.sharedfiles->SafeAddKFile(toadd); // part files are always shared files
 			theApp.emuledlg->transferwnd->downloadlistctrl.AddFile(toadd);// show in downloadwindow
 
 			AddLogLine(false, GetResString(IDS_RECOVERED_PARTMET), toadd->GetFileName());
@@ -137,7 +137,7 @@ void CDownloadQueue::Init(){
 		SortByPriority();
 		CheckDiskspace();	// SLUGFILLER: checkDiskspace
 	}
-	VERIFY( m_srcwnd.CreateEx(0, AfxRegisterWndClass(0),_T("Hostname Resolve Wnd"),WS_OVERLAPPED, 0, 0, 0, 0, NULL, NULL));
+	VERIFY( m_srcwnd.CreateEx(0, AfxRegisterWndClass(0), _T("eMule Async DNS Resolve Socket Wnd #2"), WS_OVERLAPPED, 0, 0, 0, 0, NULL, NULL));
 
 	ExportPartMetFilesOverview();
 }
@@ -209,12 +209,8 @@ void CDownloadQueue::AddSearchToDownload(CString link,uint8 paused, uint8 cat){
 }
 
 void CDownloadQueue::StartNextFileIfPrefs(int cat) {
-    if (thePrefs.StartNextFile()) {
-        int catTemp = thePrefs.StartNextFile() > 1?cat:-1;
-        bool force = thePrefs.StartNextFile()==3?false:true;
-
-		StartNextFile(catTemp, force);
-    }
+    if (thePrefs.StartNextFile())
+		StartNextFile((thePrefs.StartNextFile() > 1?cat:-1), (thePrefs.StartNextFile()!=3));
 }
 
 void CDownloadQueue::StartNextFile(int cat, bool force){
@@ -230,7 +226,7 @@ void CDownloadQueue::StartNextFile(int cat, bool force){
 			if (cur_file->GetStatus()==PS_PAUSED &&
                 (
 				 cur_file->GetCategory()==cat || 
-				 cat==0 && thePrefs.GetAllcatType()==0 && cur_file->GetCategory()>0
+				 cat==0 && thePrefs.GetCategory(0)->filter==0 && cur_file->GetCategory()>0
                 ) &&
                 CPartFile::RightFileHasHigherPrio(pfile, cur_file)
 			   ) {
@@ -319,7 +315,7 @@ void CDownloadQueue::AddDownload(CPartFile* newfile,bool paused) {
 
 bool CDownloadQueue::IsFileExisting(const uchar* fileid, bool bLogWarnings)
 {
-	const CKnownFile* file = sharedfilelist->GetFileByID(fileid);
+	const CKnownFile* file = theApp.sharedfiles->GetFileByID(fileid);
 	if (file){
 		if (bLogWarnings){
 			if (file->IsPartFile())
@@ -1053,7 +1049,7 @@ void CDownloadQueue::GetDownloadStats(SDownloadStats& results)
 		const CPartFile* cur_file = filelist.GetNext(pos);
 
 		results.a[0]  += cur_file->GetSourceCount();
-		results.a[1]  += cur_file->GetTransferingSrcCount();
+		results.a[1]  += cur_file->GetTransferringSrcCount();
 		results.a[2]  += cur_file->GetSrcStatisticsValue(DS_ONQUEUE);
 		results.a[3]  += cur_file->GetSrcStatisticsValue(DS_REMOTEQUEUEFULL);
 		results.a[4]  += cur_file->GetSrcStatisticsValue(DS_NONEEDEDPARTS);
@@ -1279,17 +1275,22 @@ void CDownloadQueue::DisableAllA4AFAuto(void)
 	for (POSITION pos = filelist.GetHeadPosition(); pos != NULL; )
 		filelist.GetNext(pos)->SetA4AFAuto(false);
 }
-// HoaX_69: BEGIN AutoCat function
-void CDownloadQueue::SetAutoCat(CPartFile* newfile){
-	if(thePrefs.GetCatCount()>1){
-		for (int ix=1;ix<thePrefs.GetCatCount();ix++){	
-			int curPos = 0;
-			CString catExt = thePrefs.GetCategory(ix)->autocat;
-			catExt.MakeLower();
 
-			// No need to compare agains an empty AutoCat array
-			if( catExt.IsEmpty())
-				continue;
+void CDownloadQueue::SetAutoCat(CPartFile* newfile){
+	if(thePrefs.GetCatCount()==1)
+		return;
+	CString catExt;
+
+	for (int ix=1;ix<thePrefs.GetCatCount();ix++){	
+		catExt= thePrefs.GetCategory(ix)->autocat;
+		if (catExt.IsEmpty())
+			continue;
+
+		if (!thePrefs.GetCategory(ix)->ac_regexpeval) {
+			// simple string comparison
+
+			int curPos = 0;
+			catExt.MakeLower();
 
 			CString fullname = newfile->GetFileName();
 			fullname.MakeLower();
@@ -1312,10 +1313,13 @@ void CDownloadQueue::SetAutoCat(CPartFile* newfile){
 				}
 				cmpExt = catExt.Tokenize(_T("|"),curPos);
 			}
+		} else {
+			// regular expression evaluation
+			if (RegularExpressionMatch(catExt,newfile->GetFileName()))
+				newfile->SetCategory(ix);
 		}
 	}
 }
-// HoaX_69: END
 
 void CDownloadQueue::ResetLocalServerRequests()
 {
@@ -1373,8 +1377,8 @@ void CDownloadQueue::ProcessLocalRequests()
 						nPriority = PR_HIGH;
 					}
 
-					if (cur_file->lastsearchtime + (PR_HIGH-nPriority) < dwBestWaitTime ){
-						dwBestWaitTime = cur_file->lastsearchtime + (PR_HIGH-nPriority);
+					if (cur_file->m_LastSearchTime + (PR_HIGH-nPriority) < dwBestWaitTime ){
+						dwBestWaitTime = cur_file->m_LastSearchTime + (PR_HIGH-nPriority);
 						posNextRequest = pos2;
 					}
 				}
@@ -1390,7 +1394,7 @@ void CDownloadQueue::ProcessLocalRequests()
 			{
 				cur_file = m_localServerReqQueue.GetAt(posNextRequest);
 				cur_file->m_bLocalSrcReqQueued = false;
-				cur_file->lastsearchtime = ::GetTickCount();
+				cur_file->m_LastSearchTime = ::GetTickCount();
 				m_localServerReqQueue.RemoveAt(posNextRequest);
 				iFiles++;
 				
@@ -1452,12 +1456,14 @@ void CDownloadQueue::GetDownloadStats(int results[],
 			results[2]++;
 		}
 		results[0] += cur_file->GetSourceCount();
-		results[1] += cur_file->GetTransferingSrcCount();
+		results[1] += cur_file->GetTransferringSrcCount();
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // CSourceHostnameResolveWnd
+
+#define WM_HOSTNAMERESOLVED		(WM_USER + 0x101)	// does not need to be placed in "UserMsgs.h"
 
 BEGIN_MESSAGE_MAP(CSourceHostnameResolveWnd, CWnd)
 	ON_MESSAGE(WM_HOSTNAMERESOLVED, OnHostnameResolved)
@@ -1608,7 +1614,7 @@ void CDownloadQueue::KademliaSearchFile(uint32 searchID, const Kademlia::CUInt12
 		{
 			//This will be a firewaled client connected to Kad only.
 			//We set the clientID to 1 as a Kad user only has 1 buddy.
-			ctemp = new CUpDownClient(temp,0,1,0,0,false);
+			ctemp = new CUpDownClient(temp,tcp,1,0,0,false);
 			//The only reason we set the real IP is for when we get a callback
 			//from this firewalled source, the compare method will match them.
 			ctemp->SetSourceFrom(SF_KADEMLIA);
@@ -1650,10 +1656,8 @@ void CDownloadQueue::ExportPartMetFilesOverview() const
 		return;
 	}
 
-#ifdef _UNICODE
 	// write Unicode byte-order mark 0xFEFF
 	fputwc(0xFEFF, file.m_pStream);
-#endif
 
 	try
 	{

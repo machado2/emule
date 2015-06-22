@@ -57,28 +57,20 @@ public:
 	void	DeleteAll();
 	uint16	GetWaitingPosition(CUpDownClient* client);
 	
-	//void	SetBanCount(uint32 in_count)			{bannedcount = in_count;}
-	//uint32	GetBanCount()							{return bannedcount;}
-	//void	UpdateBanCount();
-	
 	uint32	GetSuccessfullUpCount()					{return successfullupcount;}
 	uint32	GetFailedUpCount()						{return failedupcount;}
 	uint32	GetAverageUpTime();
-//	void	FindSourcesForFileById(CUpDownClientPtrList* srclist, const uchar* filehash);
 
-    CUpDownClient* FindBestClientInQueue(bool allowLowIdAddNextConnectToBeSet = false);
+    CUpDownClient* FindBestClientInQueue();
     void ReSortUploadSlots(bool force = false);
 
 protected:
 	void	RemoveFromWaitingQueue(POSITION pos, bool updatewindow);
-//	POSITION	GetWaitingClient(CUpDownClient* client);
-//	POSITION	GetWaitingClientByID(CUpDownClient* client);
-//	POSITION	GetDownloadingClient(CUpDownClient* client);
-	bool		AcceptNewClient();
+	bool		AcceptNewClient(bool addOnNextConnect = false);
 	bool		AcceptNewClient(uint32 curUploadSlots);
 	bool		ForceNewClient(bool allowEmptyWaitingQueue = false);
 
-	bool		AddUpNextClient(CUpDownClient* directadd = 0);
+	bool		AddUpNextClient(LPCTSTR pszReason, CUpDownClient* directadd = 0);
 	
 	static VOID CALLBACK UploadTimer(HWND hWnd, UINT nMsg, UINT nId, DWORD dwTime);
 
@@ -98,8 +90,8 @@ private:
 		uint32	datalen;
 		DWORD	timestamp;
 	};
-	CList<uint64,uint64> avarage_dr_list;
-    CList<uint64,uint64> avarage_friend_dr_list;
+	CList<uint64> avarage_dr_list;
+    CList<uint64> avarage_friend_dr_list;
 	CList<DWORD,DWORD> avarage_tick_list;
 	CList<int,int> activeClients_list;
     CList<DWORD,DWORD> activeClients_tick_list;
@@ -112,7 +104,6 @@ private:
 	uint32	failedupcount;
 	uint32	totaluploadtime;
 	uint32	m_nLastStartUpload;
-	bool	lastupslotHighID; // VQB lowID alternation
 	uint32	m_dwRemovedClientByScore;
 
 	uint32	m_imaxscore;

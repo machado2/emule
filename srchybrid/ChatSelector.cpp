@@ -35,9 +35,9 @@
 #include "ClientList.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -73,7 +73,6 @@ BEGIN_MESSAGE_MAP(CChatSelector, CClosableTabCtrl)
 	ON_NOTIFY_REFLECT(TCN_SELCHANGE, OnTcnSelchangeChatsel)
 	ON_BN_CLICKED(IDC_CCLOSE, OnBnClickedCclose)
 	ON_BN_CLICKED(IDC_CSEND, OnBnClickedCsend)
-	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
 CChatSelector::CChatSelector()
@@ -84,7 +83,7 @@ CChatSelector::CChatSelector()
 	m_lastemptyicon = false;
 	m_blinkstate = false;
 	m_Timer = 0;
-	m_bCloseable = false;
+	m_bCloseable = true;
 }
 
 CChatSelector::~CChatSelector()
@@ -653,53 +652,29 @@ void CChatSelector::OnDestroy()
 	CClosableTabCtrl::OnDestroy();
 }
 
-void CChatSelector::OnContextMenu(CWnd* pWnd, CPoint point)
-{ 
-	const CChatItem* ci = GetCurrentChatItem();
-	if (!ci)
-		return;
-
-
-	bool  isvalidconclient=false;
-	if (ci->client &&  ci->client->HasValidHash())
-		isvalidconclient=true;
-
-	CTitleMenu ChatMenu;
-	ChatMenu.CreatePopupMenu(); 
-	ChatMenu.AddMenuTitle(GetResString(IDS_CW_MESSAGES),true);
-
-	ChatMenu.AppendMenu(MF_STRING | isvalidconclient?MF_ENABLED : MF_GRAYED, MP_DETAIL, GetResString(IDS_SHOWDETAILS),_T("CLIENTDETAILS"));
-	ChatMenu.AppendMenu(MF_STRING | (isvalidconclient && !ci->client->IsFriend() )? MF_ENABLED : MF_GRAYED , MP_ADDFRIEND, GetResString(IDS_ADDAFRIEND),_T("ADDFRIEND"));
-	ChatMenu.AppendMenu(MF_STRING, MP_REMOVE, GetResString(IDS_FD_CLOSE), _T("DELETE") );
-
-	ChatMenu.TrackPopupMenu(TPM_LEFTALIGN |TPM_RIGHTBUTTON, point.x, point.y, this);
- 	VERIFY( ChatMenu.DestroyMenu() );
-	
-}
-
 BOOL CChatSelector::OnCommand(WPARAM wParam, LPARAM lParam)
 {
-	switch (wParam){ 
+	switch (wParam){
 		case MP_DETAIL:{
 			const CChatItem* ci = GetCurrentChatItem();
 			if (ci) {
 				CClientDetailDialog dialog(ci->client);
 				dialog.DoModal();
 			}
-			break;
+			return TRUE;
 		}
 		case MP_ADDFRIEND:{
 			const CChatItem* ci = GetCurrentChatItem();
 			if (ci && !ci->client->IsFriend() )
 				theApp.friendlist->AddFriend(ci->client);
-			break;
+			return TRUE;
 		}
 		case MP_REMOVE:{
 			const CChatItem* ci = GetCurrentChatItem();
 			if (ci)
 				EndSession(ci->client);
-			break;
+			return TRUE;
 		}
 	}
-	return TRUE;
+	return CClosableTabCtrl::OnCommand(wParam, lParam);
 }

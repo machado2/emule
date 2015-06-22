@@ -25,8 +25,8 @@ namespace Kademlia{
 };
 typedef CTypedPtrList<CPtrList, CUpDownClient*> CUpDownClientPtrList;
 
-#define BAN_CLEANUP_TIME	1200000 // 20 min
-
+#define	NUM_CLIENTLIST_STATS	19
+#define BAN_CLEANUP_TIME		1200000 // 20 min
 
 //------------CDeletedClient Class----------------------
 // this class / list is a bit overkill, but currently needed to avoid any exploit possibtility
@@ -40,9 +40,9 @@ struct PORTANDHASH{
 class CDeletedClient{
 public:
 	CDeletedClient(const CUpDownClient* pClient);
-	CArray<PORTANDHASH,PORTANDHASH> m_ItemsList;
-	uint32							m_dwInserted;
-	uint32							m_cBadRequest;
+	CArray<PORTANDHASH> m_ItemsList;
+	uint32				m_dwInserted;
+	uint32				m_cBadRequest;
 };
 
 // ----------------------CClientList Class---------------
@@ -50,12 +50,19 @@ class CClientList
 {
 	friend class CClientListCtrl;
 
+	enum buddyState
+	{
+		Disconnected,
+		Connecting,
+		Connected
+	};
+
 public:
 	CClientList();
 	~CClientList();
 	void	AddClient(CUpDownClient* toadd,bool bSkipDupTest = false);
 	void	RemoveClient(CUpDownClient* toremove, LPCTSTR pszReason = NULL);
-	void	GetStatistics(uint32& totalclient, int stats[],
+	void	GetStatistics(uint32& totalclient, int stats[NUM_CLIENTLIST_STATS],
 						  CMap<uint32, uint32, uint32, uint32>& clientVersionEDonkey,
 						  CMap<uint32, uint32, uint32, uint32>& clientVersionEDonkeyHybrid,
 						  CMap<uint32, uint32, uint32, uint32>& clientVersionEMule,

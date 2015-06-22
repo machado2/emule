@@ -39,9 +39,9 @@
 #include "Log.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -140,8 +140,7 @@ void CServerConnect::ConnectToServer(CServer* server, bool multiconnect)
 	m_lstOpenSockets.AddTail((void*&)newsocket);
 	newsocket->Create(0,SOCK_STREAM,FD_READ|FD_WRITE|FD_CLOSE|FD_CONNECT,NULL);
 	newsocket->ConnectToServer(server);
-	ULONG x = GetTickCount();
-	connectionattemps.SetAt(x, newsocket);
+	connectionattemps.SetAt(GetTickCount(), newsocket);
 }
 
 void CServerConnect::StopConnectionTry()
@@ -213,9 +212,7 @@ void CServerConnect::ConnectionEstablished(CServerSocket* sender)
 		tagPort.WriteTagToFile(&data);
 
 		CTag tagFlags(CT_SERVER_FLAGS,SRVCAP_ZLIB | SRVCAP_NEWTAGS);
-#ifdef _UNICODE
 		tagFlags.SetInt(tagFlags.GetInt() | SRVCAP_UNICODE);
-#endif
 		tagFlags.WriteTagToFile(&data);
 
 		// eMule Version (14-Mar-2004: requested by lugdunummaster (need for LowID clients which have no chance 

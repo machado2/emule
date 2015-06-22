@@ -35,9 +35,12 @@
 #endif
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+#ifdef _DEBUG
 extern _CRT_ALLOC_HOOK g_pfnPrevCrtAllocHook;
 #endif
 
@@ -45,8 +48,22 @@ extern _CRT_ALLOC_HOOK g_pfnPrevCrtAllocHook;
 // CStatisticsDlg dialog
 
 IMPLEMENT_DYNAMIC(CStatisticsDlg, CDialog)
+
+BEGIN_MESSAGE_MAP(CStatisticsDlg, CResizableDialog)
+	ON_WM_SHOWWINDOW()
+	ON_WM_SIZE()
+	ON_BN_CLICKED(IDC_BNMENU, OnMenuButtonClicked)	
+	ON_WM_SYSCOLORCHANGE()
+	ON_STN_DBLCLK(IDC_SCOPE_D, OnStnDblclickScopeD)
+	ON_STN_DBLCLK(IDC_SCOPE_U, OnStnDblclickScopeU)
+	ON_STN_DBLCLK(IDC_STATSSCOPE, OnStnDblclickStatsscope)
+END_MESSAGE_MAP()
+
 CStatisticsDlg::CStatisticsDlg(CWnd* pParent /*=NULL*/)
-	: CResizableDialog(CStatisticsDlg::IDD, pParent) , m_DownloadOMeter( 3 ),m_Statistics(4),m_UploadOMeter(5)
+	: CResizableDialog(CStatisticsDlg::IDD, pParent)
+	, m_DownloadOMeter(3)
+	, m_Statistics(4)
+	, m_UploadOMeter(5)
 
 {
 	m_oldcx=0;
@@ -70,20 +87,8 @@ CStatisticsDlg::~CStatisticsDlg()
 void CStatisticsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CResizableDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CExoSliderDlg)
 	DDX_Control(pDX, IDC_STATTREE, stattree);
-	//}}AFX_DATA_MAP
 }
-
-
-BEGIN_MESSAGE_MAP(CStatisticsDlg, CResizableDialog)
-	//{{AFX_MSG_MAP(CStatisticsDlg)
-	ON_WM_SHOWWINDOW()
-	ON_WM_SIZE()
-	//}}AFX_MSG_MAP
-	ON_BN_CLICKED(IDC_BNMENU, OnMenuButtonClicked)	
-	ON_WM_SYSCOLORCHANGE()
-END_MESSAGE_MAP()
 
 void CStatisticsDlg::OnSysColorChange()
 {
@@ -121,32 +126,10 @@ void CStatisticsDlg::SetAllIcons()
 
 	COLORREF crBk = GetSysColor(COLOR_WINDOW);
 	COLORREF crFg = GetSysColor(COLOR_WINDOWTEXT);
-	LPCTSTR pszSkinProfile = thePrefs.GetSkinProfile();
-	if (pszSkinProfile != NULL && pszSkinProfile[0] != _T('\0'))
-	{
-		TCHAR szColor[MAX_PATH];
-		GetPrivateProfileString(_T("Colors"), _T("StatisticsTvBk"), _T(""), szColor, ARRSIZE(szColor), pszSkinProfile);
-		if (szColor[0] == _T('\0'))
-			GetPrivateProfileString(_T("Colors"), _T("DefLvBk"), _T(""), szColor, ARRSIZE(szColor), pszSkinProfile);
-		if (szColor[0] != _T('\0'))
-		{
-			UINT red, grn, blu;
-			int iVals = _stscanf(szColor, _T("%i , %i , %i"), &red, &grn, &blu);
-			if (iVals == 3)
-				crBk = RGB(red, grn, blu);
-		}
 
-		GetPrivateProfileString(_T("Colors"), _T("StatisticsTvFg"), _T(""), szColor, ARRSIZE(szColor), pszSkinProfile);
-		if (szColor[0] == _T('\0'))
-			GetPrivateProfileString(_T("Colors"), _T("DefLvFg"), _T(""), szColor, ARRSIZE(szColor), pszSkinProfile);
-		if (szColor[0] != _T('\0'))
-		{
-			UINT red, grn, blu;
-			int iVals = _stscanf(szColor, _T("%i , %i , %i"), &red, &grn, &blu);
-			if (iVals == 3)
-				crFg = RGB(red, grn, blu);
-		}
-	}
+	theApp.LoadSkinColorAlt(_T("StatisticsTvBk"), _T("DefLvBk"), crBk);
+	theApp.LoadSkinColorAlt(_T("StatisticsTvFg"), _T("DefLvFg"), crFg);
+
 	stattree.SetBkColor(crBk);
 	stattree.SetTextColor(crFg);
 	// can't use 'TVM_SETLINECOLOR' because the color may not match that one used in "StatsGeneric" item image.
@@ -183,25 +166,28 @@ BOOL CStatisticsDlg::OnInitDialog()
 #endif
 	// Setup download-scope
 	CRect rect;
-	GetDlgItem(IDC_SCOPE_D)->GetWindowRect(rect) ;
-	ScreenToClient(rect) ;
-	m_DownloadOMeter.Create(WS_VISIBLE | WS_CHILD, rect, this) ; 
-	SetARange(true,thePrefs.GetMaxGraphDownloadRate());
-	m_DownloadOMeter.SetYUnits(GetResString(IDS_KBYTESEC)) ;
+	GetDlgItem(IDC_SCOPE_D)->GetWindowRect(rect);
+	GetDlgItem(IDC_SCOPE_D)->DestroyWindow();
+	ScreenToClient(rect);
+	m_DownloadOMeter.Create(WS_VISIBLE | WS_CHILD, rect, this, IDC_SCOPE_D);
+	SetARange(true, thePrefs.GetMaxGraphDownloadRate());
+	m_DownloadOMeter.SetYUnits(GetResString(IDS_KBYTESEC));
 	
 	// Setup upload-scope
-	GetDlgItem(IDC_SCOPE_U)->GetWindowRect(rect) ;
-	ScreenToClient(rect) ;
-	m_UploadOMeter.Create(WS_VISIBLE | WS_CHILD, rect, this) ; 
-	SetARange(false,thePrefs.GetMaxGraphUploadRate());
-	m_UploadOMeter.SetYUnits(GetResString(IDS_KBYTESEC)) ;
+	GetDlgItem(IDC_SCOPE_U)->GetWindowRect(rect);
+	GetDlgItem(IDC_SCOPE_U)->DestroyWindow();
+	ScreenToClient(rect);
+	m_UploadOMeter.Create(WS_VISIBLE | WS_CHILD, rect, this, IDC_SCOPE_U);
+	SetARange(false, thePrefs.GetMaxGraphUploadRate());
+	m_UploadOMeter.SetYUnits(GetResString(IDS_KBYTESEC));
 	
 	// Setup additional graph-scope
-	GetDlgItem(IDC_STATSSCOPE)->GetWindowRect(rect) ;
-	ScreenToClient(rect) ;
-	m_Statistics.Create(WS_VISIBLE | WS_CHILD, rect, this) ; 
-	m_Statistics.SetRanges(0, thePrefs.GetStatsMax()) ;
-	m_Statistics.autofitYscale=false;
+	GetDlgItem(IDC_STATSSCOPE)->GetWindowRect(rect);
+	GetDlgItem(IDC_STATSSCOPE)->DestroyWindow();
+	ScreenToClient(rect);
+	m_Statistics.Create(WS_VISIBLE | WS_CHILD, rect, this, IDC_STATSSCOPE);
+	m_Statistics.SetRanges(0, thePrefs.GetStatsMax());
+	m_Statistics.autofitYscale = false;
 	// Set the trend ratio of the Active Connections trend in the Connection Statistics scope.
 	m_Statistics.SetTrendRatio(0, thePrefs.GetStatsConnectionsGraphRatio());
 
@@ -229,8 +215,7 @@ BOOL CStatisticsDlg::OnInitDialog()
 	GetWindowRect(rcW);
 	ScreenToClient(rcW);
 
-	CWnd* pWnd = GetDlgItem(IDC_STATTREE);
-	pWnd->GetWindowRect(rcTree);
+	GetDlgItem(IDC_STATTREE)->GetWindowRect(rcTree);
 	ScreenToClient(rcTree);
 	m_DownloadOMeter.GetWindowRect(rcDown);
 	ScreenToClient(rcDown);
@@ -296,15 +281,11 @@ BOOL CStatisticsDlg::OnInitDialog()
 
 	m_wndSplitterstat_HL.MoveWindow(rcSpl);
 
-	int var = 0;
-
 	DoResize_V(PosStatVnewX - PosStatVinitX);
 	DoResize_HL(PosStatVnewY - PosStatVinitY);
 	DoResize_HR(PosStatVnewZ - PosStatVinitZ);
 
 	Localize();
-
-
 	ShowStatistics(true);
 	
 	return true;
@@ -450,14 +431,10 @@ LRESULT CStatisticsDlg::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam
 			if (m_wndSplitterstat) 
 			{
 				CRect rctree,rcSpl,rcW;
-				CWnd* pWnd;
-
 				GetWindowRect(rcW);
 				ScreenToClient(rcW);
 
-				pWnd = GetDlgItem(IDC_STATTREE);
-				pWnd->GetWindowRect(rctree);
-
+				GetDlgItem(IDC_STATTREE)->GetWindowRect(rctree);
 				ScreenToClient(rctree);
 				
 				if (rcW.Width()>0) 
@@ -879,6 +856,7 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 						int i = 0;
 						uint64	PortDataDefault =	thePrefs.GetDownDataPort_4662();
 						uint64	PortDataOther =		thePrefs.GetDownDataPort_OTHER();
+						uint64	PortDataPeerCache =	thePrefs.GetDownDataPort_PeerCache();
 						uint64	PortDataTotal =		thePrefs.GetDownSessionDataPort();
 						double	percentPortTransferred = 0;
 
@@ -893,6 +871,14 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 						else
 							percentPortTransferred = 0;
 						cbuffer.Format( _T("%s: %s (%1.1f%%)") , GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataOther, false, false ) , percentPortTransferred);
+						stattree.SetItemText( down_spb[i] , cbuffer );
+						i++;
+
+						if ( PortDataTotal!=0 && PortDataPeerCache!=0 )
+							percentPortTransferred = (double) 100 * PortDataPeerCache / PortDataTotal;
+						else
+							percentPortTransferred = 0;
+						cbuffer.Format( _T("%s: %s (%1.1f%%)") , thePrefs.GetPeerCacheShow() ? _T("PeerCache") : GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataPeerCache, false, false ) , percentPortTransferred);
 						stattree.SetItemText( down_spb[i] , cbuffer );
 						i++;
 					}
@@ -1155,6 +1141,7 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 						int i = 0;
 						uint64	PortDataDefault =	thePrefs.GetCumDownDataPort_4662();
 						uint64	PortDataOther =		thePrefs.GetCumDownDataPort_OTHER();
+						uint64	PortDataPeerCache =	thePrefs.GetCumDownDataPort_PeerCache();
 						uint64	PortDataTotal =		thePrefs.GetDownTotalPortData();
 						double	percentPortTransferred = 0;
 
@@ -1168,7 +1155,15 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 							percentPortTransferred = (double) 100 * PortDataOther / PortDataTotal;
 						else
 							percentPortTransferred = 0;
-						cbuffer.Format( _T("%s: %s (%1.1f%%)") , GetResString(IDS_STATS_PRTOTHER), CastItoXBytes( PortDataOther, false, false ) , percentPortTransferred);
+						cbuffer.Format( _T("%s: %s (%1.1f%%)") , GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataOther, false, false ) , percentPortTransferred);
+						stattree.SetItemText( down_tpb[i] , cbuffer );
+						i++;
+
+						if ( PortDataTotal!=0 && PortDataPeerCache!=0 )
+							percentPortTransferred = (double) 100 * PortDataPeerCache / PortDataTotal;
+						else
+							percentPortTransferred = 0;
+						cbuffer.Format( _T("%s: %s (%1.1f%%)") , thePrefs.GetPeerCacheShow() ? _T("PeerCache") : GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataPeerCache, false, false ) , percentPortTransferred);
 						stattree.SetItemText( down_tpb[i] , cbuffer );
 						i++;
 					}
@@ -1359,6 +1354,7 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 						int i = 0;
 						uint64	PortDataDefault =	thePrefs.GetUpDataPort_4662();
 						uint64	PortDataOther =		thePrefs.GetUpDataPort_OTHER();
+						uint64	PortDataPeerCache =	thePrefs.GetUpDataPort_PeerCache();
 						uint64	PortDataTotal =		thePrefs.GetUpSessionPortData();
 						double	percentPortTransferred = 0;
 
@@ -1373,6 +1369,14 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 						else
 							percentPortTransferred = 0;
 						cbuffer.Format( _T("%s: %s (%1.1f%%)") , GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataOther, false, false ) , percentPortTransferred);
+						stattree.SetItemText( up_spb[i] , cbuffer );
+						i++;
+
+						if ( PortDataTotal!=0 && PortDataPeerCache!=0 )
+							percentPortTransferred = (double) 100 * PortDataPeerCache / PortDataTotal;
+						else
+							percentPortTransferred = 0;
+						cbuffer.Format( _T("%s: %s (%1.1f%%)") , thePrefs.GetPeerCacheShow() ? _T("PeerCache") : GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataPeerCache, false, false ) , percentPortTransferred);
 						stattree.SetItemText( up_spb[i] , cbuffer );
 						i++;
 					}
@@ -1572,6 +1576,7 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 						int i = 0;
 						uint64	PortDataDefault =	thePrefs.GetCumUpDataPort_4662();
 						uint64	PortDataOther =		thePrefs.GetCumUpDataPort_OTHER();
+						uint64	PortDataPeerCache =	thePrefs.GetCumUpDataPort_PeerCache();
 						uint64	PortDataTotal =		thePrefs.GetUpTotalPortData();
 						double	percentPortTransferred = 0;
 
@@ -1586,6 +1591,14 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 						else
 							percentPortTransferred = 0;
 						cbuffer.Format( _T("%s: %s (%1.1f%%)") , GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataOther, false, false ) , percentPortTransferred);
+						stattree.SetItemText( up_tpb[i] , cbuffer );
+						i++;
+
+						if ( PortDataTotal!=0 && PortDataPeerCache!=0 )
+							percentPortTransferred = (double) 100 * PortDataPeerCache / PortDataTotal;
+						else
+							percentPortTransferred = 0;
+						cbuffer.Format( _T("%s: %s (%1.1f%%)") , thePrefs.GetPeerCacheShow() ? _T("PeerCache") : GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataPeerCache, false, false ) , percentPortTransferred);
 						stattree.SetItemText( up_tpb[i] , cbuffer );
 						i++;
 					}
@@ -2046,6 +2059,7 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 								int i = 0;
 								uint64	PortDataDefault =	(uint64) thePrefs.GetCumUpDataPort_4662() * avgModifier[mx];
 								uint64	PortDataOther =		(uint64) thePrefs.GetCumUpDataPort_OTHER() * avgModifier[mx];
+								uint64	PortDataPeerCache =	(uint64) thePrefs.GetCumUpDataPort_PeerCache() * avgModifier[mx];
 								uint64	PortDataTotal =		(uint64) thePrefs.GetUpTotalPortData() * avgModifier[mx];
 								double	percentPortTransferred = 0;
 
@@ -2060,6 +2074,14 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 								else
 									percentPortTransferred = 0;
 								cbuffer.Format( _T("%s: %s (%1.1f%%)") , GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataOther, false, false ) , percentPortTransferred);
+								stattree.SetItemText( time_aap_up_dp[mx][i] , cbuffer );
+								i++;
+
+								if ( PortDataTotal!=0 && PortDataPeerCache!=0 )
+									percentPortTransferred = (double) 100 * PortDataPeerCache / PortDataTotal;
+								else
+									percentPortTransferred = 0;
+								cbuffer.Format( _T("%s: %s (%1.1f%%)") , thePrefs.GetPeerCacheShow() ? _T("PeerCache") : GetResString(IDS_STATS_PRTOTHER) , CastItoXBytes( PortDataPeerCache, false, false ) , percentPortTransferred);
 								stattree.SetItemText( time_aap_up_dp[mx][i] , cbuffer );
 								i++;
 							}
@@ -2255,6 +2277,7 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 								int i = 0;
 								uint64	PortDataDefault =	(uint64) thePrefs.GetCumDownDataPort_4662() * avgModifier[mx];
 								uint64	PortDataOther =		(uint64) thePrefs.GetCumDownDataPort_OTHER() * avgModifier[mx];
+								uint64	PortDataPeerCache =	(uint64) thePrefs.GetCumDownDataPort_PeerCache() * avgModifier[mx];
 								uint64	PortDataTotal =		(uint64) thePrefs.GetDownTotalPortData() * avgModifier[mx];
 								double	percentPortTransferred = 0;
 
@@ -2269,6 +2292,14 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 								else
 									percentPortTransferred = 0;
 								cbuffer.Format( _T("%s: %s (%1.1f%%)") , GetResString(IDS_STATS_PRTOTHER), CastItoXBytes( PortDataOther, false, false ) , percentPortTransferred);
+								stattree.SetItemText( time_aap_down_dp[mx][i] , cbuffer );
+								i++;
+
+								if ( PortDataTotal!=0 && PortDataPeerCache!=0 )
+									percentPortTransferred = (double) 100 * PortDataPeerCache / PortDataTotal;
+								else
+									percentPortTransferred = 0;
+								cbuffer.Format( _T("%s: %s (%1.1f%%)") , thePrefs.GetPeerCacheShow() ? _T("PeerCache") : GetResString(IDS_STATS_PRTOTHER), CastItoXBytes( PortDataPeerCache, false, false ) , percentPortTransferred);
 								stattree.SetItemText( time_aap_down_dp[mx][i] , cbuffer );
 								i++;
 							}
@@ -2375,7 +2406,7 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 		CMap<uint32, uint32, uint32, uint32>	clientVersionEMule;
 		CMap<uint32, uint32, uint32, uint32>	clientVersionAMule;
 		uint32									totalclient;
-		int										myStats[19];
+		int										myStats[NUM_CLIENTLIST_STATS];
 
 		theApp.clientlist->GetStatistics(totalclient, myStats, 
 										 clientVersionEDonkey, 
@@ -2386,7 +2417,8 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 		cbuffer.Format(_T("%s: %u "), GetResString(IDS_CLIENTLIST), totalclient);
 		stattree.SetItemText(cligen[5], cbuffer);
 
-		cbuffer.Format(_T("%s: %u (%.1f%%) : %u (%.1f%%)"), GetResString(IDS_STATS_SECUREIDENT), myStats[12] , (myStats[2]>0)?((double)100*myStats[12] / myStats[2]):0, myStats[13] , (myStats[2]>0)?((double)100*myStats[13] / myStats[2] ):0);
+		int SIclients=myStats[12]+myStats[13];
+		cbuffer.Format(_T("%s: %u (%.1f%%) : %u (%.1f%%)"), GetResString(IDS_STATS_SECUREIDENT), myStats[12] , (SIclients>0)?((double)100*myStats[12] / SIclients):0, myStats[13] , (SIclients>0)?((double)100*myStats[13] / SIclients ):0);
 		stattree.SetItemText(cligen[3], cbuffer);
 
 		cbuffer.Format(_T("%s: %u (%.1f%%)"), GetResString(IDS_IDLOW), myStats[14] , (totalclient>0)?((double)100*myStats[14] / totalclient):0);
@@ -2747,15 +2779,21 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 		// CLIENTS -> PORT SECTION
 		if (forceUpdate || stattree.IsExpanded(hcliport)) 
 		{
-
-			cbuffer.Format(_T("%s: %u (%1.1f%%)"), GetResString(IDS_STATS_PRTDEF), myStats[8], myStats[8]>0?((double)100*myStats[8]/(myStats[8]+myStats[9])):0);stattree.SetItemText(cliport[0], cbuffer);
-			cbuffer.Format(_T("%s: %u (%1.1f%%)"), GetResString(IDS_STATS_PRTOTHER), myStats[9], myStats[9]>0?((double)100*myStats[9]/(myStats[8]+myStats[9])):0);stattree.SetItemText(cliport[1], cbuffer);
+			cbuffer.Format(_T("%s: %u (%1.1f%%)"), GetResString(IDS_STATS_PRTDEF), myStats[8], myStats[8]>0?((double)100*myStats[8]/(myStats[8]+myStats[9])):0);
+			stattree.SetItemText(cliport[0], cbuffer);
+			cbuffer.Format(_T("%s: %u (%1.1f%%)"), GetResString(IDS_STATS_PRTOTHER), myStats[9], myStats[9]>0?((double)100*myStats[9]/(myStats[8]+myStats[9])):0);
+			stattree.SetItemText(cliport[1], cbuffer);
 		} // - End Clients -> Port Section
 
 		// General Client Statistics
-		cbuffer.Format(_T("%s: %u (%1.1f%%)"), GetResString(IDS_STATS_PROBLEMATIC), myStats[6],(double)100*myStats[6]/totalclient );stattree.SetItemText(cligen[0], cbuffer);
-		cbuffer.Format(_T("%s: %u (%1.1f%%)"), GetResString(IDS_BANNED), myStats[7], (double)100*myStats[7]/totalclient);stattree.SetItemText(cligen[1], cbuffer);
-		cbuffer.Format(GetResString(IDS_STATS_FILTEREDCLIENTS)+_T(" (%1.1f%%)"),theStats.filteredclients, (double)100*theStats.filteredclients/totalclient);stattree.SetItemText(cligen[2], cbuffer);
+		cbuffer.Format(_T("%s: %u (%1.1f%%)"), GetResString(IDS_STATS_PROBLEMATIC), myStats[6], (double)100*myStats[6]/totalclient);
+		stattree.SetItemText(cligen[0], cbuffer);
+		
+		cbuffer.Format(_T("%s: %u"), GetResString(IDS_BANNED), theApp.clientlist->GetBannedCount());
+		stattree.SetItemText(cligen[1], cbuffer);
+		
+		cbuffer.Format(GetResString(IDS_STATS_FILTEREDCLIENTS), theStats.filteredclients);
+		stattree.SetItemText(cligen[2], cbuffer);
 	} // - END CLIENTS SECTION
 
 
@@ -2871,11 +2909,11 @@ void CStatisticsDlg::ShowStatistics(bool forceUpdate)
 		cbuffer.Format(GetResString(IDS_DWTOT_TSD),CastItoXBytes(ui64TotFileSize, false, false)); 
 		stattree.SetItemText(h_total_size_of_dls, cbuffer);
 
-		uint64 ui64BytesTransfered = (ui64TotFileSize - ui64TotBytesLeftToTransfer);
+		uint64 ui64BytesTransferred = (ui64TotFileSize - ui64TotBytesLeftToTransfer);
 		float fPercent = 0.0f;
 		if (ui64TotFileSize != 0)
-			fPercent = (float)((ui64BytesTransfered*100)/(ui64TotFileSize)); //kuchin
-		cbuffer.Format(GetResString(IDS_DWTOT_TCS),CastItoXBytes(ui64BytesTransfered, false, false), fPercent); 
+			fPercent = (float)((ui64BytesTransferred*100)/(ui64TotFileSize)); //kuchin
+		cbuffer.Format(GetResString(IDS_DWTOT_TCS),CastItoXBytes(ui64BytesTransferred, false, false), fPercent); 
 		stattree.SetItemText(h_total_size_dld, cbuffer);
 
 		cbuffer.Format(GetResString(IDS_DWTOT_TSL),CastItoXBytes(ui64TotBytesLeftToTransfer, false, false)); 
@@ -2986,6 +3024,11 @@ void CStatisticsDlg::ShowInterval()
 		
 		// Dynamic update of time scale [Maella]
 		int shownSecs = plotRect.Width() * thePrefs.GetTrafficOMeterInterval(); 
+		
+		// CB Mod ---> Make Setters
+		m_Statistics.m_nXPartial = m_DownloadOMeter.m_nXPartial = m_UploadOMeter.m_nXPartial = shownSecs % 3600;
+		m_Statistics.m_nXGrids = m_DownloadOMeter.m_nXGrids = m_UploadOMeter.m_nXGrids = shownSecs / 3600;
+
 		if(shownSecs == 0)
 		{
 			m_DownloadOMeter.SetXUnits(GetResString(IDS_STOPPED)); 
@@ -3064,10 +3107,10 @@ void CStatisticsDlg::CreateMyTree()
 	for(int i = 0; i<6; i++) 
 		up_S[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), h_up_session); //MORPH - Added by Yun.SF3, ZZ Upload System
 	hup_scb= stattree.InsertItem(GetResString(IDS_CLIENTS),up_S[0]);							// Clients Section
-	for(int i = 0; i<7; i++) 
+	for(int i = 0; i<ARRSIZE(up_scb); i++) 
 		up_scb[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), hup_scb);
 	hup_spb= stattree.InsertItem(GetResString(IDS_PORT),up_S[0]);								// Ports Section
-	for(int i = 0; i<2; i++) 
+	for(int i = 0; i<ARRSIZE(up_spb); i++) 
 		up_spb[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), hup_spb);
 	hup_ssb= stattree.InsertItem(GetResString(IDS_STATS_DATASOURCE),up_S[0]);					// Data Source Section
 	for(int i = 0; i<2; i++) 
@@ -3080,10 +3123,10 @@ void CStatisticsDlg::CreateMyTree()
 	h_up_total= stattree.InsertItem(GetResString(IDS_STATS_CUMULATIVE),9,9, h_upload);		// Cumulative Section (Uploads)
 	up_T[0]= stattree.InsertItem(GetResString(IDS_FSTAT_WAITING),h_up_total);				// Uploaded Data (Total)
 	hup_tcb= stattree.InsertItem(GetResString(IDS_CLIENTS),up_T[0]);							// Clients Section
-	for(int i = 0; i<7; i++) 
+	for(int i = 0; i<ARRSIZE(up_tcb); i++) 
 		up_tcb[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), hup_tcb);
 	hup_tpb= stattree.InsertItem(GetResString(IDS_PORT),up_T[0]);								// Ports Section
-	for(int i = 0; i<2; i++) 
+	for(int i = 0; i<ARRSIZE(up_tpb); i++) 
 		up_tpb[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), hup_tpb);
 	hup_tsb= stattree.InsertItem(GetResString(IDS_STATS_DATASOURCE),up_T[0]);					// Data Source Section
 	for(int i = 0; i<2; i++) 
@@ -3099,10 +3142,10 @@ void CStatisticsDlg::CreateMyTree()
 	for(int i = 0; i<8; i++) 
 		down_S[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), h_down_session);
 	hdown_scb= stattree.InsertItem(GetResString(IDS_CLIENTS),down_S[0]);						// Clients Section
-	for(int i = 0; i<8; i++) 
+	for(int i = 0; i<ARRSIZE(down_scb); i++) 
 		down_scb[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), hdown_scb);
 	hdown_spb= stattree.InsertItem(GetResString(IDS_PORT),down_S[0]);							// Ports Section
-	for(int i = 0; i<2; i++) 
+	for(int i = 0; i<ARRSIZE(down_spb); i++) 
 		down_spb[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), hdown_spb);
 	for(int i = 0; i<ARRSIZE(down_sources); i++) 
 		down_sources[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), down_S[3]);
@@ -3115,10 +3158,10 @@ void CStatisticsDlg::CreateMyTree()
 	for(int i = 0; i<6; i++)
 		down_T[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), h_down_total);
 	hdown_tcb= stattree.InsertItem(GetResString(IDS_CLIENTS),down_T[0]);						// Clients Section
-	for(int i = 0; i<8; i++) 
+	for(int i = 0; i<ARRSIZE(down_tcb); i++) 
 		down_tcb[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), hdown_tcb);
 	hdown_tpb= stattree.InsertItem(GetResString(IDS_PORT),down_T[0]);							// Ports Section
-	for(int i = 0; i<2; i++) 
+	for(int i = 0; i<ARRSIZE(down_tpb); i++) 
 		down_tpb[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), hdown_tpb);
 	for(int i = 0; i<4; i++)
 		down_tsessions[i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), down_T[2]);
@@ -3172,7 +3215,7 @@ void CStatisticsDlg::CreateMyTree()
 		for(int i = 0; i<7; i++)
 			time_aap_up_dc[x][i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), time_aap_up_hd[x][0]);
 		time_aap_up_hd[x][1] = stattree.InsertItem(GetResString(IDS_PORT),time_aap_up[x][0]);								// Ports Section
-		for(int i = 0; i<2; i++)
+		for(int i = 0; i<ARRSIZE(time_aap_up_dp[0]); i++)
 			time_aap_up_dp[x][i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), time_aap_up_hd[x][1]);
 		time_aap_up_hd[x][2] = stattree.InsertItem(GetResString(IDS_STATS_DATASOURCE),time_aap_up[x][0]);					// Data Source Section
 		for(int i = 0; i<2; i++)
@@ -3188,7 +3231,7 @@ void CStatisticsDlg::CreateMyTree()
 		for(int i = 0; i<8; i++)
 			time_aap_down_dc[x][i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), time_aap_down_hd[x][0]);
 		time_aap_down_hd[x][1] = stattree.InsertItem(GetResString(IDS_PORT),time_aap_down[x][0]);								// Ports Section
-		for(int i = 0; i<2; i++)
+		for(int i = 0; i<ARRSIZE(time_aap_down_dp[0]); i++)
 			time_aap_down_dp[x][i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), time_aap_down_hd[x][1]);
 		for(int i = 0; i<2; i++)
 			time_aap_down_s[x][i] = stattree.InsertItem(GetResString(IDS_FSTAT_WAITING), time_aap_down[x][2]);
@@ -3278,4 +3321,19 @@ void CStatisticsDlg::CreateMyTree()
 		cli_lastCount[i] = 0;
 
 	// End Tree Setup
+}
+
+void CStatisticsDlg::OnStnDblclickScopeD()
+{
+	theApp.emuledlg->ShowPreferences(IDD_PPG_STATS);
+}
+
+void CStatisticsDlg::OnStnDblclickScopeU()
+{
+	theApp.emuledlg->ShowPreferences(IDD_PPG_STATS);
+}
+
+void CStatisticsDlg::OnStnDblclickStatsscope()
+{
+	theApp.emuledlg->ShowPreferences(IDD_PPG_STATS);
 }

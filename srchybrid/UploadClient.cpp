@@ -40,9 +40,9 @@
 #include "Log.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -127,6 +127,8 @@ void CUpDownClient::SetUploadState(EUploadState eNewState)
 			m_nSumForAvgUpDataRate = 0;
 			m_AvarageUDR_list.RemoveAll();
 		}
+		if (eNewState == US_UPLOADING)
+			m_fSentOutOfPartReqs = 0;
 
 		// don't add any final cleanups for US_NONE here
 		m_nUploadState = eNewState;
@@ -271,7 +273,7 @@ void CUpDownClient::CreateNextBlockPackage(){
 	bool bFromPF = true; // Statistic to breakdown uploaded data by complete file vs. partfile.
 	CSyncHelper lockFile;
 	try{
-        // Buffer new data if current buffer is less than 1 MBytes
+        // Buffer new data if current buffer is less than 100 KBytes
         while (!m_BlockRequests_queue.IsEmpty() &&
                (m_addedPayloadQueueSession <= GetQueueSessionPayloadUp() || m_addedPayloadQueueSession-GetQueueSessionPayloadUp() < 100*1024)) {
 
@@ -639,10 +641,14 @@ uint32 CUpDownClient::SendBlockData(){
     uint64 sentBytesPartFile = 0;
     uint64 sentBytesPayload = 0;
 
-    if(GetFileUploadSocket() && (m_ePeerCacheUpState != PCUS_WAIT_CACHE_REPLY)) {
+    if (GetFileUploadSocket() && (m_ePeerCacheUpState != PCUS_WAIT_CACHE_REPLY))
+	{
 		CEMSocket* s = GetFileUploadSocket();
+		UINT uUpStatsPort;
+        if (m_pPCUpSocket && IsUploadingToPeerCache())
+		{
+			uUpStatsPort = (UINT)-1;
 
-        if(m_pPCUpSocket && IsUploadingToPeerCache()) {
             // Check if filedata has been sent via the normal socket since last call.
             uint64 sentBytesCompleteFileNormalSocket = socket->GetSentBytesCompleteFileSinceLastCallAndReset();
             uint64 sentBytesPartFileNormalSocket = socket->GetSentBytesPartFileSinceLastCallAndReset();
@@ -651,34 +657,25 @@ uint32 CUpDownClient::SendBlockData(){
                 AddDebugLogLine(false, _T("Sent file data via normal socket when in PC mode. Bytes: %I64i."), sentBytesCompleteFileNormalSocket + sentBytesPartFileNormalSocket);
 			}
         }
+		else
+			uUpStatsPort = GetUserPort();
 
 	    // Extended statistics information based on which client software and which port we sent this data to...
 	    // This also updates the grand total for sent bytes, etc.  And where this data came from.
         sentBytesCompleteFile = s->GetSentBytesCompleteFileSinceLastCallAndReset();
         sentBytesPartFile = s->GetSentBytesPartFileSinceLastCallAndReset();
-	    thePrefs.Add2SessionTransferData(GetClientSoft(), GetUserPort(), false, true, sentBytesCompleteFile, (IsFriend()&& GetFriendSlot()));
-	    thePrefs.Add2SessionTransferData(GetClientSoft(), GetUserPort(), true, true, sentBytesPartFile, (IsFriend()&& GetFriendSlot()));
+		thePrefs.Add2SessionTransferData(GetClientSoft(), uUpStatsPort, false, true, sentBytesCompleteFile, (IsFriend() && GetFriendSlot()));
+		thePrefs.Add2SessionTransferData(GetClientSoft(), uUpStatsPort, true, true, sentBytesPartFile, (IsFriend() && GetFriendSlot()));
 
-		m_nTransferedUp += sentBytesCompleteFile + sentBytesPartFile;
+		m_nTransferredUp += sentBytesCompleteFile + sentBytesPartFile;
         credits->AddUploaded(sentBytesCompleteFile + sentBytesPartFile, GetIP());
 
         sentBytesPayload = s->GetSentPayloadSinceLastCallAndReset();
         m_nCurQueueSessionPayloadUp += sentBytesPayload;
 
-        if(theApp.uploadqueue->CheckForTimeOver(this)) {
+        if (theApp.uploadqueue->CheckForTimeOver(this)) {
             theApp.uploadqueue->RemoveFromUploadQueue(this, _T("Completed transfer"), true);
-			//OP_OUTOFPARTREQS will tell the downloading client to go back to OnQueue..
-			//The main reason for this is that if we put the client back on queue and it goes
-			//back to the upload before the socket times out... We get a situation where the
-			//downloader things it already send the requested blocks and the uploader thinks
-			//the downloader didn't send any reqeust blocks. Then the connection times out..
-			//I did some tests with eDonkey also and it seems to work well with them also..
-			if (thePrefs.GetDebugClientTCPLevel() > 0)
-				DebugSend("OP__OutOfPartReqs", this);
-			Packet* pCancelTransferPacket = new Packet(OP_OUTOFPARTREQS, 0);
-			theStats.AddUpDataOverheadFileRequest(pCancelTransferPacket->size);
-			socket->SendPacket(pCancelTransferPacket,true,true);
-            theApp.uploadqueue->AddClientToQueue(this,true);
+			SendOutOfPartReqsAndAddToWaitingQueue();
         } 
 		else {
             // read blocks from file and put on socket
@@ -688,7 +685,7 @@ uint32 CUpDownClient::SendBlockData(){
 
     if(sentBytesCompleteFile + sentBytesPartFile > 0 ||
         m_AvarageUDR_list.GetCount() == 0 || (curTick - m_AvarageUDR_list.GetTail().timestamp) > 1*1000) {
-        // Store how much data we've transfered this round,
+        // Store how much data we've transferred this round,
         // to be able to calculate average speed later
         // keep sum of all values in list up to date
         TransferredData newitem = {sentBytesCompleteFile + sentBytesPartFile, curTick};
@@ -719,6 +716,23 @@ uint32 CUpDownClient::SendBlockData(){
     }
 
     return sentBytesCompleteFile + sentBytesPartFile;
+}
+
+void CUpDownClient::SendOutOfPartReqsAndAddToWaitingQueue()
+{
+	//OP_OUTOFPARTREQS will tell the downloading client to go back to OnQueue..
+	//The main reason for this is that if we put the client back on queue and it goes
+	//back to the upload before the socket times out... We get a situation where the
+	//downloader thinks it already sent the requested blocks and the uploader thinks
+	//the downloader didn't send any request blocks. Then the connection times out..
+	//I did some tests with eDonkey also and it seems to work well with them also..
+	if (thePrefs.GetDebugClientTCPLevel() > 0)
+		DebugSend("OP__OutOfPartReqs", this);
+	Packet* pPacket = new Packet(OP_OUTOFPARTREQS, 0);
+	theStats.AddUpDataOverheadFileRequest(pPacket->size);
+	socket->SendPacket(pPacket, true, true);
+	m_fSentOutOfPartReqs = 1;
+    theApp.uploadqueue->AddClientToQueue(this, true);
 }
 
 /**
@@ -907,16 +921,18 @@ bool CUpDownClient::GetFriendSlot() const
 	return m_bFriendSlot;
 }
 
-CEMSocket* CUpDownClient::GetFileUploadSocket(bool log) {
-    if(m_pPCUpSocket && (IsUploadingToPeerCache() || m_ePeerCacheUpState == PCUS_WAIT_CACHE_REPLY)) {
-        if(thePrefs.GetVerbose() && log)
+CEMSocket* CUpDownClient::GetFileUploadSocket(bool bLog)
+{
+    if (m_pPCUpSocket && (IsUploadingToPeerCache() || m_ePeerCacheUpState == PCUS_WAIT_CACHE_REPLY))
+	{
+        if (bLog && thePrefs.GetVerbose())
             AddDebugLogLine(false, _T("%s got peercache socket."), DbgGetClientInfo());
-
         return m_pPCUpSocket;
-    } else {
-        if(thePrefs.GetVerbose() && log)
+    }
+	else
+	{
+        if (bLog && thePrefs.GetVerbose())
             AddDebugLogLine(false, _T("%s got normal socket."), DbgGetClientInfo());
-
         return socket;
     }
 }

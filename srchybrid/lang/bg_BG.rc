@@ -268,7 +268,7 @@ BEGIN
     IDS_QL_RATING           "Категория"
     IDS_CONNECTINGTO        "Свързване към %s (%s:%i)..."
     IDS_CLIENTS             "Клиенти"
-    IDS_SEARCH_ANY          "Някакъв"
+    IDS_SEARCH_ANY          "Всякакъв"
     IDS_SEARCH_AUDIO        "Аудио"
 END
 
@@ -1450,7 +1450,7 @@ BEGIN
     IDS_TIMEBEFORE          "(%s ago)"
     IDS_FD_TIMEDATE         "Dates"
     IDS_FILEINFORMATION     "File Information"
-    IDS_STATS_FREESPACE     "Free Space on Tempdrive: "
+    IDS_STATS_FREESPACE     "Free Space"
     IDS_IRC_HELPCHANNEL     "Connect to help channels."
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-bulgarian"
     IDS_IRC_ACCEPTLINKSFRIENDS "From friends only."
@@ -1542,10 +1542,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "Node Lookup (%i:%i)"
-    IDS_KAD_STOREFILE       "Store File (%i:%i)"
-    IDS_KAD_STOREKW         "Store Keyword (%i:%i)"
-    IDS_KAD_UNKNOWN         "Unknown (%i:%i)"
+    IDS_KAD_NODE            "Node Lookup"
+    IDS_KAD_STOREFILE       "Store File"
+    IDS_KAD_STOREKW         "Store Keyword"
+    IDS_KAD_UNKNOWN         "Unknown"
     IDS_SRV_TCPCOMPR        "TCP compression"
     IDS_KADSEARCHLAB        "Current Searches"
     IDS_SRV_UDPSR           "Extended UDP protocol for source requests"
@@ -1597,8 +1597,8 @@ BEGIN
     IDS_KADDISTANCE         "Distance"
     IDS_KEY                 "Key"
     IDS_NUMBER              "Number"
-    IDS_KAD_SEARCHSRC       "Search Sources (%i:%i)"
-    IDS_KAD_SEARCHKW        "Search Keywords (%i:%i)"
+    IDS_KAD_SEARCHSRC       "Search Sources"
+    IDS_KAD_SEARCHKW        "Search Keywords"
 END
 
 STRINGTABLE 
@@ -1808,6 +1808,36 @@ BEGIN
     IDS_SELSKINPROFILEDIR   "Select skin profile directory"
     IDS_ASKDLINCOMPLETE     "Potentially incomplete file:\r\n\r\n%s\r\n\r\nThis file is supposed to be incomplete in the network and can therefore most likely not downloaded successfully! Do you really want to download this file?"
     IDS_DEADSOURCES         "Dead Sources"
+    IDS_LARGEICONS          "Large Icons"
+    IDS_SMALLICONS          "Small Icons"
+    IDS_SHORTTAGS           "Short tags"
+    IDS_THELOAD             "Load"
+    IDS_PACKSENT            "Packets Sent"
+    IDS_RESPONSES           "Responses"
+    IDS_EXTRACT_META_DATA   "Extract meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (for all other audio/video files)"
+    IDS_META_DATA_ID3LIB    "ID3 Library (only for MPEG audio files)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Common Controls library (COMCTL32.DLL) is too old!\r\n\r\neMule detected a version of the ""Windows Common Controls library (COMCTL32.DLL)"" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the ""Windows Common Controls library (COMCTL32.DLL)"" to at least version 5.8.\r\n\r\nDownload and install an update of the ""Windows Common Controls library (COMCTL32.DLL)"" at Microsoft (R) Download Center. Do you want to visit the corresponding URL?"
+    IDS_ASREGEXPR           "As Regular Expression"
+    IDS_STATIC_REGEXP       "Regular expression for view filter:"
+    IDS_CARE4ALL            "Evaluate All Files"
+    IDS_REGEXPRESSION       "Regular Expression"
+    IDS_SEARCHKAD           "Search Kad"
+    IDS_DWL_IPFILTERFILE    "Downloading IP filter file"
+    IDS_DWLIPFILTERFAILED   "IP filter download failed"
+    IDS_FINDBUDDY           "Find Buddy"
+    IDS_ERR_IPFILTERZIPEXTR "Failed to extract IP filter file from downloaded IP filter ZIP file ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Downloaded IP filter file ""%s"" is a ZIP file with unexpected content."
+    IDS_STORENOTES          "Store Notes"
+    IDS_NOTES               "Notes"
+    IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
+
 END
 
 #endif    // Bulgarian resources

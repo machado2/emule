@@ -1,6 +1,6 @@
 // Microsoft Visual C++ generated resource script.
 //
-#include "de_DE.h"
+#include "ro_RO.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ LANGUAGE LANG_ROMANIAN, SUBLANG_DEFAULT
 
 1 TEXTINCLUDE 
 BEGIN
-    "de_DE.h\0"
+    "ro_RO.h\0"
 END
 
 2 TEXTINCLUDE 
@@ -138,7 +138,7 @@ BEGIN
     IDS_SKIN_PROF           "Profile Skin"
     IDS_ERR_PART_FNF        "Fiºierul .part negãsit"
     IDS_ERR_OPENMETFILE     "Nu pot deschide fiºierul part.met"
-    IDS_KADOPEN             "Deschide"
+    IDS_KADOPEN             "Deschisã"
     IDS_ERR_SAVEMET         "EROARE la salvarea fiºierului .part: %s (%s)"
     IDS_ERR_FOUNDCORRUPTION "Am gãsit coruptã partea (%i) în %s"
     IDS_HASHINGDONE         "Re-hash-ul %s terminat. Fiºierul pare OK"
@@ -203,7 +203,7 @@ BEGIN
     IDS_ERR_INCOMPLETEHASH  "Eroare: Nu pot face hash pãrþii descãrcate - hashset incomplet (%s). N-ar trebui sã se întîmple asta!"
     IDS_DOWNLOADING         "Descarcã"
     IDS_WAITING             "Aºteaptã"
-    IDS_HASHING             "Fac hash pt. încã"
+    IDS_HASHING             "Fac hash:"
     IDS_COMPLETING          "Completez"
     IDS_COMPLETE            "Complet"
     IDS_PAUSED              "În pauzã"
@@ -562,7 +562,7 @@ BEGIN
     IDS_PW_INCOMING         "Fiºiere descãrcate"
     IDS_PW_TEMP             "Fiºiere temporare"
     IDS_PW_BROWSE           "Cautã..."
-    IDS_PW_SHARED           "Dosare share (Ctrl-Click include subdosarele)"
+    IDS_PW_SHARED           "Dosare share (Ctrl+Click include subdosarele)"
     IDS_PW_CONNECTION       "Conectare"
     IDS_PW_DOWNC            "Capacitate descãrcare"
     IDS_PW_DOWNL            "Limitã descãrcare"
@@ -1479,7 +1479,7 @@ BEGIN
     IDS_TIMEBEFORE          "(%s în urmã)"
     IDS_FD_TIMEDATE         "Date"
     IDS_FILEINFORMATION     "Informaþii fiºier"
-    IDS_STATS_FREESPACE     "Spaþiu liber pe disc: "
+    IDS_STATS_FREESPACE     "Spaþiu liber"
     IDS_IRC_HELPCHANNEL     "Conectare la canalele de Help."
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-romanian"
     IDS_IRC_ACCEPTLINKSFRIENDS "Doar de la prieteni."
@@ -1572,10 +1572,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "Cãutare nod (%i:%i)"
-    IDS_KAD_STOREFILE       "Memoreazã fiºierul (%i:%i)"
-    IDS_KAD_STOREKW         "Memoreazã keyword (%i:%i)"
-    IDS_KAD_UNKNOWN         "Necunoscut (%i:%i)"
+    IDS_KAD_NODE            "Cãutare nod"
+    IDS_KAD_STOREFILE       "Memoreazã fiºierul"
+    IDS_KAD_STOREKW         "Memoreazã keyword"
+    IDS_KAD_UNKNOWN         "Necunoscut"
     IDS_SRV_TCPCOMPR        "Comprimare TCP"
     IDS_KADSEARCHLAB        "Cãutãri curente"
     IDS_SRV_UDPSR           "Protocol UDP extins ptr. cereri surse"
@@ -1627,8 +1627,8 @@ BEGIN
     IDS_KADDISTANCE         "Distanþã"
     IDS_KEY                 "Cheie"
     IDS_NUMBER              "Numãr"
-    IDS_KAD_SEARCHSRC       "Cãutare surse (%i:%i)"
-    IDS_KAD_SEARCHKW        "Cãutare keywords (%i:%i)"
+    IDS_KAD_SEARCHSRC       "Cãutare surse"
+    IDS_KAD_SEARCHKW        "Cãutare keywords"
 END
 
 STRINGTABLE 
@@ -1695,7 +1695,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_IMP_ERR_BADFORMAT   "Format fiºier temp incorect."
-    IDS_SEARCH_INVALIDCHAR  "Expresia de cãutare conþine caractere invalide. Ai introdus un '?' sau alte caractere nefolosibile în reþeaua eD2K."
+    IDS_SEARCH_INVALIDCHAR  "Expresia de cãutare conþine caractere invalide. Ai introdus un '?' sau alte caractere nefolosibile în aceastã reþea."
     IDS_PORTSCON            "Porturi ºi Conectare"
     IDS_PORTINFO            "eMule foloseºte 2 porturi pentru a comunica cu serverele ºi clienþii. Aceste porturi trebuie sã fie libere ºi disponibile celorlalþi clienþi. Portul TCP este principal în funcþionarea eMule. Portul UDP este pentru Kad (reþea fãrã servere) ºi pentru a reduce încãrcarea reþelei (Overhead).\n\nPoþi schimba porturile aici, înainte de a începe activitatea pe reþea."
     IDS_STARTTEST           "Testare porturi"
@@ -1809,13 +1809,43 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_SPARSEPARTFILES     "Creeazã noi fiºiere part 'dispersate' (numai NTFS)"
+    IDS_SPARSEPARTFILES     "Creeazã noi fiºiere part 'sparse' (numai NTFS)"
     IDS_ASPECTRATIO         "Raport aspect"
-    IDS_NEGATEFILTER        "inversare filtru"
+    IDS_NEGATEFILTER        "Inversare filtru"
     IDS_SEENCOMPL           "Prima oarã vãzut complet"
     IDS_SELSKINPROFILEDIR   "Selecteazã dosarul cu profile skin-uri"
     IDS_ASKDLINCOMPLETE     "Posibil fiºier incomplet:\r\n\r\n%s\r\n\r\nAcest fiºier se presupune a fi incomplet în reþea ºi de aceea mai mult ca sigur nu se va descãrca cu succes! Chiar vrei sã descarci acest fiºier?"
     IDS_DEADSOURCES         "Surse moarte"
+    IDS_LARGEICONS          "Icon-uri mari"
+    IDS_SMALLICONS          "Icon-uri mici"
+    IDS_SHORTTAGS           "Tag-uri scurte"
+    IDS_THELOAD             "Încãrcare"
+    IDS_PACKSENT            "Pachete trimise"
+    IDS_RESPONSES           "Rãspunsuri"
+    IDS_EXTRACT_META_DATA   "Extrage meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (pentru toate celelalte fiºiere audio/video)"
+    IDS_META_DATA_ID3LIB    "Bibliotecã ID3 (doar pentru fiºierele MPEG audio)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Biblioteca Windows Common Controls (COMCTL32.DLL) e prea veche!\r\n\r\neMule a detectat o versiune a ""bibliotecii Windows Common Controls (COMCTL32.DLL)"" prea veche pentru buna funcþionare a eMule. Pentru ca eMule sã funcþioneze perfect la întreaga capacitate, îþi recomandãm insistent sã updatezi ""biblioteca Windows Common Controls (COMCTL32.DLL)"" minim la versiunea 5.8.\r\n\r\nDescarcã ºi instaleazã un update la ""biblioteca Windows Common Controls (COMCTL32.DLL)"" de la Microsoft (R) Download Center. Vrei sã vizitezi adresa URL respectivã?"
+    IDS_ASREGEXPR           "Ca Expresie Obiºnuitã"
+    IDS_STATIC_REGEXP       "Expresia obiºnuitã pentru filtrul de afiºare:"
+    IDS_CARE4ALL            "Evalueazã toate fiºierele"
+    IDS_REGEXPRESSION       "Expresie Obiºnuitã"
+    IDS_SEARCHKAD           "Cautã Kad"
+    IDS_DWL_IPFILTERFILE    "Descarc fiºier filtre IP"
+    IDS_DWLIPFILTERFAILED   "Descãrcare eºuatã filtre IP"
+    IDS_FINDBUDDY           "Gãseºte Buddy"
+    IDS_ERR_IPFILTERZIPEXTR "Nu pot extrage fiºierul cu filtre IP din ZIP-ul descãrcat: ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Fiºierul cu filtre IP descãrcat ""%s"" e un ZIP cu un conþinut necunoscut."
+    IDS_STORENOTES          "Stocheazã Notiþe"
+    IDS_NOTES               "Notiþe"
+    IDS_KADSEARCHALREADY    "Deja se efectueazã o cãutare. Încearcã, te rog, mai tîrziu!"
+
 END
 
 #endif    // Romanian resources

@@ -42,19 +42,18 @@
 #include "HelpIDs.h"
 #include "Exceptions.h"
 #include "StringConversion.h"
+#include "UserMsgs.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
 extern int yyparse();
 extern int yyerror(const char* errstr);
-#ifdef _UNICODE
 extern int yyerror(LPCTSTR errstr);
-#endif
 extern LPCTSTR _aszInvKadKeywordChars;
 
 enum ESearchTimerID
@@ -86,8 +85,8 @@ BEGIN_MESSAGE_MAP(CSearchResultsWnd, CResizableFormView)
 	ON_BN_CLICKED(IDC_SDOWNLOAD, OnBnClickedSdownload)
 	ON_BN_CLICKED(IDC_CLEARALL, OnBnClickedClearall)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, OnTcnSelchangeTab1)
-	ON_MESSAGE(WM_CLOSETAB, OnCloseTab)
-	ON_MESSAGE(WM_DBLCLICKTAB, OnDblClickTab)
+	ON_MESSAGE(UM_CLOSETAB, OnCloseTab)
+	ON_MESSAGE(UM_DBLCLICKTAB, OnDblClickTab)
 	ON_WM_DESTROY()
 	ON_WM_SYSCOLORCHANGE()
 	ON_WM_SIZE()
@@ -1313,7 +1312,7 @@ bool CSearchResultsWnd::DoNewKadSearch(SSearchParams* pParams)
 	Kademlia::CSearch* pSearch = NULL;
 	try
 	{
-		pSearch = Kademlia::CSearchManager::prepareFindKeywords(Kademlia::CSearch::KEYWORD, true, pParams->bUnicode, pParams->strKeyword, uSearchTermsSize, pSearchTermsData);
+		pSearch = Kademlia::CSearchManager::prepareFindKeywords(pParams->bUnicode, pParams->strKeyword, uSearchTermsSize, pSearchTermsData);
 		delete pSearchTermsData;
 		if (!pSearch){
 			ASSERT(0);

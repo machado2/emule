@@ -14,7 +14,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Japanisch resources
+// 日本語(Japanese) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
 #ifdef _WIN32
@@ -28,21 +28,22 @@ LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "jp_JP.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include ""afxres.h""\r\n"
     "#include ""..\\resource.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
-    "\r\n"
+    "#include ""..\\version.h""\r\n"
+    "#include ""lang.rc2""\r\n"
     "\0"
 END
 
@@ -54,1720 +55,2001 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_SOCKETS_INIT_FAILED "ウィンドウソケット起動エラー"
-    IDS_ABOUTBOX            "&eMuleについて..."
-    IDS_HTTPDOWNLOAD_FILESTATUS "%s から %s"
-    IDS_HTTPDOWNLOAD_CONNECTED "%sに接続"
-    IDS_HTTPDOWNLOAD_RESOLVING_NAME "名前を確定中: %s"
+    IDS_SOCKETS_INIT_FAILED 
+"Windowsソケットの初期化中にエラーが発生しました"
+    IDS_ABOUTBOX            "eMuleについて(&A)..."
+    IDS_HTTPDOWNLOAD_FILESTATUS "%s(%s)"
+    IDS_HTTPDOWNLOAD_CONNECTED "%sに接続しました"
+    IDS_HTTPDOWNLOAD_RESOLVING_NAME "名前解決中: %s"
     IDS_HTTPDOWNLOAD_RESOLVED_NAME "名前は%sに確定されました"
-    IDS_HTTPDOWNLOAD_CONNECTING "%sに接続中"
-    IDS_HTTPDOWNLOAD_REDIRECTING "%sへ転送中"
-    IDS_HTTPDOWNLOAD_GETTING_FILE_INFORMATION "ファイルインフォーメイションを収集中"
-    IDS_HTTPDOWNLOAD_FAIL_PARSE_ERROR "URL: %s　検索中エラー発生"
-    IDS_HTTPDOWNLOAD_GENERIC_ERROR "ファイルダウンロード開始中エラー発生, Error:%s"
+    IDS_HTTPDOWNLOAD_CONNECTING "%sへ接続中"
+    IDS_HTTPDOWNLOAD_REDIRECTING "%sへリダイレクト中"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_HTTPDOWNLOAD_FAIL_CONNECT_SERVER "サーバーに接続中エラー発生, Error:%s"
-    IDS_HTTPDOWNLOAD_INVALID_SERVER_RESPONSE "サーバーから有効な応答受信失敗"
-    IDS_HTTPDOWNLOAD_INVALID_HTTP_RESPONSE "サーバーから有効なHTTP応答受信失敗"
-    IDS_HTTPDOWNLOAD_ERROR_READFILE "ファイルダウンロード中エラー発生, Error:%s"
-    IDS_HTTPDOWNLOAD_PERCENTAGE "サーバーリスト更新中: %s　中　%s%%　終了"
-    IDS_HTTPDOWNLOAD_RETREIVEING_FILE "ファイルを回収中"
+    IDS_HTTPDOWNLOAD_GETTING_FILE_INFORMATION "ファイル情報を収集中"
+    IDS_HTTPDOWNLOAD_FAIL_PARSE_ERROR
+                            "URLを解析中にエラーが発生しました。エラー: %s"
+    IDS_HTTPDOWNLOAD_GENERIC_ERROR	"ファイルのダウンロード試行中にエラーが発生しました。エラー:%s"
+    IDS_HTTPDOWNLOAD_FAIL_CONNECT_SERVER	"サーバーに接続中にエラーが発生しました。エラー:%s"
+    IDS_HTTPDOWNLOAD_INVALID_SERVER_RESPONSE
+                            "サーバーから有効な応答の受信に失敗しました"
+    IDS_HTTPDOWNLOAD_INVALID_HTTP_RESPONSE
+                            "サーバーから有効なHTTP応答の受信に失敗しました"
+    IDS_HTTPDOWNLOAD_ERROR_READFILE  "ファイルをダウンロード中にエラーが発生しました。エラー:%s"
+    IDS_HTTPDOWNLOAD_PERCENTAGE "ダウンロード中: %s中、%s%終了"
+    IDS_HTTPDOWNLOAD_RETREIVEING_FILE "ファイルを検索中"
     IDS_HTTPDOWNLOAD_OF     "%s　中　%s"
     IDS_CANCEL              "キャンセル"
-    IDS_HTTP_CAPTION        "サーバーリスト更新中"
-    IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s コピー終了)"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE "同ファイル名 '%s' 在ります\n上書きしますか?"
-    IDS_HTTPDOWNLOAD_FAIL_FILE_OPEN "ダウンロードの為のファイルをオープン中エラー発生, Error:%s"
-    IDS_HTTPDOWNLOAD_ABORTING_TRANSFER "ダウンロードを中止します"
-    IDS_MAIN_READY          "eMule Version %s 準備完了"
-    IDS_MAIN_SOCKETERROR    "フェイタルエラー: ポート %i　にソケットが起動できません"
-    IDS_MAIN_BTN_DISCONNECT "接続中断"
-    IDS_MAIN_BTN_DISCONNECT_TOOLTIP "このサーバーとの接続を中断します"
-    IDS_ERR_WRONGFILEID     "間違った欄を送信"
-    IDS_ERR_BADHASHSET      "破損しているか無効なハッシュセットを受信"
-    IDS_ERR_BADDATABLOCK    "破損しているか無効なデータブロックを受信"
-    IDS_ERR_ILLFORMEDHASH   "改悪されたハッシュ"
-    IDS_ERR_BADED2KLINK     "普通のed2kリンクではありません"
-    IDS_ERR_NOSLLINK        "ED2Kサーバーでもファイルリンクでもありません"
-    IDS_ERR_WRONGPACKAGESIZE "無効なパケットサイズ"
+    IDS_LD_ADDHTML          "HTMLタグを追加"
+    IDS_HTTP_CAPTION        "サーバーリストを更新中"
+    IDS_HTTPDOWNLOAD_TIMELEFT "%s(%s 済)"
+    IDS_HSAV                "利用可能ハッシュセット"
+    IDS_FD_CORR             "破損"
+    IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE
+                            "ファイル'%s'は既に存在します\n上書きしますか?"
+    IDS_FD_RECOV            "修復"
+    IDS_HTTPDOWNLOAD_FAIL_FILE_OPEN
+                            
+"ダウンロードしたファイルのオープン中にエラーが発生しました。エラー:%s"
+    IDS_HTTPDOWNLOAD_ABORTING_TRANSFER "転送を中止しています"
+    IDS_FD_COMPR            "圧縮"
+    IDS_WIZARD_NETWORK      "使用するネットワークを選択して下さい"
+    IDS_MAIN_READY          "eMule バージョン %s がリリースされました"
+    IDS_WIZARD_ED2K         "eD2k設定"
+    IDS_SEL_SKIN            "スキン選択..."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_SL_SERVERNAME       "サーバー名"
-    IDS_IP                  "IP"
-    IDS_DESCRIPTION         "記述"
-    IDS_PING                "ピング"
-    IDS_FILES               "ファイル"
-    IDS_PREFERENCE          "個人の設定"
-    IDS_PRIONOPREF          "個人の設定無し"
-    IDS_CONNECTTHIS         "選択されたサーバーへ接続"
-    IDS_CHAT_WELCOME        "インスタントメッセージ\n  \n相手のクライエントを選んでマウスの右ボタンをクリック、'メッセージ送信' ボタンを押してトーク開始"
-    IDS_MAIN_BTN_CANCEL_TOOLTIP "現在の接続試みを中止"
-    IDS_MAIN_BTN_CONNECT    "&接続"
-    IDS_ERR_SAVESERVERMET2  "server.metの保存を失敗しました! server.metを削除し名前をserver.met.oldからserver.metへ変更しなければなりません!"
-    IDS_NOTCONNECTED        "接続されてません"
-    IDS_DISCONNECTED        "断線"
-    IDS_USERS               "ユーザー: %i"
-    IDS_UPDOWN              "送: %.1f(%.1f) | 受: %.1f(%.1f)"
+    IDS_MAIN_SOCKETERROR    "致命的エラー: ポート %iでソケットを作成できません"
+    IDS_MAIN_BTN_DISCONNECT "切断"
+    IDS_MAIN_BTN_DISCONNECT_TOOLTIP "現在のサーバーから切断します"
+    IDS_ERR_WRONGFILEID     "不正なフィールドを送信しました"
+    IDS_ERR_BADHASHSET      "破損、又は無効なハッシュセットを受信しました"
+    IDS_ERR_BADDATABLOCK    "破損、又は無効なデータブロックを受信しました"
+    IDS_ERR_ILLFORMEDHASH   "不適格ハッシュ"
+    IDS_ERR_BADED2KLINK     "通常のeD2Kリンクではありません"
+    IDS_ERR_NOSLLINK        "eD2Kサーバーでもファイルリンクでもありません"
+    IDS_ERR_WRONGPACKAGESIZE "無効なOP_REQUESTFILENAMEパケットサイズ"
+    IDS_ERR_WRONGHPACKAGESIZE "無効なOP_HASHSETREQUESTパケットサイズ"
+    IDS_ERR_BADCLIENTACTION 			"クライアントがエラーを発生させたか、危害を加えました: %s クライアントを切断中です!"
+    IDS_ERR_UNKNOWNCLIENTACTION		"未知のクライアントが拡張プロトコルパケットを送信しています"
+    IDS_ERR_OPENMET         "エラー: part.metのオープンに失敗しました! (%s => %s)"
+    IDS_ERR_BADMETVERSION   "エラー: 無効なpart.metファイルバージョンです! (%s => %s)"
+    IDS_ERR_BADGAP          "part.metファイル内に無効なGap-Tagがあります"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_ASSIGNED2K          "今、eMuleはED2Kリンクに割り当てられてません。 eMuleをED2Kリンクに割り当てますか　(お勧め)?"
-    IDS_ERR_EMPTYADRESSESDAT "サーバーリストのエントリーが　'adresses.dat'　に見つかりません。 サーバーリストを自動的に更新する為に有効なサーバーリストのエントリーをこのファイルに複写してください"
     IDS_ERR_EMPTYADRESSESDAT_TITLE "サーバーリストの検索ができません"
-    IDS_ERR_BADSERVERMETVERSION "無効なserver.metです (0x%X)!"
-    IDS_SERVERSFOUND        "%i サーバーがserver.metの中に見つかりました"
-    IDS_SERVERSADDED        "%d サーバーを加えましました, %d は加えませんでした (すでに無効サーバーにリストされています)"
-    IDS_ERR_BADSERVERLIST   "エラー: server.metが破損しています。 サーバーリストはロードできません"
-    IDS_ERR_FILEERROR_SERVERMET 
-                            "server.metをロード中エラー発生: %s, サーバーリストはロードできません"
-    IDS_ERR_SAVESERVERMET   "server.metの保存を失敗しました!"
-    IDS_MAIN_CONNECTEDTO    ":　へ接続"
-    IDS_MAIN_BTN_CANCEL     "&キャンセル"
-    IDS_AVAIL               "利用可能"
-    IDS_TYPE                "タイプ"
+    IDS_ERR_BADSERVERMETVERSION "server.metに無効なバージョンタグがあります(0x%X)!"
+    IDS_SERVERSFOUND        "%iサーバーがserver.met内に見つかりました"
+    IDS_SERVERSADDED        "%d追加、%dを無視(既にリスト内に存在/無効)"
+    IDS_ERR_BADSERVERLIST   "エラー: server.metが破損しています。サーバーリストをロードできません"
+    IDS_ERR_FILEERROR_SERVERMET	"server.metをロード中に予期せぬファイルエラーが発生しました: %s、サーバーリストをロードできません"
+    IDS_ERR_SAVESERVERMET   "server.metの保存に失敗しました!"
+    IDS_PASSIVE             "パッシブ"
+    IDS_MAIN_CONNECTEDTO    "接続確立:"
+    IDS_MAIN_BTN_CANCEL     "キャンセル"
+    IDS_AVAIL               "部品: %u、利用可能: %u(%.1f%%)\n\n"
+    IDS_TYPE                "種類"
     IDS_FILEID              "ファイルID"
     IDS_FILE                "ファイル"
     IDS_DOWNLOAD            "ダウンロード"
+    IDS_SL_SERVERNAME       "サーバー名"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_CONNECTED           "接続完了"
-    IDS_LINKNOTADDED        "リンクを加えれません"
-    IDS_MAIN_EXIT           "eMuleを終了しますか?"
-    IDS_MAIN_EXITTITLE      "終了の再確認"
-    IDS_MAIN_POPUP_RESTORE  "もとに戻す"
-    IDS_CONNECTTOANYSERVER  "無規則にサーバーへ接続"
-    IDS_EXIT                "終了"
+    IDS_IP                  "IP"
+    IDS_DESCRIPTION         "説明"
+    IDS_PING                "Ping"
+    IDS_FILES               "ファイル"
+    IDS_PREFERENCE          "設定"
+    IDS_PRIONOPREF          "未設定"
+    IDS_CONNECTTHIS         "選択したサーバーへ接続します"
+    IDS_CHAT_WELCOME        "インスタントメッセージ\n\n相手のクライアント上で右クリックしてメニューから'メッセージ送信'を選択すればチャットできます"
+    IDS_MAIN_BTN_CANCEL_TOOLTIP "現在の接続試行を中止"
+    IDS_MAIN_BTN_CONNECT    "接続"
+    IDS_ERR_SAVESERVERMET2  "server.metの保存に失敗しました! server.metを削除し、名前をserver.met.oldからserver.metへリネームしなければなりません!"
+    IDS_NOTCONNECTED        "未接続"
+    IDS_DISCONNECTED        "切断"
+    IDS_USERS               "ユーザー: %i"
+    IDS_UPDOWN              "㊤: %.1f(%.1f) | ㊦: %.1f(%.1f)"
+    IDS_CONNECTED           "接続済み"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_WRITEERROR      "%sを書き込み中に予期せぬファイルエラーが発生しました: %s"
+    IDS_ERR_COMPLETIONFAILED	"%sの終了作業中に予期せぬファイルエラーが発生し、一時停止しています。eMuleを再起動して終了作業をもう一度行って下さい"
+    IDS_ERR_DELETEFAILED    "%sの削除に失敗しました。このファイルを手動で削除する必要があります"
+    IDS_DOWNLOADDONE        "%sのダウンロードが終了しました (^∀^)"
+    IDS_ERR_DELETE          "%sの削除に失敗しました"
+    IDS_ERR_HASHERRORWARNING                            "警告: ダウンロードした部分をハッシュできません - ハッシュセットが不完全です(%s)"
+    IDS_ERR_INCOMPLETEHASH  "エラー: ダウンロードした部分をハッシュできません - ハッシュセットが不完全です(%s)。これは発生するはずがありません"
+    IDS_DOWNLOADING         "ダウンロード中"
+    IDS_WAITING             "待機中"
+    IDS_HASHING             "ハッシュ中"
+    IDS_COMPLETING          "終了作業中"
+    IDS_COMPLETE            "完了"
+    IDS_PAUSED              "一時停止"
+    IDS_ERRORLIKE           "エラー"
+    IDS_ASSIGNED2K          
+"eMuleはeD2Kリンクに関連づけられていません。eMuleをeD2Kリンクと関連づけますか(推奨)?"
+    IDS_ERR_EMPTYADRESSESDAT
+                            
+"サーバーリストアドレスのエントリが'adresses.dat'内で見つかりません。サーバーリストを自動更新する為に、このファイルに有効なサーバーリストアドレスを貼り付けて下さい"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LINKNOTADDED        "リンクを追加できません"
+    IDS_MAIN_EXIT           "eMuleを終了してよろしいですか?"
+    IDS_MAIN_EXITTITLE      "終了確認"
+    IDS_MAIN_POPUP_RESTORE  "元に戻す"
+    IDS_CONNECTTOANYSERVER  "全てのサーバーに接続"
+    IDS_EXIT                "終了(&X)"
     IDS_CONNECTING          "接続中"
     IDS_FAILED              "失敗"
-    IDS_ERR_BADSERVERREPLY  "無効なログイン回答がサーバーから着ました"
-    IDS_NEWCLIENTID         "新しい　id　は %u"
-    IDS_NOSHAREDFOLDERS     "共有フォルダー無し"
-    IDS_SHAREDFOLDERS       "共有フォルダー"
-    IDS_VIEW1               "見る "
-    IDS_VIEW2               "　(共有されてません)"
-    IDS_PRIOLOW             "低い"
+    IDS_ERR_BADSERVERREPLY  
+"サーバーからの不正/無効なログイン応答を受信しました"
+    IDS_NEWCLIENTID         "新クライアントIDは%uです"
+    IDS_NOSHAREDFOLDERS     "共有フォルダ無し"
+    IDS_SHAREDFOLDERS       "共有フォルダ"
+    IDS_VIEW1               "表示"
+    IDS_VIEW2               "(未共有)"
+    IDS_PRIOLOW             "低"
+    IDS_PRIONORMAL          "普通"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_PRIONORMAL          "普通"
-    IDS_PRIOHIGH            "高い"
+    IDS_PRIOHIGH            "高"
     IDS_DOWNLOADMENUTITLE   "ダウンロード"
     IDS_PRIORITY            "優先順位"
-    IDS_NEWSERVERS          "%d 新しいサーバーを受信"
-    IDS_DL_STOP             "&中止"
-    IDS_DL_PAUSE            "&一時中止"
-    IDS_DL_RESUME           "&再開"
-    IDS_DL_OPEN             "&ファイルをオープンする"
-    IDS_DL_INFO             "ファイルの&詳細を見る"
-    IDS_DL_CLEAR            "終了したファイルのク&リアー"
-    IDS_DL_LINK1            "ED2k &リンクをクリップボードに複写"
-    IDS_DL_LINK2            "ED2k リンクをクリップボードに複写(&HTML)"
-    IDS_SHOWDETAILS         "&詳細を見る"
-    IDS_SEND_MSG            "&メッセージを送る"
-    IDS_ASKING              "尋ねる"
+    IDS_NEWSERVERS          "%dの新規サーバーを受信"
+    IDS_DL_STOP             "中止(&S)"
+    IDS_DL_PAUSE            "一時停止(&P)"
+    IDS_DL_RESUME           "再開(&R)"
+    IDS_DL_OPEN             "ファイルを開く(&O)"
+    IDS_DL_INFO             "ファイルの詳細を表示(&D)"
+    IDS_DL_CLEAR            "完了済みをクリア(&L)"
+    IDS_DL_LINK1            "eD2kリンクをクリップボードにコピー(&L)"
+    IDS_DL_LINK2            "eD2kリンクをクリップボードにコピー(&HTML)"
+    IDS_SHOWDETAILS         "詳細を表示(&D)"
+    IDS_SEND_MSG            "メッセージ送信(&M)"
+    IDS_ASKING              "問い合わせ中"
+    IDS_CONNVIASERVER       "サーバーを経由して接続中"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_CONNVIASERVER       "サーバーを通して接続中"
     IDS_ONQUEUE             "順番待ち"
-    IDS_TRANSFERRING        "送信中"
-    IDS_RECHASHSET          "ハッシュセットを受信"
-    IDS_NONEEDEDPARTS       "不必要な部分"
-    IDS_NOCONNECTLOW2LOW    "ローID to ローIDは接続できません"
-    IDS_UNKNOWN             "不明"
-    IDS_ASKED4ANOTHERFILE   "他のファイルを請求"
-    IDS_Q_CANCELDL          "キャンセルしてこのファイルを削除してもいいですか?\n"
-    IDS_Q_CANCELDL2         "本当にキャンセルしてこのファイルを削除してもいいですか?\n"
-    IDS_COPIED2CB           "クリップボードに複写されました: \n"
+    IDS_TRANSFERRING        "転送中"
+    IDS_RECHASHSET          "ハッシュセットを受信中"
+    IDS_NONEEDEDPARTS       "必要な部分無し"
+    IDS_NOCONNECTLOW2LOW    "LowIDからLowIDへの接続禁止"
+    IDS_UNKNOWN             "未知"
+    IDS_ASKED4ANOTHERFILE   "別のファイルを問い合せ中"
+    IDS_Q_CANCELDL          
+"これらのファイルをキャンセル、削除してよろしいですか?\n"
+    IDS_Q_CANCELDL2         
+"このファイルをキャンセル、削除してよろしいですか?\n"
+    IDS_COPIED2CB           "クリップボードにコピーしました: \n"
     IDS_PROCDONE            "% 終了"
-    IDS_SELECTINCOMINGDIR   "ファイルのフォルダーを選んでください"
-    IDS_SELECTTEMPDIR       "環境変数ファイルのフォルダーを選んでください"
+    IDS_SELECTINCOMINGDIR   "ダウンロードフォルダを選択して下さい"
+    IDS_SELECTTEMPDIR       "一時ファイル保存フォルダを選択して下さい"
     IDS_DL_FILENAME         "ファイル名"
     IDS_DL_SIZE             "サイズ"
+    IDS_DL_TRANSF           "転送済み"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_DL_TRANSF           "送信済み"
     IDS_DL_SPEED            "速度"
-    IDS_DL_PROGRESS         "経過"
-    IDS_DL_SOURCES          "ダウンロード情報源"
-    IDS_ERR_BADSERVERLISTRECEIVED "無効なサーバーリストパケットを受信"
+    IDS_DL_PROGRESS         "進行"
+    IDS_DL_SOURCES          "ソース"
+    IDS_ERR_BADSERVERLISTRECEIVED 
+"無効なサーバーリストパケットを受信しました"
     IDS_STATUS              "状態"
     IDS_DL_REMAINS          "残り"
+    IDS_UPDATEFROM          "URLから更新: (filter.dat- 又は 
+PeerGuardian-形式)"
     IDS_QL_USERNAME         "ユーザー名"
-    IDS_ERR_PACKAGEHANDLING "サーバーからのパケットの処理中エラー発生 (%s)"
-    IDS_QL_RATING           "ランク"
-    IDS_CONNECTINGTO        "%sへ接続中 (%s:%i)..."
-    IDS_CLIENTS             "クライエント"
-    IDS_SEARCH_ANY          "無指定"
+    IDS_LOADURL             "読み込み"
+    IDS_DELETEAFTERALLOC    
+"ファイル'%s'は現在ディスク領域を割当中のため、その作業終了後に削除されます"
+    IDS_ERR_PACKAGEHANDLING 
+"サーバーからのパケット処理中にUnhandledエラーが発生しました(%s)"
+    IDS_QL_RATING           "評価"
+    IDS_CONNECTINGTO        "%sに接続中 (%s:%i)..."
+    IDS_CLIENTS             "クライアント"
+    IDS_SEARCH_ANY          "全て"
     IDS_SEARCH_AUDIO        "オーディオ"
-    IDS_SEARCH_PICS         "ピクチャー"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SEARCH_PICS         "画像"
     IDS_SEARCH_PRG          "プログラム"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_SEARCH_VIDEO        "ビデオ"
-    IDS_SEARCH_CDIMG        "CD-イメージ"
-    IDS_SEARCH_ARC          "アーカイブ"
-    IDS_ERR_INVALIDLINK     "このed2リンクは無効です (%s)"
+    IDS_SEARCH_CDIMG        "CDイメージ"
+    IDS_SEARCH_ARC          "圧縮ファイル"
+    IDS_ERR_INVALIDLINK     "このeD2Kリンクは無効です(%s)"
     IDS_ERR_LINKERROR       "無効なリンク: %s"
-    IDS_ERR_NOTCONNECTED    "サーバーに接続されてません!"
-    IDS_REMOVETHIS          "選択したサーバーを除去"
-    IDS_REMOVEALL           "全てのサーバーを除去"
-    IDS_SRV_ADDR            "サーバーアドレスを入力してください"
-    IDS_SRV_PORT            "サーバーポート入力不良: サーバーポートを入力してください"
-    IDS_SRV_NOTADDED        "サーバーは加えられません!"
-    IDS_SRV_READD           "利用不可能サーバーとされていたが加えられました!"
-    IDS_SRV_NOURLAV         "利用可能なURLは在りません"
+    IDS_ERR_NOTCONNECTED    "サーバーに接続していません!"
+    IDS_REMOVETHIS          "選択したサーバーを削除します"
+    IDS_REMOVEALL           "全てのサーバーを削除します"
+    IDS_SRV_ADDR            "サーバーアドレスを入力して下さい"
+    IDS_SRV_PORT            
+"サーバーポートが未入力です:サーバーポートを入力して下さい"
+    IDS_SRV_NOTADDED        "サーバーは追加されませんでした!"
+    IDS_SRV_READD           
+"サーバーは利用不可能とされたサーバーが読み込まれました!"
+    IDS_SRV_NOURLAV         "利用可能なURLがありません"
     IDS_INVALIDURL          "無効なURL"
-    IDS_ERR_FAILEDDOWNLOADMET "%sからサーバーリストのダウンロード失敗"
-    IDS_PERMISSION          "許可"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
+    IDS_ERR_FAILEDDOWNLOADMET 
+"%sからサーバーリストのダウンロードに失敗しました"
+    IDS_PERMISSION          "パーミッション"
     IDS_SHAREDFILES         "共有ファイル"
     IDS_PRIOVERYLOW         "最低"
-    IDS_PRIORELEASE         "解放"
+    IDS_PRIORELEASE         "開放"
+    IDS_TRAYDLG_SPEED       "eMule速度"
     IDS_FSTATUS_LOCKED      "締め出す"
-    IDS_FSTATUS_FRIENDSONLY "友達だけ"
-    IDS_FSTATUS_PUBLIC      "一般"
+    IDS_KADALPHA            
+"Kademliaはまだ開発の初期段階ですので、ﾃｽﾄ目的だけに使用することを推奨します。"
+    IDS_FSTATUS_FRIENDSONLY "友達のみ"
+    IDS_VIAPASSIVE          "パッシブ経由"
+    IDS_FSTATUS_PUBLIC      "公開"
+    IDS_ERR_RENAMESF        "リネームに失敗しました\n    ""%s""\nから\n    
+""%s""\n\n%hs"
     IDS_PRIOHIGHEST         "最高"
-    IDS_ERR_NOPRIMCHANGE    "ダウンロード中はファイルの許可権は変えれません!"
-    IDS_HIDDEN              "隠されている"
-    IDS_FSTAT_TRANSFER      "送信"
-    IDS_FSTAT_CONNECTION    "接続"
-    IDS_FSTAT_CLIENTS       "クライエント"
-    IDS_FSTAT_SERVERS       "サーバー"
-    IDS_FSTAT_WAITING       "待ち..."
-    IDS_TIME                "所要時間"
-    IDS_STATS_DDATA         "受信データ (今回 (総合)): %s (%s)"
+    IDS_AVAILABLE           "利用可能"
+    IDS_ERR_NOPRIMCHANGE    
+"ファイルがまだダウンロード中はパーミッションを変更できません!"
+    IDS_HIDDEN              "隠蔽"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_STATS_UDATA         "送信データ (今回 (合計)): %s (%s)"
-    IDS_STATS_AVGDL         "平均ダウンロードスピード (今回): %s"
-    IDS_STATS_AVGUL         "平均アップロードスピード (今回): %s"
-    IDS_STATS_FOUNDSRC      "ダウンロード源数: %i"
-    IDS_STATS_ACTDL         "現在ダウンロード数: %i"
+    IDS_FSTAT_TRANSFER      "転送"
+    IDS_FSTAT_CONNECTION    "接続"
+    IDS_FSTAT_CLIENTS       "クライアント"
+    IDS_FSTAT_SERVERS       "サーバー"
+    IDS_FSTAT_WAITING       "待機中..."
+    IDS_TIME                "時間"
+    IDS_STATS_DDATA         "ダウンロードデータ: %s"
+    IDS_STATS_UDATA         "アップロードデータ: %s"
+    IDS_STATS_AVGDL         "平均ダウンロード速度: %.2f kB/s"
+    IDS_STATS_AVGUL         "平均アップロード速度: %.2f kB/s"
+    IDS_STATS_FOUNDSRC      "ダウンロードソース: %i"
+    IDS_STATS_ACTDL         "現在ダウンロード数(チャンク): %i"
     IDS_STATS_ACTUL         "現在アップロード数: %i"
-    IDS_STATS_WAITINGUSERS  "アップロード待ち数: %i"
+    IDS_STATS_WAITINGUSERS  "アップロード待機数: %i"
     IDS_STATS_RECONNECTS    "再接続: %i"
-    IDS_STATS_WAITTRANSF    "送信待ち..."
+    IDS_STATS_WAITTRANSF    "転送待ち..."
+END
+
+STRINGTABLE
+BEGIN
     IDS_STATS_WAITCONN      "接続待ち..."
-    IDS_STATS_CONNECTEDSINCE "サーバーへの接続時間: %s"
-    IDS_STATS_RATIO         "アップロード:ダウンロード 率:"
+    IDS_STATS_CONNECTEDSINCE "サーバー接続時間: %s"
+    IDS_STATS_RATIO         "今回 UL:DL率 (今回 (合計)):"
     IDS_STATS_UNKNOWNCLIENT "不明: %i"
     IDS_STATS_TOTAL         "合計: %i"
-    IDS_STATS_WORKING       "作動中: %i"
-    IDS_STATS_DEAD          "作動不可能/削除済み: %i"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DISABLED            "無活動中"
-    IDS_STOPPED             "中止中"
-    IDS_STATS_UPDATELABEL   "アップデート遅れ: %i sec"
-    IDS_QUEUECOUNT          "%u (%u 追放)"
+    IDS_STATS_WORKING       "動作中: %i"
+    IDS_STATS_DEAD          "利用不能/削除済み: %i"
+    IDS_DISABLED            "使用不可"
+    IDS_STOPPED             "中止"
+    IDS_STATS_UPDATELABEL   "アップﾃﾞｰﾄ遅延: %i秒"
+    IDS_QUEUECOUNT          "%u (%u Ban済)"
     IDS_NICKNAME            "ニックネーム: "
-    IDS_CLIENTSFILENAME     "\nクライエントファイルネーム: "
-    IDS_ASKEDFAF            "\n他のファイルと交換"
-    IDS_WAITED              "待った"
-    IDS_ERR_LOADCREDITFILE  "クレディトファイルのロード失敗, 新しいクレディトファイルが作成されます"
-    IDS_ERR_CREDITFILEOLD   "クレディトファイルは古いので交換されます"
-    IDS_CREDITFILELOADED    "クレディトファイルがロードされました, %u クライエント"
-    IDS_CREDITFILECORRUPT   "エラー: クレディトファイルは破損していますので新しいクレディトファイルが作成されます!"
-    IDS_ERR_CREDITFILEREAD  "クレディトファイルをロード中エラー発生: %s"
-    IDS_ERR_FAILED_CREDITSAVE "クレディトファイルの保存を失敗しました"
-    IDS_NOPARTSFOUND        "パートファイルが見つかりませんｔ"
-    IDS_FOUNDPARTS          " %i パートファイルが見つかりました"
+    IDS_CLIENTSFILENAME     "\nクライアントのファイル名: "
+    IDS_ASKEDFAF            "\n別のファイルを問い合せ中"
+    IDS_WAITED              "待機"
+    IDS_ERR_LOADCREDITFILE  
+"クレジットファイルのロードに失敗した為、新規ファイルが作成されました"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_FILEBUFFERSIZE      "ファイルバッファーサイズ"
-    IDS_QUEUESIZE           "待ちリストのサイズ"
+    IDS_ERR_CREDITFILEOLD   
+"クレジットファイルが期限切れの為、置き換えられました"
+    IDS_CREDITFILELOADED    
+"クレジットファイルをロードしました。既知のクライアント %u"
+    IDS_CREDITFILECORRUPT   "エラー: 
+クレジットファイルが破損していた為、置き換えられました!"
+    IDS_ERR_CREDITFILEREAD  
+"クレジットファイルを読込み中に予期せぬエラーが発生しました: %s"
+    IDS_ERR_FAILED_CREDITSAVE "クレジットファイルの保存に失敗しました"
+    IDS_NOPARTSFOUND        "部分ファイルが見つかりません"
+    IDS_FOUNDPARTS          " %i個の部分ファイルが見つかりました"
+    IDS_NEWDOWNLOAD         "%sをダウンロード中"
+    IDS_ERR_ALREADY_DOWNLOADING
+                            "ファイル%sは既にダウンロード中です"
+    IDS_ERR_ALREADY_DOWNLOADED "ファイル%sを既に所有しています"
+    IDS_ERR_SERVERMET_BAD   "エラー: 
+known.metファイルが破損していた為、友達リストをロードできません"
+    IDS_ERR_SERVERMET_UNKNOWN
+                            
+"known.metロード中に予期せぬファイルエラーが発生しました: 
+%s、友達リストをロードできません"
+    IDS_ERR_CONNECTIONERROR "%sへ接続中にエラーが発生しました(%s:%i): %s"
+    IDS_ERR_SOCKET          
+"サーバーソケット%s内でエラーが発生しました(%s:%i): %s"""
+    IDS_SHAREDFOUND         "%i共有ファイルが見つかりました"
+    IDS_SHAREDFOUNDHASHING  
+"%i共有ファイルが見つかりました、新規に%iファイルをハッシュしています"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_FILECOMPLETIONTHREAD 
+"ファイル完了作業用のスレッドの作成に失敗しました"
+    IDS_FILEBUFFERSIZE      "ファイルバッファサイズ"
+    IDS_QUEUESIZE           "キューサイズ"
     IDS_DAYS2               "日"
-    IDS_ERR_MAKEBAKCREDITFILE "クレディトファイルのバックアップを失敗しました"
-    IDS_COMMENT             "コメント"
-    IDS_IPFILTERED          "フィルターされた IP: %s (%s)"
-    IDS_DL_TRANSFCOMPL      "終了"
-    IDS_STATS_FILTEREDCLIENTS "フィルター済み: %i"
-    IDS_FILTERLABEL         "フィルターメッセージに含まれている: (セパレーター | )"
-    IDS_ERR_LARGEREQBLOCK   "クライエントが規格サイズ外のブロックを要求しました"
-    IDS_SHOWRATEONTITLE     "タイトルに送信速度の掲示"
-    IDS_TBN_NOMESSAGEHISTORY "記録無しのメッセージ!"
-    IDS_PW_DAP              "自動優先権を使って新しいダウンロードを追加する"
-    IDS_FD_LASTCHANGE       "最後の送信:"
+    IDS_ERR_MAKEBAKCREDITFILE 
+"クレジットファイルのバックアップに失敗しました"
+    IDS_COMMENT             "解説"
+    IDS_IPFILTERED          "フィルタIP: %s (%s)"
+    IDS_DL_TRANSFCOMPL      "完了"
+    IDS_DL_ACTIVE_TIME      "ダウンロード時間"
+    IDS_STATS_FILTEREDCLIENTS "フィルタ済: %i"
+    IDS_FILTERLABEL         "次の単語を含むメッセージをフィルタリンクﾞ: 
+(「|」で区切る )"
+    IDS_ERR_LARGEREQBLOCK   "クライアントが大きすぎるブロックを要求しました"
+    IDS_SHOWRATEONTITLE     "タイトルに転送率を表示"
+    IDS_TBN_NOMESSAGEHISTORY "履歴メッセージはありません!"
+    IDS_PW_DAP              "自動優先順位を使用して新規ダウンロードを追加"
+    IDS_FD_LASTCHANGE       "最終受信:"
+END
+
+STRINGTABLE
+BEGIN
     IDS_STATS_RUNTIME       "起動時間"
-    IDS_ALL                 "全部"
+    IDS_ALL                 "全て"
+    IDS_CAT_ADD             "カテゴリー追加"
+    IDS_CAT_EDIT            "カテゴリー編集"
+    IDS_CAT_REMOVE          "カテゴリー削除"
+    IDS_CAT                 "カテゴリー"
+    IDS_TITLE               "タイトル"
+    IDS_COLOR               "色"
+    IDS_DEFAULT             "デフォルト"
+    IDS_PW_DISPLAY          "画面"
+    IDS_CAT_INVADD          "割り当てられてない全てを見る"
+    IDS_CAT_REINVADD        "全てを見る"
+    IDS_INDICATERATINGS     
+"解説/評価があるダウンロードをアイコンで表示する"
+    IDS_ALLOTHERS           "カテゴリー無し"
+    IDS_TOCAT               "カテゴリー割当て"
+    IDS_CAT_UNASSIGN        "(未割当て)"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_NEWDOWNLOAD         "ダウンロード中 %s"
-    IDS_ERR_ALREADY_DOWNLOADING "このファイルは既にダウンロード中です %s"
-    IDS_ERR_ALREADY_DOWNLOADED "このファイルはダウンロード済みです %s"
-    IDS_ERR_SERVERMET_BAD   "エラー: known.metが破損しています。 友達リストはロードできません"
-    IDS_ERR_SERVERMET_UNKNOWN "known.metをロード中エラー発生: %s, 友達リストはロードできません"
-    IDS_ERR_CONNECTIONERROR "%s (%s:%i): %d　へ接続中エラー発生"
-    IDS_ERR_SOCKET          "サーバーソケット: %s (%s:%i): %u　にエラー発生"
-    IDS_SHAREDFOUND         "%i 共有ファイルが見つかりました"
-    IDS_SHAREDFOUNDHASHING  "%i 共有ファイルが見つかりました, %i 新しいファイルをハッシュしています"
-    IDS_ERR_UDPEXT          "UDPエクステンディットプロトコールパケットの受信処理中エラー発生"
-    IDS_ERR_INCOMPLETEBLOCK "不完全なブロックの申請"
-    IDS_ERR_OPEN            "リクエストされたファイルのオープン失敗"
-    IDS_ERR_CLIENTERRORED   "(%s)　パケットの製作中クライエント '%s' がエラーを起こしました - このクライエントを遮断中"
-    IDS_ERR_REQ_FNF         "リクエストされたファイルが見つかりません"
-    IDS_CLIENTBLOCKED       "クライエント '%s' は危害を加えているのでアップロードリストから禁止されました"
+    IDS_ERR_UDPEXT          
+"入力拡張プロトコルUDPパケットを処理中にエラーが発生しました"
+    IDS_ERR_INCOMPLETEBLOCK "不完全ブロックを問い合せました"
+    IDS_ERR_OPEN            "要求されたファイルのオープンに失敗しました"
+    IDS_ERR_CLIENTERRORED   
+"クライアント'%s'はﾊﾟｯｹｰｼﾞ作成中にエラーを発生させました(%s) - 
+クライアントを切断しています"
+    IDS_ERR_REQ_FNF         "要求されたファイルが見つかりません"
+    IDS_CLIENTBLOCKED       
+"クライアント'%s'は危害を加えている可能性があるのでアップロードキューからBanしました"
     IDS_LUSERS              "ユーザー"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_ERR_WRONGHPACKAGESIZE "無効なパケットサイズ"
-    IDS_ERR_BADCLIENTACTION "クライエント: %s　がエラーを起こしたか危害を加えたのでこのクライエントを遮断中!"
-    IDS_ERR_UNKNOWNCLIENTACTION "エクステンディットプロトコールパケットが認識不明のクライエントから送れてきます"
-    IDS_ERR_OPENMET         "エラー: part.metのオープンに失敗! (%s => %s)"
-    IDS_ERR_BADMETVERSION   "エラー: 無効なpart.metファイルバージョン! (%s => %s)"
-    IDS_ERR_BADGAP          "part.metファイルに無効なGap-Tagが在ります"
-    IDS_ERR_METCORRUPT      "エラー: %s (%s)は破損していますファイルはロードできません"
-    IDS_ERR_FILEERROR       "%s (%s): %s　ロード中エラー発生"
-    IDS_ERR_FILEOPEN        "%s (%s)をオープン失敗"
-    IDS_ERR_REHASH          "警告: %s は破損していかもしれません再度ハッシュをしています"
-    IDS_ERR_PART_FNF        ".part ファイルが見つかりません"
-    IDS_ERR_OPENMETFILE     "part.metをオープン失敗"
-    IDS_ERR_SAVEMET         "エラー: パートファイルの保存に失敗: %s (%s => %s)"
-    IDS_ERR_FOUNDCORRUPTION "破損しているパート(%i)を%sに発見"
-    IDS_HASHINGDONE         "%s　ハッシュを終了、ファイルは大丈夫です"
-    IDS_ERR_PARTCORRUPT     "ダウンロードされたパート %i は破損しています　:(  (%s)"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_ICHWORKED           "ICH: 破損したパート%i  (%s)は修復されました, Saved: %s"
-    IDS_ERR_OUTOFSPACE      "ハードディスクがいっぱいです %s!"
-    IDS_ERR_WRITEERROR      "%s : %s　ファイルの保存に失敗"
-    IDS_ERR_COMPLETIONFAILED "%s　ファイルの終了に失敗したのでこのファイルはポーズされました。eMuleを再起動してファイルの終了をもう一度してください"
-    IDS_ERR_DELETEFAILED    "%s　ファイルの削除に失敗したのでこのファイルを自分で削除してください"
-    IDS_DOWNLOADDONE        "%s　ダウンロードが終了しました :-)"
-    IDS_ERR_DELETE          "%s　ファイルの終了に失敗"
-    IDS_ERR_HASHERRORWARNING "警告: ダウンロードされたパートをハッシュできません - 不完全なハッシュセット (%s)"
-    IDS_ERR_INCOMPLETEHASH  "エラー: ダウンロードされたパートをハッシュできません - 不完全なハッシュセット　(%s)。 起こるはずのないことです"
-    IDS_DOWNLOADING         "ダウンロード中"
-    IDS_WAITING             "待ち中"
-    IDS_HASHING             "ハッシュ中"
-    IDS_COMPLETING          "終了中"
-    IDS_COMPLETE            "終了"
-    IDS_PAUSED              "休止中"
-    IDS_ERRORLIKE           "エラー"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_LFILES              "ファイル"
-    IDS_DESC                "記述: %s"
+    IDS_DESC                "説明: %s"
     IDS_PORT                "ポート"
-    IDS_ERR_NOVALIDSERVERSFOUND "有効なサーバーがサーバーリストの中に見つかりません"
-    IDS_CONNECTEDTOREQ      "%s (%s:%i)　へ接続中"
-    IDS_ERR_FATAL           "接続ができません。 インターネットへ接続されてないかもしてません"
-    IDS_ERR_LOSTC           "%s (%s:%i)　への連絡が断たれました"
-    IDS_ERR_DEAD            "%s (%s:%i) は不能の様です"
-    IDS_ERR_FULL            "%s (%s:%i) は満員の様です"
-    IDS_ERR_NOSERVERSC      "有効なサーバーがサーバーリストの中に見つかりません"
-    IDS_CONNECTEDTO         "%s　へ接続完了"
-    IDS_DL_PREVIEW          "試写"
-    IDS_VIEWQUEUE           "待ちリストを見せる"
-    IDS_VIEWUPLOADS         "アップロードを見せる"
+    IDS_ERR_NOVALIDSERVERSFOUND
+                            
+"サーバーリスト内に接続する有効なサーバーが見つかりませんでした"
+    IDS_CONNECTEDTOREQ      "%sへ接続しました(%s:%i)、ログイン要求を送信中"
+    IDS_ERR_FATAL           
+"接続試行中に致命的なエラーが発生しました。インターネット接続がダウンしている可能性があります"
+    IDS_ERR_LOSTC           "%sへの接続をロストしました(%s:%i)"
+    IDS_ERR_DEAD            "%s(%s:%i)は利用不能です"
+    IDS_ERR_FULL            "%s(%s:%i)は満員です"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_METCORRUPT      "エラー: %s 
+(%s)が破損している為ファイルをロードできません"
+    IDS_ERR_FILEERROR       
+"%sをロード中に予期せぬファイルエラーが発生しました(%s): %s"
+    IDS_ERR_FILEOPEN        "%sのオープンに失敗しました(%s)"
+    IDS_SEL_SKINDIR         "スキンディレクトリを選択..."
+    IDS_ERR_REHASH          "警告: %s 
+は破損しているかもしれません。完了部分を再ハッシュしています"
+    IDS_SKIN_PROF           "スキンプロフィール"
+    IDS_ERR_PART_FNF        ".partファイルが見つかりません"
+    IDS_ERR_OPENMETFILE     "part.metファイルのオープンに失敗しました"
+    IDS_KADOPEN             "オープン"
+    IDS_ERR_SAVEMET         "エラー: 
+部分ファイルのｾｰﾌﾞ中にエラーが発生しました: %s (%s)"
+    IDS_ERR_FOUNDCORRUPTION "破損部分(%i)が%s内に見つかりました"
+    IDS_HASHINGDONE         
+"%sの再ハッシュが終了しました、ファイルは問題ありません"
+    IDS_ERR_PARTCORRUPT     "ダウンロードした部分%iは破損しています(%s)"
+    IDS_ICHWORKED           "ICH: 破損した部分%i 
+(%s)を修復しました。%sに保存しました"
+    IDS_ERR_OUTOFSPACE      
+"%sをダウンロードするのに十分なディスク容量がありません!"
+    IDS_SE                  "ソース交換"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_NOSERVERSC      
+"サーバーリスト内に接続する有効なサーバーが見つかりませんでした"
+    IDS_CONNECTEDTO         "接続確立: %s"
+    IDS_DL_PREVIEW          "プレビュー(&V)"
+    IDS_VIEWQUEUE           "キューを表示"
+    IDS_VIEWUPLOADS         "アップロードを表示"
     IDS_TW_UPLOADS          "アップロード"
     IDS_TW_DOWNLOADS        "ダウンロード"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_TW_QUEUE            "クライエントの待ちリスト:"
+    IDS_TW_QUEUE            "キュー上のクライアント:"
     IDS_SW_SEARCHBOX        "検索"
     IDS_SW_NAME             "名前"
-    IDS_SW_GLOBAL           "拡張検索"
-    IDS_SW_TYPE             "タイプ"
-    IDS_SW_DIRECTDOWNLOAD   "ダイレクトダウンロード"
-    IDS_SW_LINK             "eD2K リンク"
+    IDS_SW_GLOBAL           "グローバル検索(&G)"
+    IDS_SW_TYPE             "種類"
+    IDS_SW_DIRECTDOWNLOAD   "eD2Kリンクを貼り付け"
+    IDS_SW_LINK             "eD2Kリンク"
     IDS_SW_START            "開始"
-    IDS_SCHEDULER           "予定表"
+    IDS_SCHEDULER           "スケジューラ"
+END
+
+STRINGTABLE
+BEGIN
     IDS_IRC                 "IRC"
     IDS_SW_RESULT           "検索結果"
-    IDS_SW_DOWNLOAD         "選択したものをダウンロード"
-    IDS_SV_SERVERLIST       "サーバーリスト"
-    IDS_SV_SERVERINFO       "サーバーの情報"
-    IDS_SV_LOG              "記録"
-    IDS_SV_NEWSERVER        "新しいサーバー"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_CAPACITY_LIMITS     "送受信容量"
-    IDS_ADMIN               "アドミニストレーター"
-    IDS_ACCESSDENIED        "アクセスは拒絶されました!"
-    IDS_WEB_LOWUSER         "ゲスト"
-    IDS_WEB_ERR_CANTLOAD    "テンプレートをロードできません: ファイルをオープンできません %s"
-    IDS_GLOBALSEARCH        "グローバル (サーバー)"
-    IDS_METHOD              "方法"
-    IDS_SW_WEBBASED         "ウェブ　サーチ"
-    IDS_NOTHING             "無し"
-    IDS_SETUPSPEED          "アップロードリミットの設定"
-    IDS_SETDOWNSPEED        "ダウンロードリミットの設定"
-    IDS_DAYLY               "毎日"
-    IDS_DAY_MO_FR           "月-金"
-    IDS_DAY_SA_SO           "土-日"
-    IDS_MO                  "月曜日"
-    IDS_DI                  "火曜日"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_SV_ADDRESS          "IPかアドレス"
-    IDS_SV_PORT             "Portポート"
-    IDS_SV_ADD              "リストに追加"
+    IDS_SW_DOWNLOAD         "選択をダウンロード"
+    IDS_SV_SERVERLIST       "サーバー"
+    IDS_SV_SERVERINFO       "サーバー情報"
+    IDS_SV_LOG              "ログ"
+    IDS_SV_NEWSERVER        "新規サーバー"
+    IDS_SV_ADDRESS          "IP/アドレス"
+    IDS_SV_PORT             "ポート"
+    IDS_SV_ADD              "リスト追加"
     IDS_SV_MET              "server.metをURLから更新"
     IDS_SV_UPDATE           "更新"
     IDS_SF_FILES            "共有ファイル"
     IDS_SF_STATISTICS       "統計"
-    IDS_SF_RELOAD           "再ロード"
+    IDS_SF_RELOAD           "再読み込み"
     IDS_SF_CURRENT          "今回"
-    IDS_SF_TOTAL            "合計"
-    IDS_SF_TRANS            "送信済み:"
-    IDS_SF_ACCEPTED         "受諾されたアップロード:"
-    IDS_SF_REQUESTED        "要求:"
-    IDS_ST_DOWNLOAD         "ダウンロードスピード"
-    IDS_ST_UPLOAD           "アップロードスピード"
-    IDS_ST_CURRENT          "今回"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_ST_SESSION          "今回の平均"
-    IDS_ST_ACTIVED          "ダウンロード中"
-    IDS_ST_ACTIVEU          "アップロード中"
-    IDS_ST_WAITINGU         "アップロード待ち"
+    IDS_PRIORITY_UP         "優先順位を上げる"
+    IDS_PRIORITY_DOWN       "優先順位を下げる"
+    IDS_SPEED_LIMITS        "速度制限"
+    IDS_CAPACITY_LIMITS     "帯域制限"
+    IDS_ADMIN               "管理者"
+    IDS_ACCESSDENIED        "アクセスが拒絶されました!"
+    IDS_WEB_LOWUSER         "ゲスト"
+    IDS_WEB_ERR_CANTLOAD    "テンプレートをロードできません: ファイル 
+%sを開けません"
+    IDS_GLOBALSEARCH        "グローバル(サーバー)"
+    IDS_METHOD              "方法"
+    IDS_SW_WEBBASED         "Web検索"
+    IDS_NOTHING             "無し"
+    IDS_SETUPSPEED          "アップロード制限の設定"
+    IDS_SETDOWNSPEED        "ダウンロード制限の設定"
+    IDS_UNDO                "元に戻す"
+    IDS_DAYLY               "毎日"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DAY_MO_FR           "月-金"
+    IDS_DAY_SA_SO           "土-日"
+    IDS_MO                  "月曜日"
+    IDS_DI                  "火曜日"
+    IDS_MI                  "水曜日"
+    IDS_DO                  "木曜日"
+    IDS_FR                  "金曜日"
+    IDS_SA                  "土曜日"
+    IDS_SO                  "日曜日"
+    IDS_WEB_ADMINLOGIN      "Webインターフェース: 管理者ログイン"
+    IDS_WEB_GUESTLOGIN      "Webインターフェース: ゲストログイン"
+    IDS_WEB_SESSIONEND      "Webインターフェース: ログアウト"
+    IDS_DETAILS             "詳細"
+    IDS_ACTION              "アクション"
+    IDS_REMOVE              "削除"
+    IDS_NEW                 "新規"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SF_TOTAL            "合計"
+    IDS_SF_TRANS            "転送済み:"
+    IDS_SF_ACCEPTED         "アップロード受付:"
+    IDS_SF_REQUESTED        "要求済み:"
+    IDS_ST_DOWNLOAD         "ダウンロード速度"
+    IDS_ST_UPLOAD           "アップロード速度"
+    IDS_ST_CURRENT          "今回"
+    IDS_ST_SESSION          "今回平均"
+    IDS_ST_ACTIVED          "現在のダウンロード"
+    IDS_ST_ACTIVEU          "現在のアップロード"
+    IDS_ST_WAITINGU         "アップロード待機"
     IDS_CW_MESSAGES         "メッセージ"
     IDS_CW_FRIENDS          "友達"
-    IDS_CW_SEND             "送る"
+    IDS_CW_SEND             "送信"
     IDS_CW_CLOSE            "閉じる"
     IDS_PW_GENERAL          "一般"
-    IDS_PW_DIR              "ディレクトリー"
-    IDS_PW_NICK             "ニック"
-    IDS_PW_INCOMING         "ファイルのフォルダー"
-    IDS_PW_TEMP             "環境変数ファイルのフォルダー"
-    IDS_PW_BROWSE           "ブラウズ"
-    IDS_PW_SHARED           "共有ディレクトリー"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PW_DIR              "ディレクトリ"
+    IDS_PW_NICK             "ニックネーム"
+    IDS_PW_INCOMING         "ダウンロードフォルダ"
+    IDS_PW_TEMP             "一時フォルダ"
+    IDS_PW_BROWSE           "参照"
+    IDS_PW_SHARED           
+"共有ディレクトリ(Ctrl+クリックでサブディレクトリを含める)"
     IDS_PW_CONNECTION       "接続"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_PW_DOWNC            "ダウンロード容量"
-    IDS_PW_DOWNL            "ダウンロードリミット"
+    IDS_PW_DOWNL            "ダウンロード制限"
     IDS_PW_UPC              "アップロード容量"
-    IDS_PW_UPL              "アップロードリミット"
+    IDS_PW_UPL              "アップロード制限"
     IDS_PW_MAXC             "最大接続数"
-    IDS_PW_CLIENTPORT       "クライエントポート"
+    IDS_PW_CLIENTPORT       "クライアントポート"
     IDS_PW_AUTOCON          "起動時に自動接続"
-    IDS_PW_RECON            "断線時に再接続"
-    IDS_PW_SERVER           "サーバーServer"
-    IDS_PW_RDEAD            "後で不能なサーバーを除去"
-    IDS_PW_RETRIES          "再接続"
-    IDS_PW_SCORE            "優先権システムを使う"
-    IDS_PW_USC              "接続時サーバーリストの更新"
-    IDS_PW_UCC              "クライエント接続時サーバーリストの更新"
-    IDS_PW_FILTER           "不良なIPをいつも遮断する"
-    IDS_PW_USS              "起動時に自動的にサーバーリストの更新"
+    IDS_PW_RECON            "切断時に自動接続"
+    IDS_PW_SERVER           "サーバー"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_PW_MISC             "オプション"
-    IDS_PW_TRAY             "トレー&アイコンに縮小"
-    IDS_PW_BEEP             "エラー時に警告音を発生"
-    IDS_PW_PROMPT           "終了時を再確認"
-    IDS_PW_SPLASH           "スプラッシュスクリーンを見せる"
-    IDS_PW_DBLCLICK         "ダウンロードリストをダブルクリックで拡張"
-    IDS_PW_TOOL             "ボタンインフォーメイション表示　(秒後)"
-    IDS_PW_FRONT            "リンククリックで前にする"
+    IDS_PW_RDEAD            "利用不能サーバーを削除"
+    IDS_PW_RETRIES          "再試行後"
+    IDS_PW_SCORE            "優先システムを使用"
+    IDS_PW_USC              "サーバー接続時にサーバーリストを更新"
+    IDS_PW_UCC              "クライアント接続時にサーバーリストを更新"
+    IDS_PW_FILTER           "サーバーとクライアントのLANIPをフィルタリンクﾞ"
+    IDS_PW_USS              "起動時にサーバーリストを自動更新"
+    IDS_PW_MISC             "その他"
+    IDS_PW_TRAY             "システムトレイに最小化"
+    IDS_PW_BEEP             "エラー時に音を鳴らす"
+    IDS_PW_PROMPT           "終了時に確認する"
+    IDS_PW_SPLASH           "スプラッシュスクリーンを表示"
+    IDS_PW_DBLCLICK         "ダウンロードリストをダブルクリックで伸張"
+    IDS_PW_TOOL             "ツールチップ遅延時間(秒)"
+    IDS_PW_FRONT            "リンクのクリックで前面にする"
     IDS_PW_LANG             "言語"
-    IDS_PW_FILES            "ファイル"
-    IDS_PW_ICH              "&自動破損部インテリジェント修復"
-    IDS_PW_SHARE            "共有ファイルを見せる"
-    IDS_PW_EVER             "全員"
-    IDS_PW_FRIENDS          "友達だけ"
-    IDS_PW_NOONE            "見せない"
-    IDS_PW_RESET            "リセット"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_PW_APPLY            "適用する"
-    IDS_EM_TRANS            "&送信済み"
-    IDS_EM_SERVER           "&サーバー"
-    IDS_EM_SEARCH           "&検索"
-    IDS_EM_FILES            "共有&ファイル"
-    IDS_EM_MESSAGES         "&メッセージ"
-    IDS_EM_STATISTIC        "&統計"
-    IDS_EM_PREFS            "&好み"
-    IDS_MB_LANGUAGEINFO     "標準言語に設定さてています。 いつでも言語の設定を替えれます"
+    IDS_PW_FILES            "ファイル"
+    IDS_PW_ICH              "破損修復機能(&I)"
+    IDS_PW_SHARE            "共有ファイルの公開"
+    IDS_PW_EVER             "全て"
+    IDS_PW_FRIENDS          "友達のみ"
+    IDS_PW_NOONE            "公開しない"
+    IDS_PW_RESET            "リセット"
+    IDS_PW_APPLY            "適用"
+    IDS_EM_TRANS            "転送"
+    IDS_EM_SERVER           "サーバー"
+    IDS_EM_SEARCH           "検索"
+    IDS_EM_FILES            "共有ファイル"
+    IDS_EM_MESSAGES         "メッセージ"
+    IDS_EM_STATISTIC        "統計"
+    IDS_EM_PREFS            "設定"
+    IDS_MB_LANGUAGEINFO     
+"デフォルト言語が変更されました。設定タブでいつでも言語設定を変更することができます"
+END
+
+STRINGTABLE
+BEGIN
     IDS_FD_GENERAL          "一般"
     IDS_FD_NAME             "名前:"
     IDS_FD_MET              "metファイル:"
     IDS_FD_HASH             "ハッシュ:"
     IDS_FD_SIZE             "ファイルサイズ:"
-    IDS_FD_STATUS           "パートファイルの状態:"
-    IDS_FD_TRANSFER         "送信"
+    IDS_FD_STATUS           "部分ファイル状態:"
+    IDS_FD_TRANSFER         "転送"
+    IDS_FD_SOURCES          "発見したソース数:"
+    IDS_FD_PARTS            "部分:"
+    IDS_FD_TRANS            "転送済み:"
+    IDS_FD_DATARATE         "データレート:"
+    IDS_FD_TRANSI           "転送中:"
+    IDS_FD_COMPSIZE         "完了サイズ:"
+    IDS_FD_CLOSE            "閉じる"
+    IDS_FD_TITLE            "ファイル詳細"
+    IDS_CD_GENERAL          "一般"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_FD_SOURCES          "見つかったダウンロード源:"
-    IDS_FD_PARTS			"Parts:"
-    IDS_FD_TRANS            "送信済み:"
-    IDS_FD_DATARATE         "データレート:"
-    IDS_FD_TRANSI           "送信中:"
-    IDS_FD_COMPSIZE         "ファイルサイズ:"
-    IDS_FD_CLOSE            "閉じる"
-    IDS_FD_TITLE            "ファイルの詳細"
-    IDS_CD_GENERAL          "一般"
     IDS_CD_UNAME            "ユーザー名:"
     IDS_CD_UHASH            "ユーザーハッシュ:"
-    IDS_CD_CSOFT            "クライエントソフト:"
+    IDS_CD_CSOFT            "クライアントソフト:"
     IDS_CD_UIP              "IPアドレス:"
     IDS_CD_SIP              "サーバーIP:"
-    IDS_CD_VERSION          "クライエントヴァージョン:"
+    IDS_CD_VERSION          "クライアントバージョン:"
     IDS_CD_UID              "ID:"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_CD_SNAME            "サーバー名:"
     IDS_CD_CDOWN            "現在ダウンロード中:"
-    IDS_CD_DOWN             "ダウンロード済み (今回):"
-    IDS_CD_ADOWN            "平均ダウンロードスピード:"
-    IDS_CD_TDOWN            "ダウンロードの合計:"
-    IDS_CD_UP               "アップロード済み (今回):"
-    IDS_CD_AUP              "平均アップロードスピード:"
-    IDS_CD_TUP              "アップロードの合計:"
-    IDS_CD_TRANS            "送信"
-    IDS_CD_SCORES           "スコアー"
-    IDS_CD_MOD              "受信/送信 修正値:"
-    IDS_CD_RATING           "評価 (合計):"
-    IDS_CD_USCORE           "アップロードスコアー:"
-    IDS_CD_TITLE            "クライエントの詳細"
-    IDS_EMULEW              "クリック "
-    IDS_EMULEW2             "新しいヴァージョンが在るか調べる"
+    IDS_CD_DOWN             "ダウンロード(今回):"
+    IDS_CD_ADOWN            "平均ダウンロード速度:"
+    IDS_CD_TDOWN            "ダウンロード合計:"
+    IDS_CD_UP               "アップロード(今回):"
+    IDS_CD_AUP              "平均アップロード速度:"
+    IDS_CD_TUP              "アップロード合計:"
+    IDS_CD_TRANS            "転送"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_EMULEW3             "ここ"
-    IDS_PW_MAXSOURCES       "最大ダウンロード源"
+    IDS_CD_SCORES           "スコア"
+    IDS_CD_MOD              "DL/UP修正値:"
+    IDS_CD_RATING           "評価(合計):"
+    IDS_CD_USCORE           "アップロードキュースコア:"
+    IDS_CD_TITLE            "クライアント詳細"
+    IDS_EMULEW              "Click"
+    IDS_EMULEW2             "to check if a new version is available"
+    IDS_EMULEW3             "here"
+    IDS_PW_MAXSOURCES       "最大ソース数"
     IDS_SHAREDFILESCOUNT    "共有ファイル数: %i"
-    IDS_SF_SIZE             "共有ファイルザイズの合計: %s"
-    IDS_ERR_WRONGPARTNUMBER "間違ったパートナンバー"
-    IDS_ERR_BADPORT         "不良ポートナンバー"
-    IDS_ERR_NOHELLO         "挨拶無しに何かを要求"
-    IDS_ERR_INVALIDPACKAGE  "無効か破損したパケットを受信"
-    IDS_ERR_CLIENTERROR     "クライエント '%s' (IP:%s) がエラーを起こしました: %s。 このクライエントを遮断中!"
-    IDS_ERR_BADSIZE         "無効なサイズ (OP_QUEUERANKING)"
-    IDS_ERR_BADCLIENT2      "クライエント '%s' (IP:%s) がエラーを起こしました: %u。 このクライエントを遮断中!"
-    IDS_ERR_NOTAFILELINK    "ファイルリンクではありません"
-    IDS_ERR_CREATEPARTFILE  "エラー: パートファイルの作成に失敗)"
-    IDS_ERR_UDP_MISCONF     "UDPパケット受信処理中エラー発生 (正しく設定されていないサーバーからでしょう)"
-    IDS_CHAT_START          "*** トーク開始 : "
-    IDS_FILEPRIO            "ファイルの優先権"
+    IDS_SF_SIZE             "共有ファイルサイズ合計: %s"
+    IDS_ERR_WRONGPARTNUMBER "間違った部分番号"
+    IDS_ERR_BADPORT         "不正なポート番号"
+    IDS_ERR_NOHELLO         "前処理無しで何かを要求しました"
+    IDS_ERR_INVALIDPACKAGE  "無効又は破損したパケットを受信しました"
+    IDS_ERR_CLIENTERROR     
+"クライアント'%s'(IP:%s)がエラーを発生させました: 
+%s。クライアントを切断しています!"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_SCORE               "スコアー"
-    IDS_ASKED               "要求された"
-    IDS_LASTSEEN            "Last Seen"
-    IDS_BANNED              "禁止"
+    IDS_ERR_BADSIZE         "無効なサイズ(OP_QUEUERANKING)"
+    IDS_ERR_BADCLIENT2      
+"クライアント'%s'(IP:%s)がエラーを発生させました: 
+%u。クライアントを切断しています!"
+    IDS_ERR_NOTAFILELINK    "ファイルリンクではありません"
+    IDS_ERR_CREATEPARTFILE  "エラー: 部分ファイルの作成に失敗しました)"
+    IDS_ERR_UDP_MISCONF     
+"入力UDPパケットの処理中にエラーが発生しました(恐らくサーバーの設定ミスです)"
+    IDS_CHAT_START          "*** チャット開始 : "
+    IDS_FILEPRIO            "ファイル優先順位"
+    IDS_SCORE               "スコア"
+    IDS_ASKED               "問い合せ"
+    IDS_LASTSEEN            "最終面会日"
+    IDS_BANNED              "Ban"
     IDS_PRIOVERYHIGH        "非常に高い"
     IDS_UUSERS              "ユーザー"
     IDS_UFAILED             "失敗"
-    IDS_OPENFILE            "オープンしたファイル"
+    IDS_OPENFILE            "ファイルを開く(&F)"
     IDS_DATE                "日付"
-    IDS_PARTINFOS           "パートファイル名: %s\nパート: %d , %s: %d (%.1f%%)\n"
-    IDS_PARTINFOS2          "%d%% 終了 (%s) - %d ダウンロード源からダウンロード中"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PARTINFOS           "部分ファイル名:"
+    IDS_PARTINFOS2          "ダウンロード中(%d ソース)"
     IDS_USERID              "ユーザーID"
-    IDS_CLIENT              "クライエント"
+    IDS_CLIENT              "クライアント"
     IDS_SERVER              "サーバー"
-    IDS_SOURCEINFO          "要求された回数: %d - 共有しているパートの数: %d"
-    IDS_CLIENTSOURCENAME    "\n: クライエントのファイル名"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_USERINFO            "ニックネーム: %s\n"
-    IDS_FILESTATS_SESSION   "今回のファイルの統計: %d　の要求中　%d　受諾 , %d バイト送信\n"
-    IDS_FILESTATS_TOTAL     "ファイルの総合統計: %d　の要求中　%d　受諾 , %d バイト送信\n"
-    IDS_REQ_UNKNOWNFILE     "不明ファイルのリクエスト"
+    IDS_SOURCEINFO          "問い合せ: %d回 - 利用可能部分の数: %d"
+    IDS_CLIENTSOURCENAME    "\n: クライアントのファイル名"
+    IDS_USERINFO            "名前: %s\n"
+    IDS_FILESTATS_SESSION   "今回のファイル統計: 受付 %d (%d 要求)、転送済み 
+%s\n"
+    IDS_FILESTATS_TOTAL     "総合ファイル統計: 受付 %d (%d 要求)、転送済み 
+%s"
+    IDS_REQ_UNKNOWNFILE     "未知のファイルを要求しました"
     IDS_TRANSFERTIME        "最初の送信からの経過時間: %s"
-    IDS_SF_AVERAGESIZE      "ファイルサイズの平均: %s"
-    IDS_SF_REQUESTS         "リクエスト"
-    IDS_SF_ACCEPTS          "受諾したリクエスト"
-    IDS_SF_TRANSFERRED      "送信されたデータ"
-    IDS_REMOVESEARCHSTRING  "この検索結果を閉じる"
-    IDS_REMOVESELECTED      "選択したものを除去する"
-    IDS_REMOVEALLSEARCH     "全てを除去する"
-    IDS_ENTERQUEUE          "ダウンロードする"
-    IDS_SF_FAIL             "不能なサーバー"
-    IDS_SF_WUSER            "活動しているサーバーのユーザー数"
-    IDS_SF_WFILE            "活動しているサーバーのファイル数"
+    IDS_SF_AVERAGESIZE      "平均ファイルサイズ: %s"
+    IDS_SF_REQUESTS         "要求"
+    IDS_SF_ACCEPTS          "受諾した要求"
+    IDS_SF_TRANSFERRED      "転送済みデータ"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_SF_USER             "ユーザー数の合計"
-    IDS_SF_FILE             "ファイル数の合計"
-    IDS_UPLOADTIME          "アップロードした時間"
-    IDS_LASTSEENCOMPL       "完全なファイルを最後に発見した日:"
+    IDS_REMOVESEARCHSTRING  "この検索結果を閉じる"
+    IDS_REMOVESELECTED      "選択した検索結果を削除"
+    IDS_REMOVEALLSEARCH     "検索結果全てを削除"
+    IDS_ENTERQUEUE          "ダウンロード"
+    IDS_SF_FAIL             "利用不能サーバー"
+    IDS_SF_WUSER            "稼働サーバーのユーザー数"
+    IDS_SF_WFILE            "稼働サーバーのファイル数"
+    IDS_SF_USER             "ユーザー合計"
+    IDS_SF_FILE             "ファイル数合計"
+    IDS_UPLOADTIME          "アップロード時間"
+    IDS_LASTSEENCOMPL       "完了ファイル確認:"
     IDS_YES                 "はい"
     IDS_NO                  "いいえ"
-    IDS_UNBAN               "禁止を取り除く"
-    IDS_SF_WORKING          "活動しているサーバー"
-    IDS_ADDTOSTATIC         "個人サーバーリストに加える"
-    IDS_ADDED2SSF           "個人サーバーリストに加えました"
-    IDS_STATICSERVER        "個人"
-    IDS_ERROR_SSF           "staticservers.datのオープンに失敗"
-    IDS_ERR_PACKAGEERROR    "データパケット %s (間違ったサイズ)の処理中エラー発生 - このデータブロックを破棄"
-    IDS_SF_ACTIVECON        "接続数 (推定)"
-    IDS_SF_MAXCONLIMITREACHED "接続数の限界値に達した回数"
-    IDS_SF_AVGCON           "接続数の平均 (推定)"
+    IDS_UNBAN               "Ban解除"
+    IDS_SF_WORKING          "稼働サーバー"
+    IDS_ADDTOSTATIC         "スタティックサーバーリストに追加"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_SF_PEAKCON          "最大接続数 (推定)"
-    IDS_ST_ACTIVEC          "接続数 (1:3)"
+    IDS_ADDED2SSF           "スタティックサーバーリストに追加しました"
+    IDS_STATICSERVER        "スタティック"
+    IDS_ERROR_SSF           "staticservers.datのオープンに失敗しました"
+    IDS_ERR_PACKAGEERROR    
+"%sの為のデータパケットを処理中に致命的なエラーが発生しました(不正サイズ) - 
+データブロックを破棄しました"
+    IDS_SF_ACTIVECON        "接続数(推定)"
+    IDS_SF_MAXCONLIMITREACHED "接続限界に達した回数"
+    IDS_SF_AVGCON           "平均接続数(推定)"
+    IDS_SF_PEAKCON          "最大接続数(推定)"
+    IDS_ST_ACTIVEC          "接続数(1:3)"
     IDS_NETWORK             "ネットワーク"
-    IDS_SF_DELCOUNT         "除去されたサーバー数"
-    IDS_QUEUEFULL           "ダウンロード数の限界"
+    IDS_SF_DELCOUNT         "削除サーバー数"
+    IDS_QUEUEFULL           "キュー限界"
     IDS_AVG                 "平均"
     IDS_BYTES               "バイト"
     IDS_KBYTES              "KB"
     IDS_MBYTES              "MB"
+END
+
+STRINGTABLE
+BEGIN
     IDS_GBYTES              "GB"
     IDS_TBYTES              "TB"
     IDS_SECS                "秒"
     IDS_MINS                "分"
     IDS_HOURS               "時"
     IDS_DAYS                "日"
-    IDS_ED2KLINKFIX         "ED2Kリンク"
+    IDS_ED2KLINKFIX         "eD2Kリンク"
+    IDS_RECONNECT           "サーバーに自動接続を %d 秒後におこないます"
+    IDS_SERVERADDED         "追加サーバー: "
+    IDS_IRC_IGNOREJOINMESSAGE "参加情報メッセージを無視"
+    IDS_STATS_SUCCUPCOUNT   "成功したアップロードの合計: %i"
+    IDS_IRC_IGNOREPARTMESSAGE "部分情報メッセージを無視"
+    IDS_STATS_FAILUPCOUNT   "失敗したアップロードの合計: %i"
+    IDS_STATS_AVEUPTIME     "平均アップロード時間: %s"
+    IDS_SEARCHMINSIZE       "最小サイズ(MB)"
+    IDS_SEARCHMAXSIZE       "最大サイズ(MB)"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_RECONNECT           "サーバーに自動接続を %d 秒後におこないます"
-    IDS_SERVERADDED         "サーバーを追加しました: "
-    IDS_STATS_SUCCUPCOUNT   "成功したアップロード合計数: %i"
-    IDS_STATS_FAILUPCOUNT   "失敗したアップロード合計数: %i"
-    IDS_STATS_AVEUPTIME     "平均アップロード時間: %s"
-    IDS_SEARCHMINSIZE       "最小サイズ (MB)"
-    IDS_SEARCHMAXSIZE       "最大サイズ (MB)"
-    IDS_PREF_ONLINESIG      "オンラインシグネチャーを作動させる"
-    IDS_ERROR_SAVEFILE      "保存に失敗"
-    IDS_REQ_SHAREDFILES     "ユーザー %s (%u) が共有ファイルのリストを要求しています -> %s"
-    IDS_ACCEPTED            "受諾した"
-    IDS_DENIED              "拒否した"
+    IDS_PREF_ONLINESIG      "オンライン署名を使用する"
+    IDS_ERROR_SAVEFILE      "保存に失敗しました"
+    IDS_REQ_SHAREDFILES     
+"ユーザー%s(%u)があなたの共有ファイルリストを要求しました -> %s"
+    IDS_ACCEPTED            "受付ける"
+    IDS_DENIED              "拒否する"
     IDS_PW_CON_DOWNLBL      "ダウンロード"
     IDS_PW_CON_UPLBL        "アップロード"
-    IDS_PW_AUTOCONNECTSTATICONLY "自動的にリストアップしたサーバーに接続する"
+    IDS_PW_AUTOCONNECTSTATICONLY 
+"スタティックリスト内のサーバーだけに自動接続する"
     IDS_PW_CON_LIMITFRM     "限界"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DOWNLOADMOVIECHUNKS "始まりと終わりの部分を最初にダウンロードする"
-    IDS_UPDATEQUEUE         "ダウンロードの順番を同時更新する"
-    IDS_RECOVER_SINGLE      "1　つのファイルが復元されました"
-    IDS_RECOVER_MULTIPLE    "%ld のファイルが復元されました"
-    IDS_ATTEMPTING_RECOVERY "復元を試みています..."
-    IDS_RECOVERY_SUCCESSFUL "復元を成功しました"
-    IDS_RECOVERY_FAILED     "復元を失敗しました"
-    IDS_STARTNEXTFILE       "既存のダウンロードが終了したら新しいダウンロードを自動的に開始"
-    IDS_FULLCHUNKTRANS      "アップロード時に完全なファイルパートを送信する"
-    IDS_MANUALSERVERHIGHPRIO "自分で追加したサーバーには優先権を与える"
-    IDS_VERBOSE             "詳しい (より詳しいプログラムのフィードバック)"
-    IDS_FLAT                "扁平"
-    IDS_ROUND               "湾曲"
-    IDS_SAMEUSERHASH        "クライエント '%s' と '%s' は同じハッシュかIPを使っています - '%s'　を除去しました"
-    IDS_SEARCHEXTENTION     "拡張"
-    IDS_SEARCHAVAIL         "入手可能"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_PW_FILE_ICH         "I.C.H 活動させる"
-    IDS_STATS_AVGLABEL      "グラフの間隔: %i 分"
+    IDS_PW_FILE_ICH         "I.C.Hを使用する"
+    IDS_STATS_AVGLABEL      "平均グラフの間隔: %i分"
     IDS_GRAPHS              "グラフ"
-    IDS_STREE               "統計表"
+    IDS_STREE               "統計ツリー"
+    IDS_IRC_IGNOREQUITMESSAGE "終了情報メッセージを無視する"
     IDS_STATSSETUPINFO      "統計"
+    IDS_IRC_SOUNDEVENTS     "イベント時に音楽を再生"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_NOTCONNECTEDKAD "Kadネットワークに未接続です!"
+    IDS_IRC_NOSFS           "共有ファイルが選択されていません"
+    IDS_RESETLABEL          "自動補完 (履歴機能)"
+    IDS_IRC_IGNOREMISCMESSAGE "雑多な情報メッセージを無視"
+    IDS_KNOWN               "既知"
+    IDS_RAU_RUNNING         
+"管理者権限がないユーザー""%s""としてeMuleを起動します"
+    IDS_RAU_FAILED          
+"管理者権限がないユーザー""eMule_Secure""としてeMuleを起動することに失敗しました。現在のユーザーの特権を維持します(""%s"")。"
+    IDS_KADCONTACTSREAD     "ファイルから %ld 個の接触先を読み込みました"
+    IDS_ERR_KADCONTACTS     
+"接触先が見つかりません、ブートストラップするかnodes.datファイルをダウンロードして下さい。"
+    IDS_METATAGS            "メタタグ カウント:"
+    IDS_FILEFORMAT          "ファイル フォーマット"
+    IDS_UDPREASKS           "UDPファイル再問い合わせ"
+    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping許容値 (ﾐﾘ秒)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Ping許容値の形式"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"ミリ秒 (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"パーセント (%)"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DOWNLOADMOVIECHUNKS "まず始めに先頭・最終チャンクをダウンロードする"
+    IDS_UPDATEQUEUE         "リアルタイムでキューリストを更新しない"
+    IDS_RECOVER_SINGLE      "1ファイル復元"
+    IDS_RECOVER_MULTIPLE    "%ldファイル復元"
+    IDS_ATTEMPTING_RECOVERY "復元を試行しています..."
+    IDS_RECOVERY_SUCCESSFUL "復元に成功しました"
+    IDS_RECOVERY_FAILED     "復元に失敗しました"
+    IDS_STARTNEXTFILE       
+"ダウンロード完了すれば次に停止しているファイルを自動的に開始"
+    IDS_FULLCHUNKTRANS      "全てのアップロードで完全なチャンクを転送する"
+    IDS_MANUALSERVERHIGHPRIO "手動追加サーバーには高い優先順位を設定する"
+    IDS_VERBOSE             "冗長(プログラムから詳細なフィードバックを得る)"
+    IDS_FLAT                "ﾌﾗｯﾄ"
+    IDS_ROUND               "丸み"
+    IDS_SAMEUSERHASH        
+"クライアント'%s'と'%s'は同じユーザーハッシュかIPを使用しています - 
+'%s'を削除しました"
+    IDS_SEARCHEXTENTION     "拡張子"
+    IDS_SEARCHAVAIL         "利用可能"
+END
+
+STRINGTABLE
+BEGIN
     IDS_HARDLIMIT           "限界値"
-    IDS_COL_MORECOLORS      "より多く..."
-    IDS_KBYTESEC            "kB/s"
-    IDS_TOOMANYCONNS        "これ以上接続できません"
-    IDS_DOWNLOADRENAMED     "同じファイル名がすでに存在しているので、%s　で保存されました"
-    IDS_TBN_DOWNLOADDONE    "ダウンロード終了:"
-    IDS_TBN_DOWNLOADADDED   "ダウンロードリストへ追加する:"
-    IDS_PW_TBN_USESOUND     "予告音を使う"
-    IDS_PW_TBN_ONLOG        "新しいエントリーを記録する"
-    IDS_PW_TBN_ONCHAT       "新しいトークをはじめる"
-    IDS_PW_TBN_POP_ALWAYS   "新しいトークメッセージが来ました"
+    IDS_COL_MORECOLORS      "詳細..."
+    IDS_KBYTESEC            "kB/秒"
+    IDS_TOOMANYCONNS        "接続限界"
+    IDS_DOWNLOADRENAMED     
+"その名前のファイルが既に存在していた為、%sという名前で保存されました"
+    IDS_TBN_DOWNLOADDONE    "ダウンロード済み:"
+    IDS_TBN_DOWNLOADADDED   "ダウンロードリストに追加:"
+    IDS_PW_TBN_USESOUND     "サウンドを使用する"
+    IDS_PW_TBN_ONLOG        "ログエントリの追加"
+    IDS_PW_TBN_ONCHAT       "チャット開始"
+    IDS_PW_TBN_POP_ALWAYS   "チャットメッセージの受信"
+    IDS_PW_TBN_ONDOWNLOAD   "ダウンロードリストに追加/終了しました"
+    IDS_PW_EKDEV_OPTIONS    "通知"
+    IDS_PW_TASKBARNOTIFIER  "ポップアップメッセージ"
+    IDS_PW_TBN_OPTIONS      "通知するイベント"
+    IDS_TBN_NEWCHATMSG      "メッセージ"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_PW_TBN_ONDOWNLOAD   "ダウンロードリストに追加かされたか終了しました"
-    IDS_PW_EKDEV_OPTIONS    "通知する"
-    IDS_PW_TASKBARNOTIFIER  "飛び出しメッセージ"
-    IDS_PW_TBN_OPTIONS      "いつ飛び出す"
-    IDS_TBN_NEWCHATMSG      "からメッセージ"
     IDS_PW_CON_CAPFRM       "容量"
-    IDS_IRC_STATUSLOG       "状態の記録"
+    IDS_IRC_STATUSLOG       "状態ログ"
     IDS_IRC_STATUS          "状態"
-    IDS_IRC_PRIVATECHANSTART "* プライベートトーク開始"
-    IDS_IRC_SLAPMSG         "* %s は %s を大きな魚でたたく!"
+    IDS_IRC_PRIVATECHANSTART "* プライベートチャット開始"
+    IDS_IRC_SLAPMSG         "* 
+%sが%sの周囲に大きいBabelfishでスラップします!"
     IDS_IRC_PRIVMESSAGE     "プライベートメッセージ"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_IRC_KICK            "蹴る"
-    IDS_IRC_SLAP            "叩く"
-    IDS_IRC_JOIN            "加わる"
+    IDS_WEB_REMOTE_LINK_ADDED "リンク追加: "
+    IDS_WEB_REMOTE_LINK_NOT_ADDED 
+"リンクを追加できません。パスワードが間違っています"
+    IDS_SOURCEEXCHANGESWAP  "一時的にソース交換をスワップ"
+    IDS_DL_TRY_TO_GET_PREVIEW_PARTS 
+"プレビューするには最初に必要な部品をダウンロードしていなければなりません"
+    IDS_PR_SHORT_LOW        "[低]"
+    IDS_IRC_KICK            "キック"
+    IDS_IRC_SLAP            "スラップ"
+    IDS_IRC_JOIN            "参加"
     IDS_IRC_CHANNELLIST     "チャンネルリスト"
     IDS_IRC_CONNECT         "接続"
-    IDS_IRC_DISCONNECT      "断線"
-    IDS_IRC_HASJOINED       "* %s は %s　に加わった"
-    IDS_IRC_HASPARTED       "* %s は %s (%s)　から離れた"
-    IDS_IRC_WASKICKEDBY     "* %s は %s (%s)　に蹴られた"
-    IDS_IRC_NICKUSED        "このIRCサーバーで同じニックネームがすでに使われています. 違うニックネームを選んでください"
-    IDS_IRC_HASQUIT         "* %s は (%s)　をやめました"
-    IDS_IRC_NOWKNOWNAS      "* %s は %s　として知られています"
-    IDS_IRC_SETSMODE        "* %s はモードを: %s %s　にセットします"
-    IDS_IRC_NOTSUPPORTED    "** まだサポートされていないモードがセットされています。　もう一度チャンネルに接続しなおしてください.."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_FO_PREF_EXISTED     
+"eMuleは選択されたポート用の既存規則を検出し、これを上書きまたは置換できませんでした。 
+足りない規則の追加には成功しています。\nサードパーティ製のデスクトップ用ファイアーウォールやルータはこれによって影響されないことに注意して下さい!"
+    IDS_FO_PREF_FAILED      
+"選択されたポート用のWinXP内蔵ファイアーウォールの構成に失敗しました!"
+    IDS_FO_PREF_STARTUP     
+"eMuleの開始/終了時にWinXPのファイアーウォール上のポートを開く/閉じる"
+    IDS_LOG_LEVEL           "ログレベル"
+    IDS_DISABLEPEERACHE     "PeerCacheからのダウンロードを無効にする"
+    IDS_NEWMSG              "'%s' (IP:%s)からの新しいメッセージ"
+    IDS_PREF_STARTNEXTFILECATONLY "同じカテゴリ内のみ"
+    IDS_LOG_ULDL_EVENTS     "アップロード/ダウンロードイベントのログを取る"
+    IDS_PEERCACHE_ENABLED   
+"あなたのISPはキャッシュダウンロードを有効にすることで、PeerCache技術をサポートしています!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND 
+"ユーザーが友達としてあなたを加えることを許可"
+    IDS_SOURCESWAPBLOCKED   "スワップがブロックされました"
+    IDS_TRICKLING           "待機"
+    IDS_A4AF_CHECK_THIS_NOW "このソースを今すぐチェック (デバッグ)"
+    IDS_PR_SHORT_HIGH       "[高]"
+    IDS_STATS_FRATIO        "セッション UL:DL 割合 (友達へのULを含む):"
+    IDS_STATS_UDATA_FRIENDS "友達スロットへアップロードしたデータ 
+(セッション): %s"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IRC_DISCONNECT      "切断"
+    IDS_IRC_HASJOINED       "* %sが%sに参加しました"
+    IDS_IRC_HASPARTED       "* %sが%sから退出しました(%s)"
+    IDS_IRC_WASKICKEDBY     "* %sが%sにキックされました(%s)"
+    IDS_IRC_NICKUSED        "このIRCサーバーで同じ名前が既に使用されています。「設定」のIRCタブで違う名前を入力して下さい"
+    IDS_DOWNLOAD_ALPHABETICAL "ｱﾙﾌｧﾍﾞｯﾄ順でダウンロード"
+    IDS_IRC_HASQUIT         "* %sは退席しました(%s)"
+    IDS_IRC_NOWKNOWNAS      "* %sは%sとして知られています"
+    IDS_IRC_SETSMODE        "*  %sはモードを%s %sにセットしました"
+    IDS_IRC_NOTSUPPORTED    "**まだサポートされていないモードが設定されています。もう一度チャンネルに接続し直して下さい.."
     IDS_IRC_CHANNEL         "チャンネル"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_IRC_NICK            "ニックネーム"
-    IDS_IRC_SEND            "送る"
+    IDS_IRC_NICK            "Nick"
+    IDS_IRC_SEND            "送信"
     IDS_IRC_NAME            "名前"
-    IDS_IRC_SLAPMSGSEND     "プライベートメッセージ %s :\001ACTION は %s を大きな魚でたたく!\001"
-    IDS_IRC_ADDTIMESTAMP    "時刻をメッセージに表示する"
-    IDS_IRC_USEFILTER       "チャンネルリストのフィルターを使う"
-    IDS_IRC_PERFORM         "パフォーム"
-    IDS_IRC_USEPERFORM      "接続時にパフォームを使う"
-    IDS_IRC_ADDTOFRIENDLIST "友達リストへ追加する"
-    IDS_IRC_LOADCHANNELLISTONCON "サーバーチャンネルリストを接続時にロードする"
-    IDS_IRC_ADDASFRIEND     "友達リストへ追加した!"
-    IDS_PW_WARNING          "入力された数字""%s""はOSにはサポートされていません:  %d\nシステムが不安定になるかもしれません\n\nそれでもいいですか?"
-    IDS_TAKEOVER            "引き継ぐ"
-    IDS_CLEANUP             "まとめる"
-    IDS_RENAME              "変名する"
-    IDS_IRC_ADDLINKTOIRC    "これをIRCクリップボードへくわえて友達に送る"
+    IDS_IRC_SLAPMSGSEND     "PRIVMSG %s 
+:ACTIONは%sの周囲に大きいBabelfishでスラップします!"
+    IDS_IRC_ADDTIMESTAMP    "メッセージに時刻を表記する"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_IRC_SENDLINK        "これを友達に送る: "
-    IDS_IRC_RECIEVEDLINK    "%s 送られました (%s) は自動てきに開始します"
-    IDS_IRC_ACCEPTLINKS     "IRCでED2Kリンクを使う (警告!)"
-    IDS_SOURCENAMES         "ダウンロード源の名前"
-    IDS_PREF_STARTMIN       "小さいウィンドウで開始"
-    IDS_PS_TBN_IMPORTANT    "緊急: ハードディスクの空きがありません、 サーバーへの接続が失われました"
+    IDS_IRC_USEFILTER       "チャンネルリストフィルタを使用する"
+    IDS_IRC_PERFORM         "自動処理"
+    IDS_IRC_USEPERFORM      "接続時に自動処理を使用する"
+    IDS_IRC_ADDTOFRIENDLIST "友達リストへ追加"
+    IDS_IRC_LOADCHANNELLISTONCON 
+"接続時にサーバーチャンネルリストを読み込む"
+    IDS_IRC_ADDASFRIEND     "友達リストへ追加しました!"
+    IDS_PW_WARNING          "入力された数値""%s""はOSがサポートする範囲を超えています: %d\nシステムが不安定になる可能性があります。\n\nよろしいですか?"
+    IDS_TAKEOVER            "引き継ぐ"
+    IDS_CLEANUP             "クリーンアップ"
+    IDS_RENAME              "リネーム"
+    IDS_IRC_ADDLINKTOIRC    "これをIRCクリップボードへ追加して友達に送信する"
+    IDS_IRC_SENDLINK        "友達に送信:"
+    IDS_IRC_RECIEVEDLINK    "%sは(%sに)送信され、自動的に開始されます"
+    IDS_IRC_ACCEPTLINKS     "IRCでeD2Kリンクを使用する(慎重に使用して下さい!)"
+    IDS_SHARED              "共有済み"
+    IDS_DOWNLOADED          "ダウンロード済み"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SOURCENAMES         "ソース名"
+    IDS_PREF_STARTMIN       "最小化して開始する"
+    IDS_PS_TBN_IMPORTANT    "緊急:ハードディスクの空き容量不足でサーバーから切断"
     IDS_COLORS              "色"
     IDS_SP_BACKGROUND       "背景"
-    IDS_SP_GRID             "ごばん目"
+    IDS_SP_GRID             "グリッド"
     IDS_SP_DL1              "現在のダウンロード"
-    IDS_SP_DL2              "平均のダウンロード"
-    IDS_SP_DL3              "今回のダウンロード"
+    IDS_SP_DL2              "平均ダウンロード時間"
+    IDS_SP_DL3              "今回の平均ダウンロード時間"
     IDS_SP_UL1              "現在のアップロード"
-    IDS_SP_UL2              "平均のアップロード"
-    IDS_SP_UL3              "今回のアップロード"
+    IDS_SP_UL2              "平均アップロード時間"
+    IDS_SP_UL3              "今回の平均ダウンロード時間"
     IDS_SP_ACTCON           "現在の接続数"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_SP_ACTDL            "現在のダウンロード数"
     IDS_SP_ACTUL            "現在のアップロード数"
-    IDS_PW_TIT_UP           "アップロードスピードの設定"
-    IDS_PW_TIT_DOWN         "ダウンロードスピードの設定"
-    IDS_PW_UNLIMITED        "無限"
-    IDS_PW_MINREC           "最小推奨値\t%i "
-    IDS_PW_UA               "フルアップロード/ダウンロードスピードの設定"
-    IDS_PW_PA               "アップロード/ダウンロードスピードの速度を落とす"
-    IDS_IRC_IGNOREINFOMESSAGE "インフォーメーションメッセージをむしする"
-    IDS_CONNECTIONLOST      "接続を失いました"
-    IDS_WIZ_OS_FRAME        "オペレイティングシステム"
-    IDS_WIZ_CONCURENTDOWN_FRAME 
-                            "幾つダウンロードをしていますか?"
-    IDS_WIZ_CUSTOM_FRAME    "もし接続スピードテストしたなら、結果をここに入力してください"
-    IDS_WIZ_HOTBUTTON_FRAME "調節されたボタン"
-    IDS_WIZ_TRUEUPLOAD_TEXT "真のアップロード帯域幅"
-    IDS_WIZ_TRUEDOWNLOAD_TEXT "真のダウンロード帯域幅"
+    IDS_PW_TIT_UP           "アップロード速度制限"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
+    IDS_PW_TIT_DOWN         "ダウンロード速度制限"
+    IDS_PW_UNLIMITED        "無制限"
+    IDS_PW_MINREC           "推奨最小値\t%i"
+    IDS_PW_UA               "Up/Down速度を最大に設定"
+    IDS_PW_PA               "Up/Down速度を制限する"
+    IDS_IRC_IGNOREINFOMESSAGE "情報メッセージを無視する"
+    IDS_CONNECTIONLOST      "接続を失いました"
+    IDS_WIZ_OS_FRAME        "OS"
+    IDS_WIZ_CONCURENTDOWN_FRAME "通常、一度にどの位ダウンロードしますか?"
+    IDS_HASHINGFILE         "ファイルハッシュ中:"
+    IDS_WIZ_CUSTOM_FRAME    
+"もし接続速度のテストをしたなら、結果をここに入力してください"
+    IDS_WIZ_HOTBUTTON_FRAME "ボタン設定"
+    IDS_WIZ_TRUEUPLOAD_TEXT "実際のアップロード帯域幅"
+    IDS_WIZ_TRUEDOWNLOAD_TEXT "実際のダウンロード帯域幅"
     IDS_FRIENDLIST          "友達"
-    IDS_CHATDISCONNECTED    "*** 断線しました"
-    IDS_WIZARD              "ウィザード"
-    IDS_ADDFRIEND           "友達リストに加える"
+    IDS_CHATDISCONNECTED    "*** 切断"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WIZARD              "ウィザード..."
+    IDS_ADDFRIEND           "友達リストに追加(&A)"
     IDS_REMOVEFRIEND        "友達リストから削除する"
-    IDS_REMOVEFROMSTOK      "サーバーリストから削除されました"
-    IDS_REMOVEFROMSTATIC    "サーバーリストから削除する"
+    IDS_REMOVEFROMSTOK      "スタティックサーバーリストから削除しました"
+    IDS_REMOVEFROMSTATIC    "スタティックサーバーリストから削除"
     IDS_LENGTH              "長さ"
     IDS_VIDEO               "ビデオ"
     IDS_AUDIO               "オーディオ"
-    IDS_FILEINFO            "ファイル&インフォーメイション"
+    IDS_FILEINFO            "メディア情報"
     IDS_CODEC               "コーデック"
     IDS_BITRATE             "ビットレート"
     IDS_WIDTH               "幅"
     IDS_FPS                 "Fps"
     IDS_CHANNELS            "チャンネル"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_SAMPLERATE          "サンプルレート"
     IDS_ROUNDBITRATE        "ラウンドビットレート"
-    IDS_HEIGHT              "丈"
-    IDS_SHAREDFILES_FAILED  "共有ファイルを'%s'から検索ができません"
-    IDS_SHAREDFILES_REQUEST "共有ファイルを'%s'から申請中"
-    IDS_VIEWFILES           "ファイルを見る"
-    IDS_FRIENDSLOT          "友達としてアップロードをする"
-    IDS_FRIENDDETAIL        "(友達用アップロード)"
-    IDS_ASCWOP_PROXYSUPPORT "Automatic server connect without proxy"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_HEIGHT              "高さ"
+    IDS_SHAREDFILES_FAILED  "'%s'からの共有ファイルを検索できません"
+    IDS_SHAREDFILES_REQUEST "'%s'から共有ファイルを要求しています"
+    IDS_VIEWFILES           "共有ファイルを表示(&V)"
+    IDS_FRIENDSLOT          "友達スロットを作成する"
+    IDS_FRIENDDETAIL        "(友達スロット)"
+    IDS_ASCWOP_PROXYSUPPORT "プロキシなしで自動サーバ接続"
     IDS_UDPDISABLED         "使用しない"
-    IDS_CTINFO              "接続のタイプを選んでください:"
-    IDS_WIZ_CTFRAME         "接続のタイプ"
+    IDS_CTINFO              "接続種類を選択して下さい:"
+    IDS_WIZ_CTFRAME         "接続種類"
     IDS_CONCURDWL           "同時ダウンロード"
     IDS_UNIT                "ユニット:"
     IDS_WIZARD_CUSTOM       "カスタム"
-    IDS_WIZARD_ENTERBELOW   "(この下に入力!)"
-    IDS_USS_MIN             "Warning: USS currently does not support upload speeds less then 10K. If you know your connection is not able to handle this, please disable USS."
+    IDS_WIZARD_ENTERBELOW   "(下に入力!)"
+    IDS_STATS_MAXAVGDL      "平均最大ダウンロード速度: %.2f kB/s"
+    IDS_USS_MIN             "警告: 
+USSは現在、10K未満のアップロード速度をサポートしていません。あなたの接続がこれに満たない場合はUSSを無効にして下さい。"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_STATS_MAXAVGDL      "最大平均ダウンロードスピード (今回): %s"
-    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
-                            "Ignore eMule add friend protocol messages"
-    IDS_STATS_MAXDL         "最大ダウンロードスピード (今回): %s"
-    IDS_PW_FASTSRVCON       "安全に接続"
-    IDS_SOURCELINKFAILED    "ハイIDがダウンロード源のリンク作るのに必要です"
-    IDS_CREATESOURCELINK    "ED2kリンクをクリップボードにコピーする (ダウンロード源)"
+    IDS_STATS_MAXDL         "最大ダウンロード速度: %.2f kB/s"
+    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND
+                            "eMuleの add friend プロトコルメッセージを無視"
+    IDS_PW_FASTSRVCON       "安全接続"
+    IDS_SOURCELINKFAILED    
+"有効なソースリンクを作成するにはHighIDが必要になります"
+    IDS_CREATESOURCELINK    
+"eD2kリンクをクリップボードにコピーします(ソース(&S))"
     IDS_ERR_LOADSERVERMET   "server.metのロードに失敗しました!"
-    IDS_ERR_CORRUPTCOMPRPKG "破損した圧縮されたパケット %s を受信しました (エラー %i)"
-    IDS_ERR_EMFRIENDSINVALID "emfriends.metは無効か破損しています!"
-    IDS_ERR_READEMFRIENDS   "emfriends.metをロード中エラー発生: %s"
-    IDS_ERR_KNOWNSERVERINFOREC "不明なサーバーインフォーメーションを受信しました!"
-    IDS_ERR_TIMERCREATEFAILED "エラー: タイマーの作成に失敗しました"
-    IDS_WIZ_DOWN            "ダウンロードスピード (kbit/s)"
-    IDS_WIZ_UP              "アップロードスピード (kbit/s)"
-    IDS_SELECT_INCOMINGDIR  "ファイルのフォルダーを選んでください"
-    IDS_SELECT_TEMPDIR      "環境変数ファイルのフォルダーを選んでください"
+    IDS_ERR_CORRUPTCOMPRPKG "%s用の破損圧縮パケットを受信しました(エラー 
+%i)"
+    IDS_ERR_EMFRIENDSINVALID "emfriends.metは無効であるか、破損しています!"
+    IDS_ERR_READEMFRIENDS   
+"emfriends.metを読込み中に未知のエラーが発生しました: %s"
+    IDS_ERR_KNOWNSERVERINFOREC "未知のサーバー情報を受信しました!"
+    IDS_ERR_TIMERCREATEFAILED "致命的エラー: タイマーの作成に失敗しました"
+    IDS_WIZ_DOWN            "ダウン(kbit/s)"
+    IDS_WIZ_UP              "アップ(kbit/s)"
+    IDS_SELECT_INCOMINGDIR  
+"ダウンロードファイルの保存フォルダを選択して下さい"
+    IDS_SELECT_TEMPDIR      "一時ファイルの保存フォルダを選択して下さい"
     IDS_PRIOAUTO            "自動"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_PRIOAUTONORMAL      "自動 [中]"
     IDS_PRIOAUTOHIGH        "自動 [高]"
     IDS_PRIOAUTORELEASE     "自動 [特]"
     IDS_PRIOAUTOLOW         "自動 [低]"
-    IDS_ERR_CONTIMEOUT      """%s"" (%s:%i )への接続中時間切れになりました"
-    IDS_ERR_CONFAILED       """%s"" (%s:%i )への接続は失敗しました"
-    IDS_OUTOFSERVERS        "全てのサーバーへの接続は失敗しました。もう一度接続しなをしています"
-    IDS_PW_CONLIMITS        "接続限界値"
-    IDS_MAXCON5SECLABEL     "新しい接続数の最大値 / 5秒"
-    IDS_PW_UAP              "新しく加えた共有ファイル自動優先権をに使う"
+    IDS_ERR_CONTIMEOUT      
+"""%s""への接続作業(%s:%i)がタイムアウトしました"
+    IDS_ERR_CONFAILED       """%s""への接続(%s:%i)は失敗しました"
+    IDS_OUTOFSERVERS        
+"リストされた全てのサーバーへの接続に失敗しました。やり直します"
+    IDS_PW_CONLIMITS        "接続限界数"
+    IDS_MAXCON5SECLABEL     "最大新規接続数/5秒"
+    IDS_PW_UAP              
+"自動優先順位を使用して新規共有ファイルを追加する"
     IDS_MAXCLIENT           "最大ユーザー数"
-    IDS_PW_TWEAK            "拡張セッティング"
-    IDS_TWEAKS_WARNING      "警告: これらのセッティングをむやみに変えないでください。間違ったセッティングはシステムの不安定化のもとです。\neMuleはこれらのセッティングままで通常に作動します。"
-    IDS_ADDAFRIEND          "友達リストに加える"
-    IDS_PAF_REQINFO         "必要な情報"
+    IDS_PW_TWEAK            "拡張設定"
+    IDS_TWEAKS_WARNING      "警告: 
+よく判らない場合はこれらの設定をむやみに変えないでください。さもなければシステムが不安定になります。eMuleはこれらの設定に何も手を加えることなしに実行してしまいます"
+    IDS_ADDAFRIEND          "友達を追加..."
+    IDS_PAF_REQINFO         "必要情報"
     IDS_PAF_MOREINFO        "追加情報"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_ERR_NOVALIDFRIENDINFO 
-                            "有効なユーザーネームとハッシュを入力しなければいけません!"
-    IDS_ADD                 "追加"
-    IDS_RECOVERED_PARTMET   "part.metの %s　を修復しました"
-    IDS_CMT_QUEST           "このファイルにコメントしてください! (コメントは全てのユーザーに掲示されます)"
-    IDS_CMT_AIDE            "映画には、 長さ、 話の内容, 言語... もし偽者だったら他のeMuleユーザーに知らせる"
-    IDS_CMT_TITLE           "%s ファイルのコメント数"
-    IDS_CMT_ADD             "このファイルにコメントをかえる"
-    IDS_CMT_NONE            "コメント無し"
-    IDS_CMT_READ            "ファイルのコメント:"
-    IDS_CMT_NOTCONNECTED    "まだ接続されてません..."
-    IDS_CMT_SHOWALL         "全てのコメントを見る"
-    IDS_CMT_REFRESH         "&リフレッシュする"
-    IDS_CMT_READALL         "全てのコメント"
-    IDS_CMT_NOCOMMENT       "コメントは入力されませんでした..."
-    IDS_CMT_RATEQUEST       "ファイルの質"
-    IDS_CMT_RATEHELP        "ファイルの評価を選ぶか、もし偽者だったら他のユーザーに知らせる!"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_CMT_FAKE            "無効 / 破損 / 偽造"
-    IDS_CMT_POOR            "悪質"
-    IDS_CMT_GOOD            "良質"
-    IDS_CMT_FAIR            "普通"
-    IDS_CMT_EXCELLENT       "大変良質"
-    IDS_CMT_NOTRATED        "評価されてません"
-    IDS_KILO                "K"
-    IDS_MEGA                "M"
-    IDS_GIGA                "G"
-    IDS_TERRA               "T"
-    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "Emuleのプロトタイプメッセージを無視する"
-    IDS_SMARTLOWIDCHECK     "スマートローID チェックを接続時に使う"
-    IDS_SF_SRVOCC           "サーバーの占有率: %.2f%%"
-    IDS_3DDEP               "プログレスバースタイル"
-    IDS_AUTOTAKEED2KLINKS   "作動時に限りED2Kリンクを自動的に加える"
-    IDS_ADDNEWFILESPAUSED   "ダウンロードファイルをポーズモードで加える"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_FD_STATS            "破損の為の損失: %s       圧縮の為の利得: %s\nI.C.H.が修復をしたパケット数: %i"
-    IDS_ERR_NOHELP          "Please visit our homepage's download section to get a copy of the newest help file!\n\nDo you want to browse the online help now instead?"
-    IDS_SHOWOVERHEAD        "間接の帯域幅見せる"
-    IDS_UPDOWNSMALL         "アップロード: %.1f | ダウンロード: %.1f"
-    IDS_EDITLIST            "リスト"
-    IDS_SP_ICONBAR          "システムトレイアイコンスピードバー"
-    IDS_RATINGRECV          "'%s'の評価を受信しました: %i"
-    IDS_DESCRIPTIONRECV     "'%s' の記述を受信しました: %s"
-    IDS_WEBSERVICES         "ウェブサービス"
-    IDS_WEBSVEDIT           "ウェブサービスを編集する"
-    IDS_IRC_EMULEPROTO_IGNORESENDLINK 
-                            "Ignore eMule send link protocol messages"
-    IDS_CHECK4UPDATE        "新いバージョンをチェックする"
-    IDS_STARTUP             "開始時"
-    IDS_NEWVERSIONAVL       "新いeMuleが入手できます! ホームページで最新の情報をチェックしてください"
-    IDS_NEWVERSIONAVLPOPUP  "新いeMuleが入手できます!　ここをクリックして新いバージョンをチェックする!"
-    IDS_NEWVERSIONFAILED    "新いバージョンをチェックできません"
-    IDS_CB_TBN_ONNEWVERSION "新いeMuleバージョンを検出しました"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_NONEWERVERSION      "新しいeMuleバージョンは在りません"
-    IDS_VERSIONCHECK        "&バージョンチェック"
-    IDS_VISITVERSIONCHECK   "\n\nインフォーメションのページへ行って見ますか?"
-    IDS_PW_VIDEOPLAYER      "ビデオプレイヤー"
-    IDS_VIDEOBACKUP         "プレビューの為のバックアップ"
-    IDS_STATIC_EMPTY        "(空=ディフォルト)"
-    IDS_MYINFO              "マイインフォーメーション"
-    IDS_ID                  "ID"
-    IDS_IDLOW               "ローID"
-    IDS_IDHIGH              "ハイID"
-    IDS_UPSTATUS            "獲得したパート"
-    IDS_TOVERHEAD           "トータルの間接パケット: %s (%s)"
-    IDS_FROVERHEAD          "ファイルリクエストの間接パケット: %s (%s)"
-    IDS_SSOVERHEAD          "情報交換の間接パケット: %s (%s)"
-    IDS_SOVERHEAD           "サーバーの間接パケット: %s (%s)"
-    IDS_ERR_FILECOMPLETIONTHREAD "ダウンロードファイルの保存に失敗しました"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_CAT_ADD             "カテゴリーを追加する"
-    IDS_CAT_EDIT            "カテゴリーをエディットする"
-    IDS_CAT_REMOVE          "カテゴリーを削除する"
-    IDS_CAT                 "カテゴリー"
-    IDS_TITLE               "タイトル"
-    IDS_COLOR               "カラー"
-    IDS_DEFAULT             "ディフォルト"
-    IDS_PW_DISPLAY          "ディスプレイ"
-    IDS_CAT_INVADD          "割り当てられてない全部を見る"
-    IDS_CAT_REINVADD        "全部を見る"
-    IDS_INDICATERATINGS     "表示コメントが付いているダウンロードをアイコンで表示"
-    IDS_ALLOTHERS           "カテゴリー外"
-    IDS_TOCAT               "カテゴリーに割り当てる"
-    IDS_CAT_UNASSIGN        "(カテゴリー外)"
-    IDS_ADDDOWNLOADSFROMCB  "これらのeD2Kファイルリンクをダウンロードに追加しますか?\n"
-    IDS_ADDDOWNLOADSFROMCBTITLE "eD2Kファイルリンクをクリップボードへ"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_PF_WATCHCB          "クリップボードのeD2Kファイルリンクに注意する"
-    IDS_SECURITY            "セキュリティー"
-    IDS_IPFILTERLOADED      "%i IPフィルターがロードされました"
-    IDS_IPFILTER            "IPフィルター"
-    IDS_EDIT                "エディット"
-    IDS_FILTERLEVEL         "フィルターレベル"
-    IDS_FILTERSERVERBYIPFILTER "サーバーもフィルターする (ダイナミックIPサーバーも拒否)"
-    IDS_FILTERCOMMENTSLABEL "セパレーター( | )が入っているコメントは拒否する"
-    IDS_CLIENTLIST          "知っているクライエント"
-    IDS_FOLDER              "フォルダー"
-    IDS_CL_UPLOADSTATUS     "アップロードの状態"
-    IDS_CL_TRANSFUP         "アップロード送信"
-    IDS_CL_DOWNLSTATUS      "ダウンロードの状態"
-    IDS_CL_TRANSFDOWN       "ダウンロード送信"
-    IDS_CL_PENDING          "決定待ち"
-    IDS_CL_LOW2LOW          "ローからローIPへ"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_ERROR               "エラー"
-    IDS_OPENINC             "&インカミングフォルダーをオープンする"
-    IDS_HOTMENU             "ホットメニュー"
-    IDS_DISABLEKNOWNLIST    "知っているクライエントリストを使わなくする"
-    IDS_DISABLEQUEUELIST    "順番リストを使わなくする"
-    IDS_USECREDITSYSTEM     "クレディト優先制を使う (アップロードをしてくれた人に者優先権を与える)"
-    IDS_FIRSTAUTODOWN       "eMuleにダウンロード優先権を任せるならこのオピションを使う。\n\nこのオピションを使うとeMuleはファイル数が多いダウンロードとファイル数が少ないダウンロードの優先権の処理をします。\n\nもしクライエントをv0.26か以下からアップデートした場合、今のダウンロードは自動優先権に設定されています。\n\nこのオプションはこれからのダウンロードだけに働きます。　(基本設定は使うです)"
-    IDS_FIRSTAUTOUP         "eMuleにアップロード優先権を任せるならこのオピションを使う。\n\nこのオピションを使うとeMuleはファイル数が少ない方のアップロードを優先処理をします。\n\nこのオピションを使わないとeMuleはファイル数が多いい方のアップロードを優先処理をします。\n\nもしクライエントをv0.26か以下からアップデートした場合、今の共有ファイルは自動優先権に設定されています。\n\nこのオプションはこれからの共有ファイルだけに働きます。　(基本設定は使うです)"
-    IDS_FIRSTCREDITSYSTEM   "アップロードをしてくれた人に者優先権を与えたいですか?\n\nこれはクレディト優先制と言われます。 このオピションを使うと対リーチャーに役立ちます。 ファイルリリースをするのなら、このオピションを使わないでください。\n\n(基本設定は使うです)"
-    IDS_FIRSTFULLCHUNK      "完全なパートをアップロードするならこのオピションを使う。\n\n完全なパートをアップロードするとクライエントがパートを終了する確立が高くなります。 完全なパートをアップロードしなければあなたのアップロード待ちの順番回転が速くなります。 ファイルリリースをするのなら、このオピションを使ってください。.\n\n(基本設定は使うです)"
-    IDS_FIRSTSAFECON        "eMuleにセーフコネクトさせるならこのオピションを使う。\n\nこのオピションを使うとeMuleはサーバーに少し速く接続しますが、ローID接続される確立が高くなります。\n\n(基本設定は使わないです)"
-    IDS_FIRSTRUNASSIST      "セットアップウィザード始動しますか?"
-    IDS_FIRSTAUTOCON        "始動時にeMuleに自動的にサーバーに接続させるならこのオピションを使う。\n\n(基本設定は使わないです)"
-    IDS_FIRSTCOMPLETE       "セットアップウィザードを終了しました。\n\n他の設定は好みのアイコンで変えれます。ヘルプはF1です。"
-    IDS_ENTERUSERNAME       "ユーザーネームを入力して下さい:"
-    IDS_STATIC_CPUMEM       "CPU && メモリー使用量の保存"
-    IDS_KAD_SEARCH_KEYWORD_TOO_SHORT 
-                            "Keyword too short.\r\n\r\nThe keyword(s) used in a Kad search expression must have a minimum length of 3 characters."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_LOG2DISK            "Save log to disk"
-    IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING 
-                            "There is already a Kad search ongoing for the keyword ""%s"".\r\n\r\nTo search again for that keyword, either wait until this keyword search is finished or close the according search results pane."
-    IDS_KAD_SEARCH_KEYWORD_INVALID 
-                            "Invalid Kad keyword.\r\n\r\nA Kad search expression has the following format:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nThe <kad-keyword> must not contain any of the following characters:\r\n\r\n\t%s"
-    IDS_EDITCAT             "カデゴリープロバーティをエディットする"
-    IDS_PW_WS               "ウェブインターフェイス"
-    IDS_ENABLED             "使用する"
-    IDS_WEB_LOGIN           "ログイン"
-    IDS_WEB_ENTER_PASSWORD  "パスワードをここに入力"
-    IDS_WEB_LOGIN_NOW       "今、ログインする"
-    IDS_WEB_CONFIRM_REMOVE_SERVER 
-                            "このサーバーを本当にリストから削除しますか?"
-    IDS_WEB_CONTROL         "ウェブコントロールパネル"
-    IDS_WEB_LOGOUT          "ログアウト"
-    IDS_WEB_ACTIONS         "アクション"
-    IDS_WEB_SHOW_UPLOAD_QUEUE "順番列を見る"
-    IDS_WEB_HIDE_UPLOAD_QUEUE "順番列をを隠す"
-    IDS_WEB_GZIP_COMPRESSION "Gzip 圧縮"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_WEB_GZIP_COMMENT    "特にグラフの送信状態をほぞんする。"
-    IDS_WEB_UPLOAD_QUEUE_COMMENT 
-                            "送信状態のページで順番待ちの表示をするかしないか。"
-    IDS_WEB_REFRESH_TIME    "ページの再生間隔"
-    IDS_WEB_REFRESH_COMMENT "秒単位 (ゼロ=使用しない):"
-    IDS_SV_URL              "ユーアールエル"
-    IDS_WS_RELOAD_TMPL      "テンプレート"
-    IDS_SV_DEBUGLOG         "ディバグログ"
-    IDS_WS_PASS             "パスワード"
-    IDS_WEB_FILESETTINGS    "ファイル設定"
-    IDS_WS_ERR_LOADTEMPLATE "テンプレートをロードできません: 新しいファイル %s と交換してください!"
-    IDS_WEB_CONLIMITS       "コネクションのリミット"
-    IDS_INFLST_USER_TOTALDOWNLOAD "トータルダウンロード"
-    IDS_INFLST_USER_TOTALUPLOAD "トータルアップロード"
-    IDS_PRIORITY_UP         "優先権を上げる"
-    IDS_PRIORITY_DOWN       "優先権を下げる"
-    IDS_SPEED_LIMITS        "スピードリミット"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_MI                  "水曜日"
-    IDS_DO                  "木曜日"
-    IDS_FR                  "金曜日"
-    IDS_SA                  "土曜日"
-    IDS_SO                  "日曜日"
-    IDS_WEB_ADMINLOGIN      "ウェブインターフェイス: アドミンログイン"
-    IDS_WEB_GUESTLOGIN      "ウェブインターフェイス: ゲエストログイン"
-    IDS_WEB_SESSIONEND      "ウェブインターフェイス: ログアウト"
-    IDS_DETAILS             "詳細"
-    IDS_ACTION              "アクション"
-    IDS_REMOVE              "除去"
-    IDS_NEW                 "新規"
-    IDS_WEB_BADLOGINATTEMPT "ウェブインターフェイス: ログイン失敗"
-    IDS_ERR_TOOLARGEFILE    "フアイルサイズがedonkeyプロトコールでサポートせれているサイズ(>=4GB)より大きいです"
-    IDS_MSGONLYFRIENDS      "友達からだけ受け入れる"
-    IDS_MSGONLYSEC          "正規のクライエントからだけ受け入れる"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DAY_MO_SA           "月-土"
-    IDS_LIMITSOURCES        "ダウンロード源のリミット"
-    IDS_LIMITCONS5SEC       "コネクションのリミット/5秒"
-    IDS_SCHED_CATSTOP       "カテゴリー:ダウンロード中止"
-    IDS_SCHED_CATRESUME     "カテゴリー:ダウンロード再開"
-    IDS_S_DAYS              "日"
-    IDS_STARTTIME           "開始時間"
-    IDS_VALUE               "値"
-    IDS_SCHED_ENTERDATARATELIMIT "データレートのリミット入力:"
-    IDS_SCHED_ENTERVAL      "新しい値を入力して下さい:"
-    IDS_SCHED_ACTCONFIG     "アクションの設定"
-    IDS_SELECTCAT           "カテゴリーの選択"
-    IDS_ALLUNASSIGNED       "カテゴリーを使わない"
-    IDS_ACTSESSIONS         "アクティブなセッション"
-    IDS_WEBSRV              "ウェブインターフェイス。"
-    IDS_SW_REFETCHRES       "結果を再度表示"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_FILEHASH            "ファイルハッシュ"
-    IDS_GLOBALSEARCH2       "グローバルサーチ"
-    IDS_PW_PROXY            "ポロキシ"
-    IDS_PROXY_ENABLE        "ポロキシを使う"
-    IDS_PROXY_TYPE          "ポロキシタイプ:"
-    IDS_PROXY_HOST          "ポロキシホスト:"
-    IDS_PROXY_PORT          "ポロキシポート:"
-    IDS_PROXY_AUTH          "証明を使う"
-    IDS_AUTH                "証明"
-    IDS_SHOWCATINFO         "カテゴリータブにダウンロードのインフォーメイションを表示する"
-    IDS_SW_SEARCHINGINFO    "サーチ中。 もう少しで結果がでます!"
-    IDS_LOGENTRY            "記録エントリー"
-    IDS_COPY                "コピー"
-    IDS_SELECTALL           "全部選択"
-    IDS_AUTOSCROLL          "自動スクロール"
-    IDS_WIZ1_WELCOME_TITLE  "eMuleへようこそ"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_WIZ1_WELCOME_ACTIONS 
-                            "このウィザードは初期のeMuleのセッティングをガイドします。"
-    IDS_WIZ1_WELCOME_BTN_HINT "続けるなら、次をクリックしてださい。"
-    IDS_WIZ1_END_TITLE      "ウィザードを終了中"
-    IDS_WIZ1                "eMuleを初めて使う人のウィザード"
-    IDS_WIZ1_END_BTN_HINT   "ウィザードを止めるなら、終了をクリックしてださい。"
-    IDS_WIZ1_UPLOAD_SUBTITLE "完全パート送信"
-    IDS_DL_RESUMENEXT       "次のポーズしたダウンロードを再開する"
-    IDS_DONTCHANGE          "変更しない"
-    IDS_STARTPRIO           "Priority for this category"
-    IDS_PREF_STARTNEXTFILECAT "同じカテゴリーを望む"
-    IDS_REPAINTGRAPHS       "サイズを変えた時にグラフを書き換えない"
-    IDS_SOFTFILES           "ソフトファイルリミット"
-    IDS_HARDFILES           "ハードファイルリミット"
-    IDS_FILTER              "フィルター"
-    IDS_LINKS               "リンク"
-    IDS_HM_SCHED_ON         "予定表を使う"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_HM_SCHED_OFF        "予定表を使わない"
-    IDS_HM_LINKHP           "eMuleホームページ"
-    IDS_HM_LINKFAQ          "eMule FAQ"
-    IDS_HM_LINKVC           "eMuleヴァージョンチェック"
-    IDS_DEBUG_SOURCE_EXCHANGE "ダウンロード源交換メッセージの表示"
-    IDS_SHAREDREQ1          "ユーザー %s (%u) は共有ディレクトリーのリストを要求しています -> %s"
-    IDS_SHAREDREQ2          "ユーザー %s (%u) は共有ディレクトリーのファイルリストを要求しています '%s' -> %s"
-    IDS_SHAREDANSW          "ユーザー %s (%u) はディレクトリーを共有しています '%s'"
-    IDS_SHAREDANSW2         "ユーザー %s (%u) は共有ディレクトリーのリスト送りませんでした - 無視しました"
-    IDS_SHAREDINFO1         "ユーザー %s (%u) は共有ディレクトリーのファイルリストを送りました '%s'"
-    IDS_SHAREDINFO2         "ユーザー %s (%u) は共有ディレクトリーのファイルリストを送り終えました"
-    IDS_SHAREDANSW3         "ユーザー %s (%u) は共有ディレクトリーのファイルリストを送りませんでした　'%s' - 無視しました"
-    IDS_SHAREDREQDENIED     "ユーザー %s (%u) は共有ディレクトリーのファイルリストの要求を拒否しました"
-    IDS_AUTOCLEANUPFN       "ファイル名の整理"
-    IDS_ONNEWDOWNLOAD       "初期化する"
-    IDS_FILTERFILENAMEWORD  "フィルターする文字を入力、 |　で区切る"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_FNFILTERTITLE       "ファイル名のEdit filename wordfilter for name-cleanup"
-    IDS_CHANGECATVIEW       "フィルターを見る"
-    IDS_STATUS_NOTCOMPLETED "非完全"
-    IDS_STATS_CUMULATIVE    "累積"
-    IDS_STATS_OVRHD         "オーバーヘッド"
-    IDS_STATS_RECORDS       "記録"
-    IDS_STATS_OVRHD2        "オーバーヘッド: %s (%s パケット)"
-    IDS_STATS_COMPDL        "ダウンロード済み"
-    IDS_STATS_SVRECWORKING  "最大サーバー数"
-    IDS_STATS_SVRECUSERS    "最大ユーザー数"
-    IDS_SEARCH_TEXT         "探す"
-    IDS_STATS_SVRECFILES    "最大ファイル数"
-    IDS_STATS_SHRECNUM      "今までの最大共有ファイル数"
-    IDS_SEARCH_COLUMN       "コラムを探す"
-    IDS_STATS_SHRECSIZE     "最大共有サイズ"
-    IDS_STATS_SHRECASIZE    "平均最大共有サイズ"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_STATS_MYRUNTIME     "全体の起動時間: %s"
-    IDS_STATS_SESSION       "セッション"
-    IDS_STATS_SRATIO        "セッション UL:DL 比:"
-    IDS_STATS_CRATIO        "累積 UL:DL 比:"
-    IDS_SEARCH_NORESULT     "類似した物は見つかりませんでした。"
-    IDS_STATS_CURRSRVDUR    "現在のサーバー接続時間"
-    IDS_LONGSECS            "秒"
-    IDS_STATS_DLSES         "ダウンロードセッション"
-    IDS_LONGMINS            "分"
-    IDS_STATS_SDLSES        "成功したダウンロードセッション"
-    IDS_STATS_FDLSES        "失敗したダウンロードセッション"
-    IDS_STATS_AVGDATADLSES  "セッションあたりの平均ダウンロード"
-    IDS_STATS_ULSES         "アップロードセッション"
-    IDS_STATS_GAINCOMP      "圧縮による利益: %s"
-    IDS_STATS_LOSTCORRUPT   "ダメージの為のロス: %s"
-    IDS_STATS_AVGDATAULSES  "セッションあたりの平均アップロード"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_STATS_ICHSAVED      "I.C.Hの為にリカバーできたパート: %u"
-    IDS_STATS_MBRESET_TXT   "本当に累積統計値をリセットしますか?\n\nもし古い累積統計値を復元するなら、クリック'統計値を復元'ボタン。"
-    IDS_STATS_MBRESET_CAP   "リセットを再確認"
-    IDS_STATS_MBRESTORE_TXT "本当に累積統計値をバックアップから復元しますか?\n\n'統計値を復元'をクリックすると以前の累積統計値が現在の統計値として表示されます。"
-    IDS_STATS_MBRESTORE_CAP "復元を再確認"
-    IDS_ERR_NOSTATBKUP      "エラー: バックアップファイルが見つかりません"
-    IDS_STATS_NFOLOADEDBKUP "バックアップファイルをロードしました"
-    IDS_STATS_NFORESET      "統計値はリセットされました!"
-    IDS_STATS_BNRESET       "リセット統計値"
-    IDS_STATS_BNRESTORE     "統計値を復元"
-    IDS_CONNECTIONSTATISTICS "コネクションの統計値"
-    IDS_PPGSTATS_YSCALE     "コネクションの統計値のY軸範囲:"
-    IDS_PPGSTATS_ACRATIO    "アクティブコネクション比:"
-    IDS_STATS_PROBLEMATIC   "問題あり"
-    IDS_LONGHRS             "時間"
-    IDS_STATS_LARGESTFILE   "最大共有ファイルサイズ"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_CLIENTSOFTWARE      "クライエントソフト"
-    IDS_STATS_DSPF          "パートファイル"
-    IDS_STATS_DATASOURCE    "データ源"
-    IDS_STATS_DSFILE        "終了したファイル"
-    IDS_STATS_GENERAL       "一般"
-    IDS_STATS_TRANSTIME     "送信時間"
-    IDS_STATS_DOWNTIME      "ダウンロード時間"
-    IDS_STATS_UPTIME        "アップロード時間"
-    IDS_STATS_TOTALSRVDUR   "サーバー接続時間"
-    IDS_STATS_MAXAVGUL      "平均最大アップロードレート"
-    IDS_STATS_MAXUL         "最大アップロードレート"
-    IDS_STATS_AVGDLTIME     "平均ダウンロード時間"
-    IDS_STATS_OLDCLIENTS    "古い"
-    IDS_STATS_PRTDEF        "初期値"
-    IDS_STATS_PRTOTHER      "他"
-    IDS_STATS_MNUTREETITLE  "統計値"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_STATS_MNUTREECPYSEL "選択した物をコピーする"
-    IDS_STATS_MNUTREECPYALL "全部の統計値をコピーする"
-    IDS_STATS_MNUTREEHTML   "HTMLの特徴"
-    IDS_STATS_EXPORT2HTML   "全部の統計値をエクスポートする"
-    IDS_STATS_EXPORTVIS     "全部をエクスポートする"
-    IDS_STATS_MNUTREECPYVIS "全部をコピーする"
-    IDS_STATS_MNUTREEEXPANDALL "全部のセクションを広げる"
-    IDS_STATS_MNUTREECOLLAPSEALL "全部のセクションを閉じる"
-    IDS_STATS_MNUTREEEXPANDMAIN "メインセクションを広げる"
-    IDS_STATS_LASTRESETSTATIC "統計値の最後のリセット: %s"
-    IDS_STATS_MONTHLY       "月々"
-    IDS_STATS_YEARLY        "年々"
-    IDS_STATS_TIMESTATS     "時間の統計値"
-    IDS_STATS_AVGANDPROJ    "予想平均"
-    IDS_STATS_TIMESINCERESET "最後のリセットからの経過時間: %s"
-    IDS_CRYPT_INITFAILED    "暗号化に失敗しました - secure ident　は起動していません"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_CD_IDENT            "身分証明:"
-    IDS_IDENTOK             "成功"
-    IDS_IDENTFAILED         "無効"
-    IDS_IDENTNOSUPPORT      "サポートされていないか使われていません"
-    IDS_COMMITFILES         "安全に .met/.dat ファイルを書き込む"
-    IDS_ERR_BADUNC          "無効なUNC-名"
-    IDS_NEVER               "いつもしない"
-    IDS_ALWAYS              "いつもする"
-    IDS_ONSHUTDOWN          "終了の時"
-    IDS_UNCFOLDERS          "UNCフォルダー"
-    IDS_USESECIDENT         "安全な身分証明を使う"
-    IDS_ADVSPAMFILTER       "高度なスパムフィルター"
-    IDS_STATS_SECUREIDENT   "安全な身分証明 (成功 : 失敗 )"
-    IDS_ONDISK              "ディスクの中のサイズ: "
-    IDS_CLIENTCOL           "注意: 現在接続しているクライエントに類似するクライエントを見つけました: %s (%s) と %s (%s)"
-    IDS_SEARCH_UNTERMSTRING "終わりのないストリング"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_SEARCH_GENERALERROR "一般エラー"
-    IDS_SEARCH_MISSINGORRIGHT "右側のORオペレーターが足りません"
-    IDS_SEARCH_MISSINGNOTRIGHT "右側のNOTオペレーターが足りません"
-    IDS_SEARCH_MISSINGEXPRPARANT "式が足りません '(' ')'"
-    IDS_SEARCH_MISSINGCLOSINGPARANT "クローズが足りません ')'"
-    IDS_SEARCH_MISSINGANDLEFT "左側のANDオペレーターが足りません"
-    IDS_SEARCH_MISSINGORLEFT "左側のORオペレーターが足りません"
-    IDS_SEARCH_MISSINGNOTLEFT "左側のNOTオペレーターが足りません"
-    IDS_SEARCH_EXPRERROR    "サーチの式を読解するのに失敗しました"
-    IDS_SEARCH_TOOCOMPLEX   "式が難解し過ぎです"
-    IDS_SEARCH_INVALIDMINMAX "最小/最大ファイルサイズ設定には無効なユニットです"
-    IDS_VERSION             "ヴァージョン"
-    IDS_ALL_A4AF_TO_THIS    "全部の源をこのファイルと今すぐ交換する"
-    IDS_ALL_A4AF_TO_OTHER   "全部の源をどのファイルとでも今すぐ交換する"
-    IDS_ALL_A4AF_AUTO       "自動的に(A4AF)源をこのファイルと今すぐ交換する"
-    IDS_SWAP_A4AF_TO_THIS   "(A4AF)源をこのファイルと今すぐ交換する"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_SWAP_A4AF_TO_OTHER  "(A4AF)源をどのファイルとでも今すぐ交換する"
-    IDS_A4AF                "源の制御(A4AF)"
-    IDS_MOBILEMULE          "モーバイルMule"
-    IDS_ENABLEMM            "モーバイルMuleを使う"
-    IDS_AUTOCAT_LABEL       "自動にカテゴリー分割する(パターン、 |で区切る)"
-    IDS_SHOWEXTSETTINGS     "他のオプションを見せる (アドヴァンスモードコントロール)"
-    IDS_TREEOPTIONS_TRUE    "実"
-    IDS_TREEOPTIONS_FALSE   "虚"
-    IDS_TREEOPTIONS_OK      "OK"
-    IDS_HYPERTEXT_FONT_HINT "サーバー-, メッセセージ- とIRC-ウィンドウ用文字"
-    IDS_SELECT_FONT         "フォントの選択"
-    IDS_SERVER_LIMITS       "ソフト- / ハード-ファイルリミット"
-    IDS_SERVERINFO          "サーバー情報"
-    IDS_KBITSSEC            "kBits/sec"
-    IDS_KBYTESSEC           "kBytes/sec"
-    IDS_ERR_CREATE_DIR      "%s ディレクトリーの創作に失敗 ""%s"" - %s"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_WRN_INCFILE_RESERVED 
-                            "incomingディレクトリーはeMuleのインストゥールディレクトリーとは併用できません。"
-    IDS_WRN_TEMPFILES_RESERVED 
-                            "temporaryディレクトリーはeMuleのインストゥールディレクトリーとは併用できません。"
-    IDS_WRN_INCTEMP_SAME    "incomingディレクトリーとtemporaryディレクトリーは併用できません。"
-    IDS_MMFAILED            "モーバイルMule ソケットの起動に失敗!"
-    IDS_MMSTARTED           "モーバイルMuleサーバーはポート　%i　に起動。 プロトコールヴァージョン: %s"
-    IDS_SHOWDWLPERCENTAGE   "ダウンロードパーセントをプログレスバーに表示する"
-    IDS_TBN_ONNEWDOWNLOAD   "ダウンロード追加"
-    IDS_ARTIST              "アーティスト"
-    IDS_ALBUM               "アルバム"
-    IDS_MMGUIDELINK         "モーバイルMuleガイド"
-    IDS_CD_UPLOADREQ        "アップロードリクエストされました:"
-    IDS_SETTINGCHANGED_RESTART 
-                            "設定の変更にはeMuleの再スタートが必要です!"
-    IDS_CREDITSEXPIRED      ", %i クライエント消去 (５ヶ月間接続していません)"
-    IDS_SOURCESINFO         "%i  (利用可: %i, NNP: %i, A4AF: %i)"
-    IDS_SHOW_META_DATA      "&メタデータを見せる..."
-    IDS_META_DATA           "メタデータ"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_TIMEBEFORE          "(%s 前)"
-    IDS_FD_TIMEDATE         "日付"
-    IDS_FILEINFORMATION     "ファイル情報"
-    IDS_STATS_FREESPACE     "テンプドライブのフリースペース: "
-    IDS_IRC_HELPCHANNEL     "ヘルプチャンネルに接続。"
-	IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-japanese"			//please dont changed that line at all!
-    IDS_IRC_ACCEPTLINKSFRIENDS "友達だけ"
-    IDS_COMPLSOURCES        "完全な源"
-    IDS_CHECKNOENDTIME      "タイムアウト無し"
-    IDS_FD_DOWNLOADSTARTED  "ダウンロード追加しました:"
-    IDS_MATCH_KEYWORDS      "キーワードマッチ"
-    IDS_FAILEDREOPEN        "フェイタルエラー: パートファイルのオープンに失敗しました '%s' (%s)!"
-    IDS_ERR_PREVIEWALREADY  "プレヴィユーのリクエストがこのクライエントからすでに有ります"
-    IDS_ERR_PREVIEWFAILED   "ユーザー'%s'からのプレヴィユー失敗しました"
-    IDS_DWTOT               "ディスクスペース"
-    IDS_DWTOT_NR            "ダウンロード数: %d"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DWTOT_TSD           "全ダウローンドサイズ: %s"
-    IDS_DWTOT_TCS           "全ダウンロード終了サイズ: %s (%.0f%%)"
-    IDS_DWTOT_TSL           "全ダウンロード予定サイズ: %s"
-    IDS_DWTOT_TSN           "全ダウンロードに必要なスペース: %s"
-    IDS_DWTOT_FS            "テンプドライブのフリースペース: %s"
-    IDS_NEEDFREEDISKSPACE   "%s (%s　をフリーにして下さい!)"
-    IDS_SERVERKEEPALIVETIMEOUT "サーバー再接続周期 [分]"
-    IDS_CREATEHOSTNAMESRCLINK "クリップボードへeD2Kリンクをコピーする (ホストネーム)"
-    IDS_HASHINGFILESCOUNT   " (%u ハッシュ中)"
-    IDS_CHECKDISKSPACE      "ディスクスペースのチェック"
-    IDS_YOURHOSTNAME        "自分のeD2Kリンクのホストネーム"
-    IDS_INSUFFICIENT        "ディスクスペースが足りません"
-    IDS_MINFREEDISKSPACE    "最小のフリーディスクスペース"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_MORE                "&もっと"
-    IDS_WARNING             "注意"
-    IDS_TOOLS               "ト&ゥール"
-    IDS_CONFIRM_FILEDELETE  "Do you really want to remove all selected files from disk?"
-    IDS_OPENFOLDER          "Open folder"
-    IDS_DELETE              "Delete from disk"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_IMPORTSPLPF         "パートファイルをインポートする (eMule,eDonkey,Overnet)"
-    IDS_IMP_STEPREADPF      "パートフォルダーを読み込み中"
-    IDS_IMP_STEPBASICINF    "パートファイルから基本的な情報を回収中"
-    IDS_IMP_STEPCRDESTFILE  "行き先のパートファイル創作中"
-    IDS_IMP_LOADDATA        "古いパートファイルからデータをロード中 (%i of %i)"
-    IDS_IMP_SAVEDATA        "データブロックを新しい一つのパートファイルに保存中 (%i of %i)"
-    IDS_IMP_IOERROR         "パートファイルの変換中ファイルエラーが起きました"
-    IDS_IMP_GETPFINFO       "パートファイルの源の情報を回収中"
-    IDS_IMP_ADDDWL          "ダウンロードを追加して新しいパートファイルを保存する"
-    IDS_IMP_FETCHSTATUS     "ステイタス待ち..."
-    IDS_IMP_INPROGR         "進行中"
-    IDS_IMP_ERR_DISKSP      "エラー: ディスクの空きがありません"
-    IDS_IMP_ERR_PARTMETIO   "エラー: パートメットが見つかりません"
-    IDS_IMP_ERR_IO          "エラー: IO エラー!"
-    IDS_IMP_ERR_FAILED      "エラー: 失敗した!"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_IMP_STATUSQUEUED    "順番待ち中"
-    IDS_IMP_ALRDWL          "すでにダウンロード中"
-    IDS_IMP_ADDBTN          "&インポートを追加"
-    IDS_IMP_RETRYBTN        "&選択したものを再度やり直す"
-    IDS_IMP_REMOVEBTN       "選択したものを&削除する"
-    IDS_IMP_SELFOLDER       "ひとつのパートメットフォルダーか古いパートメットフォルダーを選択してください!"
-    IDS_IMP_DELSRC          "新しくインポートされたパートファイル源が欲しいですか?"
-    IDS_IMP_SIZE            "%s (ディスク:%s)"
-    IDS_IMP_STATUS          "インポート中 %s: %s"
-    IDS_SAVELOG             "記録を保存する"
-END
-
-
-
-STRINGTABLE 
-BEGIN
-    IDS_CUSTOMIZETOOLBAR    "トゥールバーのカスタマイズ"
-    IDS_MINBITRATE          "Min. bitrate [kBit/s]"
-    IDS_KAD_RECHECKFW       "ファイアーウォールのチェック"
-    IDS_SHAREDTITLE         "ED2K|Kadの共有"
-    IDS_WARNINGNOBS         "ブートストラップ休止中　(Kadは休止中もしくはすでに可動しています)."
-    IDS_FIREWALLED          "ファイアーウォールがある"
-    IDS_KADEMLIA            "Kad"
-    IDS_KADCONTACTLAB       "接点"
-    IDS_KADDISTANCE         "距離"
-    IDS_KEY                 "キー"
-    IDS_NUMBER              "数字"
-    IDS_KAD_SEARCHSRC       "ダウンロード源のサーチ (%i:%i)"
-    IDS_KAD_SEARCHKW        "キーワードサーチ (%i:%i)"
-    IDS_KAD_NODE            "ホストの検索 (%i:%i)"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_BOOTSTRAP           "ブートストラップ"
-    IDS_VIAED2KSQ           "ED2K サーバー/列を介して"
-    IDS_EM_KADEMLIA         "&Kad"
-    IDS_VIAKAD              "Kadを介して"
-    IDS_VIASE               "ダウンロード源の交換を介して"
-    IDS_SELECTTOOLBARBITMAP "トゥールバーのビットマップを選択"
-    IDS_SELECTTOOLBARBITMAPDIR "トゥールバーのビットマップのディレクトリーを選択"
-    IDS_TOOLBARSKINS        "トゥールバーのスキン"
-    IDS_NOTEXTLABELS        "ラベル無し"
-    IDS_TEXTLABELSONRIGHT   "アイコンの右"
-    IDS_TEXTLABELS          "テキストラベル"
-    IDS_ENABLETEXTLABELS    "アイコンの下"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_KAD_STOREFILE       "ファイルを保存する (%i:%i)"
-    IDS_KAD_STOREKW         "キーワードを保存する (%i:%i)"
-    IDS_KAD_UNKNOWN         "不明 (%i)"
-    IDS_SRV_TCPCOMPR        "TCP 圧縮"
-    IDS_KADSEARCHLAB        "現在のサーチ"
-    IDS_SRV_UDPSR           "ダウンロード源のリクエストの為のエクステンドUDPプロトコール"
-    IDS_SRV_UDPFR           "ファイルのリクエストの為のエクステンドUDPプロトコール"
-    IDS_MINLENGTH           "Min. length [hh:mm:ss]"
-    IDS_EM_HELP             "&ヘルプ"
-    IDS_WRN_FRIENDDUPLIPPORT 
-                            "友達はついかされませんでした\r\n\r\nすでに同じIPアドレスとポート使っている友達がいます。"
-    IDS_ERR_BADFOLDER       "Invalid folder.\nFolder can not be created. Please check name and location."
-    IDS_AUTOREMOVEFD        "Auto clear completed downloads"
-    IDS_MM_BLOCK            "3 failed logins for MobileMule logged - any further attempt is blocked for 10 min!"
-    IDS_MM_NEWUSER          "New user successfully logged into MobileMule-Server"
-    IDS_RADCLIENTS          "from connected clients"
-    IDS_KADUDPPORTERR  	    "Kads UDP port conflicts with either eMule's Ext UDP port or eMule's Server UDP port. Port has been changed to %u."
-    IDS_WIZARD_NETWORK      "Choose which network(s) you want to use."
-    IDS_WIZARD_ED2K         "ED2k Settings"
-    IDS_FD_RECOV            "Recovered"
-    IDS_FD_COMPR            "Compression"
-    IDS_HSAV                "Hashset available"
-    IDS_FD_CORR             "Corrupted"
-    IDS_KADOVERHEAD         "Kad Overhead (Packets): %s (%s)"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_SEL_SKIN            "Select Skin..."
-    IDS_SEL_SKINDIR         "Select Skin Directory..."
-    IDS_SKIN_PROF           "Skin Profiles"
-    IDS_KADOPEN             "Open"
-    IDS_PASSIVE             "Passive"
-    IDS_SE                  "Source Exchange"
-	IDS_LOG_BANNED_CLIENTS	"Log banned clients"
-	IDS_LOG_RATING_RECV     "Log received file descriptions and ratings"
-	IDS_LOG_FILTERED_IPS	"Log filtered and/or ignored IPs"
-	IDS_LOG_FILE_SAVING		"Log file save actions"
-	IDS_FIND				"Find..."
-    IDS_ERR_RENAMESF        "Failed to rename\r\n    ""%s""\r\nto\r\n    ""%s""\r\n\r\n%hs"
-    IDS_LOG_SECURE_IDENT    "Log secure ident"
-    IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|All Files (*.*)|*.*||"
-    IDS_DELETEIPFILTERS     "Do you really want to delete the selected IP filters?"
-    IDS_TOTAL_IPFILTER_LABEL "Total IP filters:"
-    IDS_TOTAL_IPS_LABEL     "Total IPs:"
-    IDS_DELETESELECTED             "Delete"
-    IDS_APPEND              "Append..."
-    IDS_SAVE                "Save"
-    IDS_IP_START            "Start"
-    IDS_IP_END              "End"
-    IDS_IP_LEVEL            "Level"
-    IDS_IP_DESC             "Description"
-    IDS_IP_HITS             "Hits"
-    IDS_IP_RULES            "IP Filters:"
-    IDS_KADALPHA            "Kademlia is still in an early development stage. We recommend to enabled it only if you are interested in testing it"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_ERR_NOTCONNECTEDKAD "You are currently not connected to the Kad Network!"
-    IDS_AVAILABLE           "available"
-    IDS_SHARED              "Shared"
-    IDS_DOWNLOADED          "Downloaded"
-    IDS_HASHINGFILE         "Hashing file:"
-    IDS_DL_ACTIVE_TIME      "Download time"
-    IDS_RESETLABEL          "Auto completion (history function)"
-    IDS_PASTE               "Paste"
-    IDS_UNDO                "Undo"
-    IDS_CUT                 "Cut"
-    IDS_IRC_SOUNDEVENTS     "Play sound events"
-    IDS_KADCONTACTSREAD     "Read %ld contacts from file."
-    IDS_ERR_KADCONTACTS     "No contacts found, please bootstrap, or download a nodes.dat file."
-    IDS_RUNASUSER           "Run eMule as unprivileged User"
-    IDS_RAU_RUNNING         "eMule running as unprivileged user ""%s"""
-    IDS_RAU_FAILED          "Failed to start eMule as unprivileged user ""eMule_Secure"". Keeping the privileges of the current user (""%S"")."
-    IDS_RAU_WARNING         "This setting will give eMule additional security against attacks and exploits and we encourage the usage of this option.\nHowever it is strongly recommended to read the manual before activating it!\n\nChanges will take effect after restarting eMule."
-    IDS_SEARCHPARAMS        "Search Parameters"
-    IDS_METATAGS            "Meta Tag Count:"
-    IDS_FILEFORMAT          "File format"
-    IDS_UPDATEFROM          "Update from URL: (filter.dat- or PeerGuardian-format)"
-    IDS_UDPREASKS           "UDP File Reasks"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping tolerance (ms)"
-    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Method for ping tolerance"
-    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milliseconds (ms)"
-    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Percent (%)"
-    IDS_LOG_A4AF            "Log A4AF actions"
-    IDS_A4AF_SAVE_CPU       "Disable A4AF checks to save CPU"
-    IDS_SEARCH_DOC          "Document"
-    IDS_DOWNLOAD_ALPHABETICAL "Download in alphabetical order"
-    IDS_INSTALL_SKIN        "Install eMule Skin"
-    IDS_INSTALL_SKIN_NODIR  "No eMule Skin profile directory selected or directory is not accessible!"
-    IDS_INSTALL_SKIN_DIR_ERROR 
-                            "Failed to create directory ""%s"" for eMule Skin - %s"
-    IDS_INSTALL_SKIN_FILE_ERROR 
-                            "Failed to extract file ""%s"" from eMule Skin to local file ""%s"" - %s"
-    IDS_INSTALL_SKIN_PKG_ERROR "This is not a valid eMule Skin package file."
-    IDS_NEXT_REASK          "Next ask to this client"
-    IDS_A4AF_FILES          "A4AF files"
-    IDS_STATS_FRATIO        "Session UL:DL ratio (friends UL excluded):"
-    IDS_STATS_UDATA_FRIENDS "Uploaded data to friend slots (Session): %s"
+    IDS_ERR_NOVALIDFRIENDINFO "有効なユーザIDとポートを入力して下さい!"
+    IDS_ADD                 "追加"
+    IDS_RECOVERED_PARTMET   "part.metファイルを修復しました: %s"
+    IDS_CMT_QUEST           
+"このファイルの解説!(この説明は全てのユーザ-に表示されます)"
+    IDS_CMT_AIDE            
+"例えば映画の場合なら長さ、ストーリー、言語等について解説することができます... 
+そしてもしこのファイルが偽物なら他のeMuleユーザーに知らせることができます"
+    IDS_CMT_TITLE           "%s ファイルの解説"
+    IDS_CMT_ADD             "このファイルの解説を変更する"
+    IDS_CMT_NONE            "解説無し"
+    IDS_CMT_READ            "ファイル解説:"
+    IDS_CMT_NOTCONNECTED    "未接続..."
+    IDS_CMT_SHOWALL         "解説を表示(&N)..."
+    IDS_CMT_REFRESH         "更新(&R)"
+    IDS_CMT_READALL         "解説"
+    IDS_CMT_NOCOMMENT       "解説を記述していません..."
+    IDS_CMT_RATEQUEST       "ファイル品質"
+    IDS_CMT_RATEHELP        
+"ファイルの評価や、偽造情報を他のユーザに知らせます!"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_FO_PREF_EXISTED     "eMule detected existing rules for the selected ports, which were not overwritten or replaced. Missing rules have been added successfully.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
-    IDS_FO_PREF_FAILED      "Failed to configure the internal WinXP firewall for the selected ports!"
-    IDS_FO_PREF_STARTUP     "Open/close ports on WinXP firewall when starting/exiting eMule"
-    IDS_LOG_LEVEL           "Log Level"
-    IDS_DISABLEPEERACHE     "Disable downloading from PeerCache"
-    IDS_FO_TEMPTCP_S        "Opened port %u (TCP) on internal WinXP firewall for this eMule session"
-    IDS_FO_TEMPTCP_F        "Failed to open port %u (TCP) on internal WinXP firewall for this eMule session"
-    IDS_FO_TEMPUDP_S        "Opened port %u (UDP) on internal WinXP firewall for this eMule session"
-    IDS_FO_TEMPUDP_F        "Failed to open port %u (UDP) on internal WinXP firewall for this eMule session"
-    IDS_FO_PREFBUTTON       "Open these ports on internal WinXP firewall"
-    IDS_FO_PREF_SUCCCEEDED  "Succeeded to open selected ports on the internal WinXP firewall.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
-    IDS_SOURCESWAPBLOCKED   "Swap blocked"
-    IDS_A4AF_CHECK_THIS_NOW "Check this source now (debug)"
-    IDS_SOURCEEXCHANGESWAP  "Temporary Source Exchange Swap"
-    IDS_NEWMSG              "New Message from '%s' (IP:%s)"
-    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
-    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
-    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
-    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
-    IDS_DL_TRY_TO_GET_PREVIEW_PARTS "Download parts needed for preview first"
+    IDS_CMT_FAKE            "無効/破損/偽造"
+    IDS_CMT_POOR            "劣悪"
+    IDS_CMT_GOOD            "良い"
+    IDS_CMT_FAIR            "普通"
+    IDS_CMT_EXCELLENT       "素薔薇しい"
+    IDS_CMT_NOTRATED        "未評価"
+    IDS_KILO                "K"
+    IDS_MEGA                "M"
+    IDS_GIGA                "G"
+    IDS_TERRA               "T"
+    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE 
+"eMuleのプロトコルメッセージを無視する"
+    IDS_SMARTLOWIDCHECK     "接続時にスマートLowIDチェックを使用する"
+    IDS_SF_SRVOCC           "サーバー占有率: %.2f%%"
+    IDS_3DDEP               "進行バーのスタイル"
+    IDS_AUTOTAKEED2KLINKS   "実行時のみeD2Kリンクと関連づける"
+    IDS_ADDNEWFILESPAUSED   
+"ダウンロードファイルを一時停止した状態で追加する"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_IMP_ERR_BADFORMAT   "Unknown or bad tempfile format."
-    IDS_SEARCH_INVALIDCHAR  "Search expression contains invalid characters. You either entered a '?' character or entered characeters which can not be used in eD2K network."
-    IDS_PORTSCON            "Ports and Connection"
-    IDS_PORTINFO            "eMule uses two ports for communication with servers and clients. These ports must be free and available for remote clients. The TCP port must be available to ensure the main functionality of eMule. The UDP port is used for Kad (serverless network) and to reduce network usage (Overhead).\n\nYou can change the ports here while no network activities have started."
-    IDS_STARTTEST           "Test ports"
-    IDS_TESTINFO            "Here you can test, if your TCP and UDP port can be connected to from remote. This success of this test is required for servers and clients to connect you. The TCP port have to succeed!"
-    IDS_CONNECTIONTEST      "Connection test"
-    IDS_NOPORTCHANGEPOSSIBLE 
-                            "The change of ports is not possible after you connected with clients or while connected to a server/Kad!\n\nPlease restart eMule with the changed port settings."
-    IDS_NETWORK_INFO        "Network Information"
-    IDS_SP_TOTALUL          "Total number of uploads"
-    IDS_SP_ULFRIENDS        "Upload friend slots"
-    IDS_SP_ULSLOTSNOOVERHEAD "current upload excl. overhead (UL Slots only)"
-    IDS_ST_ACTIVEU_ZZ       "Active Uploads"
-    IDS_ST_ULCURRENT        "Upload+Overhead"
-    IDS_ST_ULSLOTSNOOVERHEAD "Upload"
-    IDS_ST_ULFRIEND         "Friend upload"
+    IDS_FD_STATS            "破損損失: %s       圧縮による獲得: 
+%s\nI.C.H.が保存したパケット: %i"
+    IDS_ERR_NOHELP          
+"ヘルプファイルが見つかりません。\nホームページ(ダウンロードセクション)から最新のヘルプファイルをダウンロードして下さい!\n\n代わりにオンラインヘルプを参照しますか?"
+    IDS_SHOWOVERHEAD        "オーバーヘッドした帯域幅を表示"
+    IDS_UPDOWNSMALL         "㊤: %.1f | ㊦: %.1f"
+    IDS_EDITLIST            "リスト..."
+    IDS_SP_ICONBAR          "システムトレイアイコン スピードバー"
+    IDS_RATINGRECV          "ファイル'%s'の評価を受信しました: %i"
+    IDS_DESCRIPTIONRECV     "'ファイル'%s'の説明を受信しました: %s"
+    IDS_WEBSERVICES         "ウェブサービス(&W)"
+    IDS_WEBSVEDIT           "ウェブサービスを編集"
+    IDS_IRC_EMULEPROTO_IGNORESENDLINK
+                            "eMuleの send link プロトコルメッセージを無視"
+    IDS_CHECK4UPDATE        "新しいバージョンをチェック"
+    IDS_STARTUP             "起動時"
+    IDS_NEWVERSIONAVL       "新しいバージョンのeMuleが利用可能になりました! 
+プロジェクトホームページで更に詳細な情報を得ることができます"
+    IDS_NEWVERSIONAVLPOPUP  "新しいバージョンのeMuleが利用可能になりました! 
+ここをクリックすれば新バージョンについての記述を読むことができます!"
+    IDS_NEWVERSIONFAILED    "新しいバージョンをチェックできません"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_STATS_ACTUL_ZZ      "Active uploads/needed to fill bandwidth: %i"
-    IDS_STATS_TOTALUL       "Total number of uploads: %i"
-    IDS_CHAT_DOWNLOADED     "Downloaded:"
-    IDS_CHAT_UPLOADED       "Uploaded:"
-    IDS_CHAT_IDENT          "Identification:"
-    IDS_CHAT_CLIENT         "Client:"
+    IDS_CB_TBN_ONNEWVERSION "新しいバージョンのeMuleを検出"
+    IDS_NONEWERVERSION      "eMuleの新しいバージョンはありません"
+    IDS_VERSIONCHECK        "バージョンチェック(&V)"
+    IDS_VISITVERSIONCHECK   
+"\n\n今すぐインフォメーションページを訪問しますか?"
+    IDS_PW_VIDEOPLAYER      "ビデオﾌﾟﾚｰﾔｰ"
+    IDS_VIDEOBACKUP         "プレビュー用バックアップを作成"
+    IDS_STATIC_EMPTY        "(空=デフォルト)"
+    IDS_MYINFO              "情報"
+    IDS_ID                  "ID"
+    IDS_IDLOW               "Low ID"
+    IDS_IDHIGH              "High ID"
+    IDS_UPSTATUS            "取得部分"
+    IDS_TOVERHEAD           "オーバーヘッド(パケット)合計: %s (%s)"
+    IDS_FROVERHEAD          "ファイル要求オーバーヘッド(パケット): %s (%s)"
+    IDS_SSOVERHEAD          "ソース交換オーバーヘッド(パケット): %s (%s)"
+    IDS_SOVERHEAD           "サーバーオーバーヘッド(パケット): %s (%s)"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_MAXHALFOPENCONS     "Max. Half Open Connections"
-    IDS_WIZ_STARTWITHWINDOWS 
-                            "Enable this so that eMule will run when you start windows. [Default disabled]"
-    IDS_KAD_WAITCBK         "Wait Callback Kad"
-    IDS_KAD_TOOMANDYKADLKPS "Too Many Kad Lookups"
+    IDS_ADDDOWNLOADSFROMCB  
+"これらのeD2Kファイルリンクをダウンロードに追加しますか?\n"
+    IDS_ADDDOWNLOADSFROMCBTITLE "eD2Kファイルリンクをクリップボードへコピー"
+    IDS_PF_WATCHCB          "クリップボードのeD2Kファイルリンクを監視する"
+    IDS_SECURITY            "セキュリティ"
+    IDS_IPFILTERLOADED      "%i IPフィルタを読み込みました"
+    IDS_IPFILTER            "IPフィルタ"
+    IDS_EDIT                "編集..."
+    IDS_FILTERLEVEL         "フィルタレベル"
+    IDS_FILTERSERVERBYIPFILTER 
+"サーバーもフィルタリンクﾞ(ダイナミックIPサーバーも拒否)"
+    IDS_FILTERCOMMENTSLABEL "次の単語を含む解説を無視(「|」で区切る)"
+    IDS_CLIENTLIST          "既知のクライアント"
+    IDS_FOLDER              "フォルダ"
+    IDS_CL_UPLOADSTATUS     "アップロード状態"
+    IDS_CL_TRANSFUP         "アップロード転送"
+    IDS_CL_DOWNLSTATUS      "ダウンロード状態"
+    IDS_CL_TRANSFDOWN       "ダウンロード転送"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CL_PENDING          "保留中"
+    IDS_CL_LOW2LOW          "LowからLowIPへ"
+    IDS_ERROR               "エラー"
+    IDS_OPENINC             "ダウンロードフォルダを開く(&O)"
+    IDS_HOTMENU             "ホットメニュー"
+    IDS_DISABLEKNOWNLIST    "既知のクライアントリストを使用しない"
+    IDS_DISABLEQUEUELIST    "キューリストを使用しない"
+    IDS_USECREDITSYSTEM     
+"クレジットシステムを使用(アップロードする人を優先)"
+    IDS_FIRSTAUTODOWN       
+"eMuleにダウンロード優先順位を管理させたいならこのオプションを有効にして下さい。\n\nそうすれば多数のソースがあるダウンロードが少しのソースしかないダウンロードに干渉しなくなります。\n\nもしv0.26以降からアップﾃﾞｰﾄしたなら、現在の全てのダウンロードはデフォルトで自動優先順位が使用されています。\n\nこのオプションは次回からのダウンロードのみに適用されます(デフォルトは使用する設定です)"
+    IDS_FIRSTAUTOUP         
+"eMuleにアップロード優先順位を管理させたいならこのオプションを有効にして下さい。\n\nそうすれば数が少ないレアなファイルを優先してアップロードします。\n\nこのオプションを使用しない場合は一般的なファイルの方を優先してアップロードします。\n\nもしv0.26以降からアップﾃﾞｰﾄしたなら、現在の全てのアップロードはデフォルトで自動優先順位が使用されています。\n\nこのオプションは次回からのダウンロードのみに適用されます(デフォルトは使用する設定です)"
+    IDS_FIRSTCREDITSYSTEM   
+"アップロードしてくれた人を優先しますか?\n\nこれはクレジットシステムとして一般的に知られています。これを使用すると対DOMに対して有利に働きます。あなたがｶｲｰﾎ神ならこのオプションは使用しないで下さい\n\n(デフォルトでは使用する設定です)"
+    IDS_FIRSTFULLCHUNK      
+"完全なチャンクをアップロードしたい場合はこのオプションを使用します。\n\n完全チャンクを使用することによってクライアントがチャンクを完成させる機会が増えます。これを使用しないとキューの回転率が速くなります。あなたがｶｲｰﾎ神ならこのオプションは使用しないで下さい\n\n(デフォルトでは使用する設定です)"
+    IDS_FIRSTSAFECON        
+"eMuleにｾｰﾌ接続をさせる場合はこのオプションを使用します。\n\nこのオプションを使用しないとサーバーに少し速く接続できまが、間違ってLowID接続になる可能性が高くなります\n\n(デフォルトでは使用しない設定です)"
+    IDS_FIRSTRUNASSIST      "セットアップウィザードを起動しますか?"
+    IDS_FIRSTAUTOCON        
+"起動時にeMuleに自動的にサーバー接続させる場合はこのオプションを使用します\n\n(デフォルトでは使用しない設定です)"
+    IDS_FIRSTCOMPLETE       
+"セットアップウィザードが完了しました。\n\nこれらを含めた全ての設定は、設定アイコンをクリックすることでいつでも変更することができます。設定の説明とサポートはeMule内でF1キーを押せば表示されるヘルプを参照して下さい"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ENTERUSERNAME       "ニックネームを入力して下さい:"
+    IDS_STATIC_CPUMEM       "CPUとメモリの使用方法"
+    IDS_KAD_SEARCH_KEYWORD_TOO_SHORT
+                            
+"キーワードが短すぎます\r\n\r\nKad検索式で使用されるキーワードは最低で3文字の長さが必要です。"
+    IDS_LOG2DISK            "ログをディスクに保存する"
+    IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING
+                            
+"既にキーワード""%s""でのKad検索を実行しています。\r\n\r\nこのキーワードで再検索するには、このキーワード検索が終了するまで待機するか、検索結果のペインを閉じて下さい。"
+    IDS_KAD_SEARCH_KEYWORD_INVALID
+                            
+"無効なKadキーワード。\r\n\r\nKad検索式には以下のフォーマットがあります:\r\n\r\n\t<kad-keyword> 
+[ <ed2k-search-expression> 
+]\r\n\r\n<kad-keyword>は次の文字を含んではいけません:\r\n\r\n\t%s"
+    IDS_EDITCAT             "カテゴリープロパティを編集する"
+    IDS_PW_WS               "ウェブインターフェース"
+    IDS_ENABLED             "使用する"
+    IDS_WEB_LOGIN           "ログイン"
+    IDS_WEB_ENTER_PASSWORD  "パスワードを入力して下さい"
+    IDS_WEB_LOGIN_NOW       "今すぐログイン"
+    IDS_WEB_CONFIRM_REMOVE_SERVER
+                            
+"このサーバーをリストから削除してよろしいですか?"
+    IDS_WEB_CONTROL         "ウェブコントロールパネル"
+    IDS_WEB_LOGOUT          "ログアウト"
+    IDS_WEB_ACTIONS         "操作"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WEB_SHOW_UPLOAD_QUEUE "キューを表示"
+    IDS_WEB_HIDE_UPLOAD_QUEUE "キューを非表示"
+    IDS_WEB_GZIP_COMPRESSION "Gzip圧縮"
+    IDS_WEB_GZIP_COMMENT    "グラフ内の転送状態を保存する"
+    IDS_WEB_UPLOAD_QUEUE_COMMENT
+                            "転送ページ内の順番待ちキューの表示/非表示"
+    IDS_WEB_REFRESH_TIME    "ページの更新間隔"
+    IDS_WEB_REFRESH_COMMENT "秒単位(0=使用しない):"
+    IDS_SV_URL              "URL"
+    IDS_WS_RELOAD_TMPL      "テンプレート"
+    IDS_SV_DEBUGLOG         "デバッグログ"
+    IDS_WS_PASS             "パスワード"
+    IDS_WEB_FILESETTINGS    "ファイル設定"
+    IDS_WS_ERR_LOADTEMPLATE "テンプレートをロードできません: 
+ファイル%sを新しいものと入れ替えて下さい!"
+    IDS_WEB_CONLIMITS       "接続限界"
+    IDS_INFLST_USER_TOTALDOWNLOAD "ダウンロード合計"
+    IDS_INFLST_USER_TOTALUPLOAD "アップロード合計"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WEB_BADLOGINATTEMPT "Webインターフェース: ログインに失敗しました"
+    IDS_ERR_TOOLARGEFILE    
+"ファイルサイズがeDonkeyプロトコルでサポートされるサイズよりも大きくなっています(>=4GB)"
+    IDS_MSGONLYFRIENDS      "友達だけを受け付ける"
+    IDS_MSGONLYSEC          "正規クライアントからだけ受け付ける"
+    IDS_DAY_MO_SA           "月-土"
+    IDS_LIMITSOURCES        "ソース数の制限"
+    IDS_LIMITCONS5SEC       "接続制限/5秒"
+    IDS_SCHED_CATSTOP       "カテゴリー: ダウンロード中止"
+    IDS_SCHED_CATRESUME     "カテゴリー: ダウンロード再開"
+    IDS_S_DAYS              "日"
+    IDS_STARTTIME           "開始時間"
+    IDS_VALUE               "値"
+    IDS_SCHED_ENTERDATARATELIMIT "データレート制限入力:"
+    IDS_SCHED_ENTERVAL      "新しい値を入力して下さい:"
+    IDS_SCHED_ACTCONFIG     "アクションの構成"
+    IDS_SELECTCAT           "カテゴリー選択"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ALLUNASSIGNED       "全て未カテゴリーにする"
+    IDS_ACTSESSIONS         "現在のセッション"
+    IDS_WEBSRV              "Webインターフェース"
+    IDS_SW_REFETCHRES       "結果を更新"
+    IDS_FILEHASH            "ファイルハッシュ"
+    IDS_GLOBALSEARCH2       "グローバル検索"
+    IDS_PW_PROXY            "プロキシ"
+    IDS_PROXY_ENABLE        "プロキシを使用する"
+    IDS_PROXY_TYPE          "プロキシ 種類:"
+    IDS_PROXY_HOST          "プロキシ ホスト:"
+    IDS_PROXY_PORT          "プロキシ ポート:"
+    IDS_PROXY_AUTH          "認証する"
+    IDS_AUTH                "認証"
+    IDS_SHOWCATINFO         "カテゴリータブにダウンロード情報を表示する"
+    IDS_SW_SEARCHINGINFO    "検索中です。しばらくお待ち下さい!"
+    IDS_LOGENTRY            "ログエントリ"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_COPY                "コピー"
+    IDS_SELECTALL           "全て選択"
+    IDS_AUTOSCROLL          "自動スクロール"
+    IDS_WIZ1_WELCOME_TITLE  "eMuleへようこそ"
+    IDS_WIZ1_WELCOME_ACTIONS
+                            
+"このウィザードはeMuleの初期設定を構成するお手伝いをします。"
+    IDS_WIZ1_WELCOME_BTN_HINT "続けるには次へをクリックして下さい"
+    IDS_WIZ1_END_TITLE      "ウィザード完了"
+    IDS_WIZ1                "eMule初回起動ウィザード"
+    IDS_WIZ1_END_BTN_HINT   
+"このウィザードを閉じるには完了をクリックして下さい"
+    IDS_WIZ1_UPLOAD_SUBTITLE "完全チャンク転送"
+    IDS_DL_RESUMENEXT       "次の一時停止を再開する"
+    IDS_DONTCHANGE          "変更しない"
+    IDS_STARTPRIO           "このカテゴリの優先順位"
+    IDS_PREF_STARTNEXTFILECAT "同じカテゴリーを選択する"
+    IDS_REPAINTGRAPHS       "リサイズしても統計グラフを書き換えない"
+    IDS_SOFTFILES           "ソフトファイル制限"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_HARDFILES           "ハードファイル制限"
+    IDS_FILTER              "フィルタ"
+    IDS_LINKS               "リンク"
+    IDS_HM_SCHED_ON         "スケジューラを使用する"
+    IDS_HM_SCHED_OFF        "スケジューラを使用しない"
+    IDS_HM_LINKHP           "eMule ホームページ"
+    IDS_HM_LINKFAQ          "eMule FAQ"
+    IDS_HM_LINKVC           "eMule バージョン確認"
+    IDS_DEBUG_SOURCE_EXCHANGE
+                            
+"クライアントソース交換とサーバソースクエリ/応答のログをとる"
+    IDS_SHAREDREQ1          "ユーザー %s (%u) 
+が共有ディレクトリのリストを要求しました -> %s"
+    IDS_SHAREDREQ2          "ユーザー %s (%u) 
+はディレクトリ'%s'内の共有ファイルリストを要求しました -> %s"
+    IDS_SHAREDANSW          "ユーザー %s (%u) 
+はディレクトリ'%s'を共有しています"
+    IDS_SHAREDANSW2         "ユーザー %s (%u) 
+は要求された共有ディレクトリのリストを送信しませんでした - 無視"
+    IDS_SHAREDINFO1         "ユーザー %s (%u) 
+はディレクトリ'%s'の共有ファイルリストを送信しました"
+    IDS_SHAREDINFO2         "ユーザー %s (%u) 
+は共有ファイルリストの送信を完了しました"
+    IDS_SHAREDANSW3         "ユーザー %s (%u) 
+は要求されたディレクトリ'%s'内の共有ファイルリストを送信しませんでした - 
+無視"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SHAREDREQDENIED     "ユーザー %s (%u) 
+は共有ディレクトリ/ファイルリストへのアクセスを拒否しました"
+    IDS_AUTOCLEANUPFN       "ファイル名のクリーンアップ"
+    IDS_ONNEWDOWNLOAD       "初期化処理"
+    IDS_FILTERFILENAMEWORD  
+"フィルタする単語を入力して下さい。単語間は「|」で区切ります"
+    IDS_FNFILTERTITLE       "ファイル名を整形する単語フィルタを編集"
+    IDS_CHANGECATVIEW       "表示するフィルタを選択"
+    IDS_STATUS_NOTCOMPLETED "不完全"
+    IDS_STATS_CUMULATIVE    "総合"
+    IDS_STATS_OVRHD         "オーバーヘッド"
+    IDS_STATS_RECORDS       "記録"
+    IDS_STATS_OVRHD2        "オーバーヘッド: %s (%sパケット)"
+    IDS_STATS_COMPDL        "ダウンロード完了"
+    IDS_STATS_SVRECWORKING  "最大稼働サーバー数"
+    IDS_STATS_SVRECUSERS    "最大オンラインユーザー数"
+    IDS_SEARCH_TEXT         "検索"
+    IDS_STATS_SVRECFILES    "利用可能な最大ファイル数"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_SHRECNUM      "今まで共有した最大ファイル数"
+    IDS_SEARCH_COLUMN       "カラム内を検索"
+    IDS_STATS_SHRECSIZE     "最大共有サイズ"
+    IDS_STATS_SHRECASIZE    "平均最大共有サイズ"
+    IDS_STATS_MYRUNTIME     "起動時間: %s"
+    IDS_STATS_SESSION       "今回"
+    IDS_STATS_SRATIO        "UL:DL比率(今回):"
+    IDS_STATS_CRATIO        "UL:DL比率(総合):"
+    IDS_SEARCH_NORESULT     "見つかりませんでした"
+    IDS_STATS_CURRSRVDUR    "サーバー接続時間"
+    IDS_LONGSECS            "秒"
+    IDS_STATS_DLSES         "ダウンロード(今回)"
+    IDS_LONGMINS            "分"
+    IDS_STATS_SDLSES        "ダウンロード成功(今回)"
+    IDS_STATS_FDLSES        "ダウンロード失敗(今回)"
+    IDS_STATS_AVGDATADLSES  "1セッションあたりの平均ダウンロード"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_ULSES         "アップロード(今回)"
+    IDS_STATS_GAINCOMP      "圧縮による獲得: %s"
+    IDS_STATS_LOSTCORRUPT   "破損による損失: %s"
+    IDS_STATS_AVGDATAULSES  "1セッションあたりの平均アップロード"
+    IDS_STATS_ICHSAVED      "I.C.Hによる保存部分: %u"
+    IDS_STATS_MBRESET_TXT   
+"総合統計値をリセットしてよろしいですか?\n\n古いデータを復元する場合は'統計復元'ボタンをクリックして下さい"
+    IDS_STATS_MBRESET_CAP   "リセット確認"
+    IDS_STATS_MBRESTORE_TXT 
+"総合統計値をバックアップから復元しますか?\n\n'統計復元'をクリックすると以前のデータが現在の統計として表示されます"
+    IDS_STATS_MBRESTORE_CAP "復元確認"
+    IDS_ERR_NOSTATBKUP      "エラー: 
+バックアップした統計ファイルが見つかりません"
+    IDS_STATS_NFOLOADEDBKUP "統計ファイルのバックアップを読み込みました"
+    IDS_STATS_NFORESET      "統計値をリセットしました!"
+    IDS_STATS_BNRESET       "統計値のリセット"
+    IDS_STATS_BNRESTORE     "統計値を復元"
+    IDS_CONNECTIONSTATISTICS "接続統計"
+    IDS_PPGSTATS_YSCALE     "接続統計グラフのY軸幅:"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PPGSTATS_ACRATIO    "アクティブ接続比率:"
+    IDS_STATS_PROBLEMATIC   "問題あり"
+    IDS_LONGHRS             "時間"
+    IDS_STATS_LARGESTFILE   "最大共有ファイル"
+    IDS_CLIENTSOFTWARE      "クライアントソフト"
+    IDS_STATS_DSPF          "部分ファイル"
+    IDS_STATS_DATASOURCE    "データソース"
+    IDS_STATS_DSFILE        "完了ファイル"
+    IDS_STATS_GENERAL       "一般"
+    IDS_STATS_TRANSTIME     "転送時間"
+    IDS_STATS_DOWNTIME      "ダウンロード時間"
+    IDS_STATS_UPTIME        "アップロード時間"
+    IDS_STATS_TOTALSRVDUR   "サーバー接続時間"
+    IDS_STATS_MAXAVGUL      "最大平均アップロード速度"
+    IDS_STATS_MAXUL         "最大アップロード速度"
+    IDS_STATS_AVGDLTIME     "平均ダウンロード時間"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_OLDCLIENTS    "古い"
+    IDS_STATS_PRTDEF        "デフォルト"
+    IDS_STATS_PRTOTHER      "その他"
+    IDS_STATS_MNUTREETITLE  "統計ツリー"
+    IDS_STATS_MNUTREECPYSEL "選択した枝をコピー"
+    IDS_STATS_MNUTREECPYALL "全ての統計値をコピー"
+    IDS_STATS_MNUTREEHTML   "HTML機能"
+    IDS_STATS_EXPORT2HTML   "全ての統計値をエクスポート"
+    IDS_STATS_EXPORTVIS     "表示されている値を全てエクスポート"
+    IDS_STATS_MNUTREECPYVIS "表示されている値を全てコピー"
+    IDS_STATS_MNUTREEEXPANDALL "全セクションを伸張"
+    IDS_STATS_MNUTREECOLLAPSEALL "全セクションを折畳む"
+    IDS_STATS_MNUTREEEXPANDMAIN "メインセクションを伸張"
+    IDS_STATS_LASTRESETSTATIC "最終リセット: %s"
+    IDS_STATS_MONTHLY       "月"
+    IDS_STATS_YEARLY        "年"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_TIMESTATS     "時間の統計"
+    IDS_STATS_AVGANDPROJ    "平均予想"
+    IDS_STATS_TIMESINCERESET "最終リセットからの経過時間: %s"
+    IDS_CRYPT_INITFAILED    "暗号化に失敗しました - 安全に識別できません"
+    IDS_CD_IDENT            "認証:"
+    IDS_IDENTOK             "成功"
+    IDS_IDENTFAILED         "無効"
+    IDS_IDENTNOSUPPORT      "未サポートまたは無効です"
+    IDS_COMMITFILES         "安全な.met/.datファイル書き込み"
+    IDS_ERR_BADUNC          "無効UNC名"
+    IDS_NEVER               "利用しない"
+    IDS_ALWAYS              "毎回"
+    IDS_ONSHUTDOWN          "終了時"
+    IDS_UNCFOLDERS          "UNCパス"
+    IDS_USESECIDENT         "安全な認証を使用する"
+    IDS_ADVSPAMFILTER       "高度スパムフィルタ"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CUT                 "切り取り"
+    IDS_STATS_SECUREIDENT   "安全な認証(成功 : 失敗 )"
+    IDS_ONDISK              "ディスク上のサイズ: "
+    IDS_CLIENTCOL           "警告: 
+現在接続しているクライアントに一致するクライアントを見つけました: 
+%s(%s)と%s(%s)"
+    IDS_SEARCH_UNTERMSTRING "終了されていない文字列"
+    IDS_SEARCH_GENERALERROR "一般エラー"
+    IDS_SEARCH_MISSINGORRIGHT "右側のOR演算子がありません"
+    IDS_SEARCH_MISSINGNOTRIGHT "右側のNOT演算子がありません"
+    IDS_SEARCH_MISSINGEXPRPARANT "'(' ')'の式がありません"
+    IDS_SEARCH_MISSINGCLOSINGPARANT "閉じる演算子')'がありません"
+    IDS_SEARCH_MISSINGANDLEFT "左側のAND演算子がありません"
+    IDS_SEARCH_MISSINGORLEFT "左側のOR演算子がありません"
+    IDS_SEARCH_MISSINGNOTLEFT "左側のNOT演算子がありません"
+    IDS_SEARCH_EXPRERROR    "検索式の解析に失敗しました"
+    IDS_SEARCH_TOOCOMPLEX   "式が複雑すぎます"
+    IDS_SEARCH_INVALIDMINMAX 
+"最小/最大ファイルサイズ設定には無効なユニットです"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_VERSION             "バージョン"
+    IDS_ALL_A4AF_TO_THIS    "今すぐこのファイルへの全てのソースを交換する"
+    IDS_PASTE               "貼り付け"
+    IDS_ALL_A4AF_TO_OTHER   "今すぐ他のファイルへの全てのソースを交換する"
+    IDS_ALL_A4AF_AUTO       
+"自動的にこのファイルへの全ての(A4AF)ソースを交換する"
+    IDS_SWAP_A4AF_TO_THIS   
+"今すぐこのファイルへの全ての(A4AF)ソースを交換する"
+    IDS_SWAP_A4AF_TO_OTHER  
+"今すぐ他のファイルへの全ての(A4AF)ソースを交換する"
+    IDS_A4AF                "ソースハンドリンクﾞ(A4AF)"
+    IDS_MOBILEMULE          "モバイルMule"
+    IDS_ENABLEMM            "モバイルeMuleを使用する"
+    IDS_AUTOCAT_LABEL       "自動的に分類する(パターンは「|」で区切ります)"
+    IDS_SHOWEXTSETTINGS     "追加オプションを表示する(高度モード)"
+    IDS_TREEOPTIONS_TRUE    "真"
+    IDS_TREEOPTIONS_FALSE   "偽"
+    IDS_TREEOPTIONS_OK      "OK"
+    IDS_HYPERTEXT_FONT_HINT 
+"サーバー・メッセージ・IRCウィンドウ用のフォント"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SELECT_FONT         "フォント選択"
+    IDS_SERVER_LIMITS       "ソフト/ハードファイル制限"
+    IDS_SERVERINFO          "サーバー情報"
+    IDS_KBITSSEC            "kビット/秒"
+    IDS_KBYTESSEC           "kバイト/秒"
+    IDS_ERR_CREATE_DIR      "%sディレクトリの作成に失敗しました ""%s"" - %s"
+    IDS_WRN_INCFILE_RESERVED
+                            
+"eMuleインストールディレクトリをダウンロードディレクトリとして設定することはできません"
+    IDS_WRN_TEMPFILES_RESERVED
+                            
+"eMuleインストールディレクトリを一時ディレクトリとして設定することはできません"
+    IDS_WRN_INCTEMP_SAME    
+"ダウンロードディレクトリと一時ディレクトリが同じであってはなりません"
+    IDS_MMFAILED            "モバイルeMuleソケットの作成に失敗しました!"
+    IDS_MMSTARTED           
+"モバイルMuleサーバーをポート%iで起動しました。プロトコルバージョン: %s"
+    IDS_SHOWDWLPERCENTAGE   "進行バーの中でダウンロードの進行状況を表示する"
+    IDS_TBN_ONNEWDOWNLOAD   "ダウンロード追加"
+    IDS_ARTIST              "アーティスト"
+    IDS_ALBUM               "アルバム"
+    IDS_MMGUIDELINK         "モバイルeMuleガイド"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CD_UPLOADREQ        "アップロード要求されました:"
+    IDS_SETTINGCHANGED_RESTART
+                            
+"設定の変更を反映させるにはeMuleを再起動する必要があります!"
+    IDS_CREDITSEXPIRED      ", 
+%iクライアントが削除されました(５ヶ月間接続無し)"
+    IDS_SOURCESINFO         "%i  (利用: %i, NNP: %i);  A4AF: %i"
+    IDS_SHOW_META_DATA      "メタデータを表示(&M)..."
+    IDS_META_DATA           "メタデータ"
+    IDS_TIMEBEFORE          "(%s前)"
+    IDS_FD_TIMEDATE         "日付"
+    IDS_FILEINFORMATION     "ファイル情報"
+    IDS_STATS_FREESPACE     "空き容量"
+    IDS_IRC_HELPCHANNEL     "ヘルプチャンネルに接続"
+    IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-japanese"
+    IDS_IRC_ACCEPTLINKSFRIENDS "友達のみ"
+    IDS_COMPLSOURCES        "完全ソース"
+    IDS_CHECKNOENDTIME      "終了時間無し"
+    IDS_FD_DOWNLOADSTARTED  "ダウンロード追加:"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_MATCH_KEYWORDS      "キーワードに一致"
+    IDS_FAILEDREOPEN        "致命的エラー: 
+部分ファイル'%s'の再オープンに失敗しました(%s)!"
+    IDS_ERR_PREVIEWALREADY  
+"既にこのクライアントからのプレビュー要求が保留中です"
+    IDS_ERR_PREVIEWFAILED   "ユーザー'%s'からのプレビューに失敗しました"
+    IDS_DWTOT               "ディスク容量"
+    IDS_DWTOT_NR            "ダウンロード数: %d"
+    IDS_DWTOT_TSD           "総ダウンロードサイズ: %s"
+    IDS_DWTOT_TCS           "総ダウンロード完了サイズ: %s (%.0f%%)"
+    IDS_DWTOT_TSL           "総未転送サイズ: %s"
+    IDS_DWTOT_TSN           "ダウンロードに必要な追加容量 %s"
+    IDS_DWTOT_FS            "一時ドライブの空き容量: %s"
+    IDS_NEEDFREEDISKSPACE   "%s (%sの空き容量が必要です!)"
+    IDS_SERVERKEEPALIVETIMEOUT "サーバー接続更新間隔[分]"
+    IDS_MORE                "詳細(&M)"
+    IDS_TOOLS               "ツール"
+    IDS_SEARCHPARAMS        "検索パラメータ"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CREATEHOSTNAMESRCLINK "eD2Kリンクをクリップボードへコピー(ホスト名)"
+    IDS_HASHINGFILESCOUNT   " (%u ハッシュ中)"
+    IDS_CHECKDISKSPACE      "ディスク容量確認"
+    IDS_YOURHOSTNAME        "自分のeD2Kリンクのホスト名"
+    IDS_INSUFFICIENT        "ディスク容量が足りません"
+    IDS_MINFREEDISKSPACE    "最小フリーディスク容量[MB]"
+    IDS_WARNING             "警告"
+    IDS_IMPORTSPLPF         "部分ファイル(eM, eD, ON)をインポート"
+    IDS_IMP_STEPREADPF      "部分フォルダを読み込み中"
+    IDS_IMP_STEPBASICINF    "部分ファイルから基礎情報を検索中"
+    IDS_IMP_STEPCRDESTFILE  "目的部分ファイルを作成中"
+    IDS_IMP_LOADDATA        "古い部分ファイルからデータを読込み中(%i of %i)"
+    IDS_IMP_SAVEDATA        "新規単一部分ファイルにデータブロックを保存中(%i 
+of %i)"
+    IDS_IMP_IOERROR         
+"部分ファイルの変換中にファイルエラーが発生しました"
+    IDS_IMP_GETPFINFO       "ソース部分ファイル情報を検索中"
+    IDS_IMP_ADDDWL          
+"ダウンロードを追加し、新規部分ファイルを保存する"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IMP_FETCHSTATUS     "情報を入手中..."
+    IDS_IMP_INPROGR         "進行中"
+    IDS_IMP_ERR_DISKSP      "エラー: ディスクの空き容量がありません"
+    IDS_IMP_ERR_PARTMETIO   "エラー: Partmetが見つかりません"
+    IDS_IMP_ERR_IO          "エラー: 入出力エラー!"
+    IDS_IMP_ERR_FAILED      "エラー: 失敗!"
+    IDS_IMP_STATUSQUEUED    "順番待ち"
+    IDS_IMP_ALRDWL          "既にダウンロード中です"
+    IDS_IMP_ADDBTN          "インポート追加(&A)"
+    IDS_IMP_RETRYBTN        "選択を再試行(&R)"
+    IDS_IMP_REMOVEBTN       "選択を削除(&M)"
+    IDS_IMP_SELFOLDER       
+"単一のpartmetフォルダか、全てのpartmetサブフォルダがある古い一時フォルダを選択して下さい!"
+    IDS_IMP_DELSRC          
+"インポートに成功したダウンロードのソース部分ファイルを希望しますか?"
+    IDS_IMP_SIZE            "%s (ディスク:%s)"
+    IDS_IMP_STATUS          "インポート中 %s: %s"
+    IDS_DYNUPENABLED        "自動的に最適なアップロード制限を探す"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE "Ping許容値(最低Ping割合)"
+    IDS_DYNUP_GOINGUPDIVIDER "アップロードを遅くする"
+    IDS_DYNUP_GOINGDOWNDIVIDER "ダウンロードを遅くする"
+    IDS_DYNUP_NUMBEROFPINGS "平均用のPing最大数"
+    IDS_DYNUP_MINUPLOAD     "最低アップロード速度"
+    IDS_ESTTIMELEFT         "残り時間:"
+    IDS_TRANSFER_RATE_LABEL "転送速度:"
+    IDS_SAVELOG             "記録を保存する"
+    IDS_CMT_COPYCLIPBOARD   "解説をクリップボードにコピー"
+    IDS_ASKDOWNLOADLANG     
+"選択した言語はシステムにインストールされていません。eMuleでemule-projectから言語ファイルをダウンロードしますか?"
+    IDS_ASKDOWNLOADLANGCAP  "言語ファイルをダウンロード"
+    IDS_DELETESELECTED      "削除"
+    IDS_ERR_FAILEDDOWNLOADLANG
+                            
+"%sから選択された言語DLLのダウンロード・インストール作業に失敗しました!"
+    IDS_ERR_BADFOLDER       
+"無効フォルダ\nフォルダが見つかりません。フォルダ名と位置を確認して下さい"
+    IDS_AUTOREMOVEFD        "完了したダウンロードを自動クリアｰ"
+    IDS_MM_BLOCK            
+"MobileMuleへのログインに3回失敗しました･･･10分間は全てのログイン試行がブロックされます!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_KAD_NODE            "ノード検索"
+    IDS_KAD_STOREFILE       "ファイル格納"
+    IDS_KAD_STOREKW         "キーワード格納"
+    IDS_KAD_UNKNOWN         "不明"
+    IDS_SRV_TCPCOMPR        "TCP圧縮"
+    IDS_KADSEARCHLAB        "現在の検索"
+    IDS_SRV_UDPSR           "ソース要求の為の拡張UDPプロトコル"
+    IDS_SRV_UDPFR           "ファイル要求の為の拡張UDPプロトコル"
+    IDS_MINLENGTH           "最小の長さ [hh:mm:ss]"
+    IDS_EM_HELP             "ヘルプ"
+    IDS_WRN_FRIENDDUPLIPPORT
+                            
+"友達は追加されませんでした\n\n既に同じIPアドレスとポートを持った友達が存在します"
+    IDS_DYNUP               "アップロード速度感知"
+    IDS_KADOVERHEAD         "Kadオーバーヘッド(パケット): %s (%s)"
+    IDS_FIND                "検索..."
+    IDS_LOG_BANNED_CLIENTS  "BANしたクライアントのログをとる"
+    IDS_LOG_RATING_RECV     "受信したファイル詳細とﾚｰﾃｨﾝｸﾞのログをとる"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_MM_NEWUSER          
+"新規ユーザはMobileMuleサーバへのログインに成功しました"
+    IDS_RADCLIENTS          "既知のクライアント"
+    IDS_KADUDPPORTERR       
+"KadのUDPポートはeMuleの外部UDPポート又はサーバーUDPポートのどちらかと競合しています。ポートは%uに変更されました。"
+    IDS_CONFIRM_FILEDELETE  
+"ディスクから選択したファイルを全て削除しますか?"
+    IDS_OPENFOLDER          "フォルダを開く"
+    IDS_RUNASUSER           "管理者権限がないユーザーとしてeMuleを起動"
+    IDS_DELETE              "ディスクから削除"
+    IDS_BOOTSTRAP           "ブートストラップ"
+    IDS_VIAED2KSQ           "eD2Kサーバー経由"
+    IDS_EM_KADEMLIA         "Kad"
+    IDS_VIAKAD              "Kad経由"
+    IDS_VIASE               "ソース交換経由"
+    IDS_SELECTTOOLBARBITMAP "ツールバーのビットマップを選択..."
+    IDS_SELECTTOOLBARBITMAPDIR 
+"ツールバーのビットマップディレクトリを選択..."
+    IDS_TOOLBARSKINS        "ツールバースキン"
+    IDS_NOTEXTLABELS        "ラベル無し"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TEXTLABELSONRIGHT   "アイコンの右側"
+    IDS_TEXTLABELS          "テキストラベル"
+    IDS_ENABLETEXTLABELS    "アイコンの下"
+    IDS_CUSTOMIZETOOLBAR    "ツールバーのカスタマイズ..."
+    IDS_MINBITRATE          "最小ビットレート [kBit/s]"
+    IDS_KAD_RECHECKFW       "ﾌｧｲｱｰｳｫｰﾙの再確認"
+    IDS_SHAREDTITLE         "eD2K|Kadの共有"
+    IDS_WARNINGNOBS         "現在ﾌﾞｰｽﾄﾗｯﾌﾟ休止中(既にKadに接続済み)"
+    IDS_FIREWALLED          "ファイアーウォール"
+    IDS_KADEMLIA            "Kad"
+    IDS_KADCONTACTLAB       "接点"
+    IDS_KADDISTANCE         "距離"
+    IDS_KEY                 "キー"
+    IDS_NUMBER              "数値"
+    IDS_KAD_SEARCHSRC       "ソース検索(%i:%i)"
+    IDS_KAD_SEARCHKW        "キーワード検索(%i:%i)"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LOG_SECURE_IDENT    "セキュアIDエントリのログをとる"
+    IDS_LOG_FILTERED_IPS    "フィルタ/無視IPのログをとる"
+    IDS_LOG_FILE_SAVING     "ファイル保存操作のログをとる"
+    IDS_IPFILTERFILES       "全IPフィルタファイル 
+(*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule 
+IPフィルタファイル (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer 
+Guardianファイル(*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|テキストファイル 
+(*.txt)|*.txt|全てのファイル (*.*)|*.*||"
+    IDS_DELETEIPFILTERS     "選択したIPフィルタを削除してよろしいですか?"
+    IDS_TOTAL_IPFILTER_LABEL "総IPフィルタ:"
+    IDS_TOTAL_IPS_LABEL     "総IP:"
+    IDS_RAU_WARNING         
+"この設定はeMuleへの攻撃や搾取に対する追加の安全対策を与え、このオプションを使用することを推奨します。\nしかしこれを使用する前にはマニュアルを読むことを強くお勧めします!\n\n変更を適用するにはeMuleを再起動して下さい。"
+    IDS_APPEND              "追加..."
+    IDS_SAVE                "保存"
+    IDS_IP_START            "開始"
+    IDS_IP_END              "終了"
+    IDS_IP_LEVEL            "レベル"
+    IDS_IP_DESC             "説明"
+    IDS_IP_HITS             "ヒット"
+    IDS_IP_RULES            "IPフィルタ:"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LOG_A4AF            "A4AF操作のログをとる"
+    IDS_A4AF_SAVE_CPU       
+"CPU使用率を抑えるためにA4AFチェックを無効にする"
+    IDS_SEARCH_DOC          "ドキュメント"
+    IDS_INSTALL_SKIN        "eMuleスキンをインストール"
+    IDS_INSTALL_SKIN_NODIR  
+"選択されたeMuleスキンプロフィールが無いか、ディレクトリにアクセスできません!"
+    IDS_INSTALL_SKIN_DIR_ERROR
+                            "ディレクトリ ""%s"" 
+の作成に失敗しました。eMuleスキン - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR
+                            "eMuleスキンからのファイル ""%s"" 
+の抽出に失敗しました。対象: ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR 
+"これは有効なeMuleスキンのﾊﾟｯｹｰｼﾞではありません"
+    IDS_NEXT_REASK          "次はこのクライアントに問い合わせる"
+    IDS_A4AF_FILES          "A4AF ファイル"
+    IDS_FO_TEMPTCP_S        
+"このeMuleのセッション用にWinXP内蔵ファイアーウォール上のポート %u (TCP) 
+を開きました"
+    IDS_FO_TEMPTCP_F        
+"このeMuleのセッション用にWinXP内蔵ファイアーウォール上のポート %u (TCP) 
+のオープンに失敗しました"
+    IDS_FO_TEMPUDP_S        
+"このeMuleのセッション用にWinXP内蔵ファイアーウォール上のポート %u (UDP) 
+を開きました"
+    IDS_FO_TEMPUDP_F        
+"このeMuleのセッション用にWinXP内蔵ファイアーウォール上のポート %u (UDP) 
+のオープンに失敗しました"
+    IDS_FO_PREFBUTTON       
+"WinXP内蔵ファイアーウォール上でこれらのポートを開く"
+    IDS_FO_PREF_SUCCCEEDED  
+"WinXP内蔵ファイアーウォール上で選択されたポートを開くことに成功しました。\nサードパーティ製のデスクトップ用ファイアーウォールやルータはこれによって影響されないことに注意して下さい!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IMP_ERR_BADFORMAT   "未知または不正な一時ファイルフォーマットです。"
+    IDS_SEARCH_INVALIDCHAR  
+"検索式に使用できない文字が含まれています。文字「?」か、このネットワーク内で使用できない文字が入力されている可能性があります。"
+    IDS_PORTSCON            "ポートと接続"
+    IDS_PORTINFO            
+"eMuleはサーバー用とクライアント用で2つのポートを使用します。 
+これらのポートはリモートホストから自由に利用できなければなりません。 
+また、eMuleの主な機能を確実に利用するにはTCPポートが利用可能になっていなければなりません。 
+UDPポートはKad(サーバー無しネットワーク)と、ネットワークの使用率(オーバーヘッド)を軽減させる目的で使用されます。\n\nネットワークへの接続を開始していない場合はここでポート設定を変更することができます。"
+    IDS_STARTTEST           "ポートのテスト"
+    IDS_TESTINFO            
+"TCPとUDPポートがリモートから接続可能かどうかここでテストすることができます。 
+サーバーへの接続やクライアントがあなたに接続できるようにするためにはこのテストに成功している必要があります。 
+特にTCPポートのテストは確実に成功していなければなりません!"
+    IDS_CONNECTIONTEST      "接続テストt"
+    IDS_NOPORTCHANGEPOSSIBLE
+                            
+"クライアントと接続した後や、サーバー/Kadへの接続中にはポートを変更することができません!\n\n設定を変更するにはeMuleを再起動して下さい。"
+    IDS_NETWORK_INFO        "ネットワーク情報"
+    IDS_SP_TOTALUL          "アップロード数の合計"
+    IDS_SP_ULFRIENDS        "アップロード友達スロット"
+    IDS_SP_ULSLOTSNOOVERHEAD 
+"現在のアップロードオーバーヘッド(ULスロットのみ)"
+    IDS_ST_ACTIVEU_ZZ       "現在のアップロード"
+    IDS_ST_ULCURRENT        "アップロード+オーバーヘッド"
+    IDS_ST_ULSLOTSNOOVERHEAD "アップロード"
+    IDS_ST_ULFRIEND         "友達アップロード"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_ACTUL_ZZ      "現在のアップロード/有効な全帯域幅: %i"
+    IDS_STATS_TOTALUL       "アップロード数の合計: %i"
+    IDS_CHAT_DOWNLOADED     "ダウンロード済:"
+    IDS_CHAT_UPLOADED       "アップロード済:"
+    IDS_CHAT_IDENT          "ID:"
+    IDS_CHAT_CLIENT         "クライアント:"
+    IDS_MAXHALFOPENCONS     "最大接続制限数"
+    IDS_WIZ_STARTWITHWINDOWS
+                            
+"これを有効にすればWindowsのスタートアップにeMuleを起動します。 [デフォルト: 
+無効]"
+    IDS_KAD_WAITCBK         "Kadのコールバックを待機"
+    IDS_KAD_TOOMANDYKADLKPS "Kad検索が過多"
     IDS_PCDS_CLIENTWAIT     "ClientWait"
     IDS_PCDS_CACHEWAIT      "CacheWait"
-    IDS_CACHE               "Cache"
-    IDS_INDEXED             "Indexed"
-    IDS_KADINFO_SRC         "\tSource: %u\r\n"
-    IDS_KADINFO_KEYW        "\tKeyword: %u\r\n"
-    IDS_STARTWITHWINDOWS    "Start with Windows"
-    IDS_ADDSRCMANUALLY      "Manually Add A Source"
-    IDS_BUDDY               "Buddy"
-    IDS_BUDDYNONE           "None"
-    IDS_INFO                "Info"
-    IDS_HALF                "Half"
-    IDS_CONCOMPL            "Compl"
-    IDS_KADSTATUS_STOPPING  "Stopping"
-    IDS_KADSTATUS_ACTIVE    "Active"
+    IDS_CACHE               "キャッシュ"
+    IDS_INDEXED             "インデックス済"
+    IDS_KADINFO_SRC         "\tソース: %u\r\n"
+    IDS_KADINFO_KEYW        "\tキーワードd: %u\r\n"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_FORMAT              "Format"
-    IDS_META_COLLECTION     "Collection"
-    IDS_META_PARTPATH       "Part path"
-    IDS_META_PARTHASH       "Part hash"
-    IDS_META_GAPSTART       "Gap start"
-    IDS_META_GAPEND         "Gap end"
-    IDS_FAIL                "Fail"
-    IDS_META_PREFERENCES    "Preferences"
-    IDS_META_VERSION        "Version"
-    IDS_META_TEMPFILE       "Temporary file"
-    IDS_META_SERVERPORT     "Server port"
-    IDS_META_SERVERIP       "Server IP"
-    IDS_META_SRCUDPPORT     "Source UDP port"
-    IDS_META_SRCTCPPORT     "Source TCP port"
-    IDS_META_SRCIP          "Source IP"
-    IDS_META_SRCTYPE        "Source type"
-    IDS_SEARCH_UNICODE      "Search with Unicode"
-    IDS_PERSEC              "/s"
+    IDS_STARTWITHWINDOWS    "Windows起動時に開始"
+    IDS_ADDSRCMANUALLY      "ソース追加..."
+    IDS_BUDDY               "友達"
+    IDS_BUDDYNONE           "無し"
+    IDS_INFO                "情報"
+    IDS_HALF                "制限"
+    IDS_CONCOMPL            "完了"
+    IDS_KADSTATUS_STOPPING  "停止中"
+    IDS_KADSTATUS_ACTIVE    "有効"
+    IDS_FORMAT              "フォーマット"
+    IDS_META_COLLECTION     "コレクション"
+    IDS_META_PARTPATH       "部分パス"
+    IDS_META_PARTHASH       "部分ハッシュ"
+    IDS_META_GAPSTART       "ギャップ開始"
+    IDS_META_GAPEND         "ギャップ終了"
+    IDS_FAIL                "失敗"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_LD_ED2KLINK         "ED2K Link"
-    IDS_LD_COPYCLIPBOARD    "Copy to Clipboard"
-    IDS_LD_HOSTNAME         "Use hostname (from peferences) instead of IP when creating a sourcelink"
-    IDS_SAVEACFAILED        "Failed to save AICH Hashset!"
-    IDS_IACHHASH            "AICH Hash"
-    IDS_BYTESPERSEC         "B/s"
-    IDS_KBYTESPERSEC        "KB/s"
-    IDS_MBYTESPERSEC        "MB/s"
-    IDS_GBYTESPERSEC        "GB/s"
-    IDS_TBYTESPERSEC        "TB/s"
+    IDS_META_PREFERENCES    "設定"
+    IDS_META_VERSION        "バージョン"
+    IDS_META_TEMPFILE       "一時ファイル"
+    IDS_META_SERVERPORT     "サーバーポート"
+    IDS_META_SERVERIP       "サーバーIP"
+    IDS_META_SRCUDPPORT     "ソースUDPポート"
+    IDS_META_SRCTCPPORT     "ソースTCPポート"
+    IDS_META_SRCIP          "ソースIP"
+    IDS_META_SRCTYPE        "ソース種別"
+    IDS_SEARCH_UNICODE      "Unicodeで検索"
+    IDS_PF_ADVANCEDCALC     "残り時間の計算に高度な方法を使用する"
+    IDS_PERSEC              "/秒"
+    IDS_LD_ED2KLINK         "ED2Kリンク"
+    IDS_LD_COPYCLIPBOARD    "クリップボードにコピー"
+    IDS_LD_HOSTNAME         
+"ソースリンク作成時にIPの替わりに(設定から)ホスト名を使用する"
+    IDS_SAVEACFAILED        "AICHハッシュセットの保存に失敗しました!"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_STATS_MINORCLIENTS  "Minor"
-    IDS_LD_BASICOPT         "Basic Options"
-    IDS_LD_ADDSOURCE        "Add yourself as source"
-    IDS_LD_EMULEHASH        "Add eMule AICH Hash for advanced corruption handling"
-    IDS_LD_ADVANCEDOPT      "Advanced Options"
-    IDS_LD_ADDHTML          "Add HTML-Tags"
-    IDS_LD_ADDHASHSET       "Add complete hashset"
-    IDS_FILELINK            "File Link"
-    IDS_PF_ADVANCEDCALC     "Use advanced calculation method for remaining time"
-    IDS_DL_SHOWED2KLINK     "Show eD2K Link..."
-    IDS_AICH_SYNCTOTAL      "Found %i files without valid AICH Hashset, going to rehash those files now"
-    IDS_AICH_CALCFILE       "Calculating AICH Hash for file %s"
-    IDS_AICH_WARNUSER       "Since version 0.44a eMule uses an additional filehash which helps to greatly reduce the dataloss when a corruption is detected. Because your are updating from an earlier version, eMule needs to rehash all your shared files to calculate the new hash. This may take a while but is an one-time action.  "
-    IDS_AICH_WORKED         "AICH successfully recovered %s of %s from part %u for %s"
-    IDS_TRICKLING           "Standby"
-    IDS_SOURCECLIENT        "Source Client"
-    IDS_USERSIP             "Users IP"
-    IDS_FEATURES            "Features"
-    IDS_IRC_NEWNICK         "Select a IRC nick."
-    IDS_IRC_NEWNICKDESC     "Should be one word less then 20 characters containing (A-Z, 0-9). It can be changed again in Preferences->Irc."
+    IDS_IACHHASH            "AICHハッシュ"
+    IDS_BYTESPERSEC         "B/秒"
+    IDS_KBYTESPERSEC        "KB/秒"
+    IDS_MBYTESPERSEC        "MB/秒"
+    IDS_GBYTESPERSEC        "GB/秒"
+    IDS_TBYTESPERSEC        "TB/秒"
+    IDS_STATS_MINORCLIENTS  "マイナー"
+    IDS_AICH_SYNCTOTAL      "有効なAICHハッシュセットがないファイルが %i 
+個見つかりました。 今すぐこれらのファイルを再ハッシュして下さい"
+    IDS_AICH_CALCFILE       "ファイル %s のAICHハッシュを計算しています"
+    IDS_AICH_WARNUSER       
+"バージョン0.44aからeMuleは、破損検出時にデータの損失をできるだけ押さえることができる、付加的なファイルハッシュを使用することになりました。 
+以前のバージョンからアップデートすることにより、eMuleはあなたの全てのファイルの新しいハッシュを計算します。 
+これにはしばらく時間がかかりますが、一度だけしか行われません。  "
+    IDS_AICH_WORKED         "AICHは破損の回復に成功しました…%s(%s) - 
+%u(%s)"
+    IDS_SOURCECLIENT        "ソースクライアント"
+    IDS_USERSIP             "ユーザーIP"
+    IDS_FEATURES            "機能"
+    IDS_IRC_NEWNICK         "IRCニックネームを選択"
+    IDS_IRC_NEWNICKDESC     "ニックネームは英数字(A-Z, 
+0-9)で20文字以下でなければなりません。 
+設定→Ircでこの設定を変更することができます。"
+    IDS_LD_BASICOPT         "基本オプション"
+    IDS_LD_ADDSOURCE        "ソースとして自分自身を追加する"
+    IDS_LD_EMULEHASH        
+"高度な破損検出を取り扱うためにeMuleAICHハッシュを追加する"
+    IDS_LD_ADVANCEDOPT      "高度オプション"
+    IDS_LD_ADDHASHSET       "完了ハッシュセットを追加"
+    IDS_FILELINK            "ファイルリンク"
+    IDS_DL_SHOWED2KLINK     "eD2Kリンクを表示..."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_SPARSEPARTFILES     "Create new part files as 'sparse' (NTFS only)"
-    IDS_ASPECTRATIO         "Aspect Ratio"
-    IDS_NEGATEFILTER        "negate filter"
-    IDS_SEENCOMPL           "Ever seen complete"
-    IDS_SELSKINPROFILEDIR   "Select skin profile directory"
-    IDS_ASKDLINCOMPLETE     "Potentially incomplete file:\r\n\r\n%s\r\n\r\nThis file is supposed to be incomplete in the network and can therefore most likely not downloaded successfully! Do you really want to download this file?"
-    IDS_DEADSOURCES         "Dead Sources"
+    IDS_SPARSEPARTFILES     "'スパース'として新しく部分ファイルを作成する 
+(NTFSのみ)"
+    IDS_ASPECTRATIO         "アスペクト比"
+    IDS_NEGATEFILTER        "否定フィルタ"
+    IDS_SEENCOMPL           "完全ファイルを確認"
+    IDS_SELSKINPROFILEDIR   "スキンプロフィールディレクトリを選択して下さい"
+    IDS_ASKDLINCOMPLETE     
+"潜在的に不完全である可能性のあるファイル:\r\n\r\n%s\r\n\r\nこのファイルはネットワーク上で不完全であると思われます。このファイルのダウンロードは恐らく失敗します! 
+このファイルのダウンロードを続けてよろしいですか?"
+    IDS_DEADSOURCES         "デッドソース"
+    IDS_LARGEICONS          "大きいアイコン"
+    IDS_SMALLICONS          "小さいアイコン"
+    IDS_SHORTTAGS           "短いタグ"
+    IDS_THELOAD             "読み込み"
+    IDS_PACKSENT            "送信パケット"
+    IDS_RESPONSES           "応答"
+    IDS_EXTRACT_META_DATA   "メタデータ抽出"
+    IDS_META_DATA_MEDIADET  "DirectShow 
+(他の全てのオーディオ/ビデオファイル用)"
+    IDS_META_DATA_ID3LIB    "ID3 ライブラリ (MPEGオーディオファイル用)"
 END
 
-#endif    // Japanisch resources
+STRINGTABLE
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD
+                            "Windows Common Controls library 
+(COMCTL32.DLL)のバージョンが古すぎます!\r\n\r\neMuleは適切な使用に耐えない程古いバージョンの""Windows 
+Common Controls library 
+(COMCTL32.DLL)""を検出しました。eMuleの機能を完全に利用する為には、""Windows 
+Common Controls library 
+(COMCTL32.DLL)""のバージョンを5.8以降のものにアップデートすることをお勧めします。\r\n\r\nMicrosoft 
+(R)ダウンロードセンターで""Windows Common Controls library 
+(COMCTL32.DLL)""のアップデータを入手/インストールして下さい。ダウンロードセンターを訪問しますか?"
+    IDS_ASREGEXPR           "正規表現として"
+    IDS_STATIC_REGEXP       "表示フィルタ用正規表現:"
+    IDS_CARE4ALL            "全ファイルを評価"
+    IDS_REGEXPRESSION       "正規表現"
+    IDS_SEARCHKAD           "Kad検索"
+    IDS_DWL_IPFILTERFILE    "IPフィルタファイルをダウンロード中"
+    IDS_DWLIPFILTERFAILED   "IPフィルタのダウンロードに失敗しました"
+    IDS_FINDBUDDY           "友達を検索"
+    IDS_ERR_IPFILTERZIPEXTR 	 "ダウンロードしたIPフィルタのZIP圧縮ファイル""%s""からIPフィルタを抽出できませんでした。"
+    IDS_ERR_IPFILTERCONTENTERR	"ダウンロードしたIPフィルタファイル""%s""のZIPファイルの内容が破損しています。"
+    IDS_STORENOTES          "注意書きを記録する"
+    IDS_NOTES               "注意書き"
+    IDS_KADSEARCHALREADY    "別の検索が既に実行されています。暫くしてから再試行して下さい!"
+
+END
+
+#endif    // 日本語(Japanese) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -1780,6 +2062,7 @@ END
 #include "..\version.h"
 #include "lang.rc2"
 
-
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+
+

@@ -637,14 +637,12 @@ char *yytext;
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
-#endif //_DEBUG
+#endif
 
 #define YY_NEVER_INTERACTIVE 1
 
 extern int yyerror(const char* errstr);
-#ifdef _UNICODE
 extern int yyerror(LPCTSTR errstr);
-#endif
 
 #define	ECHO				TRACE
 #define	YY_INPUT			ReadLexBuff

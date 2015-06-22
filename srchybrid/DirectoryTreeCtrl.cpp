@@ -20,12 +20,14 @@
 #include "otherfunctions.h"
 #include "Preferences.h"
 #include "TitleMenu.h"
+#include "UserMsgs.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
+
 
 /////////////////////////////////////////////
 // written by robert rostek - tecxx@rrs.at //
@@ -182,9 +184,7 @@ void CDirectoryTreeCtrl::OnTvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CDirectoryTreeCtrl::Init(void)
 {
-#ifdef _UNICODE
 	SendMessage(CCM_SETUNICODEFORMAT, TRUE);
-#endif
 
 	ShowWindow(SW_HIDE);
 	DeleteAllItems();
@@ -446,7 +446,7 @@ void CDirectoryTreeCtrl::CheckChanged(HTREEITEM hItem, bool bChecked)
 		DelShare(strDir);
 
 	UpdateParentItems(hItem);
-	GetParent()->SendMessage(WM_COMMAND, USRMSG_ITEMSTATECHANGED, (long)m_hWnd);
+	GetParent()->SendMessage(WM_COMMAND, UM_ITEMSTATECHANGED, (long)m_hWnd);
 }
 
 bool CDirectoryTreeCtrl::IsShared(CString strDir)

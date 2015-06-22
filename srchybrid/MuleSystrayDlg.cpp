@@ -15,10 +15,12 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+
 //Cax2 - new class without context menu
 BEGIN_MESSAGE_MAP(CInputBox, CEdit)
     ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
+
 void CInputBox::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	//Cax2 - nothing to see here!

@@ -514,7 +514,7 @@ BEGIN
     IDS_PW_INCOMING         "Ateinantys failai"
     IDS_PW_TEMP             "Laikini failai"
     IDS_PW_BROWSE           "Nurodyti"
-    IDS_PW_SHARED           "Ðarinti katalogai"
+    IDS_PW_SHARED           "Ðarinti katalogai (+Ctrl ir bus átraukti pokatalogiai)"
     IDS_PW_CONNECTION       "Susijungimas"
     IDS_PW_DOWNC            "Gavimo talpa"
     IDS_PW_DOWNL            "Gavimo limitas"
@@ -1450,7 +1450,7 @@ BEGIN
     IDS_TIMEBEFORE          "(pieð %s)"
     IDS_FD_TIMEDATE         "Datos"
     IDS_FILEINFORMATION     "Failo informacija"
-    IDS_STATS_FREESPACE     "Laivos vietos laikinø failø diske: "
+    IDS_STATS_FREESPACE     "Laisva vieta"
     IDS_IRC_HELPCHANNEL     "Jungtis prie pagalbos kanalø."
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-lithuanian"
     IDS_IRC_ACCEPTLINKSFRIENDS "Tik ið draugø."
@@ -1544,10 +1544,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "Mazgo paieðka (%i:%i)"
-    IDS_KAD_STOREFILE       "Publikuojamas failas (%i:%i)"
-    IDS_KAD_STOREKW         "Publikuojamas raktaþodis (%i:%i)"
-    IDS_KAD_UNKNOWN         "Neþinoma (%i:%i)"
+    IDS_KAD_NODE            "Mazgo paieðka"
+    IDS_KAD_STOREFILE       "Publikuojamas failas"
+    IDS_KAD_STOREKW         "Publikuojamas raktaþodis"
+    IDS_KAD_UNKNOWN         "Neþinoma"
     IDS_SRV_TCPCOMPR        "TCP kompresija"
     IDS_KADSEARCHLAB        "Esama paieðka"
     IDS_SRV_UDPSR           "Iðplëstas UDP protokolas ðaltiniø uþklausoms"
@@ -1599,8 +1599,8 @@ BEGIN
     IDS_KADDISTANCE         "Atstumas"
     IDS_KEY                 "Raktas"
     IDS_NUMBER              "Numeris"
-    IDS_KAD_SEARCHSRC       "Paieðkos ðaltiniai (%i:%i)"
-    IDS_KAD_SEARCHKW        "Paieðkos raktaþodþiai (%i:%i)"
+    IDS_KAD_SEARCHSRC       "Paieðkos ðaltiniai"
+    IDS_KAD_SEARCHKW        "Paieðkos raktaþodþiai"
 END
 
 STRINGTABLE 
@@ -1689,7 +1689,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_IMP_ERR_BADFORMAT   "Neþinomas arba blogas laikino failo formatas."
-    IDS_SEARCH_INVALIDCHAR  "Paieðkoje ávesti neleistini simboliai. Jûs ávedëte '?' arba kità simbolá kurie negali bûti naudojami eD2k tinkle."
+    IDS_SEARCH_INVALIDCHAR  "Paieðkoje ávesti neleistini simboliai. Jûs ávedëte '?' arba kità simbolá kurie negali bûti naudojami ðiame tinkle."
     IDS_PORTSCON            "Portai ir jungtis"
     IDS_PORTINFO            "eMule naudoja du portus bendravimui su serveriu ir klientais. Ðie portai turi bûti laisvi ir prieinami nutolusiems klientams. TCP portas turi bûti laisvas tam, kad uþtikrinti pagrindines eMule funkcijas. UDP portas naudojamas specialiom eMule galimybëm (ðaltiniø apsikeitimas ir t.t.).\n\nJûs èia galite pakeisti portus kol nëra pradëtas joks tinklo aktivûmas."
     IDS_STARTTEST           "Portø testas"
@@ -1810,6 +1810,36 @@ BEGIN
     IDS_SELSKINPROFILEDIR   "Pasirinkite skinø profilio katalogà"
     IDS_ASKDLINCOMPLETE     "Potencialiai nepilnas failas:\r\n\r\n%s\r\n\r\nLabai panaðu, kad nëra pilnai paplites tinkle ir greièiausiai jums niekada nepavyks gauti viso failo! Ar jûs tikrai norite tæsti ðio failo gavimà?"
     IDS_DEADSOURCES         "Miræ ðaltiniai"
+    IDS_LARGEICONS          "Didelës ikonos"
+    IDS_SMALLICONS          "Maþos ikonos"
+    IDS_SHORTTAGS           "Trumpos þymos"
+    IDS_THELOAD             "Apkrova"
+    IDS_PACKSENT            "Iðsiøsta paketø"
+    IDS_RESPONSES           "Atsakymai"
+    IDS_EXTRACT_META_DATA   "Iðtraukti meta duomenis"
+    IDS_META_DATA_MEDIADET  "DirectShow (visiems kitiems audio/video failams)"
+    IDS_META_DATA_ID3LIB    "ID3 biblioteka (tiktai MPEG audio failams)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Common Controls library (COMCTL32.DLL) is too old!\r\n\r\neMule detected a version of the ""Windows Common Controls library (COMCTL32.DLL)"" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the ""Windows Common Controls library (COMCTL32.DLL)"" to at least version 5.8.\r\n\r\nDownload and install an update of the ""Windows Common Controls library (COMCTL32.DLL)"" at Microsoft (R) Download Center. Do you want to visit the corresponding URL?"
+    IDS_ASREGEXPR           "Reguliarios iðraiðkos"
+    IDS_STATIC_REGEXP       "Reguliari iðraiðka vaizdavimo filtrui:"
+    IDS_CARE4ALL            "Ávertinti visus failus"
+    IDS_REGEXPRESSION       "Reguliari iðraiðka"
+    IDS_SEARCHKAD           "Ieðkoti Kad"
+    IDS_DWL_IPFILTERFILE    "Gaunamas IP filtro failas"
+    IDS_DWLIPFILTERFAILED   "IP filtro gavimas nepavyko"
+    IDS_FINDBUDDY           "Rasti bièiulá"
+    IDS_ERR_IPFILTERZIPEXTR "Nepavyko iðgauti IP filtro failo ið gauto IP filtro ZIP failo ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Gautas IP filtro failas ""%s"" yra ZIP failas su nelaukiamu turiniu."
+    IDS_STORENOTES          "Iðsaugoti pastabas"
+    IDS_NOTES               "Pastabos"
+    IDS_KADSEARCHALREADY    "Ðiuo metu vykdoma kita paieðka. Praðom bandyti vëliau!"
+
 END
 
 #endif    // Lithuanian resources

@@ -28,9 +28,9 @@
 #include "HelpIDs.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -134,6 +134,7 @@ BOOL CPPgDisplay::OnInitDialog()
 	slider3D->SetPos(thePrefs.Get3DDepth());
 	slider3D->SetTicFreq(1);
 	DrawPreview();
+
 
 	LoadSettings();
 	Localize();

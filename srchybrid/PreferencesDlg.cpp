@@ -19,9 +19,9 @@
 #include "PreferencesDlg.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -91,8 +91,7 @@ CPreferencesDlg::CPreferencesDlg()
 	SetTreeViewMode(TRUE, TRUE, TRUE);
 	SetTreeWidth(170);
 
-	m_nActiveWnd = 0;
-	m_iPrevPage = -1;
+	m_pPshStartPage = NULL;
 }
 
 CPreferencesDlg::~CPreferencesDlg()
@@ -103,17 +102,24 @@ void CPreferencesDlg::OnDestroy()
 {
 	CTreePropSheet::OnDestroy();
 	thePrefs.Save();
-	m_nActiveWnd = GetActiveIndex();
+	m_pPshStartPage = GetPage(GetActiveIndex())->m_psp.pszTemplate;
 }
 
 BOOL CPreferencesDlg::OnInitDialog()
 {
 	BOOL bResult = CTreePropSheet::OnInitDialog();
 	InitWindowStyles(this);
-	SetActivePage(m_nActiveWnd);
+
+	for (int i = 0; i < m_pages.GetSize(); i++)
+	{
+		if (GetPage(i)->m_psp.pszTemplate == m_pPshStartPage)
+		{
+			SetActivePage(i);
+			break;
+		}
+	}
 
 	Localize();	
-	m_iPrevPage = GetActiveIndex();
 	return bResult;
 }
 
@@ -197,4 +203,9 @@ BOOL CPreferencesDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	OnHelp();
 	return TRUE;
+}
+
+void CPreferencesDlg::SetStartPage(UINT uStartPageID)
+{
+	m_pPshStartPage = MAKEINTRESOURCE(uStartPageID);
 }

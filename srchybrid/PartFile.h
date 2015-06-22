@@ -171,6 +171,7 @@ public:
 	
 	EPartFileStatus	GetStatus(bool ignorepause = false) const;
 	void	SetStatus(EPartFileStatus in);
+	void	NotifyStatusChange();
 	bool	IsStopped() const { return stopped; }
 	bool	GetCompletionError() const { return m_bCompletionError; }
 	uint32  GetCompletedSize() const { return completedsize; }
@@ -187,16 +188,16 @@ public:
 	uint16	GetSourceCount() const { return srclist.GetCount(); }
 	uint16	GetSrcA4AFCount() const { return A4AFsrclist.GetCount(); }
 	uint16	GetSrcStatisticsValue(EDownloadState nDLState) const;
-	uint16	GetTransferingSrcCount() const; // == GetSrcStatisticsValue(DS_DOWNLOADING)
-	uint32	GetTransfered() const { return transfered; }
+	uint16	GetTransferringSrcCount() const;
+	uint32	GetTransferred() const { return m_uTransferred; }
 	uint32	GetDatarate() const { return datarate; }
 	float	GetPercentCompleted() const { return percentcompleted; }
 	uint16	GetNotCurrentSourcesCount() const;
 	int		GetValidSourcesCount() const;
 	bool	IsArchive(bool onlyPreviewable = false) const; // Barry - Also want to preview archives
     bool    IsPreviewableFileType() const;
-	sint32	getTimeRemaining() const;
-	sint32	getTimeRemainingSimple() const;
+	time_t	getTimeRemaining() const;
+	time_t	getTimeRemainingSimple() const;
 	uint32	GetDlActiveTime() const;
 
 	// Barry - Added as replacement for BlockReceived to buffer data before writing to disk
@@ -237,9 +238,9 @@ public:
 	void	SetLastAnsweredTime() { m_ClientSrcAnswered = ::GetTickCount(); }
 	void	SetLastAnsweredTimeTimeout();
 
-	uint64	GetLostDueToCorruption() const { return m_iLostDueToCorruption; }
-	uint64	GetGainDueToCompression() const { return m_iGainDueToCompression; }
-	uint32	TotalPacketsSavedDueToICH() const { return m_iTotalPacketsSavedDueToICH; }
+	uint64	GetCorruptionLoss() const { return m_uCorruptionLoss; }
+	uint64	GetCompressionGain() const { return m_uCompressionGain; }
+	uint32	GetRecoveredPartsByICH() const { return m_uPartsSavedDueICH; }
 
 	bool	HasComment() const { return hasComment; }
 	void	SetHasComment(bool in) { hasComment = in; }
@@ -263,7 +264,7 @@ public:
 
 	uint8	GetCategory() /*const*/;
 	void	SetCategory(uint8 cat,bool setprio=true);
-	bool	CheckShowItemInGivenCat(int inCategory);
+	bool	CheckShowItemInGivenCat(int inCategory) /*const*/;
 
 	uint8*	MMCreatePartStatus();
 
@@ -284,8 +285,9 @@ public:
 	void	RequestAICHRecovery(uint16 nPart);
 	void	AICHRecoveryDataAvailable(uint16 nPart);
 
-	uint32	lastsearchtime;
-	uint32	lastsearchtimeKad;
+	uint32	m_LastSearchTime;
+	uint32	m_LastSearchTimeKad;
+	uint8	m_TotalSearchesKad;
 	uint32	m_iAllocinfo;
 	CUpDownClientPtrList srclist;
 	CUpDownClientPtrList A4AFsrclist; //<<-- enkeyDEV(Ottavio84) -A4AF-
@@ -334,13 +336,13 @@ private:
 	uint16	count;
 	uint16	m_anStates[STATES_COUNT];
 	uint32	completedsize;
-	uint64	m_iLostDueToCorruption;
-	uint64	m_iGainDueToCompression;
-	uint32	m_iTotalPacketsSavedDueToICH;
+	uint64	m_uCorruptionLoss;
+	uint64	m_uCompressionGain;
+	uint32	m_uPartsSavedDueICH;
 	uint32	datarate;
 	CString m_fullname;
 	CString m_partmetfilename;
-	uint32	transfered;
+	uint32	m_uTransferred;
 	bool	paused;
 	bool	stopped;
 	bool	insufficient; // SLUGFILLER: checkDiskspace

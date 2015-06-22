@@ -40,8 +40,6 @@ public:
 
     void EndThread();
 
-    void SetAllowedDataRate(uint32 newValue);
-
     void Pause(bool paused);
 private:
     static UINT RunProc(LPVOID pParam);
@@ -66,8 +64,6 @@ private:
     uint64 m_SentBytesSinceLastCall;
     uint64 m_SentBytesSinceLastCallOverhead;
     uint32 m_highestNumberOfFullyActivatedSlots;
-
-    uint32 m_allowedDataRate;
 
     bool doRun;
 };

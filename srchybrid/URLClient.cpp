@@ -27,9 +27,9 @@
 #include "ClientCredits.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -110,18 +110,18 @@ bool CUrlClient::SetUrl(LPCTSTR pszUrl, uint32 nIP)
 	if (!InternetCanonicalizeUrl(szUrl, szEncodedUrl, &dwEncodedUrl, ICU_ENCODE_PERCENT))
 		return false;
 	m_strUrlPath = szEncodedUrl;
-	m_nUrlStartPos = -1;
+	m_nUrlStartPos = (UINT)-1;
 
 	SetUserName(szUrl);
 
-	//NOTE: be very carefull with what is stored in the following IP/ID/Port members!
+	//NOTE: be very careful with what is stored in the following IP/ID/Port members!
 	if (nIP)
 		m_nConnectIP = nIP;
 	else
 		m_nConnectIP = inet_addr(T2A(szHostName));
 //	if (m_nConnectIP == INADDR_NONE)
 //		m_nConnectIP = 0;
-	m_nUserIDHybrid = m_nConnectIP;
+	m_nUserIDHybrid = htonl(m_nConnectIP);
 	ASSERT( m_nUserIDHybrid != 0 );
 	m_nUserPort = Url.nPort;
 	return true;
@@ -141,7 +141,7 @@ bool CUrlClient::SendHttpBlockRequests()
 	USES_CONVERSION;
 	m_dwLastBlockReceived = ::GetTickCount();
 	if (reqfile == NULL)
-		throw CString("Failed to send block requests - No 'reqfile' attached");
+		throw CString(_T("Failed to send block requests - No 'reqfile' attached"));
 
 	CreateBlockRequests(PARTSIZE / EMBLOCKSIZE);
 	if (m_PendingBlocks_list.IsEmpty()){
@@ -236,9 +236,9 @@ bool CUrlClient::Disconnected(LPCTSTR pszReason, bool bFromSocket)
 bool CUrlClient::ProcessHttpDownResponse(const CStringAArray& astrHeaders)
 {
 	if (reqfile == NULL)
-		throw CString("Failed to process received HTTP data block - No 'reqfile' attached");
+		throw CString(_T("Failed to process received HTTP data block - No 'reqfile' attached"));
 	if (astrHeaders.GetCount() == 0)
-		throw CString("Unexpected HTTP response - No headers available");
+		throw CString(_T("Unexpected HTTP response - No headers available"));
 
 	const CStringA& rstrHdr = astrHeaders.GetAt(0);
 	UINT uHttpMajVer, uHttpMinVer, uHttpStatusCode;
@@ -351,13 +351,13 @@ bool CUpDownClient::ProcessHttpDownResponseBody(const BYTE* pucData, UINT uSize)
 void CUpDownClient::ProcessHttpBlockPacket(const BYTE* pucData, UINT uSize)
 {
 	if (reqfile == NULL)
-		throw CString("Failed to process HTTP data block - No 'reqfile' attached");
+		throw CString(_T("Failed to process HTTP data block - No 'reqfile' attached"));
 
 	if (reqfile->IsStopped() || (reqfile->GetStatus() != PS_READY && reqfile->GetStatus() != PS_EMPTY))
-		throw CString("Failed to process HTTP data block - File not ready for receiving data");
+		throw CString(_T("Failed to process HTTP data block - File not ready for receiving data"));
 
 	if (m_nUrlStartPos == -1)
-		throw CString("Failed to process HTTP data block - Unexpected file data");
+		throw CString(_T("Failed to process HTTP data block - Unexpected file data"));
 
 	uint32 nStartPos = m_nUrlStartPos;
 	uint32 nEndPos = m_nUrlStartPos + uSize;
@@ -368,14 +368,14 @@ void CUpDownClient::ProcessHttpBlockPacket(const BYTE* pucData, UINT uSize)
 //		Debug("  Start=%u  End=%u  Size=%u  %s\n", nStartPos, nEndPos, size, DbgGetFileInfo(reqfile->GetFileHash()));
 
 	if (!(GetDownloadState() == DS_DOWNLOADING || GetDownloadState() == DS_NONEEDEDPARTS))
-		throw CString("Failed to process HTTP data block - Invalid download state");
+		throw CString(_T("Failed to process HTTP data block - Invalid download state"));
 
 	m_dwLastBlockReceived = ::GetTickCount();
 
 	if (nEndPos == nStartPos || uSize != nEndPos - nStartPos)
-		throw CString("Failed to process HTTP data block - Invalid block start/end offsets");
+		throw CString(_T("Failed to process HTTP data block - Invalid block start/end offsets"));
 
-	thePrefs.Add2SessionTransferData(GetClientSoft(), GetUserPort(), false, false, uSize);
+	thePrefs.Add2SessionTransferData(GetClientSoft(), (GetClientSoft()==SO_URL) ? (UINT)-2 : (UINT)-1, false, false, uSize);
 	m_nDownDataRateMS += uSize;
 	if (credits)
 		credits->AddDownloaded(uSize, GetIP());
@@ -397,7 +397,7 @@ void CUpDownClient::ProcessHttpBlockPacket(const BYTE* pucData, UINT uSize)
 			uint32 lenWritten = reqfile->WriteToBuffer(uSize, pucData, nStartPos, nEndPos, cur_block->block, this);
 			if (lenWritten > 0)
 			{
-				m_nTransferedDown += lenWritten;
+				m_nTransferredDown += uSize;
 				SetTransferredDownMini();
 
 				if (nEndPos >= cur_block->block->EndOffset)
@@ -411,7 +411,7 @@ void CUpDownClient::ProcessHttpBlockPacket(const BYTE* pucData, UINT uSize)
 					{
 						if (thePrefs.GetDebugClientTCPLevel() > 0)
 							DebugSend("More block requests", this);
-						m_nUrlStartPos = -1;
+						m_nUrlStartPos = (UINT)-1;
 						SendHttpBlockRequests();
 					}
 				}

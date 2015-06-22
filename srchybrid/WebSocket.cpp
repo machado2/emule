@@ -7,9 +7,9 @@
 #include "StringConversion.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -232,12 +232,8 @@ void CWebSocket::SendContent(LPCSTR szStdResponse, const void* pContent, DWORD d
 
 void CWebSocket::SendContent(LPCSTR szStdResponse, const CString& rstr)
 {
-#ifdef _UNICODE
 	CStringA strA(wc2utf8(rstr));
 	SendContent(szStdResponse, strA, strA.GetLength());
-#else
-	SendContent(szStdResponse, rstr, rstr.GetLength());
-#endif
 }
 
 void CWebSocket::Disconnect()

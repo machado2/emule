@@ -1463,8 +1463,8 @@ BEGIN
     IDS_META_DATA           "Meta Data"
     IDS_TIMEBEFORE          "(%s siden)"
     IDS_FD_TIMEDATE         "Datoer"
-    IDS_FILEINFORMATION     "FilInformation"
-    IDS_STATS_FREESPACE     "Fri plads på Temp drevet: "
+    IDS_FILEINFORMATION     "Fil Information"
+    IDS_STATS_FREESPACE     "Fri Plads"
     IDS_IRC_HELPCHANNEL     "Forbind til hjælpekanalerne."
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-danish"
     IDS_IRC_ACCEPTLINKSFRIENDS "Kun fra venner."
@@ -1557,10 +1557,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "Node Opslag (%i:%i)"
-    IDS_KAD_STOREFILE       "Gem fil (%i:%i)"
-    IDS_KAD_STOREKW         "Gem Nøgleord (%i:%i)"
-    IDS_KAD_UNKNOWN         "Ukendt (%i:%i)"
+    IDS_KAD_NODE            "Node Opslag"
+    IDS_KAD_STOREFILE       "Gem fil"
+    IDS_KAD_STOREKW         "Gem Nøgleord"
+    IDS_KAD_UNKNOWN         "Ukendt"
     IDS_SRV_TCPCOMPR        "TCP kompression"
     IDS_KADSEARCHLAB        "Nuværende Søgninger"
     IDS_SRV_UDPSR           "Udvidet UDP protokol for kilde anmodninger"
@@ -1612,8 +1612,8 @@ BEGIN
     IDS_KADDISTANCE         "Distance"
     IDS_KEY                 "Nøgle"
     IDS_NUMBER              "Nummer"
-    IDS_KAD_SEARCHSRC       "Søgnings-kilder (%i:%i)"
-    IDS_KAD_SEARCHKW        "Søgnings-nøgleord (%i:%i)"
+    IDS_KAD_SEARCHSRC       "Søgnings-kilder"
+    IDS_KAD_SEARCHKW        "Søgnings-nøgleord"
 END
 
 STRINGTABLE 
@@ -1688,7 +1688,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_IMP_ERR_BADFORMAT   "Ukendt eller forkert fil format."
-    IDS_SEARCH_INVALIDCHAR  "Søgeudtryk indeholder invalide karakterer. Du har enten indtastet e '?' karakter eller karakterer som ikke kan bruges i eD2K netwærket."
+    IDS_SEARCH_INVALIDCHAR  "Søgeudtryk indeholder invalide karakterer. Du har enten indtastet e '?' karakter eller karakterer som ikke kan bruges i dette netwærk."
     IDS_PORTSCON            "Prote og Forbindelse"
     IDS_PORTINFO            "eMule bruger to porte til kommunikation med servere og klienter. Disse porte skal være frie og tilgængelige for andre klienter. TCP porten skal være tilgængelig for at sikre den primære funktionalitet i eMule. UDP porten bruges til Kad (serverfrie netværk) og for at mindske netwærk brug (Overhead).\n\nDu kan ændre portene her mens ingen netwærkaktiviteter er påbegyndt."
     IDS_STARTTEST           "Test porte"
@@ -1784,7 +1784,7 @@ BEGIN
     IDS_LD_EMULEHASH        "Tilføj eMule AICH Hash til advanceret korruption behandling"
     IDS_LD_ADVANCEDOPT      "Advanceret Indstillinger"
     IDS_LD_ADDHTML          "Tilføj HTML-Tags"
-    IDS_LD_ADDHASHSET       "Tilføj Komplet hashset"
+    IDS_LD_ADDHASHSET       "Tilføj Komplet Hashset"
     IDS_FILELINK            "Fil Link"
     IDS_PF_ADVANCEDCALC     "Brug advanceret udregningsmetode for tilbageværende tid"
     IDS_DL_SHOWED2KLINK     "Vis eD2K Link..."
@@ -1809,6 +1809,36 @@ BEGIN
     IDS_SELSKINPROFILEDIR   "Vælg skin profil mappe"
     IDS_ASKDLINCOMPLETE     "Mulig ufuldstændig fil:\r\n\r\n%s\r\n\r\nDenne fil formodes at være ufuldstændig på netwærket og kan derfor sandsynligvis ikke downloades succuesfuldt! Ønsker du virkeligt at downloade denne fil?"
     IDS_DEADSOURCES         "Døde Kilder"
+    IDS_LARGEICONS          "Store Ikoner"
+    IDS_SMALLICONS          "Små Ikoner"
+    IDS_SHORTTAGS           "Korte Tags"
+    IDS_THELOAD             "Indlæs"
+    IDS_PACKSENT            "Pakker Sendt"
+    IDS_RESPONSES           "Svar"
+    IDS_EXTRACT_META_DATA   "Udtræk meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (for alle andre lyd/video filer)"
+    IDS_META_DATA_ID3LIB    "ID3 Bibliotek (kun for MPEG lyd filer)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Common Controls library (COMCTL32.DLL) er for gammel!\r\n\r\neMule har opdaget en version af ""Windows Common Controls library (COMCTL32.DLL)"", der er for gammel til at blive brugt korrekt af eMule. For at sikre fuld og fejlfri funktionalitet af eMule anbefaler vi kraftigt at updatere ""Windows Common Controls library (COMCTL32.DLL)"" til seneste version 5.8.\r\n\r\nDownload og installér en opdatering af ""Windows Common Controls library (COMCTL32.DLL)"" fra Microsoft (R) Download Center. Ønsker du at besøge den den tilsvarende URL?"
+    IDS_ASREGEXPR           "Som Regulært Udtryk"
+    IDS_STATIC_REGEXP       "Regulært udtryk for synsfilter:"
+    IDS_CARE4ALL            "Evaluer Alle Filer"
+    IDS_REGEXPRESSION       "Regulært Udtryk"
+    IDS_SEARCHKAD           "Søg Kad"
+    IDS_DWL_IPFILTERFILE    "Downloader IP filter fil"
+    IDS_DWLIPFILTERFAILED   "IP filter download mislykkedes"
+    IDS_FINDBUDDY           "Find Ven"
+    IDS_ERR_IPFILTERZIPEXTR "Mislykkedes at udtrække IP filter fil fra downloadede IP filter ZIP fil ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Downloadede IP filter fil ""%s"" er en ZIP fil med udventet indhold."
+    IDS_STORENOTES          "Gem Noter"
+    IDS_NOTES               "Noter"
+    IDS_KADSEARCHALREADY    "En anden søgning er allerede undervejs. Prøv venligtst igen senere!"
+
 END
 
 #endif    // Danish resources

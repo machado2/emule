@@ -256,7 +256,7 @@ BEGIN
     IDS_ERR_BADSERVERLISTRECEIVED "잘못된 서버목록 패킷 수신"
     IDS_STATUS              "상태"
     IDS_DL_REMAINS          "남은 양"
-    IDS_UPDATEFROM          "Update from URL: (filter.dat- or PeerGuardian-format)"
+    IDS_UPDATEFROM          "갱신 URL: (filter.dat- 또는 PeerGuardian-형식)"
     IDS_QL_USERNAME         "사용자명"
     IDS_ERR_PACKAGEHANDLING "서버 (%s)에서 수신한 패킷을 처리하던 중 알 수 없는 오류 발생"
     IDS_QL_RATING           "등급"
@@ -333,7 +333,7 @@ BEGIN
     IDS_STATS_TOTAL         "합계: %i"
     IDS_STATS_WORKING       "정상: %i"
     IDS_STATS_DEAD          "죽음/삭제됨: %i"
-    IDS_DISABLED            "막힘"
+    IDS_DISABLED            "닫힘"
     IDS_STOPPED             "정지됨"
     IDS_STATS_UPDATELABEL   "갱신 주기: %i 초"
     IDS_QUEUECOUNT          "%u (%u 금지됨)"
@@ -395,7 +395,7 @@ BEGIN
     IDS_SKIN_PROF           "스킨 프로파일"
     IDS_ERR_PART_FNF        ".part 파일을 찾을 수 없음"
     IDS_ERR_OPENMETFILE     "part.met 파일을 열 수 없음"
-    IDS_KADOPEN             "열기"
+    IDS_KADOPEN             "열림"
     IDS_ERR_SAVEMET         "part 파일 저장 중 오류: %s (%s)"
     IDS_ERR_FOUNDCORRUPTION "깨진 part 발견 (%i) in %s"
     IDS_HASHINGDONE         "%s 파일의 재 해시를 끝냈고, 파일은 이상이 없어 보입니다"
@@ -1358,7 +1358,7 @@ BEGIN
     IDS_ERR_BADUNC          "잘못 된 UNC 이름"
     IDS_NEVER               "사용 안함"
     IDS_ALWAYS              "항상"
-    IDS_ONSHUTDOWN          "끌 때"
+    IDS_ONSHUTDOWN          "끝낼 때"
     IDS_UNCFOLDERS          "UNC 폴더"
     IDS_USESECIDENT         "보안 ID 사용"
     IDS_ADVSPAMFILTER       "고급 스팸 필터"
@@ -1438,7 +1438,7 @@ BEGIN
     IDS_TIMEBEFORE          "(%s일 전)"
     IDS_FD_TIMEDATE         "날짜"
     IDS_FILEINFORMATION     "파일 정보"
-    IDS_STATS_FREESPACE     "임시 드라이브에 남은 공간: "
+    IDS_STATS_FREESPACE     "Free Space"
     IDS_IRC_HELPCHANNEL     "도움 채널로 연결."
     IDS_IRC_HELPCHANNELPERFORM "/join #emule"
     IDS_IRC_ACCEPTLINKSFRIENDS "친구에게만."
@@ -1524,14 +1524,16 @@ BEGIN
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "%s에서 선택한 언어 DLL을 다운로드하고 설치하는데 실패했습니다!"
     IDS_ERR_BADFOLDER       "잘못된 폴더.\n폴더를 생성할 수 없습니다. 이름과 위치를 확인해 주십시요."
+    IDS_AUTOREMOVEFD        "완료된 파일을 목록에서 자동 제거"
+    IDS_MM_BLOCK            "MobileMule에 로그인 3회 실패가 기록됨 - 10분 동안 더 이상의 시도는 금지됩니다!"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "노드 찾기 (%i)"
-    IDS_KAD_STOREFILE       "파일 저장 (%i:%i)"
-    IDS_KAD_STOREKW         "키워드 저장 (%i:%i)"
-    IDS_KAD_UNKNOWN         "모름 (%i)"
+    IDS_KAD_NODE            "노드 찾기"
+    IDS_KAD_STOREFILE       "파일 저장"
+    IDS_KAD_STOREKW         "키워드 저장"
+    IDS_KAD_UNKNOWN         "모름"
     IDS_SRV_TCPCOMPR        "TCP 압축"
     IDS_KADSEARCHLAB        "현재 검색"
     IDS_SRV_UDPSR           "소스 요청을 위한 확장 UDP 프로토콜"
@@ -1563,12 +1565,15 @@ BEGIN
     IDS_KADDISTANCE         "거리"
     IDS_KEY                 "키"
     IDS_NUMBER              "번호"
-    IDS_KAD_SEARCHSRC       "소스 검색 (%i)"
-    IDS_KAD_SEARCHKW        "키워드 검색 (%i)"
+    IDS_KAD_SEARCHSRC       "소스 검색"
+    IDS_KAD_SEARCHKW        "키워드 검색"
 END
 
 STRINGTABLE 
 BEGIN
+    IDS_MM_NEWUSER          "새로운 사용자가 MobileMule 서버에 로그인 했습니다"
+    IDS_RADCLIENTS          "알려진 클라이언트 사용"
+    IDS_KADUDPPORTERR       "Kad의 UDP 포트가 eMule의 확장 UDP 포트나 eMule의 서버 UDP 포트와 충돌합니다. 포트가 %u 로 변경되업습니다."
     IDS_CONFIRM_FILEDELETE  "선택한 모든 파일을 디스크에서 지우시겠습니까?"
     IDS_OPENFOLDER          "폴더 열기"
     IDS_RUNASUSER           "eMule을 제한된 사용자 계정으로 실행"
@@ -1591,8 +1596,8 @@ BEGIN
     IDS_LOG_FILE_SAVING     "파일 저장 행위 기록"
     IDS_IPFILTERFILES       "모든 IP 필터 파일 (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP 필터 파일 (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian 파일 (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|텍스트 파일 (*.txt)|*.txt|모든 파일 (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "정말로 선택된 IP 필터를 삭제하겠습니까?"
-    IDS_TOTAL_IPFILTER_LABEL "모든 IP 필터:"
-    IDS_TOTAL_IPS_LABEL     "모든 IP:"
+    IDS_TOTAL_IPFILTER_LABEL "총 IP 필터 개수:"
+    IDS_TOTAL_IPS_LABEL     "총 IP 개수:"
     IDS_RAU_WARNING         "이 설정은 eMule을 각종 공격으로부터 더 안전하게 해 줍니다. 이 옵션의 사용은 권장되지만, 꼭 미리 메뉴얼을 읽어 주시기 바랍니다. eMule을 재시작해야 설정이 적용됩니다."
     IDS_APPEND              "추가..."
     IDS_SAVE                "저장"
@@ -1774,23 +1779,53 @@ BEGIN
     IDS_AICH_CALCFILE       "%s 파일의 AICH 해시 계산 중"
     IDS_AICH_WARNUSER       "eMule 0.44a 버전 부터는 깨짐이 발견될 때 데이터 손실을 크게 줄일 수 있는 추가적인 파일 해시를 사용하고 있습니다. 지금 이전 버전에서 업데이트 하려고 하고 있으므로, eMule은 새로운 해시 계산을 위해 모든 공유된 파일을 다시 해시 해야 합니다. 작업은 시간이 좀 걸리나 한번만 해 주시면 됩니다.  "
     IDS_AICH_WORKED         "AICH가 part를 성공적으로 복구했습니다 (%s of %s, part %u, 파일 %s)"
-    IDS_TRICKLING           "Standby"
-    IDS_SOURCECLIENT        "Source Client"
-    IDS_USERSIP             "Users IP"
-    IDS_FEATURES            "Features"
-    IDS_IRC_NEWNICK         "Select a IRC nick."
-    IDS_IRC_NEWNICKDESC     "Should be one word less then 20 characters containing (A-Z, 0-9). It can be changed again in Preferences->Irc."
+    IDS_TRICKLING           "대기"
+    IDS_SOURCECLIENT        "소스 클라이언트"
+    IDS_USERSIP             "사용자 IP"
+    IDS_FEATURES            "기능"
+    IDS_IRC_NEWNICK         "IRC 닉네임 선택."
+    IDS_IRC_NEWNICKDESC     "20자 이내의 (A-Z, 0-9)만을 포함한 한 단어여야 합니다. 설정->IRC 에서 변경할 수 있습니다."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_SPARSEPARTFILES     "Create new part files as 'sparse' (NTFS only)"
-    IDS_ASPECTRATIO         "Aspect Ratio"
-    IDS_NEGATEFILTER        "negate filter"
-    IDS_SEENCOMPL           "Ever seen complete"
-    IDS_SELSKINPROFILEDIR   "Select skin profile directory"
-    IDS_ASKDLINCOMPLETE     "Potentially incomplete file:\r\n\r\n%s\r\n\r\nThis file is supposed to be incomplete in the network and can therefore most likely not downloaded successfully! Do you really want to download this file?"
-    IDS_DEADSOURCES         "Dead Sources"
+    IDS_SPARSEPARTFILES     "새 part 파일을 'sparse'로 생성 (NFTS에서만 가능)"
+    IDS_ASPECTRATIO         "화면 비율"
+    IDS_NEGATEFILTER        "반대 필터"
+    IDS_SEENCOMPL           "완전한 파일 발견"
+    IDS_SELSKINPROFILEDIR   "스킨 프로파일 디렉토리 선택"
+    IDS_ASKDLINCOMPLETE     "완전하지 않을 가능성이 높은 파일:\r\n\r\n%s\r\n\r\n이 파일은 네트워크에서 불완전하므로 성공적으로 다운로드 하지 못할 가능성이 아주 높습니다. 정말로 이 파일을 다운로드 하겠습니까?"
+    IDS_DEADSOURCES         "죽은 소스"
+    IDS_LARGEICONS          "Large Icons"
+    IDS_SMALLICONS          "Small Icons"
+    IDS_SHORTTAGS           "Short tags"
+    IDS_THELOAD             "Load"
+    IDS_PACKSENT            "Packets Sent"
+    IDS_RESPONSES           "Responses"
+    IDS_EXTRACT_META_DATA   "Extract meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (for all other audio/video files)"
+    IDS_META_DATA_ID3LIB    "ID3 Library (only for MPEG audio files)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Common Controls library (COMCTL32.DLL) is too old!\r\n\r\neMule detected a version of the ""Windows Common Controls library (COMCTL32.DLL)"" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the ""Windows Common Controls library (COMCTL32.DLL)"" to at least version 5.8.\r\n\r\nDownload and install an update of the ""Windows Common Controls library (COMCTL32.DLL)"" at Microsoft (R) Download Center. Do you want to visit the corresponding URL?"
+    IDS_ASREGEXPR           "As Regular Expression"
+    IDS_STATIC_REGEXP       "Regular expression for view filter:"
+    IDS_CARE4ALL            "Evaluate All Files"
+    IDS_REGEXPRESSION       "Regular Expression"
+    IDS_SEARCHKAD           "Search Kad"
+    IDS_DWL_IPFILTERFILE    "Downloading IP filter file"
+    IDS_DWLIPFILTERFAILED   "IP filter download failed"
+    IDS_FINDBUDDY           "Find Buddy"
+    IDS_ERR_IPFILTERZIPEXTR "Failed to extract IP filter file from downloaded IP filter ZIP file ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Downloaded IP filter file ""%s"" is a ZIP file with unexpected content."
+    IDS_STORENOTES          "Store Notes"
+    IDS_NOTES               "Notes"
+    IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
+
 END
 
 #endif    // Korean resources

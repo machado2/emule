@@ -2,8 +2,129 @@
 	http://emule-project.net
 	========================
 
+v0.45b
+----------------------
+- Feb, 10rd 2005     -
+----------------------
+.: Fixed a bug related to the new kad-filecomments which would cause eMule to freeze [thx gcostanza]
+.: Fixed a bug related to the udp-server protocol which could emule let drop packets or if malicious crafted freeze [kry]
+.: The downloadwindow now remembers the 4 last sort orders and uses them as secondary sort orders
+.: A displaybug in the uploadwindow has been fixed
+.: A problem which caused eMule to call the onlinehelp even if an appropriate helpfile was available has been fixed[cml]
+Ornis: Fixed lowercased path entries in the shared files list
+Ornis: Fixed issue with autoresum after file completion
+Ornis: Fixed secure identitfication statistics with a >100% entry
+
+
+eMule 0.45a
+----------------------
+- Jan, 25rd 2005     -
+----------------------
+Ornis: little updates in the web interface to category items, remember last used category in session, display first results on new search)
+Ornis: statistic graphs: added vertical marker for every hour and enlarged statistic update delay [CB mod]
+Ornis: added command line argument to reload ipfilter: "emule.exe reloadipf"
+Unk: Corrected a issue where the keyword or source index was not restored.
+.: Fixed bug with wrong user-id/IP for http sources [thx SiRoB]
 
 ----------------------
+- Jan, 23rd 2005     -
+----------------------
+Unk: Fix a possible situation that may cause kad to not store sources.
+Unk: Removed some unneeded parameters in the search class.
+Unk: Added "Notes" for kad. Currently used to store file comments.. (Will not work until a majority of users upgrade.)
+Unk: The time between Kad file source reasks slowly adjusts over time to ease up on overhead and redundant results. (Let the source exchange do it's job..)
+
+----------------------
+- Jan, 17th 2005     -
+----------------------
+Unk: Some general cleanup in some code when Kad thread was integrated to the main thread.
+Unk: Fixed Download List sort bug where sources could be displayed with the wrong file. (Fix by KinkyJohn)
+Ornis: category view filters more flexible
+Ornis: categories can be filtered by regular expressions on the filenames (as view filter)
+Ornis: middle mouse click closes tabs (messagewnd, irc, search results)
+Ornis: coloring of search results customizable via skin
+
+----------------------
+- Jan, 16th 2005     -
+----------------------
+Unk: The AddOnNextConnect flag we gave to lowID users that missed their uploadslot still didn't work well as the user had to reconnect within a specific window.
+- Now that flaged user can reconnect anytime that doesn't violate the protocol and get the upload slot.
+- Only one user can have that slot at any given time to avoid the uploadlist from getting out of hand just in case more then one lowID user got flaged.
+- Once a user is removed from the upload list, this slot is available again.
+Unk: Relaxed the conditions for users to enter the upload queue of a lowID client.
+- We still monitor for users on the upload list that try to get around the lowID callback limits through servers.
+- We do not monitor Kad users on the upload list as the callbacks are all currently valid.
+Ornis: automatic category assignment can now also be done by regular expression rules
+.:	  Navigation in the file detail- and client detail dialog:  up/down buttons allow scrolling through the items within the current list
+
+----------------------
+- Jan, 14th 2005     -
+----------------------
+.: Fixed bug with Unicode passwords in Web-interface and MobileMule-interface. Note: Your need to specify new passwords for those interfaces.
+
+----------------------
+- Jan, 9th 2005      -
+----------------------
+.: Added new setting in preferences.ini (Section=[eMule], Keyword=PreviewOnIconDblClk, Value=1) to invoke preview command when double clicking on file icon in download list. This setting is used only if "Downloadlist doubleclick to expand" (in Options/Display) is disabled.
+Unk: We now use load balancing on publishes. If we publish a keyword to a section of network that has a high load, we increase delay for the next republish time. These times are also carried between restarts of the client.
+Unk: Reworked the loop that rechecks what keywords to publish to reduce cpu load.
+
+----------------------
+- Dec, 31th 2004     -
+----------------------
+bluecow: Changed: Amount of uploaded/downloaded data to/from a client shows the raw (compressed) data size (which is also used for credits).
+bluecow: Fixed sorting bug in upload list control.
+bluecow: Changed: Maximum supported file size is 4290048000 bytes.
+
+----------------------
+- Dec, 30th 2004     -
+----------------------
+bluecow: Fixed bug in client statistics for banned and IP-filtered clients.
+bluecow: Fixed crash with sending a message to an new added friend [thx Libbnor]
+bluecow: Fixed bug with wrong hashset creation in case file could not successfully read (may indeed happen with NTFS compressed files with very high compression!?)
+bluecow: Fixed bug with files of too large size when added via search results.
+
+----------------------
+- Dec, 29th 2004     -
+----------------------
+bluecow: Added 'Extract Meta Data' setting to enhanced options dialog.
+Unk: Fixed a bug in SMIRC if CHANMODES was missing from the welcome message.
+
+----------------------
+- Dec, 27th 2004     -
+----------------------
+Unk: Ping/Pong system added for buddies to prevent stalled buddy connections.
+Unk: Fixed a couple bugs in the hello packets for buddy information.
+- If your firewalled and you have sources that are also in your queue, they will be able to more easily follow you if you change buddies.
+- Only firewalled users with a buddy will send the buddy info to lower overhead.
+
+----------------------
+- Dec, 26th 2004     -
+----------------------
+bluecow: Added default creation of 'skins' subdirectory in eMule application folder which will be used as default directory for eMule Skins and Toolbar bitmaps.
+Ornis:   -added language Breton - translated by KAD-Korvigelloù an Drouizig
+		 -enabled Japanese translation, which was updated by DukeDog
+
+----------------------
+- Dec, 24th 2004     -
+----------------------
+bluecow: Added Windows Internet Security Manager for external loaded HTML files.
+- Internet Security Zone policies are taken from Windows Internet Settings System Applet (same settings as used by Internet Explorer).
+- Default Internet Security Zone used by eMule is set to highest level: "Untrusted Zone"
+- Internet Security Zone can be changed in preferences.ini file: Section=[eMule], Keyword=InternetSecurityZone, Values=Untrusted|Internet|Intranet|Trusted|LocalMachine
+bluecow: Added sorting of context menu entries for toolbar bitmaps and skin profiles.
+bluecow: Shared files which have a user comment and/or user rating attached are displayed with a small additional overlay icon in Shared Files window.
+bluecow: Added icons for network share information column in Shared Files window.
+bluecow: Fixed some GUI glitches [thx apph]
+bluecow: Fixed some bugs with statistics colors in Options/Statistics page.
+bluecow: Added some double-click shortcuts:
+- Server window: Double-click on Server list icon opens Options/Server page.
+- Shared Files window: Double-click on Shared Files list icon opens Options/Directories page.
+- Messages window: Double-click on Friends list icon opens Options/Files page.
+- Statistics window: Double-click on any graph opens Options/Statistics page.
+
+----------------------
+<<<<<<< changelog.txt
 - Nov, 14st 2004      -
 ----------------------
 .: Icons in contextmenus have been disabled for Win98/ME due to reported problems
@@ -12,9 +133,98 @@
 
 ----------------------
 - Nov, 8st 2004      -
+=======
+- Dec, 22th 2004     -
+----------------------
+bluecow: Fixed bug with status.log file which truncated filenames to 50 chars.
+
+----------------------
+- Dec, 21st 2004     -
+----------------------
+zz: Improvements to download throttler to lower amount of timed out/failed download sessions.
+
+----------------------
+- Dec, 19th 2004     -
+----------------------
+bluecow: Fixed Unicode bug with ed2k links added via web interface.
+bluecow: Fixed bug with file priority in web interface [thx CML]
+bluecow: Added Unicode search parameter to web interface [thx CML]
+bluecow: Local hostname (if specified in ext. settings) is used for web interface URL shown in MyInfo.
+Unk: Force a node lookup when it appears Kad may be disconnected to verify if we are really disconnected.
+Unk: Firewalled Kad users will instantly look for a new buddy when it loses it's current buddy instead of waiting for next firewall check.
+Unk: Firewalled users will republish it's sources if they changed buddies.
+Unk: If something happens and a Kad Buddy lookup fails, it will continue to retry the lookup until successful.
+
+----------------------
+- Dec, 13th 2004     -
+----------------------
+Unk: Changed the Kad search list to show info clearer and to add the Node Load column.
+Unk: Fixed a bug that could access a NULL kad buddy pointer.
+bluecow: Fixed crash with system tray context menu, opened preferences dialog and restored main window.
+bluecow: Fixed bug: Shared directory names with Unicode characters were ignored at startup.
+bluecow: File format of "shareddir.dat" and "adresses.dat" changed to Unicode. Old (ANSI) files are read and converted to Unicode automatically at startup. Previous (ANSI) eMule versions can not read those files any longer.
+Unk: Fixed a bug that prevented lowID clients from publishing as a source into the Kad network.
+
+----------------------
+- Dec, 12th 2004     -
+----------------------
+bluecow: Added startup check for proper version of COMCTL32.DLL.
+bluecow: Merged debug dump build into release build. To enable crash dump generation, specify "CreateCrashDump=1" in "eMule" section of preferences.ini file.
+
+----------------------
+- Dec, 9th 2004      -
+----------------------
+bluecow: All packets received from eD2K servers can contain Unicode strings. (Server admins can announce their server's description in Unicode).
+bluecow: Added new Mini eMule window with basic stats and functions. Single click in eMule System Tray icon to open it.
+- Mini eMule window can be customized with HTML template (see Template.eMuleSkin.ini for details).
+- Mini eMule window can be disabled with following setting in preferences.ini file (section "[eMule]") setting: "MiniMule=0". (read only on startup)
+- Mini eMule window can be customized with following settings in preferences.ini file (section "[eMule]"). Those settings can be modified during eMule is running (no need to restart).
+-      Setting: "MiniMuleAutoClose=1" Mini eMule window will automatically close itself if mouse cursor is not located within the window (similar to a tooltip).
+-      Setting: "MiniMuleTransparency=<0-100>" Transparency (in percent) of Mini eMule window.
+
+----------------------
+- Dec, 4th 2004      -
+----------------------
+bluecow: Reworked 'Startup Minimized' and main window restoring after startup to avoid some window redrawing problems.
+
+----------------------
+- Nov, 21th 2004     -
+----------------------
+bluecow: Fixed sorting bug in download list with "Time Remaining".
+
+----------------------
+- Nov, 17th 2004     -
+----------------------
+bluecow: Reworked eMule Main toolbar:
+- Added chevron support: If toolbar is too small to display all buttons a chevron (">>" icon) is shown at the very right side which opens a menu with the remaining button commands.
+- Tooltips are shown for truncated button titles and in "No Labels" mode of toolbar.
+- Buttons can be moved and/or removed from the toolbar by holding down Ctrl+Alt key while draging a button with the mouse.
+- Buttons can be set to large or small.
+- Button sizes more similar to Windows Explorer.
+- All new toolbar features can be disabled with "ReBarToolbar=0" setting in preferences.ini.
+- Toolbar background can be customized with skin profile (see Template.eMuleSkin.ini file)
+bluecow: Fixed bug with vertical oriented fonts in Statistics window.
+
+----------------------
+- Nov, 16th 2004     -
+----------------------
+bluecow: Preferences.ini setting ShowCopyEd2kLinkCmd=1 replaces "Show eD2K Links" command with "Copy eD2K Links"
+bluecow: Fixed GUI glitches with context menus in Log-, Message- and IRC panes.
+
+----------------------
+- Nov, 14th 2004     -
+----------------------
+bluecow: Searching in eD2K and Kad is now defaulted to use Unicode search expressions.
+bluecow: File comments dialog in Shared Files window can be invoked for multiple files.
+bluecow: Fixed not working buttons in Message window.
+
+
+v0.44c
+----------------------
+- Nov, 8th 2004      -
+>>>>>>> 1.473
 ----------------------
 .: eMule is now able to detect which clients sent corrupt data and bans those if a threshold is reached (based on AICH)
-
 
 ----------------------
 - Nov, 1st 2004      -

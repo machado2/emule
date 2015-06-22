@@ -20,10 +20,11 @@
 #include "OtherFunctions.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
+
 
 // define mask color
 #define MASK_RGB	(COLORREF)0xFFFFFF
@@ -432,31 +433,41 @@ void CCreditsThread::InitText()
 
 	m_arCredits.Add(_T("03:00:eMule"));
 	sTmp.Format(_T("02:01:Version %s"),theApp.m_strCurVersionLong);
-#ifdef _UNICODE
-	sTmp += _T(" Unicode");
-#endif
 	m_arCredits.Add(sTmp);
-	m_arCredits.Add(_T("01:06:Copyright (C) 2002-2004 Merkur"));
+	m_arCredits.Add(_T("01:06:Copyright (C) 2002-2005 Merkur"));
 	m_arCredits.Add(_T("S:50"));
 	m_arCredits.Add(_T("02:04:Developers"));
 	m_arCredits.Add(_T("S:5"));
 	m_arCredits.Add(_T("01:06:Unknown1"));
 	m_arCredits.Add(_T("S:5"));
 	m_arCredits.Add(_T("01:06:Ornis"));
-	m_arCredits.Add(_T("S:5"));
-	m_arCredits.Add(_T("01:06:Bluecow"));
 
 	m_arCredits.Add(_T("S:50"));
 
 	m_arCredits.Add(_T("02:04:Tester"));
 	m_arCredits.Add(_T("S:5"));
-	m_arCredits.Add(_T("01:06:Sony666"));
-	m_arCredits.Add(_T("S:5"));
 	m_arCredits.Add(_T("01:06:Monk"));
 	m_arCredits.Add(_T("S:5"));
-	m_arCredits.Add(_T("01:06:Myxin"));
+	m_arCredits.Add(_T("01:06:Daan"));
 	m_arCredits.Add(_T("S:5"));
-	
+	m_arCredits.Add(_T("01:06:Elandal"));
+	m_arCredits.Add(_T("S:5"));
+	m_arCredits.Add(_T("01:06:Frozen_North"));
+	m_arCredits.Add(_T("S:5"));
+	m_arCredits.Add(_T("01:06:kayfam"));
+	m_arCredits.Add(_T("S:5"));
+	m_arCredits.Add(_T("01:06:Khandurian"));
+	m_arCredits.Add(_T("S:5"));
+	m_arCredits.Add(_T("01:06:Masta2002"));
+	m_arCredits.Add(_T("S:5"));
+	m_arCredits.Add(_T("01:06:mrLabr"));
+	m_arCredits.Add(_T("S:5"));
+	m_arCredits.Add(_T("01:06:Nesi-San"));
+	m_arCredits.Add(_T("S:5"));
+	m_arCredits.Add(_T("01:06:SeveredCross"));
+	m_arCredits.Add(_T("S:5"));
+	m_arCredits.Add(_T("01:06:Skynetman"));
+
 
 	m_arCredits.Add(_T("S:50"));
 	m_arCredits.Add(_T("02:04:Retired Members"));
@@ -472,7 +483,6 @@ void CCreditsThread::InitText()
 	m_arCredits.Add(_T("01:06:Barry"));
 	m_arCredits.Add(_T("S:5"));
 	m_arCredits.Add(_T("01:06:Dirus"));
-	m_arCredits.Add(_T("S:5"));
 	
 
 	m_arCredits.Add(_T("S:50"));
@@ -500,6 +510,8 @@ void CCreditsThread::InitText()
 	m_arCredits.Add(_T("02:07:people for translating eMule"));
 	m_arCredits.Add(_T("02:07:into different languages:"));
 	m_arCredits.Add(_T("S:20"));
+	m_arCredits.Add(_T("01:06:Breton: KAD-Korvigelloù an Drouizig"));
+	m_arCredits.Add(_T("S:05"));	
 	m_arCredits.Add(_T("01:06:Bulgarian: DapKo"));
 	m_arCredits.Add(_T("S:05"));	
 	m_arCredits.Add(_T("01:06:Catalan: LeChuck"));
@@ -526,7 +538,7 @@ void CCreditsThread::InitText()
 	m_arCredits.Add(_T("S:05"));
 	m_arCredits.Add(_T("01:06:Italian: Trevi, FrankyFive"));
 	m_arCredits.Add(_T("S:05"));
-	m_arCredits.Add(_T("01:06:Japanese: Shinro T."));
+	m_arCredits.Add(_T("01:06:Japanese: DukeDog, Shinro T."));
 	m_arCredits.Add(_T("S:05"));
 	m_arCredits.Add(_T("01:06:Hebrew: Avi-3k"));
 	m_arCredits.Add(_T("S:05"));

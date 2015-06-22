@@ -82,7 +82,7 @@ protected:
 	int GetTabUnderMouse(CPoint* point);
 	int GetItemUnderMouse(CListCtrl* ctrl);
 	CString GetCatTitle(int catid);
-	int AddCategorie(CString newtitle,CString newincoming,CString newcomment,CString newautocat,bool addTab=true);
+	int AddCategory(CString newtitle,CString newincoming,CString newcomment,CString newautocat,bool addTab=true);
 	void EditCatTabLabel(int index,CString newlabel);
 	void EditCatTabLabel(int index);
 

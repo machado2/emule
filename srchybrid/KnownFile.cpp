@@ -39,6 +39,7 @@
 #include "PartFile.h"
 #include "Packets.h"
 #include "Kademlia/Kademlia/SearchManager.h"
+#include "Kademlia/Kademlia/Entry.h"
 #include "SafeFile.h"
 #include "shahashset.h"
 #include "Log.h"
@@ -58,6 +59,17 @@ _DEFINE_GUID(MEDIATYPE_Video, 0x73646976, 0x0000, 0x0010, 0x80, 0x00, 0x00, 0xaa
 _DEFINE_GUID(MEDIATYPE_Audio, 0x73647561, 0x0000, 0x0010, 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71);
 _DEFINE_GUID(FORMAT_VideoInfo,0x05589f80, 0xc356, 0x11ce, 0xbf, 0x01, 0x00, 0xaa, 0x00, 0x55, 0x59, 0x5a);
 _DEFINE_GUID(FORMAT_WaveFormatEx,0x05589f81, 0xc356, 0x11ce, 0xbf, 0x01, 0x00, 0xaa, 0x00, 0x55, 0x59, 0x5a);
+#define MMNODRV			// mmsystem: Installable driver support
+#define MMNOSOUND		// mmsystem: Sound support
+//#define MMNOWAVE		// mmsystem: Waveform support
+#define MMNOMIDI		// mmsystem: MIDI support
+#define MMNOAUX			// mmsystem: Auxiliary audio support
+#define MMNOMIXER		// mmsystem: Mixer support
+#define MMNOTIMER		// mmsystem: Timer support
+#define MMNOJOY			// mmsystem: Joystick support
+#define MMNOMCI			// mmsystem: MCI support
+#define MMNOMMIO		// mmsystem: Multimedia file I/O support
+#define MMNOMMSYSTEM	// mmsystem: General MMSYSTEM functions
 #include <qedit.h>
 typedef struct tagVIDEOINFOHEADER {
     RECT            rcSource;          // The bit we really want to use
@@ -72,9 +84,9 @@ typedef struct tagVIDEOINFOHEADER {
 #include "SharedFilesWnd.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -160,18 +172,26 @@ CKnownFile::CKnownFile()
 	(void)m_strComment;
 	m_PublishedED2K = false;
 	kadFileSearchID = 0;
-	m_PublishedKadSrc = 0;
-	m_lastPublishTimeKadSrc = 0;
+	SetLastPublishTimeKadSrc(0,0);
 	m_nCompleteSourcesTime = time(NULL);
 	m_nCompleteSourcesCount = 1;
 	m_nCompleteSourcesCountLo = 1;
 	m_nCompleteSourcesCountHi = 1;
 	m_uMetaDataVer = 0;
+	m_lastPublishTimeKadSrc = 0;
+	m_lastPublishTimeKadNotes = 0;
+	m_lastBuddyIP = 0;
 	m_pAICHHashSet = new CAICHHashSet(this);
 }
 
 CKnownFile::~CKnownFile()
 {
+	for(POSITION pos = CKadEntryPtrList.GetHeadPosition(); pos != NULL; )
+	{
+		Kademlia::CEntry* entry = CKadEntryPtrList.GetNext(pos);
+		delete entry;
+	}
+
 	for (int i = 0; i < hashlist.GetSize(); i++)
 		delete[] hashlist[i];
 	for (int i = 0; i < taglist.GetSize(); i++)
@@ -205,7 +225,8 @@ void CKnownFile::AssertValid() const
 	CHECK_BOOL(m_PublishedED2K);
 	(void)kadFileSearchID;
 	(void)m_lastPublishTimeKadSrc;
-	(void)m_PublishedKadSrc;
+	(void)m_lastPublishTimeKadNotes;
+	(void)m_lastBuddyIP;
 	(void)wordlist;
 }
 
@@ -438,7 +459,7 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename, LPVOI
 	}
 
 	// set filesize
-	if (_filelengthi64(file->_file)>=4294967296){
+	if (_filelengthi64(file->_file) > MAX_EMULE_FILE_SIZE){
 		fclose(file);
 		return false; // not supported by network
 	}
@@ -453,12 +474,19 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename, LPVOI
 	
 	// create hashset
 	uint32 togo = m_nFileSize;
-	for (uint16 hashcount = 0; togo >= PARTSIZE; ) {
-		uchar* newhash = new uchar[16];
+	for (uint16 hashcount = 0; togo >= PARTSIZE; )
+	{
 		CAICHHashTree* pBlockAICHHashTree = m_pAICHHashSet->m_pHashTree.FindHash(hashcount*PARTSIZE, PARTSIZE);
 		ASSERT( pBlockAICHHashTree != NULL );
-		CreateHash(file, PARTSIZE, newhash, pBlockAICHHashTree);
-		// SLUGFILLER: SafeHash - quick fallback
+
+		uchar* newhash = new uchar[16];
+		if (!CreateHash(file, PARTSIZE, newhash, pBlockAICHHashTree)) {
+			LogError(_T("Failed to hash file \"%s\" - %hs"), strFilePath, strerror(errno));
+			fclose(file);
+			delete[] newhash;
+			return false;
+		}
+
 		if (theApp.emuledlg==NULL || !theApp.emuledlg->IsRunning()){ // in case of shutdown while still hashing
 			fclose(file);
 			delete[] newhash;
@@ -477,8 +505,6 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename, LPVOI
 			VERIFY( PostMessage(theApp.emuledlg->GetSafeHwnd(), TM_FILEOPPROGRESS, uProgress, (LPARAM)pvProgressParam) );
 		}
 	}
-	uchar* lasthash = new uchar[16];
-	md4clr(lasthash);
 
 	CAICHHashTree* pBlockAICHHashTree;
 	if (togo == 0)
@@ -488,24 +514,30 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename, LPVOI
 		ASSERT( pBlockAICHHashTree != NULL );
 	}
 	
-	CreateHash(file, togo, lasthash, pBlockAICHHashTree);	
+	uchar* lasthash = new uchar[16];
+	md4clr(lasthash);
+	if (!CreateHash(file, togo, lasthash, pBlockAICHHashTree)) {
+		LogError(_T("Failed to hash file \"%s\" - %hs"), strFilePath, strerror(errno));
+		fclose(file);
+		delete[] lasthash;
+		return false;
+	}
 	
 	m_pAICHHashSet->ReCalculateHash(false);
-	if ( m_pAICHHashSet->VerifyHashTree(true) ){
+	if (m_pAICHHashSet->VerifyHashTree(true))
+	{
 		m_pAICHHashSet->SetStatus(AICH_HASHSETCOMPLETE);
-		if (!m_pAICHHashSet->SaveHashSet()){
+		if (!m_pAICHHashSet->SaveHashSet())
 			LogError(LOG_STATUSBAR, GetResString(IDS_SAVEACFAILED));
-		}
 	}
 	else{
 		// now something went pretty wrong
 		DebugLogError(LOG_STATUSBAR, _T("Failed to calculate AICH Hashset from file %s"), GetFileName());
 	}
 
-
 	if (!hashcount){
 		md4cpy(m_abyFileHash, lasthash);
-		delete[] lasthash; // i_a: memleak 
+		delete[] lasthash;
 	} 
 	else {
 		hashlist.Add(lasthash);
@@ -555,11 +587,16 @@ bool CKnownFile::CreateAICHHashSetOnly()
 
 	// create aichhashset
 	uint32 togo = m_nFileSize;
-	for (uint16 hashcount = 0; togo >= PARTSIZE; ) {
+	for (uint16 hashcount = 0; togo >= PARTSIZE; )
+	{
 		CAICHHashTree* pBlockAICHHashTree = m_pAICHHashSet->m_pHashTree.FindHash(hashcount*PARTSIZE, PARTSIZE);
 		ASSERT( pBlockAICHHashTree != NULL );
-		CreateHash(file, PARTSIZE, NULL, pBlockAICHHashTree);
-		// SLUGFILLER: SafeHash - quick fallback
+		if (!CreateHash(file, PARTSIZE, NULL, pBlockAICHHashTree)) {
+			LogError(_T("Failed to hash file \"%s\" - %hs"), GetFilePath(), strerror(errno));
+			fclose(file);
+			return false;
+		}
+
 		if (theApp.emuledlg==NULL || !theApp.emuledlg->IsRunning()){ // in case of shutdown while still hashing
 			fclose(file);
 			return false;
@@ -569,26 +606,32 @@ bool CKnownFile::CreateAICHHashSetOnly()
 		hashcount++;
 	}
 
-	if (togo != 0){
+	if (togo != 0)
+	{
 		CAICHHashTree* pBlockAICHHashTree = m_pAICHHashSet->m_pHashTree.FindHash(hashcount*PARTSIZE, togo);
 		ASSERT( pBlockAICHHashTree != NULL );
-		CreateHash(file, togo, NULL, pBlockAICHHashTree);
-	}
-	
-	m_pAICHHashSet->ReCalculateHash(false);
-	if ( m_pAICHHashSet->VerifyHashTree(true) ){
-		m_pAICHHashSet->SetStatus(AICH_HASHSETCOMPLETE);
-		if (!m_pAICHHashSet->SaveHashSet()){
-			LogError(LOG_STATUSBAR, GetResString(IDS_SAVEACFAILED));
+		if (!CreateHash(file, togo, NULL, pBlockAICHHashTree)) {
+			LogError(_T("Failed to hash file \"%s\" - %hs"), GetFilePath(), strerror(errno));
+			fclose(file);
+			return false;
 		}
+	}
+
+	m_pAICHHashSet->ReCalculateHash(false);
+	if (m_pAICHHashSet->VerifyHashTree(true))
+	{
+		m_pAICHHashSet->SetStatus(AICH_HASHSETCOMPLETE);
+		if (!m_pAICHHashSet->SaveHashSet())
+			LogError(LOG_STATUSBAR, GetResString(IDS_SAVEACFAILED));
 	}
 	else{
 		// now something went pretty wrong
 		DebugLogError(LOG_STATUSBAR, _T("Failed to calculate AICH Hashset from file %s"), GetFileName());
 	}
-	
+
 	fclose(file);
 	file = NULL;
+
 	return true;	
 }
 
@@ -779,9 +822,7 @@ bool CKnownFile::LoadTagsFromFile(CFileDataIO* file)
 			case FT_FILENAME:{
 				ASSERT( newtag->IsStr() );
 				if (newtag->IsStr()){
-#ifdef _UNICODE
 					if (GetFileName().IsEmpty())
-#endif
 						SetFileName(newtag->GetStr());
 				}
 				delete newtag;
@@ -799,14 +840,14 @@ bool CKnownFile::LoadTagsFromFile(CFileDataIO* file)
 				delete newtag;
 				break;
 			}
-			case FT_ATTRANSFERED:{
+			case FT_ATTRANSFERRED:{
 				ASSERT( newtag->IsInt() );
 				if (newtag->IsInt())
 					statistic.alltimetransferred = newtag->GetInt();
 				delete newtag;
 				break;
 			}
-			case FT_ATTRANSFEREDHI:{
+			case FT_ATTRANSFERREDHI:{
 				ASSERT( newtag->IsInt() );
 				if (newtag->IsInt())
 				{
@@ -856,7 +897,19 @@ bool CKnownFile::LoadTagsFromFile(CFileDataIO* file)
 			case FT_KADLASTPUBLISHSRC:{
 				ASSERT( newtag->IsInt() );
 				if (newtag->IsInt())
-					m_lastPublishTimeKadSrc = newtag->GetInt();
+					SetLastPublishTimeKadSrc( newtag->GetInt(), 0 );
+				if(GetLastPublishTimeKadSrc() > (uint32)time(NULL)+KADEMLIAREPUBLISHTIMES)
+				{
+					//There may be a posibility of an older client that saved a random number here.. This will check for that..
+					SetLastPublishTimeKadSrc(0,0);
+				}
+				delete newtag;
+				break;
+			}
+			case FT_KADLASTPUBLISHNOTES:{
+				ASSERT( newtag->IsInt() );
+				if (newtag->IsInt())
+					SetLastPublishTimeKadNotes( newtag->GetInt() );
 				delete newtag;
 				break;
 			}
@@ -942,10 +995,8 @@ bool CKnownFile::WriteToFile(CFileDataIO* file)
 	ULONG uTagCountFilePos = (ULONG)file->GetPosition();
 	file->WriteUInt32(uTagCount);
 
-#ifdef _UNICODE
 	if (WriteOptED2KUTF8Tag(file, GetFileName(), FT_FILENAME))
 		uTagCount++;
-#endif
 	CTag nametag(FT_FILENAME, GetFileName());
 	nametag.WriteTagToFile(file);
 	uTagCount++;
@@ -956,11 +1007,11 @@ bool CKnownFile::WriteToFile(CFileDataIO* file)
 	
 	// statistic
 	if (statistic.alltimetransferred){
-		CTag attag1(FT_ATTRANSFERED, (uint32)statistic.alltimetransferred);
+		CTag attag1(FT_ATTRANSFERRED, (uint32)statistic.alltimetransferred);
 		attag1.WriteTagToFile(file);
 		uTagCount++;
 		
-		CTag attag4(FT_ATTRANSFEREDHI, (uint32)(statistic.alltimetransferred >> 32));
+		CTag attag4(FT_ATTRANSFERREDHI, (uint32)(statistic.alltimetransferred >> 32));
 		attag4.WriteTagToFile(file);
 		uTagCount++;
 	}
@@ -993,6 +1044,12 @@ bool CKnownFile::WriteToFile(CFileDataIO* file)
 	if (m_lastPublishTimeKadSrc){
 		CTag kadLastPubSrc(FT_KADLASTPUBLISHSRC, m_lastPublishTimeKadSrc);
 		kadLastPubSrc.WriteTagToFile(file);
+		uTagCount++;
+	}
+
+	if (m_lastPublishTimeKadNotes){
+		CTag kadLastPubNotes(FT_KADLASTPUBLISHNOTES, m_lastPublishTimeKadNotes);
+		kadLastPubNotes.WriteTagToFile(file);
 		uTagCount++;
 	}
 
@@ -1139,9 +1196,10 @@ bool CKnownFile::CreateHash(const uchar* pucData, UINT uSize, uchar* pucHash, CA
 	return bResult;
 }
 
-uchar* CKnownFile::GetPartHash(uint16 part) const {
+uchar* CKnownFile::GetPartHash(uint16 part) const
+{
 	if (part >= hashlist.GetCount())
-		return 0;
+		return NULL;
 	return hashlist[part];
 }
 
@@ -1429,6 +1487,7 @@ void CKnownFile::SetFileComment(LPCTSTR pszComment)
 {
 	if (m_strComment.Compare(pszComment) != 0)
 	{
+		SetLastPublishTimeKadNotes(0);
 		CIni ini(thePrefs.GetFileCommentsFilePath(), md4str(GetFileHash()));
 		ini.WriteStringUTF8(_T("Comment"), pszComment);
 		m_strComment = pszComment;
@@ -1449,6 +1508,7 @@ void CKnownFile::SetFileRating(uint8 uRating)
 {
 	if (m_uRating != uRating)
 	{
+		SetLastPublishTimeKadNotes(0);
 		CIni ini(thePrefs.GetFileCommentsFilePath(), md4str(GetFileHash()));
 		ini.WriteInt(_T("Rate"), uRating);
 		m_uRating = uRating;
@@ -1821,23 +1881,68 @@ void CKnownFile::SetPublishedED2K(bool val){
 	theApp.emuledlg->sharedfileswnd->sharedfilesctrl.UpdateFile(this);
 }
 
-void CKnownFile::SetPublishedKadSrc(){
-	m_PublishedKadSrc++;
-	theApp.emuledlg->sharedfileswnd->sharedfilesctrl.UpdateFile(this);
+bool CKnownFile::PublishNotes()
+{
+	if(m_lastPublishTimeKadNotes > (uint32)time(NULL))
+	{
+		return false;
+	}
+	if(GetFileComment() != "")
+	{
+		m_lastPublishTimeKadNotes = (uint32)time(NULL)+KADEMLIAREPUBLISHTIMEN;
+		return true;
+	}
+	if(GetFileRating() != 0)
+	{
+		m_lastPublishTimeKadNotes = (uint32)time(NULL)+KADEMLIAREPUBLISHTIMEN;
+		return true;
+	}
+
+	return false;
 }
 
 bool CKnownFile::PublishSrc()
 {
-	if( m_lastPublishTimeKadSrc > 0)
+	uint32 lastBuddyIP = 0;
+
+	if( theApp.IsFirewalled() )
 	{
-		if( ((uint32)time(NULL)-m_lastPublishTimeKadSrc) < KADEMLIAREPUBLISHTIMES)
+		CUpDownClient* buddy = theApp.clientlist->GetBuddy();
+		if( buddy )
 		{
-			return false;
+			lastBuddyIP = theApp.clientlist->GetBuddy()->GetIP();
+			if( lastBuddyIP != m_lastBuddyIP )
+			{
+				SetLastPublishTimeKadSrc( (uint32)time(NULL)+KADEMLIAREPUBLISHTIMES, lastBuddyIP );
+				return true;
+			}
 		}
+		else
+			return false;
 	}
-	m_lastPublishTimeKadSrc = (uint32)time(NULL);
+
+	if(m_lastPublishTimeKadSrc > (uint32)time(NULL))
+		return false;
+
+	SetLastPublishTimeKadSrc((uint32)time(NULL)+KADEMLIAREPUBLISHTIMES,lastBuddyIP);
 	return true;
 }
+
+void CAbstractFile::AddNote(Kademlia::CEntry* pEntry)
+{
+	for(POSITION pos = CKadEntryPtrList.GetHeadPosition(); pos != NULL; )
+	{
+		Kademlia::CEntry* entry = CKadEntryPtrList.GetNext(pos);
+		if(entry->ip == pEntry->ip || entry->sourceID.compareTo(pEntry))
+		{
+			delete pEntry;
+			return;
+		}
+	}
+	CKadEntryPtrList.AddHead(pEntry);
+}
+
+
 
 bool CKnownFile::IsMovie() const
 {
@@ -1847,7 +1952,7 @@ bool CKnownFile::IsMovie() const
 // function assumes that this file is shared and that any needed permission to preview exists. checks have to be done before calling! 
 bool CKnownFile::GrabImage(uint8 nFramesToGrab, double dStartTime, bool bReduceColor, uint16 nMaxWidth, void* pSender)
 {
-	return GrabImage(GetPath() + CString("\\") + GetFileName(), nFramesToGrab,  dStartTime, bReduceColor, nMaxWidth, pSender);
+	return GrabImage(GetPath() + CString(_T("\\")) + GetFileName(), nFramesToGrab,  dStartTime, bReduceColor, nMaxWidth, pSender);
 }
 
 bool CKnownFile::GrabImage(CString strFileName,uint8 nFramesToGrab, double dStartTime, bool bReduceColor, uint16 nMaxWidth, void* pSender)

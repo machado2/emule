@@ -35,16 +35,19 @@
 #include "UploadQueue.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
 // CUploadListCtrl
 
 IMPLEMENT_DYNAMIC(CUploadListCtrl, CMuleListCtrl)
-CUploadListCtrl::CUploadListCtrl(){
+
+CUploadListCtrl::CUploadListCtrl()
+	: CListCtrlItemWalk(this)
+{
 }
 
 void CUploadListCtrl::Init()
@@ -250,11 +253,14 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	cur_rec.right = cur_rec.left - 8;
 	cur_rec.left += 4;
 
-	for(int iCurrent = 0; iCurrent < iCount; iCurrent++){
+	for (int iCurrent = 0; iCurrent < iCount; iCurrent++)
+	{
 		int iColumn = pHeaderCtrl->OrderToIndex(iCurrent);
-		if( !IsColumnHidden(iColumn) ){
+		if (!IsColumnHidden(iColumn))
+		{
 			cur_rec.right += GetColumnWidth(iColumn);
-			switch(iColumn){
+			switch (iColumn)
+			{
 				case 0:{
 					uint8 image;
 					if (client->IsFriend())
@@ -305,50 +311,56 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					POINT point = {cur_rec.left, cur_rec.top+1};
 					imagelist.Draw(dc,image, point, ILD_NORMAL | ((client->Credits() && client->Credits()->GetCurrentIdentState(client->GetIP()) == IS_IDENTIFIED) ? INDEXTOOVERLAYMASK(1) : 0));
 					Sbuffer = client->GetUserName();
-					cur_rec.left +=20;
-					dc->DrawText(Sbuffer,Sbuffer.GetLength(),&cur_rec,DLC_DT_TEXT);
-					cur_rec.left -=20;
+					cur_rec.left += 20;
+					dc->DrawText(Sbuffer, Sbuffer.GetLength(), &cur_rec, DLC_DT_TEXT);
+					cur_rec.left -= 20;
 					break;
 				}
 				case 1:
-					if(file)
+					if (file)
 						Sbuffer = file->GetFileName();
 					else
 						Sbuffer = _T("?");
 					break;
 				case 2:
-					Sbuffer.Format(_T("%s"), CastItoXBytes(client->GetDatarate(), false, true));
+					Sbuffer = CastItoXBytes(client->GetDatarate(), false, true);
 					break;
 				case 3:
-					Sbuffer.Format(_T("%s"), CastItoXBytes(client->GetQueueSessionPayloadUp(), false, false));
+					// this would be the logical correct data item to show here
+					Sbuffer = CastItoXBytes(client->GetTransferredUp(), false, false);
+
+					//this is something which does not make sense in the context it's shown, but may be useful for debugging..
+					/*if(thePrefs.m_bExtControls)
+						Sbuffer.Format( _T("%s (%s)"), CastItoXBytes(client->GetQueueSessionPayloadUp(), false, false), CastItoXBytes(client->GetSessionUp(), false, false));
+					else
+						Sbuffer = CastItoXBytes(client->GetSessionUp(), false, false);*/
 					break;
 				case 4:
 					if (client->HasLowID())
-						Sbuffer.Format(_T("%s (%s)"),CastSecondsToHM((client->GetWaitTime())/1000),GetResString(IDS_IDLOW) );
+						Sbuffer.Format(_T("%s (%s)"), CastSecondsToHM(client->GetWaitTime()/1000), GetResString(IDS_IDLOW));
 					else
-						Sbuffer = CastSecondsToHM((client->GetWaitTime())/1000);
+						Sbuffer = CastSecondsToHM(client->GetWaitTime()/1000);
 					break;
 				case 5:
-					Sbuffer = CastSecondsToHM((client->GetUpStartTimeDelay())/1000);
+					Sbuffer = CastSecondsToHM(client->GetUpStartTimeDelay()/1000);
 					break;
 				case 6:
 					Sbuffer = client->GetUploadStateDisplayString();
 					break;
 				case 7:
-					//if( client->GetUpPartCount() ){
-						cur_rec.bottom--;
-						cur_rec.top++;
-						client->DrawUpStatusBar(dc,&cur_rec,false,thePrefs.UseFlatBar());
-						cur_rec.bottom++;
-						cur_rec.top--;
-					//}
+					cur_rec.bottom--;
+					cur_rec.top++;
+					client->DrawUpStatusBar(dc, &cur_rec, false, thePrefs.UseFlatBar());
+					cur_rec.bottom++;
+					cur_rec.top--;
 					break;
 			}
-			if( iColumn != 7 && iColumn != 0 )
-				dc->DrawText(Sbuffer,Sbuffer.GetLength(),&cur_rec,DLC_DT_TEXT);
+			if (iColumn != 7 && iColumn != 0)
+				dc->DrawText(Sbuffer, Sbuffer.GetLength(), &cur_rec, DLC_DT_TEXT);
 			cur_rec.left += GetColumnWidth(iColumn);
 		}
 	}
+
 	//draw rectangle around selected item(s)
 	if ((lpDrawItemStruct->itemAction | ODA_SELECT) && (lpDrawItemStruct->itemState & ODS_SELECTED))
 	{
@@ -362,7 +374,7 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		outline_rec.left++;
 		outline_rec.right--;
 
-		if(bCtrlFocused)
+		if (bCtrlFocused)
 			dc->FrameRect(&outline_rec, &CBrush(m_crFocusLine));
 		else
 			dc->FrameRect(&outline_rec, &CBrush(m_crNoFocusLine));
@@ -420,7 +432,7 @@ BOOL CUploadListCtrl::OnCommand(WPARAM wParam,LPARAM lParam ){
 				break;
 			case MPG_ALTENTER:
 			case MP_DETAIL:{
-				CClientDetailDialog dialog(client);
+				CClientDetailDialog dialog(client, this);
 				dialog.DoModal();
 				break;
 			}
@@ -502,22 +514,25 @@ int CUploadListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 			return CompareUnsigned(item2->GetDatarate(), item1->GetDatarate());
 
 		case 3: 
-			return CompareUnsigned(item1->GetSessionUp(), item2->GetSessionUp());
+			return CompareUnsigned(item1->GetTransferredUp(), item2->GetTransferredUp());
 		case 103: 
-			return CompareUnsigned(item2->GetSessionUp(), item1->GetSessionUp());
+			return CompareUnsigned(item2->GetTransferredUp(), item1->GetTransferredUp());
 
 		case 4: 
 			return item1->GetWaitTime() - item2->GetWaitTime();
 		case 104: 
 			return item2->GetWaitTime() - item1->GetWaitTime();
+
 		case 5: 
 			return item1->GetUpStartTimeDelay() - item2->GetUpStartTimeDelay();
 		case 105: 
 			return item2->GetUpStartTimeDelay() - item1->GetUpStartTimeDelay();
+
 		case 6: 
 			return item1->GetUploadState() - item2->GetUploadState();
 		case 106: 
 			return item2->GetUploadState() - item1->GetUploadState();
+
 		case 7:
 			return item1->GetUpPartCount() - item2->GetUpPartCount();
 		case 107: 
@@ -542,9 +557,9 @@ void CUploadListCtrl::ShowSelectedUserDetails()
 	SetItemState(it, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
 	SetSelectionMark(it);   // display selection mark correctly!
 
-	const CUpDownClient* client = (CUpDownClient*)GetItemData(GetSelectionMark());
+	CUpDownClient* client = (CUpDownClient*)GetItemData(GetSelectionMark());
 	if (client){
-		CClientDetailDialog dialog(client);
+		CClientDetailDialog dialog(client, this);
 		dialog.DoModal();
 	}
 }
@@ -553,9 +568,9 @@ void CUploadListCtrl::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	int iSel = GetNextItem(-1, LVIS_SELECTED | LVIS_FOCUSED);
 	if (iSel != -1){
-		const CUpDownClient* client = (CUpDownClient*)GetItemData(iSel);
+		CUpDownClient* client = (CUpDownClient*)GetItemData(iSel);
 		if (client){
-			CClientDetailDialog dialog(client);
+			CClientDetailDialog dialog(client, this);
 			dialog.DoModal();
 		}
 	}

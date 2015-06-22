@@ -15,6 +15,7 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include "stdafx.h"
+#include "langids.h"
 #include "emule.h"
 #include "SearchDlg.h"
 #include "PreferencesDlg.h"
@@ -36,9 +37,9 @@
 #include "Log.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -142,13 +143,17 @@ BOOL CPPgGeneral::OnInitDialog()
 		TCHAR szLang[128];
 		int ret=GetLocaleInfo(aLanguageIDs[i], LOCALE_SLANGUAGE, szLang, ARRSIZE(szLang));
 
-		if (ret==0 && aLanguageIDs[i]==MAKELANGID(LANG_GALICIAN,SUBLANG_DEFAULT) )
+		if (ret==0 && aLanguageIDs[i]== LANGID_GL_ES )
 			_tcscpy(szLang,_T("Galician") );
+		else if (ret==0 && aLanguageIDs[i]==LANGID_FR_BR )
+			_tcscpy(szLang,_T("Breton (Brezhoneg)") );
 
 		m_language.SetItemData(m_language.AddString(szLang), aLanguageIDs[i]);
 	}
 
 	UpdateEd2kLinkFixCtrl();
+
+	GetDlgItem(IDC_ONLINESIG)->ShowWindow( thePrefs.IsExtControlsEnabled()?SW_SHOW:SW_HIDE );
 
 	CSliderCtrl *sliderUpdate = (CSliderCtrl*)GetDlgItem(IDC_CHECKDAYS);
 	sliderUpdate->SetRange(2, 7, true);
@@ -160,7 +165,7 @@ BOOL CPPgGeneral::OnInitDialog()
 	GetDlgItem(IDC_DAYS)->ShowWindow( IsDlgButtonChecked(IDC_CHECK4UPDATE) ? SW_SHOW : SW_HIDE );
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 BOOL CPPgGeneral::OnApply()

@@ -26,11 +26,13 @@
 #include "MenuCmds.h"
 #include "PartFile.h"
 #include "CatDialog.h"
+#include "InputBox.h"
+#include "UserMsgs.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -64,7 +66,7 @@ BEGIN_MESSAGE_MAP(CTransferWnd, CResizableDialog)
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
 	ON_NOTIFY(LVN_KEYDOWN, IDC_DOWNLOADLIST, OnLvnKeydownDownloadlist)
-	ON_NOTIFY(NM_TABMOVED, IDC_DLTAB, OnTabMovement)
+	ON_NOTIFY(UM_TABMOVED, IDC_DLTAB, OnTabMovement)
 	ON_WM_SYSCOLORCHANGE()
 END_MESSAGE_MAP()
 
@@ -89,6 +91,7 @@ BOOL CTransferWnd::OnInitDialog()
 
 	m_uplBtn.SetAlign(CButtonST::ST_ALIGN_HORIZ);
 	m_uplBtn.SetFlat();
+	m_uplBtn.DrawFlatFocus(TRUE);
 	m_uplBtn.SetLeftAlign(true);
 	
 	AddAnchor(IDC_DOWNLOADLIST,TOP_LEFT,CSize(100, thePrefs.GetSplitterbarPosition() ));
@@ -118,14 +121,17 @@ BOOL CTransferWnd::OnInitDialog()
 	m_bIsDragging=false;
 
 	// show & cat-tabs
-  	_stprintf(thePrefs.GetCategory(0)->title, _T("%s"), GetCatTitle(thePrefs.GetAllcatType()));
+	_stprintf(thePrefs.GetCategory(0)->title, _T("%s"), GetCatTitle(thePrefs.GetCategory(0)->filter));
 	_stprintf(thePrefs.GetCategory(0)->incomingpath, _T("%s"), thePrefs.GetIncomingDir());
+	thePrefs.GetCategory(0)->care4all=true;
+
 	for (int ix=0;ix<thePrefs.GetCatCount();ix++)
 		m_dlTab.InsertItem(ix,thePrefs.GetCategory(ix)->title );
 
 	// create tooltip control for download categories
 	m_tooltipCats.Create(this, TTS_NOPREFIX);
 	m_dlTab.SetToolTips(&m_tooltipCats);
+	UpdateCatTabTitles();
 	UpdateTabToolTips();
 	m_tooltipCats.SendMessage(TTM_SETMAXTIPWIDTH, 0, SHRT_MAX); // recognize \n chars!
 	m_tooltipCats.SetDelayTime(TTDT_AUTOPOP, 20000);
@@ -157,38 +163,33 @@ void CTransferWnd::DoDataExchange(CDataExchange* pDX)
 
 void CTransferWnd::SetInitLayout() {
 	CRect rcDown,rcSpl,rcW;
-	CWnd* pWnd;
 
 	GetWindowRect(rcW);
 	ScreenToClient(rcW);
 
 	LONG splitpos=(thePrefs.GetSplitterbarPosition()*rcW.Height())/100;
 
-	pWnd = GetDlgItem(IDC_DOWNLOADLIST);
-	pWnd->GetWindowRect(rcDown);
+	GetDlgItem(IDC_DOWNLOADLIST)->GetWindowRect(rcDown);
 	ScreenToClient(rcDown);
 	rcDown.right=rcW.right-7;
 	rcDown.bottom=splitpos-5;
 	downloadlistctrl.MoveWindow(rcDown);
 	
-	pWnd = GetDlgItem(IDC_UPLOADLIST);
-	pWnd->GetWindowRect(rcDown);
+	GetDlgItem(IDC_UPLOADLIST)->GetWindowRect(rcDown);
 	ScreenToClient(rcDown);
 	rcDown.right=rcW.right-7;
 	rcDown.bottom=rcW.bottom-20;
 	rcDown.top=splitpos+20;
 	uploadlistctrl.MoveWindow(rcDown);
 
-	pWnd = GetDlgItem(IDC_QUEUELIST);
-	pWnd->GetWindowRect(rcDown);
+	GetDlgItem(IDC_QUEUELIST)->GetWindowRect(rcDown);
 	ScreenToClient(rcDown);
 	rcDown.right=rcW.right-7;
 	rcDown.bottom=rcW.bottom-20;
 	rcDown.top=splitpos+20;
 	queuelistctrl.MoveWindow(rcDown);
 
-	pWnd = GetDlgItem(IDC_CLIENTLIST);
-	pWnd->GetWindowRect(rcDown);
+	GetDlgItem(IDC_CLIENTLIST)->GetWindowRect(rcDown);
 	ScreenToClient(rcDown);
 	rcDown.right=rcW.right-7;
 	rcDown.bottom=rcW.bottom-20;
@@ -219,25 +220,20 @@ void CTransferWnd::DoResize(int delta)
 void CTransferWnd::UpdateSplitterRange()
 {
 	CRect rcDown,rcUp,rcW,rcSpl;
-	CWnd* pWnd;
 
 	GetWindowRect(rcW);
 	ScreenToClient(rcW);
 
-	pWnd = GetDlgItem(IDC_DOWNLOADLIST);
-	pWnd->GetWindowRect(rcDown);
+	GetDlgItem(IDC_DOWNLOADLIST)->GetWindowRect(rcDown);
 	ScreenToClient(rcDown);
 
-	pWnd = GetDlgItem(IDC_UPLOADLIST);
-	pWnd->GetWindowRect(rcUp);
+	GetDlgItem(IDC_UPLOADLIST)->GetWindowRect(rcUp);
 	ScreenToClient(rcUp);
 
-	pWnd = GetDlgItem(IDC_QUEUELIST);
-	pWnd->GetWindowRect(rcUp);
+	GetDlgItem(IDC_QUEUELIST)->GetWindowRect(rcUp);
 	ScreenToClient(rcUp);
 
-	pWnd = GetDlgItem(IDC_CLIENTLIST);
-	pWnd->GetWindowRect(rcUp);
+	GetDlgItem(IDC_CLIENTLIST)->GetWindowRect(rcUp);
 	ScreenToClient(rcUp);
 
 	thePrefs.SetSplitterbarPosition((rcDown.bottom*100)/rcW.Height());
@@ -252,9 +248,7 @@ void CTransferWnd::UpdateSplitterRange()
 	AddAnchor(IDC_CLIENTLIST,CSize(0,thePrefs.GetSplitterbarPosition()),BOTTOM_RIGHT);
 
 	m_wndSplitter.SetRange(rcDown.top+50 , rcUp.bottom-40);
-
 }
-
 
 LRESULT CTransferWnd::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
 {
@@ -263,14 +257,11 @@ LRESULT CTransferWnd::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_PAINT:
 			if (m_wndSplitter) {
 				CRect rcDown,rcSpl,rcW;
-				CWnd* pWnd;
-
 
 				GetWindowRect(rcW);
 				ScreenToClient(rcW);
 
-				pWnd = GetDlgItem(IDC_DOWNLOADLIST);
-				pWnd->GetWindowRect(rcDown);
+				GetDlgItem(IDC_DOWNLOADLIST)->GetWindowRect(rcDown);
 				ScreenToClient(rcDown);
 
 				if (rcW.Height()>0) {
@@ -302,14 +293,10 @@ LRESULT CTransferWnd::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_SIZE:
 			if (m_wndSplitter) {
 				CRect rcDown,rcSpl,rcW;
-				CWnd* pWnd;
-
 				GetWindowRect(rcW);
 				ScreenToClient(rcW);
-
 				if (rcW.Height()>0){
-					pWnd = GetDlgItem(IDC_DOWNLOADLIST);
-					pWnd->GetWindowRect(rcDown);
+					GetDlgItem(IDC_DOWNLOADLIST)->GetWindowRect(rcDown);
 					ScreenToClient(rcDown);
 
 					long splitpos=(thePrefs.GetSplitterbarPosition()*rcW.Height())/100;
@@ -317,15 +304,12 @@ LRESULT CTransferWnd::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 					rcSpl.right=rcDown.right;rcSpl.top=splitpos+10;rcSpl.bottom=rcSpl.top+7;rcSpl.left=(rcDown.right/2)-50;rcSpl.right=rcSpl.left+100;
 					m_wndSplitter.MoveWindow(rcSpl,true);
 				}
-
 			}
 			break;
 	}
 
 	return CResizableDialog::DefWindowProc(message, wParam, lParam);
 }
-
-
 
 // CTransferWnd message handlers
 BOOL CTransferWnd::PreTranslateMessage(MSG* pMsg)
@@ -567,7 +551,7 @@ void CTransferWnd::OnTcnSelchangeDltab(NMHDR *pNMHDR, LRESULT *pResult)
 // Ornis' download categories
 void CTransferWnd::OnNMRclickDltab(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	// Menu for category
+	UINT flag;
 	CTitleMenu menu;
 	POINT point;
 	::GetCursorPos(&point);
@@ -575,14 +559,15 @@ void CTransferWnd::OnNMRclickDltab(NMHDR *pNMHDR, LRESULT *pResult)
 	CPoint pt(point);
 	rightclickindex=GetTabUnderMouse(&pt);
 
-	UINT flag;
-	flag=(rightclickindex==0) ? MF_GRAYED:MF_STRING;
+	if (rightclickindex==-1)
+		return;
 
 	CMenu m_CatMenu;
 	m_CatMenu.CreateMenu();
 
 	CMenu m_PrioMenu;
 	m_PrioMenu.CreateMenu();
+
 // ZZ:DownloadManager -->
     Category_Struct* category_Struct = thePrefs.GetCategory(rightclickindex);
 
@@ -598,6 +583,7 @@ void CTransferWnd::OnNMRclickDltab(NMHDR *pNMHDR, LRESULT *pResult)
     //m_PrioMenu.AppendMenu(MF_STRING,MP_PRIOAUTO, GetResString(IDS_PRIOAUTO));
 // <-- ZZ:DownloadManager
 
+
 	menu.CreatePopupMenu();
 	if (rightclickindex)
 		menu.AddMenuTitle(GetResString(IDS_CAT)+_T(" (")+thePrefs.GetCategory(rightclickindex)->title+_T(")") ,true );
@@ -605,10 +591,24 @@ void CTransferWnd::OnNMRclickDltab(NMHDR *pNMHDR, LRESULT *pResult)
 		menu.AddMenuTitle(GetResString(IDS_CAT),true);
 
 	m_isetcatmenu=rightclickindex;
-
 	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0,GetResString(IDS_ALL) );
-	if (rightclickindex==0 )
-		m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+1,GetResString(IDS_ALLOTHERS) );
+
+	flag=(!thePrefs.GetCategory(rightclickindex)->care4all && rightclickindex ) ? MF_GRAYED:MF_STRING;
+	m_CatMenu.AppendMenu(flag,MP_CAT_SET0+1,GetResString(IDS_ALLOTHERS) );
+
+	// selector for regular expression view filter
+
+	if (rightclickindex) {
+		if (thePrefs.IsExtControlsEnabled())
+			m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+18, GetResString(IDS_REGEXPRESSION) );
+
+		flag=MF_STRING;
+		if (thePrefs.GetCategory(rightclickindex)->care4all)
+			flag=flag|MF_CHECKED | MF_BYCOMMAND;
+		if (thePrefs.IsExtControlsEnabled() )
+			m_CatMenu.AppendMenu(flag,MP_CAT_SET0+17,GetResString(IDS_CARE4ALL) );
+	}
+
 	m_CatMenu.AppendMenu(MF_SEPARATOR);
 	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+2,GetResString(IDS_STATUS_NOTCOMPLETED) );
 	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+3,GetResString(IDS_DL_TRANSFCOMPL) );
@@ -623,11 +623,15 @@ void CTransferWnd::OnNMRclickDltab(NMHDR *pNMHDR, LRESULT *pResult)
 	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+12,GetResString(IDS_SEARCH_ARC) );
 	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+13,GetResString(IDS_SEARCH_CDIMG) );
 
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+14,GetResString(IDS_SEARCH_DOC) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+15,GetResString(IDS_SEARCH_PICS) );
+	m_CatMenu.AppendMenu(MF_STRING,MP_CAT_SET0+16,GetResString(IDS_SEARCH_PRG) );
+
 	if (thePrefs.IsExtControlsEnabled()) {
 		m_CatMenu.AppendMenu(MF_SEPARATOR);
-		m_CatMenu.AppendMenu( thePrefs.GetCatFilter(rightclickindex)>1?MF_STRING:MF_GRAYED,MP_CAT_SET0+20,GetResString(IDS_NEGATEFILTER) );
-		if ( thePrefs.GetCatFilter(rightclickindex)>1 && thePrefs.GetCatFilterNeg(rightclickindex))
-			m_CatMenu.CheckMenuItem( MP_CAT_SET0+20 ,MF_CHECKED | MF_BYCOMMAND);
+		m_CatMenu.AppendMenu( thePrefs.GetCatFilter(rightclickindex)>0?MF_STRING:MF_GRAYED,MP_CAT_SET0+19,GetResString(IDS_NEGATEFILTER) );
+		if ( thePrefs.GetCatFilterNeg(rightclickindex))
+			m_CatMenu.CheckMenuItem( MP_CAT_SET0+19 ,MF_CHECKED | MF_BYCOMMAND);
 	}
 	
 	m_CatMenu.CheckMenuItem( MP_CAT_SET0+thePrefs.GetCatFilter(rightclickindex) ,MF_CHECKED | MF_BYCOMMAND);
@@ -653,12 +657,14 @@ void CTransferWnd::OnNMRclickDltab(NMHDR *pNMHDR, LRESULT *pResult)
 	menu.AppendMenu(MF_SEPARATOR);
 	menu.AppendMenu(MF_STRING,MP_HM_OPENINC, GetResString(IDS_OPENINC), _T("FOLDERS") );
 
+	flag=(rightclickindex==0) ? MF_GRAYED:MF_STRING;
 	menu.AppendMenu(MF_SEPARATOR);
 	menu.AppendMenu(MF_STRING,MP_CAT_ADD,GetResString(IDS_CAT_ADD));
 	menu.AppendMenu(flag,MP_CAT_EDIT,GetResString(IDS_CAT_EDIT));
 	menu.AppendMenu(flag,MP_CAT_REMOVE, GetResString(IDS_CAT_REMOVE));
 
 	menu.TrackPopupMenu(TPM_LEFTALIGN |TPM_RIGHTBUTTON, point.x, point.y, this);
+
 	VERIFY( m_PrioMenu.DestroyMenu() );
 	VERIFY( m_CatMenu.DestroyMenu() );
 	VERIFY( menu.DestroyMenu() );
@@ -697,7 +703,12 @@ void CTransferWnd::OnMouseMove(UINT nFlags, CPoint point)
 		ClientToScreen(&pt);        //convert to screen coordinates
 
 		m_nDropIndex=GetTabUnderMouse(&pt);
+
+		if (m_nDropIndex>0 && thePrefs.GetCategory(m_nDropIndex)->care4all)	// not droppable
+			m_dlTab.SetCurSel(-1);
+		else
 		m_dlTab.SetCurSel(m_nDropIndex);
+
 		m_dlTab.Invalidate();
 		
 		::GetCursorPos(&pt);
@@ -742,7 +753,7 @@ void CTransferWnd::OnLButtonUp(UINT nFlags, CPoint point)
 
 			m_dlTab.SetCurSel(downloadlistctrl.curTab);
 			//if (m_dlTab.GetCurSel()>0 || (thePrefs.GetAllcatType()==1 && m_dlTab.GetCurSel()==0) )
-			downloadlistctrl.ChangeCategory(m_dlTab.GetCurSel());
+			downloadlistctrl.UpdateCurrentCategoryView();
 
 			UpdateCatTabTitles();
 
@@ -754,29 +765,42 @@ void CTransferWnd::OnLButtonUp(UINT nFlags, CPoint point)
 BOOL CTransferWnd::OnCommand(WPARAM wParam,LPARAM lParam ){ 
 
 	// category filter menuitems
-	if (wParam>=MP_CAT_SET0 && wParam<=MP_CAT_SET0+20) {
-		if (wParam==MP_CAT_SET0+20) {
+	if (wParam>=MP_CAT_SET0 && wParam<=MP_CAT_SET0+99) {
+		if (wParam==MP_CAT_SET0+17) {
+			thePrefs.GetCategory(m_isetcatmenu)->care4all=!thePrefs.GetCategory(m_isetcatmenu)->care4all;
+		}else if (wParam==MP_CAT_SET0+19) {
 			// negate
 			thePrefs.SetCatFilterNeg(m_isetcatmenu, (!thePrefs.GetCatFilterNeg(m_isetcatmenu)) );
-
-
-		} else {
-			// dont negate all/uncat filter
-			if (wParam-MP_CAT_SET0<=1)
+		} else {	// set the view filter
+			if (wParam-MP_CAT_SET0<1)	// dont negate all filter
 				thePrefs.SetCatFilterNeg(m_isetcatmenu, false);
 
 			thePrefs.SetCatFilter(m_isetcatmenu,wParam-MP_CAT_SET0);
 			m_nLastCatTT=-1;
 		}
-		EditCatTabLabel(m_isetcatmenu);
-		downloadlistctrl.ChangeCategory( m_dlTab.GetCurSel() );
-		thePrefs.SaveCats();
-	}
 
+		// set to regexp but none is set for that category?
+		if (wParam==MP_CAT_SET0+18 && thePrefs.GetCategory(m_isetcatmenu)->regexp.IsEmpty() ) {
+			m_nLastCatTT=-1;
+			CCatDialog dialog(rightclickindex);
+			dialog.DoModal();
+
+			// still no regexp?
+			if (thePrefs.GetCategory(m_isetcatmenu)->regexp.IsEmpty()) {
+				thePrefs.SetCatFilter(m_isetcatmenu,0);
+			}
+
+		}
+
+		downloadlistctrl.UpdateCurrentCategoryView();
+		EditCatTabLabel(m_isetcatmenu);
+		thePrefs.SaveCats();
+		return TRUE;
+	}
 	switch (wParam){ 
 		case MP_CAT_ADD: {
 			m_nLastCatTT=-1;
-			int newindex=AddCategorie(_T("?"),thePrefs.GetIncomingDir(),_T(""),_T(""),false);
+			int newindex=AddCategory(_T("?"),thePrefs.GetIncomingDir(),_T(""),_T(""),false);
 			CCatDialog dialog(newindex);
 			dialog.DoModal();
 			if (dialog.WasCancelled())
@@ -800,6 +824,7 @@ BOOL CTransferWnd::OnCommand(WPARAM wParam,LPARAM lParam ){
 			EditCatTabLabel(rightclickindex,csName);
 		
 			theApp.emuledlg->searchwnd->UpdateCatTabs();
+			theApp.emuledlg->transferwnd->downloadlistctrl.UpdateCurrentCategoryView();
 			thePrefs.SaveCats();
 			break;
 		}
@@ -811,7 +836,8 @@ BOOL CTransferWnd::OnCommand(WPARAM wParam,LPARAM lParam ){
 			m_dlTab.SetCurSel(0);
 			downloadlistctrl.ChangeCategory(0);
 			thePrefs.SaveCats();
-			if (thePrefs.GetCatCount()==1) thePrefs.SetAllcatType(0);
+			if (thePrefs.GetCatCount()==1) 
+				thePrefs.GetCategory(0)->filter=0;
 			theApp.emuledlg->searchwnd->UpdateCatTabs();
 			VerifyCatTabSize();
 			break;
@@ -819,34 +845,19 @@ BOOL CTransferWnd::OnCommand(WPARAM wParam,LPARAM lParam ){
 // ZZ:DownloadManager -->
 		case MP_PRIOLOW: {
             thePrefs.GetCategory(rightclickindex)->prio = PR_LOW;
-			
-            //CString csName;
-            //csName.Format(_T("%s"), thePrefs.GetCategory(rightclickindex)->title );
-            //EditCatTabLabel(rightclickindex,csName);
 
-            //theApp.emuledlg->searchwnd->UpdateCatTabs();
 			thePrefs.SaveCats();
 			break;
 		}
 		case MP_PRIONORMAL: {
             thePrefs.GetCategory(rightclickindex)->prio = PR_NORMAL;
-			
-            //CString csName;
-            //csName.Format(_T("%s"), thePrefs.GetCategory(rightclickindex)->title );
-            //EditCatTabLabel(rightclickindex,csName);
 
-            //theApp.emuledlg->searchwnd->UpdateCatTabs();
 			thePrefs.SaveCats();
 			break;
 		}
 		case MP_PRIOHIGH: {
             thePrefs.GetCategory(rightclickindex)->prio = PR_HIGH;
-			
-            //CString csName;
-            //csName.Format(_T("%s"), thePrefs.GetCategory(rightclickindex)->title );
-            //EditCatTabLabel(rightclickindex,csName);
 
-            //theApp.emuledlg->searchwnd->UpdateCatTabs();
 			thePrefs.SaveCats();
 			break;
 		}
@@ -914,11 +925,11 @@ void CTransferWnd::UpdateCatTabTitles(bool force) {
 		return;
 
 	for (uint8 i=0;i<m_dlTab.GetItemCount();i++)
-		EditCatTabLabel(i,(i==0)? GetCatTitle( thePrefs.GetAllcatType() ):thePrefs.GetCategory(i)->title);
+		EditCatTabLabel(i,/*(i==0)? GetCatTitle( thePrefs.GetCategory(0)->filter ):*/thePrefs.GetCategory(i)->title);
 }
 
 void CTransferWnd::EditCatTabLabel(int i) {
-	EditCatTabLabel(i,(i==0)? GetCatTitle( thePrefs.GetAllcatType() ):thePrefs.GetCategory(i)->title);
+	EditCatTabLabel(i,/*(i==0)? GetCatTitle( thePrefs.GetAllcatType() ):*/thePrefs.GetCategory(i)->title);
 }
 
 void CTransferWnd::EditCatTabLabel(int index,CString newlabel) {
@@ -930,36 +941,27 @@ void CTransferWnd::EditCatTabLabel(int index,CString newlabel) {
 
 	newlabel.Replace(_T("&"),_T("&&"));
 
-	// add filter label
-	if (index && thePrefs.GetCatFilter(index)>0) {
-		newlabel.Append(_T(" (")) ;
+	if (!index)
+		newlabel.Empty();
+
+	if (!index || (index && thePrefs.GetCatFilter(index)>0)) {
+
+		if (index)
+			newlabel.Append(_T(" (")) ;
+		
 		if (thePrefs.GetCatFilterNeg(index))
 			newlabel.Append(_T("!"));			
-			newlabel.Append( GetCatTitle(thePrefs.GetCatFilter(index)) + _T(")") );
-	} else
-		if (!index && thePrefs.GetCatFilterNeg(index)  )
-			newlabel=_T("!") + newlabel;
+ 
+		if (thePrefs.GetCatFilter(index)==18)
+			newlabel.Append( _T("\"") + thePrefs.GetCategory(index)->regexp + _T("\"") );
+		else
+        	newlabel.Append( GetCatTitle(thePrefs.GetCatFilter(index)));
 
+		if (index)
+			newlabel.Append( _T(")") );
+	}
 
 	int count,dwl;
-
-// ZZ:DownloadManager -->
-    //CString prioStr;
-    //switch(thePrefs.GetCategory(index)->prio) {
-    //    case PR_LOW:
-    //        prioStr = _T(" ") + GetResString(IDS_PR_SHORT_LOW);
-    //        break;
-
-    //    case PR_HIGH:
-    //        prioStr = _T(" ") + GetResString(IDS_PR_SHORT_HIGH);
-    //        break;
-
-    //    default:
-    //        prioStr = _T("");
-    //        break;
-    //}
-// <-- ZZ:DownloadManager
-
 	if (thePrefs.ShowCatTabInfos()) {
 		CPartFile* cur_file;
 		count=dwl=0;
@@ -967,18 +969,12 @@ void CTransferWnd::EditCatTabLabel(int index,CString newlabel) {
 			cur_file=theApp.downloadqueue->GetFileByIndex(i);
 			if (cur_file==0) continue;
 			if (cur_file->CheckShowItemInGivenCat(index)) {
-				if (cur_file->GetTransferingSrcCount()>0) ++dwl;
+				if (cur_file->GetTransferringSrcCount()>0) ++dwl;
 			}
 		}
 		CString title=newlabel;
-		int compl= theApp.emuledlg->transferwnd->downloadlistctrl.GetCompleteDownloads(index,count);
+		theApp.emuledlg->transferwnd->downloadlistctrl.GetCompleteDownloads(index, count);
 		newlabel.Format(_T("%s %i/%i"),title,dwl,count); // ZZ:DownloadManager
-		//newlabel.Format(_T("%s%s %i/%i"),title, prioStr,dwl,count); // ZZ:DownloadManager
-
-// ZZ:DownloadManager -->
-    //} else {
-    //    newlabel += prioStr;
-// <-- ZZ:DownloadManager
 	}
 
 	tabitem.pszText = newlabel.LockBuffer();
@@ -988,17 +984,20 @@ void CTransferWnd::EditCatTabLabel(int index,CString newlabel) {
 	VerifyCatTabSize();
 }
 
-int CTransferWnd::AddCategorie(CString newtitle,CString newincoming,CString newcomment, CString newautocat, bool addTab){
+int CTransferWnd::AddCategory(CString newtitle,CString newincoming,CString newcomment, CString newautocat, bool addTab){
 	Category_Struct* newcat=new Category_Struct;
 
 	_stprintf(newcat->title,newtitle);
 	newcat->prio=PR_NORMAL; // ZZ:DownloadManager
 	_stprintf(newcat->incomingpath,newincoming);
 	_stprintf(newcat->comment,newcomment);
+	newcat->regexp.Empty();
+	newcat->ac_regexpeval=false;
 	newcat->autocat=newautocat;
     newcat->downloadInAlphabeticalOrder = FALSE; // ZZ:DownloadManager
 	newcat->filter=0;
 	newcat->filterNeg=false;
+	newcat->care4all=false;
 
 	int index=thePrefs.AddCat(newcat);
 	if (addTab) m_dlTab.InsertItem(index,newtitle);
@@ -1030,11 +1029,17 @@ int CTransferWnd::GetTabUnderMouse(CPoint* point) {
 void CTransferWnd::OnLvnKeydownDownloadlist(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLVKEYDOWN pLVKeyDow = reinterpret_cast<LPNMLVKEYDOWN>(pNMHDR);
-	if (downloadlistctrl.GetSelectionMark()!=-1) {
-		uint8 action=EXPAND_COLLAPSE;
-		if (pLVKeyDow->wVKey==VK_ADD || pLVKeyDow->wVKey==VK_RIGHT) action=EXPAND_ONLY;
-		else if ( pLVKeyDow->wVKey==VK_SUBTRACT || pLVKeyDow->wVKey==VK_LEFT ) action=COLLAPSE_ONLY;
-		if (action<EXPAND_COLLAPSE) downloadlistctrl.ExpandCollapseItem(downloadlistctrl.GetSelectionMark(),action,true);
+	int iItem = downloadlistctrl.GetSelectionMark();
+	if (iItem != -1)
+	{
+		bool bAltKey = GetAsyncKeyState(VK_MENU) < 0;
+		int iAction = EXPAND_COLLAPSE;
+		if (pLVKeyDow->wVKey==VK_ADD || (bAltKey && pLVKeyDow->wVKey==VK_RIGHT))
+			iAction = EXPAND_ONLY;
+		else if (pLVKeyDow->wVKey==VK_SUBTRACT || (bAltKey && pLVKeyDow->wVKey==VK_LEFT))
+			iAction = COLLAPSE_ONLY;
+		if (iAction < EXPAND_COLLAPSE)
+			downloadlistctrl.ExpandCollapseItem(iItem, iAction, true);
 	}
 	*pResult = 0;
 }
@@ -1078,7 +1083,7 @@ CString CTransferWnd::GetTabStatistic(uint8 tab) {
 		if (cur_file==0) continue;
 		if (cur_file->CheckShowItemInGivenCat(tab)) {
 			count++;
-			if (cur_file->GetTransferingSrcCount()>0) ++dwl;
+			if (cur_file->GetTransferringSrcCount()>0) ++dwl;
 			speed+=cur_file->GetDatarate()/1024.0f;
 			size+=cur_file->GetFileSize();
 			trsize+=cur_file->GetCompletedSize();
@@ -1211,6 +1216,11 @@ CString CTransferWnd::GetCatTitle(int catid)
 		case 11 : return GetResString(IDS_AUDIO);
 		case 12 : return GetResString(IDS_SEARCH_ARC);
 		case 13 : return GetResString(IDS_SEARCH_CDIMG);
+
+		case 14 : return GetResString(IDS_SEARCH_DOC);
+		case 15 : return GetResString(IDS_SEARCH_PICS);
+		case 16 : return GetResString(IDS_SEARCH_PRG);
+//		case 18 : return GetResString(IDS_REGEXPRESSION);
 	}
 	return _T("?");
 }

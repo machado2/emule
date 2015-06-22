@@ -29,9 +29,9 @@
 #include "Log.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -57,7 +57,7 @@ int CAICHSyncThread::Run()
 		return 0;
 
 	// we collect all masterhashs which we find in the known2.met and store them in a list
-	CList<CAICHHash,CAICHHash&> liKnown2Hashs;
+	CList<CAICHHash> liKnown2Hashs;
 	CString fullpath=thePrefs.GetConfigDir();
 	fullpath.Append(KNOWN2_MET_FILENAME);
 	CSafeFile file;

@@ -29,8 +29,6 @@ namespace Kademlia
 	class CUInt128;
 };
 
-#define WM_HOSTNAMERESOLVED		(WM_USER + 0x101)
-
 class CSourceHostnameResolveWnd : public CWnd
 {
 // Construction
@@ -62,7 +60,7 @@ class CDownloadQueue
 	friend class CServerSocket;
 
 public:
-	CDownloadQueue(CSharedFileList* in_sharedfilelist);
+	CDownloadQueue();
 	~CDownloadQueue();
 
 	void	Process();
@@ -162,7 +160,6 @@ private:
 	// SLUGFILLER: checkDiskspace
 	CTypedPtrList<CPtrList, CPartFile*> filelist;
 	CTypedPtrList<CPtrList, CPartFile*> m_localServerReqQueue;
-	CSharedFileList* sharedfilelist;
 	uint16	filesrdy;
 	uint32	datarate;
 	
@@ -185,7 +182,7 @@ private:
 		uint32	datalen;
 		DWORD	timestamp;
 	};
-	CList<TransferredData,TransferredData> avarage_dr_list;
+	CList<TransferredData> avarage_dr_list;
 	// END By BadWolf - Accurate Speed Measurement
 
 	CSourceHostnameResolveWnd m_srcwnd;

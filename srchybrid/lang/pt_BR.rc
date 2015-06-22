@@ -103,7 +103,7 @@ BEGIN
     IDS_FD_COMPR            "Compressão"
     IDS_WIZARD_NETWORK      "Escolha qual(is) rede(s) você deseja utilizar."
     IDS_MAIN_READY          "Versão do eMule %s Carregado"
-    IDS_WIZARD_ED2K         "Configurações ED2k"
+    IDS_WIZARD_ED2K         "Configurações eD2k"
     IDS_SEL_SKIN            "Selecionar Skin"
 END
 
@@ -267,7 +267,7 @@ BEGIN
     IDS_QL_RATING           "Avaliação"
     IDS_CONNECTINGTO        "Tentativa de conexão ao servidor: %s (%s:%i)..."
     IDS_CLIENTS             "Clientes"
-    IDS_SEARCH_ANY          "Qualquer"
+    IDS_SEARCH_ANY          "Todos"
     IDS_SEARCH_AUDIO        "Audio"
 END
 
@@ -300,19 +300,19 @@ BEGIN
     IDS_PRIOVERYLOW         "Muito Baixa"
     IDS_PRIORELEASE         "Lançamento"
     IDS_FSTATUS_LOCKED      "Fechado"
-    IDS_KADALPHA            "Kademlia is still in an early development stage. We recommend to enabled it only if you are interested in testing it"
+    IDS_KADALPHA            "A rede Kad está em estágio de desenvolvimento. Nós recomendamos habilitar a rede somente se você estiver interessado em testa-la."
     IDS_FSTATUS_FRIENDSONLY "Somente Amigos"
     IDS_FSTATUS_PUBLIC      "Público"
     IDS_ERR_RENAMESF        "Falha ao renomear\r\n    ""%s""\r\nto\r\n    ""%s""\r\n\r\n%hs"
     IDS_PRIOHIGHEST         "Muito Alta"
-    IDS_AVAILABLE           "available"
+    IDS_AVAILABLE           "Disponível"
     IDS_ERR_NOPRIMCHANGE    "Você não pode mudar as permissões enquanto o arquivo esta fazendo download!"
     IDS_HIDDEN              "Escondido"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_FSTAT_TRANSFER      "Status da Transferêcia"
+    IDS_FSTAT_TRANSFER      "Status de Transferêcia"
     IDS_FSTAT_CONNECTION    "Conexão"
     IDS_FSTAT_CLIENTS       "Clientes"
     IDS_FSTAT_SERVERS       "Servidores"
@@ -399,7 +399,7 @@ BEGIN
     IDS_ERR_FILEOPEN        "Falha ao abrir %s (%s)"
     IDS_SEL_SKINDIR         "Selecionar Diretório de Skins"
     IDS_ERR_REHASH          "Cuidado: %s Pode estar corrompido, fazendo novo hash das partes completas"
-    IDS_SKIN_PROF           "Perfis de Skin"
+    IDS_SKIN_PROF           "Perfis de Skins"
     IDS_ERR_PART_FNF        "Arquivo .part não foi encontrado"
     IDS_ERR_OPENMETFILE     "Falha ao abrir o arquivo part.met"
     IDS_KADOPEN             "Aberto"
@@ -426,7 +426,7 @@ BEGIN
     IDS_SW_NAME             "Nome"
     IDS_SW_GLOBAL           "Procura Global"
     IDS_SW_TYPE             "Tipo"
-    IDS_SW_DIRECTDOWNLOAD   "Download Direto"
+    IDS_SW_DIRECTDOWNLOAD   "Adicionar Download"
     IDS_SW_LINK             "Link do ED2K"
     IDS_SW_START            "Iniciar"
     IDS_SCHEDULER           "Programador"
@@ -562,7 +562,7 @@ BEGIN
     IDS_PW_NOONE            "Ninguem"
     IDS_PW_RESET            "Limpar"
     IDS_PW_APPLY            "Aplicar"
-    IDS_EM_TRANS            "Down/Upload"
+    IDS_EM_TRANS            "Transferência"
     IDS_EM_SERVER           "Servidores"
     IDS_EM_SEARCH           "Pesquisar"
     IDS_EM_FILES            "Arquivos"
@@ -602,7 +602,7 @@ BEGIN
     IDS_CD_VERSION          "Versão:"
     IDS_CD_UID              "ID:"
     IDS_CD_SNAME            "Servidor:"
-    IDS_CD_CDOWN            "Nº de Downloads atuais:"
+    IDS_CD_CDOWN            "Nome do Download:"
     IDS_CD_DOWN             "Downloads (nesta sessão):"
     IDS_CD_ADOWN            "Média de Download:"
     IDS_CD_TDOWN            "Total de Downloads:"
@@ -750,7 +750,7 @@ BEGIN
     IDS_STREE               "Estrutura das Estátisticas"
     IDS_IRC_IGNOREQUITMESSAGE "Ignorar mensagens de Saída"
     IDS_STATSSETUPINFO      "Estatísticas"
-    IDS_IRC_SOUNDEVENTS     "Tocar eventos sonoros"
+    IDS_IRC_SOUNDEVENTS     "Ativar eventos sonoros"
 END
 
 STRINGTABLE 
@@ -759,7 +759,7 @@ BEGIN
     IDS_UPDATEQUEUE         "Não atualizar lista de filas em tempo real"
     IDS_RECOVER_SINGLE      "1 arquivo recuperado."
     IDS_RECOVER_MULTIPLE    "%ld arquivos recuperados."
-    IDS_ATTEMPTING_RECOVERY "Atençao recuperação de arquivo..."
+    IDS_ATTEMPTING_RECOVERY "Atençaão recuperação de arquivo..."
     IDS_RECOVERY_SUCCESSFUL "Recuperação do arquivo bem sucedida."
     IDS_RECOVERY_FAILED     "Recuperação do arquivo falhou."
     IDS_STARTNEXTFILE       "Iniciar download pausado após completar um arquivo"
@@ -781,7 +781,7 @@ BEGIN
     IDS_KBYTESEC            "kB/s"
     IDS_TOOMANYCONNS        "Muitas conexões"
     IDS_DOWNLOADRENAMED     "Já existe um arquivo com este nome, o arquivo foi salvo como %s"
-    IDS_TBN_DOWNLOADDONE    "Baixado:"
+    IDS_TBN_DOWNLOADDONE    "Transferido:"
     IDS_TBN_DOWNLOADADDED   "Adicionado para downloads:"
     IDS_PW_TBN_USESOUND     "Usar o som:"
     IDS_PW_TBN_ONLOG        "Ocorrer novas informações no Log"
@@ -844,8 +844,8 @@ BEGIN
     IDS_IRC_SENDLINK        "Enviar para um amigo: "
     IDS_IRC_RECIEVEDLINK    "%s recebido (%s) para ser iniciado automaticamente."
     IDS_IRC_ACCEPTLINKS     "Aceitar Links ED2K no IRC. (Use com cuidado!)"
-    IDS_SHARED              "Shared"
-    IDS_DOWNLOADED          "Downloaded"
+    IDS_SHARED              "Compartilhado"
+    IDS_DOWNLOADED          "Transferido"
 END
 
 STRINGTABLE 
@@ -918,7 +918,7 @@ BEGIN
     IDS_FRIENDSLOT          "Abrir slot para este Amigo"
     IDS_FRIENDDETAIL        "(Conexão com o Amigo)"
     IDS_ASCWOP_PROXYSUPPORT "Conexão automatica sem uso de Proxy"
-    IDS_UDPDISABLED         "desativado"
+    IDS_UDPDISABLED         "Desativado"
     IDS_CTINFO              "Selecione o tipo de sua conexão aqui:"
     IDS_WIZ_CTFRAME         "Tipo de Conexão"
     IDS_CONCURDWL           "Downloads Concorrentes"
@@ -926,7 +926,7 @@ BEGIN
     IDS_WIZARD_CUSTOM       "Customizável"
     IDS_WIZARD_ENTERBELOW   "(escolha baixo)"
     IDS_STATS_MAXAVGDL      "Taxa média máx. de Download (Sessão): %s"
-    IDS_USS_MIN             "Warning: USS currently does not support upload speeds less then 10K. If you know your connection is not able to handle this, please disable USS."
+    IDS_USS_MIN             "Aviso:  USS atualmente não suporta as velocidades de upload menores que 10K. Se você não souber que sua conexão suporta isto, por favor desabilite o USS."
 END
 
 STRINGTABLE 
@@ -1004,7 +1004,7 @@ BEGIN
     IDS_GIGA                "G"
     IDS_TERRA               "T"
     IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "Ignorar mensagens de Proto eMule"
-    IDS_SMARTLOWIDCHECK     "Usar verificação inteligente de LowID ao conectar"
+    IDS_SMARTLOWIDCHECK     "Usar verificação inteligente de ID Baixa ao conectar"
     IDS_SF_SRVOCC           "Ocupação do Servidor: %.2f%%"
     IDS_3DDEP               "Estilo da Barra de Download"
     IDS_AUTOTAKEED2KLINKS   "Abrir Links ED2K somente durante funcionamento"
@@ -1014,9 +1014,9 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "Perdas devido corrompimento: %s       Ganho devido compressão: %s\nPacotes salvos por I.C.H.: %i"
-    IDS_ERR_NOHELP          "Please visit our homepage's download section to get a copy of the newest help file!\n\nDo you want to browse the online help now instead?"
-    IDS_SHOWOVERHEAD        "Exibir banda overhead"
-    IDS_UPDOWNSMALL         "Up: %.1f | Down: %.1f"
+    IDS_ERR_NOHELP          "Visite por favor a seção de download da nossa homepage para baixar uma cópia do arquivo de ajuda recente!\n\nVocê deseja acessar a ajuda online agora?"
+    IDS_SHOWOVERHEAD        "Exibir banda acima do normal"
+    IDS_UPDOWNSMALL         "Upload: %.1f | Download: %.1f"
     IDS_EDITLIST            "Listar"
     IDS_SP_ICONBAR          "Barra de Veloc. do Ícone de Bandeja"
     IDS_RATINGRECV          "Pontuação para o arquivo '%s' recebido: %i"
@@ -1034,8 +1034,8 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Uma nova versão do eMule for detectada"
-    IDS_NONEWERVERSION      "Nenhuma nova versão do eMule foi detectada.........."
+    IDS_CB_TBN_ONNEWVERSION "Uma nova versão do eMule foi encontrada"
+    IDS_NONEWERVERSION      "Nenhuma versão nova do eMule foi encontrada......"
     IDS_VERSIONCHECK        "&Verificar versão"
     IDS_VISITVERSIONCHECK   "\n\nVocê gostaria de visitar a página de Informações agora?"
     IDS_PW_VIDEOPLAYER      "Player de Video"
@@ -1046,10 +1046,10 @@ BEGIN
     IDS_IDLOW               "ID Baixa"
     IDS_IDHIGH              "ID Alta"
     IDS_UPSTATUS            "Partes Obtidas"
-    IDS_TOVERHEAD           "Sobrecarga Total (Pacotes): %s (%s)"
-    IDS_FROVERHEAD          "Sobrecarga de Arquivos Requisitados (Pacotes): %s (%s)"
-    IDS_SSOVERHEAD          "Sobrecarga de Troca de Fontes (Pacotes): %s (%s)"
-    IDS_SOVERHEAD           "Sobrecarga de Servidores (Pacotes): %s (%s)"
+    IDS_TOVERHEAD           "Total transferido acima do normal (Pacotes): %s (%s)"
+    IDS_FROVERHEAD          "Arquivos Requisitados acima do normal (Pacotes): %s (%s)"
+    IDS_SSOVERHEAD          "Troca de Fontes acima do normal (Pacotes): %s (%s)"
+    IDS_SOVERHEAD           "Servidores acima do normal (Pacotes): %s (%s)"
 END
 
 STRINGTABLE 
@@ -1139,15 +1139,15 @@ BEGIN
     IDS_ENTERUSERNAME       "Por Favor digite o seu nome de usuário:"
     IDS_STATIC_CPUMEM       "Preservar Uso de CPU &e Memória"
     IDS_KAD_SEARCH_KEYWORD_TOO_SHORT 
-                            "Keyword too short.\r\n\r\nThe keyword(s) used in a Kad search expression must have a minimum length of 3 characters."
+                            "Palavra chave muito curta.\r\n\r\nA(s) palavra(s) usadas na busca da rede Kad necessita(m) uma expressão de no minimo de 3 caracteres."
     IDS_LOG2DISK            "Log"
     IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING 
-                            "There is already a Kad search ongoing for the keyword ""%s"".\r\n\r\nTo search again for that keyword, either wait until this keyword search is finished or close the according search results pane."
+                            "Já existe uma busca na rede Kad por esta palavra chave ""%s"".\r\n\r\nPara buscar novamente por esta palavra chave espere até que a busca por esta palavra chave termine ou feche a aba da busca correspondente."
     IDS_KAD_SEARCH_KEYWORD_INVALID 
-                            "Invalid Kad keyword.\r\n\r\nA Kad search expression has the following format:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nThe <kad-keyword> must not contain any of the following characters:\r\n\r\n\t%s"
+                            "Palavra chave invalida.\r\n\r\nA A busca na rede Kad deve ser no seguinte formato:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nA <kad-keyword> não necessita conter nenhum dos seguintes caracteres:\r\n\r\n\t%s"
     IDS_EDITCAT             "Editar Propriedades das Categorias"
     IDS_PW_WS               "Servidor Web"
-    IDS_ENABLED             "ativado"
+    IDS_ENABLED             "Ativado"
     IDS_WEB_LOGIN           "Login"
     IDS_WEB_ENTER_PASSWORD  "Insira sua senha aqui"
     IDS_WEB_LOGIN_NOW       "Entrar agora"
@@ -1224,7 +1224,7 @@ BEGIN
     IDS_COPY                "Copiar"
     IDS_SELECTALL           "Selecionar tudo"
     IDS_AUTOSCROLL          "AutoRolagem"
-    IDS_WIZ1_WELCOME_TITLE  "Bem Vindo ao eMule"
+    IDS_WIZ1_WELCOME_TITLE  "Bem-Vindo ao eMule"
     IDS_WIZ1_WELCOME_ACTIONS 
                             "Este Assistente irá guiá-lo com as primeiras etapas de configuração do eMule."
     IDS_WIZ1_WELCOME_BTN_HINT "Proximo passo, clique em Avançar."
@@ -1270,9 +1270,9 @@ BEGIN
     IDS_CHANGECATVIEW       "Modificar Seletor"
     IDS_STATUS_NOTCOMPLETED "Incompletos"
     IDS_STATS_CUMULATIVE    "Acumulativo"
-    IDS_STATS_OVRHD         "Overhead"
+    IDS_STATS_OVRHD         "Banda acima do normal"
     IDS_STATS_RECORDS       "Recordes"
-    IDS_STATS_OVRHD2        "Overhead: %s (%s Pacotes)"
+    IDS_STATS_OVRHD2        "Banda acima do normal: %s (%s Pacotes)"
     IDS_STATS_COMPDL        "Downloads Completos"
     IDS_STATS_SVRECWORKING  "Max. de Servidores funcionando"
     IDS_STATS_SVRECUSERS    "Max. de Usuários Online"
@@ -1455,7 +1455,7 @@ BEGIN
     IDS_TIMEBEFORE          "(%s passados)"
     IDS_FD_TIMEDATE         "Datas"
     IDS_FILEINFORMATION     "Informação do Arquivo"
-    IDS_STATS_FREESPACE     "Espaço Livre no Drive Temporário: "
+    IDS_STATS_FREESPACE     "Espaço Livre"
     IDS_IRC_HELPCHANNEL     "Connectar ao canal de ajuda."
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-poruguese"
     IDS_IRC_ACCEPTLINKSFRIENDS "Somente de Amigos."
@@ -1551,15 +1551,15 @@ STRINGTABLE
 BEGIN
     IDS_MM_NEWUSER          "Novo usuário logado com sucesso no Servidor MobileMule"
     IDS_RADCLIENTS          "dos clientes conhecidos"
-    IDS_KADUDPPORTERR       "A porta UDP do Kademlia conflitou com alguma porta externa ou porta UDP de Servidor do eMule. A porta foi modificada para %u."
+    IDS_KADUDPPORTERR       "A porta UDP da rede Kad conflitou com alguma porta externa ou porta UDP de Servidor do eMule. A porta foi modificada para %u."
     IDS_CONFIRM_FILEDELETE  "Você realmente deseja remover todos arquivos selecionados do disco?"
     IDS_OPENFOLDER          "Abrir pasta"
     IDS_RUNASUSER           "Executar eMule como usuário não previlegiado"
     IDS_DELETE              "Apagar do disco"
     IDS_BOOTSTRAP           "Auxílio Externo"
     IDS_VIAED2KSQ           "Via ED2K Servidor/Fila"
-    IDS_EM_KADEMLIA         "&Kademlia"
-    IDS_VIAKAD              "Via Kademlia"
+    IDS_EM_KADEMLIA         "&Kad"
+    IDS_VIAKAD              "Via Kad"
     IDS_VIASE               "Via Troca de Fontes"
     IDS_SELECTTOOLBARBITMAP "Selecionar Skin para Barra de Ferramentas"
     IDS_SELECTTOOLBARBITMAPDIR "Selecionar Diretório de Skins"
@@ -1569,20 +1569,20 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "Procura de Nódulo (%i:%i)"
-    IDS_KAD_STOREFILE       "Armazenando Arquivo (%i:%i)"
-    IDS_KAD_STOREKW         "Armazenando Palavra-chave (%i:%i)"
-    IDS_KAD_UNKNOWN         "Desconhecido (%i:%i)"
+    IDS_KAD_NODE            "Procura de Nódulo"
+    IDS_KAD_STOREFILE       "Armazenando Arquivo"
+    IDS_KAD_STOREKW         "Armazenando Palavra-chave"
+    IDS_KAD_UNKNOWN         "Desconhecido"
     IDS_SRV_TCPCOMPR        "Compressão TCP"
     IDS_KADSEARCHLAB        "Buscas Atuais"
     IDS_SRV_UDPSR           "Protocolo Extendido UDP para requisição de fontes"
     IDS_SRV_UDPFR           "Protocolo Extendido UDP para requisição de arquivos"
-    IDS_MINLENGTH           "Min. length [hh:mm:ss]"
+    IDS_MINLENGTH           "Tempo min. [hh:mm:ss]"
     IDS_EM_HELP             "&Ajuda"
     IDS_WRN_FRIENDDUPLIPPORT 
                             "Amigo não adicionado.\r\n\r\nJá existe uma amigo com o mesmo Endereço IP e porta disponíveis."
     IDS_DYNUP               "Sensor de velocidade de Upload"
-    IDS_KADOVERHEAD         "Overhead Kademlia (Pacotes): %s (%s)"
+    IDS_KADOVERHEAD         "Banda acima do normal na rede Kad (Pacotes): %s (%s)"
     IDS_FIND                "Localizar..."
     IDS_LOG_BANNED_CLIENTS  "Registrar os usuários banidos"
     IDS_LOG_RATING_RECV     "Registrar as avaliações recebidas dos arquivos"
@@ -1594,18 +1594,18 @@ BEGIN
     IDS_TEXTLABELS          "Rótulos de Texto"
     IDS_ENABLETEXTLABELS    "Embaixo do Ícone"
     IDS_CUSTOMIZETOOLBAR    "Personalizar Barra de Ferramentas"
-    IDS_MINBITRATE          "Min. bitrate [kBit/s]"
+    IDS_MINBITRATE          "Bitrate min. [kBit/s]"
     IDS_KAD_RECHECKFW       "Verificar Firewall"
     IDS_SHAREDTITLE         "Compart. ED2K|Kad"
-    IDS_WARNINGNOBS         "Auxílio Externo (Bootstrap) inativo agora (Rede Kademlia desabilitada ou já conectada)."
+    IDS_WARNINGNOBS         "Auxílio Externo (Bootstrap) inativo agora (Rede Kad desabilitada ou já conectada)."
     IDS_FIREWALLED          "Sob Firewall"
-    IDS_KADEMLIA            "Kademlia"
+    IDS_KADEMLIA            "Kad"
     IDS_KADCONTACTLAB       "Contatos"
     IDS_KADDISTANCE         "Distância"
     IDS_KEY                 "Chave"
     IDS_NUMBER              "Número"
-    IDS_KAD_SEARCHSRC       "Procurando Fontes (%i:%i)"
-    IDS_KAD_SEARCHKW        "Procurando Palavra-chave (%i:%i)"
+    IDS_KAD_SEARCHSRC       "Procurando Fontes"
+    IDS_KAD_SEARCHKW        "Procurando Palavra-chave"
 END
 
 STRINGTABLE 
@@ -1630,7 +1630,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ERR_NOTCONNECTEDKAD "Você não está conectado à rede Kademlia neste momento!"
+    IDS_ERR_NOTCONNECTEDKAD "Você não está conectado à rede Kad neste momento!"
     IDS_IRC_NOSFS           "Nenhum arquivo compartilhado selecionado"
     IDS_RESETLABEL          "Auto conclusão (função de histórico)"
     IDS_IRC_IGNOREMISCMESSAGE "Ignorar mensagens de informações variadas"
@@ -1652,7 +1652,7 @@ BEGIN
     IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Porcentagem (%)"
     IDS_LOG_A4AF            "Registrar ações A4AF"
     IDS_A4AF_SAVE_CPU       "Desabilitar verificação A4AF para preservar a CPU"
-    IDS_SEARCH_DOC          "Documentos"
+    IDS_SEARCH_DOC          "Documento"
     IDS_DOWNLOAD_ALPHABETICAL "Efetuar Download em ordem alfabetica"
     IDS_INSTALL_SKIN        "Instalar Skin do eMule"
     IDS_INSTALL_SKIN_NODIR  "Nenhum Perfil de Skin do eMule selecionado ou o diretório não está acessível!"
@@ -1696,18 +1696,18 @@ BEGIN
     IDS_IMP_ERR_BADFORMAT   "Formato de Arquivo temporário desconhecido ou corrompido."
     IDS_SEARCH_INVALIDCHAR  "A expressão da busca contem caráteres inválidos. Você inseriu uma '?' como caracter ou inseriu caracteres que não podem ser usados com a Rede ED2K."
     IDS_PORTSCON            "Portas e Conexão"
-    IDS_PORTINFO            "eMule uses two ports for communication with servers and clients. These ports must be free and available for remote clients. The TCP port must be available to ensure the main functionality of eMule. The UDP port is used for Kad (serverless network) and to reduce network usage (Overhead).\n\nYou can change the ports here while no network activities have started."
+    IDS_PORTINFO            "eMule usa duas portas para se comunicar cp, os servidores e usuarios. Estas portas necessitam estar livres e disponiveis para os usuarios remotos. A porta TCP necessita etar disponivel para assegurar a funcionalidade principal do eMule. A porta UDP é usada na rede Kad (rede sem uso de servidor) e para reduzir o uso da rede (Banda acima do normal).\n\nVocê pode mudar as portas aqui quando nenhuma atividade da rede iniciar."
     IDS_STARTTEST           "Teste de portas"
-    IDS_TESTINFO            "Here you can test, if your TCP and UDP port can be connected to from remote. This success of this test is required for servers and clients to connect you. The TCP port have to succeed!"
+    IDS_TESTINFO            "Aqui você pode testar se sua porta TCP e UDP pode ser conectada remotamente. O sucesso neste teste é nescessário para que  servidores e usuários se conectem à você. A porta TCP deve passar no teste!"
     IDS_CONNECTIONTEST      "Teste de Conexão"
     IDS_NOPORTCHANGEPOSSIBLE 
                             "A mudança de portas não é possível após você conectar com os clientes ou quando conectado a um Servidor/Kad!\n\nReinicie por favor o eMule após ter alterado os ajustes de portas ."
     IDS_NETWORK_INFO        "Informação da Rede"
     IDS_SP_TOTALUL          "Número total de uploads"
     IDS_SP_ULFRIENDS        "Slots de amigos enviados"
-    IDS_SP_ULSLOTSNOOVERHEAD "Upload atual excluindo overhead (UL somente em Slots)"
+    IDS_SP_ULSLOTSNOOVERHEAD "Upload atual excluindo a banda acima do normal (UL somente em Slots)"
     IDS_ST_ACTIVEU_ZZ       "Uploads ativos"
-    IDS_ST_ULCURRENT        "Upload+Overhead"
+    IDS_ST_ULCURRENT        "Upload+Banda acima do normal"
     IDS_ST_ULSLOTSNOOVERHEAD "Upload"
     IDS_ST_ULFRIEND         "Upload do amigo"
 END
@@ -1813,8 +1813,38 @@ BEGIN
     IDS_NEGATEFILTER        "Negar Filtro"
     IDS_SEENCOMPL           "Sempre visualizar arquivos completos"
     IDS_SELSKINPROFILEDIR   "Selecionar Diretório de Perfis"
-    IDS_ASKDLINCOMPLETE     "Potentially incomplete file:\r\n\r\n%s\r\n\r\nThis file is supposed to be incomplete in the network and can therefore most likely not downloaded successfully! Do you really want to download this file?"
-    IDS_DEADSOURCES         "Dead Sources"
+    IDS_ASKDLINCOMPLETE     "Arquivo potencialmente incompleto:\r\n\r\n%s\r\n\r\nEste arquivo está supostamente incompleto na rede e  conseqüentemente é muito improvável completar a transferência do arquivo com sucesso! Você deseja realmente baixar este arquivo?"
+    IDS_DEADSOURCES         "Fontes mortas"
+    IDS_LARGEICONS          "Ícones grandes"
+    IDS_SMALLICONS          "Ícones pequenos"
+    IDS_SHORTTAGS           "Tags curtas"
+    IDS_THELOAD             "Carregar"
+    IDS_PACKSENT            "Pacotes Enviados"
+    IDS_RESPONSES           "Respostas"
+    IDS_EXTRACT_META_DATA   "Extract meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (for all other audio/video files)"
+    IDS_META_DATA_ID3LIB    "ID3 Library (only for MPEG audio files)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Common Controls library (COMCTL32.DLL) is too old!\r\n\r\neMule detected a version of the ""Windows Common Controls library (COMCTL32.DLL)"" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the ""Windows Common Controls library (COMCTL32.DLL)"" to at least version 5.8.\r\n\r\nDownload and install an update of the ""Windows Common Controls library (COMCTL32.DLL)"" at Microsoft (R) Download Center. Do you want to visit the corresponding URL?"
+    IDS_ASREGEXPR           "As Regular Expression"
+    IDS_STATIC_REGEXP       "Regular expression for view filter:"
+    IDS_CARE4ALL            "Evaluate All Files"
+    IDS_REGEXPRESSION       "Regular Expression"
+    IDS_SEARCHKAD           "Search Kad"
+    IDS_DWL_IPFILTERFILE    "Downloading IP filter file"
+    IDS_DWLIPFILTERFAILED   "IP filter download failed"
+    IDS_FINDBUDDY           "Find Buddy"
+    IDS_ERR_IPFILTERZIPEXTR "Failed to extract IP filter file from downloaded IP filter ZIP file ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Downloaded IP filter file ""%s"" is a ZIP file with unexpected content."
+    IDS_STORENOTES          "Store Notes"
+    IDS_NOTES               "Notes"
+    IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
+
 END
 
 #endif    // Portuguese (Brazil) resources

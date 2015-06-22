@@ -61,9 +61,9 @@
 #include "Log.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -106,13 +106,13 @@ void CUpDownClient::Init()
 {
 	credits = 0;
 	m_nSumForAvgUpDataRate = 0;
-	m_bAddNextConnect = false;  // VQB Fix for LowID slots only on connection
+	m_bAddNextConnect = false;
 	m_nChatstate = MS_NONE;
 	m_nKadState = KS_NONE;
 	m_cShowDR = 0;
 	m_nUDPPort = 0;
 	m_nKadPort = 0;
-	m_nTransferedUp = 0;
+	m_nTransferredUp = 0;
 	m_cAsked = 0;
 	m_cDownAsked = 0;
 	m_nUpDatarate = 0;
@@ -136,7 +136,7 @@ void CUpDownClient::Init()
 	m_abyUpPartStatus = 0;
 	m_nDownloadState = DS_NONE;
 	m_dwUploadTime = 0;
-	m_nTransferedDown = 0;
+	m_nTransferredDown = 0;
 	m_nDownDatarate = 0;
 	m_nDownDataRateMS = 0;
 	m_nUploadState = US_NONE;
@@ -162,6 +162,7 @@ void CUpDownClient::Init()
 	m_cMessagesReceived = 0;
 	m_cMessagesSent = 0;
 	m_nCurSessionUp = 0;
+	m_nCurSessionDown = 0;
 	m_nSumForAvgDownDataRate = 0;
 	m_clientSoft=SO_UNKNOWN;
 	m_bRemoteQueueFull = false;
@@ -206,7 +207,7 @@ void CUpDownClient::Init()
 	md4clr(requpfileid);
 	m_nTotalUDPPackets = 0;
 	m_nFailedUDPPackets = 0;
-	m_nUrlStartPos = -1;
+	m_nUrlStartPos = (UINT)-1;
 	m_iHttpSendState = 0;
 	m_fPeerCache = 0;
 	m_uPeerCacheDownloadPushId = 0;
@@ -230,6 +231,9 @@ void CUpDownClient::Init()
 	m_pReqFileAICHHash = NULL;
 	m_fSupportsAICH = 0;
 	m_fAICHRequested = 0;
+	m_byKadVersion = 0;
+	SetLastBuddyPingPongTime();
+	m_fSentOutOfPartReqs = 0;
 }
 
 CUpDownClient::~CUpDownClient(){
@@ -314,6 +318,7 @@ void CUpDownClient::ClearHelloProperties()
 	m_fPeerCache = 0;
 	m_uPeerCacheDownloadPushId = 0;
 	m_uPeerCacheUploadPushId = 0;
+	m_byKadVersion = 0;
 }
 
 bool CUpDownClient::ProcessHelloPacket(char* pachPacket, uint32 nSize){
@@ -433,24 +438,33 @@ bool CUpDownClient::ProcessHelloTypePacket(CSafeMemFile* data)
 				//	1 No 'View Shared Files' supported
 				//	1 MultiPacket
 				//  1 Preview
-				m_fSupportsAICH			= (temptag.GetInt() >> (4*7+1)) & 0x07;
-				m_bUnicodeSupport		= (temptag.GetInt() >> 4*7) & 0x01;
-				m_byUDPVer				= (temptag.GetInt() >> 4*6) & 0x0f;
-				m_byDataCompVer			= (temptag.GetInt() >> 4*5) & 0x0f;
-				m_bySupportSecIdent		= (temptag.GetInt() >> 4*4) & 0x0f;
-				m_bySourceExchangeVer	= (temptag.GetInt() >> 4*3) & 0x0f;
-				m_byExtendedRequestsVer	= (temptag.GetInt() >> 4*2) & 0x0f;
-				m_byAcceptCommentVer	= (temptag.GetInt() >> 4*1) & 0x0f;
-				m_fPeerCache			= (temptag.GetInt() >> 1*3) & 0x01;
-				m_fNoViewSharedFiles	= (temptag.GetInt() >> 1*2) & 0x01;
-				m_bMultiPacket			= (temptag.GetInt() >> 1*1) & 0x01;
-				m_fSupportsPreview		= (temptag.GetInt() >> 1*0) & 0x01;
+				m_fSupportsAICH			= (temptag.GetInt() >> 29) & 0x07;
+				m_bUnicodeSupport		= (temptag.GetInt() >> 28) & 0x01;
+				m_byUDPVer				= (temptag.GetInt() >> 24) & 0x0f;
+				m_byDataCompVer			= (temptag.GetInt() >> 20) & 0x0f;
+				m_bySupportSecIdent		= (temptag.GetInt() >> 16) & 0x0f;
+				m_bySourceExchangeVer	= (temptag.GetInt() >> 12) & 0x0f;
+				m_byExtendedRequestsVer	= (temptag.GetInt() >>  8) & 0x0f;
+				m_byAcceptCommentVer	= (temptag.GetInt() >>  4) & 0x0f;
+				m_fPeerCache			= (temptag.GetInt() >>  3) & 0x01;
+				m_fNoViewSharedFiles	= (temptag.GetInt() >>  2) & 0x01;
+				m_bMultiPacket			= (temptag.GetInt() >>  1) & 0x01;
+				m_fSupportsPreview		= (temptag.GetInt() >>  0) & 0x01;
 				dwEmuleTags |= 2;
 				if (bDbgInfo){
 					m_strHelloInfo.AppendFormat(_T("\n  PeerCache=%u  UDPVer=%u  DataComp=%u  SecIdent=%u  SrcExchg=%u")
 												_T("  ExtReq=%u  Commnt=%u  Preview=%u  NoViewFiles=%u  Unicode=%u"), 
 												m_fPeerCache, m_byUDPVer, m_byDataCompVer, m_bySupportSecIdent, m_bySourceExchangeVer, 
 												m_byExtendedRequestsVer, m_byAcceptCommentVer, m_fSupportsPreview, m_fNoViewSharedFiles, m_bUnicodeSupport);
+				}
+				break;
+			case CT_EMULE_MISCOPTIONS2:
+				//	28 Reserved
+				//   4 Kad Version
+				m_byKadVersion			= (temptag.GetInt() >>  0) & 0x0f;
+				dwEmuleTags |= 8;
+				if (bDbgInfo){
+					m_strHelloInfo.AppendFormat(_T("\n  KadVersion=%u"  ), m_byKadVersion );
 				}
 				break;
 			case CT_EMULE_VERSION:
@@ -806,9 +820,9 @@ void CUpDownClient::SendHelloTypePacket(CSafeMemFile* data)
 	data->WriteUInt32(clientid);
 	data->WriteUInt16(thePrefs.GetPort());
 
-	uint32 tagcount = 5;
+	uint32 tagcount = 6;
 
-	if( m_nBuddyIP && m_nBuddyPort )
+	if( theApp.clientlist->GetBuddy() && theApp.IsFirewalled() )
 		tagcount += 2;
 
 	data->WriteUInt32(tagcount);
@@ -831,16 +845,19 @@ void CUpDownClient::SendHelloTypePacket(CSafeMemFile* data)
 	}
 	CTag tagUdpPorts(CT_EMULE_UDPPORTS, 
 				((uint32)kadUDPPort			   << 16) |
-				((uint32)thePrefs.GetUDPPort()      ) ); 
+				((uint32)thePrefs.GetUDPPort() <<  0)
+				); 
 	tagUdpPorts.WriteTagToFile(data);
 	
-	if( m_nBuddyPort && m_nBuddyIP )
+	if( theApp.clientlist->GetBuddy() && theApp.IsFirewalled() )
 	{
-		CTag tagBuddyIP(CT_EMULE_BUDDYIP, m_nBuddyIP ); 
+		CTag tagBuddyIP(CT_EMULE_BUDDYIP, theApp.clientlist->GetBuddy()->GetBuddyIP() ); 
 		tagBuddyIP.WriteTagToFile(data);
 	
 		CTag tagBuddyPort(CT_EMULE_BUDDYUDP, 
-				((uint32)m_nBuddyPort				) );
+//					( RESERVED												)
+					((uint32)theApp.clientlist->GetBuddy()->GetBuddyPort()  ) 
+					);
 		tagBuddyPort.WriteTagToFile(data);
 	}
 
@@ -855,33 +872,38 @@ void CUpDownClient::SendHelloTypePacket(CSafeMemFile* data)
 	const UINT uMultiPacket			= 1;
 	const UINT uSupportPreview		= (thePrefs.CanSeeShares() != vsfaNobody) ? 1 : 0; // set 'Preview supported' only if 'View Shared Files' allowed
 	const UINT uPeerCache			= 1;
-#ifdef _UNICODE
 	const UINT uUnicodeSupport		= 1;
-#else
-	const UINT uUnicodeSupport		= 0;
-#endif
 	const UINT nAICHVer				= 1;
-	CTag tagMisOptions(CT_EMULE_MISCOPTIONS1, 
-				(nAICHVer				<< ((4*7)+1)) |
-				(uUnicodeSupport		<< 4*7) |
-				(uUdpVer				<< 4*6) |
-				(uDataCompVer			<< 4*5) |
-				(uSupportSecIdent		<< 4*4) |
-				(uSourceExchangeVer		<< 4*3) |
-				(uExtendedRequestsVer	<< 4*2) |
-				(uAcceptCommentVer		<< 4*1) |
-				(uPeerCache				<< 1*3) |
-				(uNoViewSharedFiles		<< 1*2) |
-				(uMultiPacket			<< 1*1) |
-				(uSupportPreview		<< 1*0) );
-	tagMisOptions.WriteTagToFile(data);
+	CTag tagMisOptions1(CT_EMULE_MISCOPTIONS1, 
+				(nAICHVer				<< 29) |
+				(uUnicodeSupport		<< 28) |
+				(uUdpVer				<< 24) |
+				(uDataCompVer			<< 20) |
+				(uSupportSecIdent		<< 16) |
+				(uSourceExchangeVer		<< 12) |
+				(uExtendedRequestsVer	<<  8) |
+				(uAcceptCommentVer		<<  4) |
+				(uPeerCache				<<  3) |
+				(uNoViewSharedFiles		<<  2) |
+				(uMultiPacket			<<  1) |
+				(uSupportPreview		<<  0)
+				);
+	tagMisOptions1.WriteTagToFile(data);
+
+	// eMule Misc. Options #2
+	const UINT uKadVersion			= 1;
+	CTag tagMisOptions2(CT_EMULE_MISCOPTIONS2, 
+//				(RESERVED				     ) 
+				(uKadVersion			<<  0) 
+				);
+	tagMisOptions2.WriteTagToFile(data);
 
 	// eMule Version
 	CTag tagMuleVersion(CT_EMULE_VERSION, 
 				//(uCompatibleClientID	<< 24) |
 				(VERSION_MJR			<< 17) |
 				(VERSION_MIN			<< 10) |
-				(VERSION_UPDATE			<<  7) //|
+				(VERSION_UPDATE			<<  7) 
 //				(RESERVED			     ) 
 				);
 	tagMuleVersion.WriteTagToFile(data);
@@ -956,14 +978,20 @@ void CUpDownClient::ProcessMuleCommentPacket(char* pachPacket, uint32 nSize)
 	}
 }
 
-bool CUpDownClient::Disconnected(LPCTSTR pszReason, bool bFromSocket){
-	//If this is a KAD client object, just delete it!
-	ASSERT(theApp.clientlist->IsValidClient(this));
+bool CUpDownClient::Disconnected(LPCTSTR pszReason, bool bFromSocket)
+{
+	ASSERT( theApp.clientlist->IsValidClient(this) );
 
+	//If this is a KAD client object, just delete it!
 	SetKadState(KS_NONE);
 
     if (GetUploadState() == US_UPLOADING || GetUploadState() == US_CONNECTING)
+	{
+		if (thePrefs.GetLogUlDlEvents() && GetUploadState()==US_UPLOADING && m_fSentOutOfPartReqs==0 && !theApp.uploadqueue->IsOnUploadQueue(this))
+			DebugLog(_T("Disconnected client removed from upload queue and waiting list: %s"), DbgGetClientInfo());
 		theApp.uploadqueue->RemoveFromUploadQueue(this, pszReason);
+	}
+
 	// 28-Jun-2004 [bc]: re-applied this patch which was in 0.30b-0.30e. it does not seem to solve the bug but
 	// it does not hurt either...
 	if (m_BlockRequests_queue.GetCount() > 0 || m_DoneBlocks_list.GetCount()){
@@ -984,27 +1012,30 @@ bool CUpDownClient::Disconnected(LPCTSTR pszReason, bool bFromSocket){
 	if (GetDownloadState() == DS_DOWNLOADING){
 		if (m_ePeerCacheDownState == PCDS_WAIT_CACHE_REPLY || m_ePeerCacheDownState == PCDS_DOWNLOADING)
 			theApp.m_pPeerCache->DownloadAttemptFailed();
-	
-		if (thePrefs.GetLogUlDlEvents())
-        	AddDebugLogLine(DLP_VERYLOW, false, _T("Download session ended. User: %s Reason: %s"), GetUserName(), pszReason);
-		SetDownloadState(DS_ONQUEUE);
+		SetDownloadState(DS_ONQUEUE, CString(_T("Disconnected: ")) + pszReason);
 	}
 	else{
 		// ensure that all possible block requests are removed from the partfile
 		ClearDownloadBlockRequests();
+		if(GetDownloadState() == DS_CONNECTED){
+			theApp.clientlist->m_globDeadSourceList.AddDeadSource(this);
+			theApp.downloadqueue->RemoveSource(this);
+	    }
 	}
+
 	// we had still an AICH request pending, handle it
 	if (IsAICHReqPending()){
 		m_fAICHRequested = FALSE;
 		CAICHHashSet::ClientAICHRequestFailed(this);
 	}
+
 	// The remote client does not have to answer with OP_HASHSETANSWER *immediatly* 
 	// after we've sent OP_HASHSETREQUEST. It may occure that a (buggy) remote client 
 	// is sending use another OP_FILESTATUS which would let us change to DL-state to DS_ONQUEUE.
 	if (((GetDownloadState() == DS_REQHASHSET) || m_fHashsetRequesting) && (reqfile))
         reqfile->hashsetneeded = true;
 
-	ASSERT(theApp.clientlist->IsValidClient(this));
+	ASSERT( theApp.clientlist->IsValidClient(this) );
 
 	//check if this client is needed in any way, if not delete it
 	bool bDelete = true;
@@ -1012,14 +1043,14 @@ bool CUpDownClient::Disconnected(LPCTSTR pszReason, bool bFromSocket){
 		case US_ONUPLOADQUEUE:
 			bDelete = false;
 			break;
-	};
+	}
 	switch(m_nDownloadState){
 		case DS_ONQUEUE:
 		case DS_TOOMANYCONNS:
 		case DS_NONEEDEDPARTS:
 		case DS_LOWTOLOWIP:
 			bDelete = false;
-	};
+	}
 
 	switch(m_nUploadState){
 		case US_CONNECTING:
@@ -1029,40 +1060,44 @@ bool CUpDownClient::Disconnected(LPCTSTR pszReason, bool bFromSocket){
 		case US_ERROR:
 			theApp.clientlist->m_globDeadSourceList.AddDeadSource(this);
 			bDelete = true;
-	};
+	}
 	switch(m_nDownloadState){
 		case DS_CONNECTING:
 		case DS_WAITCALLBACK:
 		case DS_ERROR:
 			theApp.clientlist->m_globDeadSourceList.AddDeadSource(this);
 			bDelete = true;
-	};
-	
+	}
 
 	if (GetChatState() != MS_NONE){
 		bDelete = false;
 		theApp.emuledlg->chatwnd->chatselector.ConnectingResult(this,false);
 	}
+	
 	if (!bFromSocket && socket){
 		ASSERT (theApp.listensocket->IsValidSocket(socket));
 		socket->Safe_Delete();
 	}
 	socket = 0;
+
     if (m_iFileListRequested){
 		LogWarning(LOG_STATUSBAR, GetResString(IDS_SHAREDFILES_FAILED), GetUserName());
         m_iFileListRequested = 0;
 	}
+
 	if (m_Friend)
 		theApp.friendlist->RefreshFriend(m_Friend);
 
 	theApp.emuledlg->transferwnd->clientlistctrl.RefreshClient(this);
 
-	if (bDelete){
+	if (bDelete)
+	{
 		if (thePrefs.GetDebugClientTCPLevel() > 0)
 			Debug(_T("--- Deleted client            %s; Reason=%s\n"), DbgGetClientInfo(true), pszReason);
 		return true;
 	}
-	else{
+	else
+	{
 		if (thePrefs.GetDebugClientTCPLevel() > 0)
 			Debug(_T("--- Disconnected client       %s; Reason=%s\n"), DbgGetClientInfo(true), pszReason);
 		m_fHashsetRequesting = 0;
@@ -1084,6 +1119,7 @@ bool CUpDownClient::Disconnected(LPCTSTR pszReason, bool bFromSocket){
 			m_pPCUpSocket->client = NULL;
 			m_pPCUpSocket->Safe_Delete();
 		}
+		m_fSentOutOfPartReqs = 0;
 		return false;
 	}
 }
@@ -1173,7 +1209,6 @@ bool CUpDownClient::TryToConnect(bool bIgnoreMaxCon, CRuntimeClass* pClassSocket
 			if( Kademlia::CKademlia::isConnected() )
 			{
 				//We are connect to Kad
-				ASSERT(Kademlia::CKademlia::getPrefs() != NULL);
 				if( Kademlia::CKademlia::getPrefs()->getTotalSource() > 0 || Kademlia::CSearchManager::alreadySearchingFor(Kademlia::CUInt128(GetBuddyID())))
 				{
 					//There are too many source lookups already or we are already searching this key.
@@ -1292,10 +1327,6 @@ bool CUpDownClient::TryToConnect(bool bIgnoreMaxCon, CRuntimeClass* pClassSocket
 						}
 					}
 				}
-//				else
-//				{
-					//At the moment we ONLY allow Kad callbacks for downloads!
-//				}
 			}
 			else
 			{
@@ -2080,7 +2111,7 @@ void CUpDownClient::AssertValid() const
 	(void)m_dwLastSignatureIP;
 	ASSERT( (m_byInfopacketsReceived & ~IP_BOTH) == 0 );
 	(void)m_bySupportSecIdent;
-	(void)m_nTransferedUp;
+	(void)m_nTransferredUp;
 	ASSERT( m_nUploadState >= US_UPLOADING && m_nUploadState <= US_NONE );
 	(void)m_dwUploadTime;
 	(void)m_cAsked;
@@ -2101,7 +2132,7 @@ void CUpDownClient::AssertValid() const
 	(void)m_cDownAsked;
 	(void)m_abyPartStatus;
 	(void)m_strClientFilename;
-	(void)m_nTransferedDown;
+	(void)m_nTransferredDown;
 	(void)m_dwDownStartTime;
 	(void)m_nLastBlockOffset;
 	(void)m_nDownDatarate;
@@ -2215,11 +2246,11 @@ CString CUpDownClient::DbgGetClientInfo(bool bFormatIP) const
 
 bool CUpDownClient::CheckHandshakeFinished(UINT protocol, UINT opcode) const
 {
-	if (m_bHelloAnswerPending){
-		//throw CString(_T("Handshake not finished")); // -> disconnect client
-		// this triggers way too often.. need more time to look at this -> only create a warning
-		if (thePrefs.GetVerbose())
-			AddDebugLogLine(DLP_VERYLOW, false, _T("Handshake not finished - while processing packet: %s; %s"), DbgGetClientTCPOpcode(protocol, opcode), DbgGetClientInfo());
+	if (m_bHelloAnswerPending)
+	{
+		// 24-Nov-2004 [bc]: The reason for this is that 2 clients are connecting to each other at the same..
+		//if (thePrefs.GetVerbose())
+		//	AddDebugLogLine(DLP_VERYLOW, false, _T("Handshake not finished - while processing packet: %s; %s"), DbgGetClientTCPOpcode(protocol, opcode), DbgGetClientInfo());
 		return false;
 	}
 
@@ -2291,22 +2322,23 @@ CString CUpDownClient::GetDownloadStateDisplayString() const
 			break;
 	}
 
-#ifdef _DEBUG
-	switch (m_ePeerCacheDownState)
+	if (thePrefs.GetPeerCacheShow())
 	{
-	case PCDS_WAIT_CLIENT_REPLY:
-		strState += _T(" ")+GetResString(IDS_PCDS_CLIENTWAIT);
-		break;
-	case PCDS_WAIT_CACHE_REPLY:
-		strState += _T(" ")+GetResString(IDS_PCDS_CACHEWAIT);
-		break;
-	case PCDS_DOWNLOADING:
-		strState += _T(" ")+GetResString(IDS_CACHE);
-		break;
+		switch (m_ePeerCacheDownState)
+		{
+		case PCDS_WAIT_CLIENT_REPLY:
+			strState += _T(" ")+GetResString(IDS_PCDS_CLIENTWAIT);
+			break;
+		case PCDS_WAIT_CACHE_REPLY:
+			strState += _T(" ")+GetResString(IDS_PCDS_CACHEWAIT);
+			break;
+		case PCDS_DOWNLOADING:
+			strState += _T(" ")+GetResString(IDS_CACHE);
+			break;
+		}
+		if (m_ePeerCacheDownState != PCDS_NONE && m_bPeerCacheDownHit)
+			strState += _T(" Hit");
 	}
-	if (m_ePeerCacheDownState != PCDS_NONE && m_bPeerCacheDownHit)
-		strState += _T(" Hit");
-#endif
 
 	return strState;
 }
@@ -2347,19 +2379,21 @@ CString CUpDownClient::GetUploadStateDisplayString() const
 			break;
 	}
 
-#ifdef _DEBUG
-	switch (m_ePeerCacheUpState)
+	if (thePrefs.GetPeerCacheShow())
 	{
-	case PCUS_WAIT_CACHE_REPLY:
-		strState += _T(" CacheWait");
-		break;
-	case PCUS_UPLOADING:
-		strState += _T(" Cache");
-		break;
+		switch (m_ePeerCacheUpState)
+		{
+		case PCUS_WAIT_CACHE_REPLY:
+			strState += _T(" CacheWait");
+			break;
+		case PCUS_UPLOADING:
+			strState += _T(" Cache");
+			break;
+		}
+		if (m_ePeerCacheUpState != PCUS_NONE && m_bPeerCacheUpHit)
+			strState += _T(" Hit");
 	}
-	if (m_ePeerCacheUpState != PCUS_NONE && m_bPeerCacheUpHit)
-		strState += _T(" Hit");
-#endif
+
 	return strState;
 }
 
@@ -2408,9 +2442,7 @@ void CUpDownClient::CheckFailedFileIdReqs(const uchar* aucFileHash)
 
 EUtf8Str CUpDownClient::GetUnicodeSupport() const
 {
-#ifdef _UNICODE
 	if (m_bUnicodeSupport)
 		return utf8strRaw;
-#endif
 	return utf8strNone;
 }

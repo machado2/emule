@@ -11,49 +11,6 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Static|Win32"
-			OutputDirectory="Static"
-			IntermediateDirectory="Static"
-			ConfigurationType="4"
-			UseOfMFC="2"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="1"
-				OmitFramePointers="TRUE"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_LIB;ES_ES_T_EXPORTS"
-				StringPooling="TRUE"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="TRUE"
-				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLibrarianTool"
-				AdditionalOptions="/MACHINE:IX86"
-				OutputFile="$(OutDir)/es_ES_T.lib"/>
-			<Tool
-				Name="VCMIDLTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				Description="Copying language DLL into debug directory"
-				CommandLine="if not exist ..\debug\lang md ..\debug\lang
-copy &quot;$(TargetPath)&quot; ..\debug\lang\$(TargetFileName)
-"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-		</Configuration>
-		<Configuration
 			Name="Dynamic|Win32"
 			OutputDirectory="Dynamic"
 			IntermediateDirectory="Dynamic"
@@ -70,15 +27,13 @@ copy &quot;$(TargetPath)&quot; ..\debug\lang\$(TargetFileName)
 				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"/>
+				Detect64BitPortabilityProblems="TRUE"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)/es_ES_T.dll"
 				LinkIncremental="1"
-				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -90,10 +45,8 @@ copy &quot;$(TargetPath)&quot; ..\debug\lang\$(TargetFileName)
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying language DLL into debug directory"
-				CommandLine="if not exist ..\Debug\lang md ..\Debug\lang
-copy &quot;$(TargetPath)&quot; ..\Debug\lang\$(TargetFileName)
-if not exist ..\DebugUnicode\lang md ..\DebugUnicode\lang
-copy &quot;$(TargetPath)&quot; ..\DebugUnicode\lang\$(TargetFileName)
+				CommandLine="if not exist ..\debug\lang md ..\debug\lang
+copy &quot;$(TargetPath)&quot; ..\debug\lang\$(TargetFileName)
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"/>

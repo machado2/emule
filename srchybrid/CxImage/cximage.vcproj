@@ -67,7 +67,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
+				Optimization="2"
 				AdditionalIncludeDirectories="..\..;..\..\zlib;..\jpeg;..\png;..\mng;..\tiff;..\j2k;..\jasper\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;JAS_WIN_MSVC_BUILD"
 				BasicRuntimeChecks="3"

@@ -76,7 +76,7 @@
 #define IDS_SKIN_PROF                   165
 #define IDS_ERR_PART_FNF                166
 #define IDS_ERR_OPENMETFILE             167
-#define IDR_HTTPDOWNLOAD_ANI			168
+#define IDR_HTTPDOWNLOAD_ANI            168
 #define IDS_KADOPEN                     168
 #define IDS_ERR_SAVEMET                 169
 #define IDS_ERR_FOUNDCORRUPTION         170
@@ -1360,6 +1360,7 @@
 #define IDS_CHAT_DOWNLOADED             1410
 #define IDS_CHAT_UPLOADED               1411
 #define IDS_CHAT_IDENT                  1412
+#define IDD_MINIMULE                    1412
 #define IDS_CHAT_CLIENT                 1413
 #define IDS_MAXHALFOPENCONS             1414
 #define IDS_WIZ_STARTWITHWINDOWS        1415
@@ -1426,6 +1427,31 @@
 #define IDS_SELSKINPROFILEDIR           1476
 #define IDS_ASKDLINCOMPLETE             1477
 #define IDS_DEADSOURCES                 1478
+#define IDS_LARGEICONS                  1479
+#define IDS_SMALLICONS                  1480
+#define IDR_HTML_MINIMULE               1481
+#define IDS_SHORTTAGS                   1481
+#define IDS_THELOAD                     1482
+#define IDS_PACKSENT                    1483
+#define IDS_RESPONSES                   1484
+#define IDS_EXTRACT_META_DATA           1485
+#define IDS_META_DATA_MEDIADET          1486
+#define IDS_META_DATA_ID3LIB            1487
+#define IDS_COMCTRL32_DLL_TOOOLD        1488
+#define IDS_ASREGEXPR                   1489
+#define IDS_STATIC_REGEXP               1490
+#define IDS_CARE4ALL                    1491
+#define IDS_REGEXPRESSION               1492
+#define IDS_SEARCHKAD                   1493
+#define IDS_DWL_IPFILTERFILE            1494
+#define IDS_DWLIPFILTERFAILED           1495
+#define IDS_FINDBUDDY                   1496
+#define IDS_ERR_IPFILTERZIPEXTR         1497
+#define IDS_ERR_IPFILTERCONTENTERR      1498
+#define IDS_STORENOTES                  1499
+#define IDS_NOTES                       1500
+#define IDS_KADSEARCHALREADY            1501
+#define IDS_ALPHABETIC2NDSORT           1502
 #define IDC_ANIMATE1                    2000
 #define IDC_STATUS                      2001
 #define IDC_FILESTATUS                  2002
@@ -1471,6 +1497,7 @@
 #define IDC_EDITADR                     2060
 #define IDC_BROWSE                      2061
 #define IDC_RELOADFILTER                2062
+#define IDC_REB                         2062
 #define IDC_HOTMENU                     2063
 #define IDC_LOADURL                     2063
 #define IDC_WSRELOADTMPL                2064
@@ -1533,6 +1560,7 @@
 #define IDC_PROGRESS1                   2180
 #define IDC_MINTRAY                     2181
 #define IDC_VCODEC                      2182
+#define IDC_ALPH2ND                     2182
 #define IDC_SEARCHNAME                  2183
 #define IDC_AUTOCONNECT                 2185
 #define IDC_VBITRATE                    2186
@@ -1577,7 +1605,7 @@
 #define IDC_SREQUESTED                  2230
 #define IDC_SACCEPTED                   2234
 #define IDC_DSIP                        2235
-#define IDC_STRANSFERED                 2236
+#define IDC_STRANSFERRED                2236
 #define IDC_DHASH                       2237
 #define IDC_FSTATIC8                    2238
 #define IDC_FSTATIC9                    2240
@@ -1586,7 +1614,7 @@
 #define IDC_DSNAME                      2243
 #define IDC_SACCEPTED2                  2244
 #define IDC_DDOWNLOADING                2245
-#define IDC_STRANSFERED2                2246
+#define IDC_STRANSFERRED2               2246
 #define IDC_DDOWN                       2247
 #define IDC_DAVDR                       2248
 #define IDC_DDUP                        2249
@@ -1624,7 +1652,7 @@
 #define IDC_BEEPER                      2308
 #define IDC_EXIT                        2311
 #define IDC_SPLASHON                    2315
-#define IDC_TypeSearch                  2322
+#define IDC_TYPESEARCH                  2322
 #define IDC_FILTER                      2327
 #define IDC_IRC_USECHANFILTER           2329
 #define IDC_UDPDISABLE                  2330
@@ -1641,7 +1669,7 @@
 #define IDC_FD_AICHHASH                 2341
 #define IDC_PFSTATUS                    2343
 #define IDC_PARTCOUNT                   2344
-#define IDC_TRANSFERED                  2345
+#define IDC_TRANSFERRED                 2345
 #define IDC_COMPLSIZE                   2346
 #define IDC_DATARATE                    2348
 #define IDC_SOURCECOUNT                 2349
@@ -1804,6 +1832,7 @@
 #define IDC_WSPASSLOW                   2556
 #define IDC_AUTOCATEXT                  2558
 #define IDC_MMPORT_FIELD                2559
+#define IDC_REGEXP                      2559
 #define IDC_WIZ_TRUEUPLOAD_TEXT         2564
 #define IDC_WIZ_OS_FRAME                2566
 #define IDC_WIZ_CONCURENTDOWN_FRAME     2567
@@ -1855,6 +1884,7 @@
 #define IDC_STATIC_COMMENT              2621
 #define IDC_STATIC_DLTOof               2622
 #define IDC_STATIC_AUTOCAT              2623
+#define IDC_STATIC_REGEXP               2624
 #define IDC_FILTERSERVERBYIPFILTER      2626
 #define IDC_STATIC_FILTERLEVEL          2627
 #define IDC_STATIC_IPFILTER             2628
@@ -2090,14 +2120,16 @@
 #define IDC_LD_HOSTNAMECHE              2909
 #define IDC_SOURCE_TYPE                 2909
 #define IDC_UIP                         2910
+#define IDC_REGEXPR                     2912
+#define IDC_SEARCHKAD                   2913
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        1411
+#define _APS_NEXT_RESOURCE_VALUE        1503
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         2912
-#define _APS_NEXT_SYMED_VALUE           1453
+#define _APS_NEXT_CONTROL_VALUE         2914
+#define _APS_NEXT_SYMED_VALUE           1482
 #endif
 #endif

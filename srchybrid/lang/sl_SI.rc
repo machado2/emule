@@ -1446,7 +1446,7 @@ BEGIN
     IDS_TIMEBEFORE          "(pred %s)"
     IDS_FD_TIMEDATE         "Datumi"
     IDS_FILEINFORMATION     "Inf. o datoteki"
-    IDS_STATS_FREESPACE     "Prostor na disku: "
+    IDS_STATS_FREESPACE     "Free Space"
     IDS_IRC_HELPCHANNEL     "Poveži s kanali za pomoè"
     IDS_IRC_HELPCHANNELPERFORM "/join #emule"
     IDS_IRC_ACCEPTLINKSFRIENDS "Samo od prijateljev"
@@ -1539,10 +1539,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "Išèi Node (%i:%i)"
-    IDS_KAD_STOREFILE       "Shrani dat. (%i:%i)"
-    IDS_KAD_STOREKW         "shrani kjuèno besedo (%i:%i)"
-    IDS_KAD_UNKNOWN         "Neznano (%i:%i)"
+    IDS_KAD_NODE            "Išèi Node"
+    IDS_KAD_STOREFILE       "Shrani dat."
+    IDS_KAD_STOREKW         "shrani kjuèno besedo"
+    IDS_KAD_UNKNOWN         "Neznano"
     IDS_SRV_TCPCOMPR        "TCP stiskanje"
     IDS_KADSEARCHLAB        "Trenutna iskanja"
     IDS_SRV_UDPSR           "Dodatne UDP protokol za zahteve virom"
@@ -1574,8 +1574,8 @@ BEGIN
     IDS_KADDISTANCE         "Razdalja"
     IDS_KEY                 "Kljuè"
     IDS_NUMBER              "Številka"
-    IDS_KAD_SEARCHSRC       "Išèi vire (%i:%i)"
-    IDS_KAD_SEARCHKW        "Išèi kljuène besede (%i:%i)"
+    IDS_KAD_SEARCHSRC       "Išèi vire"
+    IDS_KAD_SEARCHKW        "Išèi kljuène besede"
 END
 
 STRINGTABLE 
@@ -1805,6 +1805,36 @@ BEGIN
     IDS_SELSKINPROFILEDIR   "Select skin profile directory"
     IDS_ASKDLINCOMPLETE     "Potentially incomplete file:\r\n\r\n%s\r\n\r\nThis file is supposed to be incomplete in the network and can therefore most likely not downloaded successfully! Do you really want to download this file?"
     IDS_DEADSOURCES         "Dead Sources"
+    IDS_LARGEICONS          "Large Icons"
+    IDS_SMALLICONS          "Small Icons"
+    IDS_SHORTTAGS           "Short tags"
+    IDS_THELOAD             "Load"
+    IDS_PACKSENT            "Packets Sent"
+    IDS_RESPONSES           "Responses"
+    IDS_EXTRACT_META_DATA   "Extract meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (for all other audio/video files)"
+    IDS_META_DATA_ID3LIB    "ID3 Library (only for MPEG audio files)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Common Controls library (COMCTL32.DLL) is too old!\r\n\r\neMule detected a version of the ""Windows Common Controls library (COMCTL32.DLL)"" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the ""Windows Common Controls library (COMCTL32.DLL)"" to at least version 5.8.\r\n\r\nDownload and install an update of the ""Windows Common Controls library (COMCTL32.DLL)"" at Microsoft (R) Download Center. Do you want to visit the corresponding URL?"
+    IDS_ASREGEXPR           "As Regular Expression"
+    IDS_STATIC_REGEXP       "Regular expression for view filter:"
+    IDS_CARE4ALL            "Evaluate All Files"
+    IDS_REGEXPRESSION       "Regular Expression"
+    IDS_SEARCHKAD           "Search Kad"
+    IDS_DWL_IPFILTERFILE    "Downloading IP filter file"
+    IDS_DWLIPFILTERFAILED   "IP filter download failed"
+    IDS_FINDBUDDY           "Find Buddy"
+    IDS_ERR_IPFILTERZIPEXTR "Failed to extract IP filter file from downloaded IP filter ZIP file ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Downloaded IP filter file ""%s"" is a ZIP file with unexpected content."
+    IDS_STORENOTES          "Store Notes"
+    IDS_NOTES               "Notes"
+    IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
+
 END
 
 #endif    // Slovenian resources

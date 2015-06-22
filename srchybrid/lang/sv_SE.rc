@@ -515,7 +515,7 @@ BEGIN
     IDS_PW_INCOMING         "Inkommande filer"
     IDS_PW_TEMP             "Temponära filer"
     IDS_PW_BROWSE           "Utforska"
-    IDS_PW_SHARED           "Utdelade kataloger"
+    IDS_PW_SHARED           "Utdelade kataloger (Ctrl+Klick för att inkludera underkataloger)"
     IDS_PW_CONNECTION       "Anslutning"
     IDS_PW_DOWNC            "Nedl. kapacitet"
     IDS_PW_DOWNL            "Nedladdningsgräns"
@@ -1449,7 +1449,7 @@ BEGIN
     IDS_TIMEBEFORE          "(%s sen)"
     IDS_FD_TIMEDATE         "Datum"
     IDS_FILEINFORMATION     "Överföringsinformation"
-    IDS_STATS_FREESPACE     "Ledigt utrymme på tempdisken: "
+    IDS_STATS_FREESPACE     "Ledigt utrymme"
     IDS_IRC_HELPCHANNEL     "Anslut till hjälpkanaler."
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-swedish"
     IDS_IRC_ACCEPTLINKSFRIENDS "Bara från kompisar."
@@ -1562,10 +1562,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "Kolla upp nod (%i:%i)"
-    IDS_KAD_STOREFILE       "Lagra fil (%i:%i)"
-    IDS_KAD_STOREKW         "Lagra nyckelord (%i:%i)"
-    IDS_KAD_UNKNOWN         "Okänd (%i:%i)"
+    IDS_KAD_NODE            "Kolla upp nod"
+    IDS_KAD_STOREFILE       "Lagra fil"
+    IDS_KAD_STOREKW         "Lagra nyckelord"
+    IDS_KAD_UNKNOWN         "Okänd"
     IDS_SRV_TCPCOMPR        "TCP komprimering"
     IDS_KADSEARCHLAB        "Nuvarande sökningar"
     IDS_SRV_UDPSR           "Utökat UDP-protokoll för källförfrågningar"
@@ -1597,8 +1597,8 @@ BEGIN
     IDS_KADDISTANCE         "Distans"
     IDS_KEY                 "Nyckel"
     IDS_NUMBER              "Nummer"
-    IDS_KAD_SEARCHSRC       "Sök källor (%i:%i)"
-    IDS_KAD_SEARCHKW        "Sök ord (%i:%i)"
+    IDS_KAD_SEARCHSRC       "Sök källor"
+    IDS_KAD_SEARCHKW        "Sök ord"
 END
 
 STRINGTABLE 
@@ -1687,7 +1687,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_IMP_ERR_BADFORMAT   "Okänt eller felaktigt tempfilformat."
-    IDS_SEARCH_INVALIDCHAR  "Sökningen innehåller felaktiga tecken. Antingen ett '?' tecken eller tecken som inte kan användas i eD2K-nätverket."
+    IDS_SEARCH_INVALIDCHAR  "Sökningen innehåller felaktiga tecken. Antingen ett '?' tecken eller andra tecken som inte kan användas i detta nätverk."
     IDS_PORTSCON            "Portar och Anslutning"
     IDS_PORTINFO            "eMule använder två portar för kommunikation med servrar och klienter. Dessa portar måste vara oanvända och tillgängliga för andra klienter. TCP-porten måste vara tillgänglig för att eMules huvudfunktionaliteten skall fungera. UDP-porten används till Kad (nätverk utan servrar) och för att reducera nätverksanvändningen (overhead).\n\nDu kan ändra portarna medan ingen nätverksaktiviteter har startat."
     IDS_STARTTEST           "Testa portar"
@@ -1808,6 +1808,36 @@ BEGIN
     IDS_SELSKINPROFILEDIR   "Välj skalprofilsmapp"
     IDS_ASKDLINCOMPLETE     "Potentiellt inkompletta filer:\r\n\r\n%s\r\n\r\nDenna filen är gjord för att vara inkomplett på nätverket och kommer därför aldrig kunna laddas hem! Vill du verkligen ladda hem denna filen?"
     IDS_DEADSOURCES         "Döda källor"
+    IDS_LARGEICONS          "Stora ikoner"
+    IDS_SMALLICONS          "Små ikoner"
+    IDS_SHORTTAGS           "Korta taggar"
+    IDS_THELOAD             "Load"
+    IDS_PACKSENT            "Skickade paket"
+    IDS_RESPONSES           "Svar"
+    IDS_EXTRACT_META_DATA   "Extrahera meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (för alla övriga ljud-/videofiler)"
+    IDS_META_DATA_ID3LIB    "ID3 Biblotek (bara för MPEG-ljudfiler)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Common Controls library (COMCTL32.DLL) är för gammal!\r\n\r\neMule har hittat en version av ""Windows Common Controls library (COMCTL32.DLL)"" som är för gammal för att användas tillsammans med eMule. För en fullständig och felfri funktionalitet är det rekommenderat att uppdatera ""Windows Common Controls library (COMCTL32.DLL)"" till minst version 5.8.\r\n\r\nLadda hem och installera en uppdatering av ""Windows Common Controls library (COMCTL32.DLL)"" på Microsoft (R) Download Center. Vill du besöka den här sidan?"
+    IDS_ASREGEXPR           "Som Regular Expression"
+    IDS_STATIC_REGEXP       "Regular expression som filter:"
+    IDS_CARE4ALL            "Evaluate All Files"
+    IDS_REGEXPRESSION       "Regular Expression"
+    IDS_SEARCHKAD           "Sök Kad"
+    IDS_DWL_IPFILTERFILE    "Laddar hem IP-filter fil"
+    IDS_DWLIPFILTERFAILED   "Nedladdningen av IP-filter misslyckades"
+    IDS_FINDBUDDY           "Hitta kompis"
+    IDS_ERR_IPFILTERZIPEXTR "Misslyckades att extrahera IP-filter filen från nedladdad ZIP-fil ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Den nedladdade IP-filter filen ""%s"" är ett ZIP-arkiv med oväntat innehåll"
+    IDS_STORENOTES          "Spara anteckning"
+    IDS_NOTES               "Anteckningar"
+    IDS_KADSEARCHALREADY    "En sökning är redan aktiv. Försök igen senare!"
+
 END
 
 #endif    // Swedish resources

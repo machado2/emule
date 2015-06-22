@@ -29,9 +29,9 @@
 #include "Log.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -363,7 +363,7 @@ void CEMSocket::OnReceive(int nErrorCode){
 		//
 		// Conclusion: When the download limit is disabled, this method can be at least 
 		// called 8 times (10240/1300) by the lower layer before a splitted packet is 
-		// rebuild and transfered to the above layer for processing.
+		// rebuild and transferred to the above layer for processing.
 		//
 		// The purpose of this algorithm is to limit the amount of data exchanged between buffers
 
@@ -468,7 +468,7 @@ void CEMSocket::DisableDownloadLimit(){
  * @param packet address to the packet that should be added to the queue
  *
  * @param delpacket if true, the responsibility for deleting the packet after it has been sent
- *                  has been transfered to this object. If false, don't delete the packet after it
+ *                  has been transferred to this object. If false, don't delete the packet after it
  *                  has been sent.
  *
  * @param controlpacket the packet is a controlpacket

@@ -2,7 +2,214 @@
 	http://emule-project.net
 	========================
 
+eMule 0.45b
+----------------------
+- 11. Februar 2005     -
+----------------------
+.: Ein Fehler im Zusammenhang mit den neuen Kad-Dateikommentaren, der eMule einfrieren lassen konnte wurde behoben [thx gcostanza]
+.: Ein Fehler im UDP-Server Protokoll, der dazu führen konnte dass eMule Pakete ignorierte oder bei bösartig hergestellten Paketen einfrieren könnte wurde behoben  [kry]
+.: Das Download-Fenster merkt sich nun die 4 letzten Sortierreihenfolgen und benutzt sie als sekundäre Sortierreihenfolgen
+.: Ein Anzeigebug im Uploadfenster wurde behoben
+.: Ein Problem welches eMule manchmal die Onlinehilfe aufrufen ließ selbst wenn die passende Hilfedatei verfügbar war wurde behoben [cml]
+Ornis: Korrektur von kleingeschriebenen Pfadangaben in der Liste freigegebener Dateien
+Ornis: Automatisches Fortsetzen nach fertiggestellter Datei korrigiert
+Ornis: >100% Statistikangabe der SecIdent-Angabe korrigiert
 
+
+eMule 0.45a
+----------------------
+- 25. Januar 2005    -
+----------------------
+Ornis: kleinere Aktualisierungen im Webinterface, bzgl. Kategorienauswahl, Merken der gewählten Kategorie innerhalb einer Session, erste Suchergebnisse gleich nach der Suche anzeigen,...)
+Ornis: Statistikgraphen: vertikale Markierungen im Stundenabstand hinzugefügt; größere mögliche Zeitspanne in der Statistikupdateverzögerung  [CB mod]
+Ornis: neues Kommandozeilenargument hinzugefügt, um IPFilter-Datei neu zu laden:   "emule.exe reloadipf"
+Unk:   Korrektur eines Problems, welches dazu führte, dass ein Keyword oder Quellenindex nicht wiederhergestellt wurde
+.: 		 Korrektur eines Fehler mit falscher User-ID/IP bei HTTP-Quellen [thx SiRoB]
+
+----------------------
+- 23. Januar 2005    -
+----------------------
+Unk: Korrektur eines Fehlers, welcher zu einer Situation führen konnte, in welcher Kad Quellen nicht speicherte
+Unk: Entfernen einiger unnötiger Parameter in der Suchklasse
+Unk: Einführung von "Notizen" in Kad. Derzeit nur genutzt, um Dateikommentare zu speichern (sobald ein Großteil der Nutzer die neue Version nutzen)
+Unk: Kad: die Zeit zwischen Quellenanfragen für Dateien wird nun mit der Zeit ständig angepasst, um Overhead und Redundanz in den Resultaten zu verringern.
+
+----------------------
+- 17. Januar 2005    -
+----------------------
+Unk: verschiedene Codecleanups, aufgrund der Integration des früher separaten Kad-Threads in den Main-Thread.
+Unk: Korrektur eines Downloadliste-Sortierfehlers, durch welchem Quellen zur falschen Datei angezeigt werden konnten 	[Fix von KinkyJohn]
+Ornis: Kategorien-Ansichtsfilter flexibler (allgemeingültige Filter nicht mehr nur für die Standard-Kategorie)
+Ornis: Kategorieninhalte können durch reguläre Ausdrücke für den Dateinamen gefiltert werden
+Ornis: Klick mit der mittleren Maustaste auf Reiter schließt diese (Nachrichtenfenster, IRC, Suchresultate)
+Ornis: farbliche Markierungen der Suchresultate in Skins anpassbar
+
+----------------------
+- 16. Januar 2005    -
+----------------------
+Unk: Korrektur: das AddOnNextConnect flag welches für LoadID-User gesetzt wurde welche ihren Uploadslot verpassten, hatte nicht korrekt gearbeitet, da der User innerhalb eines bestimmten Zeitfensters sich neu verbinden musste
+- ein Client mit diesem Flag kann nun zu jeder Zeit (welche nicht das Protokoll verletzt) sich neu verbinden und erhält den Uploadslot
+- nur ein User kann diesen Slot halten, um zu vermeiden, dass die Uploadliste überschwemmt wird, wenn mehrere LowID-Users markiert wurden
+- sobald ein solcher User wieder von der Uploadliste entfernt wird, ist dieser Slot wieder verfügbar
+Unk: Aufweichung der Bedingungen für User, um die Uploadqueue eines LowID Users zu betreten
+- wir beobachten weiterhin User auf der Uploadliste, welche versuchen über Server um das LowID-Callbacklimit herum zu kommen
+- wir beobachten nicht Kad User auf der Uploadliste, da deren Callbacks derzeit alle ok sind
+Ornis: automatische Kategorienzuweisung kann nun auch über Auswertung eines regulären Ausdrucks getätigt werden
+.:	  Navigation im Dateidetail-Fenster und Clientdetail-Fenster: Hoch/Runter-Knöpfe in diesen Dialog erlauben das Durchlaufen der Einträge innerhalb der aktuellen Liste
+
+----------------------
+- 14. Januar 2005    -
+----------------------
+.: Korrektur eines Fehlers mit Unicode-Passwärter im Webinterface und MobileMule-Interface. Hinweis: das Passwort muss erneut für diese Interfaces angegeben werden!
+
+----------------------
+- 9. Januar 2005    -
+----------------------
+.: neue Einstellungen in der Preferences.ini hinzugefügt: (Section=[eMule], Keyword=PreviewOnIconDblClk, Value=1) um das Vorschaukommando auszuführen, wenn auf das Dateiicon in der Downloadliste gedoppelklickt wird. Die Einstellung wird nur genutzt, wenn "Doppelklick öffnet Download" (in Einstellungen/Anzeige) nicht aktiviert ist.)
+Unk: Nutzung von Load Balancing: Beim Senden eines Keywords in eine Sektion des Netzwerkes mit hoher Last, erhöhen wir die Verzögerung bis zum nächsten Senden (keyword Publishing). Diese Zeiten werden über Programmneustarts gehalten.
+Unk: Umarbeitungen der Schleife zur Prüfung der zu sendenden Keywords, um die CPU Last zu verringern
+
+----------------------
+- 31. Dezember 2004  -
+----------------------
+bluecow: Änderung: Menge der Heruntergeladenen/Hochgeladeten Daten von/zu einem Client wird nun der tatsächlich übertragenen (komprimierten) Größe angezeigt (welche auch für die Kreditberechnung herangezogen wird).
+bluecow: Korrektur eines Sortierungsfehlers in der Uploadliste.
+bluecow: Änderung: maximale unterstützte Dateigröße ist 4290048000 Bytes
+
+----------------------
+- 30. Dezember 2004  -
+----------------------
+bluecow: Fehlerkorrektur in der Clientstatistik für gebannte Clients und IP-gefilterte Clients
+bluecow: Korrektur eines Absturzes, beim Senden einer Nachricht an einen neu hinzugefügten Freund [thx Libbnor]
+bluecow: Korrektur eines Fehlers mit falscher Hashseterstellung in dem Fall, dass die Datei nicht erfolgreich gelesen werden konnte (kann bei NTFS komprimierten Dateien mit sehr hoher Kompression geschehen!)
+bluecow: Korrektur eines Fehlers beim Hinzufügen von zu großen Dateien (größer als unterstützt Größe) aus Suchresultaten heraus
+
+----------------------
+- 29. Dezember 2004  -
+----------------------
+bluecow: Option 'Meta Daten extrahieren' zu den erweiterten Einstellungen hinzugefügt
+Unk: Korrektur eines Fehlers in SMIRC, wenn CHANMODES nicht in der Willkommensnachricht enthalten war
+
+----------------------
+- 27. Dezember 2004  -
+----------------------
+Unk: Ping/Pong System für Buddies (Kad) hinzugefügt, um die Verbindung zu diesem Client aufrecht zu erhalten.
+Unk: Korrekt mehrerer Fehler im Hello-Paket für Buddy-Informationen
+- ...falls du den Status "firewalled" hast und Quellen in der Warteschlange hast, können diese dir nun leichter folgen wenn du den Buddy wechselst
+- ...nur User im Status "firewalled" mit einem Buddy senden die Buddy-Info, um den Overhead zu verringern
+
+----------------------
+- 26. Dezember 2004  -
+----------------------
+bluecow: Erstellung des 'skins'-Unterverzeichnisses im eMule-Ordner. Dieses wird als Standardverzeichnis für Skins und Toolbar-Bitmaps gesetzt.
+Ornis:   Sprache Bretonisch hinzugefügt [Übersetzung von KAD-Korvigelloù an Drouizig]
+		 		 Japanische Übersetzung aktualisiert [Aktualisierung von DukeDog]
+
+----------------------
+- 24. Dezember 2004  -
+----------------------
+bluecow: Windows Internet Security Manager für extern geladene HTML-Dateien hinzugefügt
+- Internet Security Zone Einstellungen werden vom Windows Internet Settings System Applet (same settings as used by Internet Explorer) übernommen.
+- von eMule verwendete Standard Internet Security Zone ist auf höhste Stufe gesetzt: "nicht vertrauenswürdige Zone"
+- Internet Security Zone kann in der Datei preferences.ini geändert werden: Sektion=[eMule], Schlüssel=InternetSecurityZone, Werte=Untrusted|Internet|Intranet|Trusted|LocalMachine
+bluecow: Sortierung von Kontextmenüeinträgen für die Toolbar Bitmaps und Skin-Profile
+bluecow: freigegebene Dateien mit Kommentaren und/oder Bewertungen werden mit einem kleinen Overlayicon in der Liste markiert
+bluecow: Hinzugefügt: Icons für die Angabe, in welchen Netzen die einzelnen Dateien veröffentlich wurden (Liste der freigegeben Dateien)
+bluecow: Korrektur einiger GUI-Darstellungsfehler [thx apph]
+bluecow: Korrektur einiger Fehler mit den Statistiken-Farben in der Einstellungen/Statistiken-Seite
+bluecow: einige Doppelklick-Funktionen hinzugefügt: 
+- Serverfenster: Doppelklick auf Serverlistenicon (oben links) öffnet die Einstellungen/Server-Seite
+- Fenster der freigegeben Dateien: Doppelklick auf das Icon für freigegebene Dateien (oben links) öffnet die Einstellungen/Verzeichnisse-Seite.
+- Nachrichtenfenster: Doppelklick auf das Freundeslisten-Icon (oben links) öffnet die Einstellungen/Dateien-Seite.
+- Statistikenfenster: Doppelklick auf einen Graphen öffnet die Einstellungen/Statistiken-Seite.
+
+----------------------
+- 22. Dezember 2004  -
+----------------------
+bluecow: Status.log Dateien gibt nun den kompletten Dateinahmen aus (vorher auf 50 Zeichen gekürzt)
+
+----------------------
+- 21. Dezember 2004  -
+----------------------
+zz: Verbesserungen zum Downloadthrottler, um die Menge der fehlgeschlagenen Sessions und "timed out"-Sessions zu verringern
+
+----------------------
+- 19. Dezember 2004  -
+----------------------
+bluecow: Korrektur eines Unicode-Fehlers mit ed2k-Links, welche über das Webinterface hinzugefügt werden.
+bluecow: Korrektur eines Fehlers mit der Dateipriorität im Webinterface [thx CML]
+bluecow: Unicode-Suchparameter dem Webinterface hinzugefügt [thx CML]
+bluecow: lokaler Hostname (wenn in den erweiterten Einstellungen angegeben) wird für die Anzeige der Webinterface-URL im "Meine Info" Kasten.
+Unk: Knotensuche wird erzwungen, wenn es scheint das Kad die Verbindung verloren hat, um zu testen, ob wir wirklich keine Verbindung mehr haben
+Unk: Firewalled Kad User sucht sofort nach einem neuen Buddy, wenn der aktuelle Buddy verloren wurde, anstatt bis zum nächsten Firewall-Check zu warten
+Unk: Firewalled Users senden erneut seine Quellen, wenn sie ihren Buddy gewechselt haben
+Unk: Wenn die Suche nach einem Kad Buddy fehlschlägt, wird dieser solange wiederholt, bis er erfolgreich ist
+
+----------------------
+- 13. Dezember 2004  -
+----------------------
+Unk: Kad-Suchliste geändert, um die Information klarer darzustellen und um die Spalte "Knoten Last" hinzuzufügen
+Unk: Korrektur eines Fehlers, welcher zu einem Zugriff auf einen NULL Kad Buddy Pointer führen konnte
+bluecow: Korrektur eines Absturzes in Verbindung mit dem Systemtray-Kontextmenüs, geöffnetem Optionendialog und wiederhergestelltem Hauptfenster
+bluecow: Korrektur eines Fehlers, welcher zum Ignorieren von freigegebenen Verzeichnissen mit Unicodezeichen im Namen beim Programmstart führen konnte
+bluecow: Dateiformat von "shareddir.dat" und "adresses.dat" in Unicode geändert. Alte (ANSI) Dateien werden gelesen und beim Programmstart automatisch ins Unicodeformat konvertiert. Alte (ANSI)-eMule-Versionen können diese Dateien nicht lesen.
+Unk: Korrektur eines Fehlers, welcher LowID-Clients es nicht ermöglichte, als Quelle im Kad-Netzwerk veröffentlicht zu werden
+
+----------------------
+- 12. Dezember 2004  -
+----------------------
+bluecow: Hinzugefügt: Beim Programmstart wird auf eine aktuelle Version von COMCTL32.DLL geprüft
+bluecow: Die Dumperstellung beim Programmabsturz wurde für Release-builds übernommen. Um die Crash-Dump-Erstellung zu aktivieren, gebe "CreateCrashDump=1" in der "eMule" Sektion der preferences.ini Datei an.
+
+----------------------
+-  9. Dezember 2004  -
+----------------------
+bluecow: Alle von ed2k-Servern empfangenen Pakete können Unicode-Strings enthalten. (Server admins können ihre Server-Beschreibung in Unicode senden).
+bluecow: Hinzugefügt: Mini eMule Fenster mit den wichtigsten Statistiken und Funktionen. Ein einfacher Linksklick auf das eMule-System Trayicon öffnet das Fenster.
+- Mini eMule Fenster kann über ein HTML-Template angepasst werden (siehe Template.eMuleSkin.ini für Details).
+- Mini eMule Fenster kann deaktiviert werden durch folgende Einstellung in der "preferences.ini"-Datei, Sektion "[eMule]" : "MiniMule=0". (wird nur zum Programmstart ausgewertet)
+- Mini eMule Fenster kann durch folgende Einstellungen in der "preferences.ini"-Datei angepasst werden (Sektion "[eMule]"): 							 (diese Einstellungen werden während des Programmlaufes ausgewertet, kein Neustart nötig)
+-      "MiniMuleAutoClose=1" : das Mini eMule Fenster schließt sich automatisch selber, wenn der Mauszeiger nicht über dem Fenster ist. (ähnlich einem Tooltip)
+-      "MiniMuleTransparency=<0-100>" : Transparenz (in Prozent) des Mini eMule Fensters
+
+----------------------
+-  4. Dezember 2004  -
+----------------------
+bluecow: Umarbeitung von 'Minimiert Starten' und dem Wiederherstellen des Hauptfensters nach dem Programmstart, um einige Fensterdarstellungsprobleme zu verhindern.
+
+----------------------
+- 21. November 2004  -
+----------------------
+bluecow: Korrektur eines Sortierfehlers für "verbleibende Zeit" in der Downloadliste
+
+----------------------
+- 17. November 2004  -
+----------------------
+bluecow: eMule-Haupttoolbar überarbeitet:
+- Chevron Unterstützung hinzugefügt: Wenn die Toolbar zu klein für alle Knöpfe ist, wird ein Chevron (">>" Icon) am rechten Rand dargestellt, welches ein Menü mit den übrigen Knöpfen anzeigt.
+- Tooltips werden für abgetrennte Knopfbeschriftungen und im "Keine Beschriftungen"-Modus der Toolbar angezeigt
+- Knöpfe der Toolbar können umgeordnet und/oder entfernt werden, indem Strg+Alt gedrückt gehalten wird, während Knöpfe mit der Maus bewegt werden (Drag)
+- Knopfgröße kann gewählt werden zwischen groß und klein.
+- Knopfgröße ähnelt mehr denen des Windows Explorers.
+- Alle neuen Toolbarfunktionen können deaktiviert werden, durch Eintrag von "ReBarToolbar=0" in der "preferences.ini"-Datei
+- Toolbar-Hintergrund kann über ein Skin-Profil angepasst werden (siehe Template.eMuleSkin.ini)
+bluecow: Korrektur eines Fehlers mit den vertikal ausgerichteten Schriften im Statistikfenster
+
+----------------------
+- 16. November 2004  -
+----------------------
+bluecow: die Einstellung "ShowCopyEd2kLinkCmd=1" in der Datei "preferences.ini" ersetzt das "Zeige eD2K Links"-Kommando mit "Kopiere eD2K Links"
+bluecow: Korrektur eines Darstellungsfehlers im Kontextmenü in Log-, Nachrichten- und IRC-Listen
+
+----------------------
+- 14. November 2004  -
+----------------------
+bluecow: die Suche in eD2K und Kad ist nun standardmäßig auf Unicode-Suchausdrücke gestellt
+bluecow: der Dialog für Dateikommentare im Fenster der freigegebenen Dateien kann nun auch für mehrere Dateien aufgerufen werden
+bluecow: Korrektur von nicht funktionierenden Knöpfen im Nachrichtenfenster
+
+
+v0.44c
 ----------------------
 - 14. November 2004   -
 ----------------------
@@ -301,6 +508,7 @@ zz: ´Versuche ersten und letzten Teil zuerst zu laden´ ist nun individuell für j
 - Jul, 3rd 2004      -
 ----------------------
 bluecow: Bei mehrern markierten freigegeben Datein zeigt die Statistik nun eine Zusammenfassung aller Datein an
+
 
 v0.43b - Hotfix
 ----------------------

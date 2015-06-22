@@ -559,7 +559,7 @@ BEGIN
     IDS_PW_INCOMING         "Pøíchozí soubory"
     IDS_PW_TEMP             "Doèasné soubory"
     IDS_PW_BROWSE           "Procházet"
-    IDS_PW_SHARED           "Sdílené adresáøe (Ctrl-klik vèetnì podadresáøù)"
+    IDS_PW_SHARED           "Sdílené adresáøe (Ctrl-klik pro zahrnutí podadresáøe)"
     IDS_PW_CONNECTION       "Pøipojení"
     IDS_PW_DOWNC            "Kapacita downloadu"
     IDS_PW_DOWNL            "Mez downloadu"
@@ -1454,7 +1454,7 @@ BEGIN
     IDS_TIMEBEFORE          "(pøed %s)"
     IDS_FD_TIMEDATE         "Èasové údaje"
     IDS_FILEINFORMATION     "Informace o souboru"
-    IDS_STATS_FREESPACE     "Volné místo na doèasném disku: "
+    IDS_STATS_FREESPACE     "Volné místo"
     IDS_IRC_HELPCHANNEL     "Pøipojit ke kanálu Nápovìdy"
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-czech"
     IDS_IRC_ACCEPTLINKSFRIENDS "Pouze od pøátel"
@@ -1546,10 +1546,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "Vyhledání uzlu (%i:%i)"
-    IDS_KAD_STOREFILE       "Uloit soubor (%i:%i)"
-    IDS_KAD_STOREKW         "Uloit keyword (%i:%i)"
-    IDS_KAD_UNKNOWN         "Neznámı (%i:%i)"
+    IDS_KAD_NODE            "Vyhledání uzlu"
+    IDS_KAD_STOREFILE       "Uloit soubor"
+    IDS_KAD_STOREKW         "Uloit keyword"
+    IDS_KAD_UNKNOWN         "Neznámı"
     IDS_SRV_TCPCOMPR        "TCP koprese"
     IDS_KADSEARCHLAB        "Souèasná hledání"
     IDS_SRV_UDPSR           "Rozšíøenı UDP protokol pro poadavky zdrojù"
@@ -1601,8 +1601,8 @@ BEGIN
     IDS_KADDISTANCE         "Vzdálenost"
     IDS_KEY                 "Key"
     IDS_NUMBER              "Èíslo"
-    IDS_KAD_SEARCHSRC       "Hledat zdroje (%i:%i)"
-    IDS_KAD_SEARCHKW        "Hledat keywordy (%i:%i)"
+    IDS_KAD_SEARCHSRC       "Hledat zdroje"
+    IDS_KAD_SEARCHKW        "Hledat keywordy"
 END
 
 STRINGTABLE 
@@ -1688,7 +1688,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_IMP_ERR_BADFORMAT   "Neznámı neba špatnı formát doèasného souboru."
-    IDS_SEARCH_INVALIDCHAR  "Vyhledávací øetìzec obsahuje neplatné znaky. Zadal jste buï znak '?' nebo jinı znak, která nelze pouít v síti eD2K."
+    IDS_SEARCH_INVALIDCHAR  "Vyhledávací øetìzec obsahuje neplatné znaky. Zadal jste buï znak '?' nebo jinı znak, která nelze pouít v této síti."
     IDS_PORTSCON            "Porty a pøipojení"
     IDS_PORTINFO            "eMule pouívá dva porty pro komunikaci se servery a klienty. Tyto porty musí bıt volné a dostupné pro vzdálené klienty. TCP port musí bıt dostupnı pro zajištìní hlavní funkènosti eMule. UDP port je pouíván pro Kad (bezserverovou sí) a pro sníení pouívání sítì (Overhead).\n\nPorty mùete mìnit zde, dokud nebìí ádné síové aktivity."
     IDS_STARTTEST           "Testovat porty"
@@ -1708,8 +1708,8 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATS_ACTUL_ZZ      "Aktivní uploady/potøebné k zaplnìní bandwidth: %i"
-    IDS_STATS_TOTALUL       "Total number of uploads: %i"
+    IDS_STATS_ACTUL_ZZ      "Aktivní uploady/potøebné k zaplnìní šíøe pásma: %i"
+    IDS_STATS_TOTALUL       "Celkovı poèet uploadù: %i"
     IDS_CHAT_DOWNLOADED     "Downloadováno:"
     IDS_CHAT_UPLOADED       "Uploadováno:"
     IDS_CHAT_IDENT          "Identifikace:"
@@ -1717,10 +1717,10 @@ BEGIN
     IDS_MAXHALFOPENCONS     "Max. polootevøwnıch pøipojení"
     IDS_WIZ_STARTWITHWINDOWS 
                             "Povolte tuto monost, pokovaï máte zájem, aby se eMule spouštìl se startem windows. [Implicitnì zakázáno]"
-    IDS_KAD_WAITCBK         "Wait Callback Kad"
+    IDS_KAD_WAITCBK         "Èekat na zpìtné volání z Kad"
     IDS_KAD_TOOMANDYKADLKPS "Pøíliš mnoho Kad vyhledávání"
-    IDS_PCDS_CLIENTWAIT     "ClientWait"
-    IDS_PCDS_CACHEWAIT      "CacheWait"
+    IDS_PCDS_CLIENTWAIT     "Klient Èeká"
+    IDS_PCDS_CACHEWAIT      "Cache Æeká"
     IDS_CACHE               "Cache"
     IDS_INDEXED             "Indexován"
     IDS_KADINFO_SRC         "\tZdroj: %u\r\n"
@@ -1742,8 +1742,8 @@ BEGIN
     IDS_META_COLLECTION     "Kolekce"
     IDS_META_PARTPATH       "Part stezka"
     IDS_META_PARTHASH       "Part hash"
-    IDS_META_GAPSTART       "Gap start"
-    IDS_META_GAPEND         "Gap end"
+    IDS_META_GAPSTART       "Zaèátek mezery"
+    IDS_META_GAPEND         "Konec mezery"
     IDS_FAIL                "Selhal"
 END
 
@@ -1751,7 +1751,7 @@ STRINGTABLE
 BEGIN
     IDS_META_PREFERENCES    "Preference"
     IDS_META_VERSION        "Verze"
-    IDS_META_TEMPFILE       "Doèasnı file"
+    IDS_META_TEMPFILE       "Doèasnı soubor"
     IDS_META_SERVERPORT     "Port serveru"
     IDS_META_SERVERIP       "IP serveru"
     IDS_META_SRCUDPPORT     "UDP port zdroje"
@@ -1802,13 +1802,43 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_SPARSEPARTFILES     "Vytváøet nové part soubory jako 'sparse' (poze NTFS)"
+    IDS_SPARSEPARTFILES     "Vytváøet nové part soubory jako 'sparse' (pouze NTFS)"
     IDS_ASPECTRATIO         "Pomìr stran"
     IDS_NEGATEFILTER        "negovat filtr"
     IDS_SEENCOMPL           "Ji nìkdy spatøen kompletní"
     IDS_SELSKINPROFILEDIR   "Vyberte adresáø s profily skinù"
     IDS_ASKDLINCOMPLETE     "Potenciálnì nekompletní soubor:\r\n\r\n%s\r\n\r\nTento soubor vypadá, e není v síti kompletní a proto velmi pravdìpodobnì ani nepùjde úspìšnì downloadovat! Chcete se pøesto pokusit o download tohoto souboru?"
     IDS_DEADSOURCES         "Mrtvé zdroje"
+    IDS_LARGEICONS          "Velké ikony"
+    IDS_SMALLICONS          "Malé ikony"
+    IDS_SHORTTAGS           "Krátké tagy"
+    IDS_THELOAD             "Load"
+    IDS_PACKSENT            "Posladné pakety"
+    IDS_RESPONSES           "Odpovìdi"
+    IDS_EXTRACT_META_DATA   "Extrahovat meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (pro všechny ostatní audio/video soubory)"
+    IDS_META_DATA_ID3LIB    "ID3 knihovna (pouze pro MPEG audio soubory)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Knihovna spoleènıch ovládacích prvkù Windows (COMCTL32.DLL) je pøíliš stará!\r\n\r\neMule detekovalo novou verzi ""Windows Common Controls library (COMCTL32.DLL)"", jen je ji pøíliš stará pro pouití v eMule. K zajištìní plné a bezchybné funkènosti eMule dùraznì doporuèujeme updatovat ""Windows Common Controls library (COMCTL32.DLL)"" alespoò na verzi 5.8.\r\n\r\nDownloadujte a nainstalulte update ""Windows Common Controls library (COMCTL32.DLL)"" z Microsoft (R) Download Centra. Máte zájem navštívit pøíslušnou URL?"
+    IDS_ASREGEXPR           "Jako pravidelnı vıraz"
+    IDS_STATIC_REGEXP       "Pravidelnı vıraz pro prohlíecí filtr:"
+    IDS_CARE4ALL            "Ohodnotit všechny soubory"
+    IDS_REGEXPRESSION       "Pravidelnı vıraz"
+    IDS_SEARCHKAD           "Hledat Kad"
+    IDS_DWL_IPFILTERFILE    "Stahování souboru IP filtru"
+    IDS_DWLIPFILTERFAILED   "download IP filter selhal"
+    IDS_FINDBUDDY           "Najít kámoše"
+    IDS_ERR_IPFILTERZIPEXTR "Nezdaøilo se rozbalit soubor IP filtru ze staeného ZIP souboru ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Staenı soubor IP filtru ""%s"" je ZIP soubor s neoèekávanım obsahem."
+    IDS_STORENOTES          "Uloit poznámky"
+    IDS_NOTES               "Poznámky"
+    IDS_KADSEARCHALREADY    "Jiné hlednání právì probíhá. Prosím, zkuste to pozdìji!"
+
 END
 
 #endif    // Czech resources

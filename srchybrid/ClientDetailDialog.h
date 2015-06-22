@@ -16,26 +16,62 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
 
+#include "ResizableLib/ResizablePage.h"
+#include "ResizableLib/ResizableSheet.h"
+#include "ListViewWalkerPropertySheet.h"
+
 class CUpDownClient;
 
-class CClientDetailDialog : public CDialog
+///////////////////////////////////////////////////////////////////////////////
+// CClientDetailPage
+
+class CClientDetailPage : public CResizablePage
+{
+	DECLARE_DYNAMIC(CClientDetailPage)
+
+public:
+	CClientDetailPage();   // standard constructor
+	virtual ~CClientDetailPage();
+
+	void SetClients(const CSimpleArray<CObject*>* paClients) { m_paClients = paClients; m_bDataChanged = true; }
+
+	enum { IDD = IDD_SOURCEDETAILWND };
+
+protected:
+	const CSimpleArray<CObject*>* m_paClients;
+	bool m_bDataChanged;
+
+	void Localize();
+	void RefreshData();
+
+	virtual BOOL OnInitDialog();
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual BOOL OnSetActive();
+
+	DECLARE_MESSAGE_MAP()
+	afx_msg LRESULT OnDataChanged(WPARAM, LPARAM);
+};
+
+
+///////////////////////////////////////////////////////////////////////////////
+// CClientDetailDialog
+
+class CClientDetailDialog : public CListViewWalkerPropertySheet
 {
 	DECLARE_DYNAMIC(CClientDetailDialog)
 
 public:
-	CClientDetailDialog(const CUpDownClient* client);   // standard constructor
+	CClientDetailDialog(CUpDownClient* pClient, CListCtrlItemWalk* pListCtrl = NULL);
+	CClientDetailDialog(const CSimpleArray<CUpDownClient*>* paClients, CListCtrlItemWalk* pListCtrl = NULL);
 	virtual ~CClientDetailDialog();
 
-	void Localize();
-
-// Dialog Data
-	enum { IDD = IDD_SOURCEDETAILWND };
-
 protected:
-	const CUpDownClient* m_client;
+	CClientDetailPage m_wndClient;
+
+	void Construct();
 
 	virtual BOOL OnInitDialog();
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
+	afx_msg void OnDestroy();
 };

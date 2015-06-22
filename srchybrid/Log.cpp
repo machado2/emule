@@ -24,9 +24,9 @@
 #include "emuledlg.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -273,7 +273,6 @@ bool CLogFile::Open()
 	{
 		m_tStarted = time(NULL);
 		m_uBytesWritten = _filelength(fileno(m_fp));
-#ifdef _UNICODE
 		if (m_uBytesWritten == 0)
 		{
 			// write Unicode byte-order mark 0xFEFF
@@ -302,7 +301,6 @@ bool CLogFile::Open()
 				}
 			}
 		}
-#endif
 	}
 	return m_fp != NULL;
 }

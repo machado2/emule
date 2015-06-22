@@ -58,6 +58,7 @@ public:
 	void	HashFailed(UnknownFile_Struct* hashed);		// SLUGFILLER: SafeHash
 	void	FileHashingFinished(CKnownFile* file);
 	void	ClearED2KPublishInfo();
+	void	ClearKadSourcePublishInfo();
 	void	Process();
 	void	Publish();
 	void	AddKeywords(CKnownFile* pFile);
@@ -84,9 +85,10 @@ private:
 	uint32 m_lastPublishED2K;
 	bool	 m_lastPublishED2KFlag;
 	int m_currFileSrc;
+	int m_currFileNotes;
 	int m_currFileKey;
 	uint32 m_lastPublishKadSrc;
-	uint32 m_lastProcessPublishKadKeywordList;
+	uint32 m_lastPublishKadNotes;
 };
 
 class CAddFileThread : public CWinThread

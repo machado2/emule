@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by ro_RO.rc
+// Used by de_DE.rc
 //
 
 // Next default values for new objects

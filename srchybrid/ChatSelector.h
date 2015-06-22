@@ -75,7 +75,6 @@ protected:
 	afx_msg void OnBnClickedCsend();
 	afx_msg void OnBnClickedCclose();
 	afx_msg void OnSysColorChange();
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual int InsertItem(int nItem, TCITEM* pTabCtrlItem);

@@ -1,0 +1,1818 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "fr_BR.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "..\resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// French (Bretan) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "fr_FR.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""..\\resource.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""..\\version.h""\r\n"
+    "#include ""lang.rc2""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    104                     "Fazi p’eo bet deraouekaet ar Socket Windows"
+    105                     "&A-zivout eMule..."
+    106                     "%s eus %s"
+    107                     "Kennasket da %s"
+    108                     "Klask an anv : %s"
+    109                     "Anv kavet : %s"
+    110                     "Kennaskañ ouzh %s"
+    111                     "Dilec’hiañ diwar %s"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    112                     "Klask titouroù restroù"
+    113                     "Fazi dielfennañ al lec’hienn : %s"
+    114                     "Fazi e-pad an taol-esae pellgargañ, Fazi : %s"
+    115                     "Fazi e-pad ar c’hennaskañ ouzh an dafariad, Fazi : %s"
+    116                     "Respont an dafariad direizh"
+    117                     "Respont HTTP an dafariad direizh"
+    118                     "Fazi p’eo bet pellgarget ar restr, Fazi : %s"
+    119                     "Nevesaat roll an dafariadoù : %s%% eus %s graet"
+    120                     "Dastum ar restr"
+    121                     "%s eus %s"
+    122                     "Ere Restr"
+    123                     "Dibaboù kentañ"
+    124                     "Klokaat an ere gant hoc’h IP"
+    125                     "Ouzhpennañ an drailherezh AICH evit merañ resisoc’h ar gwastadur"
+    126                     "Dibaboù kempleshoc’h"
+    127                     "Leuskel"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    128                     "Ouzhpennañ ar balizennoù HTML"
+    129                     "Nevesaat roll an dafariadoù"
+    130                     "%s (%s kopiet)"
+    131                     "Ouzhpennañ an daolenn zrailhañ klokaet"
+    132                     "Taolenn zrailhañ"
+    133                     "Diskouez an ereoù eD2K..."
+    134                     "Gwastet"
+    135                     "Amañ eo dija ar restr ’%s’.\nFlastrañ anezhañ ?"
+    136                     "Dastumet"
+    137                     "Fazi p’eo bet digoret ar restr da bellgargañ, Fazi:%s"
+    138                     "Dilezel an treuzkas"
+    139                     "Gwaskañ"
+    140                     "Dibabit pe rouedad(où) a fell deoc’h implijout."
+    141                     "Prest eo eMule stumm %s"
+    142                     "Perzhioù ED2k"
+    143                     "Dibab ur gwiskadur..."
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    144                     "Fazi dibare: n’haller ket krouiñ ar socket war ar porzh %i"
+    145                     "Di&gennaskañ"
+    146                     "Digennasket ouzh an dafariad red"
+    147                     "Gwall ID restr kaset"
+    148                     "Gwastet pe direizh eo an daolenn zrailhañ resevet"
+    149                     "Gwastet pe direizh eo ar bloc’had stlennoù resevet"
+    150                     "Drailherezh direizh"
+    151                     "Ere ed2k direizh"
+    152                     "Ere ed2k direizh"
+    153                     "Ment ar pakad direizh"
+    154                     "Ment ar pakad direizh"
+    155                     "Fazioù zo bet savet gant un ostiz : %s. Ostiz digennasket."
+    156                     "Kas a ra ostizien zianav pakadoù IP"
+    157                     "N’haller ket digeriñ part.met ! (%s => %s)"
+    158                     "Stumm part.met zo direizh ! (%s => %s)"
+    159                     "Balizenn dachenn c’houllo direizh e-barzh part.met"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    160                     " %s (%s) zo direizh, n’haller ket pellgargañ ar restr"
+    161                     "Fazi lenn dianav war %s (%s) : %s"
+    162                     "Fazi o tigeriñ %s (%s)"
+    163                     "Lec’hiadur ar gwiskadurioù..."
+    164                     "Diwallit : %s a c’hell bezañ gwastet, drailherezh red"
+    165                     "Gwiskadurioù etrefas"
+    166                     "N’eo ket bet kavet ar restr .part"
+    167                     "Fazi o tigeriñ part.met"
+    168                     "Digor"
+    169                     "Fazi enrollañ: %s (%s)"
+    170                     "Lodenn direizh kavet (%i) e-barzh %s"
+    171                     "Drailherezh kaset a-benn %s, reizh eo ar restr war ar seblant"
+    172                     "Lodenn bellgarget %i direizh (%s)"
+    173                     "Lodenn direizh erlec’hiet %i  (%s), Dastumet: %s"
+    174                     "Egor kantenn re vihan a-benn pellgargañ %s!"
+    175                     "Eskemm orinoù"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    176                     "Fazi skrivañ dianav gant %s : %s"
+    177                     "Fazi echuiñ dianav gant %s. Restr war ehan, adloc’hit eMule evit kregiñ en-dro"
+    178                     "N’haller ket diverkañ %s, ret e vo deoc’h ober anezhañ dre-zorn"
+    179                     "Pellgargañ %s kaset a-benn"
+    180                     "N’haller ket dilemel %s"
+    181                     "N’haller ket drailhañ al lodenn bellgarget : taolenn zrailhañ diglok (%s)."
+    182                     "N’haller ket drailhañ al lodenn bellgarget : taolenn zrailhañ diglok (%s)."
+    183                     "Degemer"
+    184                     "O c’hortoz"
+    185                     "Drailherezh"
+    186                     "O kas a-benn"
+    187                     "Kaset a-benn"
+    188                     "Ehanet"
+    189                     "Faziet"
+    190                     "N’eo ket staget eMule ouzh an ereoù ED2K. Ha fellout a ra deoc’h stagañ eMule ouzh an ereoù ED2K diouzhtu (ali) ?"
+    191                     "Dafariad ebet zo enrollet e-barzh ’adresses.dat’. Lakait e-barzh ur roll dafariadoù gant o chomlec’hioù evit asuriñ o nevesaat emgefre."
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    192                     "N’haller ket kavout ar rollad dafariadoù en-dro"
+    193                     "Niver stumm direizh e-barzh server.met (0x%X)!"
+    194                     "%i dafariad kavet war server.met"
+    195                     "%d dafariad ouzhpennet, %d dilamet"
+    196                     "Direizh eo ar restr server.met, n’haller ket kargañ ar rollad dafariadoù"
+    197                     "Fazi lenn gant ar restr server.met : %s, n’haller ket kargañ ar rollad dafariadoù"
+    198                     "Fazi enrollañ server.met!"
+    199                     "Gouzañvat"
+    200                     "Kennaskañ bev war : "
+    201                     "&Nullañ"
+    202                     "Lodennoù: %d , vak: %d (%.1f%%)\n\n"
+    203                     "Rizh"
+    204                     "ID Restr"
+    205                     "Restr"
+    206                     "Degemer"
+    207                     "Anv dafariad"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    208                     "IP"
+    209                     "Deskrivadenn"
+    210                     "Ping"
+    211                     "Restr"
+    212                     "Dibaboù gwellañ"
+    213                     "Dibaboù gwellañ ebet"
+    214                     "Kennaskañ ouzh an dafariad-mañ"
+    215                     "Postelerezh brim\n  \nKlikit dehou war an ostiz ha dibabit ’Kas kemennadenn’ evit lañsañ un diviz"
+    216                     "Paouez gant taolioù-arnod kennaskañ"
+    217                     "&Kennaskañ"
+    218                     "Fazi enrollañ ar server.met ! Gallout a rit diverkañ server.met hag adenvel server.met.old e server.met !"
+    219                     "Ket kennasket"
+    220                     "Digennasket"
+    221                     "Impl. : %i"
+    222                     "E : %.1f(%.1f) | R : %.1f(%.1f)"
+    223                     "Kennasket"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    224                     "N’haller ket ouzhpennañ an ere"
+    225                     "Ha fellout a ra deoc’h kuitaat eMule ?"
+    226                     "Kadarnañ kuitaat"
+    227                     "Brasaat"
+    228                     "Kennaskañ ouzh un dafariad"
+    229                     "Kuitaat"
+    230                     "O kennaskañ..."
+    231                     "Fazi"
+    232                     "Respont kennaskañ direizh"
+    233                     "ID ostiz nevez : %u"
+    234                     "Teuliad eskemmet ebet"
+    235                     "Teuliadoù eskemmet"
+    236                     "Gwelout "
+    237                     " (ket eskemmet)"
+    238                     "Izel"
+    239                     "Reizh"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    240                     "Uhel"
+    241                     "Degemerioù"
+    242                     "Tevet"
+    243                     "O resev %d dafariad nevez"
+    244                     "&Paouez"
+    245                     "&Ehan"
+    246                     "&Kenderc’hel"
+    247                     "&Digeriñ ar restr"
+    248                     "Gwelout &munudoù ar restr"
+    249                     "Di&verkañ ar re gaset a-benn"
+    250                     "Kopiañ &ere ED2k"
+    251                     "Kopiañ ere ED2k (&HTML)"
+    252                     "Gwelout &munudoù"
+    253                     "Kas &kemennadenn"
+    254                     "Goulenn"
+    255                     "Kennaskañ dre an dafariad"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    256                     "O c’hortoz"
+    257                     "Treuzkas"
+    258                     "O tegemer an daolenn zrailhañ"
+    259                     "Lodenn ebet da gargañ"
+    260                     "Kennaskañ dibosupl etre daou LowID"
+    261                     "Dianav"
+    262                     "Restr all goulennet"
+    263                     "Ha fellout a ra deoc’h nullañ pe diverkañ ar restroù-mañ ?\n"
+    264                     "Ha fellout a ra deoc’h nullañ pe diverkañ ar restr-mañ ?\n"
+    265                     "Kopiet : \n"
+    266                     "% graet"
+    267                     "Dibab un teuliad evit ar restroù pellgarget"
+    268                     "Dibab un teuliad evit ar restroù dibadus"
+    269                     "Anv restr"
+    270                     "Ment"
+    271                     "Treuzkaset"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    272                     "Tizh"
+    273                     "Araokadenn"
+    274                     "Orin"
+    275                     "Rollad dafariadoù resevet direizh"
+    276                     "Stad"
+    277                     "Amzer o chom"
+    278                     "Nevesaat adalek al lec’hienn : (filter.dat/PeerGuardian)"
+    279                     "Anv implijour"
+    282                     "Fazi ket keweriet e-pad keweriañ ar pakadoù (%s)"
+    283                     "Prizadur"
+    284                     "Kennaskañ ouzh %s (%s:%i)..."
+    285                     "Ostizien"
+    286                     "Pep tra"
+    287                     "Son/Odio"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    288                     "Skeudennoù"
+    289                     "Goulevioù"
+    290                     "Videoioù"
+    291                     "Luniennoù-CD"
+    292                     "Dielloù"
+    293                     "Ere ed2k direizh (%s)"
+    294                     "Ere direizh : %s"
+    295                     "N’oc’h ket kennasket ouzh an dafariad-mañ !"
+    296                     "Dilemel an dafariad-mañ"
+    297                     "Dilemel pep dafariad"
+    298                     "Roit ur chomlec’h dafariad"
+    299                     "Roit porzh an dafariad nevez da ouzhpennañ"
+    300                     "Dafariad ket ouzhpennet !"
+    301                     "Disoberiant e oa merket an dafariad, adensoc’het eo bet!"
+    302                     "URL ebet vak."
+    303                     "URL direizh"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    304                     "Fazi degemer ar rollad dafariadoù adalek %s"
+    305                     "Aotreoù"
+    306                     "Eskemmoù"
+    307                     "Izel-tre"
+    308                     "Leuskel"
+    310                     "Harpet"
+    311                     "War ober emañ c’hoazh Kademlia. Gallout a rit e weredekaat mard oc’h dedennet evit e arnodiñ."
+    312                     "Nemet mignoned"
+    314                     "Publik"
+    315                     "N’haller ket adenvel\r\n    ""%s""\r\ne\r\n    ""%s""\r\n\r\n%hs"
+    316                     "Uhel-tre"
+    317                     "vak"
+    318                     "N’hallit ket kemmañ an aotreoù e-pad ur pellgargañ !"
+    319                     "Kuzhet"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    320                     "Treuzkas"
+    321                     "Kennaskañ"
+    322                     "Ostizien"
+    323                     "Dafariadoù"
+    324                     "O c’hortoz..."
+    325                     "Amzer"
+    326                     "Stlennoù resevet : %s"
+    327                     "Stlennoù kaset : %s"
+    328                     "Tizh keitad o tegemer : %s"
+    329                     "Tizh keitad o kas : %s"
+    330                     "Orinoù kavet : %i"
+    331                     "Degemerioù oberiant (lodennoù) : %i"
+    332                     "Kasoù oberiant : %i"
+    333                     "Kasoù o c’hortoz : %i"
+    334                     "Niver adkennsakañ : %i"
+    335                     "O c’hortoz an treuzkas..."
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    336                     "O c’hortoz kennsakañ..."
+    337                     "Kennasket ouzh an dafariad adalek : %s"
+    338                     "Feur E/R : "
+    339                     "Dianav : %i"
+    340                     "Hollad : %i"
+    341                     "Arc’hwelel : %i"
+    342                     "Disoberiant/Diverket : %i"
+    343                     "Diweredekaet"
+    344                     "Paouezet"
+    345                     "Amzer nevesaat : %i eil"
+    346                     "%u ha %u forbanet ennañ"
+    347                     "Moranv : "
+    348                     "\nAnv restr an ostiz : "
+    349                     "\nGoulenn ur restr all"
+    350                     "Gortozet"
+    351                     "Fazi o kargañ ar restr-dleoù, restr nevez krouet"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    352                     "N’eo ket ar restr-dleoù an hini neveshañ : erlec’hiet e vo"
+    353                     "Restr-dleoù garget, %u ostiz a zo anavezet"
+    354                     "Restr-dleoù faziet : erlec’hiet e vo !"
+    355                     "Fazi lenn dianav eus ar restr-deloù : %s"
+    356                     "Fazi skrivañ eus ar restr-dleoù"
+    357                     "Restr .part ebet zo bet kavet"
+    358                     "%i restr .part kavet"
+    359                     "Pellgargañ %s"
+    360                     "Emaoc’h o pellgargañ ar restr-mañ dija : %s"
+    361                     "Pellgarget eo bet ganeoc’h dija ar restr : %s"
+    362                     "Faziet eo ar restr known.met, n’haller ket he c’hargañ"
+    363                     "Fazi lenn dianav gant known.met : %s, n’haller ket e gargañ"
+    364                     "Fazi e-pad ar c’hennaksañ ouzh %s (%s:%i) : %d"
+    365                     "Fazi e-barzh serversocket : %s (%s:%i) : %u"
+    366                     "%i restr eskemmet anavezet zo bet kavet"
+    367                     "%i restr eskemmet anavezet zo bet kavet, hachage %i nouveaux fichiers"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    368                     "Fazi e-pad erounit ar protokol Pakad UDP"
+    369                     "Goulenn ur bloc’had diglok "
+    370                     "Fazi o tigeriñ ar restr c’houlennet"
+    371                     "Savet eo bet ur fazi (%s) gant an ostiz ’%s’. Ostiz digennasket"
+    372                     "Restr c’houlennet ket kavet"
+    373                     "Tagus eo an ostiz ’%s’ war ar seblant : forbanet eo bet eus al lostennad"
+    374                     "Implij."
+    375                     "Restr."
+    376                     "Diskrivadenn : %s"
+    377                     "Porzh"
+    378                     "Dafariad reizh ebet kavet er rollad"
+    379                     "Ur respont zo bet resevet adalek an dafariad %s, taol-arnod kennaskañ. (%s:%i)"
+    380                     "Fazi dibare e-pad ar c’hennaskañ. Sur a-walc’h eo bet kollet ar c’hennaskañ Internet."
+    381                     "Kennaskañ ouzh %s (%s:%i) kollet"
+    382                     "%s (%s:%i) a zo disoberiant war ar seblant"
+    383                     "%s (%s:%i) a zo peurintret war ar seblant"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    384                     "Dafariad reizh ebet kavet er rollad"
+    385                     "Kennaskañ bev war : %s"
+    386                     "Alberz"
+    387                     "Diskouez al lostennad"
+    388                     "Diskouez kasoù"
+    389                     "Kas"
+    390                     "Degemer"
+    391                     "Ostizien o c’hortoz : "
+    392                     "Klask"
+    393                     "Anv"
+    394                     "Klask hollek"
+    395                     "Rizh"
+    396                     "Pellgargañ eeun"
+    397                     "Ere(où) ED2K"
+    398                     "Loc’hañ"
+    399                     "Raktresañ"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    400                     "IRC"
+    401                     "Disoc’hoù ar c’hlask"
+    402                     "Pellgargañ an diuzad"
+    403                     "Roll an dafariadoù"
+    404                     "Titouroù diwar-benn an dafariadoù"
+    405                     "Kerzh-levr"
+    406                     "Dafariad nevez"
+    407                     "IP pe Lec’hienn"
+    408                     "Porzh"
+    409                     "Ouzhpennañ"
+    410                     "Nevesaat server.met adal. an URL"
+    411                     "Nevesaat"
+    412                     "Restroù eskemmet"
+    413                     "Feurioù"
+    414                     "Adkargañ"
+    415                     "Estez red"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    416                     "Hollek"
+    417                     "Treuzkaset : "
+    418                     "Resevet : "
+    419                     "Goulennoù : "
+    420                     "Tizh resev"
+    421                     "Tizh kas"
+    422                     "Red"
+    423                     "Estez geitad"
+    424                     "Degemer oberiant"
+    425                     "Kas oberiant"
+    426                     "Kas o c’hortoz"
+    427                     "Kemennadoù"
+    428                     "Mignoned"
+    429                     "Kas"
+    430                     "Serriñ"
+    431                     "Hollek"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    432                     "Teuliadoù"
+    433                     "Moranv"
+    434                     "Restroù resevet"
+    435                     "Restroù dibadus"
+    436                     "Furchal"
+    437                     "Teuliadoù eskemmet (Ctrl-klik evit kemer an is-teuliadoù)"
+    438                     "Kennaskañ"
+    439                     "Stlennvarr R"
+    440                     "Harz R"
+    441                     "Stlennvarr E"
+    442                     "Harz E"
+    443                     "N° kennaskañ uhelañ"
+    444                     "Porzh ostiz"
+    445                     "Kennaskañ pa vez loc’hañ"
+    446                     "Kennaskañ en-dro emgefre"
+    447                     "Dafariad"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    448                     "Dilemel an dafariadoù disoberiant"
+    449                     "taol-esae"
+    450                     "Ober gant an tevet"
+    451                     "Nevesaat an dafariadoù dre gennaskañ ouzh an dafariad"
+    452                     "Nevesaat rollad an dafariadoù dre gennaskañ ostiz"
+    453                     "Silañ an IPoù lec’hel dafariad ha ostiz"
+    454                     "Nevesaat emgefre eus rollad an dafariadoù pa vez loc’hañ "
+    455                     "Dibaboù a-bep seurt"
+    456                     "Bihanaat en &arlun"
+    457                     "Bip pa c’hoarvez ur fazi"
+    458                     "Kadarnañ a-raok kuitaat"
+    459                     "Diskouez ar skramm loc’hañ"
+    460                     "Daou-glik evit gwelout an orinoù"
+    461                     "Amzer o tiskouez an titouroù (eil)"
+    462                     "Rakleur goude klikañ war an ere ED2K"
+    463                     "Yezh"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    464                     "Restroù"
+    465                     "Keweriañ &ijinus eus ar fazioù"
+    466                     "Restroù eskemmet gwelet gant"
+    467                     "Tout an dud"
+    468                     "Mignoned"
+    469                     "Den ebet"
+    470                     "Deraouekaat"
+    471                     "Seveniñ"
+    472                     "&Treuzkasadennoù"
+    473                     "&Dafariadoù"
+    474                     "&Klaskoù"
+    475                     "&Eskemmoù"
+    476                     "Ke&mennadoù"
+    477                     "&Feurioù"
+    478                     "&Dibaboù"
+    479                     "Dibabet eo bet ar yezh dre-ziouer. Gallout a rit dibab unan all en ivinenn « Dibaboù gwellañ »."
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    480                     "Hollek"
+    481                     "Anv klok : "
+    482                     "Restr .met : "
+    483                     "Drailherezh : "
+    484                     "Ment : "
+    485                     "Stad : "
+    486                     "Treuzkas"
+    487                     "Orinoù kavet : "
+    488                     "Lodennoù:"
+    489                     "Treuzkaset : "
+    490                     "Dibun : "
+    491                     "Treuzkas : "
+    492                     "Ment oberiataet : "
+    493                     "Serriñ"
+    494                     "Munudoù ar restr"
+    495                     "Hollek"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    496                     "Anv implijour : "
+    497                     "Drailherezh ostiz : "
+    498                     "Meziant ostiz : "
+    499                     "Chomlec’h IP : "
+    500                     "Dafariad IP : "
+    501                     "Stumm ostiz : "
+    502                     "ID : "
+    503                     "Anv dafariad : "
+    504                     "Goulenn a ra an ostiz : "
+    505                     "Bet en deus an ostiz (estez): "
+    506                     "Keitad degemer : "
+    507                     "Hollad degemer : "
+    508                     "Kaset en deus an ostiz (estez): "
+    509                     "Keitad kas : "
+    510                     "Hollad kas : "
+    511                     "Treuzkas"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    512                     "Sammad an ostiz"
+    513                     "Gwerzhiad kemmañ R/E : "
+    514                     "Taol-arnodiñ (hollad) : "
+    515                     "Sammad al lostennad : "
+    516                     "Munudoù an ostiz"
+    517                     "Klikit"
+    518                     "a-benn gwiriañ mard e c’hell bezañ nevesaet ar goulev-mañ"
+    519                     "amañ"
+    520                     "Orinoù uhelañ dre restr"
+    521                     "Niver a restroù eskemmet : %i"
+    522                     "Hollad ment ar restroù eskemmet: %s"
+    523                     "Niverenn abadenn direizh"
+    524                     "Niverenn borzh direizh"
+    525                     "Goulenn a ra un dra bennak hep lârout Demat"
+    526                     "Direizh pe gwastet eo ar pakad resevet"
+    527                     "An ostiz ’%s’ (IP:%s) en deus degaset ur fazi gantañ: %u. Digennaskañ an ostiz !"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    528                     "Ment direizh"
+    529                     "An ostiz ’%s’ (IP:%s) en deus graet ur fazi: %u. Digennaskañ an ostiz !"
+    530                     "N’eo ket un ere diwar ur restr"
+    531                     "N’haller ket krouiñ ar restr .part"
+    532                     "Fazi o keweriañ ar pakad UDP o vont e-barzh (sur a-walc’h n’eo ket kefluniet mat an dafariad)"
+    533                     "*** Loc’hañ un estez Chat : "
+    534                     "Tevet ar restroù"
+    535                     "Kont"
+    536                     "Goulennet"
+    537                     "Tremen diwezhañ da"
+    538                     "Forbannet"
+    539                     "Uhel-tre"
+    540                     "Impl."
+    541                     "Fazi"
+    542                     "Digeriñ ar restr"
+    543                     "Deiziad"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    544                     "Anv ar restr part :"
+    545                     "Degemer (adalek %d orin)"
+    546                     "ID an implijour"
+    547                     "Ostiz"
+    548                     "Dafariad"
+    549                     "Niver goulennoù : %dx - Niver lodennoù hegerz : %d"
+    550                     "\nAnv restr : "
+    551                     "Moranv : %s\n"
+    552                     "Restr statik evit an estez-mañ : %d reked degemeret war %d, %s treuzkaset\n"
+    553                     "Restr statik evit an holl estezioù : %d reked degemeret war %d, %s treuzkaset"
+    554                     "Restr c’houlennet dianav"
+    555                     "Amzer dremenet adalek an treuzkas kentañ : %s"
+    556                     "Ment geitad ar restr : %s"
+    557                     "Goulennoù "
+    558                     "Degemeret"
+    559                     "Treuzkaset"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    560                     "Dilemel klask(où) diuzet"
+    561                     "Dilemel diuzad"
+    562                     "Dilemel pep tra"
+    563                     "Lakaet el lostennad"
+    564                     "Dafariadoù n’hallont ket bezañ juntet"
+    565                     "Implijourien war an dafariad oberiant"
+    566                     "Restroù war an dafariadoù oberiant"
+    567                     "Hollad implijourien"
+    568                     "Hollad restroù"
+    569                     "Amzer gas"
+    570                     "Gwelet klok : "
+    571                     "Ya"
+    572                     "Ket"
+    573                     "Diforbannañ"
+    574                     "Dafariadoù oberiant"
+    575                     "Ouzhpennañ d’ar roll statik dafariadoù"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    576                     "Ouzhpennañ d’ar roll statik dafariadoù"
+    577                     "Statik"
+    578                     "Fazi o tigeriñ staticservers.dat"
+    579                     "Fazi dibare e-pad keweriañ ar pakad stlennoù %s (ment faziet) - bloc’had stlennoù dilamet"
+    580                     "Kennaskañ oberiant (tro-dro...)"
+    581                     "Niver uhelañ a gennaskañ graet"
+    582                     "Keitad kennaskañ (tro-dro...)"
+    583                     "Pikern kennaskañ (tro-dro...)"
+    584                     "Kennaskañ oberiant"
+    585                     "Rouedad"
+    586                     "Dafariadoù dilamet"
+    587                     "Lostennad leun"
+    588                     "Keitad"
+    589                     "Eizhtet"
+    590                     "Ke"
+    591                     "Me"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    592                     "Mont da"
+    593                     "Da"
+    594                     "eil"
+    595                     "min"
+    596                     "e"
+    597                     "D"
+    598                     "Ereoù ED2K"
+    599                     "Adc’hraet e vo ar c’hennaskañ diouzh an dafariad a-benn %d eilenn"
+    600                     "Dafariad ouzhpennet : %s"
+    601                     "Leuskel a-gostez ar c’hemennadoù Join"
+    602                     "Hollad an estezioù kaset a-benn mat : %i (%.2f%%)"
+    603                     "Leuskel a-gostez ar c’hemennadoù Part"
+    604                     "Hollad an estezioù faziet : %i (%.2f%%)"
+    605                     "Amzer geitad ur c’has : %s"
+    606                     "Ment izelañ"
+    607                     "Ment uhelañ"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    608                     "Gweredekaat Online-Signature"
+    609                     "Fazi oc’h enrollañ"
+    610                     "Goulennet en deus an implijour %s (%u) ganeoc’h ho rollad restroù eskemmet -> %s"
+    611                     "degemeret"
+    612                     "nac’het"
+    613                     "Degemer"
+    614                     "Kas"
+    615                     "Kennaskañ emgefre nemet ouzh an dafariadoù statik"
+    616                     "Harzoù"
+    617                     "I.C.H oberiant"
+    618                     "Amzer evit ar gevregenn eus keitad : %i min"
+    619                     "Kevregañ"
+    620                     "Gwezenn feurioù"
+    621                     "Leuskel a-gostez ar gemennadennoù Kuitaat"
+    622                     "Feurioù"
+    623                     "Darvoudoù son"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    624                     "Harz kreñv"
+    625                     "muioc’h ..."
+    626                     "Ke/s"
+    627                     "Re a gennaskañ"
+    628                     "Kavet e vez ur restr gant ar memes anv amañ dija, gwaredet eo bet ar restr dindan %s"
+    629                     "Pellgarget : "
+    630                     "Ouzhpennet d’an degemerioù : "
+    631                     "Implijout ur son"
+    632                     "Ul linenn nevez er c’herzh-levr"
+    633                     "Derou un estez Chat"
+    634                     "Degouezhet eo ur gemennadenn nevez"
+    635                     "Kaset ez eus bet a-benn ur pellgargañ"
+    636                     "Galvadennoù"
+    637                     "Reizhiad galvadennoù"
+    638                     "Diskouez ur c’halvadenn evit"
+    639                     "Kemennadenn a-berzh"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    640                     "Stlennvarr"
+    641                     "Stad ar c’herzh-levr"
+    642                     "Stad"
+    643                     "*** Loc’hañ un estez brivez Chat : "
+    644                     "* %s slaps %s around with a large Babelfish!"
+    645                     "Kemennadenn brevez"
+    648                     "Eskemm an orinoù dibadus"
+    649                     "Tevet war al lodennoù rekis evit an alberz"
+    651                     "Kick"
+    652                     "Slap"
+    653                     "Join"
+    654                     "Roll ar saloñsoù"
+    655                     "Kennaskañ"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    656                     "Digennaskañ"
+    657                     "* %s a zo deuet war %s"
+    658                     "* %s a zo deuet er-maez eus %s (%s)"
+    659                     "* %s a zo bet lakaet er-maez gant %s (%s)"
+    660                     "Implijet eo ho moranv dija gant unan all war an dafariad IRC. Roit ur moranv all er voest dibaboù, mar plij ganeoc’h."
+    662                     "* %s a zo kennasket (%s)"
+    663                     "* %s a zo graet %s anezhañ bremañ"
+    664                     "* %s en deus kemmet ar mod gantañ : %s %s"
+    665                     "** Modoù zo a zo bet kemmet ha n’int ket skoret. Ret eo deoc’h mont er-maez ha dont en-dro er saloñs a-benn nevesaat ho rollad moranvioù.."
+    666                     "Saloñs"
+    667                     "Moranv"
+    668                     "Kas"
+    669                     "Anv"
+    670                     "PRIVMSG %s :\001ACTION slaps %s around with a large Babelfish!\001"
+    671                     "Stagañ an eur ouzh ar c’hemennadennoù"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    672                     "Implijout ur sil evit rollad ar saloñs"
+    673                     "Erounit"
+    674                     "Erounit ur skrid pa vez kennasket."
+    675                     "Ouzhpennañ d’ar roll mignoned"
+    676                     "Kargañ ar rollad saloñsoù pa vez kennasket"
+    677                     "en deus ouzhpennet ac’hanoc’h evel mignon !"
+    678                     "Re vras eo ar werzhiad ho peus dibabet ""%s"" evit bezañ skoret gant ho reizhiad korvoiñ : %d\nGallout a ra lakaat ho   \nreizhiad da vezañ distabil.\n\nHa fellout a ra deoc’h ober an dra-mañ evelkent ?"
+    679                     "Adgolloiñ"
+    680                     "Naetaat"
+    681                     "Adenvel"
+    682                     "Kopiañ er glover IRC."
+    683                     "Kas d’ur mignon : "
+    684                     "%s en deus kaset (%s), emañ o paouez da vezañ kaset ent-emgefre."
+    685                     "Degemer ereoù ED2K e-barzh IRC (Diwallit gant ec’h implij !)"
+    686                     "Eskemmet"
+    687                     "Pellgarget"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    688                     "Anvioù ar restr"
+    689                     "Bihanaat pa vez loc’het"
+    690                     "Mallus : Egor kantenn re vihan, kennaskañ ouzh an dafariad kollet"
+    691                     "Livioù"
+    692                     "Drekleur"
+    693                     "Kael"
+    694                     "Degemer red"
+    695                     "Keitad degemer war an amzer ziuzet"
+    696                     "Estez : keitad degemer"
+    697                     "Kas red"
+    698                     "Keitad kas war an amzer ziuzet"
+    699                     "Estez : keitad kas"
+    700                     "Kennaskañ oberiant"
+    701                     "Degemer oberiant"
+    702                     "Kas oberiant"
+    703                     "Spisaat an harz kas"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    704                     "Spisaat an harz degemer"
+    705                     "Diharz"
+    706                     "Gwerzhiad bihanañ erbediet\t%i "
+    707                     "Spisaat harz E/R d’an uhelañ"
+    708                     "Reoliñ tizh E/R"
+    709                     "Leuskel a-gostez ar c’hemennadennoù titouroù"
+    710                     "Kennaskañ kollet"
+    711                     "Reizhiad korvoiñ"
+    712                     "Pet pellgargañ en ur ser e lañsit kustum ?"
+    713                     "Drailherezh ar restr :"
+    714                     "M’ho peus arnodet ho tizh kennaskañ e c’hellit lakaat an disoc’hoù amañ."
+    715                     "Afellioù aozañ"
+    716                     "Bann tremen gwir o Kas"
+    717                     "Bann tremen gwir o Resev"
+    718                     "Mignoned"
+    719                     "*** Digennasket"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    720                     "Skoazeller"
+    721                     "Ouzhpennañ d’ar vignoned"
+    722                     "Dilemel mignon"
+    723                     "Dilamet diouzh ar rollad statik dafariadoù"
+    724                     "Dilemel diouzh ar rollad statik dafariadoù"
+    725                     "Amzer"
+    726                     "Video"
+    727                     "Odio"
+    728                     "&Titouroù restr"
+    729                     "Codec"
+    730                     "Dibun"
+    731                     "Ledander"
+    732                     "Fps"
+    733                     "Kanolioù"
+    734                     "Standilhonoù/s"
+    735                     "Dibun dre-vras"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    736                     "Uhelder"
+    737                     "N’haller ket tapout rollad ar restroù eskemmet ’%s’"
+    738                     "Goulenn rollad ar restroù eskemmet ’%s’"
+    739                     "Gwelout ar restroù"
+    740                     "O sevel ur slot Mignon"
+    741                     "(Haeziñ Mignon)"
+    742                     "Kennaskañ emgefre diouzh an dafariad hep proksi"
+    743                     "Diweredekaet"
+    744                     "Dibabit ho rizh kennaskañ : "
+    745                     "Rizh kennaskañ"
+    746                     "Niver a bellgargañ"
+    747                     "Unvez :"
+    748                     "Personelaat"
+    749                     "gwerzhiad da heul"
+    750                     "Tizh keitad gewllañ o tegemer : %s"
+    751                     "Diwall : ne vez ket skoret an USS tizhoù a-zindan 10Ke/s, evit ar mare. Mard ouzit dija n’hall ket tizhout an tizh-mañ ho kennaskañ, diweredekait an USS mar plij"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    752                     "Tizh degemer gwellañ : %s"
+    753                     "Leuskel a-gostez ar c’hemennadennoù ouzhpennañ a-berzh mignoned"
+    754                     "Kennaskañ doujus ouzh an dafariad"
+    755                     "Dav eo deoc’h kaout un HighID a-benn sevel un ere gant un orin IP reizh"
+    756                     "Kopiañ ere ED2k (gant orin IP)"
+    757                     "Fazi o kargañ server.met !"
+    758                     "Pakad gwasket gwastet evit %s resevet (fazi %i)"
+    759                     "Direizh pe gwastet eo ar restr emfriends.met !"
+    760                     "Fazi dianav o lenn emfriends.met : %s"
+    761                     "Titour dafariad resevet zo dianav !"
+    762                     "Fazi dibare : Fazi o sevel an Timer"
+    763                     "Degemer (Ke/s)"
+    764                     "Kas (Ke/s)"
+    765                     "Dibab ur c’havlec’h evit ar restroù resevet"
+    766                     "Dibab ur c’havlec’h evit ar restroù dibadus"
+    767                     "Emgefre"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    768                     "Emgefre [Reizh]"
+    769                     "Emgefre [Uhel]"
+    770                     "Emgefre [Krenn]"
+    771                     "Emgefre [Izel]"
+    772                     "Oc’h esaeañ kennaskañ ouzh ""%s"" : re hir"
+    773                     "Fazi o kennaskañ ouzh ""%s"""
+    774                     "N’eus dafariad vak ken evit kennaskañ."
+    775                     "Harzoù kennaskañ "
+    776                     "Uhel. kennaskañ nevez / 5 eil"
+    777                     "Lakaat ar restroù nevez da vezañ eskemmet gant un tevet Emgefre"
+    778                     "Niv. implijourien uhelañ"
+    779                     "Perzhioù kempleshoc’h"
+    780                     "Diwall : Na gemmit ket ar perzhioù-mañ hep bezañ sur eus ar pezh a rit. Gallout a rafec’h faziañ ganto.\nMont a raio en-dro ent-reizh eMule hep ouzhpennañ ar perzhioù-mañ."
+    781                     "Ouzhpennañ ur mignon"
+    782                     "Titouroù ret"
+    783                     "Titouroù diret"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    784                     "Dav eo deoc’h reiñ un IP pe N° porzh reizh !"
+    785                     "Ouzhpennañ"
+    786                     "Restr part.met dastumet evit : %s"
+    787                     "Reiñ un evezhiadenn d’ar restr-mañ (Gwelet e vo an destenn-mañ gant an holl implijourien)"
+    788                     "Evit ur film e c’hellit reiñ e ditl, e zeiziad embann, e galite (a-zivout ar film pe e enbonegañ memestra), e yezh ...\nHa mard eo ar restr-mañ un drevezadenn anezhi e c’hellit kemenn implijourien eMule diwar he fenn."
+    789                     "Evezhiadenn a-zivout ar restr %s"
+    790                     "Kemmañ evezhiadenn ar restr..."
+    791                     "Hep evezhiadenn"
+    792                     "Evezhiadenn ar restr :"
+    793                     "Ket kennasket c’hoazh ..."
+    794                     "Diskouez an evezhiadennoù"
+    795                     "Nevesaat"
+    796                     "Pep evezhiadenn"
+    797                     "Evezhiadenn ebet kavet..."
+    798                     "Kalite ar restr :"
+    799                     "Servijout a ra an notenn-mañ d’anavezout kalite ar restr ha da ziguzhat an drevezadennoù..."
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    800                     "Gwastet / direizh / drevezadenn (fake)"
+    801                     "Gwall"
+    802                     "Mat"
+    803                     "Mat-tre"
+    804                     "Dispar"
+    805                     "Diistimet"
+    806                     "K"
+    807                     "M"
+    808                     "G"
+    809                     "T"
+    810                     "Leuskel a-gostez ar c’hemennadennoù eMule Proto"
+    811                     "Reoliñ speredek al LowId e-pad ar c’hennaskañ"
+    812                     "Trevell an dafariad : %.2f%%"
+    813                     "Barrenn greskaat"
+    814                     "Ereoù ED2K oberiant p’emañ eMule o vont en-dro"
+    815                     "Ouzhpennañ ar restroù da bellgargañ dindan ar mod ehan"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    816                     "Tevet war al lodennoù ret d’an alberz"
+    817                     "Na nevesaat al lostennad en amzer werc’hel"
+    818                     "1 restr dastumet."
+    819                     "%ld restr dastumet."
+    820                     "Oc’h arnodiñ da zastum dielloù..."
+    821                     "Dastum an dielloù klokaet."
+    822                     "Dastum an dielloù faziet."
+    823                     "Lañsañ ar restr ehanet da heul pa unan a echu"
+    824                     "Klask kas lodennoù klok da bep ostiz"
+    825                     "Dafariadoù ouzhpennet dre-zorn : Lakaet e tevet uhel"
+    826                     "Prenestr dilastezañ"
+    827                     "plad"
+    828                     "krommaet"
+    829                     "An ostizien ’%s’ ha ’%s’ o deus ar memes drailherezh pe IP - ’%s’ dilamet"
+    830                     "Astenn"
+    831                     "Vakted"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    832                     "Kolloù en abeg d’ar gwastañ : %s       Gounid a-drugarez d’ar gwaskañ : %s\nLodennoù enrollet a-drugarez d’an l’I.C.H. : %i"
+    833                     "Trugarez da vont war hor bajenn zegemer evit dastum ar stumm diwezhañ ! (kevrenn Pellgargañ)\nHa fellout a ra deoc’h furchal er skoazell en-linenn a-hend all ?"
+    834                     "Diskouez ar bann tremen dreistniverel"
+    835                     "E : %.1f | R : %.1f"
+    836                     "Aozañ"
+    837                     "Arlun ar varrenn boelladoù"
+    838                     "Ment ar restr ’%s’ : %i"
+    839                     "Evezhiadenn ar restr ’%s’ : %s"
+    840                     "WebServices"
+    841                     "Aozañ WebServices"
+    842                     "Leuskel a-gostez ar c’hemennadennoù kas eus ereoù"
+    843                     "Gwiriañ stumm nevez"
+    844                     "Loc’hañ"
+    845                     "Prest eo ur stumm nevez eus eMule da vezañ pellgarget. Sellit ouzh http://emule.sourceforge.net evit lenn muioc’h a ditouroù."
+    846                     "Prest eo stumm nevez eus eMule da vezañ staliet. Klikit amañ evit lenn muioc’h a ditouroù."
+    847                     "N’haller ket gwiriañ mard ez eus ur stumm nevez da bellgargañ."
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    848                     "Dizoloet ez eus bet ur stumm nevez eus eMule"
+    849                     "Stumm nevez eus eMule ebet kavet."
+    850                     "&Gwiriañ stumm"
+    851                     "\n\nHa fellout a ra deoc’h gweladenniñ ar bajenn ditouroù diouzhtu ?"
+    852                     "Lenner video"
+    853                     "Gwarediñ ar stlennoù evit rakgwelout"
+    854                     "(goullo=diouer)"
+    855                     "Ma zitouroù"
+    856                     "ID"
+    857                     "Low ID"
+    858                     "High ID"
+    859                     "Lodennoù tapet"
+    860                     "Hollad bann tremen dreistniverel (Pakadoù): %s (%s)"
+    861                     "Goulenn restroù gant ur bann tremen dreistniverel (Pakadoù): %s (%s)"
+    862                     "Eskemm orinoù gant ur bann tremen dreistniverel (Pakadoù): %s (%s)"
+    863                     "Dafariad gant ur bann tremen dreistniverel (Pakadoù): %s (%s)"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    864                     "Faziet eo bet lañs un argerz a-benn echuiñ ur restr"
+    865                     "Ment ar restr skurzer"
+    866                     "Ment al lostennad"
+    867                     "deiziad"
+    868                     "Faziet eo bet enrollañ ar restr-dleoù"
+    869                     "Evezhiadenn"
+    870                     "IP silet : %s (%s)"
+    871                     "Graet"
+    872                     "Amzer o tegemer"
+    873                     "Silet : %i"
+    874                     "Enderc’hel a ra ar c’hemennadennoù silet : (Kefarz | )"
+    875                     "Goulenn a ra an ostiz ur bloc’had re vras."
+    876                     "Diskouez ar feurioù treuzkas en titl"
+    877                     "Rollad istor kemennadennoù ebet !"
+    878                     "Lakaat ar pellgargañ nevez e tevet emgefre"
+    879                     "Resevet ar wech diwezhañ :"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    880                     "Amzer o vont en-dro"
+    881                     "Pep tra"
+    882                     "Ouzhpennañ ur rummad"
+    883                     "Aozañ ar rummad-mañ"
+    884                     "Dilemel ar rummad-mañ"
+    885                     "Rummad"
+    886                     "Titl"
+    887                     "Liv"
+    888                     "Diouer"
+    889                     "Gwereañ"
+    890                     "Gwelout an holl re n’int ket merket"
+    891                     "Gwelout pep tra"
+    892                     "Arlunioù evit ar restroù gant evezhiadennoù/feurioù"
+    893                     "An holl re all"
+    894                     "Merkañ d’ar rummad"
+    895                     "(merket ebet)"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    896                     "Ouzhpennañ an ereoù ED2k-mañ d’ar pellgargañ ?\n"
+    897                     "Ereoù ED2k er skurzer"
+    898                     "Gwelout ar skurzer evit an ereoù ED2k"
+    899                     "Surentez"
+    900                     "%i silioù IP karget"
+    901                     "Silioù IP"
+    902                     "Aozañ"
+    903                     "Silerezh nevez"
+    904                     "Silioù dafariad (Dafariadoù e dynIP nac’het)"
+    905                     "Leuskel a-gostez an evezhiadennoù o deus enno : (Kefarz | )"
+    906                     "Ostizien anavezet"
+    907                     "Teuliad"
+    908                     "Stad kas"
+    909                     "Kaset"
+    910                     "Stad degemer"
+    911                     "Resevet"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    912                     "E-pign"
+    913                     "Kennaskañ etre daou LowID"
+    914                     "Fazi"
+    915                     "&Digeriñ ar restr « incoming »"
+    916                     "Hotmenu"
+    917                     "Dilemel rollad an ostizien anavezet"
+    918                     "Dilemel al lostennad"
+    919                     "Implijout ar reizhiad dleoù (Goprañ ar c’hasadennoù)"
+    920                     "Ha fellout a ra deoc’h e vefe meret ho tevetoù pellgargañ gant eMule ?\r\rEm am asurañ a raio eMule e vo kenlevezon ebet etre ar restroù pellgarget o deus kalz a orinoù ganto hag a re n’o deus ket kalz.\r\rM’emaoc’h o paouez nevesaat eMule adalek stumm 0.26 pe kent e vo lakaet pep pellgargañ deoc’h-c’hwi d’an tevet dre-ziouer.\rDerc’hel a raio kont an dibab-mañ eus ho pellgargañ o tont hepken. (Diouer Ya)"
+    921                     "Ha fellout a ra deoc’h e vefe meret ho tevetoù kas gant eMule ?\r\rMa kemerit an dibab-mañ e vo diuzet ar restroù dibaot gant eMule, ar pezh a sinifi e vo diaesoc’h d’an implijourien all da dapout ar restroù brudetoc’h.\rMa ne gemerit ket anezhañ e vo karget ar restroù brudetoc’h en un doare aesoc’h hag e vo diaesoc’h d’an implijourien all da dapout ar restroù dibaot.\r\rM’emaoc’h o paouez nevesaat eMule adalek stumm 0.26 pe kent e vo lakaet pep restr eskemmet deoc’h-c’hwi d’an tevet dre-ziouer.\rDerc’hel a raio kont an dibab-mañ eus ho pellgargañ o tont hepken. (Diouer Ya)"
+    922                     "Ha fellout a ra deoc’h goprañ an dud ho peus pellgarget o restroù du-se ?\r\rKustum eo graet ar reizhiad-mañ ar reizhiad dleoù anezhañ. Servijout a ra ar reizhiad-mañ da stourm a-enep al liperien. Ma eskemmit restroù nemeto, n’eo ket kuzuliet ober gantañ.\r\r(Diouer Ya)"
+    923                     "Ha fellout a ra deoc’h kas lodennoù klok eus ho restroù ?\r\rServijout a ra an dibab-mañ e vefe aesoc’h d’an dud da dapout ul lodenn glok eus ur restr. Ma ne gemerit ket an dibab-mañ e vo tu da ostizien eus ho lostennad da vont war-raok fonnaploc’h. Ma eskemmit restroù nemeto e vefe mat ober gant an dibab-mañ.\r\r(Diouer Ya)"
+    924                     "Ha fellout a ra deoc’h e vefe kennasket eMule dre ur c’hennaskañ dafariad doujus ?\r\rNag ober gant an dibab-mañ a servij da eMule da gennaskañ un tamm fonnaploc’h, met e c’hellot kaout muioc’h a gennaskañ e LowID.\r\r(Diouer Ket)"
+    925                     "Ha fellout a ra deoc’h lañsañ ar skoazeller kefluniañ ?"
+    926                     "Ha fellout a ra deoc’h e vefe loc’het eMule gant Windows en ur ser ?\r\r(Diouer Ket)"
+    927                     "Echu eo gant ar skoazeller-mañ.\r\rGallout a reer kemmañ an holl zibaboù-mañ ha lod all er voest Dibaboù Gwellañ. Evit lenn muioc’h a zisplegadennoù, sellit ouzh ar skoazell en ur bouezañ war F1 e-barzh eMule !"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    928                     "Roit hoc’h anv implijour mar plij :"
+    929                     "Enrollañ CPU && Implij ar memor"
+    930                     "Ger-alc’hwez re verr.\r\n\r\nDav eo d’ar gerioù-alc’hwez implijet ganeoc’h er riñvennoù klask Kad kaout muioc’h a 3 arouezenn enno."
+    931                     "Enrollañ ar c’herzh-levr war ar gantenn"
+    932                     "Emañ ur c’hlask o vont en-dro endeo war Kad gant ar ger-alc’hwez ""%s"".\r\n\r\nGallout a rit pe gortoz dibenn ar c’hlask o vont  en-dro pe serriñ an ivinenn glask a genglot evit lañsañ ur c’hlask nevez."
+    933                     "Ger-alc’hwez Kad direizh.\r\n\r\nMentrezh ur riñvenn glask Kad a zo evel da heul:\r\n\r\n\t<ger-alc’hwez-kad> [ <riñvenn glask-ed2k> ]\r\n\r\nDav eo d’ar riñvenn glask <ger-alc’hwez-kad> na gaout unan eus an arouezennoù da heul enni :\r\n\r\n\t%s"
+    934                     "Aozañ perzhioù ar rummadoù"
+    935                     "Dafariad Web"
+    936                     "Gweredekaet"
+    937                     "Kennaskañ"
+    938                     "Ger-tremen"
+    939                     "Kennaskañ"
+    940                     "Ha fellout a ra deoc’h e vefe dilamet an dafariad-mañ diouzh ar roll ?"
+    941                     "Penel reoliñ Web"
+    942                     "Kuitaat"
+    943                     "Oberiadennoù"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    944                     "Gwelout al lostennad"
+    945                     "Kuzhat al lostennad"
+    946                     "Gwaskerezh Gzip"
+    947                     "Espern ar bann tremen, er grafoù dreist pep tra."
+    948                     "Gweredekaat pe ket gwereañ al lostennad e-barzh an treuzkasoù."
+    949                     "Amzer freskaat ar pajennadoù"
+    950                     "Amzer en eilennoù (0=Diweredekaet) : "
+    951                     "URL"
+    952                     "Gwiskadur"
+    953                     "Kerzh-levr dilastezañ"
+    954                     "Ger-tremen"
+    955                     "Perzhioù ar restr"
+    956                     "N’haller ket pellgargañ ar gwiskadurioù : Lakaat ur restr all nevesoc’h e-lec’h %s !"
+    957                     "Harzoù kennaskañ"
+    958                     "Hollad degemer"
+    959                     "Hollad kas"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    960                     "Kreskaat an tevet"
+    961                     "Digreskaat an tevet"
+    962                     "Harzoù tizh"
+    963                     "Harzoù"
+    964                     "Merour"
+    965                     "Haeziñ nac’het !"
+    966                     "Kouviad"
+    967                     "N’haller ket pellgargañ patromoù : n’haller ket digeriñ ar restr %s"
+    968                     "Hollek (Dafariad)"
+    969                     "Hentenn"
+    970                     "Klask Web"
+    971                     "Tra ebet"
+    972                     "Harz o kas"
+    973                     "Harz o resev"
+    974                     "Nullañ"
+    975                     "Bemdeziek"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    976                     "Lun-Gwe"
+    977                     "Sad-Sul"
+    978                     "Lun"
+    979                     "Meurzh"
+    980                     "Merc’her"
+    981                     "Yaou"
+    982                     "Gwener"
+    983                     "Sadorn"
+    984                     "Sul"
+    985                     "Dafariad Web : Kennaskañ merour"
+    986                     "Dafariad Web : Kennaskañ kouviad"
+    987                     "Dafariad Web : Digennaskañ"
+    988                     "Munudoù"
+    989                     "Oberiadenn"
+    990                     "Dilemel"
+    991                     "Nevez"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    992                     "Dafariad Web : Fazi o klask kennaskañ"
+    993                     "Re vras eo ment ar restr. N’eo ket skoret gant ar protokol war ar rouedad eDonkey (>=4 Ge)"
+    994                     "Nemet aotreañ ar vignoned"
+    995                     "Nemet aotreañ an ostizien reizh"
+    996                     "Lun-Sul"
+    997                     "Harz an orinoù"
+    998                     "Harz ar c’hennaskañ/5eil"
+    999                     "Cat:Paouez degemer"
+    1000                    "Cat:Kenderc’hel degemer"
+    1001                    "Deiziadoù"
+    1002                    "Derou"
+    1003                    "Gwerzhiad"
+    1004                    "Roit feur harz ar stlennoù : "
+    1005                    "Roit ar gwerzhiad nevez :"
+    1006                    "Kefluniañ Oberiadenn"
+    1007                    "Diuz ur rummad"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1008                    "An holl re n’int ket merket"
+    1009                    "Estezioù oberiant"
+    1010                    "WebSrv."
+    1011                    "Disoc’hoù ar c’hlask"
+    1012                    "Drailherezh ar restr"
+    1013                    "Klask hollek"
+    1014                    "Proksi"
+    1015                    "Gweredekaat Proksi"
+    1016                    "Rizh ar proksi :"
+    1017                    "Proksi ostiz :"
+    1018                    "Porzh ar proksi :"
+    1019                    "Gweredekaat an dilesa"
+    1020                    "Dilesa"
+    1021                    "Diskouez titouroù pellgargañ war an ivinennoù rummadoù"
+    1022                    "Klask red. Disoc’hoù a-benn nebeut !"
+    1023                    "Tres"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1024                    "Kopiañ"
+    1025                    "Diuz pep tra"
+    1026                    "Dibunañ emgefre"
+    1027                    "Degemer mat e-barzh eMule"
+    1028                    "Emañ o vont d’ho sturiañ ar skoazeller-mañ gant pazennoù kentañ ar c’hefluniañ eMule."
+    1029                    "Evit mont pelloc’h, klikit war War-lerc’h."
+    1030                    "Echu eo ar skoazeller"
+    1031                    "Skoazeller evit implij kentañ eMule"
+    1032                    "Evit serriñ ar skoazeller-mañ, klikit war Echuiñ."
+    1033                    "Treuzkas al lodennoù klok"
+    1034                    "Kenderc’hel gant an hini o tont a zo ehanet"
+    1035                    "Chom hep kemmañ"
+    1036                    "Tevet evit ar rummad-mañ"
+    1037                    "Kavout gwelloc’h ar memes rummad"
+    1038                    "Na adsevel ar grafoù feurioù pa vez kemmet ment ar prenestr"
+    1039                    "Harz gwan ar restroù"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1040                    "Harz kreñv ar restroù"
+    1041                    "Sil"
+    1042                    "Ereoù"
+    1043                    "Gweredekaat ar Raktreser"
+    1044                    "Diweredekaat ar Raktreser"
+    1045                    "Lec’hienn ofisiel eMule"
+    1046                    "FAG eMule"
+    1047                    "Gwiriañ stummoù nevez eMule"
+    1048                    "Diskouez ar gemennadennoù diwar eskemm an orinoù"
+    1049                    "Goulennet en deus an implijour %s (%u) ganeoc’h ho roll restroù eskemmet -> %s"
+    1050                    "Goulennet en deus an implijour %s (%u) ganeoc’h ho roll restroù eskemmet evit ar c’havlec’h ’%s’ -> %s"
+    1051                    "Eskemm a ra an implijour %s (%u) ar c’havlec’h ’%s’"
+    1052                    "Kaset en deus an implijour %s (%u) ur rollad kavlec’hioù eskemmet ha n’eo ket bet goulennet - laosket a-gostez"
+    1053                    "Kaset en deus an implijour %s (%u) rollad ar restroù eskemmet evit ar c’havlec’h ’%s’"
+    1054                    "Echu eo gant an implijour %s (%u) kas rollad e restroù eskemmet"
+    1055                    "Kaset en deus an implijour %s (%u) ur rollad restroù eskemmet evit ar c’havlec’h ’%s’ ha n’eo ket be goulennet - laosket   \na-gostez"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1056                    "Nac’het en deus an implijour %s (%u) haeziñ e roll restroù/kavlec’hioù eskemmet"
+    1057                    "Naetaat an anv"
+    1058                    "Gwerzhiadoù deraouekaat"
+    1059                    "Roit ar gerioù da silañ, dispartiet gant |"
+    1060                    "Aozañ ar silioù evit naetaat an anv restr"
+    1061                    "Silañ ar gwereañ"
+    1062                    "Diglok"
+    1063                    "Dassammad"
+    1064                    "Bann tremen dreistniverel"
+    1065                    "Taolioù-dreist"
+    1066                    "Bann tremen dreistniverel : %s (%s pakad)"
+    1067                    "Degemer kaset a-benn"
+    1068                    "Niv. dafariadoù uhelañ en-linenn"
+    1069                    "Niv. implijourien en-linenn"
+    1070                    "Klask"
+    1071                    "Niv. restroù uhelañ vak"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1072                    "Niv. restroù eskemmet"
+    1073                    "Klask er bann"
+    1074                    "Ment uhelañ eskemm"
+    1075                    "Keitad brasañ eus ment restr"
+    1076                    "Amzer erounit hollek : %s"
+    1077                    "Estez"
+    1078                    "Feur E:R evit an estez :"
+    1079                    "Feur E:R sammet :"
+    1080                    "Disoc’h ebet kavet."
+    1081                    "Amzer war an dafariad red"
+    1082                    "Eilenn"
+    1083                    "Estezioù degemer"
+    1084                    "Minutenn"
+    1085                    "Estezioù degemer kaset a-benn"
+    1086                    "Estezioù degemer faziet"
+    1087                    "Keitad degemer dre estez"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1088                    "Estezioù kas"
+    1089                    "Gounezet a-drugarez d’ar waskerezh : %s"
+    1090                    "Kollet en abeg d’ar wasterezh : %s"
+    1091                    "Keitad kas dre estez"
+    1092                    "Lodennoù enrollet a-drugarez d’an I.C.H: %u"
+    1093                    "Ha fellout a ra deoc’h adderaouekaat da 0 ho feurioù dassammus ? \n\nMa deuit en-dro diwezhatoc’h war ho choaz e c’hellot kemmañ an dibab-mañ en ur glikañ war an afell ’Adlakaat Feurioù’."
+    1094                    "Kadarnañ an adderaouekaat da 0"
+    1095                    "Ha fellout a ra deoc’h adlakaat ho feurioù dassammus diwar ar restr gwarediñ ? \n\nDre glikañ war ’Restaurer Stats’ en-dro ec’h adkargot ho feurioù a-vremañ."
+    1096                    "Kadarnañ an adlakaat"
+    1097                    "FAZI: n’eo ket be kavet ar restr gwarediñ ar feurioù..."
+    1098                    "Stlennadoù feurioù gwaredet karget..."
+    1099                    "Adderaouekaet da 0 eo bet ar feurioù !"
+    1100                    "Adderaouekaat ar feurioù"
+    1101                    "Adlakaat ar feurioù"
+    1102                    "Feurioù kennaskañ"
+    1103                    "Skeul an ahel Y evit ar feurioù kennaskañ:"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1104                    "Feur kennaskañ oberiant:"
+    1105                    "Kudennoù"
+    1106                    "eurvezhioù"
+    1107                    "Restr vrasañ eskemmet"
+    1108                    "Goulev ostiz"
+    1109                    "Restr ziglok"
+    1110                    "Orin ar stlennoù"
+    1111                    "Restr klok"
+    1112                    "Hollek"
+    1113                    "Amzer treuzkas"
+    1114                    "Amzer degemer"
+    1115                    "Amzer kas"
+    1116                    "Hollad amzer an dafariad"
+    1117                    "Tizh keitad gwelloc’h o kas"
+    1118                    "Tizh gwelloc’h o kas"
+    1119                    "Amzer keitad o tegemer"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1120                    "Kozh"
+    1121                    "Diouer"
+    1122                    "Lod all"
+    1123                    "Gwezenn feurioù"
+    1124                    "Kopiañ ar skourr diuzet"
+    1125                    "Kopiañ an holl feurioù"
+    1126                    "Arc’hwelioù HTML"
+    1127                    "Ezporzhiañ an holl feurioù"
+    1128                    "Ezporzhiañ an holl re hewelus"
+    1129                    "Kopiañ an holl re hewelus"
+    1130                    "Digeriñ an holl ziuzadoù"
+    1131                    "Serriñ an holl ziuzadoù"
+    1132                    "Digeriñ an estezioù pennañ"
+    1133                    "Feurioù adderaouekaet da 0 evit ar wech gentañ : %s"
+    1134                    "Miziek"
+    1135                    "Bloavezhiek"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1136                    "Feurioù amzerel"
+    1137                    "Keitadoù raktreset"
+    1138                    "Amzer adal an adderaouekaat diwezhañ da 0: %s"
+    1139                    "N’haller ket deraouekaat an alc’hwezioù ennodiñ - dilesa surentezet diweredekaet"
+    1140                    "Identelezh :"
+    1141                    "Deuet a-benn"
+    1142                    "Direizh"
+    1143                    "Diskoret pe diweredekaouet"
+    1144                    "Skrivañ diarvar ar restroù .met/.dat"
+    1145                    "Anv UNC direizh"
+    1146                    "Morse"
+    1147                    "Bepred"
+    1148                    "D’ar c’hlozadur"
+    1149                    "Kavlec’hioù UNC"
+    1150                    "Ober gant an dilesa surentezet"
+    1151                    "Sil enep-lastez kempleshoc’h"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1152                    "Troc’hañ"
+    1153                    "Identelezh surentezet (Mat eo : Fazi )"
+    1154                    "Ment war ar gantenn : "
+    1155                    "Diwall: Kavet ez eus bet un ostiz heñvel diouzh unan all kennasket bremañ : %s (%s) ha %s (%s)"
+    1156                    "Hedad dianav"
+    1157                    "Fazi hollek"
+    1158                    "Lodenn zehou diank evit an niñvader OR"
+    1159                    "Lodenn zehou diank evit an niñvader NOT"
+    1160                    "Riñvenn diankevit ’(’ ’)’"
+    1161                    "Krommell serriñ ’)’ diank "
+    1162                    "Lodenn gleiz diank evit an niñvader AND"
+    1163                    "Lodenn gleiz diank evit an niñvader OR"
+    1164                    "Lodenn gleiz diank evit an niñvader NOT"
+    1165                    "Fazi o tielfennañ ar riñvenn glask"
+    1166                    "Riñvenn re gemplezh"
+    1167                    "Unvezioù direizh evit an Uhelañ/Izelañ gant ar vent restr spisaet"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1168                    "Stumm"
+    1169                    "Tremen pep orin d’ar restr-mañ"
+    1170                    "Pegañ"
+    1171                    "Tremen pep orin d’unan eus ar restroù all"
+    1172                    "Tremen pep orin (A4AF) ent-emgefre d’ar restr-mañ"
+    1173                    "Tremen an orin d’ar restr-mañ bremañ"
+    1174                    "Tremen an orin d’unan eus ar restroù all bremañ"
+    1175                    "Merañs an orinoù (A4AF)"
+    1176                    "MobileMule"
+    1177                    "Gweredekaat MobileMule"
+    1178                    "Merkañ emgfre d’ur rummad (dispartiañ ar gwiskadurioù gant |)"
+    1179                    "Diskouez muioc’h a reoliñ (Reoliñ eeun kempleshoc’h)"
+    1180                    "Gwir"
+    1181                    "Gaou"
+    1182                    "Mat eo"
+    1183                    "Nodrezh evit ar prenestroù Dafariad, Kemennad hag IRC"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1184                    "Dibab un nodrezh"
+    1185                    "Harz restroù gwan/kreñv"
+    1186                    "Titouroù dafariad"
+    1187                    "kbits/eil"
+    1188                    "keizhtet/eil"
+    1189                    "Fazi p’eo bet savet %s ar c’havlec’h ""%s"" - %s"
+    1190                    "Ret eo bezañ lec’hiet an teuliad evit ar restroù pellgarget e-barzh ur c’havlec’h disheñvel diouzh hini staliañ eMule."
+    1191                    "Ret eo bezañ lec’hiet an teuliad evit ar restroù dibadus e-barzh ur c’havlec’h disheñvel diouzh hini staliañ eMule."
+    1192                    "Ret eo bezañ disheñvel an teuliad evit ar restroù dibadus diouzh hini ar restroù pellgarget."
+    1193                    "Fazi o sevel ar socket MobileMule!"
+    1194                    "Dafariad MobileMule loc’het war ar porzh %i. Stumm ar protokol: %s"
+    1195                    "Diskouez an % eus an araokadenn er varrenn greskaat"
+    1196                    "Pellgargañ ouzhpennet"
+    1197                    "Aozer"
+    1198                    "Albom"
+    1199                    "Levr-henchañ MobileMule"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1200                    "Goulenn gant an ostiz:"
+    1201                    "Evit ma vefe enrollet ho kemmoù, trugarez da loc’hañ eMule en-dro !"
+    1202                    ", %i ostiz dilamet (ket gwelet abaoe 5 mizvezh)"
+    1203                    "%i (Talvoudus : %i, NNP: %i, A4AF: %i)"
+    1204                    "Diskouez ar &Gour Stlennoù..."
+    1205                    "Gour Stlennoù"
+    1206                    "(bez ez eus %s)"
+    1207                    "Deiziadoù"
+    1208                    "Titouroù restr"
+    IDS_STATS_FREESPACE     "Egor vak"
+    1210                    "Kennaskañ ouzh ar c’hanolioù skoazell."
+    1211                    "/join #emule | /join #emule-french"
+    1212                    "Nemet o tont deus mignoned."
+    1213                    "Klok"
+    1214                    "dibenn ebet"
+    1215                    "Pellgargañ ouzhpennet :"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1216                    "Gerioù a-bezh"
+    1217                    "Fazi dibare: Fazi oc’h addigeriñ ar restr ’%s’ (%s)!"
+    1218                    "Bez ez eus dija ur reked rakwelout o c’hortoz gant an ostiz-mañ"
+    1219                    "Faziet eo bet ar rakwelout adalek an implijour ’%s’"
+    1220                    "Egor kantenn"
+    1221                    "Niver a zegemerioù: %d"
+    1222                    "Ment hollad an degemerioù: %s"
+    1223                    "Ment hollad resevet endeo: %s (%.0f%%)"
+    1224                    "Ment hollad a chom da vezañ treuzkaset: %s"
+    1225                    "Egor hollad rekis d’an degemerioù: %s"
+    1226                    "Egor kantenn vak war ar gantenn Temp: %s"
+    1227                    "%s (ret eo deoc’h dieubiñ %s!)"
+    1228                    "Amzer o nevesaat ar c’hennaskañ ouzh an dafariad [min.]"
+    1229                    "&Ouzhpenn"
+    1230                    "&Ostilhoù"
+    1231                    "Perzhioù klask"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1232                    "Kopiañ an ere ed2k (Anv ostiz)"
+    1233                    " (%u drailherezh)"
+    1234                    "Gwiriañ an egor kantenn"
+    1235                    "Anv ostiz evit ma ereoù ed2k din"
+    1236                    "N’eus egor kantenn a-walc’h"
+    1237                    "Egor kantenn izel. [Me]"
+    1238                    "Kemenn"
+    1239                    "Enporzhiañ ar restroù « part » (eMule, eDonkey, Overnet)"
+    1240                    "O lenn kavlec’h part"
+    1241                    "O tastum stlennoù eeun adalek ar restr part"
+    1242                    "O sevel ar restr part eus termen"
+    1243                    "O kargañ stlennoù adalek ar restr part kozh (%i eus %i)"
+    1244                    "Oc’h enrollañ ar bloc’had stlennoù en ur restr part nemetañ (%i eus %i)"
+    1245                    "Fazi restr p’eo bet troet ar restr part"
+    1246                    "O tastum stlennoù ar restr part orin"
+    1247                    "Oc’h ouzhpennañ ar pellgargañ hag enrollañ ar restr part nevez"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1248                    "Klask ar stad..."
+    1249                    "red"
+    1250                    "Fazi: N’eus egor kantenn a-walc’h"
+    1251                    "Fazi: N’haller ket kavet ar restr partmet"
+    1252                    "Fazi: Fazi ES!"
+    1253                    "Fazi: Fazi !"
+    1254                    "Lakaet el lostennad"
+    1255                    "O pellgargañ emañ dija"
+    1256                    "&Ouzhpennañ an enporzhiañ"
+    1257                    "&Esaeañ an diuzad en-dro"
+    1258                    "&Dilemel an diuzad"
+    1259                    "Dibabit un teuliad partmet nemetañ pe ho kavlec’h temp kozh gant an holl is-teuliadoù partmet!"
+    1260                    "Ha fellout a ra deoc’h dilemel ar restroù part orin diouzh ar pellgargañ a zo bet kaset a-benn o enporzhiañ ?"
+    1261                    "%s (Kantenn :%s)"
+    1262                    "Enporzhiañ %s: %s"
+    1263                    "Kavout ent-emgefre an harz kas gwelloc’h"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1264                    "Gouzañvusted ar ping (% eus ar ping bihanañ)"
+    1265                    "Amzer oc’h ersaviñ d’an digreskaat"
+    1266                    "Amzer oc’h ersaviñ d’ar greskaat"
+    1267                    "Niver ping uhelañ evit ar c’heitad"
+    1268                    "Tizh bihanañ aotreet o kas"
+    1269                    "Amzer o chom istimet :"
+    1270                    "Feur kas :"
+    1271                    "Enrollañ ar c’herzh-levr"
+    1272                    "Kopiañ an evezhiadenn er skurzer"
+    1273                    "N’eo ket staliet en hor reizhiad ar yezh ho peus dibabet. Ha fellout a ra deoc’h e vefe pellgarget gant eMule an droidigezh adalek emule-project.net ?"
+    1274                    "Pellgargañ an droidigezh"
+    1275                    "Dilemel"
+    1276                    "Fazi o pellgargañ ha fazi o staliañ ar yezh dibabet adalek %s!"
+    1277                    "Kavlec’h direizh.\nN’haller ket sevel ar c’havlec’h. Gwiriit e anv hag e lec’hiadur."
+    1278                    "Diverkañ ar pellgargañ kaset a-benn ent-emgefre"
+    1279                    "3 fazi dilesa da MobileMule enrollet - harpet e vo pep arnodenn nevez e-pad 10 min !"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1280                    "Dilesa an implijour nevez a zo bet kaset a-benn mat gant an dafariad MobileMule"
+    1281                    "adalek an ostizien anavezet"
+    1282                    "Ur c’henniñv a zo etre porzh UDP Kad ha porzh UDP eMule pe porzh UDP Dafariadoù. Kemmet eo bet ar porzh e %u."
+    1283                    "Ha fellout a ra deoc’h dilamet diouzh ar gantenn pep restr diuzet ?"
+    1284                    "Digeriñ an teuliad"
+    1285                    "Erounit eMule gant aotreoù strizh"
+    1286                    "Dilemel diouzh ar gantenn"
+    1287                    "Loc’hañ"
+    1288                    "a-dreuz ED2K Dafariad/Lostenn"
+    1289                    "&Kad"
+    1290                    "a-dreuz Kad"
+    1291                    "a-dreuz Eskemm Orinoù"
+    1292                    "Dibab ur varrenn ostilhoù"
+    1293                    "Lec’hiadur ar barrennoù ostilhoù"
+    1294                    "Gwiskadurioù ar varrenn ostilhoù"
+    1295                    "Skritellig ebet"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1296                    "a-zehoù d’an arlun"
+    1297                    "Skritelligoù testenn"
+    1298                    "dindan an arlun"
+    1299                    "Personelaat ar varrenn ostilhoù"
+    1300                    "Dibun izel. [kBit/e]"
+    1301                    "Gwiriañ an harz-tan en-dro"
+    1302                    "Eskemmoù ED2K|Kad"
+    1303                    "Loc’hañ disoberiant bremañ (Kad diweredekaet pe kennasket dija)."
+    1304                    "A-dreñv d’an harz-tan"
+    1305                    "Kad"
+    1306                    "Stokoù"
+    1307                    "Pellder"
+    1308                    "Alc’hwez"
+    1309                    "Niver"
+    1310                    "Klask orinoù (%i:%i)"
+    1311                    "Klask gerioù-tremen (%i:%i)"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1312                    "Dizoleiñ un neudennad (%i:%i)"
+    1313                    "Enrollañ restr (%i:%i)"
+    1314                    "Enrollañ ger-alc’hwez (%i:%i)"
+    1315                    "Dianav (%i:%i)"
+    1316                    "Gwaskerezh TCP"
+    1317                    "Klaskoù red"
+    1318                    "Protokol UDP astennet evit ar rekedoù orin"
+    1319                    "Protokol UDP astennet evit ar rekedoù restroù"
+    1320                    "Padelezh izel. [hh:mm:ss]"
+    1321                    "&Skoazell"
+    1322                    "Mignon ket ouzhpennet.\r\n\r\nUr mignon all a zo dija enrollet gant ar memes chomlec’h IP ha porzh."
+    1323                    "Dizoloiñ an tizh kas"
+    1324                    "Bann tremen dreistniverel Kad (Pakadoù): %s (%s)"
+    1325                    "Kavout..."
+    1326                    "Enskrivañ an ostizien forbannet"
+    1327                    "Enskrivañ an diskrivadennoù hag an arnodennoù restroù"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1328                    "Enskrivañ an dilesa surentezet"
+    1329                    "Enskrivañ an IPoù silet pe/ha laosket a-gostez"
+    1330                    "Enskrivañ an oberiadennoù enrollañ restr"
+    1331                    "Pep mentrezh silañ IP (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|Mentrezh silañ IP eMule (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Mentrezhioù Peer Guardian (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Mentrezhioù testenn (*.txt)|*.txt|An holl restroù (*.*)|*.*||"
+    1332                    "Ha fellout a ra deoc’h dilemel ar siloù IP diuzet ?"
+    1333                    "Niver a siloù IP:"
+    1334                    "Niver a IP:"
+    1335                    "Gant ar c’hempenn-mañ e vo pourchaset d’eMule muioc’h a surentez a-enep ar stourmoù pe korvoiñ ar frailhoù, ha kuzuliañ a reomp deoc’h ober gant an dibab-mañ.\nKuzuliañ a reomp ingal gant pouez da lenn ar skoazell kent ma vo gweredekaet !\n\nDav eo deoc’h adloc’hañ eMule evit ma vefe dalc’het kont eus ar c’hemmoù."
+    1336                    "Ouzhpennañ..."
+    1337                    "Enrollañ"
+    1338                    "Derou"
+    1339                    "Dibenn"
+    1340                    "Live"
+    1341                    "Diskrivadenn"
+    1342                    "Stokoù"
+    1343                    "Siloù IP:"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1344                    "N’oc’h ket kennasket ouzh ar rouedad Kad !"
+    1345                    "N’eus restr eskemmet ebet a zo diuzet"
+    1346                    "Euvriñ hanter-emgefre (istorel)"
+    1347                    "Leuskel a-gostez ar c’hemennadennoù titouroù a-bep seurt"
+    1348                    "Anav"
+    1349                    "Emañ eMule o vont en-dro gant aotreoù strizh ""%s"""
+    1350                    "Fazi o lañsañ eMule gant aotreoù strizh ""eMule_Secure"". Kendalc’h gwirioù-dreist an implijour red (""%S"")."
+    1351                    "lennet %ld stok adalek ar restr."
+    1352                    "Stok ebet kavet, trugarez da loc’hañ pe pellgargañ ar restr nodes.dat."
+    1353                    "Hollad Gour Balizenn:"
+    1354                    "Mentrezh restr"
+    1355                    "Adc’houlennata UDP restr"
+    1356                    "Gouzañvusted ar ping (ms)"
+    1357                    "Hentenn gouzañvusted ar ping"
+    1358                    "Mili-eilennoù (ms)"
+    1359                    "Dregantad (%)"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1360                    "Enskrivañ an oberiadennoù a-zivout an A4AF"
+    1361                    "Diweredekaat reoliñ an A4AF evit espern ar CPU"
+    1362                    "Teul"
+    1363                    "Staliañ ur gwiskadur eMule"
+    1364                    "Teuliad ebet a zo bet diuzet evit gwiskadurioù an etrefas eMule, pe n’eo ket haezus an teuliad-mañ c’hoazh !"
+    1365                    "Fazi o sevel an teuliad ""%s"" evit gwiskadur an etrefas eMule - %s."
+    1366                    "Fazi oc’h eztennañ ar restr ""%s"" adalek gwiskadur an etrefas eMule diwar ar restr lec’hel ""%s""."
+    1367                    "N’eo ket ar restr-mañ ur gwiskadur reizh evit an etrefas eMule."
+    1368                    "Goulenn o tont gant an ostiz-mañ"
+    1369                    "Restroù A4AF"
+    1370                    "Porzh %u (TCP) digor en harz-tan XP evit an estez eMule-mañ"
+    1371                    "Fazi o tigeriñ ar porzh %u (TCP) en harz-tan XP evit an estez eMule-mañ"
+    1372                    "Porzh %u (UDP) digor en harz-tan XP evit an estez eMule-mañ"
+    1373                    "Fazi o tigeriñ ar porzh %u (UDP) en harz-tan XP evit an estez eMule-mañ"
+    1374                    "Digeriñ ar porzhioù-mañ en harz-tan XP"
+    1375                    "Kaset eo bet a-benn digoradur ar porzhioù diuzet evit an harz-tan XP.\nDiwall: ne zalc’h ket kont an harzoù-tan hag ar proksioù staliet eus ar c’hemmoù-mañ"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1376                    "Dizoloet eo bet gant eMule reolennoù oberiant en harz-tan Windows XP evit ar porzh diuzet, ha n’int ket bet kemmet gantañ. Ouzhpennet eo bet digudenn ar reolennoù o vankañ.\nHa dalc’hit soñj ha ne zalc’h ket kont an harzoù-tan pe ar routeurioù staliet eus ar c’hemmoù-mañ !"
+    1377                    "Fazi gant kefluniañ an harz-tan XP evit ar porzhioù diuzet!"
+    1378                    "Digeriñ/Serriñ porzhioù an harz-tan XP e-ser loc’hañ/serriñ eMule"
+    1379                    "Live enskrivañ"
+    1380                    "Diweredekaat ar pellgargañ adalek ar PeerCache"
+    1381                    "Kemennadenn nevez a-berzh ’%s’ (IP:%s)"
+    1382                    "Nemet er memes rummad"
+    1383                    "Enskrivañ an darvoudoù kas/degemer"
+    1384                    "Skorañ a ra ho pourchaser Internet an deknologiezh PeerCache, krubuilh gweredekaet !"
+    1385                    "Aotreañ an implijour d’ho lakaat en e roll mignoned."
+    1386                    "Eskemm harpet"
+    1387                    "A-gostez"
+    1388                    "Gwiriañ an orin-mañ diouzhtu (dilastezañ)"
+    1390                    "Feur estez E:R (slotoù mignoned er-maez):"
+    1391                    "Stlennoù kaset d’ar slotoù mignoned (Estez): %s"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1392                    "Mentrezh restr dianav pe gwall."
+    1393                    "Klask termoù o deus arouezennoù direizh enno. Lakaet ho peus pe ur ’?’ pe un arouezenn ha n’hall ket bezañ implijet gant eD2K."
+    1394                    "Porzhioù ha kennaskañ"
+    1395                    "Implijout a ra eMule daou borzh evit kehentiñ gant an dafariadoù hag an ostizoù. Dav eo d’ar porzhioù-mañ bezañ digoret. Dav eo d’ar porzh TCP bezañ vak evit gwarant keweriusterioù pennañ eMule. Implijet eo ar porzh UDP gant KAD (rouedad hep routeur) hag evit lakaat implij ar rouedad war zigresk (bann tremen dreistniverel).\n\nGallout a rit kemmañ ar porzhioù gant ma na vo ket kroget gant implij ar rouedad."
+    1396                    "Gwiriañ ar porzhioù"
+    1397                    "Gallout a rit arnodiñ digeriñ ar porzhioù UDP ha TCP d’ar c’hennaskañ arbell. Dav eo d’an arnodenn-mañ da vezañ kaset a-benn  evit ar c’hennaskañ etre an dafariadoù hag an ostizien. Ret eo dizoloiñ ar porzh TCP digudenn !"
+    1398                    "Gwiriañ ar c’hennaskañ"
+    1399                    "N’haller ket kemmañ ar porzh p’oc’h kennasket ouzh ar rouedad, war KAD pe war un ostiz all !\n\nTrugarez da adloc’hañ eMule evit ma vefe dalc’het kont eus ar c’hemmoù porzhioù."
+    1400                    "Titouroù ar rouedad"
+    1401                    "Niver hollad ar c’hasadennoù"
+    1402                    "Haeziñ mignoned (kas)"
+    1403                    "Kas red hep bann tremen dreistniverel (nemet haeziñ mignon)"
+    1404                    "Kas oberiant"
+    1405                    "Kas + bann tremen dreistniverel"
+    1406                    "Kas"
+    1407                    "Kas ar vignoned war-du"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1408                    "Niver a gasoù rekis evit leuniañ ar bann tremen: %i"
+    1409                    "Niver hollad a gasoù: %i"
+    1410                    "Resevet :"
+    1411                    "Kaset :"
+    1412                    "Dilesa :"
+    1413                    "Ostiz :"
+    1414                    "Niver. arnodennoù kennaskañ uhelañ en ur ser"
+    1415                    "Loc’hañ eMule gant Windows en ur ser [diweredekaet dre ziouer]"
+    1416                    "O c’hortoz PCV Kad"
+    1417                    "Re a weladennoù Kad"
+    1418                    "O c’hortoz ostiz"
+    1419                    "O c’hortoz krubuilh"
+    1420                    "Kuzhet"
+    1421                    "Merket"
+    1422                    "\tOrin : %u\r\n"
+    1423                    "\tGer-alc’hwez : %u\r\n"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1424                    "Loc’hañ gant Windows en ur ser"
+    1425                    "Ouzhpennañ un orin dre zorn"
+    1426                    "Mignon"
+    1427                    "Dibab ebet"
+    1428                    "Titour"
+    1429                    "Hanter"
+    1430                    "Klok"
+    1431                    "Paouez"
+    1432                    "Oberiant"
+    1433                    "Mentrezh"
+    1434                    "Dastumadenn"
+    1435                    "Treug ar .part"
+    1436                    "Drailherezh ar .part"
+    1437                    "Derou eus tachenn c’houllo"
+    1438                    "Dibenn eus tachenn c’houllo"
+    1439                    "Fazi"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1440                    "Dibaboù gwellañ"
+    1441                    "Stumm"
+    1442                    "Restr zibadelus"
+    1443                    "Porzh dafariad"
+    1444                    "IP an dafariad"
+    1445                    "Porzh UDP orin"
+    1446                    "Porzh TCP orin"
+    1447                    "Orin IP"
+    1448                    "Rizh orin"
+    1449                    "Klask gant Unicode"
+    1450                    "Ober gant an hentenn jediñ kempleshoc’h evit an amzer o chom"
+    1451                    "/s"
+    1452                    "Ere eD2K"
+    1453                    "Kopiañ e-barzh ar golver"
+    1454                    "Ober gant an anv ostiz (o tont d’an dibaboù gwellañ) e-lec’h an IP pa vez savet un ere gant orin"
+    1455                    "Fazi p’eo bet gwaredet an daolenn zrailhañ AICH!"
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    1456                    "Drailherezh AICH"
+    1457                    "e/s"
+    1458                    "Ke/s"
+    1459                    "Me/s"
+    1460                    "Ge/s"
+    1461                    "Te/s"
+    1462                    "Bihanik"
+    1463                    "Kavet eo bet %i restr hep taolenn zrailhañ AICH reizh, addrailhet e vo ar restroù-mañ"
+    1464                    "O jediñ Can drailherezh AICH evit ar restr %s"
+    1465                    "Ober a ra eMule adalek e stumm 0.44a gant un drailherezh war restr ouzhpenn hag a sikour a-benn digreskiñ ar c’holloù stlennoù p’eo bet dizoloet ur wasterezh. Addrailhet e vo ho restroù a-benn jediñ an drailherezh nevez peogwir e nevesait eMule adalek ur stumm koshoc’h. Gallout a ra kemer un tamm amzer met graet e vo nemet ur wech."
+    1466                    "Dastumet eo bet gant AICH %s war %s eus ar restr part %u evit %s"
+    1467                    "Ostiz orin"
+    1468                    "IP implijourien"
+    1469                    "Arc’hwelioù"
+    1470                    "Dibab ur moranv IRC."
+    1471                    "Hennezh a zlefe bezañ ur ger gant neubeutoc’h a 20 arouezenn (A-Z, 0-9) ennañ. Gallout a rit e gemmañ er voest Dibaboù gwellañ->IRC."
+END
+
+STRINGTABLE FIXED IMPURE 
+BEGIN
+    IDS_SPARSEPARTFILES     "Sevel ar restroù nevez darnel en ur espern an egor kantenn (nemet war lodenn NTFS)"
+    IDS_ASPECTRATIO         "Feur neuz"
+    IDS_NEGATEFILTER        "Lakaat ar sil war an tu gin"
+    IDS_SEENCOMPL           "Gwelet endeo klok"
+    IDS_SELSKINPROFILEDIR   "Dibab lec’hiadur ar gwiskadurioù etrefas"
+    IDS_ASKDLINCOMPLETE     "Restr diglok ent-gwirheñvel:\r\n\r\n%s\r\n\r\nSSanset eo bezañ diglok ar restr-mañ war ar rouedad ha n’hallot ket hi fellgargañ a dra-sur a-walc’h eta ! Ha fellout a ra deoc’h pellgargañ ar restr-mañ evelkent ?"
+    IDS_DEADSOURCES         "Orinoù marv"
+    IDS_LARGEICONS          "Arlunioù ledan"
+    IDS_SMALLICONS          "Arlunioù bihan"
+    IDS_SHORTTAGS           "Merkoù berr"
+    IDS_THELOAD             "Kargañ"
+    IDS_PACKSENT            "Pakadoù kaset"
+    IDS_RESPONSES           "Respontoù"
+    IDS_EXTRACT_META_DATA   "Extract meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (for all other audio/video files)"
+    IDS_META_DATA_ID3LIB    "ID3 Library (only for MPEG audio files)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Common Controls library (COMCTL32.DLL) is too old!\r\n\r\neMule detected a version of the ""Windows Common Controls library (COMCTL32.DLL)"" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the ""Windows Common Controls library (COMCTL32.DLL)"" to at least version 5.8.\r\n\r\nDownload and install an update of the ""Windows Common Controls library (COMCTL32.DLL)"" at Microsoft (R) Download Center. Do you want to visit the corresponding URL?"
+    IDS_ASREGEXPR           "As Regular Expression"
+    IDS_STATIC_REGEXP       "Regular expression for view filter:"
+    IDS_CARE4ALL            "Evaluate All Files"
+    IDS_REGEXPRESSION       "Regular Expression"
+    IDS_SEARCHKAD           "Search Kad"
+    IDS_DWL_IPFILTERFILE    "Downloading IP filter file"
+    IDS_DWLIPFILTERFAILED   "IP filter download failed"
+    IDS_FINDBUDDY           "Find Buddy"
+    IDS_ERR_IPFILTERZIPEXTR "Failed to extract IP filter file from downloaded IP filter ZIP file ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Downloaded IP filter file ""%s"" is a ZIP file with unexpected content."
+    IDS_STORENOTES          "Store Notes"
+    IDS_NOTES               "Notes"
+    IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
+
+END
+
+#endif    // French (Bretan) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "..\version.h"
+#include "lang.rc2"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -82,7 +82,7 @@ BEGIN
     IDS_HTTPDOWNLOAD_ERROR_READFILE 
                             "Dosya indirilirken bir hata oluþtu, Hata:%s"
     IDS_HTTPDOWNLOAD_PERCENTAGE 
-                            "Sunucu listesi güncelleniyor: %s%% / %s Tamamlandý"
+                            "Ýndirilen: %%%s / %s Tamamlandý"
     IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Dosya alýnýyor "
     IDS_HTTPDOWNLOAD_OF     "%s / %s"
     IDS_CANCEL              "Ýptal"
@@ -109,7 +109,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_MAIN_SOCKETERROR    "Önemli Hata: %i baðlantý noktasýnda soket oluþturulamaz"
+    IDS_MAIN_SOCKETERROR    "Önemli Hata: %i nolu baðlantý noktasýnda soket oluþturulamaz"
     IDS_MAIN_BTN_DISCONNECT "&Baðlantýyý kes"
     IDS_MAIN_BTN_DISCONNECT_TOOLTIP "Þimdiki sunucudan baðlantýyý kes"
     IDS_ERR_WRONGFILEID     "yanlýþ dosya kimliði gönderildi"
@@ -277,7 +277,7 @@ STRINGTABLE
 BEGIN
     IDS_SEARCH_PICS         "Resim"
     IDS_SEARCH_PRG          "Program"
-    IDS_SEARCH_VIDEO        "Video"
+    IDS_SEARCH_VIDEO        "Görüntü"
     IDS_SEARCH_CDIMG        "CD-Ýmajý"
     IDS_SEARCH_ARC          "Arþiv"
     IDS_ERR_INVALIDLINK     "Bu ed2k baðlantýsý geçersiz (%s)"
@@ -523,7 +523,7 @@ BEGIN
     IDS_PW_INCOMING         "Gelen dosyalar"
     IDS_PW_TEMP             "Geçici dosyalar"
     IDS_PW_BROWSE           "Gözat..."
-    IDS_PW_SHARED           "Paylaþýlan Dizinler (Ctrl-týklama altdizinleri içerir)"
+    IDS_PW_SHARED           "Paylaþýlan Dizinler (altdizinleri içermesi için Ctrl+Týklama)"
     IDS_PW_CONNECTION       "Baðlantý"
     IDS_PW_DOWNC            "Ýndirme kapasitesi"
     IDS_PW_DOWNL            "Ýndirme sýnýrý"
@@ -1437,7 +1437,7 @@ BEGIN
                             "Geçici dizini eMule kurulum dizini olarak ayarlanamaz."
     IDS_WRN_INCTEMP_SAME    "Gelen dizini ve geçici dizini ayný olamaz."
     IDS_MMFAILED            "MobileMule Soketini oluþturma baþarýsýz!"
-    IDS_MMSTARTED           "MobileMule sunucusu %i baðlantý noktasýnda baþlatýldý. Protokol sürümü: %s"
+    IDS_MMSTARTED           "MobileMule sunucusu %i nolu baðlantý noktasýnda baþlatýldý. Protokol sürümü: %s"
     IDS_SHOWDWLPERCENTAGE   "Ýlerleme çubuðunda indirme tamamlanma yüzdesini göster"
     IDS_TBN_ONNEWDOWNLOAD   "Ýndirme eklendiðinde"
     IDS_ARTIST              "Sanatçý"
@@ -1457,7 +1457,7 @@ BEGIN
     IDS_TIMEBEFORE          "(%s önce)"
     IDS_FD_TIMEDATE         "Tarihler"
     IDS_FILEINFORMATION     "Dosya Bilgisi"
-    IDS_STATS_FREESPACE     "Geçici sürücüde Boþ Alan: "
+    IDS_STATS_FREESPACE     "Boþ Alan"
     IDS_IRC_HELPCHANNEL     "Yardým kanallarýna baðlan"
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-turkish"
     IDS_IRC_ACCEPTLINKSFRIENDS "Sadece arkadaþlardan"
@@ -1550,10 +1550,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "Node Arama (%i:%i)"
-    IDS_KAD_STOREFILE       "Dosya Stokla (%i:%i)"
-    IDS_KAD_STOREKW         "Sözcük Stokla (%i:%i)"
-    IDS_KAD_UNKNOWN         "Bilinmeyen (%i:%i)"
+    IDS_KAD_NODE            "Node Arama"
+    IDS_KAD_STOREFILE       "Dosya Stokla"
+    IDS_KAD_STOREKW         "Sözcük Stokla"
+    IDS_KAD_UNKNOWN         "Bilinmeyen"
     IDS_SRV_TCPCOMPR        "TCP sýkýþtýrmasý"
     IDS_KADSEARCHLAB        "Þimdiki Aramalar"
     IDS_SRV_UDPSR           "Kaynak istekleri için geniþletilmiþ UDP protokolü"
@@ -1605,8 +1605,8 @@ BEGIN
     IDS_KADDISTANCE         "Mesafe"
     IDS_KEY                 "Anahtar"
     IDS_NUMBER              "Sayý"
-    IDS_KAD_SEARCHSRC       "Kaynaklarý Arama (%i:%i)"
-    IDS_KAD_SEARCHKW        "Sözcük Arama (%i:%i)"
+    IDS_KAD_SEARCHSRC       "Kaynaklarý Arama"
+    IDS_KAD_SEARCHKW        "Sözcük Arama"
 END
 
 STRINGTABLE 
@@ -1695,7 +1695,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_IMP_ERR_BADFORMAT   "Bilinmeyen yada kötü þablon dosyasý biçimi."
-    IDS_SEARCH_INVALIDCHAR  "Arama ifadesi geçersiz karakter içeriyor. Ya '?' karakteri girdiniz yada eD2K aðýnda kullanýlamayan bir karakter girdiniz."
+    IDS_SEARCH_INVALIDCHAR  "Arama ifadesi geçersiz karakter içeriyor. Ya '?' karakteri girdiniz yada bu aðda kullanýlamayan bir karakter girdiniz."
     IDS_PORTSCON            "Bað.Noktalarý ve Baðlantý"
     IDS_PORTINFO            "eMule sunucular ve istemciler ile iletiþim için iki baðlantý noktasý kullanýr. Bu baðlantý noktalarý uzaktaki istemciler için boþ olmalý. TCP bðlantý noktasý eMule'un ana iþlevselliði  için mevcut olmalý. UDP baðlantý noktasý Kad (sunucusuz að) için kullanýlýr ve að kullanýmýný (Birikimi) azaltýr.\n\nHiç að faaliyeti baþlamadýysa baðlantý noktalarýný burdan deðiþtirebilirsiniz."
     IDS_STARTTEST           "Bað.Noktalarýný sýna"
@@ -1814,8 +1814,37 @@ BEGIN
     IDS_NEGATEFILTER        "olumsuzluðu süz"
     IDS_SEENCOMPL           "Þimdiye kadar görülen tamamlama"
     IDS_SELSKINPROFILEDIR   "Kaplama profil dizinini seçin"
-    IDS_ASKDLINCOMPLETE     "Potentially incomplete file:\r\n\r\n%s\r\n\r\nThis file is supposed to be incomplete in the network and can therefore most likely not downloaded successfully! Do you really want to download this file?"
-    IDS_DEADSOURCES         "Dead Sources"
+    IDS_ASKDLINCOMPLETE     "Belki tamamlanmamýþ dosya:\r\n\r\n%s\r\n\r\nBu dosya að içinde tamamlanmadý farzedildi ve bu nedenle muhtemelen baþarýlý olarak indirilemedi! Bu dosyayý gerçekten indirmek istiyormusunuz?"
+    IDS_DEADSOURCES         "Ölü Kaynak"
+    IDS_LARGEICONS          "Büyük Simgeler"
+    IDS_SMALLICONS          "Küçük Simgler"
+    IDS_SHORTTAGS           "Kýsa etiketler"
+    IDS_THELOAD             "Yükle"
+    IDS_PACKSENT            "Gönderilmiþ Paket"
+    IDS_RESPONSES           "Cevaplar"
+    IDS_EXTRACT_META_DATA   "Meta verisini çýkart"
+    IDS_META_DATA_MEDIADET  "DirectShow (tüm diðer ses/görüntü dosyalarý için)"
+    IDS_META_DATA_ID3LIB    "ID3 Kütüphanesi (sadece MPEG ses dosyalarý için)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Genel Denetimler kütüphane dosyasý (COMCTL32.DLL) çok eski!\r\n\r\neMule, eMule tarafýndan doðru dürüst kullanabilmesi için çok eski ""Windows Genel Denetimler kütüphane dosyasý (COMCTL32.DLL)"" sürümünü saptadý. eMule'un iþlevselliðini tam ve kusursuz saðlamak için ""Windows Genel Denetimler kütüphane dosyasýnýn (COMCTL32.DLL)"" en az 5.8 sürümüne güncellenmesini ýsrarla öneririz.\r\n\r\n""Windows Genel Denetimler kütüphane dosyasýnýn (COMCTL32.DLL)"" güncellemesini Microsoft (R) Ýndirme Merkezinden indirin ve kurun. Ýlgili URL'yi ziyaret etmek istermisiniz?"
+    IDS_ASREGEXPR           "Kurallý Ýfadeler Olarak"
+    IDS_STATIC_REGEXP       "Görünüm süzgeci için kurallý ifade:"
+    IDS_CARE4ALL            "Tüm Dosyalarý Deðerlendir"
+    IDS_REGEXPRESSION       "Kurallý Ýfade"
+    IDS_SEARCHKAD           "Kad Ara"
+    IDS_DWL_IPFILTERFILE    "IP süzgeç dosyasý indiriliyor"
+    IDS_DWLIPFILTERFAILED   "IP süzgeci indirme baþarýsýz"
+    IDS_FINDBUDDY           "Arkadaþ Bul"
+    IDS_ERR_IPFILTERZIPEXTR "IP süzgeç dosyasýný indirilen IP süzgeç ZIP dosyasýndan ""%s"" çýkartmak baþarýsýz."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "Ýndirilen IP süzgeç dosyasý ""%s"" beklenmedik içerikli bir ZIP dosyasý."
+    IDS_STORENOTES          "Notlarý Sakla"
+    IDS_NOTES               "Notlar"
+    IDS_KADSEARCHALREADY    "Baþka bir arama zaten devam etmekte. Lütfen daha sonra tekrar deneyin!"
 END
 
 #endif    // Turkish resources

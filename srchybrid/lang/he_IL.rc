@@ -863,7 +863,7 @@ BEGIN
     IDS_PW_INCOMING         "קבצים שהתקבלו"
     IDS_PW_TEMP             "קבצים זמניים"
     IDS_PW_BROWSE           "עיון"
-    IDS_PW_SHARED           "תיקיות משותפות"
+    IDS_PW_SHARED           "תיקיות משותפות (החזק את מקש Ctrl לשתף גם תתי תיקיות)"
     IDS_PW_CONNECTION       "חיבור"
     IDS_PW_DOWNC            "יכולת הורדה"
     IDS_PW_DOWNL            "מגבלת הורדה"
@@ -1441,7 +1441,7 @@ BEGIN
     IDS_TIMEBEFORE          "(%s לפני)"
     IDS_FD_TIMEDATE         "תאריכים"
     IDS_FILEINFORMATION     "מידע קובץ"
-    IDS_STATS_FREESPACE     "Free Space on Tempdrive: "
+    IDS_STATS_FREESPACE     "מקום פנוי"
     IDS_IRC_HELPCHANNEL     "התחבר לערוצי עזרה"
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-hebrew"
     IDS_IRC_ACCEPTLINKSFRIENDS "מחברים בלבד."
@@ -1533,10 +1533,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_KAD_NODE            "חיפוש איש קשר (%i:%i)"
-    IDS_KAD_STOREFILE       "שמירת קובץ (%i:%i)"
-    IDS_KAD_STOREKW         "שמירת מילת מפתח (%i:%i)"
-    IDS_KAD_UNKNOWN         "לא ידוע (%i:%i)"
+    IDS_KAD_NODE            "חיפוש איש קשר"
+    IDS_KAD_STOREFILE       "שמירת קובץ"
+    IDS_KAD_STOREKW         "שמירת מילת מפתח"
+    IDS_KAD_UNKNOWN         "לא ידוע"
     IDS_SRV_TCPCOMPR        "TCP כיווץ"
     IDS_KADSEARCHLAB        "חיפושים נוכחיים"
     IDS_SRV_UDPSR           "פרוטוקול UDP מורחב לבקשות מקורות"
@@ -1588,8 +1588,8 @@ BEGIN
     IDS_KADDISTANCE         "מרחק"
     IDS_KEY                 "מפתח"
     IDS_NUMBER              "מספר"
-    IDS_KAD_SEARCHSRC       "חיפוש מקורות (%i:%i)"
-    IDS_KAD_SEARCHKW        "חיפוש מילות מפתח (%i:%i)"
+    IDS_KAD_SEARCHSRC       "חיפוש מקורות"
+    IDS_KAD_SEARCHKW        "חיפוש מילות מפתח"
 END
 
 STRINGTABLE 
@@ -1678,7 +1678,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_IMP_ERR_BADFORMAT   "פורמט חלק קובץ פגום או לא ידוע."
-    IDS_SEARCH_INVALIDCHAR  "מחרוזת חיפוש מכילה תווים לא תקינים. או שהכנסת תו '?' או שהכנסת תווים שאינם נתמכים ע""י רשת ה-eD2K."
+    IDS_SEARCH_INVALIDCHAR  "מחרוזת חיפוש מכילה תווים לא תקינים. או שהכנסת תו '?' או שהכנסת תווים שאינם נתמכים ע""י רשת זו."
     IDS_PORTSCON            "פורטים וחיבור"
     IDS_PORTINFO            "אימיול משתמש ב-2 פורטים לתקשורת עם שרתים וקליינטים. פורטים אלה חייבים להיות פתוחים וזמינים לקליינטים מרוחקים. פורט ה-TCP חייב להיות זמין לפעילות הראשית של אימיול. פורט ה-UDP משמש את קדמליה (רשת ללא שרתים) והפחתת העומס על הרשת (תקורה)\n\nאתה יכול לשנות פורטים אלו כאן בזמן שלא הופעלו פעילויות רשת."
     IDS_STARTTEST           "בדוק פורטים"
@@ -1715,7 +1715,7 @@ BEGIN
     IDS_KAD_TOOMANDYKADLKPS "Too Many Kad Lookups"
     IDS_PCDS_CLIENTWAIT     "ClientWait"
     IDS_PCDS_CACHEWAIT      "CacheWait"
-    IDS_CACHE               "Cache"
+    IDS_CACHE               "מטמון"
     IDS_INDEXED             "אינדקס"
     IDS_KADINFO_SRC         "\tמקור: %u\r\n"
     IDS_KADINFO_KEYW        "\tמילת מפתח: %u\r\n"
@@ -1755,7 +1755,7 @@ STRINGTABLE
 BEGIN
     IDS_LD_ED2KLINK         "ED2K קישור"
     IDS_LD_COPYCLIPBOARD    "העתק לקליפבורד"
-    IDS_LD_HOSTNAME         "Use hostname (from peferences) instead of IP when creating a sourcelink"
+    IDS_LD_HOSTNAME         "Use hostname (from preferences) instead of IP when creating a sourcelink"
     IDS_SAVEACFAILED        "נכשל בשמירת סט האש AICH!"
     IDS_IACHHASH            "AICH האש"
     IDS_BYTESPERSEC         "בתים לשנייה"
@@ -1767,7 +1767,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATS_MINORCLIENTS  "Minor"
+    IDS_STATS_MINORCLIENTS  "מינורי"
     IDS_LD_BASICOPT         "אפשרויות בסיסיות"
     IDS_LD_ADDSOURCE        "הוסף את עצמך כמקור"
     IDS_LD_EMULEHASH        "הוסף האש AICH של אימיול להתמודדות מתקדמת בפגימויות"
@@ -1785,19 +1785,49 @@ BEGIN
     IDS_SOURCECLIENT        "מקור קליינט"
     IDS_USERSIP             "איי פי משתמשים"
     IDS_FEATURES            "אפשרויות"
-    IDS_IRC_NEWNICK         "Select a IRC nick."
-    IDS_IRC_NEWNICKDESC     "Should be one word less then 20 characters containing (A-Z, 0-9). It can be changed again in Preferences->Irc."
+    IDS_IRC_NEWNICK         "בחר כינוי IRC."
+    IDS_IRC_NEWNICKDESC     "צריך להיות מילה אחת עם פחות מ-20 תווים המכילים (A-Z, 0-9). ניתן לשנותו שוב בהעדפות -> IRC."
 END
 
 STRINGTABLE 
 BEGIN
     IDS_SPARSEPARTFILES     "Create new part files as 'sparse' (NTFS only)"
-    IDS_ASPECTRATIO         "Aspect Ratio"
-    IDS_NEGATEFILTER        "negate filter"
-    IDS_SEENCOMPL           "Ever seen complete"
-    IDS_SELSKINPROFILEDIR   "Select skin profile directory"
-    IDS_ASKDLINCOMPLETE     "Potentially incomplete file:\r\n\r\n%s\r\n\r\nThis file is supposed to be incomplete in the network and can therefore most likely not downloaded successfully! Do you really want to download this file?"
-    IDS_DEADSOURCES         "Dead Sources"
+    IDS_ASPECTRATIO         "יחס מסך"
+    IDS_NEGATEFILTER        "הפוך מסנן"
+    IDS_SEENCOMPL           "נראה שלם"
+    IDS_SELSKINPROFILEDIR   "בחר תיקייה לפרופיל סקין"
+    IDS_ASKDLINCOMPLETE     "קובץ לא שלם פוטנציאלי:\r\n\r\n%s\r\n\r\nקובץ זה אמור להיות חלקי ברשת ולכן רוב הסיכויים שלא ירד בהצלחה! האם אתה בטוח שברצונך להוריד את הקובץ?"
+    IDS_DEADSOURCES         "מקורות מתים"
+    IDS_LARGEICONS          "סמלים גדולים"
+    IDS_SMALLICONS          "סמלים קטנים"
+    IDS_SHORTTAGS           "תגים קצרים"
+    IDS_THELOAD             "עומס"
+    IDS_PACKSENT            "מנות שנשלחו"
+    IDS_RESPONSES           "תגובות"
+    IDS_EXTRACT_META_DATA   "הרחב מידע מטה"
+    IDS_META_DATA_MEDIADET  "DirectShow (לכל שאר סוגי קבצי האודיו והוידאו)"
+    IDS_META_DATA_ID3LIB    "ספריית ID3 (רק לקבצי אודיו מסוג MPEG)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD 
+                            "Windows Common Controls library (COMCTL32.DLL) is too old!\r\n\r\neMule detected a version of the ""Windows Common Controls library (COMCTL32.DLL)"" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the ""Windows Common Controls library (COMCTL32.DLL)"" to at least version 5.8.\r\n\r\nDownload and install an update of the ""Windows Common Controls library (COMCTL32.DLL)"" at Microsoft (R) Download Center. Do you want to visit the corresponding URL?"
+    IDS_ASREGEXPR           "כביטוי רגיל"
+    IDS_STATIC_REGEXP       "ביטוי רגיל עבור סינון תצוגה:"
+    IDS_CARE4ALL            "Evaluate All Files"
+    IDS_REGEXPRESSION       "ביטוי רגיל"
+    IDS_SEARCHKAD           "חפש בקדמליה"
+    IDS_DWL_IPFILTERFILE    "מוריד קובץ מסנני איי פי"
+    IDS_DWLIPFILTERFAILED   "הורדת מסנני איי פי נכשלה"
+    IDS_FINDBUDDY           "חפש חבר"
+    IDS_ERR_IPFILTERZIPEXTR "נכשל בהרחבת קובץ מסנני איי פי מהורדת קובץ zip ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR 
+                            "קובץ מסנני איי פי שהורד ""%s"" הוא קובץ zip המכיל תוכן לא צפוי."
+    IDS_STORENOTES          "שמור הערות"
+    IDS_NOTES               "הערות"
+    IDS_KADSEARCHALREADY    "מתבצע חיפוש אחר. אנא נסה שוב יותר מאוחר!"
+
 END
 
 #endif    // Hebrew resources

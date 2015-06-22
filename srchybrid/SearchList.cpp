@@ -35,9 +35,9 @@
 #include "SearchListCtrl.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -124,6 +124,8 @@ void ConvertED2KTag(CTag*& pTag)
 
 ///////////////////////////////////////////////////////////////////////////////
 // CSearchFile
+
+IMPLEMENT_DYNAMIC(CSearchFile, CAbstractFile)
 
 CSearchFile::CSearchFile(const CSearchFile* copyfrom)
 {
@@ -674,7 +676,7 @@ bool CSearchList::AddToList(CSearchFile* toadd, bool bClientResponse)
 			cur_file->AddSources(uAvail);
 			AddResultCount(cur_file->GetSearchID(), toadd->GetFileHash(), uAvail);
 
-			uint32 uCompleteSources = -1;
+			uint32 uCompleteSources = (uint32)-1;
 			if (toadd->GetIntTagValue(FT_COMPLETE_SOURCES, uCompleteSources))
 				cur_file->AddCompleteSources(uCompleteSources);
 
@@ -834,11 +836,7 @@ void CSearchList::KademliaSearchKeyword(uint32 searchID, const Kademlia::CUInt12
 	va_list args;
 	va_start(args, numProperties);
 
-#ifdef _UNICODE
 	EUtf8Str eStrEncode = utf8strRaw;
-#else
-	EUtf8Str eStrEncode = utf8strNone;
-#endif
 	CSafeMemFile* temp = new CSafeMemFile(250);
 	uchar fileid[16];
 	fileID->toByteArray(fileid);
