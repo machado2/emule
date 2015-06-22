@@ -22,6 +22,7 @@
 #include "Preferences.h"
 #include "Scheduler.h"
 #include "MenuCmds.h"
+#include "HelpIDs.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -60,6 +61,7 @@ BEGIN_MESSAGE_MAP(CPPgScheduler, CPropertyPage)
 	ON_BN_CLICKED(IDC_REMOVE, OnBnClickedRemove)
 	ON_BN_CLICKED(IDC_ENABLE, OnEnableChange)
 	ON_BN_CLICKED(IDC_CHECKNOENDTIME, OnDisableTime2)
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 BOOL CPPgScheduler::OnInitDialog()
@@ -72,8 +74,8 @@ BOOL CPPgScheduler::OnInitDialog()
 	m_list.InsertColumn(0, GetResString(IDS_TITLE) ,LVCFMT_LEFT,150,0);
 	m_list.InsertColumn(1,GetResString(IDS_S_DAYS),LVCFMT_LEFT,80,1);
 	m_list.InsertColumn(2,GetResString(IDS_STARTTIME),LVCFMT_LEFT,80,2);
-	m_time.SetFormat("H:mm");
-	m_timeTo.SetFormat("H:mm");
+	m_time.SetFormat(_T("H:mm"));
+	m_timeTo.SetFormat(_T("H:mm"));
 
 	m_actions.SetExtendedStyle(LVS_EX_FULLROWSELECT);
 	m_actions.ModifyStyle(LVS_SINGLESEL,0);
@@ -158,7 +160,7 @@ void CPPgScheduler::FillScheduleList() {
 		CTime time(theApp.scheduler->GetSchedule(index)->time);
 		CString timeS;
 		m_list.SetItemText(index, 1, GetDayLabel(theApp.scheduler->GetSchedule(index)->day));
-		timeS.Format( "%s",time.Format( "%H:%M"));
+		timeS.Format(_T("%s"),time.Format(_T("%H:%M")));
 		m_list.SetItemText(index, 2, timeS);
 	}
 	if (m_list.GetItemCount()>0) {
@@ -176,7 +178,7 @@ void CPPgScheduler::OnBnClickedAdd()
 	newschedule->enabled=false;
 	newschedule->time=time(NULL);
 	newschedule->time2=time(NULL);
-	newschedule->title="?";
+	newschedule->title=_T("?");
 	newschedule->ResetActions();
 
 	index=theApp.scheduler->AddSchedule(newschedule);
@@ -223,7 +225,7 @@ void CPPgScheduler::OnBnClickedApply()
 		m_list.SetItemText(index, 1, GetDayLabel(schedule->day));
 		CTime time(theApp.scheduler->GetSchedule(index)->time);
 		CString timeS;
-		timeS.Format( "%s",time.Format( "%H:%M"));
+		timeS.Format(_T("%s"),time.Format(_T("%H:%M")));
 		m_list.SetItemText(index, 2, timeS);
 	}
 	RecheckSchedules();
@@ -339,24 +341,33 @@ void CPPgScheduler::OnNMRclickActionlist(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-BOOL CPPgScheduler::OnCommand(WPARAM wParam,LPARAM lParam ){ 
-   int item= m_actions.GetSelectionMark(); 
-   // add
-   if (wParam>=MP_SCHACTIONS && wParam<MP_SCHACTIONS+20 && m_actions.GetItemCount()<16) {
+BOOL CPPgScheduler::OnCommand(WPARAM wParam, LPARAM lParam)
+{ 
+	int item= m_actions.GetSelectionMark(); 
+	// add
+	if (wParam>=MP_SCHACTIONS && wParam<MP_SCHACTIONS+20 && m_actions.GetItemCount()<16)
+	{
 		uint8 action=wParam-MP_SCHACTIONS;
 		uint8 i=m_actions.GetItemCount();
 		m_actions.InsertItem(i,GetActionLabel(action));
 		m_actions.SetItemData(i,action);
 		m_actions.SetSelectionMark(i);
-		if (action<6) OnCommand(MP_CAT_EDIT,0);
-   } else
-   if (wParam>=MP_SCHACTIONS+20 && wParam<=MP_SCHACTIONS+80) {
-	   CString newval;
-	   newval.Format("%i",wParam-MP_SCHACTIONS-22);
-	   m_actions.SetItemText(item,1,newval);
-   }
+		if (action<6)
+			OnCommand(MP_CAT_EDIT,0);
+	}
+	else if (wParam>=MP_SCHACTIONS+20 && wParam<=MP_SCHACTIONS+80)
+	{
+		CString newval;
+		newval.Format(_T("%i"),wParam-MP_SCHACTIONS-22);
+		m_actions.SetItemText(item,1,newval);
+	}
+	else if (wParam == ID_HELP)
+	{
+		OnHelp();
+		return TRUE;
+	}
 
-   switch (wParam){ 
+	switch (wParam){ 
 		case MP_CAT_EDIT: 
         { 
 			if (item!=-1) {
@@ -366,7 +377,7 @@ BOOL CPPgScheduler::OnCommand(WPARAM wParam,LPARAM lParam ){
 				switch (m_actions.GetItemData(item)) {
 					case 1:
 					case 2:
-						prompt=GetResString(IDS_SCHED_ENTERDATARATELIMIT)+" ("+GetResString(IDS_KBYTESEC)+")";
+						prompt=GetResString(IDS_SCHED_ENTERDATARATELIMIT)+_T(" (")+GetResString(IDS_KBYTESEC)+_T(")");
 						break;
 					default: prompt=GetResString(IDS_SCHED_ENTERVAL);
 				}
@@ -388,8 +399,8 @@ BOOL CPPgScheduler::OnCommand(WPARAM wParam,LPARAM lParam ){
 			}
 			break;
 		}
-   } 
-   return CPropertyPage::OnCommand(wParam, lParam);
+	} 
+	return CPropertyPage::OnCommand(wParam, lParam);
 }
 
 void CPPgScheduler::RecheckSchedules() {
@@ -407,4 +418,15 @@ void CPPgScheduler::OnEnableChange() {
 
 void CPPgScheduler::OnDisableTime2() {
 	GetDlgItem(IDC_DATETIMEPICKER2)->EnableWindow( !IsDlgButtonChecked(IDC_CHECKNOENDTIME) );
+}
+
+void CPPgScheduler::OnHelp()
+{
+	theApp.ShowHelp(eMule_FAQ_Preferences_Scheduler);
+}
+
+BOOL CPPgScheduler::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	OnHelp();
+	return TRUE;
 }

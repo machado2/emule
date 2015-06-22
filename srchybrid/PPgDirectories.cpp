@@ -23,6 +23,7 @@
 #include "InputBox.h"
 #include "SharedFileList.h"
 #include "Preferences.h"
+#include "HelpIDs.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -40,6 +41,7 @@ BEGIN_MESSAGE_MAP(CPPgDirectories, CPropertyPage)
 	ON_EN_CHANGE(IDC_TEMPFILES, OnSettingsChange)
 	ON_BN_CLICKED(IDC_UNCADD,	OnBnClickedAddUNC)
 	ON_BN_CLICKED(IDC_UNCREM,	OnBnClickedRemUNC)
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 CPPgDirectories::CPPgDirectories()
@@ -108,6 +110,10 @@ BOOL CPPgDirectories::OnApply()
 
 	CString strIncomingDir;
 	GetDlgItemText(IDC_INCFILES, strIncomingDir);
+	if (strIncomingDir.IsEmpty()){
+		strIncomingDir = thePrefs.GetAppDir() + _T("incoming");
+		SetDlgItemText(IDC_INCFILES, strIncomingDir);
+	}
 	if (thePrefs.IsInstallationDirectory(strIncomingDir)){
 		AfxMessageBox(GetResString(IDS_WRN_INCFILE_RESERVED));
 		return FALSE;
@@ -115,6 +121,10 @@ BOOL CPPgDirectories::OnApply()
 	
 	CString strTempDir;
 	GetDlgItemText(IDC_TEMPFILES, strTempDir);
+	if (strTempDir.IsEmpty()){
+		strTempDir = thePrefs.GetAppDir() + _T("temp");
+		SetDlgItemText(IDC_TEMPFILES, strTempDir);
+	}
 	if (thePrefs.IsInstallationDirectory(strTempDir)){
 		AfxMessageBox(GetResString(IDS_WRN_TEMPFILES_RESERVED));
 		return FALSE;
@@ -127,7 +137,7 @@ BOOL CPPgDirectories::OnApply()
 
 	_sntprintf(thePrefs.incomingdir, ARRSIZE(thePrefs.incomingdir), _T("%s"), strIncomingDir);
 	MakeFoldername(thePrefs.incomingdir);
-	sprintf(thePrefs.GetCategory(0)->incomingpath,"%s",thePrefs.incomingdir);
+	_stprintf(thePrefs.GetCategory(0)->incomingpath,_T("%s"),thePrefs.incomingdir);
 
 	_sntprintf(thePrefs.tempdir, ARRSIZE(thePrefs.tempdir), _T("%s"), strTempDir);
 	MakeFoldername(thePrefs.tempdir);
@@ -160,6 +170,11 @@ BOOL CPPgDirectories::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	if (wParam == USRMSG_ITEMSTATECHANGED)
 		SetModified();	
+	else if (wParam == ID_HELP)
+	{
+		OnHelp();
+		return TRUE;
+	}
 	return CPropertyPage::OnCommand(wParam, lParam);
 }
 
@@ -226,4 +241,15 @@ void CPPgDirectories::OnBnClickedRemUNC()
 		return;
 	m_ctlUncPaths.DeleteItem(index);
 	SetModified();
+}
+
+void CPPgDirectories::OnHelp()
+{
+	theApp.ShowHelp(eMule_FAQ_Preferences_Directories);
+}
+
+BOOL CPPgDirectories::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	OnHelp();
+	return TRUE;
 }

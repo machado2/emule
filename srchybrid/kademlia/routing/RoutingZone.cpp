@@ -56,8 +56,6 @@ there client on the eMule forum..
 #include "../kademlia/SearchManager.h"
 #include "../kademlia/Defines.h"
 #include "../kademlia/Error.h"
-#include "../io/FileIO.h"
-#include "../io/IOException.h"
 #include "../net/KademliaUDPListener.h"
 #include "../../otherfunctions.h"
 #include "../../Opcodes.h"
@@ -65,6 +63,7 @@ there client on the eMule forum..
 #include "emuledlg.h"
 #include "KadContactListCtrl.h"
 #include "kademliawnd.h"
+#include "SafeFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -82,7 +81,7 @@ void DebugSend(LPCTSTR pszMsg, uint32 ip, uint16 port);
 // This is just a safety precaution
 #define CONTACT_FILE_LIMIT 5000
 
-CString CRoutingZone::m_filename = "";
+CString CRoutingZone::m_filename;
 CUInt128 CRoutingZone::me = (ULONG)0;
 
 CRoutingZone::CRoutingZone()
@@ -93,7 +92,7 @@ CRoutingZone::CRoutingZone()
 	prefs->getClientID(&me);
 	m_filename = CMiscUtils::getAppDir();
 	m_filename.Append(CONFIGFOLDER);
-	m_filename.Append("nodes.dat");
+	m_filename.Append(_T("nodes.dat"));
 	CUInt128 zero((ULONG)0);
 	init(NULL, 0, zero);
 
@@ -157,12 +156,13 @@ void CRoutingZone::readFile(void)
 	{
 		theApp.emuledlg->kademliawnd->contactList->Hide();
 		uint32 numContacts = 0;
-		CBufferedFileIO file;
-		if (file.Open(m_filename, CFile::modeRead | CFile::typeBinary))
+		CSafeBufferedFile file;
+		CFileException fexp;
+		if (file.Open(m_filename, CFile::modeRead | CFile::osSequentialScan|CFile::typeBinary|CFile::shareDenyWrite, &fexp))
 		{
 			setvbuf(file.m_pStream, NULL, _IOFBF, 32768);
 
-			numContacts = file.readUInt32();
+			numContacts = file.ReadUInt32();
 
 			CUInt128 id;
 			uint32 ip;
@@ -171,11 +171,11 @@ void CRoutingZone::readFile(void)
 			byte type;
 			for (uint32 i=0; i<numContacts; i++)
 			{
-				file.readUInt128(&id);
-				ip		= file.readUInt32();
-				udpPort	= file.readUInt16();
-				tcpPort	= file.readUInt16();
-				type	= file.readByte();
+				file.ReadUInt128(&id);
+				ip		= file.ReadUInt32();
+				udpPort	= file.ReadUInt16();
+				tcpPort	= file.ReadUInt16();
+				type	= file.ReadUInt8();
 				if(::IsGoodIPPort(ntohl(ip),udpPort))
 				{
 					if( type < 2)
@@ -183,16 +183,12 @@ void CRoutingZone::readFile(void)
 				}
 			}
 			file.Close();
-			CKademlia::logMsg("Read %ld contact%s from file.", numContacts, ((numContacts == 1) ? "" : "s"));
+			CKademlia::logMsg(GetResString(IDS_KADCONTACTSREAD), numContacts);
 		}
 		if (numContacts == 0)
-			CKademlia::reportError(ERR_NO_CONTACTS, "No contacts found, please bootstrap, or download a nodes.dat file.");
+			CKademlia::reportError(ERR_NO_CONTACTS, GetResString(IDS_ERR_KADCONTACTS));
 	} 
-	catch ( CIOException *ioe )
-	{
-		CKademlia::debugMsg("Exception in CRoutingZone::readFile (IO error(%i))", ioe->m_cause);
-		ioe->Delete();
-	}
+	//TODO: Make this catch an CFileException..
 	catch (...) 
 	{
 		CKademlia::debugLine("Exception in CRoutingZone::readFile");
@@ -210,25 +206,26 @@ void CRoutingZone::writeFile(void)
 		uint32 count = 0;
 		CContact *c;
 		CUInt128 id;
-		CBufferedFileIO file;
-		if (file.Open(m_filename, CFile::modeWrite | CFile::modeCreate | CFile::typeBinary))
+		CSafeBufferedFile file;
+		CFileException fexp;
+		if (file.Open(m_filename, CFile::modeWrite | CFile::modeCreate | CFile::typeBinary|CFile::shareDenyWrite, &fexp))
 		{
 			setvbuf(file.m_pStream, NULL, _IOFBF, 32768);
 
 			ContactList contacts;
 			getAllEntries(&contacts);
-			file.writeUInt32((uint32)min(contacts.size(), CONTACT_FILE_LIMIT));
+			file.WriteUInt32((uint32)min(contacts.size(), CONTACT_FILE_LIMIT));
 			ContactList::const_iterator it;
 			for (it = contacts.begin(); it != contacts.end(); it++)
 			{
 				count++;
 				c = *it;
 				c->getClientID(&id);
-				file.writeUInt128(id);
-				file.writeUInt32(c->getIPAddress());
-				file.writeUInt16(c->getUDPPort());
-				file.writeUInt16(c->getTCPPort());
-				file.writeByte(c->getType());
+				file.WriteUInt128(&id);
+				file.WriteUInt32(c->getIPAddress());
+				file.WriteUInt16(c->getUDPPort());
+				file.WriteUInt16(c->getTCPPort());
+				file.WriteUInt8(c->getType());
 				if (count == CONTACT_FILE_LIMIT)
 					break;
 			}
@@ -236,11 +233,7 @@ void CRoutingZone::writeFile(void)
 		}
 		CKademlia::debugMsg("Wrote %ld contact%s to file.", count, ((count == 1) ? "" : "s"));
 	} 
-	catch ( CIOException *ioe )
-	{
-		CKademlia::debugMsg("Exception in CRoutingZone::writeFile (IO error(%i))", ioe->m_cause);
-		ioe->Delete();
-	}
+	//TODO: Make this catch an CFileException..
 	catch (...) 
 	{
 		CKademlia::debugLine("Exception in CRoutingZone::writeFile");
@@ -493,7 +486,7 @@ uint64 CRoutingZone::getApproximateNodeCount(uint32 ourLevel) const
 	return (m_subZones[0]->getApproximateNodeCount(ourLevel+1) + m_subZones[1]->getApproximateNodeCount(ourLevel+1)) / 2;
 }
 
-void CRoutingZone::dumpContents(LPCSTR prefix) const
+void CRoutingZone::dumpContents(LPCTSTR prefix) const
 {
 #ifdef DEBUG
 	CString msg;
@@ -501,22 +494,22 @@ void CRoutingZone::dumpContents(LPCSTR prefix) const
 	m_zoneIndex.toBinaryString(&ziStr, true);
 
 	if (prefix == NULL)
-		OutputDebugString("------------------------------------------------------\r\n");
+		OutputDebugString(_T("------------------------------------------------------\r\n"));
 	if (isLeaf()) 
 	{
-		msg.Format("Zone level: %ld\tZone prefix: %s\tContacts: %ld\tZoneIndex: %s\r\n", 
-			m_level, (prefix == NULL) ? "ROOT" : prefix, getNumContacts(), ziStr);
+		msg.Format(_T("Zone level: %ld\tZone prefix: %s\tContacts: %ld\tZoneIndex: %s\r\n"), 
+			m_level, (prefix == NULL) ? _T("ROOT") : prefix, getNumContacts(), ziStr);
 		OutputDebugString(msg);
 		m_bin->dumpContents();
 	} 
 	else 
 	{
-		msg.Format("Zone level: %ld\tZone prefix: %s\tContacts: %ld\tZoneIndex: %s NODE\r\n", 
-					m_level, (prefix == NULL) ? "ROOT" : prefix, getNumContacts(), ziStr);
+		msg.Format(_T("Zone level: %ld\tZone prefix: %s\tContacts: %ld\tZoneIndex: %s NODE\r\n"), 
+					m_level, (prefix == NULL) ? _T("ROOT") : prefix, getNumContacts(), ziStr);
 		OutputDebugString(msg);
-		msg.Format("%s0", (prefix == NULL) ? "" : prefix);
+		msg.Format(_T("%s0"), (prefix == NULL) ? _T("") : prefix);
 		m_subZones[0]->dumpContents(msg.GetBuffer(0));
-		msg.Format("%s1", (prefix == NULL) ? "" : prefix);
+		msg.Format(_T("%s1"), (prefix == NULL) ? _T("") : prefix);
 		m_subZones[1]->dumpContents(msg.GetBuffer(0));
 	}
 #endif
@@ -652,12 +645,13 @@ uint32 CRoutingZone::estimateCount(void)
 	if( m_level < KBASE )
 		return (pow(2, m_level)*10);
 	CRoutingZone* curZone = m_superZone;
-	uint32 userCountBase = (pow( 2, m_level+1))*10;
-	uint32 sample = curZone->getNumContacts();
-	float modifier = (float)sample/20;
-	uint32 final = userCountBase * modifier;
-//	CKademlia::debugLine("CBase(%u) | SBase(%u) | Sample(%u) | modifier(%f) | Final(%u)\n", userCountBase, sampleBase, sample, modifier, final);
-	return userCountBase * modifier;
+	//This count use to be based on how Overnet estimates it's count.. But it is now
+	//obvious that Overnet takes it's real estimate and doubles it to make thier
+	//user base look twice as big as it really is..
+	float modify = (float)curZone->getNumContacts()/20;
+	if( modify > 1.5 )
+		modify = 1.5;
+	return (pow( 2, m_level))*10*(modify);
 }
 
 void CRoutingZone::onSmallTimer(void)
@@ -794,7 +788,7 @@ void CRoutingZone::selfTest(void)
 		id.setValueRandom();
 id.toHexString(&msg);
 OutputDebugString(msg);
-OutputDebugString("\r\n");
+OutputDebugString(_T("\r\n"));
 
 		if (!add(id, 0xC0A80001, 0x1234, 0x4321, 0))
 			break;
@@ -813,7 +807,7 @@ OutputDebugString("\r\n");
 		close = new CUInt128(me, 1+i%128);
 close->toHexString(&msg);
 OutputDebugString(msg);
-OutputDebugString("\r\n");
+OutputDebugString(_T("\r\n"));
 		if (!add(*close, 0xC0A80001, 0x1234, 0x4321, 0))
 			break;
 //		if (i%20 == 0)
@@ -826,15 +820,15 @@ OutputDebugString("\r\n");
 
 	id.setValueRandom();
 	id.toHexString(&msg);
-	OutputDebugString("Trying to find nearest to : ");
+	OutputDebugString(_T("Trying to find nearest to : "));
 	OutputDebugString(msg);
-	OutputDebugString("\r\n");
+	OutputDebugString(_T("\r\n"));
 	CUInt128 x(me);
 	x.xor(id);
-	OutputDebugString("Distance from me                 : ");
+	OutputDebugString(_T("Distance from me                 : "));
 	x.toBinaryString(&msg);
 	OutputDebugString(msg);
-	OutputDebugString("\r\n");
+	OutputDebugString(_T("\r\n"));
 
 	ContactMap result;
 	getClosestTo(0, id, 20, &result);
@@ -849,7 +843,7 @@ OutputDebugString("\r\n");
 		c = it->second;
 		c->m_clientID.toHexString(&hex);
 		c->getDistance(&distance);
-		line.Format("%s : %s\r\n", hex, distance);
+		line.Format(_T("%s : %s\r\n"), hex, distance);
 		OutputDebugString(line);
 	}
 }

@@ -16,6 +16,8 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include "stdafx.h"
 #include <sys/stat.h>
+#include <share.h>
+#include <io.h>
 #include "emule.h"
 #include "OtherFunctions.h"
 #include "DownloadQueue.h"
@@ -25,12 +27,10 @@
 #include "UpDownClient.h"
 #include "Opcodes.h"
 #include "WebServices.h"
-#ifndef _CONSOLE
 #include <shlobj.h>
 #include "emuledlg.h"
 #include "MenuCmds.h"
-#include "KillProcess.h"
-#endif
+#include "ZipFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -74,45 +74,45 @@ static byte base16Lookup[BASE16_LOOKUP_MAX][2] = {
 CString CastItoXBytes(uint64 count){
 	CString buffer;
 	if (count < 1024)
-		buffer.Format("%.0f %s",(float)count,GetResString(IDS_BYTES));
+		buffer.Format(_T("%.0f %s"),(float)count,GetResString(IDS_BYTES));
 	else if (count < 1048576)
-		buffer.Format("%.0f %s",(float)count/1024,GetResString(IDS_KBYTES));
+		buffer.Format(_T("%.0f %s"),(float)count/1024,GetResString(IDS_KBYTES));
 	else if (count < 1073741824)
-		buffer.Format("%.2f %s",(float)count/1048576,GetResString(IDS_MBYTES));
+		buffer.Format(_T("%.2f %s"),(float)count/1048576,GetResString(IDS_MBYTES));
 	else if (count < 1099511627776)
-		buffer.Format("%.2f %s",(float)count/1073741824,GetResString(IDS_GBYTES));
+		buffer.Format(_T("%.2f %s"),(float)count/1073741824,GetResString(IDS_GBYTES));
 	else 
-		buffer.Format("%.3f %s",(float)count/1099511627776,GetResString(IDS_TBYTES));
+		buffer.Format(_T("%.3f %s"),(float)count/1099511627776,GetResString(IDS_TBYTES));
 	return buffer;
 }
 
 CString CastItoIShort(uint64 count){
 	CString output;
 	if (count < 1000)
-		output.Format("%i",count);
+		output.Format(_T("%i"),count);
 	else if (count < 1000000)
-		output.Format("%.0f%s",(float)count/1000, GetResString(IDS_KILO));
+		output.Format(_T("%.0f%s"),(float)count/1000, GetResString(IDS_KILO));
 	else if (count < 1000000000)
-		output.Format("%.2f%s",(float)count/1000000, GetResString(IDS_MEGA));
+		output.Format(_T("%.2f%s"),(float)count/1000000, GetResString(IDS_MEGA));
 	else if (count < 1000000000000)
-		output.Format("%.2f%s",(float)count/1000000000, GetResString(IDS_GIGA));
+		output.Format(_T("%.2f%s"),(float)count/1000000000, GetResString(IDS_GIGA));
 	else if (count < 1000000000000000)
-		output.Format("%.2f%s",(float)count/1000000000000, GetResString(IDS_TERRA));
+		output.Format(_T("%.2f%s"),(float)count/1000000000000, GetResString(IDS_TERRA));
 	return output;
 }
 
 CString CastSecondsToHM(sint32 count){
 	CString buffer;
 	if (count < 0)
-		buffer = "?"; 
+		buffer = _T("?"); 
 	else if (count < 60)
-		buffer.Format("%i %s",count,GetResString(IDS_SECS)); 
+		buffer.Format(_T("%i %s"),count,GetResString(IDS_SECS)); 
 	else if (count < 3600) 
-		buffer.Format("%i:%s %s",count/60,LeadingZero(count-(count/60)*60),GetResString(IDS_MINS));
+		buffer.Format(_T("%i:%s %s"),count/60,LeadingZero(count-(count/60)*60),GetResString(IDS_MINS));
 	else if (count < 86400) 
-		buffer.Format("%i:%s %s",count/3600,LeadingZero((count-(count/3600)*3600)/60),GetResString(IDS_HOURS));
+		buffer.Format(_T("%i:%s %s"),count/3600,LeadingZero((count-(count/3600)*3600)/60),GetResString(IDS_HOURS));
 	else 
-		buffer.Format("%i %s %i %s",count/86400,GetResString(IDS_DAYS),(count-(count/86400)*86400)/3600,GetResString(IDS_HOURS)); 
+		buffer.Format(_T("%i %s %i %s"),count/86400,GetResString(IDS_DAYS),(count-(count/86400)*86400)/3600,GetResString(IDS_HOURS)); 
 	return buffer;
 }
 
@@ -120,20 +120,20 @@ CString CastSecondsToHM(sint32 count){
 CString CastSecondsToLngHM(__int64 count){
 	CString buffer;
 	if (count < 0)
-		buffer = "?"; 
+		buffer = _T("?"); 
 	else if (count < 60)
-		buffer.Format("%I64d %s",count,GetResString(IDS_LONGSECS)); 
+		buffer.Format(_T("%I64d %s"),count,GetResString(IDS_LONGSECS)); 
 	else if (count < 3600) 
-		buffer.Format("%I64d:%s %s",count/60,LeadingZero(count-(count/60)*60),GetResString(IDS_LONGMINS));
+		buffer.Format(_T("%I64d:%s %s"),count/60,LeadingZero(count-(count/60)*60),GetResString(IDS_LONGMINS));
 	else if (count < 86400) 
-		buffer.Format("%I64d:%s %s",count/3600,LeadingZero((count-(count/3600)*3600)/60),GetResString(IDS_LONGHRS));
+		buffer.Format(_T("%I64d:%s %s"),count/3600,LeadingZero((count-(count/3600)*3600)/60),GetResString(IDS_LONGHRS));
 	else {
 		__int64 cntDays = count/86400;
 		__int64 cntHrs = (count-(count/86400)*86400)/3600;
 		if (cntHrs)
-			buffer.Format("%I64d %s %I64d:%s %s",cntDays,GetResString(IDS_DAYS2),cntHrs,LeadingZero((uint32)(count-(cntDays*86400)-(cntHrs*3600))/60),GetResString(IDS_LONGHRS)); 
+			buffer.Format(_T("%I64d %s %I64d:%s %s"),cntDays,GetResString(IDS_DAYS2),cntHrs,LeadingZero((uint32)(count-(cntDays*86400)-(cntHrs*3600))/60),GetResString(IDS_LONGHRS)); 
 		else
-			buffer.Format("%I64d %s %u %s",cntDays,GetResString(IDS_DAYS2),(uint32)(count-(cntDays*86400)-(cntHrs*3600))/60,GetResString(IDS_LONGMINS));
+			buffer.Format(_T("%I64d %s %u %s"),cntDays,GetResString(IDS_DAYS2),(uint32)(count-(cntDays*86400)-(cntHrs*3600))/60,GetResString(IDS_LONGMINS));
 	}
 	return buffer;
 } 
@@ -141,13 +141,13 @@ CString CastSecondsToLngHM(__int64 count){
 
 CString LeadingZero(uint32 units) {
 	CString temp;
-	if (units<10) temp.Format("0%i",units); else temp.Format("%i",units);
+	if (units<10) temp.Format(_T("0%i"),units); else temp.Format(_T("%i"),units);
 	return temp;
 }
 
 //<<--9/21/02
 void ShellOpenFile(CString name){ 
-    ShellExecute(NULL, "open", name, NULL, NULL, SW_SHOW); 
+    ShellExecute(NULL, _T("open"), name, NULL, NULL, SW_SHOW); 
 } 
 void ShellOpenFile(CString name, LPCTSTR pszVerb){ 
     ShellExecute(NULL, pszVerb, name, NULL, NULL, SW_SHOW); 
@@ -185,48 +185,46 @@ namespace {
 
 CString URLDecode(CString inStr) {
 	
-	CString res="";
-
+	CString res;
 	for (int x = 0; x < inStr.GetLength() ; ++x )
 	{
-		if ( inStr.GetAt(x)== '%' && x+2 < inStr.GetLength() && IsHexDigit(inStr.GetAt(x+1)) && IsHexDigit(inStr.GetAt(x+2)) ) {
+		if ( inStr.GetAt(x)== _T('%') && x+2 < inStr.GetLength() && IsHexDigit(inStr.GetAt(x+1)) && IsHexDigit(inStr.GetAt(x+2)) ) {
 
-			char hexstr[3]; hexstr[2]=0;
+			TCHAR hexstr[3]; hexstr[2]=0;
 			// Copy the two bytes following the %
-			strncpy(hexstr, inStr.Mid(x+1,2).GetBuffer(), 2);
+			_tcsncpy(hexstr, inStr.Mid(x+1,2).GetBuffer(), 2);
 
 			// Skip over the hex
 			x = x + 2;
 
 			// Convert the hex to ASCII
-			res.AppendChar((unsigned char)strtoul(hexstr, NULL, 16));
+			res.AppendChar((TCHAR)_tcstoul(hexstr, NULL, 16));
 		}
 		else {
 			res.AppendChar( inStr.GetAt(x));
-			//break;
 		}
 	}
 	return res;
 }
 
-void URLDecode(CString& result, const char* buff)
+void URLDecode(CString& result, const TCHAR* buff)
 {
-	int buflen = (int)strlen(buff);
+	int buflen = (int)_tcslen(buff);
 	int x;
 	int y;
-	char* buff2 = nstrdup(buff); // length of buff2 will be less or equal to length of buff
+	TCHAR* buff2 = _tcsdup(buff); // length of buff2 will be less or equal to length of buff
 	for (x = 0, y = 0; x < buflen ; ++x )
 	{
-		if ( buff[x] == '%' && x+2 < buflen && IsHexDigit(buff[x+1]) && IsHexDigit(buff[x+2]) ) {
-			char hexstr[3];
+		if ( buff[x] == _T('%') && x+2 < buflen && IsHexDigit(buff[x+1]) && IsHexDigit(buff[x+2]) ) {
+			TCHAR hexstr[3];
 			// Copy the two bytes following the %
-			strncpy(hexstr, &buff[x + 1], 2);
+			_tcsncpy(hexstr, &buff[x + 1], 2);
 
 			// Skip over the hex
 			x = x + 2;
 
 			// Convert the hex to ASCII
-			buff2[y++] = (unsigned char)strtoul(hexstr, NULL, 16);
+			buff2[y++] = (TCHAR)_tcstoul(hexstr, NULL, 16);
 		}
 		else {
 			buff2[y++] = buff[x];
@@ -238,95 +236,93 @@ void URLDecode(CString& result, const char* buff)
 }
 
 
-CString URLEncode(CString sIn){
+CString URLEncode(CString sInT)
+{
+	CStringA sIn(sInT);
+    LPCSTR pInBuf = sIn;
+
     CString sOut;
-	
-    const int nLen = sIn.GetLength() + 1;
-
-    register LPBYTE pOutTmp = NULL;
-    LPBYTE pOutBuf = NULL;
-    register LPBYTE pInTmp = NULL;
-    LPBYTE pInBuf =(LPBYTE)sIn.GetBuffer(nLen);
-	
-    //alloc out buffer
-    pOutBuf = (LPBYTE)sOut.GetBuffer(nLen  * 3 - 2);//new BYTE [nLen  * 3];
-
+    LPTSTR pOutBuf = sOut.GetBuffer(sIn.GetLength() * 3);
     if(pOutBuf)
     {
-        pInTmp	= pInBuf;
-		pOutTmp = pOutBuf;
-			
 		// do encoding
-		while (*pInTmp)
+		while (*pInBuf)
 		{
-			if(isalnum(*pInTmp))
-				*pOutTmp++ = *pInTmp;
-			else
-				if(isspace(*pInTmp))
-				*pOutTmp++ = '+';
+			if (isalnum(*pInBuf))
+				*pOutBuf++ = (BYTE)*pInBuf;
+			else if (isspace(*pInBuf))
+				*pOutBuf++ = _T('+');
 			else
 			{
-				*pOutTmp++ = '%';
-				*pOutTmp++ = toHex(*pInTmp>>4);
-				*pOutTmp++ = toHex(*pInTmp%16);
+				*pOutBuf++ = _T('%');
+				*pOutBuf++ = toHex((BYTE)*pInBuf >> 4);
+				*pOutBuf++ = toHex((BYTE)*pInBuf % 16);
 			}
-			pInTmp++;
+			pInBuf++;
 		}
-		*pOutTmp = '\0';
-		//sOut=pOutBuf;
-		//delete [] pOutBuf;
+		*pOutBuf = _T('\0');
 		sOut.ReleaseBuffer();
     }
-    sIn.ReleaseBuffer();
     return sOut;
 }
 
 CString MakeStringEscaped(CString in) {
-	in.Replace("&","&&");
+	in.Replace(_T("&"),_T("&&"));
 	
 	return in;
 }
 
-bool Ask4RegFix(bool checkOnly, bool dontAsk){
+bool HaveEd2kRegAccess()
+{
+	CRegKey regkey;
+	DWORD dwRegResult = regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\shell\\open\\command"));
+	regkey.Close();
+	return (dwRegResult == ERROR_SUCCESS);
+}
 
+bool Ask4RegFix(bool checkOnly, bool dontAsk)
+{
 	// Barry - Make backup first
 	if (!checkOnly)
 		BackupReg();
 
 	// check registry if ed2k links is assigned to emule
 	CRegKey regkey;
-	regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\shell\\open\\command"));
+	if (regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\shell\\open\\command")) == ERROR_SUCCESS)
+	{
+		TCHAR rbuffer[500];
+		ULONG maxsize = ARRSIZE(rbuffer);
+		regkey.QueryStringValue(NULL, rbuffer, &maxsize);
 
-	TCHAR rbuffer[500];
-	ULONG maxsize = ARRSIZE(rbuffer);
-	regkey.QueryStringValue(NULL, rbuffer, &maxsize);
+		TCHAR modbuffer[490];
+		::GetModuleFileName(NULL, modbuffer, ARRSIZE(modbuffer));
+		CString strCanonFileName = modbuffer;
+		strCanonFileName.Replace(_T("%"), _T("%%"));
 
-	TCHAR modbuffer[490];
-	::GetModuleFileName(NULL, modbuffer, ARRSIZE(modbuffer));
-	CString strCanonFileName = modbuffer;
-	strCanonFileName.Replace(_T("%"), _T("%%"));
+		TCHAR regbuffer[520];
+		_sntprintf(regbuffer, ARRSIZE(regbuffer), _T("\"%s\" \"%%1\""), strCanonFileName);
+		if (_tcscmp(rbuffer, regbuffer) != 0)
+		{
+			if (checkOnly)
+				return true;
+			if (dontAsk || (AfxMessageBox(GetResString(IDS_ASSIGNED2K), MB_ICONQUESTION|MB_YESNO) == IDYES))
+			{
+				regkey.SetStringValue(NULL, regbuffer);	
+				
+				regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\DefaultIcon"));
+				regkey.SetStringValue(NULL, modbuffer);
 
-	TCHAR regbuffer[520];
-	_sntprintf(regbuffer, ARRSIZE(regbuffer), _T("\"%s\" \"%%1\""), strCanonFileName);
-	if (_tcscmp(rbuffer,regbuffer)){
-		if (checkOnly)
-			return true;
-		if (dontAsk || (AfxMessageBox(GetResString(IDS_ASSIGNED2K),MB_ICONQUESTION|MB_YESNO) == IDYES)){
-			regkey.SetStringValue(NULL, regbuffer);	
-			
-			regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\DefaultIcon"));
-			regkey.SetStringValue(NULL, modbuffer);
+				regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k"));
+				regkey.SetStringValue(NULL, _T("URL: ed2k Protocol"));
+				regkey.SetStringValue(_T("URL Protocol"), _T(""));
 
-			regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k"));
-			regkey.SetStringValue(NULL, _T("URL: ed2k Protocol"));
-			regkey.SetStringValue(_T("URL Protocol"), _T(""));
-
-			regkey.Open(HKEY_CLASSES_ROOT, _T("ed2k"));
-			regkey.RecurseDeleteKey(_T("ddexec"));
-			regkey.RecurseDeleteKey(_T("ddeexec"));
+				regkey.Open(HKEY_CLASSES_ROOT, _T("ed2k"));
+				regkey.RecurseDeleteKey(_T("ddexec"));
+				regkey.RecurseDeleteKey(_T("ddeexec"));
+			}
 		}
+		regkey.Close();
 	}
-	regkey.Close();
 	return false;
 }
 
@@ -334,22 +330,24 @@ void BackupReg(void)
 {
 	// Look for pre-existing old ed2k links
 	CRegKey regkey;
-	regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\shell\\open\\command"));
-	TCHAR rbuffer[500];
-	ULONG maxsize = ARRSIZE(rbuffer);
-	// Is it ok to write new values
-	if ((regkey.QueryStringValue(_T("OldDefault"), rbuffer, &maxsize) != ERROR_SUCCESS) || (maxsize == 0))
+	if (regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\shell\\open\\command")) == ERROR_SUCCESS)
 	{
-		maxsize = ARRSIZE(rbuffer);
-		regkey.QueryStringValue(NULL, rbuffer, &maxsize);
-		regkey.SetStringValue(_T("OldDefault"), rbuffer);
+		TCHAR rbuffer[500];
+		ULONG maxsize = ARRSIZE(rbuffer);
+		// Is it ok to write new values
+		if ((regkey.QueryStringValue(_T("OldDefault"), rbuffer, &maxsize) != ERROR_SUCCESS) || (maxsize == 0))
+		{
+			maxsize = ARRSIZE(rbuffer);
+			if ( regkey.QueryStringValue(NULL, rbuffer, &maxsize) == ERROR_SUCCESS )
+				regkey.SetStringValue(_T("OldDefault"), rbuffer);
 
-		regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\DefaultIcon"));
-		maxsize = ARRSIZE(rbuffer);
-		if (regkey.QueryStringValue(NULL, rbuffer, &maxsize) == ERROR_SUCCESS)
-			regkey.SetStringValue(_T("OldIcon"), rbuffer);
+			regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\DefaultIcon"));
+			maxsize = ARRSIZE(rbuffer);
+			if (regkey.QueryStringValue(NULL, rbuffer, &maxsize) == ERROR_SUCCESS)
+				regkey.SetStringValue(_T("OldIcon"), rbuffer);
+		}
+		regkey.Close();
 	}
-	regkey.Close();
 }
 
 // Barry - Restore previous values
@@ -357,22 +355,24 @@ void RevertReg(void)
 {
 	// restore previous ed2k links before being assigned to emule
 	CRegKey regkey;
-	regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\shell\\open\\command"));
-	TCHAR rbuffer[500];
-	ULONG maxsize = ARRSIZE(rbuffer);
-	if (regkey.QueryStringValue(_T("OldDefault"), rbuffer, &maxsize) == ERROR_SUCCESS)
+	if (regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\shell\\open\\command")) == ERROR_SUCCESS)
 	{
-		regkey.SetStringValue(NULL, rbuffer);
-		regkey.DeleteValue(_T("OldDefault"));
-		regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\DefaultIcon"));
-		maxsize = ARRSIZE(rbuffer);
-		if (regkey.QueryStringValue(_T("OldIcon"), rbuffer, &maxsize) == ERROR_SUCCESS)
+		TCHAR rbuffer[500];
+		ULONG maxsize = ARRSIZE(rbuffer);
+		if (regkey.QueryStringValue(_T("OldDefault"), rbuffer, &maxsize) == ERROR_SUCCESS)
 		{
 			regkey.SetStringValue(NULL, rbuffer);
-			regkey.DeleteValue(_T("OldIcon"));
+			regkey.DeleteValue(_T("OldDefault"));
+			regkey.Create(HKEY_CLASSES_ROOT, _T("ed2k\\DefaultIcon"));
+			maxsize = ARRSIZE(rbuffer);
+			if (regkey.QueryStringValue(_T("OldIcon"), rbuffer, &maxsize) == ERROR_SUCCESS)
+			{
+				regkey.SetStringValue(NULL, rbuffer);
+				regkey.DeleteValue(_T("OldIcon"));
+			}
 		}
+		regkey.Close();
 	}
-	regkey.Close();
 }
 
 int GetMaxWindowsTCPConnections() {
@@ -398,7 +398,7 @@ int GetMaxWindowsTCPConnections() {
 			DWORD dwLength = sizeof(dwValue);
 			LONG lResult;
 
-			RegOpenKeyEx(HKEY_LOCAL_MACHINE, "System\\CurrentControlSet\\Services\\VxD\\MSTCP",
+			RegOpenKeyEx(HKEY_LOCAL_MACHINE, _T("System\\CurrentControlSet\\Services\\VxD\\MSTCP"),
 				0, KEY_QUERY_VALUE, &hKey);
 			lResult = RegQueryValueEx(hKey, TEXT("MaxConnections"), NULL, NULL,
 				(LPBYTE)&dwValue, &dwLength);
@@ -415,14 +415,14 @@ int GetMaxWindowsTCPConnections() {
 			DWORD dwLength = sizeof(szValue);
 			LONG lResult;
 
-			RegOpenKeyEx(HKEY_LOCAL_MACHINE, "System\\CurrentControlSet\\Services\\VxD\\MSTCP",
+			RegOpenKeyEx(HKEY_LOCAL_MACHINE, _T("System\\CurrentControlSet\\Services\\VxD\\MSTCP"),
 				0, KEY_QUERY_VALUE, &hKey);
 			lResult = RegQueryValueEx(hKey, TEXT("MaxConnections"), NULL, NULL,
 				(LPBYTE)szValue, &dwLength);
 			RegCloseKey(hKey);
 
 			LONG lMaxConnections;
-			if(lResult != ERROR_SUCCESS || (lMaxConnections = atoi(szValue)) < 1)
+			if(lResult != ERROR_SUCCESS || (lMaxConnections = _tstoi(szValue)) < 1)
 				return 100;  //the default for 98/ME is 100
 
 			return lMaxConnections;
@@ -478,7 +478,7 @@ uint64 GetFreeDiskSpaceX(LPCTSTR pDirectory)
 
 	if (!_bInitialized){
 		_bInitialized = TRUE;
-		(FARPROC&)_pGetDiskFreeSpaceEx = GetProcAddress(GetModuleHandle("kernel32.dll"), "GetDiskFreeSpaceExA");
+		(FARPROC&)_pGetDiskFreeSpaceEx = GetProcAddress(GetModuleHandle(_T("kernel32.dll")), _TWINAPI("GetDiskFreeSpaceEx"));
 	}
 
 	if(_pGetDiskFreeSpaceEx)
@@ -490,15 +490,15 @@ uint64 GetFreeDiskSpaceX(LPCTSTR pDirectory)
 	}
 	else 
 	{
-		char cDrive[16];
-		char *p = strchr(pDirectory, '\\');
+		TCHAR cDrive[16];
+		TCHAR *p = _tcschr(pDirectory, _T('\\'));
 		if(p)
 		{
-			memcpy(cDrive, pDirectory, p-pDirectory);
-			cDrive[p-pDirectory] = '\0';
+			memcpy(cDrive, pDirectory, (p-pDirectory)*sizeof(TCHAR));
+			cDrive[p-pDirectory] = _T('\0');
 		}
 		else
-			strcpy(cDrive, pDirectory);
+			_tcscpy(cDrive, pDirectory);
 		DWORD dwSectPerClust, dwBytesPerSect, dwFreeClusters, dwDummy;
 		GetDiskFreeSpace(cDrive, &dwSectPerClust, &dwBytesPerSect, &dwFreeClusters, &dwDummy);
 		return (dwFreeClusters * dwSectPerClust * dwBytesPerSect);
@@ -597,7 +597,7 @@ CString EncodeBase16(const unsigned char* buffer, unsigned int bufLen)
 //
 // [Out]
 //   buffer: byte array containing decoded string
-bool DecodeBase16(const char *base16Buffer, unsigned int base16BufLen, byte *buffer, unsigned int bufflen)
+bool DecodeBase16(const TCHAR *base16Buffer, unsigned int base16BufLen, byte *buffer, unsigned int bufflen)
 {
 	unsigned int uDecodeLengthBase16 = DecodeLengthBase16(base16BufLen);
 	if (uDecodeLengthBase16 > bufflen)
@@ -657,14 +657,14 @@ int CWebServices::ReadAllServices()
 	RemoveAllServices();
 
 	CString strFilePath = GetDefaultServicesFile();
-	FILE* readFile = fopen(strFilePath, "r");
+	FILE* readFile = _tfsopen(strFilePath, _T("r"), _SH_DENYWR);
 	if (readFile != NULL)
 	{
 		CString name, url, sbuffer;
 		while (!feof(readFile))
 		{
-			char buffer[1024];
-			if (fgets(buffer, ARRSIZE(buffer), readFile) == NULL)
+			TCHAR buffer[1024];
+			if (_fgetts(buffer, ARRSIZE(buffer), readFile) == NULL)
 				break;
 			sbuffer = buffer;
 
@@ -825,7 +825,7 @@ bool SelectDir(HWND hWnd, LPTSTR pszPath, LPCTSTR pszTitle, LPCTSTR pszDlgTitle)
 	return bResult;
 }
 
-void MakeFoldername(char* path){
+void MakeFoldername(TCHAR* path){
 //	CString string(path);
 //	if (string.GetLength()>0) if (string.Right(1)=='\\') string=string.Left(string.GetLength()-1);
 //	sprintf(path,"%s",string);
@@ -837,7 +837,7 @@ void MakeFoldername(char* path){
 CString StringLimit(CString in,uint16 length){
 	if (in.GetLength()<=length || length<10) return in;
 
-	return (in.Left(length-8)+"..."+in.Right(8));
+	return (in.Left(length-8) + _T("...") + in.Right(8));
 }
 
 BOOL DialogBrowseFile(CString& rstrPath, LPCTSTR pszFilters, LPCTSTR pszDefaultFileName, DWORD dwFlags,bool openfilestyle) {
@@ -850,9 +850,26 @@ BOOL DialogBrowseFile(CString& rstrPath, LPCTSTR pszFilters, LPCTSTR pszDefaultF
 	return TRUE;
 }
 
-void md4str(const uchar* hash, char* pszHash)
+void md4str(const uchar* hash, TCHAR* pszHash)
 {
-    static const char _acHexDigits[] = "0123456789ABCDEF";
+    static const TCHAR _acHexDigits[] = _T("0123456789ABCDEF");
+    for (int i = 0; i < 16; i++){
+		*pszHash++ = _acHexDigits[hash[i] >> 4];
+		*pszHash++ = _acHexDigits[hash[i] & 0xf];
+	}
+	*pszHash = _T('\0');
+}
+
+CString md4str(const uchar* hash)
+{
+	TCHAR szHash[MAX_HASHSTR_SIZE];
+	md4str(hash, szHash);
+	return CString(szHash);
+}
+
+void md4strA(const uchar* hash, CHAR* pszHash)
+{
+    static const CHAR _acHexDigits[] = "0123456789ABCDEF";
     for (int i = 0; i < 16; i++){
 		*pszHash++ = _acHexDigits[hash[i] >> 4];
 		*pszHash++ = _acHexDigits[hash[i] & 0xf];
@@ -860,11 +877,11 @@ void md4str(const uchar* hash, char* pszHash)
 	*pszHash = '\0';
 }
 
-CString md4str(const uchar* hash)
+CStringA md4strA(const uchar* hash)
 {
-	char szHash[MAX_HASHSTR_SIZE];
-	md4str(hash, szHash);
-	return szHash;
+	CHAR szHash[MAX_HASHSTR_SIZE];
+	md4strA(hash, szHash);
+	return CStringA(szHash);
 }
 
 bool strmd4(const char* pszHash, uchar* hash)
@@ -915,47 +932,47 @@ CString CleanupFilename(CString filename) {
 	CString resToken;
 	CString strlink=thePrefs.GetFilenameCleanups().MakeLower();
 	int curPos=0;
-	resToken= strlink.Tokenize("|",curPos);
-	while (resToken != "") {
-		filename.Replace(resToken,"");
-		resToken= strlink.Tokenize("|",curPos);
+	resToken= strlink.Tokenize(_T("|"),curPos);
+	while (!resToken.IsEmpty()) {
+		filename.Replace(resToken,_T(""));
+		resToken= strlink.Tokenize(_T("|"),curPos);
 	}
 
 	// Replace . with Spaces - except the last one (extention-dot)
-	int extpos=filename.ReverseFind('.');
+	int extpos=filename.ReverseFind(_T('.'));
 	if (extpos>=0) {
 		for (int i=0;i<extpos;++i) {
-			if (filename.GetAt(i)!='.') continue;
+			if (filename.GetAt(i)!=_T('.')) continue;
 			if (i>0 && i<filename.GetLength()-1 && isdigit(filename.GetAt(i-1)) && isdigit(filename.GetAt(i+1)) ) continue;
-			filename.SetAt(i,' ');
+			filename.SetAt(i,_T(' '));
 		}
 	}
 
 	// Replace Space-holders with Spaces
-	filename.Replace('_',' ');
-	filename.Replace("+"," "); //SyruS for Jigle
+	filename.Replace(_T('_'),_T(' '));
+	filename.Replace(_T("+"),_T(" ")); //SyruS for Jigle
 
 	//SyruS additional cleanup
 	// invalid for filenames
-	filename.Replace("\\", ""); //[edit: oops, one \ was missing]
-	filename.Replace("\"", "");
-	filename.Replace("/", "");
-	filename.Replace(":", "");
-	filename.Replace("*", "");
-	filename.Replace("?", "");
-	filename.Replace("<", "");
-	filename.Replace(">", "");
-	filename.Replace("|", "");
+	filename.Replace(_T("\\"), _T("")); //[edit: oops, one \ was missing]
+	filename.Replace(_T("\""), _T(""));
+	filename.Replace(_T("/"), _T(""));
+	filename.Replace(_T(":"), _T(""));
+	filename.Replace(_T("*"), _T(""));
+	filename.Replace(_T("?"), _T(""));
+	filename.Replace(_T("<"), _T(""));
+	filename.Replace(_T(">"), _T(""));
+	filename.Replace(_T("|"), _T(""));
 	// other common nonsense (u can use dots here!)
-	filename.Replace("=", "");
+	filename.Replace(_T("="), _T(""));
 
 	int pos1,pos2;
 	pos1=-1;
 	for (;;)
 	{
-		pos1=filename.Find('[',pos1+1);
+		pos1=filename.Find(_T('['),pos1+1);
 		if (pos1==-1) break;
-		pos2=filename.Find(']',pos1);
+		pos2=filename.Find(_T(']'),pos1);
 		if (pos1>-1 && pos2>pos1) {
 			if (pos2-pos1 > 1) {
 				tempStr=filename.Mid(pos1+1,pos2-pos1-1);
@@ -970,16 +987,21 @@ CString CleanupFilename(CString filename) {
 	}
 
 	// Barry - Some additional formatting
-	filename.Replace("()", "");
-	filename.Replace("  ", " ");
-	filename.Replace(" .",".");
+	filename.Replace(_T("()"), _T(""));
+	filename.Replace(_T("  "), _T(" "));
+	filename.Replace(_T(" ."), _T("."));
 
-	filename.Replace("( ", "(");
-	filename.Replace(" )", ")");
-	filename.Replace("()", "");
-	filename.Replace("{ ", "{");
-	filename.Replace(" }", "}");
-	filename.Replace("{}", "");
+	filename.Replace(_T("( "), _T("("));
+	filename.Replace(_T(" )"), _T(")"));
+	filename.Replace(_T("()"), _T(""));
+	//CML - for chinese string
+	if(	(thePrefs.GetLanguageID() != MAKELANGID(LANG_CHINESE,SUBLANG_CHINESE_TRADITIONAL))&&
+		(thePrefs.GetLanguageID() != MAKELANGID(LANG_CHINESE,SUBLANG_CHINESE_SIMPLIFIED)))
+	{
+		filename.Replace(_T("{ "), _T("{"));
+		filename.Replace(_T(" }"), _T("}"));
+		filename.Replace(_T("{}"), _T(""));
+	}
 
 	// Make leading Caps 
 	if (filename.GetLength()>1)
@@ -987,7 +1009,7 @@ CString CleanupFilename(CString filename) {
 		tempStr=filename.GetAt(0);
 		tempStr.MakeUpper();
 		filename.SetAt(0, tempStr.GetAt(0));
-		int topos=filename.ReverseFind('.')-1;
+		int topos=filename.ReverseFind(_T('.'))-1;
 		if (topos<0) topos=filename.GetLength()-1;
 
 		for (int ix=0; ix<topos; ix++)
@@ -1014,141 +1036,153 @@ struct SED2KFileType
 } _aED2KFileTypes[] = 
 {
     { _T(".669"),   ED2KFT_AUDIO },
-	{ _T(".aac"),	ED2KFT_AUDIO },
-	{ _T(".aif"),	ED2KFT_AUDIO },
-	{ _T(".aiff"),	ED2KFT_AUDIO },
+    { _T(".aac"),   ED2KFT_AUDIO },
+    { _T(".aif"),   ED2KFT_AUDIO },
+    { _T(".aiff"),  ED2KFT_AUDIO },
     { _T(".amf"),   ED2KFT_AUDIO },
     { _T(".ams"),   ED2KFT_AUDIO },
-	{ _T(".ape"),	ED2KFT_AUDIO },
-	{ _T(".au"),	ED2KFT_AUDIO },
+    { _T(".ape"),   ED2KFT_AUDIO },
+    { _T(".au"),    ED2KFT_AUDIO },
     { _T(".dbm"),   ED2KFT_AUDIO },
     { _T(".dmf"),   ED2KFT_AUDIO },
     { _T(".dsm"),   ED2KFT_AUDIO },
     { _T(".far"),   ED2KFT_AUDIO },
-	{ _T(".flac"),	ED2KFT_AUDIO },
+    { _T(".flac"),  ED2KFT_AUDIO },
     { _T(".it"),    ED2KFT_AUDIO },
     { _T(".mdl"),   ED2KFT_AUDIO },
     { _T(".med"),   ED2KFT_AUDIO },
-	{ _T(".mid"),	ED2KFT_AUDIO },
-	{ _T(".midi"),	ED2KFT_AUDIO },
+    { _T(".mid"),   ED2KFT_AUDIO },
+    { _T(".midi"),  ED2KFT_AUDIO },
     { _T(".mod"),   ED2KFT_AUDIO },
     { _T(".mol"),   ED2KFT_AUDIO },
-	{ _T(".mp1"),	ED2KFT_AUDIO },
-	{ _T(".mp2"),	ED2KFT_AUDIO },
-	{ _T(".mp3"),	ED2KFT_AUDIO },
-	{ _T(".mp4"),	ED2KFT_AUDIO },
-	{ _T(".mpa"),	ED2KFT_AUDIO },
-	{ _T(".mpc"),	ED2KFT_AUDIO },
-	{ _T(".mpp"),	ED2KFT_AUDIO },
+    { _T(".mp1"),   ED2KFT_AUDIO },
+    { _T(".mp2"),   ED2KFT_AUDIO },
+    { _T(".mp3"),   ED2KFT_AUDIO },
+    { _T(".mp4"),   ED2KFT_AUDIO },
+    { _T(".mpa"),   ED2KFT_AUDIO },
+    { _T(".mpc"),   ED2KFT_AUDIO },
+    { _T(".mpp"),   ED2KFT_AUDIO },
     { _T(".mtm"),   ED2KFT_AUDIO },
     { _T(".nst"),   ED2KFT_AUDIO },
-	{ _T(".ogg"),	ED2KFT_AUDIO },
+    { _T(".ogg"),   ED2KFT_AUDIO },
     { _T(".okt"),   ED2KFT_AUDIO },
     { _T(".psm"),   ED2KFT_AUDIO },
     { _T(".ptm"),   ED2KFT_AUDIO },
-	{ _T(".ra"),	ED2KFT_AUDIO },
-	{ _T(".rmi"),	ED2KFT_AUDIO },
+    { _T(".ra"),    ED2KFT_AUDIO },
+    { _T(".rmi"),   ED2KFT_AUDIO },
     { _T(".s3m"),   ED2KFT_AUDIO },
     { _T(".stm"),   ED2KFT_AUDIO },
     { _T(".ult"),   ED2KFT_AUDIO },
     { _T(".umx"),   ED2KFT_AUDIO },
-	{ _T(".wav"),	ED2KFT_AUDIO },
-	{ _T(".wma"),	ED2KFT_AUDIO },
+    { _T(".wav"),   ED2KFT_AUDIO },
+    { _T(".wma"),   ED2KFT_AUDIO },
     { _T(".wow"),   ED2KFT_AUDIO },
     { _T(".xm"),    ED2KFT_AUDIO },
 
-	{ _T(".asf"),	ED2KFT_VIDEO },
-	{ _T(".avi"),	ED2KFT_VIDEO },
-	{ _T(".divx"),	ED2KFT_VIDEO },
-	{ _T(".m1v"),	ED2KFT_VIDEO },
-	{ _T(".m2v"),	ED2KFT_VIDEO },
-	{ _T(".mkv"),	ED2KFT_VIDEO },
-	{ _T(".mov"),	ED2KFT_VIDEO },
-	{ _T(".mp1v"),	ED2KFT_VIDEO },
-	{ _T(".mp2v"),	ED2KFT_VIDEO },
-	{ _T(".mpe"),	ED2KFT_VIDEO },
-	{ _T(".mpeg"),	ED2KFT_VIDEO },
-	{ _T(".mpg"),	ED2KFT_VIDEO },
-	{ _T(".mps"),	ED2KFT_VIDEO },
-	{ _T(".mpv"),	ED2KFT_VIDEO },
-	{ _T(".mpv1"),	ED2KFT_VIDEO },
-	{ _T(".mpv2"),	ED2KFT_VIDEO },
-	{ _T(".ogm"),	ED2KFT_VIDEO },
-	{ _T(".qt"),	ED2KFT_VIDEO },
-	{ _T(".ram"),	ED2KFT_VIDEO },
-	{ _T(".rm"),	ED2KFT_VIDEO },
-	{ _T(".rv"),	ED2KFT_VIDEO },
-	{ _T(".rv9"),	ED2KFT_VIDEO },
-	{ _T(".ts"),	ED2KFT_VIDEO },
-	{ _T(".vivo"),	ED2KFT_VIDEO },
-	{ _T(".vob"),	ED2KFT_VIDEO },
-	{ _T(".wmv"),	ED2KFT_VIDEO },
+    { _T(".asf"),   ED2KFT_VIDEO },
+    { _T(".avi"),   ED2KFT_VIDEO },
+    { _T(".divx"),  ED2KFT_VIDEO },
+    { _T(".m1v"),   ED2KFT_VIDEO },
+    { _T(".m2v"),   ED2KFT_VIDEO },
+    { _T(".mkv"),   ED2KFT_VIDEO },
+    { _T(".mov"),   ED2KFT_VIDEO },
+    { _T(".mp1v"),  ED2KFT_VIDEO },
+    { _T(".mp2v"),  ED2KFT_VIDEO },
+    { _T(".mpe"),   ED2KFT_VIDEO },
+    { _T(".mpeg"),  ED2KFT_VIDEO },
+    { _T(".mpg"),   ED2KFT_VIDEO },
+    { _T(".mps"),   ED2KFT_VIDEO },
+    { _T(".mpv"),   ED2KFT_VIDEO },
+    { _T(".mpv1"),  ED2KFT_VIDEO },
+    { _T(".mpv2"),  ED2KFT_VIDEO },
+    { _T(".ogm"),   ED2KFT_VIDEO },
+    { _T(".qt"),    ED2KFT_VIDEO },
+    { _T(".ram"),   ED2KFT_VIDEO },
+    { _T(".rm"),    ED2KFT_VIDEO },
+    { _T(".rv"),    ED2KFT_VIDEO },
+    { _T(".rv9"),   ED2KFT_VIDEO },
+    { _T(".ts"),    ED2KFT_VIDEO },
+    { _T(".vivo"),  ED2KFT_VIDEO },
+    { _T(".vob"),   ED2KFT_VIDEO },
+    { _T(".wmv"),   ED2KFT_VIDEO },
+    { _T(".xvid"),  ED2KFT_VIDEO },
 
-	{ _T(".bmp"),	ED2KFT_IMAGE },
-	{ _T(".dcx"),	ED2KFT_IMAGE },
-	{ _T(".emf"),	ED2KFT_IMAGE },
-	{ _T(".gif"),	ED2KFT_IMAGE },
-	{ _T(".ico"),	ED2KFT_IMAGE },
-	{ _T(".jpeg"),	ED2KFT_IMAGE },
-	{ _T(".jpg"),	ED2KFT_IMAGE },
-	{ _T(".pct"),	ED2KFT_IMAGE },
-	{ _T(".pcx"),	ED2KFT_IMAGE },
-	{ _T(".pic"),	ED2KFT_IMAGE },
-	{ _T(".pict"),	ED2KFT_IMAGE },
-	{ _T(".png"),	ED2KFT_IMAGE },
-	{ _T(".psd"),	ED2KFT_IMAGE },
-	{ _T(".psp"),	ED2KFT_IMAGE },
-	{ _T(".tga"),	ED2KFT_IMAGE },
-	{ _T(".tif"),	ED2KFT_IMAGE },
-	{ _T(".tiff"),	ED2KFT_IMAGE },
-	{ _T(".wmf"),	ED2KFT_IMAGE },
-	{ _T(".xif"),	ED2KFT_IMAGE },
+    { _T(".bmp"),   ED2KFT_IMAGE },
+    { _T(".dcx"),   ED2KFT_IMAGE },
+    { _T(".emf"),   ED2KFT_IMAGE },
+    { _T(".gif"),   ED2KFT_IMAGE },
+    { _T(".ico"),   ED2KFT_IMAGE },
+    { _T(".jpeg"),  ED2KFT_IMAGE },
+    { _T(".jpg"),   ED2KFT_IMAGE },
+    { _T(".pct"),   ED2KFT_IMAGE },
+    { _T(".pcx"),   ED2KFT_IMAGE },
+    { _T(".pic"),   ED2KFT_IMAGE },
+    { _T(".pict"),  ED2KFT_IMAGE },
+    { _T(".png"),   ED2KFT_IMAGE },
+    { _T(".psd"),   ED2KFT_IMAGE },
+    { _T(".psp"),   ED2KFT_IMAGE },
+    { _T(".tga"),   ED2KFT_IMAGE },
+    { _T(".tif"),   ED2KFT_IMAGE },
+    { _T(".tiff"),  ED2KFT_IMAGE },
+    { _T(".wmf"),   ED2KFT_IMAGE },
+    { _T(".xif"),   ED2KFT_IMAGE },
 
-	{ _T(".ace"),	ED2KFT_ARCHIVE },
-	{ _T(".arj"),	ED2KFT_ARCHIVE },
-	{ _T(".gz"),	ED2KFT_ARCHIVE },
-	{ _T(".hqx"),	ED2KFT_ARCHIVE },
-	{ _T(".lha"),	ED2KFT_ARCHIVE },
-	{ _T(".rar"),	ED2KFT_ARCHIVE },
-	{ _T(".sea"),	ED2KFT_ARCHIVE },
-	{ _T(".sit"),	ED2KFT_ARCHIVE },
-	{ _T(".tar"),	ED2KFT_ARCHIVE },
-	{ _T(".tgz"),	ED2KFT_ARCHIVE },
-	{ _T(".uc2"),	ED2KFT_ARCHIVE },
-	{ _T(".zip"),	ED2KFT_ARCHIVE },
+    { _T(".ace"),   ED2KFT_ARCHIVE },
+    { _T(".arj"),   ED2KFT_ARCHIVE },
+    { _T(".bz2"),   ED2KFT_ARCHIVE },
+    { _T(".cab"),   ED2KFT_ARCHIVE },
+    { _T(".gz"),    ED2KFT_ARCHIVE },
+    { _T(".hqx"),   ED2KFT_ARCHIVE },
+    { _T(".lha"),   ED2KFT_ARCHIVE },
+    { _T(".msi"),   ED2KFT_ARCHIVE },
+    { _T(".rar"),   ED2KFT_ARCHIVE },
+    { _T(".sea"),   ED2KFT_ARCHIVE },
+    { _T(".sit"),   ED2KFT_ARCHIVE },
+    { _T(".tar"),   ED2KFT_ARCHIVE },
+    { _T(".tgz"),   ED2KFT_ARCHIVE },
+    { _T(".uc2"),   ED2KFT_ARCHIVE },
+    { _T(".zip"),   ED2KFT_ARCHIVE },
 
-	{ _T(".bat"),	ED2KFT_PROGRAM },
-	{ _T(".cmd"),	ED2KFT_PROGRAM },
-	{ _T(".com"),	ED2KFT_PROGRAM },
-	{ _T(".exe"),	ED2KFT_PROGRAM },
+    { _T(".bat"),   ED2KFT_PROGRAM },
+    { _T(".cmd"),   ED2KFT_PROGRAM },
+    { _T(".com"),   ED2KFT_PROGRAM },
+    { _T(".exe"),   ED2KFT_PROGRAM },
 
-	{ _T(".bin"),	ED2KFT_CDIMAGE },
-	{ _T(".bwa"),	ED2KFT_CDIMAGE },
-	{ _T(".bwi"),	ED2KFT_CDIMAGE },
-	{ _T(".bws"),	ED2KFT_CDIMAGE },
-	{ _T(".bwt"),	ED2KFT_CDIMAGE },
-	{ _T(".ccd"),	ED2KFT_CDIMAGE },
-	{ _T(".cue"),	ED2KFT_CDIMAGE },
-	{ _T(".dmg"),	ED2KFT_CDIMAGE },
-	{ _T(".dmz"),	ED2KFT_CDIMAGE },
-	{ _T(".img"),	ED2KFT_CDIMAGE },
-	{ _T(".iso"),	ED2KFT_CDIMAGE },
-	{ _T(".mdf"),	ED2KFT_CDIMAGE },
-	{ _T(".mds"),	ED2KFT_CDIMAGE },
-	{ _T(".nrg"),	ED2KFT_CDIMAGE },
-	{ _T(".sub"),	ED2KFT_CDIMAGE },
-	{ _T(".toast"), ED2KFT_CDIMAGE }
+    { _T(".bin"),   ED2KFT_CDIMAGE },
+    { _T(".bwa"),   ED2KFT_CDIMAGE },
+    { _T(".bwi"),   ED2KFT_CDIMAGE },
+    { _T(".bws"),   ED2KFT_CDIMAGE },
+    { _T(".bwt"),   ED2KFT_CDIMAGE },
+    { _T(".ccd"),   ED2KFT_CDIMAGE },
+    { _T(".cue"),   ED2KFT_CDIMAGE },
+    { _T(".dmg"),   ED2KFT_CDIMAGE },
+    { _T(".dmz"),   ED2KFT_CDIMAGE },
+    { _T(".img"),   ED2KFT_CDIMAGE },
+    { _T(".iso"),   ED2KFT_CDIMAGE },
+    { _T(".mdf"),   ED2KFT_CDIMAGE },
+    { _T(".mds"),   ED2KFT_CDIMAGE },
+    { _T(".nrg"),   ED2KFT_CDIMAGE },
+    { _T(".sub"),   ED2KFT_CDIMAGE },
+    { _T(".toast"), ED2KFT_CDIMAGE },
 
-	// To be uncommented after we use the 'Doc' ed2k filetype for search expressions
-//	{ _T(".txt"),   ED2KFT_DOCUMENT },
-//	{ _T(".nfo"),   ED2KFT_DOCUMENT },
-//	{ _T(".diz"),   ED2KFT_DOCUMENT },
-//	{ _T(".doc"),   ED2KFT_DOCUMENT },
-//	{ _T(".rtf"),   ED2KFT_DOCUMENT },
-//	{ _T(".pdf"),   ED2KFT_DOCUMENT },	// double check this!
-//	{ _T(".xls"),   ED2KFT_DOCUMENT },	// double check this!
-//	{ _T(".html"),  ED2KFT_DOCUMENT },
-//	{ _T(".htm"),   ED2KFT_DOCUMENT }
+    { _T(".chm"),   ED2KFT_DOCUMENT },
+    { _T(".css"),   ED2KFT_DOCUMENT },
+    { _T(".diz"),   ED2KFT_DOCUMENT },
+    { _T(".doc"),   ED2KFT_DOCUMENT },
+    { _T(".dot"),   ED2KFT_DOCUMENT },
+    { _T(".hlp"),   ED2KFT_DOCUMENT },
+    { _T(".htm"),   ED2KFT_DOCUMENT },
+    { _T(".html"),  ED2KFT_DOCUMENT },
+    { _T(".nfo"),   ED2KFT_DOCUMENT },
+    { _T(".pdf"),   ED2KFT_DOCUMENT },
+    { _T(".pps"),   ED2KFT_DOCUMENT },
+    { _T(".ppt"),   ED2KFT_DOCUMENT },
+    { _T(".ps"),    ED2KFT_DOCUMENT },
+    { _T(".rtf"),   ED2KFT_DOCUMENT },
+    { _T(".wri"),   ED2KFT_DOCUMENT },
+    { _T(".txt"),   ED2KFT_DOCUMENT },
+    { _T(".xls"),   ED2KFT_DOCUMENT },
+    { _T(".xlt"),   ED2KFT_DOCUMENT }
 };
 
 int __cdecl CompareE2DKFileType(const void* p1, const void* p2)
@@ -1176,29 +1210,49 @@ EED2KFileType GetED2KFileTypeID(LPCTSTR pszFileName)
 // Retuns the ed2k file type term which is to be used in server searches
 LPCSTR GetED2KFileTypeSearchTerm(EED2KFileType iFileID)
 {
-	if (iFileID == ED2KFT_AUDIO)		return "Audio";
-	if (iFileID == ED2KFT_VIDEO)		return "Video";
-	if (iFileID == ED2KFT_IMAGE)		return "Image";
-	if (iFileID == ED2KFT_ARCHIVE || iFileID == ED2KFT_PROGRAM || iFileID == ED2KFT_CDIMAGE) return "Pro";
-	if (iFileID == ED2KFT_DOCUMENT)		return "Doc";
+	if (iFileID == ED2KFT_AUDIO)		return ED2KFTSTR_AUDIO;
+	if (iFileID == ED2KFT_VIDEO)		return ED2KFTSTR_VIDEO;
+	if (iFileID == ED2KFT_IMAGE)		return ED2KFTSTR_IMAGE;
+	if (iFileID == ED2KFT_DOCUMENT)		return ED2KFTSTR_DOCUMENT;
+	if (iFileID == ED2KFT_PROGRAM)		return ED2KFTSTR_PROGRAM;
+	// NOTE: Archives and CD-Images are published with file type "Pro"
+	if (iFileID == ED2KFT_ARCHIVE)		return ED2KFTSTR_PROGRAM;
+	if (iFileID == ED2KFT_CDIMAGE)		return ED2KFTSTR_PROGRAM;
 	return NULL;
 }
 
-// Returns a localized typename, examining the extention of the given filename
-CString GetFiletypeByName(LPCTSTR pszFileName)
+// Returns a file type which is used eMule internally only, examining the extention of the given filename
+CStringA GetFileTypeByName(LPCTSTR pszFileName)
 {
 	EED2KFileType iFileType = GetED2KFileTypeID(pszFileName);
 	switch (iFileType) {
-		case ED2KFT_AUDIO :		return GetResString(IDS_SEARCH_AUDIO);
-		case ED2KFT_VIDEO :		return GetResString(IDS_SEARCH_VIDEO);
-		case ED2KFT_IMAGE :		return GetResString(IDS_SEARCH_PICS);
-		case ED2KFT_ARCHIVE :	return GetResString(IDS_SEARCH_ARC);
-		case ED2KFT_PROGRAM :	return GetResString(IDS_SEARCH_PRG);
-		case ED2KFT_CDIMAGE :	return GetResString(IDS_SEARCH_CDIMG);
-		default:				return GetResString(IDS_SEARCH_ANY);
+		case ED2KFT_AUDIO:		return ED2KFTSTR_AUDIO;
+		case ED2KFT_VIDEO:		return ED2KFTSTR_VIDEO;
+		case ED2KFT_IMAGE:		return ED2KFTSTR_IMAGE;
+		case ED2KFT_DOCUMENT:	return ED2KFTSTR_DOCUMENT;
+		case ED2KFT_PROGRAM:	return ED2KFTSTR_PROGRAM;
+		case ED2KFT_ARCHIVE:	return ED2KFTSTR_ARCHIVE;
+		case ED2KFT_CDIMAGE:	return ED2KFTSTR_CDIMAGE;
+		default:				return "";
 	}
 }
 
+// Returns a file type which is used eMule internally only (GUI)
+CString GetFileTypeDisplayStrFromED2KFileType(LPCSTR pszED2KFileType)
+{
+	ASSERT( pszED2KFileType != NULL );
+	if (pszED2KFileType != NULL)
+	{
+		if (strcmp(pszED2KFileType, ED2KFTSTR_AUDIO) == 0)			return GetResString(IDS_SEARCH_AUDIO);
+		else if (strcmp(pszED2KFileType, ED2KFTSTR_VIDEO) == 0)     return GetResString(IDS_SEARCH_VIDEO);
+		else if (strcmp(pszED2KFileType, ED2KFTSTR_IMAGE) == 0)     return GetResString(IDS_SEARCH_PICS);
+		else if (strcmp(pszED2KFileType, ED2KFTSTR_DOCUMENT) == 0)	return GetResString(IDS_SEARCH_DOC);
+		else if (strcmp(pszED2KFileType, ED2KFTSTR_PROGRAM) == 0)   return GetResString(IDS_SEARCH_PRG);
+		else if (strcmp(pszED2KFileType, ED2KFTSTR_ARCHIVE) == 0)	return GetResString(IDS_SEARCH_ARC);
+		else if (strcmp(pszED2KFileType, ED2KFTSTR_CDIMAGE) == 0)   return GetResString(IDS_SEARCH_CDIMG);
+	}
+	return _T("");
+}
 
 class CED2KFileTypes{
 public:
@@ -1216,25 +1270,25 @@ public:
 };
 CED2KFileTypes theED2KFileTypes; // get the list sorted *before* any code is accessing it
 
-CHAR *stristr(const CHAR *str1, const CHAR *str2)
+TCHAR *stristr(const TCHAR *str1, const TCHAR *str2)
 {
-	const CHAR *cp = str1;
-	const CHAR *s1;
-	const CHAR *s2;
+	const TCHAR *cp = str1;
+	const TCHAR *s1;
+	const TCHAR *s2;
 
 	if (!*str2)
-		return (CHAR *)str1;
+		return (TCHAR *)str1;
 
 	while (*cp)
 	{
 		s1 = cp;
 		s2 = str2;
 
-		while (*s1 && *s2 && tolower(*s1) == tolower(*s2))
+		while (*s1 && *s2 && _totlower(*s1) == _totlower(*s2))
 			s1++, s2++;
 
 		if (!*s2)
-			return (CHAR *)cp;
+			return (TCHAR *)cp;
 
 		cp++;
 	}
@@ -1580,25 +1634,25 @@ void DebugHexDump(const uint8* data, UINT lenData)
 	byte c = 0;
 	while (pos < lenData)
 	{
-		CString line;
-		CString single;
-		line.Format(_T("%08X "), pos);
+		CStringA line;
+		CStringA single;
+		line.Format("%08X ", pos);
 		lenLine = min((lenData - pos), 16);
 		for (int i=0; i<lenLine; i++)
 		{
-			single.Format(_T(" %02X"), data[pos+i]);
+			single.Format(" %02X", data[pos+i]);
 			line += single;
 			if (i == 7)
-				line += _T(' ');
+				line += ' ';
 		}
-		line += CString(_T(' '), 60 - line.GetLength());
+		line += CString(' ', 60 - line.GetLength());
 		for (int i=0; i<lenLine; i++)
 		{
 			c = data[pos + i];
-			single.Format(_T("%c"), (((c > 31) && (c < 127)) ? (_TUCHAR)c : _T('.')));
+			single.Format("%c", (((c > 31) && (c < 127)) ? (_TUCHAR)c : '.'));
 			line += single;
 		}
-		Debug(_T("%s\n"), (LPCTSTR)line);
+		Debug(_T("%hs\n"), line);
 		pos += lenLine;
 	}
 }
@@ -1626,7 +1680,7 @@ void DebugHexDump(CFile& file)
 	}
 }
 
-LPCSTR DbgGetFileNameFromID(const uchar* hash)
+LPCTSTR DbgGetFileNameFromID(const uchar* hash)
 {
 	CKnownFile* reqfile = theApp.sharedfiles->GetFileByID((uchar*)hash);
 	if (reqfile != NULL)
@@ -1645,7 +1699,7 @@ CString DbgGetFileInfo(const uchar* hash)
 		return CString();
 
 	CString strInfo(_T("File="));
-	LPCSTR pszName = DbgGetFileNameFromID(hash);
+	LPCTSTR pszName = DbgGetFileNameFromID(hash);
 	if (pszName != NULL)
 		strInfo += pszName;
 	else
@@ -1697,14 +1751,14 @@ LPCTSTR DbgGetHashTypeString(const uchar* hash)
 CString DbgGetClientID(uint32 nClientID)
 {
 	CString strClientID;
-	if (IsLowIDHybrid(nClientID))
+	if (IsLowID(nClientID))
 		strClientID.Format(_T("LowID=%u"), nClientID);
 	else
-		strClientID = inet_ntoa(*(in_addr*)&nClientID);
+		strClientID = ipstr(nClientID);
 	return strClientID;
 }
 
-#define _STRVAL(o)	{#o, o}
+#define _STRVAL(o)	{_T(#o), o}
 
 CString DbgGetDonkeyClientTCPOpcode(UINT opcode)
 {
@@ -1774,7 +1828,12 @@ CString DbgGetMuleClientTCPOpcode(UINT opcode)
 		_STRVAL(OP_REQUESTPREVIEW),
 		_STRVAL(OP_PREVIEWANSWER),
 		_STRVAL(OP_MULTIPACKET),
-		_STRVAL(OP_MULTIPACKETANSWER)
+		_STRVAL(OP_MULTIPACKETANSWER),
+		_STRVAL(OP_PEERCACHE_QUERY),
+		_STRVAL(OP_PEERCACHE_ANSWER),
+		_STRVAL(OP_PEERCACHE_ACK),
+		_STRVAL(OP_PUBLICIP_ANSWER),
+		_STRVAL(OP_PUBLICIP_REQ)
 	};
 
 	for (int i = 0; i < ARRSIZE(_aOpcodes); i++)
@@ -1817,51 +1876,81 @@ CString DbgGetClientTCPOpcode(UINT protocol, UINT opcode)
 	return str;
 }
 
-void DebugRecv(LPCTSTR pszMsg, const CUpDownClient* client, const char* packet, uint32 nIP)
+void DebugRecv(LPCSTR pszMsg, const CUpDownClient* client, const char* packet, uint32 nIP)
 {
 	// 111.222.333.444 = 15 chars
 	if (client){
 		if (client != NULL && packet != NULL)
-			Debug(_T("%-24s from %s; %s\n"), pszMsg, client->DbgGetClientInfo(true), DbgGetFileInfo((uchar*)packet));
+			Debug(_T("%-24hs from %s; %s\n"), pszMsg, client->DbgGetClientInfo(true), DbgGetFileInfo((uchar*)packet));
 		else if (client != NULL && packet == NULL)
-			Debug(_T("%-24s from %s\n"), pszMsg, client->DbgGetClientInfo(true));
+			Debug(_T("%-24hs from %s\n"), pszMsg, client->DbgGetClientInfo(true));
 		else if (client == NULL && packet != NULL)
-			Debug(_T("%-24s; %s\n"), pszMsg, DbgGetFileInfo((uchar*)packet));
+			Debug(_T("%-24hs; %s\n"), pszMsg, DbgGetFileInfo((uchar*)packet));
 		else
-			Debug(_T("%-24s\n"), pszMsg);
+			Debug(_T("%-24hs\n"), pszMsg);
 	}
 	else{
 		if (nIP != 0 && packet != NULL)
-			Debug(_T("%-24s from %-15s; %s\n"), pszMsg, inet_ntoa(*(in_addr*)&nIP), DbgGetFileInfo((uchar*)packet));
+			Debug(_T("%-24hs from %-15s; %s\n"), pszMsg, ipstr(nIP), DbgGetFileInfo((uchar*)packet));
 		else if (nIP != 0 && packet == NULL)
-			Debug(_T("%-24s from %-15s\n"), pszMsg, inet_ntoa(*(in_addr*)&nIP));
+			Debug(_T("%-24hs from %-15s\n"), pszMsg, ipstr(nIP));
 		else if (nIP == 0 && packet != NULL)
-			Debug(_T("%-24s; %s\n"), pszMsg, DbgGetFileInfo((uchar*)packet));
+			Debug(_T("%-24hs; %s\n"), pszMsg, DbgGetFileInfo((uchar*)packet));
 		else
-			Debug(_T("%-24s\n"), pszMsg);
+			Debug(_T("%-24hs\n"), pszMsg);
 	}
 }
 
-void DebugSend(LPCTSTR pszMsg, const CUpDownClient* client, const char* packet)
+void DebugSend(LPCSTR pszMsg, const CUpDownClient* client, const char* packet)
 {
 	if (client != NULL && packet != NULL)
-		Debug(_T(">>> %-20s to   %s; %s\n"), pszMsg, client->DbgGetClientInfo(true), DbgGetFileInfo((uchar*)packet));
+		Debug(_T(">>> %-20hs to   %s; %s\n"), pszMsg, client->DbgGetClientInfo(true), DbgGetFileInfo((uchar*)packet));
 	else if (client != NULL && packet == NULL)
-		Debug(_T(">>> %-20s to   %s\n"), pszMsg, client->DbgGetClientInfo(true));
+		Debug(_T(">>> %-20hs to   %s\n"), pszMsg, client->DbgGetClientInfo(true));
 	else if (client == NULL && packet != NULL)
-		Debug(_T(">>> %-20s; %s\n"), pszMsg, DbgGetFileInfo((uchar*)packet));
+		Debug(_T(">>> %-20hs; %s\n"), pszMsg, DbgGetFileInfo((uchar*)packet));
 	else
-		Debug(_T(">>> %-20s\n"), pszMsg);
+		Debug(_T(">>> %-20hs\n"), pszMsg);
+}
+
+void DebugSend(LPCSTR pszOpcode, uint32 ip, uint16 port)
+{
+	Debug(_T(">>> %-20hs to   %-15s:%u\n"), pszOpcode, ipstr(ntohl(ip)), port);
+}
+
+void DebugSendF(LPCSTR pszOpcode, uint32 ip, uint16 port, LPCTSTR pszMsg, ...)
+{
+	va_list args;
+	va_start(args, pszMsg);
+	CString str;
+	str.Format(_T(">>> %-20hs to   %-15s:%-5u; "), pszOpcode, ipstr(ntohl(ip)), port);
+	str.AppendFormatV(pszMsg, args);
+	va_end(args);
+	Debug(_T("%s\n"), str);
+}
+
+void DebugRecv(LPCSTR pszOpcode, uint32 ip, uint16 port)
+{
+	Debug(_T("%-24hs from %-15s:%u\n"), pszOpcode, ipstr(ntohl(ip)), port);
+}
+
+void DebugHttpHeaders(const CStringAArray& astrHeaders)
+{
+	for (int i = 0; i < astrHeaders.GetCount(); i++)
+	{
+		const CStringA& rstrHdr = astrHeaders.GetAt(i);
+		Debug(_T("<%hs\n"), rstrHdr);
+	}
 }
 
 ULONGLONG GetDiskFileSize(LPCTSTR pszFilePath)
 {
 	static BOOL _bInitialized = FALSE;
-	static DWORD (WINAPI *_pfnGetCompressedFileSize)(LPCSTR, LPDWORD) = NULL;
+	static DWORD (WINAPI *_pfnGetCompressedFileSize)(LPCTSTR, LPDWORD) = NULL;
 
 	if (!_bInitialized){
 		_bInitialized = TRUE;
-		(FARPROC&)_pfnGetCompressedFileSize = GetProcAddress(GetModuleHandle("kernel32.dll"), "GetCompressedFileSizeA");
+		(FARPROC&)_pfnGetCompressedFileSize = GetProcAddress(GetModuleHandle(_T("kernel32.dll")), _TWINAPI("GetCompressedFileSize"));
 	}
 
 	// If the file is not compressed nor sparse, 'GetCompressedFileSize' returns the 'normal' file size.
@@ -1972,7 +2061,7 @@ CString StripInvalidFilenameChars(CString strText, bool bKeepSpaces)
 CString CreateED2kLink(const CAbstractFile* f)
 {
 	CString strLink;
-	strLink.Format("ed2k://|file|%s|%u|%s|/",
+	strLink.Format(_T("ed2k://|file|%s|%u|%s|/"),
 		StripInvalidFilenameChars(f->GetFileName(), false),	// spaces to dots
 		f->GetFileSize(),
 		EncodeBase16(f->GetFileHash(),16)
@@ -1980,13 +2069,40 @@ CString CreateED2kLink(const CAbstractFile* f)
 	return strLink;
 }
 
+CString CreateED2kHashsetLink(const CKnownFile* pFile)
+{
+	CString strLink;
+	strLink.Format(_T("ed2k://|file|%s|%u|%s|"),
+		StripInvalidFilenameChars(pFile->GetFileName(), false),	// spaces to dots
+		pFile->GetFileSize(),
+		EncodeBase16(pFile->GetFileHash(),16));
+	if (pFile->GetHashCount() > 0 && pFile->GetHashCount() == pFile->GetED2KPartHashCount())
+	{
+		strLink += _T("p=");
+		for (int i = 0; i < pFile->GetHashCount(); i++)
+		{
+			if (i > 0)
+				strLink += _T(':');
+			strLink += EncodeBase16(pFile->GetPartHash(i), 16);
+		}
+		strLink += _T('|');
+	}
+	strLink += _T('/');
+	return strLink;
+}
+
 CString CreateHTMLED2kLink(const CAbstractFile* f)
 {
-	CString strCode = "<a href=\"" + CreateED2kLink(f) + "\">" + StripInvalidFilenameChars(f->GetFileName(), true) + "</a>";
+	CString strCode = _T("<a href=\"") + CreateED2kLink(f) + _T("\">") + StripInvalidFilenameChars(f->GetFileName(), true) + _T("</a>");
 	return strCode;
 }
 
 bool operator==(const CCKey& k1,const CCKey& k2)
+{
+	return !md4cmp(k1.m_key, k2.m_key);
+}
+
+bool operator==(const CSKey& k1,const CSKey& k2)
 {
 	return !md4cmp(k1.m_key, k2.m_key);
 }
@@ -1997,6 +2113,15 @@ CString ipstr(uint32 nIP)
 	const BYTE* pucIP = (BYTE*)&nIP;
 	CString strIP;
 	strIP.ReleaseBuffer(_stprintf(strIP.GetBuffer(3+1+3+1+3+1+3), _T("%u.%u.%u.%u"), pucIP[0], pucIP[1], pucIP[2], pucIP[3]));
+	return strIP;
+}
+
+CStringA ipstrA(uint32 nIP)
+{
+	// following gives the same string as 'inet_ntoa(*(in_addr*)&nIP)' but is not restricted to ASCII strings
+	const BYTE* pucIP = (BYTE*)&nIP;
+	CStringA strIP;
+	strIP.ReleaseBuffer(sprintf(strIP.GetBuffer(3+1+3+1+3+1+3), "%u.%u.%u.%u", pucIP[0], pucIP[1], pucIP[2], pucIP[3]));
 	return strIP;
 }
 
@@ -2090,87 +2215,169 @@ bool AdjustNTFSDaylightFileTime(uint32& ruFileDate, LPCTSTR pszFilePath)
 	return false;
 }
 
-bool CheckForSomeFoolVirus(){
-	CFileFind ff;
-	char buffer[512];
-	GetWindowsDirectory(buffer, 511);
-	CString searchpath;
-	CKillProcess kp;	
-	
-	//******************* SomeFool.Q
-	searchpath.Format(_T("%s\\SysMonXP.exe"),buffer);
-	bool found;
-	if ( (found = ff.FindFile(searchpath,0)) )
-		ff.FindNextFile();
-	if (found && ff.GetLength() == 28008){
-		//infected
-		int result = MessageBox(NULL,_T("eMule has detected that your PC is infected with the SomeFool.Q (alias netsky.q) virus, which is build to start a DDoS Attack against eMule's Homepage.\n\nDo you want eMule to try to remove this virus now (this may take some seconds)?\n\nNote: eMule will not start as long as your PC is infected"),
-			_T("Virus found"),MB_YESNO | MB_ICONWARNING);
-		if (result == IDNO)
-			return false;
-		// kill process
-		kp.KillProcess(_T("SysMonXP.exe"));
-		// delete its files
-		uint32 nTimeOut = GetTickCount() + 20000;
-		bool success = false;
-		while (nTimeOut > GetTickCount()){
-			if ( (success = DeleteFile(searchpath.GetBuffer())) )
-				break;
-		}
-		searchpath.Format(_T("%s\\firewalllogger.txt"),buffer);
-		DeleteFile(searchpath.GetBuffer());
-		// remove registry entry
-		CRegKey regkey;
-		if (regkey.Open(HKEY_LOCAL_MACHINE,_T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run")) == ERROR_SUCCESS)
-			regkey.DeleteValue(_T("SysMonXP"));
 
-		// finished - hopefully	
-		if (success){
-			MessageBox(NULL,_T("eMule was able to remove the virus. However we STRONGLY recommend to install an up-to-date anti-virus software to run a full system check!"),
-			_T("Virus removed"),MB_ICONINFORMATION | MB_OK);
-		}
-		else{
-			MessageBox(NULL,_T("eMule was not able to remove the virus.\nPlease install an up-to-date anti-virus software and run a full system check!"),
-			_T("Virus removed"),MB_ICONERROR | MB_OK);
-		}
+bool ExpandEnvironmentStrings(CString& rstrStrings)
+{
+	DWORD dwSize = ExpandEnvironmentStrings(rstrStrings, NULL, 0);
+	if (dwSize == 0)
+		return false;
+
+	CString strExpanded;
+	DWORD dwCount = ExpandEnvironmentStrings(rstrStrings, strExpanded.GetBuffer(dwSize-1), dwSize);
+#ifdef _UNICODE
+	if (dwCount == 0 || dwCount != dwSize){
+#else
+	if (dwCount == 0 || dwCount != dwSize-1){
+#endif
+		ASSERT(0);
+		return false;
 	}
-
-	//******************* SomeFool.R
-	searchpath.Format(_T("%s\\PandaAVEngine.exe"),buffer);
-	if ( (found = ff.FindFile(searchpath,0)) )
-		ff.FindNextFile();
-	if (found && ff.GetLength() == 20624){
-		//infected
-		int result = MessageBox(NULL,_T("eMule has detected that your PC is infected with the SomeFool.R (alias netsky.r) virus, which is build to start a DDoS Attack against eMule's Homepage.\n\nDo you want eMule to try to remove this virus now (this may take some seconds)?\n\nNote: eMule will not start as long as your PC is infected"),
-			_T("Virus found"),MB_YESNO | MB_ICONWARNING);
-		if (result == IDNO)
-			return false;
-		// kill process
-		kp.KillProcess(_T("PandaAVEngine.exe"));
-		// delete its files
-		uint32 nTimeOut = GetTickCount() + 20000;
-		bool success = false;
-		while (nTimeOut > GetTickCount()){
-			if ( (success = DeleteFile(searchpath.GetBuffer())) )
-				break;
-		}
-		searchpath.Format(_T("%s\\temp09094283.dll"),buffer);
-		DeleteFile(searchpath.GetBuffer());
-		// remove registry entry
-		CRegKey regkey;
-		if (regkey.Open(HKEY_LOCAL_MACHINE,_T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run")) == ERROR_SUCCESS)
-			regkey.DeleteValue(_T("PandaAVEngine"));
-
-		// finished - hopefully	
-		if (success){
-			MessageBox(NULL,_T("eMule was able to remove the virus. However we STRONGLY recommend to install an up-to-date anti-virus software to run a full system check!"),
-			_T("Virus removed"),MB_ICONINFORMATION | MB_OK);
-		}
-		else{
-			MessageBox(NULL,_T("eMule was not able to remove the virus.\nPlease install an up-to-date anti-virus software and run a full system check!"),
-			_T("Virus removed"),MB_ICONERROR | MB_OK);
-		}
-	}
-
+	strExpanded.ReleaseBuffer(dwCount-1);
+	rstrStrings = strExpanded;
 	return true;
+}
+
+uint16 GetRandomUInt16()
+{
+#if RAND_MAX == 0x7fff
+	// get 2 random numbers
+	UINT uRand0 = rand();
+	UINT uRand1 = rand();
+
+	// NOTE: if that assert fires, you have most likely called that function *without* calling 'srand' first.
+	// NOTE: each spawned thread HAS to call 'srand' for itself to get real random numbers.
+	ASSERT( !(uRand0 == 41 && uRand1 == 18467) );
+
+	return uRand0 | ((uRand1 >= RAND_MAX/2) ? 0x8000 : 0x0000);
+#else
+#error "Implement it!"
+#endif
+}
+
+uint32 GetRandomUInt32()
+{
+#if RAND_MAX == 0x7fff
+	//return ((uint32)GetRandomUInt16() << 16) | (uint32)GetRandomUInt16();
+	// this would give the receiver the following information:
+	//	random number N
+	//	random number N+1 is below or greater/equal than 0x8000
+	//	random number N+2
+	//	random number N+3 is below or greater/equal than 0x8000
+
+	uint32 uRand0 = GetRandomUInt16();
+	srand(GetTickCount());
+	uint32 uRand1 = GetRandomUInt16();
+	return (uRand0 << 16) | uRand1;
+#else
+#error "Implement it!"
+#endif
+}
+
+HWND ReplaceRichEditCtrl(CWnd* pwndRE, CWnd* pwndParent, CFont* pFont)
+{
+	HWND hwndNewRE = NULL;
+
+	ASSERT( pwndRE );
+	if (pwndRE)
+	{
+		CHAR szClassName[MAX_PATH];
+		if (GetClassNameA(*pwndRE, szClassName, ARRSIZE(szClassName)) && __ascii_stricmp(szClassName, "RichEdit20W")==0)
+			return NULL;
+
+		CRect rcWnd;
+		pwndRE->GetWindowRect(&rcWnd);
+
+		DWORD dwStyle = pwndRE->GetStyle();
+		dwStyle |= WS_VSCROLL | WS_HSCROLL;
+		DWORD dwExStyle = pwndRE->GetExStyle();
+
+		CString strText;
+		pwndRE->GetWindowText(strText);
+
+		UINT uCtrlID = GetWindowLong(*pwndRE, GWL_ID);
+
+		pwndRE->DestroyWindow();
+		pwndRE = NULL;
+
+		pwndParent->ScreenToClient(&rcWnd);
+		HWND hwndNewRE = CreateWindowEx(dwExStyle, RICHEDIT_CLASS, strText, dwStyle, rcWnd.left, rcWnd.top, rcWnd.Width(), rcWnd.Height(), pwndParent->m_hWnd, (HMENU)uCtrlID, NULL, NULL);
+		if (hwndNewRE && pFont && pFont->m_hObject)
+			::SendMessage(hwndNewRE, WM_SETFONT, (WPARAM)pFont->m_hObject, 0);
+	}
+	return hwndNewRE;
+}
+
+void InstallSkin(LPCTSTR pszSkinPackage)
+{
+	CZIPFile zip;
+	if (zip.Open(pszSkinPackage))
+	{
+		// Search the "*.eMuleSkin.ini" file..
+		CZIPFile::File* zfIniFile = NULL;
+		static const TCHAR _szSkinSuffix[] = _T(".") EMULSKIN_BASEEXT _T(".ini");
+		for (int i = 0; i < zip.GetCount(); i++)
+		{
+			CZIPFile::File* zf = zip.GetFile(i);
+			if (zf && zf->m_sName.Right(ARRSIZE(_szSkinSuffix)-1).CompareNoCase(_szSkinSuffix) == 0)
+			{
+				zfIniFile = zf;
+				break;
+			}
+		}
+
+		if (zfIniFile)
+		{
+			if (thePrefs.GetSkinProfileDir().IsEmpty() || _taccess(thePrefs.GetSkinProfileDir(), 0) != 0){
+				AfxMessageBox(GetResString(IDS_INSTALL_SKIN_NODIR));
+				return;
+			}
+
+			for (int i = 0; i < zip.GetCount(); i++)
+			{
+				CZIPFile::File* zf = zip.GetFile(i);
+				if (zf)
+				{
+					if (zf->m_sName.IsEmpty())
+						continue;
+					if (zf->m_sName[0] == _T('\\') || zf->m_sName[0] == _T('/'))
+						continue;
+					if (zf->m_sName.Find(_T(':')) != -1)
+						continue;
+					if (zf->m_sName.Find(_T("..\\")) != -1 || zf->m_sName.Find(_T("../")) != -1)
+						continue;
+					if (zf->m_sName[zf->m_sName.GetLength()-1] == _T('/'))
+					{
+						CString strDstDirPath;
+						PathCanonicalize(strDstDirPath.GetBuffer(MAX_PATH), thePrefs.GetSkinProfileDir() + _T('\\') + zf->m_sName.Left(zf->m_sName.GetLength()-1));
+						strDstDirPath.ReleaseBuffer();
+						if (!CreateDirectory(strDstDirPath, NULL)){
+							DWORD dwError = GetLastError();
+							CString strError;
+							strError.Format(GetResString(IDS_INSTALL_SKIN_DIR_ERROR), strDstDirPath, GetErrorMessage(dwError));
+							AfxMessageBox(strError);
+							break;
+						}
+					}
+					else
+					{
+						CString strDstFilePath;
+						PathCanonicalize(strDstFilePath.GetBuffer(MAX_PATH), thePrefs.GetSkinProfileDir() + _T('\\') + zf->m_sName);
+						strDstFilePath.ReleaseBuffer();
+						SetLastError(0);
+						if (!zf->Extract(strDstFilePath)){
+							DWORD dwError = GetLastError();
+							CString strError;
+							strError.Format(GetResString(IDS_INSTALL_SKIN_FILE_ERROR), zf->m_sName, strDstFilePath, GetErrorMessage(dwError));
+							AfxMessageBox(strError);
+							break;
+						}
+					}
+				}
+			}
+		}
+		else{
+			AfxMessageBox(GetResString(IDS_INSTALL_SKIN_PKG_ERROR));
+		}
+		zip.Close();
+	}
 }

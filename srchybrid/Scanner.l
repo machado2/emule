@@ -6,6 +6,7 @@
 #include "scanner.h"
 #include "parser.hpp"
 #include "OtherFunctions.h"
+#include "ED2KLink.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -16,6 +17,9 @@ static char THIS_FILE[] = __FILE__;
 #define YY_NEVER_INTERACTIVE 1
 
 extern int yyerror(const char* errstr);
+#ifdef _UNICODE
+extern int yyerror(LPCTSTR errstr);
+#endif
 
 #define	ECHO				TRACE
 #define	YY_INPUT			ReadLexBuff
@@ -24,8 +28,8 @@ extern int yyerror(const char* errstr);
 static void ReadLexBuff(char* pcBuff, int& riResult, size_t uMaxSize);
 static void FatalLexError(yyconst char msg[]);
 
-static CString _strInputBuff;
-static LPCTSTR _pszLexBuff;
+static CStringA _strInputBuff;
+static LPCSTR _pszLexBuff;
 %}
 
 %option noyywrap
@@ -38,6 +42,41 @@ keywordchar		[^ \"()]
 "OR"			{ return TOK_OR; }
 "AND"			{ return TOK_AND; }
 "NOT"			{ return TOK_NOT; }
+
+"ed2k://|file|"[^|]+"|"[0-9]+"|"[a-fA-F0-9]{32}"|/"	{
+					CString strError;
+					try
+					{
+						USES_CONVERSION;
+						CED2KLink* pLink = CED2KLink::CreateLinkFromUrl(A2T(yytext));
+						if (pLink && pLink->GetKind() == CED2KLink::kFile)
+						{
+							CED2KFileLink* pFileLink = pLink->GetFileLink();
+							if (pFileLink)
+							{
+								yylval.pstr = new CString;
+								yylval.pstr->Format(_T("ed2k::%s"), md4str(pFileLink->GetHashKey()));
+								delete pLink;
+								return TOK_ED2K_LINK;
+							}
+						}
+						delete pLink;
+					}
+					catch(CString strEd2kLinkError)
+					{
+						strError = strEd2kLinkError;
+					}
+					if (strError.IsEmpty())
+						strError = _T("Invalid eD2K file link");
+					yyerror(strError);
+					yylval.pstr = new CString(yytext);
+					return TOK_STRING;
+				}
+
+"ed2k::"[a-fA-F0-9]{32}	{
+					yylval.pstr = new CString(yytext);
+					return TOK_ED2K_LINK;
+				}
 
 {keywordchar}*  {
 					yylval.pstr = new CString(yytext);
@@ -169,14 +208,15 @@ static void FatalLexError(yyconst char msg[])
 #ifdef _CONSOLE
 	printf("Fatal error in flex scanner: %s\n", msg);
 #else
-	AfxMessageBox(CString(_T("Fatal error in flex scanner: ")) + msg, MB_ICONSTOP);
+	USES_CONVERSION;
+	AfxMessageBox(CString(_T("Fatal error in flex scanner: ")) + A2CT(msg), MB_ICONSTOP);
 #endif
 }
 
 void LexInit(LPCTSTR pszInput)
 {
 	_strInputBuff = pszInput;
-	_pszLexBuff = (LPCTSTR)_strInputBuff;
+	_pszLexBuff = (LPCSTR)_strInputBuff;
 }
 
 void LexFree()

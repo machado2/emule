@@ -270,6 +270,7 @@ BEGIN
     IDS_ERR_BADSERVERLISTRECEIVED "Ongeldig serverlijst pakket ontvangen"
     IDS_STATUS              "Status"
     IDS_DL_REMAINS          "Nog te doen"
+    IDS_UPDATEFROM          "Update from URL: (filter.dat- or PeerGuardian-format)"
     IDS_QL_USERNAME         "Gebruikersnaam"
     IDS_ERR_PACKAGEHANDLING "Onbekende fout bij het ophalen van een pakket van de server (%s)"
     IDS_QL_RATING           "Waardering"
@@ -415,7 +416,7 @@ BEGIN
     IDS_ERR_FOUNDCORRUPTION "Corrupt bestandsdeel (%i) in %s gevonden"
     IDS_HASHINGDONE         "Opnieuw hashen van %s is afgerond, het bestand lijkt in orde"
     IDS_ERR_PARTCORRUPT     "Overgehaald bestandsdeel %i is corrupt :(  (%s)"
-    IDS_ICHWORKED           "ICH: Hersteld corrupt bestandsdeel %i  (%s)"
+    IDS_ICHWORKED           "ICH: Hersteld corrupt bestandsdeel %i  (%s), Saved: %s"
     IDS_ERR_OUTOFSPACE      "U heeft onvoldoende schijfruimte om een bestand over te halen %s!"
     IDS_SE                  "Source Exchange"
 END
@@ -476,6 +477,7 @@ BEGIN
     IDS_NOTHING             "niets"
     IDS_SETUPSPEED          "zet verzendlimiet"
     IDS_SETDOWNSPEED        "zet ontvangstlimiet"
+    IDS_UNDO                "Undo"
     IDS_DAYLY               "dagelijks"
 END
 
@@ -757,6 +759,7 @@ BEGIN
     IDS_STREE               "Statistiek Totaaloverzicht"
     IDS_IRC_IGNOREQUITMESSAGE "Ignore Quit info messages"
     IDS_STATSSETUPINFO      "Instellingen Statistieken"
+    IDS_IRC_SOUNDEVENTS     "Play sound events"
 END
 
 STRINGTABLE 
@@ -808,11 +811,6 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* Prive chat sessie begonnen"
     IDS_IRC_SLAPMSG         "* %s slaps %s around with a large Babelfish!"
     IDS_IRC_PRIVMESSAGE     "Prive Bericht"
-    IDS_IRC_OP              "Op"
-    IDS_IRC_DEOP            "DeOp"
-    IDS_IRC_VOICE           "Stemgeluid"
-    IDS_IRC_HALFOP          "HalfOp"
-    IDS_IRC_DEHALFOP        "DeHalfOp"
     IDS_IRC_KICK            "Er uit knikkeren"
     IDS_IRC_SLAP            "Slap"
     IDS_IRC_JOIN            "Toetreden"
@@ -827,7 +825,6 @@ BEGIN
     IDS_IRC_HASPARTED       "* %s verliet %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s is eruit geknikkerd door %s (%s)"
     IDS_IRC_NICKUSED        "Uw schuilnaam wordt al gebruikt binnen de IRC server. Verzin aub. een andere schuilnaam bij de IRC tab in Voorkeuren."
-    IDS_IRC_DEVOICE         "DeVoice"
     IDS_IRC_HASQUIT         "* %s is gestopt (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s is bekend als %s"
     IDS_IRC_SETSMODE        "* %s zet modus: %s %s"
@@ -1026,7 +1023,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "Verloren door corruptie: %s      Gewonnen door compressie: %s\nChunks gerepareerd door I.C.H.: %i"
-    IDS_ERR_NOHELP          "Help-bestand niet gevonden.\n Bezoek onze homepage om het nieuwste help-bestand op te halen! (download sectie)"
+    IDS_ERR_NOHELP          "Please visit our homepage's download section to get a copy of the newest help file!\n\nDo you want to browse the online help now instead?"
     IDS_SHOWOVERHEAD        "Toon overhead bandbreedte"
     IDS_UPDOWNSMALL         "Up: %.1f | Down: %.1f"
     IDS_EDITLIST            "Lijst"
@@ -1075,6 +1072,7 @@ BEGIN
     IDS_COMMENT             "Commentaar"
     IDS_IPFILTERED          "Gefilterde IP: %s (%s)"
     IDS_DL_TRANSFCOMPL      "Afgerond"
+    IDS_DL_ACTIVE_TIME      "Download time"
     IDS_STATS_FILTEREDCLIENTS "Gefilterd: %i"
     IDS_FILTERLABEL         "Filter berichten bevattend: (scheidingsteken | )"
     IDS_ERR_LARGEREQBLOCK   "Gebruiker verzoekt om een te groot blok."
@@ -1244,7 +1242,7 @@ BEGIN
     IDS_WIZ1_UPLOAD_SUBTITLE "Volledige Chunk Overdracht"
     IDS_DL_RESUMENEXT       "Ga verder met het volgende gepauzeerd bestand"
     IDS_DONTCHANGE          "Niet veranderen"
-    IDS_STARTPRIO           "Verander prioriteit voor nieuw toegekende bestanden"
+    IDS_STARTPRIO           "Priority for this category"
     IDS_PREF_STARTNEXTFILECAT "prefereer dezelfde categorie"
     IDS_REPAINTGRAPHS       "Statistiek grafieken niet opnieuw tekenen bij aanpassen grootte venster"
     IDS_SOFTFILES           "Zachte Bestandslimiet"
@@ -1392,6 +1390,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_CUT                 "Cut"
     IDS_STATS_SECUREIDENT   "Beveiligde Identificatie (OK : Gefaald )"
     IDS_ONDISK              "Grootte op schijf: "
     IDS_CLIENTCOL           "Waarschuwing: Gelijke gebruiker gevonden bij een andere huidig verbonden gebruiker: %s (%s) en %s (%s)"
@@ -1414,6 +1413,7 @@ STRINGTABLE
 BEGIN
     IDS_VERSION             "Versie"
     IDS_ALL_A4AF_TO_THIS    "Verplaats nu alle bronnen naar dit bestand"
+    IDS_PASTE               "Paste"
     IDS_ALL_A4AF_TO_OTHER   "Verplaats nu alle bronnen naar een willekeurig ander bestand"
     IDS_ALL_A4AF_AUTO       "Verplaats automatisch alle (A4AF) bronnen naar dit bestand"
     IDS_SWAP_A4AF_TO_THIS   "Verplaats bron nu naar dit bestand"
@@ -1489,7 +1489,7 @@ BEGIN
     IDS_SERVERKEEPALIVETIMEOUT "Verversingsinterval serververbinding [min.]"
     IDS_MORE                "&Meer"
     IDS_TOOLS               "W&erktuigen"
-    IDS_ERR_JIGLENEEDSTYPE  "Als u de Jigle database wilt doorzoeken zonder een bestandstype te specificeren moet u tenminste een bestandsextentie opgeven !"
+    IDS_SEARCHPARAMS        "Search Parameters"
 END
 
 STRINGTABLE 
@@ -1545,6 +1545,7 @@ BEGIN
     IDS_CMT_COPYCLIPBOARD   "Kopieer commentaar naar klembord"
     IDS_ASKDOWNLOADLANG     "De geselecteerde taal is niet geinstalleerd. Wilt u het via eMule ophalen van emule-project.net?"
     IDS_ASKDOWNLOADLANGCAP  "Ophalen taalbestanden"
+    IDS_DELETESELECTED      "Delete"
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "Fout bij het ophalen en installeren van de geselecteerde taal dll van %s!"
     IDS_ERR_BADFOLDER       "Ongeldige map.\nMap kan niet worden aangemaakt. Controleer aub. naam en plaats."
@@ -1559,6 +1560,7 @@ BEGIN
     IDS_KADUDPPORTERR       "Kads UDP poort heeft een conflict met of eMule's Ext UDP poort of eMule's Server UDP poort. De poort is veranderd naar %u."
     IDS_CONFIRM_FILEDELETE  "Do you really want to remove all selected files from disk?"
     IDS_OPENFOLDER          "Open folder"
+    IDS_RUNASUSER           "Run eMule as unprivileged User"
     IDS_DELETE              "Delete from disk"
     IDS_BOOTSTRAP           "Bootstrap"
     IDS_VIAED2KSQ           "Via ED2K Server/Wachtrij"
@@ -1621,7 +1623,7 @@ BEGIN
     IDS_DELETEIPFILTERS     "Do you really want to delete the selected IP filters?"
     IDS_TOTAL_IPFILTER_LABEL "Total IP filters:"
     IDS_TOTAL_IPS_LABEL     "Total IPs:"
-    IDS_DELETE2             "Delete"
+    IDS_RAU_WARNING         "This setting will give eMule additional security against attacks and exploits and we encourage the usage of this option.\nHowever it is strongly recommended to read the manual before activating it!\n\nChanges will take effect after restarting eMule."
     IDS_APPEND              "Append..."
     IDS_SAVE                "Save"
     IDS_IP_START            "Start"
@@ -1636,10 +1638,62 @@ STRINGTABLE
 BEGIN
     IDS_ERR_NOTCONNECTEDKAD "You are currently not connected to the Kad Network!"
     IDS_IRC_NOSFS           "No Shared Files Selected"
+    IDS_RESETLABEL          "Auto completion (history function)"
     IDS_IRC_IGNOREMISCMESSAGE "Ignore Misc info messages"
     IDS_KNOWN               "Known"
-    IDS_DL_ACTIVE_TIME      "Download time"
-    IDS_RESETLABEL          "Auto completion (history function)"
+    IDS_RAU_RUNNING         "eMule running as unprivileged user ""%s"""
+    IDS_RAU_FAILED          "Failed to start eMule as unprivileged user ""eMule_Secure"". Keeping the privileges of the current user (""%S"")."
+    IDS_KADCONTACTSREAD     "Read %ld contacts from file."
+    IDS_ERR_KADCONTACTS     "No contacts found, please bootstrap, or download a nodes.dat file."
+    IDS_METATAGS            "Meta Tag Count:"
+    IDS_FILEFORMAT          "File format"
+    IDS_UDPREASKS           "UDP File Reasks"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping tolerance (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Method for ping tolerance"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milliseconds (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Percent (%)"
+    IDS_LOG_A4AF            "Log A4AF actions"
+    IDS_A4AF_SAVE_CPU       "Disable A4AF checks to save CPU"
+    IDS_SEARCH_DOC          "Document"
+    IDS_DOWNLOAD_ALPHABETICAL "Download in alphabetical order"
+    IDS_INSTALL_SKIN        "Install eMule Skin"
+    IDS_INSTALL_SKIN_NODIR  "No eMule Skin profile directory selected or directory is not accessible!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            "Failed to create directory ""%s"" for eMule Skin - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "Failed to extract file ""%s"" from eMule Skin to local file ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "This is not a valid eMule Skin package file."
+    IDS_NEXT_REASK          "Next ask to this client"
+    IDS_A4AF_FILES          "A4AF files"
+    IDS_STATS_FRATIO        "Session UL:DL ratio (friends UL excluded):"
+    IDS_STATS_UDATA_FRIENDS "Uploaded data to friend slots (Session): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FO_PREF_EXISTED     "eMule detected existing rules for the selected ports, which were not overwritten or replaced. Missing rules have been added successfully.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_FO_PREF_FAILED      "Failed to configure the internal WinXP firewall for the selected ports!"
+    IDS_FO_PREF_STARTUP     "Open/close ports on WinXP firewall when starting/exiting eMule"
+    IDS_LOG_LEVEL           "Log Level"
+    IDS_DISABLEPEERACHE     "Disable downloading from PeerCache"
+    IDS_FO_TEMPTCP_S        "Opened port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPTCP_F        "Failed to open port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_S        "Opened port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_F        "Failed to open port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_PREFBUTTON       "Open these ports on internal WinXP firewall"
+    IDS_FO_PREF_SUCCCEEDED  "Succeeded to open selected ports on the internal WinXP firewall.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_SOURCESWAPBLOCKED   "Swap blocked"
+    IDS_A4AF_CHECK_THIS_NOW "Check this source now (debug)"
+    IDS_SOURCEEXCHANGESWAP  "Temporary Source Exchange Swap"
+    IDS_NEWMSG              "New Message from '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
+    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
+    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
 END
 
 #endif    // Dutch (Netherlands) resources

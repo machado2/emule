@@ -107,7 +107,7 @@ static int check_header(z_stream *stream, HINTERNET m_hHttpFile) {
 	return Z_OK;
 }
 
-#define ACCEPT_ENCODING_HEADER "Accept-Encoding: gzip, x-gzip, identity, *;q=0\r\n"
+#define ACCEPT_ENCODING_HEADER _T("Accept-Encoding: gzip, x-gzip, identity, *;q=0\r\n")
 
 #define ENCODING_CLEAN_UP      if(bEncodedWithGZIP) inflateEnd(&zs)
 
@@ -173,7 +173,7 @@ static int check_header(z_stream *stream, HINTERNET m_hHttpFile) {
 
 #else
 
-#define ACCEPT_ENCODING_HEADER "Accept-Encoding: identity, *;q=0\r\n"
+#define ACCEPT_ENCODING_HEADER _T("Accept-Encoding: identity, *;q=0\r\n")
 
 #define ENCODING_CLEAN_UP ((void)0)
 
@@ -255,8 +255,8 @@ BOOL CHttpDownloadDlg::OnInitDialog()
 	cap = GetResString(IDS_CANCEL);
 	GetDlgItem(IDCANCEL)->SetWindowText(cap);
 
-	cap = GetResString(IDS_HTTP_CAPTION);
-	SetWindowText(cap);
+	if (!m_strTitle.IsEmpty())
+		SetWindowText(m_strTitle);
 
 	//Let the parent class do its thing
 	CDialog::OnInitDialog();
@@ -346,6 +346,7 @@ BOOL CHttpDownloadDlg::OnInitDialog()
 UINT AFX_CDECL CHttpDownloadDlg::_DownloadThread(LPVOID pParam)
 {
 	DbgSetThreadName("HttpDownload");
+	InitThreadLocale();
 	//Convert from the SDK world to the C++ world
 	CHttpDownloadDlg* pDlg = (CHttpDownloadDlg*) pParam;
 	ASSERT(pDlg);
@@ -356,9 +357,6 @@ UINT AFX_CDECL CHttpDownloadDlg::_DownloadThread(LPVOID pParam)
 
 void CHttpDownloadDlg::SetPercentage(int nPercentage)
 {
-	//Change the progress control
-	m_ctrlProgress.SetPos(nPercentage);
-
 	//Change the caption text
 	CString sPercentage;
 	sPercentage.Format(_T("%d"), nPercentage);
@@ -656,7 +654,7 @@ resend:
 	DWORD dwEncodeStringSize = 32;
 	if(::HttpQueryInfo(m_hHttpFile, HTTP_QUERY_CONTENT_ENCODING, szContentEncoding, &dwEncodeStringSize, NULL))
 	{
-		if(!stricmp(szContentEncoding, "gzip") || !stricmp(szContentEncoding, "x-gzip"))
+		if(!_tcsicmp(szContentEncoding, _T("gzip")) || !_tcsicmp(szContentEncoding, _T("x-gzip")))
 			bEncodedWithGZIP = TRUE;
 	}
 

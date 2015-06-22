@@ -28,7 +28,7 @@ public:
 
 	void	Process();
 	void	AddClientToQueue(CUpDownClient* client,bool bIgnoreTimelimit = false);
-	bool	RemoveFromUploadQueue(CUpDownClient* client,bool updatewindow = true);
+	bool	RemoveFromUploadQueue(CUpDownClient* client, LPCTSTR pszReason = NULL, bool updatewindow = true, bool earlyabort = false);
 	bool	RemoveFromWaitingQueue(CUpDownClient* client,bool updatewindow = true);
 	bool	IsOnUploadQueue(CUpDownClient* client)	const {return (waitinglist.Find(client) != 0);}
 	bool	IsDownloading(CUpDownClient* client)	const {return (uploadinglist.Find(client) != 0);}
@@ -61,33 +61,6 @@ public:
 	uint32	GetFailedUpCount()						{return failedupcount;}
 	uint32	GetAverageUpTime();
 //	void	FindSourcesForFileById(CUpDownClientPtrList* srclist, const uchar* filehash);
-	void	AddUpDataOverheadSourceExchange(uint32 data)	{ m_nUpDataRateMSOverhead += data;
-															  m_nUpDataOverheadSourceExchange += data;
-															  m_nUpDataOverheadSourceExchangePackets++;}
-	void	AddUpDataOverheadFileRequest(uint32 data)		{ m_nUpDataRateMSOverhead += data;
-															  m_nUpDataOverheadFileRequest += data;
-															  m_nUpDataOverheadFileRequestPackets++;}
-	void	AddUpDataOverheadServer(uint32 data)			{ m_nUpDataRateMSOverhead += data;
-															  m_nUpDataOverheadServer += data;
-															  m_nUpDataOverheadServerPackets++;}
-	void	AddUpDataOverheadKad(uint32 data)				{ m_nUpDataRateMSOverhead += data;
-															  m_nUpDataOverheadKad += data;
-															  m_nUpDataOverheadKadPackets++;}
-	void	AddUpDataOverheadOther(uint32 data)				{ m_nUpDataRateMSOverhead += data;
-															  m_nUpDataOverheadOther += data;
-															  m_nUpDataOverheadOtherPackets++;}
-	uint32	GetUpDatarateOverhead()						{return m_nUpDatarateOverhead;}
-	uint64	GetUpDataOverheadSourceExchange()			{return m_nUpDataOverheadSourceExchange;}
-	uint64	GetUpDataOverheadFileRequest()				{return m_nUpDataOverheadFileRequest;}
-	uint64	GetUpDataOverheadServer()					{return m_nUpDataOverheadServer;}
-	uint64	GetUpDataOverheadKad()						{return m_nUpDataOverheadKad;}
-	uint64	GetUpDataOverheadOther()					{return m_nUpDataOverheadOther;}
-	uint64	GetUpDataOverheadSourceExchangePackets()	{return m_nUpDataOverheadSourceExchangePackets;}
-	uint64	GetUpDataOverheadFileRequestPackets()		{return m_nUpDataOverheadFileRequestPackets;}
-	uint64	GetUpDataOverheadServerPackets()			{return m_nUpDataOverheadServerPackets;}
-	uint64	GetUpDataOverheadKadPackets()				{return m_nUpDataOverheadKadPackets;}
-	uint64	GetUpDataOverheadOtherPackets()				{return m_nUpDataOverheadOtherPackets;}
-	void	CompUpDatarateOverhead();
 
 protected:
 	void	RemoveFromWaitingQueue(POSITION pos, bool updatewindow);
@@ -103,46 +76,26 @@ private:
 	void	UpdateMaxClientScore();
 	uint32	GetMaxClientScore()						{return m_imaxscore;}
 
+	CUpDownClientPtrList waitinglist;
+	CUpDownClientPtrList uploadinglist;
+
 	// By BadWolf - Accurate Speed Measurement
 	typedef struct TransferredData {
 		uint32	datalen;
 		DWORD	timestamp;
 	};
 	CList<TransferredData,TransferredData> avarage_dr_list;
-	DWORD	m_delay;
-	DWORD	m_delaytmp;
-	uint32	uLastAcceptNewClient;
-	uint32	sumavgdata;
-	sint32	sendperclient;
-
-	CUpDownClientPtrList waitinglist;
-	CUpDownClientPtrList uploadinglist;
 	uint32	datarate;   //datarate 
 	uint32	dataratems;
-	uint32	datarateave; //datarage average (since progstart) *unused*
-	uint32	estadatarate; // esta. max datarate	
+	// By BadWolf - Accurate Speed Measurement
+
 	UINT_PTR h_timer;
 	uint32	successfullupcount;
 	uint32	failedupcount;
 	uint32	totaluploadtime;
 	uint32	m_nLastStartUpload;
-	uint32	m_nUpDatarateOverhead;
-	uint32	m_nUpDataRateMSOverhead;
-	uint64	m_nUpDataOverheadSourceExchange;
-	uint64	m_nUpDataOverheadFileRequest;
-	uint64	m_nUpDataOverheadServer;
-	uint64	m_nUpDataOverheadKad;
-	uint64	m_nUpDataOverheadOther;
-	uint64	m_nUpDataOverheadSourceExchangePackets;
-	uint64	m_nUpDataOverheadFileRequestPackets;
-	uint64	m_nUpDataOverheadServerPackets;
-	uint64	m_nUpDataOverheadKadPackets;
-	uint64	m_nUpDataOverheadOtherPackets;
 	bool	lastupslotHighID; // VQB lowID alternation
+	bool	m_bRemovedClientByScore;
 
 	uint32	m_imaxscore;
-	// By BadWolf - Accurate Speed Measurement	
-	CList<TransferredData,TransferredData>	m_AvarageUDRO_list;
-	uint32	sumavgUDRO;
-	// END By BadWolf - Accurate Speed Measurement	
 };

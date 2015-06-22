@@ -271,6 +271,7 @@ BEGIN
                             "Érvénytelen kiszolgáló lista csomag érkezett"
     IDS_STATUS              "Állapot"
     IDS_DL_REMAINS          "Hátra van még"
+    IDS_UPDATEFROM          "Update from URL: (filter.dat- or PeerGuardian-format)"
     IDS_QL_USERNAME         "Felhasználó neve"
     IDS_ERR_PACKAGEHANDLING "Kezelhetetlen hiba érkezett a csomag feldolgozásakor a kiszolgálótól (%s)"
     IDS_QL_RATING           "Osztályzat"
@@ -415,7 +416,7 @@ BEGIN
     IDS_ERR_FOUNDCORRUPTION "Sérült részt találtam (%i) ebben: %s"
     IDS_HASHINGDONE         "Hash-elés befejezése %s, úgy tûnik a fájl rendben van"
     IDS_ERR_PARTCORRUPT     "A letöltött szelet sérült (%i) :(  (%s)"
-    IDS_ICHWORKED           "ISK: megsérült szelet helyreállítása %i  (%s)"
+    IDS_ICHWORKED           "ISK: megsérült szelet helyreállítása %i  (%s), Saved: %s"
     IDS_ERR_OUTOFSPACE      "Nincs elég szabad lemezterület a letöltéshez: %s!"
     IDS_SE                  "Source Exchange"
 END
@@ -476,6 +477,7 @@ BEGIN
     IDS_NOTHING             "semmi"
     IDS_SETUPSPEED          "feltöltési korlát"
     IDS_SETDOWNSPEED        "letöltési korlát"
+    IDS_UNDO                "Undo"
     IDS_DAYLY               "naponta"
 END
 
@@ -758,6 +760,7 @@ BEGIN
     IDS_STREE               "Statisztika fa"
     IDS_IRC_IGNOREQUITMESSAGE "Ignore Quit info messages"
     IDS_STATSSETUPINFO      "A statisztika kijelzõ beállítása"
+    IDS_IRC_SOUNDEVENTS     "Play sound events"
 END
 
 STRINGTABLE 
@@ -809,11 +812,6 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* Privát csevegés kezdõdik"
     IDS_IRC_SLAPMSG         "* %s jól pofánvágja %s gyereket egy bazinagy furkósbottal!"
     IDS_IRC_PRIVMESSAGE     "Privát üzenet"
-    IDS_IRC_OP              "Op"
-    IDS_IRC_DEOP            "DeOp"
-    IDS_IRC_VOICE           "Hang"
-    IDS_IRC_HALFOP          "FélOp"
-    IDS_IRC_DEHALFOP        "DeHalfOp"
     IDS_IRC_KICK            "Kirúg"
     IDS_IRC_SLAP            "Csap"
     IDS_IRC_JOIN            "Belépés"
@@ -828,7 +826,6 @@ BEGIN
     IDS_IRC_HASPARTED       "* %s elhagyta %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s ki lett rúgva %s által (%s)"
     IDS_IRC_NICKUSED        "A beceneved már foglalt. Válassz másik becenevet."
-    IDS_IRC_DEVOICE         "DeHangEmber"
     IDS_IRC_HASQUIT         "* %s kilépett (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s most már %s lett"
     IDS_IRC_SETSMODE        "* %s operátorkodik: %s %s"
@@ -1027,7 +1024,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "Sérülés miatt elveszítve: %s       Tömörítésbõl származó elõny: %s\\I.S.K. által megmentett csomagok: %i"
-    IDS_ERR_NOHELP          "Nem található súgó fájl.\n Kérlek látogass el a honlapunkra a legújabb súgóért! (letöltési szekció)"
+    IDS_ERR_NOHELP          "Please visit our homepage's download section to get a copy of the newest help file!\n\nDo you want to browse the online help now instead?"
     IDS_SHOWOVERHEAD        "Sávszélesség megjelenítése"
     IDS_UPDOWNSMALL         "Fel: %.1f | Le: %.1f"
     IDS_EDITLIST            "Lista"
@@ -1077,6 +1074,7 @@ BEGIN
     IDS_COMMENT             "Megjegyzés"
     IDS_IPFILTERED          "Kiszûrt IP: %s (%s)"
     IDS_DL_TRANSFCOMPL      "Befejezve"
+    IDS_DL_ACTIVE_TIME      "Download time"
     IDS_STATS_FILTEREDCLIENTS "Kiszûrve: %i"
     IDS_FILTERLABEL         "Üzenetek kiszûrése ha tartalmazza: (elválasztójel | )"
     IDS_ERR_LARGEREQBLOCK   "A kliens túl nagy blokkot kért."
@@ -1247,7 +1245,7 @@ BEGIN
     IDS_WIZ1_UPLOAD_SUBTITLE "Teljes szeletek átvitele"
     IDS_DL_RESUMENEXT       "Következõ szünetelt folytatása"
     IDS_DONTCHANGE          "Ne változzon"
-    IDS_STARTPRIO           "Priorításváltozás az újonnan hozzárendelt fájloknál"
+    IDS_STARTPRIO           "Priority for this category"
     IDS_PREF_STARTNEXTFILECAT "Azonos kategóriát elõnyben részesít"
     IDS_REPAINTGRAPHS       "Átméretezésnél ne rajzolja újra a grafikonokat"
     IDS_SOFTFILES           "Enyhe fájl korlát"
@@ -1395,6 +1393,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_CUT                 "Cut"
     IDS_STATS_SECUREIDENT   "Biztonságos azonosítás (Sikeres : Sikertelen)"
     IDS_ONDISK              "Méret a háttértárolón: "
     IDS_CLIENTCOL           "Figyelmeztetés: A talált klienssel már kapcsolatban állunk: %s (%s) és %s (%s)"
@@ -1416,6 +1415,7 @@ STRINGTABLE
 BEGIN
     IDS_VERSION             "Verzió"
     IDS_ALL_A4AF_TO_THIS    "Összes forrás váltása erre a fájlra"
+    IDS_PASTE               "Paste"
     IDS_ALL_A4AF_TO_OTHER   "Összes forrás váltása más fájlra"
     IDS_ALL_A4AF_AUTO       "Automatikus forrásváltás (A4AF) forrásokból erre a fájlra"
     IDS_SWAP_A4AF_TO_THIS   "Forrásváltás erre a fájlra"
@@ -1492,7 +1492,7 @@ BEGIN
                             "Kiszolgáló kapcsolat frissítési gyakorisága [min.]"
     IDS_MORE                "&Tovább"
     IDS_TOOLS               "E&szközök"
-    IDS_ERR_JIGLENEEDSTYPE  "Ha a Jigle adatbázisban való kereséshez nem adsz meg fájltípust, legalább kiterjesztést adj meg!"
+    IDS_SEARCHPARAMS        "Search Parameters"
 END
 
 STRINGTABLE 
@@ -1548,6 +1548,7 @@ BEGIN
     IDS_CMT_COPYCLIPBOARD   "Megjegyzés másolása vágólapra"
     IDS_ASKDOWNLOADLANG     "A kiválasztott nyelv még nincs telepítve. Szeretnéd, hogy az eMule letöltse az emule-project.net oldalról?"
     IDS_ASKDOWNLOADLANGCAP  "Nyelvi fájlok letöltése"
+    IDS_DELETESELECTED      "Törlés"
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "A kiválasztott nyelv letöltése és telepítése nem sikerült: %s!"
     IDS_ERR_BADFOLDER       "Érvénytelen mappa.\nA mappát nem sikerült létrehozni. Kérlek ellenõrizd a nevét és a helyét."
@@ -1562,6 +1563,7 @@ BEGIN
     IDS_KADUDPPORTERR       "A Kads UDP portja ütközik (a) az eMule's külsõ UDP portjával vagy (b) az eMule's kiszolgáló UDP portjával. Az új port: %u."
     IDS_CONFIRM_FILEDELETE  "Biztosan törölni szeretnéd a kijelölt fájlokat a lemezrõl?"
     IDS_OPENFOLDER          "Mappa megnyitása"
+    IDS_RUNASUSER           "Run eMule as unprivileged User"
     IDS_DELETE              "Törlés a lemezrõl"
     IDS_BOOTSTRAP           "Rendszertöltõ"
     IDS_VIAED2KSQ           "ED2K kiszolgálón/soron át"
@@ -1623,7 +1625,7 @@ BEGIN
     IDS_DELETEIPFILTERS     "Biztosan törölni akarod a kiválasztott IP szûrõk?"
     IDS_TOTAL_IPFILTER_LABEL "Összes IP szûrõ:"
     IDS_TOTAL_IPS_LABEL     "Összes IP:"
-    IDS_DELETE2             "Törlés"
+    IDS_RAU_WARNING         "This setting will give eMule additional security against attacks and exploits and we encourage the usage of this option.\nHowever it is strongly recommended to read the manual before activating it!\n\nChanges will take effect after restarting eMule."
     IDS_APPEND              "Hozzáfûz..."
     IDS_SAVE                "Ment"
     IDS_IP_START            "Kezdet"
@@ -1638,10 +1640,62 @@ STRINGTABLE
 BEGIN
     IDS_ERR_NOTCONNECTEDKAD "Jelenleg nem kapcsolódsz a Kad Hálózathoz!"
     IDS_IRC_NOSFS           "Nincsenek kijelölve megosztott fájlok"
+    IDS_RESETLABEL          "Auto completion (history function)"
     IDS_IRC_IGNOREMISCMESSAGE "Egyéb infoüzenetek mellõzése"
     IDS_KNOWN               "Ismert"
-    IDS_DL_ACTIVE_TIME      "Download time"
-    IDS_RESETLABEL          "Auto completion (history function)"
+    IDS_RAU_RUNNING         "eMule running as unprivileged user ""%s"""
+    IDS_RAU_FAILED          "Failed to start eMule as unprivileged user ""eMule_Secure"". Keeping the privileges of the current user (""%S"")."
+    IDS_KADCONTACTSREAD     "Read %ld contacts from file."
+    IDS_ERR_KADCONTACTS     "No contacts found, please bootstrap, or download a nodes.dat file."
+    IDS_METATAGS            "Meta Tag Count:"
+    IDS_FILEFORMAT          "File format"
+    IDS_UDPREASKS           "UDP File Reasks"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping tolerance (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Method for ping tolerance"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milliseconds (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Percent (%)"
+    IDS_LOG_A4AF            "Log A4AF actions"
+    IDS_A4AF_SAVE_CPU       "Disable A4AF checks to save CPU"
+    IDS_SEARCH_DOC          "Document"
+    IDS_DOWNLOAD_ALPHABETICAL "Download in alphabetical order"
+    IDS_INSTALL_SKIN        "Install eMule Skin"
+    IDS_INSTALL_SKIN_NODIR  "No eMule Skin profile directory selected or directory is not accessible!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            "Failed to create directory ""%s"" for eMule Skin - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "Failed to extract file ""%s"" from eMule Skin to local file ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "This is not a valid eMule Skin package file."
+    IDS_NEXT_REASK          "Next ask to this client"
+    IDS_A4AF_FILES          "A4AF files"
+    IDS_STATS_FRATIO        "Session UL:DL ratio (friends UL excluded):"
+    IDS_STATS_UDATA_FRIENDS "Uploaded data to friend slots (Session): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FO_PREF_EXISTED     "eMule detected existing rules for the selected ports, which were not overwritten or replaced. Missing rules have been added successfully.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_FO_PREF_FAILED      "Failed to configure the internal WinXP firewall for the selected ports!"
+    IDS_FO_PREF_STARTUP     "Open/close ports on WinXP firewall when starting/exiting eMule"
+    IDS_LOG_LEVEL           "Log Level"
+    IDS_DISABLEPEERACHE     "Disable downloading from PeerCache"
+    IDS_FO_TEMPTCP_S        "Opened port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPTCP_F        "Failed to open port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_S        "Opened port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_F        "Failed to open port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_PREFBUTTON       "Open these ports on internal WinXP firewall"
+    IDS_FO_PREF_SUCCCEEDED  "Succeeded to open selected ports on the internal WinXP firewall.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_SOURCESWAPBLOCKED   "Swap blocked"
+    IDS_A4AF_CHECK_THIS_NOW "Check this source now (debug)"
+    IDS_SOURCEEXCHANGESWAP  "Temporary Source Exchange Swap"
+    IDS_NEWMSG              "New Message from '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
+    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
+    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
 END
 
 #endif    // Hungarian resources

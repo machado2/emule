@@ -38,8 +38,12 @@ public:
 	CIPFilter();
 	~CIPFilter();
 
+	CString GetDefaultFilePath() const;
+
 	void AddIPRange(uint32 IPfrom, uint32 IPto, UINT level, const CString& desc);
-	void RemoveAllIPs();
+	void RemoveAllIPFilters();
+	bool RemoveIPFilter(const SIPFilter* pFilter);
+
 	int AddFromFile(LPCTSTR pszFilePath, bool bShowResponse = true);
 	int LoadFromDefaultFile(bool bShowResponse = true);
 	void SaveToDefaultFile();
@@ -47,9 +51,7 @@ public:
 	bool IsFiltered(uint32 IP) /*const*/;
 	bool IsFiltered(uint32 IP, UINT level) /*const*/;
 	LPCTSTR GetLastHit() const;
-
 	const CIPFilterArray& GetIPFilter() const;
-	bool RemoveIPFilter(const SIPFilter* pFilter);
 
 private:
 	const SIPFilter* m_pLastHit;

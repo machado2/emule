@@ -48,13 +48,15 @@ public:
 	virtual ~CDownloadListCtrl();
 
 	uint8	curTab;
+
 	void	UpdateItem(void* toupdate);
 	void	Init();
 	void	AddFile(CPartFile* toadd);
 	void	AddSource(CPartFile* owner, CUpDownClient* source, bool notavailable);
 	void	RemoveSource(CUpDownClient* source, CPartFile* owner);
-	bool	RemoveFile(CPartFile* toremove);
+	bool	RemoveFile(const CPartFile* toremove);
 	void	ClearCompleted(bool ignorecats=false);
+	void	ClearCompleted(const CPartFile* pFile);
 	void	SetStyle();
 	void	CreateMenues();
 	void	Localize();
@@ -68,13 +70,23 @@ public:
 	void	ExpandCollapseItem(int item,uint8 expand,bool collapsesource=false);
 	void	GetDisplayedFiles(CArray<CPartFile*, CPartFile*>* list);
 	void	MoveCompletedfilesCat(uint8 from, uint8 to);
-
+	int		GetCompleteDownloads(int cat,int &total);
 protected:
+	CImageList  m_ImageList;
+	CMenu		m_PrioMenu;
+	CTitleMenu	m_FileMenu;
+	CMenu		m_A4AFMenu;
+	bool		m_bRemainSort;
+	typedef std::pair<void*, CtrlItem_Struct*> ListItemsPair;
+	typedef std::multimap<void*, CtrlItem_Struct*> ListItems;
+    ListItems	m_ListItems;
+
 	void ShowFileDialog(CPartFile* pFile = NULL, bool bOpenCommentsPage = false);
 	void SetAllIcons();
 	void DrawFileItem(CDC *dc, int nColumn, LPRECT lpRect, CtrlItem_Struct *lpCtrlItem);
 	void DrawSourceItem(CDC *dc, int nColumn, LPRECT lpRect, CtrlItem_Struct *lpCtrlItem);
-    static int CALLBACK SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
+
+	static int CALLBACK SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
     static int Compare(const CPartFile* file1, const CPartFile* file2, LPARAM lParamSort);
     static int Compare(const CUpDownClient* client1, const CUpDownClient* client2, LPARAM lParamSort, int sortMod);
 
@@ -90,16 +102,5 @@ protected:
 	afx_msg void OnNMDblclkDownloadlist(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnLvnGetInfoTip(NMHDR *pNMHDR, LRESULT *pResult);
-
-private:
-	CImageList  m_ImageList;
-	CMenu		m_PrioMenu;
-	CTitleMenu	m_FileMenu;
-	CMenu		m_A4AFMenu;
-
-	bool		m_bRemainSort;
-
-	typedef std::pair<void*, CtrlItem_Struct*> ListItemsPair;
-	typedef std::multimap<void*, CtrlItem_Struct*> ListItems;
-    ListItems	m_ListItems;
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };

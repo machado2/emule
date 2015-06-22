@@ -98,6 +98,8 @@ BOOL CMetaDataDlg::OnInitDialog()
 
 	AddAnchor(IDC_TAGS, TOP_LEFT, BOTTOM_RIGHT);
 	AddAnchor(IDC_TOTAL_TAGS, BOTTOM_LEFT, BOTTOM_RIGHT);
+	
+	GetDlgItem(IDC_TOTAL_TAGS)->SetWindowText(GetResString(IDS_METATAGS));
 
 	m_tags.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 	m_tags.ReadColumnStats(ARRSIZE(_aColumns), _aColumns);
@@ -148,6 +150,7 @@ static const struct {
 	//{ 0x16,				_T("QTime") },
 	{ 0x16,					_T("Permission") },	// though not (never) used, this will be found in almost all known.met files
 	{ 0x17,					_T("Parts") },
+	{ FT_COMPLETE_SOURCES,	_T("Complete sources") },
 	{ FT_MEDIA_ARTIST,		_T("Artist") },
 	{ FT_MEDIA_ALBUM,		_T("Album") },
 	{ FT_MEDIA_TITLE,		_T("Title") },
@@ -218,7 +221,7 @@ CString GetValue(const CTag* pTag)
 {
 	CString strValue;
 	if (pTag->tag.type == 2)
-		strValue = pTag->tag.stringvalue;
+		strValue = pTag->GetStr();
 	else if (pTag->tag.type == 3)
 	{
 		if (pTag->tag.specialtag == 0x10 || pTag->tag.specialtag >= 0xFA)
@@ -244,7 +247,7 @@ CString GetValue(const Kademlia::CTag* pTag)
 	{
 		if ((BYTE)pTag->m_name[0] == 0x10 || (BYTE)pTag->m_name[0] > 0xFA)
 			strValue.Format(_T("%u"), pTag->GetInt());
-		else if (pTag->m_name == TAG_MEDIA_LENGTH)
+		else if (pTag->m_name.Compare(TAG_MEDIA_LENGTH) == 0)
 			SecToTimeLength(pTag->GetInt(), strValue);
 		else
 			strValue = GetFormatedUInt(pTag->GetInt());
@@ -349,7 +352,7 @@ void CMetaDataDlg::InitTags()
 		}
 	}
 	CString strTmp;
-	strTmp.Format(_T("Total tags: %u"), m_tags.GetItemCount());
+	strTmp.Format(_T("%s %u"), GetResString(IDS_METATAGS), m_tags.GetItemCount());
 	SetDlgItemText(IDC_TOTAL_TAGS, strTmp);
 	m_tags.SetRedraw();
 }

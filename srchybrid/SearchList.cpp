@@ -17,6 +17,7 @@
 #include "stdafx.h"
 #include "emule.h"
 #include "SearchList.h"
+#include "SearchParams.h"
 #include "Packets.h"
 #include "OtherFunctions.h"
 #include "Preferences.h"
@@ -29,10 +30,9 @@
 #include "PartFile.h"
 #include "CxImage/xImage.h"
 #include "kademlia/utils/uint128.h"
-#ifndef _CONSOLE
 #include "emuledlg.h"
 #include "SearchDlg.h"
-#endif
+#include "SearchListCtrl.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -66,55 +66,54 @@ void ConvertED2KTag(CTag*& pTag)
 			// Artist, Album and Title are disabled because they should be already part of the filename
 			// and would therefore be redundant information sent to the servers.. and the servers count the
 			// amount of sent data!
-			{ FT_MEDIA_ARTIST,  2, FT_ED2K_MEDIA_ARTIST },
-			{ FT_MEDIA_ALBUM,   2, FT_ED2K_MEDIA_ALBUM },
-			{ FT_MEDIA_TITLE,   2, FT_ED2K_MEDIA_TITLE },
-			{ FT_MEDIA_LENGTH,  2, FT_ED2K_MEDIA_LENGTH },
-			{ FT_MEDIA_BITRATE, 3, FT_ED2K_MEDIA_BITRATE },
-			{ FT_MEDIA_CODEC,   2, FT_ED2K_MEDIA_CODEC }
+			{ FT_MEDIA_ARTIST,  TAGTYPE_STRING, FT_ED2K_MEDIA_ARTIST },
+			{ FT_MEDIA_ALBUM,   TAGTYPE_STRING, FT_ED2K_MEDIA_ALBUM },
+			{ FT_MEDIA_TITLE,   TAGTYPE_STRING, FT_ED2K_MEDIA_TITLE },
+			{ FT_MEDIA_LENGTH,  TAGTYPE_STRING, FT_ED2K_MEDIA_LENGTH },
+			{ FT_MEDIA_LENGTH,  TAGTYPE_UINT32, FT_ED2K_MEDIA_LENGTH },
+			{ FT_MEDIA_BITRATE, TAGTYPE_UINT32, FT_ED2K_MEDIA_BITRATE },
+			{ FT_MEDIA_CODEC,   TAGTYPE_STRING, FT_ED2K_MEDIA_CODEC }
 		};
 
 		for (int j = 0; j < ARRSIZE(_aEmuleToED2KMetaTagsMap); j++)
 		{
-			if (stricmp(pTag->tag.tagname, _aEmuleToED2KMetaTagsMap[j].pszED2KName) == 0)
+			if (    CmpED2KTagName(pTag->tag.tagname, _aEmuleToED2KMetaTagsMap[j].pszED2KName) == 0
+				&& (   (pTag->IsStr() && _aEmuleToED2KMetaTagsMap[j].nED2KType == TAGTYPE_STRING)
+					|| (pTag->IsInt() && _aEmuleToED2KMetaTagsMap[j].nED2KType == TAGTYPE_UINT32)))
 			{
-				if (   pTag->tag.type == _aEmuleToED2KMetaTagsMap[j].nED2KType
-					|| (_aEmuleToED2KMetaTagsMap[j].nID == FT_MEDIA_LENGTH && pTag->tag.type == 3))
+				if (pTag->IsStr())
 				{
-					if (pTag->tag.type == 2)
+					if (_aEmuleToED2KMetaTagsMap[j].nID == FT_MEDIA_LENGTH)
 					{
-						if (_aEmuleToED2KMetaTagsMap[j].nID == FT_MEDIA_LENGTH)
-						{
-							UINT nMediaLength = 0;
-							UINT hour = 0, min = 0, sec = 0;
-							if (sscanf(pTag->tag.stringvalue, "%u : %u : %u", &hour, &min, &sec) == 3)
-								nMediaLength = hour * 3600 + min * 60 + sec;
-							else if (sscanf(pTag->tag.stringvalue, "%u : %u", &min, &sec) == 2)
-								nMediaLength = min * 60 + sec;
-							else if (sscanf(pTag->tag.stringvalue, "%u", &sec) == 1)
-								nMediaLength = sec;
+						UINT nMediaLength = 0;
+						UINT hour = 0, min = 0, sec = 0;
+						if (sscanf(pTag->tag.stringvalue, "%u : %u : %u", &hour, &min, &sec) == 3)
+							nMediaLength = hour * 3600 + min * 60 + sec;
+						else if (sscanf(pTag->tag.stringvalue, "%u : %u", &min, &sec) == 2)
+							nMediaLength = min * 60 + sec;
+						else if (sscanf(pTag->tag.stringvalue, "%u", &sec) == 1)
+							nMediaLength = sec;
 
-							CTag* tag = (nMediaLength != 0) ? new CTag(_aEmuleToED2KMetaTagsMap[j].nID, nMediaLength) : NULL;
-							delete pTag;
-							pTag = tag;
-						}
-						else
-						{
-							CTag* tag = (pTag->tag.stringvalue[0] != '\0') 
-										  ? new CTag(_aEmuleToED2KMetaTagsMap[j].nID, pTag->tag.stringvalue) 
-										  : NULL;
-							delete pTag;
-							pTag = tag;
-						}
-					}
-					else if (pTag->tag.type == 3)
-					{
-						CTag* tag = (pTag->tag.intvalue != 0) 
-									  ? new CTag(_aEmuleToED2KMetaTagsMap[j].nID, pTag->tag.intvalue) 
-									  : NULL;
+						CTag* tag = (nMediaLength != 0) ? new CTag(_aEmuleToED2KMetaTagsMap[j].nID, nMediaLength) : NULL;
 						delete pTag;
 						pTag = tag;
 					}
+					else
+					{
+						CTag* tag = (pTag->tag.stringvalue[0] != '\0') 
+										? new CTag(_aEmuleToED2KMetaTagsMap[j].nID, pTag->tag.stringvalue) 
+										: NULL;
+						delete pTag;
+						pTag = tag;
+					}
+				}
+				else if (pTag->IsInt())
+				{
+					CTag* tag = (pTag->tag.intvalue != 0) 
+									? new CTag(_aEmuleToED2KMetaTagsMap[j].nID, pTag->tag.intvalue) 
+									: NULL;
+					delete pTag;
+					pTag = tag;
 				}
 				break;
 			}
@@ -125,17 +124,18 @@ void ConvertED2KTag(CTag*& pTag)
 
 ///////////////////////////////////////////////////////////////////////////////
 // CSearchFile
-	
+
 CSearchFile::CSearchFile(const CSearchFile* copyfrom)
 {
 	md4cpy(m_abyFileHash, copyfrom->GetFileHash());
 	SetFileSize(copyfrom->GetIntTagValue(FT_FILESIZE));
-	SetFileName(copyfrom->GetStrTagValue(FT_FILENAME));
+	SetFileName(copyfrom->GetStrTagValue(FT_FILENAME), false, false);
+	SetFileType(copyfrom->GetFileType());
 	m_nClientServerIP = copyfrom->GetClientServerIP();
 	m_nClientID = copyfrom->GetClientID();
 	m_nClientPort = copyfrom->GetClientPort();
 	m_nClientServerPort = copyfrom->GetClientServerPort();
-	m_pszDirectory = copyfrom->GetDirectory()? nstrdup(copyfrom->GetDirectory()) : NULL;
+	m_pszDirectory = copyfrom->GetDirectory()? _tcsdup(copyfrom->GetDirectory()) : NULL;
 	m_nSearchID = copyfrom->GetSearchID();
 	m_nKademlia = copyfrom->IsKademlia();
 	for (int i = 0; i < copyfrom->GetTags().GetCount(); i++)
@@ -160,7 +160,7 @@ CSearchFile::CSearchFile(CFileDataIO* in_data, uint32 nSearchID, uint32 nServerI
 	m_nClientPort = in_data->ReadUInt16();
 	if ((m_nClientID || m_nClientPort) && !IsValidClientIPPort(m_nClientID, m_nClientPort)){
 		if (thePrefs.GetDebugServerSearchesLevel() > 1)
-			Debug("Filtered source from search result %s:%u\n", DbgGetClientID(m_nClientID), m_nClientPort);
+			Debug(_T("Filtered source from search result %s:%u\n"), DbgGetClientID(m_nClientID), m_nClientPort);
 		m_nClientID = 0;
 		m_nClientPort = 0;
 	}
@@ -173,12 +173,12 @@ CSearchFile::CSearchFile(CFileDataIO* in_data, uint32 nSearchID, uint32 nServerI
 	//  *) if the OP_OFFERFILES packet does contain our HighID and Port the server returns that data at least when
 	//     returning search results via TCP.
 	if (thePrefs.GetDebugServerSearchesLevel() > 1)
-		Debug("Search Result: %s  Client=%u.%u.%u.%u:%u  Tags=%u\n", md4str(m_abyFileHash), (uint8)m_nClientID,(uint8)(m_nClientID>>8),(uint8)(m_nClientID>>16),(uint8)(m_nClientID>>24), m_nClientPort, tagcount);
+		Debug(_T("Search Result: %s  Client=%u.%u.%u.%u:%u  Tags=%u\n"), md4str(m_abyFileHash), (uint8)m_nClientID,(uint8)(m_nClientID>>8),(uint8)(m_nClientID>>16),(uint8)(m_nClientID>>24), m_nClientPort, tagcount);
 
 	for (UINT i = 0; i < tagcount; i++){
 		CTag* toadd = new CTag(in_data);
 		if (thePrefs.GetDebugServerSearchesLevel() > 1)
-			Debug("  %s\n", toadd->GetFullInfo());
+			Debug(_T("  %s\n"), toadd->GetFullInfo());
 		ConvertED2KTag(toadd);
 		if (toadd)
 			taglist.Add(toadd);
@@ -187,8 +187,29 @@ CSearchFile::CSearchFile(CFileDataIO* in_data, uint32 nSearchID, uint32 nServerI
 	// here we have two choices
 	//	- if the server/client sent us a filetype, we could use it (though it could be wrong)
 	//	- we always trust our filetype list and determine the filetype by the extension of the file
-	SetFileName(GetStrTagValue(FT_FILENAME));
+	//
+	// if we received a filetype from server, we use it.
+	// if we did not receive a filetype, we determine it by examining the file's extension.
+	//
+	// but, in no case, we will use the receive file type when adding this search result to the download queue, to avoid
+	// that we are using 'wrong' file types in part files. (this has to be handled when creating the part files)
+	LPCSTR pszFileType = GetStrTagValueA(FT_FILETYPE);
+	SetFileName(GetStrTagValue(FT_FILENAME), false, pszFileType==NULL);
 	SetFileSize(GetIntTagValue(FT_FILESIZE));
+	if (pszFileType != NULL)
+	{
+		if (strcmp(pszFileType, ED2KFTSTR_PROGRAM)==0)
+		{
+			CStringA strDetailFileType = GetFileTypeByName(GetFileName());
+			if (!strDetailFileType.IsEmpty())
+				SetFileType(strDetailFileType);
+			else
+				SetFileType(pszFileType);
+		}
+		else
+			SetFileType(pszFileType);
+	}
+
 	m_nClientServerIP = nServerIP;
 	m_nClientServerPort = nServerPort;
 	if (m_nClientServerIP && m_nClientServerPort){
@@ -196,7 +217,7 @@ CSearchFile::CSearchFile(CFileDataIO* in_data, uint32 nSearchID, uint32 nServerI
 		server.m_uAvail = GetIntTagValue(FT_SOURCES);
 		AddServer(server);
 	}
-	m_pszDirectory = pszDirectory ? nstrdup(pszDirectory) : NULL;
+	m_pszDirectory = pszDirectory ? _tcsdup(pszDirectory) : NULL;
 	
 	m_list_bExpanded = false;
 	m_list_parent = NULL;
@@ -232,7 +253,8 @@ CSearchFile::~CSearchFile()
 {
 	for (int i = 0; i < taglist.GetSize();i++)
 		delete taglist[i];
-	delete[] m_pszDirectory;
+	if (m_pszDirectory)
+		free(m_pszDirectory);
 	for (int i = 0; i < m_listImages.GetSize(); i++)
 		delete m_listImages[i];
 }
@@ -352,7 +374,7 @@ void CSearchList::RemoveResult(CSearchFile* todel)
 		CSearchFile* cur_file = list.GetNext(pos);
 		if (cur_file == todel)
 		{
-			theApp.emuledlg->searchwnd->searchlistctrl.RemoveResult(todel);
+			theApp.emuledlg->searchwnd->RemoveResult(todel);
 			list.RemoveAt(posLast);
 			delete todel;
 			return;
@@ -360,12 +382,12 @@ void CSearchList::RemoveResult(CSearchFile* todel)
 	}
 }
 
-void CSearchList::NewSearch(CSearchListCtrl* in_wnd, CString resTypes, uint32 nSearchID, bool MobilMuleSearch)
+void CSearchList::NewSearch(CSearchListCtrl* in_wnd, CStringA strResultFileType, uint32 nSearchID, bool MobilMuleSearch)
 {
 	if (in_wnd)
 		outputwnd = in_wnd;
 
-	m_strResultType = resTypes;
+	m_strResultFileType = strResultFileType;
 	m_nCurrentSearch = nSearchID;
 	m_foundFilesCount.SetAt(nSearchID,0);
 	m_foundSourcesCount.SetAt(nSearchID,0);
@@ -419,16 +441,16 @@ uint16 CSearchList::ProcessSearchanswer(char* in_packet, uint32 size,
 			if (pbMoreResultsAvailable)
 				*pbMoreResultsAvailable = (bool)ucMore;
 			if (thePrefs.GetDebugClientTCPLevel() > 0)
-				Debug("  Client search answer(%s): More=%u\n", Sender->GetUserName(), ucMore);
+				Debug(_T("  Client search answer(%s): More=%u\n"), Sender->GetUserName(), ucMore);
 		}
 		else{
 			if (thePrefs.GetDebugClientTCPLevel() > 0)
-				Debug("*** NOTE: Client ProcessSearchanswer(%s): ***AddData: 1 byte: 0x%02x\n", Sender->GetUserName(), ucMore);
+				Debug(_T("*** NOTE: Client ProcessSearchanswer(%s): ***AddData: 1 byte: 0x%02x\n"), Sender->GetUserName(), ucMore);
 		}
 	}
 	else if (iAddData > 0){
 		if (thePrefs.GetDebugClientTCPLevel() > 0){
-			Debug("*** NOTE: Client ProcessSearchanswer(%s): ***AddData: %u bytes\n", Sender->GetUserName(), iAddData);
+			Debug(_T("*** NOTE: Client ProcessSearchanswer(%s): ***AddData: %u bytes\n"), Sender->GetUserName(), iAddData);
 			DebugHexDump((uint8*)in_packet + packet.GetPosition(), iAddData);
 		}
 	}
@@ -466,16 +488,16 @@ uint16 CSearchList::ProcessSearchanswer(char* in_packet, uint32 size,
 			if (pbMoreResultsAvailable)
 				*pbMoreResultsAvailable = (bool)ucMore;
 			if (thePrefs.GetDebugServerTCPLevel() > 0)
-				Debug("  Search answer(Server %s:%u): More=%u\n", inet_ntoa(*(in_addr*)&nServerIP), nServerPort, ucMore);
+				Debug(_T("  Search answer(Server %s:%u): More=%u\n"), ipstr(nServerIP), nServerPort, ucMore);
 		}
 		else{
 			if (thePrefs.GetDebugServerTCPLevel() > 0)
-				Debug("*** NOTE: ProcessSearchanswer(Server %s:%u): ***AddData: 1 byte: 0x%02x\n", inet_ntoa(*(in_addr*)&nServerIP), nServerPort, ucMore);
+				Debug(_T("*** NOTE: ProcessSearchanswer(Server %s:%u): ***AddData: 1 byte: 0x%02x\n"), ipstr(nServerIP), nServerPort, ucMore);
 		}
 	}
 	else if (iAddData > 0){
 		if (thePrefs.GetDebugServerTCPLevel() > 0){
-			Debug("*** NOTE: ProcessSearchanswer(Server %s:%u): ***AddData: %u bytes\n", inet_ntoa(*(in_addr*)&nServerIP), nServerPort, iAddData);
+			Debug(_T("*** NOTE: ProcessSearchanswer(Server %s:%u): ***AddData: %u bytes\n"), ipstr(nServerIP), nServerPort, iAddData);
 			DebugHexDump((uint8*)in_packet + packet.GetPosition(), iAddData);
 		}
 	}
@@ -605,12 +627,12 @@ CSearchFile* CSearchList::DetachNextFile(uint32 nSearchID) {
 
 bool CSearchList::AddToList(CSearchFile* toadd, bool bClientResponse)
 {
-	//TODO: Optimize this "GetResString(IDS_SEARCH_ANY)"!!!
-	if (!bClientResponse && !(m_strResultType==GetResString(IDS_SEARCH_ANY) || toadd->GetFileType()==m_strResultType))
+	if (!bClientResponse && !m_strResultFileType.IsEmpty() && strcmp(m_strResultFileType, toadd->GetFileType()) != 0)
 	{
 		delete toadd;
 		return false;
 	}
+
 	for (POSITION pos = list.GetHeadPosition(); pos != NULL; )
 	{
 		CSearchFile* cur_file = list.GetNext(pos);
@@ -706,7 +728,7 @@ bool CSearchList::AddToList(CSearchFile* toadd, bool bClientResponse)
 					if (thePrefs.GetDebugServerSearchesLevel() > 1)
 					{
 						uint32 nIP = toadd->GetClientID();
-						Debug("Filtered source from search result %s:%u\n", DbgGetClientID(nIP), toadd->GetClientPort());
+						Debug(_T("Filtered source from search result %s:%u\n"), DbgGetClientID(nIP), toadd->GetClientPort());
 					}
 				}
 
@@ -787,7 +809,8 @@ void CSearchList::AddResultCount(uint32 nSearchID, const uchar* hash, UINT nCoun
 	m_foundSourcesCount.SetAt(nSearchID, tempValue + nCount);
 }
 
-void CSearchList::KademliaSearchKeyword(uint32 searchID, const Kademlia::CUInt128* fileID, LPCSTR name, uint32 size, LPCSTR type, uint16 numProperties, ...)
+void CSearchList::KademliaSearchKeyword(uint32 searchID, const Kademlia::CUInt128* fileID, 
+										LPCTSTR name, uint32 size, LPCTSTR type, uint16 numProperties, ...)
 {
 	va_list args;
 	va_start(args, numProperties);
@@ -814,7 +837,7 @@ void CSearchList::KademliaSearchKeyword(uint32 searchID, const Kademlia::CUInt12
 	tagSize.WriteTagToFile(temp);
 	tagcount++;
 
-	if (type != NULL && type[0] != '\0')
+	if (type != NULL && type[0] != _T('\0'))
 	{
 		CTag tagType(FT_FILETYPE, type);
 		tagType.WriteTagToFile(temp);
@@ -824,40 +847,38 @@ void CSearchList::KademliaSearchKeyword(uint32 searchID, const Kademlia::CUInt12
 	// additional tags
 	while (numProperties-- > 0)
 	{
-		LPCSTR pszPropType = va_arg(args, LPCSTR);
+		UINT uPropType = va_arg(args, UINT);
 		LPCSTR pszPropName = va_arg(args, LPCSTR);
-		LPCSTR pszPropValue = va_arg(args, LPCSTR);
-		if ((int)pszPropType == 2)
+		LPVOID pvPropValue = va_arg(args, LPVOID);
+		if (uPropType == 2 /*TAGTYPE_STRING*/)
 		{
-			if (pszPropValue != NULL && pszPropValue[0] != '\0')
+			if ((LPCTSTR)pvPropValue != NULL && ((LPCTSTR)pvPropValue)[0] != _T('\0'))
 			{
 				if (strlen(pszPropName) == 1)
 				{
-					CTag tagProp((uint8)*pszPropName, pszPropValue);
+					CTag tagProp((uint8)*pszPropName, (LPCTSTR)pvPropValue);
 					tagProp.WriteTagToFile(temp);
 				}
 				else
 				{
-					CTag tagProp(pszPropName, pszPropValue);
+					CTag tagProp(pszPropName, (LPCTSTR)pvPropValue);
 					tagProp.WriteTagToFile(temp);
 				}
 				tagcount++;
 			}
 		}
-		else if ((int)pszPropType == 3)
+		else if (uPropType == 3 /*TAGTYPE_UINT32*/)
 		{
-			CTag tagProp(pszPropName, (uint32)pszPropValue);
-			tagProp.WriteTagToFile(temp);
-			tagcount++;
-		}
-		else
-		{
-			if (pszPropValue != NULL && pszPropValue[0] != '\0')
+			if ((uint32)pvPropValue != 0)
 			{
-				CTag tagProp(pszPropName, pszPropValue);
+				CTag tagProp(pszPropName, (uint32)pvPropValue);
 				tagProp.WriteTagToFile(temp);
 				tagcount++;
 			}
+		}
+		else
+		{
+			ASSERT(0);
 		}
 	}
 	va_end(args);

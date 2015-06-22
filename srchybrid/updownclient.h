@@ -21,6 +21,8 @@
 #include "BarShader.h"
 
 class CClientReqSocket;
+class CPeerCacheDownSocket;
+class CPeerCacheUpSocket;
 class CFriend;
 class CPartFile;
 class CClientCredits;
@@ -75,6 +77,19 @@ enum EDownloadState{
 	DS_REMOTEQUEUEFULL  // not used yet, except in statistics
 };
 
+enum EPeerCacheDownState{
+	PCDS_NONE = 0,
+	PCDS_WAIT_CLIENT_REPLY,
+	PCDS_WAIT_CACHE_REPLY,
+	PCDS_DOWNLOADING
+};
+
+enum EPeerCacheUpState{
+	PCUS_NONE = 0,
+	PCUS_WAIT_CACHE_REPLY,
+	PCUS_UPLOADING
+};
+
 enum EChatState{
 	MS_NONE,
 	MS_CHATTING,
@@ -95,12 +110,15 @@ enum EClientSoftware{
 	SO_EMULE			= 0,	// default
 	SO_CDONKEY			= 1,	// ET_COMPATIBLECLIENT
 	SO_XMULE			= 2,	// ET_COMPATIBLECLIENT
+	SO_AMULE			= 3,	// ET_COMPATIBLECLIENT
 	SO_SHAREAZA			= 4,	// ET_COMPATIBLECLIENT
 	SO_MLDONKEY			= 10,	// ET_COMPATIBLECLIENT
+	SO_LPHANT			= 20,	// ET_COMPATIBLECLIENT
 	// other client types which are not identified with ET_COMPATIBLECLIENT
 	SO_EDONKEYHYBRID	= 50,
 	SO_EDONKEY,
 	SO_OLDEMULE,
+	SO_URL,
 	SO_UNKNOWN
 };
 
@@ -122,7 +140,8 @@ enum ESourceFrom{
 	SF_SERVER			= 0,
 	SF_KADEMLIA			= 1,
 	SF_SOURCE_EXCHANGE	= 2,
-	SF_PASSIVE			= 3
+	SF_PASSIVE			= 3,
+	SF_LINK				= 4
 };
 
 struct PartFileStamp {
@@ -135,21 +154,63 @@ struct PartFileStamp {
 
 //#pragma pack(2)
 class CUpDownClient: public CLoggable
-#ifdef _DEBUG
 					,public CObject
-#endif
 {
+	DECLARE_DYNAMIC(CUpDownClient)
+
 	friend class CUploadQueue;
 public:
 	//base
 	CUpDownClient(CClientReqSocket* sender = 0);
 	CUpDownClient(CPartFile* in_reqfile, uint16 in_port, uint32 in_userid, uint32 in_serverup, uint16 in_serverport, bool ed2kID = false);
-	~CUpDownClient();
+	virtual ~CUpDownClient();
 
-	bool			Disconnected(CString strReason, bool bFromSocket = false);
-	bool			TryToConnect(bool bIgnoreMaxCon = false);
-	void			ConnectionEstablished();
+	///////////////////////////////////////////////////////////////////////////
+	// PeerCache client
+	// 
+	int m_iHttpSendState;
+	uint32 m_uPeerCacheDownloadPushId;
+	uint32 m_uPeerCacheUploadPushId;
+	CPeerCacheDownSocket* m_pPCDownSocket;
+	CPeerCacheUpSocket* m_pPCUpSocket;
+	uint32 m_uPeerCacheRemoteIP;
+	EPeerCacheDownState m_ePeerCacheDownState;
+	EPeerCacheUpState m_ePeerCacheUpState;
+	bool m_bPeerCacheDownHit;
+	bool m_bPeerCacheUpHit;
+
+	bool IsDownloadingFromPeerCache() const;
+	bool IsUploadingToPeerCache() const;
+	void SetPeerCacheDownState(EPeerCacheDownState eState);
+	void SetPeerCacheUpState(EPeerCacheUpState eState);
+
+	bool SendPeerCacheFileRequest();
+	bool ProcessPeerCacheQuery(const char* packet, UINT size);
+	bool ProcessPeerCacheAnswer(const char* packet, UINT size);
+	bool ProcessPeerCacheAcknowledge(const char* packet, UINT size);
+	void OnPeerCacheDownSocketClosed(int nErrorCode);
+	bool OnPeerCacheDownSocketTimeout();
+	
+	bool ProcessPeerCacheDownHttpResponse(const CStringAArray& astrHeaders);
+	bool ProcessPeerCacheDownHttpResponseBody(const BYTE* pucData, UINT uSize);
+	bool ProcessPeerCacheUpHttpResponse(const CStringAArray& astrHeaders);
+	UINT ProcessPeerCacheUpHttpRequest(const CStringAArray& astrHeaders);
+
+	virtual bool ProcessHttpDownResponse(const CStringAArray& astrHeaders);
+	virtual bool ProcessHttpDownResponseBody(const BYTE* pucData, UINT uSize);
+
+	void StartDownload();
+	virtual void SendCancelTransfer(Packet* packet = NULL);
+	virtual void CheckDownloadTimeout();
+
+	virtual bool	IsEd2kClient() const { return true; }
+	virtual bool	Disconnected(LPCTSTR pszReason, bool bFromSocket = false);
+	virtual bool	TryToConnect(bool bIgnoreMaxCon = false, CRuntimeClass* pClassSocket = NULL);
+	virtual bool	Connect();
+	virtual void	ConnectionEstablished();
+	virtual void	OnSocketConnected(int nErrorCode);
 	bool			CheckHandshakeFinished(UINT protocol, UINT opcode) const;
+	void			CheckFailedFileIdReqs(const uchar* aucFileHash);
 	uint32			GetUserIDHybrid() const
 					{
 						return m_nUserIDHybrid;
@@ -158,11 +219,11 @@ public:
 					{
 						m_nUserIDHybrid = val;
 					}
-	LPCSTR			GetUserName() const			
+	LPCTSTR			GetUserName() const			
 					{
 						return m_pszUsername;
 					}
-	void			SetUserName(LPCSTR pszNewName);
+	void			SetUserName(LPCTSTR pszNewName);
 	uint32			GetIP() const
 					{
 						return m_dwUserIP;
@@ -241,6 +302,7 @@ public:
 					{
 						return m_bMultiPacket;
 					}
+	bool			SupportPeerCache() const { return m_fPeerCache; }
 	bool			IsEmuleClient() const
 					{
 						return m_byEmuleVersion;
@@ -296,10 +358,13 @@ public:
 	bool			ProcessHelloAnswer(char* pachPacket, uint32 nSize);
 	bool			ProcessHelloPacket(char* pachPacket, uint32 nSize);
 	void			SendHelloAnswer();
-	bool			SendHelloPacket();
+	virtual bool	SendHelloPacket();
 	void			SendMuleInfoPacket(bool bAnswer);
 	void			ProcessMuleInfoPacket(char* pachPacket, uint32 nSize);
 	void			ProcessMuleCommentPacket(char* pachPacket, uint32 nSize);
+	void			ProcessEmuleQueueRank(char* packet, UINT size);
+	void			ProcessEdonkeyQueueRank(char* packet, UINT size);
+	void			CheckQueueRankFlood();
 	bool			Compare(const CUpDownClient* tocomp, bool bIgnoreUserhash = false) const;
 	void			ResetFileStatusInfo();
 	uint32			GetLastSrcReqTime() const	
@@ -347,6 +412,8 @@ public:
 					{
 						m_fSentCancelTransfer = bVal;
 					}
+	void			ProcessPublicIPAnswer(const BYTE* pbyData, UINT uSize);
+	void			SendPublicIPRequest();
 	// secure ident
 	void			SendPublicKeyPacket();
 	void			SendSignaturePacket();
@@ -426,7 +493,7 @@ public:
 	void			SendCommentInfo(/*const*/ CKnownFile *file);
 	void			AddRequestCount(const uchar* fileid);
 	void			UnBan();
-	void			Ban();
+	void			Ban(LPCTSTR pszReason = NULL);
 	uint32			GetAskedCount() const
 					{
 						return m_cAsked;
@@ -499,10 +566,16 @@ public:
 						return (EDownloadState)m_nDownloadState;
 					}
 	void			SetDownloadState(EDownloadState nNewState);
-	uint32			GetLastAskedTime() const
+// ZZ:DownloadManager -->
+	uint32			GetLastAskedTime(const CPartFile* partFile = NULL) const
 					{
-						return m_dwLastAskedTime;
+                        return m_dwLastAskedTime;
 					}
+    void            SetLastAskedTime() {
+                        m_dwLastAskedTime = ::GetTickCount();
+                    }
+// <-- ZZ:DownloadManager
+
 	bool			IsPartAvailable(uint16 iPart) const
 					{
 						return ( (iPart >= m_nPartCount) || (!m_abyPartStatus) )? 0:m_abyPartStatus[iPart];
@@ -534,25 +607,32 @@ public:
 					}
 	void			DrawStatusBar(CDC* dc, LPCRECT rect, bool onlygreyrect, bool  bFlat) const;
 	bool			AskForDownload();
-	void			SendFileRequest();
+	virtual void	SendFileRequest();
 	void			SendStartupLoadReq();
 	void			ProcessFileInfo(CSafeMemFile* data, CPartFile* file);
 	void			ProcessFileStatus(bool bUdpPacket, CSafeMemFile* data, CPartFile* file);
 	void			ProcessHashSet(char* data, uint32 size);
+	void			ProcessAcceptUpload();
 	bool			AddRequestForAnotherFile(CPartFile* file);
-	void			SendBlockRequests();
-	void			ProcessBlockPacket(char* packet, uint32 size, bool packed = false);
+	void			CreateBlockRequests(int iMaxBlocks);
+	virtual void	SendBlockRequests();
+	virtual bool	SendHttpBlockRequests();
+	virtual void	ProcessBlockPacket(char* packet, uint32 size, bool packed = false);
+	virtual void	ProcessHttpBlockPacket(const BYTE* pucData, UINT uSize);
 	void			ClearDownloadBlockRequests();
 	uint32			CalculateDownloadRate();
-	uint16			GetAvailablePartCount() const;
-	bool			SwapToAnotherFile(bool bIgnoreNoNeeded, bool ignoreSuspensions, bool bRemoveCompletely, CPartFile* toFile = NULL);
+	UINT			GetAvailablePartCount() const;
+	bool			SwapToAnotherFile(LPCTSTR pszReason, bool bIgnoreNoNeeded, bool ignoreSuspensions, bool bRemoveCompletely, CPartFile* toFile = NULL, bool allowSame = true, bool isAboutToAsk = false, bool debug = false); // ZZ:DownloadManager
 	void			DontSwapTo(/*const*/ CPartFile* file);
-	bool			IsSwapSuspended(const CPartFile* file) /*const*/;
-	bool			DoSwap(CPartFile* SwapTo, bool anotherfile = false);
+	bool			IsSwapSuspended(const CPartFile* file, const bool allowShortReaskTime = false, const bool fileIsNNP = false) /*const*/; // ZZ:DownloadManager
+    uint32          GetTimeUntilReask() const;
+    uint32          GetTimeUntilReask(const CPartFile* file) const;
 	void			UDPReaskACK(uint16 nNewQR);
 	void			UDPReaskFNF();
 	void			UDPReaskForDownload();
 	bool			IsSourceRequestAllowed() const;
+    bool            IsSourceRequestAllowed(CPartFile* partfile, bool sourceExchangeCheck = false) const; // ZZ:DownloadManager
+
 	bool			IsValidSource() const;
 	ESourceFrom		GetSourceFrom() const
 					{
@@ -639,8 +719,6 @@ public:
 					}
 	// Barry - Process zip file as it arrives, don't need to wait until end of block
 	int				unzip(Pending_Block_Struct* block, BYTE* zipped, uint32 lenZipped, BYTE** unzipped, uint32* lenUnzipped, int iRecursion = 0);
-	// Barry - Sets string to show parts downloading, eg NNNYNNNNYYNYN
-	void			ShowDownloadingParts(CString* partsYN) const;
 	void			UpdateDisplayedInfo(bool force = false);
 	int             GetFileListRequested() const
 					{
@@ -691,12 +769,23 @@ public:
 					{
 						m_fMessageFiltered = bVal ? 1 : 0;
 					}
+	virtual void	SetRequestFile(CPartFile* pReqFile);
+
+	CString			GetDownloadStateDisplayString() const;
+	CString			GetUploadStateDisplayString() const;
+
 	LPCTSTR			DbgGetDownloadState() const;
 	LPCTSTR			DbgGetUploadState() const;
 	CString			DbgGetClientInfo(bool bFormatIP = false) const;
 	CString			DbgGetFullClientSoftVer() const;
 	const CString&	DbgGetHelloInfo() const { return m_strHelloInfo; }
 	const CString&	DbgGetMuleInfo() const { return m_strMuleInfo; }
+
+// ZZ:DownloadManager -->
+    const bool      IsInOtherRequestList(const CPartFile* fileToCheck) const;
+
+    const bool      SwapToRightFile(CPartFile* SwapTo, CPartFile* cur_file, bool ignoreSuspensions, bool SwapToIsNNPFile, bool isNNPFile, bool& wasSkippedDueToSourceExchange, bool doAgressiveSwapping = false, bool debug = false);
+// <-- ZZ:DownloadManager
 #ifdef _DEBUG
 	// Diagnostic Support
 	virtual void AssertValid() const;
@@ -712,7 +801,7 @@ public:
 	uint16			m_lastPartAsked;
 	bool			m_bAddNextConnect;  // VQB Fix for LowID slots only on connection
 
-private:
+protected:
 	// base
 	void	Init();
 	bool	ProcessHelloTypePacket(CSafeMemFile* data);
@@ -729,32 +818,32 @@ private:
 	uint32	m_nClientVersion;
 	uint32	m_nUpDatarate;
 	uint32	dataratems;
-//--group to aligned int32
+	//--group to aligned int32
 	uint8	m_byEmuleVersion;
 	uint8	m_byDataCompVer;
 	bool	m_bEmuleProtocol;
 	bool	m_bIsHybrid;
-//--group to aligned int32
-	char*	m_pszUsername;
+	//--group to aligned int32
+	TCHAR*	m_pszUsername;
 	uchar	m_achUserHash[16];
 	uint16	m_nUDPPort;
 	uint16	m_nKadPort;
-//--group to aligned int32
+	//--group to aligned int32
 	uint8	m_byUDPVer;
 	uint8	m_bySourceExchangeVer;
 	uint8	m_byAcceptCommentVer;
 	uint8	m_byExtendedRequestsVer;
-//--group to aligned int32
+	//--group to aligned int32
 	uint8	m_byCompatibleClient;
 	bool	m_bFriendSlot;
 	bool	m_bCommentDirty;
 	bool	m_bIsML;
-//--group to aligned int32
+	//--group to aligned int32
 	bool	m_bGPLEvildoer;
 	bool	m_bHelloAnswerPending;
 	uint8	m_byInfopacketsReceived;	// have we received the edonkeyprot and emuleprot packet already (see InfoPacketsReceived() )
 	uint8	m_bySupportSecIdent;
-//--group to aligned int32
+	//--group to aligned int32
 	uint32	m_dwLastSignatureIP;
 	CString m_strClientSoftware;
 	CString m_strModVersion;
@@ -828,9 +917,12 @@ private:
 	uint32		m_nDownDatarate;
 	uint32		m_nDownDataRateMS;
 	uint32		m_nSumForAvgDownDataRate;
+	uint32		m_dwLastBlockReceived;
+	uint32		m_nTotalUDPPackets;
+	uint32		m_nFailedUDPPackets;
+	//--group to aligned int32
 	uint16		m_cShowDR;
 	uint16		m_nRemoteQueueRank;
-	uint32		m_dwLastBlockReceived;
 	//--group to aligned int32
 	uint16		m_nPartCount;
 	bool		m_bRemoteQueueFull;
@@ -850,11 +942,16 @@ private:
 		 m_fPreviewReqPending : 1,
 		 m_fPreviewAnsPending : 1,
 		 m_fIsSpammer		  : 1,
-		 m_fMessageFiltered   : 1;
+		 m_fMessageFiltered   : 1,
+		 m_fPeerCache		  : 1,
+		 m_fQueueRankPending  : 1,
+		 m_fUnaskQueueRankRecv: 2,
+		 m_fFailedFileIdReqs  : 4, // nr. of failed file-id related requests per connection
+		 m_fNeedOurPublicIP	  : 1; // we requested our IP from this client
 
 	// By BadWolf - Accurate Speed Measurement (Ottavio84 idea)
 	CList<TransferredData,TransferredData>			 m_AvarageDDR_list;
-	sint32	sumavgUDR;
+	uint32	sumavgUDR;
 	// END By BadWolf - Accurate Speed Measurement (Ottavio84 idea)
 
 	CTypedPtrList<CPtrList, Pending_Block_Struct*>	 m_PendingBlocks_list;
@@ -862,6 +959,16 @@ private:
 
 	CString m_strHelloInfo;
 	CString m_strMuleInfo;
+
+	CStringA m_strUrlPath;
+	UINT m_uReqStart;
+	UINT m_uReqEnd;
+	UINT m_nUrlStartPos;
+
+    bool    m_bSourceExchangeSwapped; // ZZ:DownloadManager
+    bool    DoSwap(CPartFile* SwapTo, bool bRemoveCompletely, LPCTSTR reason); // ZZ:DownloadManager
+    uint32  GetTimeUntilReask(const CPartFile* file, const bool allowShortReaskTime) const;
+
 };
 //#pragma pack()
 

@@ -27,8 +27,16 @@ static char THIS_FILE[]=__FILE__;
 
 IMPLEMENT_DYNAMIC(CPreferencesDlg, CPropertySheet)
 
-CPreferencesDlg::CPreferencesDlg(){
-	this->m_psh.dwFlags &= ~PSH_HASHELP;
+BEGIN_MESSAGE_MAP(CPreferencesDlg, CPropertySheet)
+	ON_WM_DESTROY()
+	ON_LBN_SELCHANGE(111,OnSelChanged)
+	ON_WM_CTLCOLOR()
+	ON_WM_HELPINFO()
+END_MESSAGE_MAP()
+
+CPreferencesDlg::CPreferencesDlg()
+{
+	m_psh.dwFlags &= ~PSH_HASHELP;
 	m_wndGeneral.m_psp.dwFlags &= ~PSH_HASHELP;
 	m_wndDisplay.m_psp.dwFlags &= ~PSH_HASHELP;
 	m_wndConnection.m_psp.dwFlags &= ~PSH_HASHELP;
@@ -72,12 +80,6 @@ CPreferencesDlg::~CPreferencesDlg()
 {
 }
 
-BEGIN_MESSAGE_MAP(CPreferencesDlg, CPropertySheet)
-	ON_WM_DESTROY()
-	ON_LBN_SELCHANGE(111,OnSelChanged)
-	ON_WM_CTLCOLOR()
-END_MESSAGE_MAP()
-
 void CPreferencesDlg::OnDestroy()
 {
 	CPropertySheet::OnDestroy();
@@ -90,7 +92,7 @@ BOOL CPreferencesDlg::OnInitDialog()
 	EnableStackedTabs(FALSE);
 	BOOL bResult = CPropertySheet::OnInitDialog();
 
-	m_listbox.CreateEx(WS_EX_CLIENTEDGE,"Listbox",0,WS_CHILD|WS_VISIBLE|LBS_NOTIFY|WS_TABSTOP|LBS_HASSTRINGS|LBS_OWNERDRAWVARIABLE|WS_BORDER,CRect(0,0,0,0),this,111);
+	m_listbox.CreateEx(WS_EX_CLIENTEDGE,_T("Listbox"),0,WS_CHILD|WS_VISIBLE|LBS_NOTIFY|WS_TABSTOP|LBS_HASSTRINGS|LBS_OWNERDRAWVARIABLE|WS_BORDER,CRect(0,0,0,0),this,111);
 	::SendMessage(m_listbox.m_hWnd, WM_SETFONT, (WPARAM) ::GetStockObject(DEFAULT_GUI_FONT),0);
 	m_groupbox.Create(0,BS_GROUPBOX|WS_CHILD|WS_VISIBLE|BS_FLAT,CRect(0,0,0,0),this,666);
 	::SendMessage(m_groupbox.m_hWnd, WM_SETFONT, (WPARAM) ::GetStockObject(DEFAULT_GUI_FONT),0);
@@ -127,24 +129,24 @@ void CPreferencesDlg::Localize()
 {
 	ImageList.DeleteImageList();
 	ImageList.Create(16, 16, theApp.m_iDfltImageListColorFlags | ILC_MASK, 0, 1);
-	ImageList.Add(CTempIconLoader("PREF_GENERAL"));
-	ImageList.Add(CTempIconLoader("PREF_DISPLAY"));
-	ImageList.Add(CTempIconLoader("PREF_CONNECTION"));
-	ImageList.Add(CTempIconLoader("PREF_PROXY"));
-	ImageList.Add(CTempIconLoader("PREF_SERVER"));
-	ImageList.Add(CTempIconLoader("PREF_FOLDERS"));
-	ImageList.Add(CTempIconLoader("PREF_FILES"));
-	ImageList.Add(CTempIconLoader("PREF_NOTIFICATIONS"));
-	ImageList.Add(CTempIconLoader("PREF_STATISTICS"));
-	ImageList.Add(CTempIconLoader("PREF_IRC"));
-	ImageList.Add(CTempIconLoader("PREF_SECURITY"));
-	ImageList.Add(CTempIconLoader("PREF_SCHEDULER"));
-	ImageList.Add(CTempIconLoader("PREF_WEBSERVER"));
-	ImageList.Add(CTempIconLoader("PREF_TWEAK"));
+	ImageList.Add(CTempIconLoader(_T("PREF_GENERAL")));
+	ImageList.Add(CTempIconLoader(_T("PREF_DISPLAY")));
+	ImageList.Add(CTempIconLoader(_T("PREF_CONNECTION")));
+	ImageList.Add(CTempIconLoader(_T("PREF_PROXY")));
+	ImageList.Add(CTempIconLoader(_T("PREF_SERVER")));
+	ImageList.Add(CTempIconLoader(_T("PREF_FOLDERS")));
+	ImageList.Add(CTempIconLoader(_T("PREF_FILES")));
+	ImageList.Add(CTempIconLoader(_T("PREF_NOTIFICATIONS")));
+	ImageList.Add(CTempIconLoader(_T("PREF_STATISTICS")));
+	ImageList.Add(CTempIconLoader(_T("PREF_IRC")));
+	ImageList.Add(CTempIconLoader(_T("PREF_SECURITY")));
+	ImageList.Add(CTempIconLoader(_T("PREF_SCHEDULER")));
+	ImageList.Add(CTempIconLoader(_T("PREF_WEBSERVER")));
+	ImageList.Add(CTempIconLoader(_T("PREF_TWEAK")));
 	m_listbox.SetImageList(&ImageList);
 
 	CString title = GetResString(IDS_EM_PREFS); 
-	title.Remove('&'); 
+	title.Remove(_T('&')); 
 	SetTitle(title); 
 
 	m_wndGeneral.Localize();
@@ -262,4 +264,58 @@ HBRUSH CPreferencesDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		hbr = GetSysColorBrush(COLOR_BTNFACE);
 	}
 	return hbr;
+}
+
+void CPreferencesDlg::OnHelp()
+{
+	int iCurSel = m_listbox.GetCurSel();
+	if (iCurSel >= 0)
+	{
+		CPropertyPage* pPage = GetPage(iCurSel);
+		if (pPage)
+		{
+			HELPINFO hi = {0};
+			hi.cbSize = sizeof hi;
+			hi.iContextType = HELPINFO_WINDOW;
+			hi.iCtrlId = 0;
+			hi.hItemHandle = pPage->m_hWnd;
+			hi.dwContextId = 0;
+			pPage->SendMessage(WM_HELP, 0, (LPARAM)&hi);
+			return;
+		}
+	}
+
+	theApp.ShowHelp(0, HELP_CONTENTS);
+}
+
+BOOL CPreferencesDlg::OnCommand(WPARAM wParam, LPARAM lParam)
+{
+	if (wParam == ID_HELP)
+	{
+		OnHelp();
+		return TRUE;
+	}
+	return __super::OnCommand(wParam, lParam);
+}
+
+BOOL CPreferencesDlg::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	OnHelp();
+	return TRUE;
+}
+
+void CPreferencesDlg::OpenPage(UINT uResourceID)
+{
+	int iCurActiveWnd = m_nActiveWnd;
+	for (int i = 0; i < m_pages.GetSize(); i++)
+	{
+		CPropertyPage* pPage = GetPage(i);
+		if (pPage->m_psp.pszTemplate == MAKEINTRESOURCE(uResourceID))
+		{
+			m_nActiveWnd = i;
+			break;
+		}
+	}
+	DoModal();
+	m_nActiveWnd = iCurActiveWnd;
 }

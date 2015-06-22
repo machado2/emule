@@ -15,6 +15,7 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include "stdafx.h"
+#include <share.h>
 #include "emule.h"
 #include "HTRichEditCtrl.h"
 #include "OtherFunctions.h"
@@ -38,6 +39,7 @@ BEGIN_MESSAGE_MAP(CHTRichEditCtrl, CRichEditCtrl)
 	ON_CONTROL_REFLECT(EN_MAXTEXT, OnEnMaxtext)
 	ON_NOTIFY_REFLECT_EX(EN_LINK, OnEnLink)
 	ON_WM_CREATE()
+	ON_WM_SYSCOLORCHANGE()
 END_MESSAGE_MAP()
 
 CHTRichEditCtrl::CHTRichEditCtrl()
@@ -56,8 +58,9 @@ CHTRichEditCtrl::~CHTRichEditCtrl(){
 void CHTRichEditCtrl::Localize(){
 }
 
-void CHTRichEditCtrl::Init(LPCTSTR pszTitle)
+void CHTRichEditCtrl::Init(LPCTSTR pszTitle, LPCTSTR pszSkinKey)
 {
+	SetProfileSkinKey(pszSkinKey);
 	SetTitle(pszTitle);
 
 	m_LogMenu.CreatePopupMenu();
@@ -78,6 +81,11 @@ void CHTRichEditCtrl::Init(LPCTSTR pszTitle)
 		LimitText(iMaxLogBuff ? iMaxLogBuff : 128*1024);
 
 	VERIFY( GetSelectionCharFormat(m_cfDefault) );
+}
+
+void CHTRichEditCtrl::SetProfileSkinKey(LPCTSTR pszSkinKey)
+{
+	m_strSkinKey = pszSkinKey;
 }
 
 void CHTRichEditCtrl::SetTitle(LPCTSTR pszTitle)
@@ -420,7 +428,7 @@ bool CHTRichEditCtrl::SaveLog(LPCTSTR pszDefName)
 	CFileDialog dlg(FALSE, _T("log"), pszDefName ? pszDefName : (LPCTSTR)m_strTitle, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("Log Files (*.log)|*.log||"), this, 0);
 	if (dlg.DoModal() == IDOK)
 	{
-		FILE* fp = fopen(dlg.GetPathName(), "wt");
+		FILE* fp = _tfsopen(dlg.GetPathName(), _T("wt"), _SH_DENYWR);
 		if (fp)
 		{
 			CString strText;
@@ -643,4 +651,26 @@ CFont* CHTRichEditCtrl::GetFont() const
 {
 	ASSERT(0);
 	return NULL;
+}
+
+void CHTRichEditCtrl::OnSysColorChange()
+{
+	CRichEditCtrl::OnSysColorChange();
+	ApplySkin();
+}
+
+void CHTRichEditCtrl::ApplySkin()
+{
+	if (!m_strSkinKey.IsEmpty())
+	{
+		COLORREF cr;
+		if (theApp.LoadSkinColor(m_strSkinKey + _T("Bk"), cr))
+		{
+			SetBackgroundColor(FALSE, cr);
+		}
+		else
+		{
+			SetBackgroundColor(TRUE, GetSysColor(COLOR_WINDOW));
+		}
+	}
 }

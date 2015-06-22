@@ -98,18 +98,22 @@ void CUploadListCtrl::SetAllIcons()
 	imagelist.DeleteImageList();
 	imagelist.Create(16,16,theApp.m_iDfltImageListColorFlags|ILC_MASK,0,1);
 	imagelist.SetBkColor(CLR_NONE);
-	imagelist.Add(CTempIconLoader("ClientEDonkey"));
-	imagelist.Add(CTempIconLoader("ClientCompatible"));
-	imagelist.Add(CTempIconLoader("ClientEDonkeyPlus"));
-	imagelist.Add(CTempIconLoader("ClientCompatiblePlus"));
-	imagelist.Add(CTempIconLoader("Friend"));
-	imagelist.Add(CTempIconLoader("ClientMLDonkey"));
-	imagelist.Add(CTempIconLoader("ClientMLDonkeyPlus"));
-	imagelist.Add(CTempIconLoader("ClientEDonkeyHybrid"));
-	imagelist.Add(CTempIconLoader("ClientEDonkeyHybridPlus"));
-	imagelist.Add(CTempIconLoader("ClientShareaza"));
-	imagelist.Add(CTempIconLoader("ClientShareazaPlus"));
-	imagelist.SetOverlayImage(imagelist.Add(CTempIconLoader("ClientSecureOvl")), 1);
+	imagelist.Add(CTempIconLoader(_T("ClientEDonkey")));
+	imagelist.Add(CTempIconLoader(_T("ClientCompatible")));
+	imagelist.Add(CTempIconLoader(_T("ClientEDonkeyPlus")));
+	imagelist.Add(CTempIconLoader(_T("ClientCompatiblePlus")));
+	imagelist.Add(CTempIconLoader(_T("Friend")));
+	imagelist.Add(CTempIconLoader(_T("ClientMLDonkey")));
+	imagelist.Add(CTempIconLoader(_T("ClientMLDonkeyPlus")));
+	imagelist.Add(CTempIconLoader(_T("ClientEDonkeyHybrid")));
+	imagelist.Add(CTempIconLoader(_T("ClientEDonkeyHybridPlus")));
+	imagelist.Add(CTempIconLoader(_T("ClientShareaza")));
+	imagelist.Add(CTempIconLoader(_T("ClientShareazaPlus")));
+	imagelist.Add(CTempIconLoader(_T("ClientAMule")));
+	imagelist.Add(CTempIconLoader(_T("ClientAMulePlus")));
+	imagelist.Add(CTempIconLoader(_T("ClientLPhant")));
+	imagelist.Add(CTempIconLoader(_T("ClientLPhantPlus")));
+	imagelist.SetOverlayImage(imagelist.Add(CTempIconLoader(_T("ClientSecureOvl"))), 1);
 }
 
 void CUploadListCtrl::Localize()
@@ -270,6 +274,18 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 						else
 							image = 9;
 					}
+					else if (client->GetClientSoft() == SO_AMULE){
+						if(client->credits->GetScoreRatio(client->GetIP()) > 1)
+							image = 12;
+						else
+							image = 11;
+					}
+					else if (client->GetClientSoft() == SO_LPHANT){
+						if(client->credits->GetScoreRatio(client->GetIP()) > 1)
+							image = 14;
+						else
+							image = 13;
+					}
 					else if (client->ExtProtocolAvailable()){
 						if(client->credits->GetScoreRatio(client->GetIP()) > 1)
 							image = 3;
@@ -295,19 +311,17 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					if(file)
 						Sbuffer = file->GetFileName();
 					else
-						Sbuffer = "?";
+						Sbuffer = _T("?");
 					break;
 				case 2:
-					Sbuffer.Format("%.1f %s",(float)client->GetDatarate()/1024,GetResString(IDS_KBYTESEC));
+					Sbuffer.Format(_T("%.1f %s"),(float)client->GetDatarate()/1024,GetResString(IDS_KBYTESEC));
 					break;
 				case 3:
-					//Sbuffer = CastItoXBytes(client->GetSessionUp());	
-                    // PENDING: ZZ: Debug printout of current buffer size for socket
-					Sbuffer.Format("%s "/*(%s-%s)*/, /*CastItoXBytes(client->GetSessionUp()), CastItoXBytes(client->GetPayloadInBuffer()),*/ CastItoXBytes(client->GetQueueSessionPayloadUp()));	
+					Sbuffer.Format(_T("%s"), CastItoXBytes(client->GetQueueSessionPayloadUp()));
 					break;
 				case 4:
 					if (client->HasLowID())
-						Sbuffer.Format("%s LowID",CastSecondsToHM((client->GetWaitTime())/1000));
+						Sbuffer.Format(_T("%s LowID"),CastSecondsToHM((client->GetWaitTime())/1000));
 					else
 						Sbuffer = CastSecondsToHM((client->GetWaitTime())/1000);
 					break;
@@ -315,28 +329,16 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					Sbuffer = CastSecondsToHM((client->GetUpStartTimeDelay())/1000);
 					break;
 				case 6:
-					switch (client->GetUploadState()){
-						case US_CONNECTING:
-							Sbuffer = GetResString(IDS_CONNECTING);
-							break;
-						case US_WAITCALLBACK:
-							Sbuffer = GetResString(IDS_CONNVIASERVER);
-							break;
-						case US_UPLOADING:
-							Sbuffer = GetResString(IDS_TRANSFERRING);
-							break;
-						default:
-							Sbuffer = GetResString(IDS_UNKNOWN);
-						}
+					Sbuffer = client->GetUploadStateDisplayString();
 					break;
 				case 7:
-					if( client->GetUpPartCount() ){
+					//if( client->GetUpPartCount() ){
 						cur_rec.bottom--;
 						cur_rec.top++;
 						client->DrawUpStatusBar(dc,&cur_rec,false,thePrefs.UseFlatBar());
 						cur_rec.bottom++;
 						cur_rec.top--;
-					}
+					//}
 					break;
 			}
 			if( iColumn != 7 && iColumn != 0 )
@@ -382,19 +384,18 @@ END_MESSAGE_MAP()
 void CUploadListCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	int iSel = GetNextItem(-1, LVIS_SELECTED | LVIS_FOCUSED);
-	UINT uFlags = (iSel != -1) ? MF_ENABLED : MF_GRAYED;
 	const CUpDownClient* client = (iSel != -1) ? (CUpDownClient*)GetItemData(iSel) : NULL;
 
 	CTitleMenu ClientMenu;
 	ClientMenu.CreatePopupMenu();
 	ClientMenu.AddMenuTitle(GetResString(IDS_CLIENTS));
-	ClientMenu.AppendMenu(MF_STRING | uFlags, MP_DETAIL, GetResString(IDS_SHOWDETAILS));
+	ClientMenu.AppendMenu(MF_STRING | (client ? MF_ENABLED : MF_GRAYED), MP_DETAIL, GetResString(IDS_SHOWDETAILS));
 	ClientMenu.SetDefaultItem(MP_DETAIL);
-	ClientMenu.AppendMenu(MF_STRING | ((client && !client->IsFriend()) ? MF_ENABLED : MF_GRAYED), MP_ADDFRIEND, GetResString(IDS_ADDFRIEND));
-	ClientMenu.AppendMenu(MF_STRING | uFlags, MP_MESSAGE, GetResString(IDS_SEND_MSG));
-	ClientMenu.AppendMenu(MF_STRING | ((!client || !client->GetViewSharedFilesSupport()) ? MF_GRAYED : MF_ENABLED), MP_SHOWLIST, GetResString(IDS_VIEWFILES));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && !client->IsFriend()) ? MF_ENABLED : MF_GRAYED), MP_ADDFRIEND, GetResString(IDS_ADDFRIEND));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient()) ? MF_ENABLED : MF_GRAYED), MP_MESSAGE, GetResString(IDS_SEND_MSG));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetViewSharedFilesSupport()) ? MF_ENABLED : MF_GRAYED), MP_SHOWLIST, GetResString(IDS_VIEWFILES));
 	if (Kademlia::CKademlia::isRunning() && !Kademlia::CKademlia::getPrefs()->getLastContact())
-		ClientMenu.AppendMenu(MF_STRING | ((!client || client->GetKadPort()==0) ? MF_GRAYED : MF_ENABLED), MP_BOOT, GetResString(IDS_BOOTSTRAP));
+		ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetKadPort()!=0) ? MF_ENABLED : MF_GRAYED), MP_BOOT, GetResString(IDS_BOOTSTRAP));
 	GetPopupMenuPos(*this, point);
 	ClientMenu.TrackPopupMenu(TPM_LEFTALIGN |TPM_RIGHTBUTTON, point.x, point.y, this);
 }

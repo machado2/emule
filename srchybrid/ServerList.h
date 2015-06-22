@@ -48,7 +48,10 @@ public:
 	CServer*	GetServerByIP(uint32 nIP) const;
 	CServer*	GetServerByIP(uint32 nIP, uint16 nPort) const;
 	bool		IsGoodServerIP(const CServer* in_server) const;
-	void		GetStatus(uint32& total, uint32& failed, uint32& user, uint32& file, uint32& tuser, uint32& tfile, float& occ) const;
+	void		GetStatus(uint32& total, uint32& failed, 
+						  uint32& user, uint32& file, uint32& lowiduser, 
+						  uint32& totaluser, uint32& totalfile, 
+						  float& occ) const;
 	void		GetUserFileStatus(uint32& user, uint32& file) const;
 	
 	void		Sort();

@@ -40,8 +40,13 @@ public:
 	void	ShowComments(CKnownFile* file);
 
 protected:
+	CTitleMenu	m_SharedFilesMenu;
+	CMenu		m_PrioMenu;
+	bool		sortstat[4];
+
 	static int CALLBACK SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
 	void UpdateItem(CKnownFile* file);
+	void OpenFile(const CKnownFile* file);
 
 	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
@@ -51,11 +56,5 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnGetDispInfo(NMHDR *pNMHDR, LRESULT *pResult);
-
-private:
-	CTitleMenu	m_SharedFilesMenu;
-	CMenu		m_PrioMenu;
-	bool		sortstat[4];
-
-	void		OpenFile(const CKnownFile* file);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };

@@ -78,7 +78,7 @@ BEGIN
     IDS_HTTPDOWNLOAD_INVALID_HTTP_RESPONSE 
                             "從這個伺服器接收一個有效的 HTTP 回應失敗"
     IDS_HTTPDOWNLOAD_ERROR_READFILE "下載這個檔案時發生錯誤, 錯誤:%s"
-    IDS_HTTPDOWNLOAD_PERCENTAGE "伺服器清單更新中: %s% 於 %s 已完成"
+    IDS_HTTPDOWNLOAD_PERCENTAGE "伺服器清單更新中: %s%% 於 %s 已完成"
     IDS_HTTPDOWNLOAD_RETREIVEING_FILE "重新取得這個檔案"
     IDS_HTTPDOWNLOAD_OF     "%s 於 %s"
     IDS_HTTPDOWNLOAD_SECONDS "%s 秒"
@@ -105,7 +105,7 @@ BEGIN
     IDS_FD_COMPR            "壓縮"
     IDS_WIZARD_NETWORK      "選擇您想要使用的網路"
     IDS_MAIN_READY          "eMule 版本 %s 已備妥"
-    IDS_WIZARD_ED2K         "ED2K 設定"
+    IDS_WIZARD_ED2K         "eD2K 設定"
     IDS_SEL_SKIN            "選擇面板..."
 END
 
@@ -118,8 +118,8 @@ BEGIN
     IDS_ERR_BADHASHSET      "已損壞或無效的切細值已接收"
     IDS_ERR_BADDATABLOCK    "已接收到損壞或無效的資料區塊"
     IDS_ERR_ILLFORMEDHASH   "不正確的切細格式"
-    IDS_ERR_BADED2KLINK     "不是一個正規的 ed2k 連結"
-    IDS_ERR_NOSLLINK        "沒有一個 ED2K 伺服器或檔案連結"
+    IDS_ERR_BADED2KLINK     "不是一個正規的 eD2K 連結"
+    IDS_ERR_NOSLLINK        "沒有一個 eD2K 伺服器或檔案連結"
     IDS_ERR_WRONGPACKAGESIZE "無效 檔案要求操作碼 封包大小"
     IDS_ERR_WRONGHPACKAGESIZE "無效 切細值要求操作碼 封包大小"
     IDS_ERR_BADCLIENTACTION "一個客戶端造成一個錯誤或某些壞的: %s. 客戶端斷線中!"
@@ -142,7 +142,7 @@ BEGIN
     IDS_PASSIVE             "被動"
     IDS_MAIN_CONNECTEDTO    "連線已建立在:"
     IDS_MAIN_BTN_CANCEL     "取消"
-    IDS_AVAIL               "部分數: %d , 有用的: %d (%.1f%%)\n\n"
+    IDS_AVAIL               "部分數: %u , 有用的: %u (%.1f%%)\n\n"
     IDS_TYPE                "類型"
     IDS_FILEID              "檔案 ID"
     IDS_FILE                "檔案"
@@ -187,7 +187,7 @@ BEGIN
     IDS_COMPLETE            "已完成"
     IDS_PAUSED              "已暫停"
     IDS_ERRORLIKE           "已損壞"
-    IDS_ASSIGNED2K          "eMule 和 ED2K 連結未產生關聯. 您現在想要 eMule 和 ED2K 產生關聯嗎 (推薦) ?"
+    IDS_ASSIGNED2K          "eMule 和 eD2K 連結未產生關聯. 您現在想要 eMule 和 eD2K 產生關聯嗎 (推薦) ?"
     IDS_ERR_EMPTYADRESSESDAT 
                             "在 'adresses.dat' 找不到任何的伺服器清單位址. 請貼一個有效的伺服器清單位址到這個檔案或使用自動更新"
 END
@@ -224,8 +224,8 @@ BEGIN
     IDS_DL_OPEN             "開啟檔案"
     IDS_DL_INFO             "顯示檔案詳細資訊"
     IDS_DL_CLEAR            "清除已完成項目"
-    IDS_DL_LINK1            "複製連結"
-    IDS_DL_LINK2            "複製連結(HTML)"
+    IDS_DL_LINK1            "複製 eD2K 連結到剪貼簿"
+    IDS_DL_LINK2            "複製 eD2K 連結到剪貼簿(HTML)"
     IDS_SHOWDETAILS         "顯示詳細資訊"
     IDS_SEND_MSG            "傳送訊息"
     IDS_ASKING              "要求中"
@@ -279,7 +279,7 @@ BEGIN
     IDS_SEARCH_VIDEO        "影像"
     IDS_SEARCH_CDIMG        "光碟影像"
     IDS_SEARCH_ARC          "壓縮檔"
-    IDS_ERR_INVALIDLINK     "這是無效的 ed2k 連結 (%s)"
+    IDS_ERR_INVALIDLINK     "這是無效的 eD2K 連結 (%s)"
     IDS_ERR_LINKERROR       "無效的連結: %s"
     IDS_ERR_NOTCONNECTED    "您尚未連線到一個伺服器!"
     IDS_REMOVETHIS          "移除這個伺服器"
@@ -287,9 +287,9 @@ BEGIN
     IDS_SRV_ADDR            "請輸入一個伺服器位址"
     IDS_SRV_PORT            "不完整的伺服器連接埠: 請輸入伺服器連接埠"
     IDS_SRV_NOTADDED        "伺服器沒有增加!"
-    IDS_SRV_READD           "伺服器被標上已掛了, 它已重新加入!"
-    IDS_SRV_NOURLAV         "沒有可用的位址."
-    IDS_INVALIDURL          "無效的位址"
+    IDS_SRV_READD           "伺服器被標上掛掉了, 它已重新加入!"
+    IDS_SRV_NOURLAV         "沒有可用的網址."
+    IDS_INVALIDURL          "無效的網址"
 END
 
 STRINGTABLE 
@@ -354,7 +354,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ERR_CREDITFILEOLD   "額度檔案已過舊並且將會取代它"
+    IDS_ERR_CREDITFILEOLD   "額度檔案太舊並且將會取代它"
     IDS_CREDITFILELOADED    "額度檔案已載入, %u 個客戶端已知"
     IDS_CREDITFILECORRUPT   "錯誤: 這個額度檔案已經損壞並且將會取代它!"
     IDS_ERR_CREDITFILEREAD  "意外的檔案錯誤當讀取額度檔案時: %s"
@@ -375,8 +375,48 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ERR_UDPEXT          "錯誤當處理額外新進 UDP 封包時"
-    IDS_ERR_INCOMPLETEBLOCK "已要求於不完全的區塊 "
+    IDS_ERR_FILECOMPLETIONTHREAD "建立檔案完成階段中失敗"
+    IDS_FILEBUFFERSIZE      "檔案緩衝區大小"
+    IDS_QUEUESIZE           "等候區大小"
+    IDS_DAYS2               "天"
+    IDS_ERR_MAKEBAKCREDITFILE "建立備份的額度檔案失敗"
+    IDS_COMMENT             "註解"
+    IDS_IPFILTERED          "已過濾 IP: %s (%s)"
+    IDS_DL_TRANSFCOMPL      "已完成"
+    IDS_DL_ACTIVE_TIME      "動作中下載時間"
+    IDS_STATS_FILTEREDCLIENTS "已過濾: %i"
+    IDS_FILTERLABEL         "過濾訊息包含: (以 | 為分隔)"
+    IDS_ERR_LARGEREQBLOCK   "客戶端要求一個太大的區塊."
+    IDS_SHOWRATEONTITLE     "顯示傳輸速率在視窗標題"
+    IDS_TBN_NOMESSAGEHISTORY "沒有歷史訊息!"
+    IDS_PW_DAP              "加入新的下載時自動設定優先權"
+    IDS_FD_LASTCHANGE       "最後接受:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATS_RUNTIME       "運作時間"
+    IDS_ALL                 "全部"
+    IDS_CAT_ADD             "增加類別"
+    IDS_CAT_EDIT            "編輯類別"
+    IDS_CAT_REMOVE          "移除類別"
+    IDS_CAT                 "類別"
+    IDS_TITLE               "標題"
+    IDS_COLOR               "顏色"
+    IDS_DEFAULT             "預設值"
+    IDS_PW_DISPLAY          "顯示"
+    IDS_CAT_INVADD          "顯示所有未分配的"
+    IDS_CAT_REINVADD        "顯示全部"
+    IDS_INDICATERATINGS     "以圖示來表現出下載的 註解/等級 狀態"
+    IDS_ALLOTHERS           "未分配"
+    IDS_TOCAT               "分配到一類別"
+    IDS_CAT_UNASSIGN        "(未分配)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_UDPEXT          "處理額外輸入 UDP 封包時發生錯誤"
+    IDS_ERR_INCOMPLETEBLOCK "已在不完全的區塊要求"
     IDS_ERR_OPEN            "開啟要求的檔案失敗"
     IDS_ERR_CLIENTERRORED   "客戶端 '%s' 造成錯誤當建立封包 (%s) - 從客戶端斷線中"
     IDS_ERR_REQ_FNF         "找不到所要求的檔案"
@@ -427,8 +467,8 @@ BEGIN
     IDS_SW_NAME             "名稱"
     IDS_SW_GLOBAL           "全球搜尋"
     IDS_SW_TYPE             "類型"
-    IDS_SW_DIRECTDOWNLOAD   "直接下載"
-    IDS_SW_LINK             "ED2K 連結"
+    IDS_SW_DIRECTDOWNLOAD   "貼上 eD2K 連結"
+    IDS_SW_LINK             "eD2K 連結"
     IDS_SW_START            "開始"
     IDS_SCHEDULER           "時間表"
 END
@@ -469,6 +509,7 @@ BEGIN
     IDS_NOTHING             "無"
     IDS_SETUPSPEED          "設定上載限制"
     IDS_SETDOWNSPEED        "設定下載限制"
+    IDS_UNDO                "復原"
     IDS_DAYLY               "每天"
 END
 
@@ -483,9 +524,9 @@ BEGIN
     IDS_FR                  "星期五"
     IDS_SA                  "星期六"
     IDS_SO                  "星期日"
-    IDS_WEB_ADMINLOGIN      "Web伺服器-管理員-登入"
-    IDS_WEB_GUESTLOGIN      "Web伺服器-客人-登入"
-    IDS_WEB_SESSIONEND      "Web伺服器: 登出"
+    IDS_WEB_ADMINLOGIN      "Web-界面: 管理員-登入"
+    IDS_WEB_GUESTLOGIN      "Web-界面: 客人-登入"
+    IDS_WEB_SESSIONEND      "Web-界面: 登出"
     IDS_DETAILS             "詳細"
     IDS_ACTION              "動作"
     IDS_REMOVE              "移除"
@@ -518,7 +559,7 @@ BEGIN
     IDS_PW_NICK             "暱稱"
     IDS_PW_INCOMING         "新進檔案資料夾"
     IDS_PW_TEMP             "暫存檔案資料夾"
-    IDS_PW_BROWSE           "瀏覽"
+    IDS_PW_BROWSE           "瀏覽..."
     IDS_PW_SHARED           "已分享資料夾 (按住Ctrl包含子目錄)"
     IDS_PW_CONNECTION       "連線"
     IDS_PW_DOWNC            "下載能力"
@@ -548,7 +589,7 @@ BEGIN
     IDS_PW_SPLASH           "顯示啟動畫面"
     IDS_PW_DBLCLICK         "下載清單點二下來擴展"
     IDS_PW_TOOL             "工具提示延遲時間 (秒)"
-    IDS_PW_FRONT            "點下ED2K連結後彈出eMule視窗"
+    IDS_PW_FRONT            "點下eD2K連結後彈出eMule視窗"
     IDS_PW_LANG             "語言"
 END
 
@@ -576,7 +617,7 @@ STRINGTABLE
 BEGIN
     IDS_FD_GENERAL          "一般"
     IDS_FD_NAME             "完整檔名:"
-    IDS_FD_MET              "met-檔案:"
+    IDS_FD_MET              "part.met-檔案:"
     IDS_FD_HASH             "切細值:"
     IDS_FD_SIZE             "檔案大小:"
     IDS_FD_STATUS           "部分檔狀態:"
@@ -627,7 +668,7 @@ BEGIN
     IDS_SF_SIZE             "已分享檔案總計大小: %s"
     IDS_ERR_WRONGPARTNUMBER "不正確的部分號碼"
     IDS_ERR_BADPORT         "不正確的連接埠號碼"
-    IDS_ERR_NOHELLO         "沒有說明要求事件"
+    IDS_ERR_NOHELLO         "沒有指明要求事件"
     IDS_ERR_INVALIDPACKAGE  "無效或已損壞的封包已接收"
     IDS_ERR_CLIENTERROR     "客戶端 '%s' (IP:%s) 造成一個錯誤: %s. 客戶端斷線中!"
 END
@@ -697,7 +738,7 @@ BEGIN
     IDS_ADDED2SSF           "已增加到靜態伺服器清單"
     IDS_STATICSERVER        "靜態的"
     IDS_ERROR_SSF           "開啟 staticservers.dat 失敗"
-    IDS_ERR_PACKAGEERROR    "危險性錯誤當處理資料封包於 %s (錯誤大小) - 資料區塊已丟棄"
+    IDS_ERR_PACKAGEERROR    "危險性錯誤當處理資料封包於 %s (不正確的大小) - 資料區塊已丟棄"
     IDS_SF_ACTIVECON        "動作中連線數 (估計)"
     IDS_SF_MAXCONLIMITREACHED "最大連線數限制已到達"
     IDS_SF_AVGCON           "平均連線數 (估計)"
@@ -720,7 +761,7 @@ BEGIN
     IDS_MINS                "分"
     IDS_HOURS               "時"
     IDS_DAYS                "天"
-    IDS_ED2KLINKFIX         "ED2K 連結"
+    IDS_ED2KLINKFIX         "eD2K 連結"
     IDS_RECONNECT           "自動連線到伺服器將於 %d 秒後重試"
     IDS_SERVERADDED         "已增加伺服器: %s"
     IDS_IRC_IGNOREJOINMESSAGE "忽略加入資訊之訊息"
@@ -749,6 +790,27 @@ BEGIN
     IDS_STREE               "樹狀統計"
     IDS_IRC_IGNOREQUITMESSAGE "忽略離開資訊之訊息"
     IDS_STATSSETUPINFO      "統計"
+    IDS_IRC_SOUNDEVENTS     "播放聲音事件"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_NOTCONNECTEDKAD "您目前尚未連線到 Kad 網路!"
+    IDS_IRC_NOSFS           "沒有選擇已分享檔案"
+    IDS_RESETLABEL          "自動完成 (記錄輸入過的文字)"
+    IDS_IRC_IGNOREMISCMESSAGE "忽略雜項資訊之訊息"
+    IDS_KNOWN               "已知的"
+    IDS_RAU_RUNNING         "以沒有特權的使用者 ""%s"" 執行 eMule"
+    IDS_RAU_FAILED          "啟動 eMule 失敗以沒有特權使用者 ""eMule_Secure"". 保留目前使用者 (""%S"") 特權."
+    IDS_KADCONTACTSREAD     "從檔案讀取 %ld 連繫."
+    IDS_ERR_KADCONTACTS     "找不到連繫, 請設啟始帶, 或下載一個 nodes.dat 檔案."
+    IDS_METATAGS            "詮釋標籤計數:"
+    IDS_FILEFORMAT          "檔案格式"
+    IDS_UDPREASKS           "UDP 檔案再要求數"
+    IDS_DYNUP_PINGTOLERANCE_MS "反應容忍限度 (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER "反應容忍限度方式"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS "毫秒 (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT "百分比 (%)"
 END
 
 STRINGTABLE 
@@ -761,7 +823,7 @@ BEGIN
     IDS_RECOVERY_SUCCESSFUL "檔案還原成功."
     IDS_RECOVERY_FAILED     "檔案還原失敗."
     IDS_STARTNEXTFILE       "完成一個檔案時, 自動下載已暫停且高優先權的一個檔案"
-    IDS_FULLCHUNKTRANS      "上載傳輸完整區塊(為9.28MB的最基本分享區塊大小)"
+    IDS_FULLCHUNKTRANS      "嘗試上載傳輸完整區塊"
     IDS_MANUALSERVERHIGHPRIO "手動增加伺服器時將其設為高優先權"
     IDS_VERBOSE             "詳細模式 (回覆程式附加資訊)"
     IDS_FLAT                "平的"
@@ -782,9 +844,9 @@ BEGIN
     IDS_TBN_DOWNLOADADDED   "已增加到下載:"
     IDS_PW_TBN_USESOUND     "使用音效"
     IDS_PW_TBN_ONLOG        "新增項目在記錄"
-    IDS_PW_TBN_ONCHAT       "開始一個新的聊天會議"
-    IDS_PW_TBN_POP_ALWAYS   "一個新的聊天訊息已接收"
-    IDS_PW_TBN_ONDOWNLOAD   "一個下載已經完成"
+    IDS_PW_TBN_ONCHAT       "聊天會議已開始"
+    IDS_PW_TBN_POP_ALWAYS   "聊天訊息已接收"
+    IDS_PW_TBN_ONDOWNLOAD   "下載已經完成"
     IDS_PW_EKDEV_OPTIONS    "通知"
     IDS_PW_TASKBARNOTIFIER  "訊息彈出"
     IDS_PW_TBN_OPTIONS      "彈出當"
@@ -817,8 +879,8 @@ BEGIN
     IDS_IRC_HASJOINED       "* %s 已經加入 %s"
     IDS_IRC_HASPARTED       "* %s 已經離開 %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s 已被 %s (%s) 踢出"
-    IDS_IRC_NICKUSED        "您的暱稱在 IRC 伺服器上已有人使用. 請輸入 '/nick 新的暱稱' 來改變它."
-    IDS_IRC_DEVOICE         "去除聲音"
+    IDS_IRC_NICKUSED        "您的暱稱在 IRC 伺服器上已有人使用. 請在設置內的 IRC 選擇一個不一樣的暱稱."
+    IDS_DOWNLOAD_ALPHABETICAL "依字母次序下載"
     IDS_IRC_HASQUIT         "* %s 已經離開 (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s 已改變暱稱為 %s"
     IDS_IRC_SETSMODE        "* %s 設定模式: %s %s"
@@ -843,10 +905,10 @@ BEGIN
     IDS_TAKEOVER            "抓取檔名"
     IDS_CLEANUP             "清除"
     IDS_RENAME              "重新命名"
-    IDS_IRC_ADDLINKTOIRC    "增加這個到 IRC 剪貼簿傳送給好友"
+    IDS_IRC_ADDLINKTOIRC    "增加這個到 IRC 剪貼簿"
     IDS_IRC_SENDLINK        "傳送這個給好友: "
     IDS_IRC_RECIEVEDLINK    "%s 傳送 (%s) 已自動啟動."
-    IDS_IRC_ACCEPTLINKS     "接受 ED2K 連結在 IRC (使用這個要小心!)"
+    IDS_IRC_ACCEPTLINKS     "接受 eD2K 連結在 IRC (使用這個要小心!)"
     IDS_SHARED              "已分享"
     IDS_DOWNLOADED          "已下載"
 END
@@ -893,9 +955,9 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_WIZARD              "精靈"
-    IDS_ADDFRIEND           "增加到好友名單內"
-    IDS_REMOVEFRIEND        "從好友名單內移除"
+    IDS_WIZARD              "精靈..."
+    IDS_ADDFRIEND           "加入到好友名單內"
+    IDS_REMOVEFRIEND        "移除好友"
     IDS_REMOVEFROMSTOK      "已從靜態伺服器清單移除"
     IDS_REMOVEFROMSTATIC    "從靜態伺服器清單移除"
     IDS_LENGTH              "長度"
@@ -905,7 +967,7 @@ BEGIN
     IDS_CODEC               "編碼"
     IDS_BITRATE             "位元率"
     IDS_WIDTH               "寬度"
-    IDS_FPS                 "Fps"
+    IDS_FPS                 "畫格/秒"
     IDS_CHANNELS            "頻道"
     IDS_SAMPLERATE          "取樣率"
     IDS_ROUNDBITRATE        "環繞位元率"
@@ -934,19 +996,18 @@ END
 STRINGTABLE 
 BEGIN
     IDS_STATS_MAXDL         "最大下載率 (目前): %.2f kB/秒"
-    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
-                            "忽略 eMule 加入好友的協定訊息"
+    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND "忽略 eMule 加入好友的協定訊息"
     IDS_PW_FASTSRVCON       "安全的連線"
     IDS_SOURCELINKFAILED    "您需要一個 高-ID 來建立一個有效來源連結"
-    IDS_CREATESOURCELINK    "複製連結 (來源)"
+    IDS_CREATESOURCELINK    "複製 eD2K 連結到剪貼簿 (來源)"
     IDS_ERR_LOADSERVERMET   "載入失敗 server.met!"
     IDS_ERR_CORRUPTCOMPRPKG "已損壞壓縮封包於 %s 已接收 (錯誤 %i)"
     IDS_ERR_EMFRIENDSINVALID "這個檔案 emfriends.met 是無效或已損壞!"
     IDS_ERR_READEMFRIENDS   "未知的錯誤當讀取 emfriends.met 中: %s"
     IDS_ERR_KNOWNSERVERINFOREC "未知伺服器資訊已接收!"
     IDS_ERR_TIMERCREATEFAILED "重大錯誤: 建立計時器失敗"
-    IDS_WIZ_DOWN            "下載 (千位元/秒)"
-    IDS_WIZ_UP              "上載 (千位元/秒)"
+    IDS_WIZ_DOWN            "下載 (kbit/秒)"
+    IDS_WIZ_UP              "上載 (kbit/秒)"
     IDS_SELECT_INCOMINGDIR  "選擇一個資料夾於新進檔案"
     IDS_SELECT_TEMPDIR      "選擇一個資料夾於暫存檔案"
     IDS_PRIOAUTO            "自動"
@@ -967,7 +1028,7 @@ BEGIN
     IDS_MAXCLIENT           "最大使用者數"
     IDS_PW_TWEAK            "延伸設定"
     IDS_TWEAKS_WARNING      "警告:  不要更改這些設定除非您知道您在做什麼. 否則容易使您自己網路品質更糟.\neMule 將會執行最好的調整於沒有更改任何設定值."
-    IDS_ADDAFRIEND          "增加一位好友"
+    IDS_ADDAFRIEND          "增加好友..."
     IDS_PAF_REQINFO         "要求資訊"
     IDS_PAF_MOREINFO        "目前位址 (選用)"
 END
@@ -978,7 +1039,7 @@ BEGIN
     IDS_ADD                 "增加"
     IDS_RECOVERED_PARTMET   "已接收 part.met 檔案於: %s"
     IDS_CMT_QUEST           "註解這個檔案! (這個文字將會顯示給所有使用者)"
-    IDS_CMT_AIDE            "於一個影片, 您能說他的長度, 他的故事, 這個語言... 並且如果它是假檔您能通知其他的 eMule 使用者... "
+    IDS_CMT_AIDE            "在一個影片, 您能說他的長度, 他的故事, 這個語言... 並且如果它是假檔您能通知其他的 eMule 使用者... "
     IDS_CMT_TITLE           "%s 檔案註解"
     IDS_CMT_ADD             "更改這個檔案的註解..."
     IDS_CMT_NONE            "沒有註解"
@@ -1004,18 +1065,18 @@ BEGIN
     IDS_MEGA                "M"
     IDS_GIGA                "G"
     IDS_TERRA               "T"
-    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "忽略 eMule 最初訊息"
+    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "忽略 eMule 協定訊息"
     IDS_SMARTLOWIDCHECK     "在連線時使用智慧型 低-ID 檢查"
     IDS_SF_SRVOCC           "伺服器佔有期間: %.2f%%"
     IDS_3DDEP               "進度條樣式"
-    IDS_AUTOTAKEED2KLINKS   "只在執行eMule時自動產生 ED2K 連結(關閉時還原舊的)"
+    IDS_AUTOTAKEED2KLINKS   "只在執行eMule時自動抓取 eD2K 連結"
     IDS_ADDNEWFILESPAUSED   "增加檔案到下載時為""已暫停""模式"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "已失去損壞部分: %s       已得到壓縮部分: %s\n封包已由 I.C.H. 儲存: %i"
-    IDS_ERR_NOHELP          "找不到說明檔案.\n 請參觀我們的首頁來取得一個新的說明檔案! (下載區)\n您現在想要改為用瀏覽器看線上說明嗎?"
+    IDS_ERR_NOHELP          "請參觀我們首頁的下載區來取得新版本的使用說明檔案!\n\n您現在想要以線上瀏覽來替代?"
     IDS_SHOWOVERHEAD        "顯示其他連線過程中的上、下載速度"
     IDS_UPDOWNSMALL         "上載: %.1f | 下載: %.1f"
     IDS_EDITLIST            "清單"
@@ -1024,8 +1085,7 @@ BEGIN
     IDS_DESCRIPTIONRECV     "'%s' 檔案描述已接收: %s"
     IDS_WEBSERVICES         "Web 服務"
     IDS_WEBSVEDIT           "編輯 Web 服務"
-    IDS_IRC_EMULEPROTO_IGNORESENDLINK 
-                            "忽略 eMule 送出連結的協定訊息"
+    IDS_IRC_EMULEPROTO_IGNORESENDLINK "忽略 eMule 送出連結的協定訊息"
     IDS_CHECK4UPDATE        "檢查是否有新版本"
     IDS_STARTUP             "啟動"
     IDS_NEWVERSIONAVL       "一個新版的 eMule 已可取得! 按這裡到 專案-首頁 取得更多資訊."
@@ -1055,52 +1115,13 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ERR_FILECOMPLETIONTHREAD "建立檔案完成階段中失敗"
-    IDS_FILEBUFFERSIZE      "檔案緩衝區大小"
-    IDS_QUEUESIZE           "等候區大小"
-    IDS_DAYS2               "天"
-    IDS_ERR_MAKEBAKCREDITFILE "建立備份的額度檔案失敗"
-    IDS_COMMENT             "註解"
-    IDS_IPFILTERED          "已過濾 IP: %s (%s)"
-    IDS_DL_TRANSFCOMPL      "已完成"
-    IDS_STATS_FILTEREDCLIENTS "已過濾: %i"
-    IDS_FILTERLABEL         "過濾訊息包含: (以 | 為分隔)"
-    IDS_ERR_LARGEREQBLOCK   "客戶端要求一個太大的區塊."
-    IDS_SHOWRATEONTITLE     "顯示傳輸速率在視窗標題"
-    IDS_TBN_NOMESSAGEHISTORY "沒有歷史訊息!"
-    IDS_PW_DAP              "加入新的下載時自動設定優先權"
-    IDS_FD_LASTCHANGE       "最後接受:"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_STATS_RUNTIME       "運作時間"
-    IDS_ALL                 "全部"
-    IDS_CAT_ADD             "增加類別"
-    IDS_CAT_EDIT            "編輯類別"
-    IDS_CAT_REMOVE          "移除類別"
-    IDS_CAT                 "類別"
-    IDS_TITLE               "標題"
-    IDS_COLOR               "顏色"
-    IDS_DEFAULT             "預設值"
-    IDS_PW_DISPLAY          "顯示"
-    IDS_CAT_INVADD          "顯示所有未分配的"
-    IDS_CAT_REINVADD        "顯示全部"
-    IDS_INDICATERATINGS     "以圖示來表現出下載的 註解/等級 狀態"
-    IDS_ALLOTHERS           "未分配"
-    IDS_TOCAT               "分配到一類別"
-    IDS_CAT_UNASSIGN        "(未分配)"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_ADDDOWNLOADSFROMCB  "增加這些 ED2k-檔案-連結 到下載?\n"
-    IDS_ADDDOWNLOADSFROMCBTITLE "ED2k-檔案-連結 在剪貼簿"
-    IDS_PF_WATCHCB          "抓取剪貼簿的 ED2k-檔案連結"
+    IDS_ADDDOWNLOADSFROMCB  "增加這些 eD2K-檔案-連結 到下載?\n"
+    IDS_ADDDOWNLOADSFROMCBTITLE "eD2K-檔案-連結 在剪貼簿"
+    IDS_PF_WATCHCB          "抓取剪貼簿的 eD2K-檔案連結"
     IDS_SECURITY            "防護"
     IDS_IPFILTERLOADED      "%i IP-過濾已載入"
     IDS_IPFILTER            "IP-過濾器"
-    IDS_EDIT                "編輯"
+    IDS_EDIT                "編輯..."
     IDS_FILTERLEVEL         "過濾等級"
     IDS_FILTERSERVERBYIPFILTER "也過濾伺服器(去除動態IP伺服器)"
     IDS_FILTERCOMMENTSLABEL "忽略註解包含下列字串: (以 | 為分隔)"
@@ -1144,7 +1165,7 @@ BEGIN
     IDS_KAD_SEARCH_KEYWORD_INVALID 
                             "無效的 Kad 關鍵字.\r\n\r\nKad 搜尋語法有下列格式:\r\n\r\n\t<kad-關鍵字> [ <ed2k-搜尋-語法> ]\r\n\r\n<kad-關鍵字> 必須不包含下列任何字元:\r\n\r\n\t%s"
     IDS_EDITCAT             "編輯類別內容"
-    IDS_PW_WS               "Web 伺服器"
+    IDS_PW_WS               "Web-界面"
     IDS_ENABLED             "啟用"
     IDS_WEB_LOGIN           "登入"
     IDS_WEB_ENTER_PASSWORD  "輸入您的密碼在這裡"
@@ -1177,7 +1198,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_WEB_BADLOGINATTEMPT "Web伺服器: 登入嘗試已經失敗"
+    IDS_WEB_BADLOGINATTEMPT "Web-界面: 登入嘗試已經失敗"
     IDS_ERR_TOOLARGEFILE    "檔案超過 eDonkey 協定支援的大小 (>=4GB)"
     IDS_MSGONLYFRIENDS      "只接受好友訊息"
     IDS_MSGONLYSEC          "只接受有效的客戶端訊息"
@@ -1199,7 +1220,7 @@ STRINGTABLE
 BEGIN
     IDS_ALLUNASSIGNED       "全部未分配的"
     IDS_ACTSESSIONS         "動作中階段"
-    IDS_WEBSRV              "Web-伺服器"
+    IDS_WEBSRV              "Web-界面"
     IDS_SW_REFETCHRES       "重新抓取結果"
     IDS_FILEHASH            "檔案切細值"
     IDS_GLOBALSEARCH2       "全球搜尋"
@@ -1211,7 +1232,7 @@ BEGIN
     IDS_PROXY_AUTH          "啟用授權"
     IDS_AUTH                "授權"
     IDS_SHOWCATINFO         "在類別分頁當中顯示下載資訊"
-    IDS_SW_SEARCHINGINFO    "搜尋在處理中. 立刻重新抓取結果!"
+    IDS_SW_SEARCHINGINFO    "搜尋在處理中. 重新抓取結果請稍候!"
     IDS_LOGENTRY            "記錄項目"
 END
 
@@ -1223,7 +1244,7 @@ BEGIN
     IDS_WIZ1_WELCOME_TITLE  "歡迎使用 eMule"
     IDS_WIZ1_WELCOME_ACTIONS "這個精靈將會一步一步的指導您設置 eMule."
     IDS_WIZ1_WELCOME_BTN_HINT "繼續下面動作, 按下一步."
-    IDS_WIZ1_END_TITLE      "完成精靈中"
+    IDS_WIZ1_END_TITLE      "精靈完成中"
     IDS_WIZ1                "eMule 第一次執行精靈"
     IDS_WIZ1_END_BTN_HINT   "關閉這個精靈, 按完成."
     IDS_WIZ1_UPLOAD_SUBTITLE "區塊完整傳輸"
@@ -1245,7 +1266,7 @@ BEGIN
     IDS_HM_LINKHP           "eMule 首頁"
     IDS_HM_LINKFAQ          "eMule FAQ"
     IDS_HM_LINKVC           "eMule 版本檢查"
-    IDS_DEBUG_SOURCE_EXCHANGE "顯示來源交換訊息"
+    IDS_DEBUG_SOURCE_EXCHANGE "記錄客戶端來源交換及伺服器來源查詢/回覆"
     IDS_SHAREDREQ1          "使用者 %s (%u) 要求您的分享資料夾清單 -> %s"
     IDS_SHAREDREQ2          "使用者 %s (%u) 要求您的分享資料夾中的檔案清單 '%s' -> %s"
     IDS_SHAREDANSW          "使用者 %s (%u) 分享資料夾 '%s'"
@@ -1344,8 +1365,8 @@ BEGIN
     IDS_STATS_MNUTREECPYSEL "複製已選的分枝"
     IDS_STATS_MNUTREECPYALL "複製全部統計"
     IDS_STATS_MNUTREEHTML   "HTML 特徵"
-    IDS_STATS_EXPORT2HTML   "匯出全部統計"
-    IDS_STATS_EXPORTVIS     "匯出全部可見的"
+    IDS_STATS_EXPORT2HTML   "匯出全部統計..."
+    IDS_STATS_EXPORTVIS     "匯出全部可見的..."
     IDS_STATS_MNUTREECPYVIS "複製全部可見的"
     IDS_STATS_MNUTREEEXPANDALL "擴展全部項目"
     IDS_STATS_MNUTREECOLLAPSEALL "收縮全部項目"
@@ -1371,13 +1392,14 @@ BEGIN
     IDS_ALWAYS              "總是"
     IDS_ONSHUTDOWN          "在關機時"
     IDS_UNCFOLDERS          "UNC-資料夾"
-    IDS_USESECIDENT         "使用者安全的識別"
+    IDS_USESECIDENT         "使用安全識別"
     IDS_ADVSPAMFILTER       "進階廣告過濾器"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATS_SECUREIDENT   "安全的識別 (確定 : 失敗)"
+    IDS_CUT                 "剪下"
+    IDS_STATS_SECUREIDENT   "安全的識別 (確認 : 失敗)"
     IDS_ONDISK              "在磁碟大小: "
     IDS_CLIENTCOL           "警告: 發現相配(相同)的客戶端, 一個已連線的客戶端: %s (%s) 和 %s (%s)"
     IDS_SEARCH_UNTERMSTRING "沒有中止字串"
@@ -1398,10 +1420,11 @@ STRINGTABLE
 BEGIN
     IDS_VERSION             "版本"
     IDS_ALL_A4AF_TO_THIS    "立即交換所有來源到這個檔案"
+    IDS_PASTE               "貼上"
     IDS_ALL_A4AF_TO_OTHER   "立即交換所有來源到任何其他檔案"
     IDS_ALL_A4AF_AUTO       "自動地交換所有 (A4AF)來源到這個檔案"
-    IDS_SWAP_A4AF_TO_THIS   "立即交換來源到這個檔案"
-    IDS_SWAP_A4AF_TO_OTHER  "立即交換來源到任何其他檔案"
+    IDS_SWAP_A4AF_TO_THIS   "立即交換 (A4AF) 來源到這個檔案"
+    IDS_SWAP_A4AF_TO_OTHER  "立即交換 (A4AF) 來源到任何其他檔案"
     IDS_A4AF                "來源處理 (A4AF)"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "啟用 MobileMule"
@@ -1440,14 +1463,14 @@ BEGIN
     IDS_CD_UPLOADREQ        "已要求上載:"
     IDS_SETTINGCHANGED_RESTART "為了使已經改變的設定值生效, 請重新啟動 eMule!"
     IDS_CREDITSEXPIRED      ", %i 個客戶端已經刪除 (在 5 個月沒再看見過)"
-    IDS_SOURCESINFO         "%i  (有用的: %i, NNP: %i, A4AF: %i)"
+    IDS_SOURCESINFO         "%i  (有用的: %i, NNP: %i); A4AF: %i"
     IDS_SHOW_META_DATA      "顯示詮釋資料(&M)..."
     IDS_META_DATA           "詮釋資料"
     IDS_TIMEBEFORE          "(%s 以前)"
     IDS_FD_TIMEDATE         "日期"
     IDS_FILEINFORMATION     "檔案資訊"
     IDS_STATS_FREESPACE     "暫存裝置可用空間: "
-    IDS_IRC_HELPCHANNEL     "連線到幫助頻道."
+    IDS_IRC_HELPCHANNEL     "連線到幫助頻道"
     IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-chinese"
     IDS_IRC_ACCEPTLINKSFRIENDS "只有來自好友"
     IDS_COMPLSOURCES        "完成的來源數"
@@ -1459,8 +1482,8 @@ STRINGTABLE
 BEGIN
     IDS_MATCH_KEYWORDS      "相配的關鍵字"
     IDS_FAILEDREOPEN        "重大錯誤: 重新開啟部分檔 '%s' (%s) 已經失敗!"
-    IDS_ERR_PREVIEWALREADY  "從這個客戶端那裡已經有一個預覽要求迫近的"
-    IDS_ERR_PREVIEWFAILED   "預覽從使用者 '%s' 已經失敗"
+    IDS_ERR_PREVIEWALREADY  "從這個客戶端那裡已經有一個預覽要求未決定的"
+    IDS_ERR_PREVIEWFAILED   "從使用者 '%s' 預覽已經失敗"
     IDS_DWTOT               "磁碟空間"
     IDS_DWTOT_NR            "下載數目: %d"
     IDS_DWTOT_TSD           "下載總計大小: %s"
@@ -1472,7 +1495,7 @@ BEGIN
     IDS_SERVERKEEPALIVETIMEOUT "伺服器連線更新間隔 [分]"
     IDS_MORE                "更多"
     IDS_TOOLS               "工具"
-    IDS_ERR_JIGLENEEDSTYPE  "假如您想要搜尋 Jigle 資料庫而沒有指定一個檔案類型, 您最少必須定指一個檔案副檔名!"
+    IDS_SEARCHPARAMS        "搜尋參數"
 END
 
 STRINGTABLE 
@@ -1500,16 +1523,16 @@ BEGIN
     IDS_IMP_FETCHSTATUS     "抓取狀態..."
     IDS_IMP_INPROGR         "在處理"
     IDS_IMP_ERR_DISKSP      "錯誤: 磁碟空間不足"
-    IDS_IMP_ERR_PARTMETIO   "錯誤: partmet 找不到"
+    IDS_IMP_ERR_PARTMETIO   "錯誤: 部分檔(partmet)找不到"
     IDS_IMP_ERR_IO          "錯誤: IO 錯誤!"
     IDS_IMP_ERR_FAILED      "錯誤: 已失敗!"
     IDS_IMP_STATUSQUEUED    "排隊"
-    IDS_IMP_ALRDWL          "早已經在下載中"
+    IDS_IMP_ALRDWL          "已經在下載中"
     IDS_IMP_ADDBTN          "增加匯入"
     IDS_IMP_RETRYBTN        "重試已選擇的"
     IDS_IMP_REMOVEBTN       "移除已選擇的"
-    IDS_IMP_SELFOLDER       "請選擇一個單一 partmet-資料夾 或您的舊暫存資料夾中所有的 partmet-子資料夾!"
-    IDS_IMP_DELSRC          "您想要已成功匯入至下載的 來源-部分檔案 被刪除?"
+    IDS_IMP_SELFOLDER       "請選擇一個單一 部分(partmet)-資料夾 或您的舊暫存資料夾中所有的 部分(partmet)-子資料夾!"
+    IDS_IMP_DELSRC          "您想要刪除已成功匯入至下載的 來源-部分檔案?"
     IDS_IMP_SIZE            "%s (磁碟:%s)"
     IDS_IMP_STATUS          "匯入中 %s: %s"
     IDS_DYNUPENABLED        "自動地找出最佳上載限制"
@@ -1528,6 +1551,7 @@ BEGIN
     IDS_CMT_COPYCLIPBOARD   "複製註解到剪貼簿"
     IDS_ASKDOWNLOADLANG     "您選擇的語言尚未安裝在您的系統. 您想要 eMule 從 emule-project.net 下載它?"
     IDS_ASKDOWNLOADLANGCAP  "下載語言檔案"
+    IDS_DELETESELECTED      "刪除"
     IDS_ERR_FAILEDDOWNLOADLANG "從 %s 安裝已選的語言 DLL 和下載失敗!"
     IDS_ERR_BADFOLDER       "無效的資料夾.\n資料夾不能被建立. 請檢查名稱及位置."
     IDS_AUTOREMOVEFD        "自動清除已完成下載"
@@ -1547,12 +1571,32 @@ BEGIN
     IDS_MINLENGTH           "最小長度 [時:分:秒]"
     IDS_EM_HELP             "說明"
     IDS_WRN_FRIENDDUPLIPPORT 
-                            "好友沒有被加入.\r\n\r\n那裡早已經有一個好友以相同的 IP 位址及連接埠可用的."
+                            "好友沒有被加入.\r\n\r\n那裡已經有一個好友以相同的 IP 位址及連接埠可用."
     IDS_DYNUP               "上載速度感應器"
     IDS_KADOVERHEAD         "Kad 連線佔用的頻寬 (封包): %s (%s)"
     IDS_FIND                "尋找..."
     IDS_LOG_BANNED_CLIENTS  "記錄已禁止客戶端"
     IDS_LOG_RATING_RECV     "記錄已接收檔案描述及等級"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MM_NEWUSER          "新的使用者登入到 MobileMule-伺服器 成功"
+    IDS_RADCLIENTS          "來自已知的客戶端"
+    IDS_KADUDPPORTERR       "Kad UDP 連接埠和 eMule 的延伸 UDP 連接埠或 eMule 的伺服器 UDP 連接埠的其中一個發生衝突. 連接埠已經改變到 %u."
+    IDS_CONFIRM_FILEDELETE  "您真的想要從磁碟中移除全部已選擇的檔案?"
+    IDS_OPENFOLDER          "開啟資料夾"
+    IDS_RUNASUSER           "以沒有特權的使用者執行 eMule"
+    IDS_DELETE              "從磁碟刪除"
+    IDS_BOOTSTRAP           "啟始帶"
+    IDS_VIAED2KSQ           "經由 eD2K 伺服器"
+    IDS_EM_KADEMLIA         "Kad"
+    IDS_VIAKAD              "經由 Kad"
+    IDS_VIASE               "經由來源交換"
+    IDS_SELECTTOOLBARBITMAP "選擇工具列的點陣圖..."
+    IDS_SELECTTOOLBARBITMAPDIR "選擇點陣圖資料夾..."
+    IDS_TOOLBARSKINS        "工具列面板"
+    IDS_NOTEXTLABELS        "沒有標籤"
 END
 
 STRINGTABLE 
@@ -1563,8 +1607,8 @@ BEGIN
     IDS_CUSTOMIZETOOLBAR    "自訂工具列"
     IDS_MINBITRATE          "最小位元率 [kBit/秒]"
     IDS_KAD_RECHECKFW       "重新檢查防火牆"
-    IDS_SHAREDTITLE         "分享 ED2K|Kad"
-    IDS_WARNINGNOBS         "啟始帶現在不活躍 (Kad 停用或已經連線)."
+    IDS_SHAREDTITLE         "分享 eD2K|Kad"
+    IDS_WARNINGNOBS         "啟始帶現在不活躍 (Kad 已經連線)."
     IDS_FIREWALLED          "防火牆內"
     IDS_KADEMLIA            "Kad"
     IDS_KADCONTACTLAB       "連繫"
@@ -1577,25 +1621,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_MM_NEWUSER          "新的使用者登入到 MobileMule-伺服器 成功"
-    IDS_RADCLIENTS          "來自已知的客戶端"
-    IDS_KADUDPPORTERR       "Kad UDP 連接埠和 eMule 的延伸 UDP 連接埠或 eMule 的伺服器 UDP 連接埠的其中一個發生衝突. 連接埠已經改變到 %u."
-    IDS_CONFIRM_FILEDELETE  "您真的想要從磁碟中移除全部已選擇的檔案?"
-    IDS_OPENFOLDER          "開啟資料夾"
-    IDS_DELETE              "從磁碟刪除"
-    IDS_BOOTSTRAP           "啟始帶"
-    IDS_VIAED2KSQ           "經由 ED2K 伺服器/佇列"
-    IDS_EM_KADEMLIA         "Kad"
-    IDS_VIAKAD              "經由 Kad"
-    IDS_VIASE               "經由來源交換"
-    IDS_SELECTTOOLBARBITMAP "選擇工具列的點陣圖"
-    IDS_SELECTTOOLBARBITMAPDIR "選擇點陣圖資料夾"
-    IDS_TOOLBARSKINS        "工具列面板"
-    IDS_NOTEXTLABELS        "沒有標籤"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_LOG_SECURE_IDENT    "記錄安全識別"
     IDS_LOG_FILTERED_IPS    "記錄已過濾 和/或 已忽略 IP"
     IDS_LOG_FILE_SAVING     "記錄檔案儲存動作"
@@ -1603,7 +1628,7 @@ BEGIN
     IDS_DELETEIPFILTERS     "您真的想要刪除所選擇的 IP 過濾?"
     IDS_TOTAL_IPFILTER_LABEL "總計 IP 過濾數:"
     IDS_TOTAL_IPS_LABEL     "總計 IP:"
-    IDS_DELETE2             "刪除"
+    IDS_RAU_WARNING         "這個設定將會給 eMule 附加防護阻止攻擊並且我們鼓勵使用這個選項.\n無論如何在使用之前強烈建議您先閱讀使用說明!\n\n變更將會在下次啟動 eMule 時生效."
     IDS_APPEND              "附加..."
     IDS_SAVE                "儲存"
     IDS_IP_START            "開時"
@@ -1616,12 +1641,40 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ERR_NOTCONNECTEDKAD "您目前尚未連線到 Kad 網路!"
-    IDS_IRC_NOSFS           "沒有選擇已分享檔案"
-    IDS_IRC_IGNOREMISCMESSAGE "忽略雜項資訊之訊息"
-    IDS_KNOWN               "已知的"
-    IDS_DL_ACTIVE_TIME      "下載時間"
-    IDS_RESETLABEL          "自動完成 (記錄輸入過的文字)"
+    IDS_LOG_A4AF            "記錄 A4AF 動作"
+    IDS_A4AF_SAVE_CPU       "停用 A4AF 檢查來節省 CPU"
+    IDS_SEARCH_DOC          "文件"
+    IDS_INSTALL_SKIN        "安裝 eMule 面板"
+    IDS_INSTALL_SKIN_NODIR  "沒有 eMule 面板檔案資料夾被選擇或資料夾無法使用!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            "建立資料夾 ""%s"" 失敗於 eMule 面板 - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "解開檔案 ""%s"" 失敗從 eMule 面板到本地檔案 ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "這不是一個有效的 eMule 面板封裝檔案."
+    IDS_NEXT_REASK          "下次請求這個客戶端"
+    IDS_A4AF_FILES          "A4AF 檔案"
+    IDS_STATS_FRATIO        "目前 上載:下載 比例 (好友的上載排除在外):"
+    IDS_STATS_UDATA_FRIENDS "已上載給好友位置的資料 (目前): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FO_PREF_EXISTED     "eMule 偵測到選擇的連接埠已有存在的規則, 將不會覆寫或取代它. 缺少的規則已被成功的加入.\n請注意 third-party desktopfirewalls 或路由器不會受這個影響!"
+    IDS_FO_PREF_FAILED      "設定 WinXP 內部防火牆已選擇連接埠失敗!"
+    IDS_FO_PREF_STARTUP     "開啟/關閉 在 WinXP 防火牆的連接埠當 啟動/離開 eMule"
+    IDS_LOG_LEVEL           "記錄標準"
+    IDS_DISABLEPEERACHE     "停用從 PeerCache 下載"
+    IDS_FO_TEMPTCP_S        "已開啟連接埠 %u (TCP) 在 WinXP 內部防火牆於這個 eMule 工作階段"
+    IDS_FO_TEMPTCP_F        "開啟連接埠 %u (TCP) 失敗在 WinXP 內部防火牆於這個 eMule 工作階段"
+    IDS_FO_TEMPUDP_S        "已開啟連接埠 %u (UDP) 在 WinXP 內部防火牆於這個 eMule 工作階段"
+    IDS_FO_TEMPUDP_F        "開啟連接埠 %u (UDP) 失敗在 WinXP 內部防火牆於這個 eMule 工作階段"
+    IDS_FO_PREFBUTTON       "開啟那些連接埠在 WinXP 內部防火牆"
+    IDS_FO_PREF_SUCCCEEDED  "已成功開啟已選擇連接埠在 WinXP 內部防火牆.\n請注意 third-party desktopfirewalls 或路由器不會受這個影響!"
+    IDS_NEWMSG              "新的訊息來自 '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "只在相同的類別"
+    IDS_LOG_ULDL_EVENTS     "記錄 上載/下載 事件"
+    IDS_PEERCACHE_ENABLED   "您的 ISP 支援 PeerCache 技術, 啟用快載下載!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "允許使用者將您加入成為好友."
 END
 
 #endif    // Chinese (Taiwan) resources
@@ -1639,8 +1692,5 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-
-
-
 
 

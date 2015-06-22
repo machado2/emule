@@ -30,9 +30,6 @@ there client on the eMule forum..
 
 #include "stdafx.h"
 #include "Prefs.h"
-#include "../io/ByteIO.h"
-#include "../io/FileIO.h"
-#include "Tag.h"
 #include "../utils/UInt128.h"
 #include "../utils/MiscUtils.h"
 #include "../kademlia/SearchManager.h"
@@ -42,6 +39,7 @@ there client on the eMule forum..
 #include "preferences.h"
 #include "emule.h"
 #include "emuledlg.h"
+#include "SafeFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -57,8 +55,8 @@ using namespace Kademlia;
 CPrefs::CPrefs()
 {
 	CString filename = CMiscUtils::getAppDir();
-	filename.Append(_T(CONFIGFOLDER));
-	filename.Append("preferencesK.dat");
+	filename.Append(CONFIGFOLDER);
+	filename.Append(_T("preferencesK.dat"));
 	init(filename.GetBuffer(0));
 }
 
@@ -68,7 +66,7 @@ CPrefs::~CPrefs(void)
 		writeFile();
 }
 
-void CPrefs::init(LPCSTR filename)
+void CPrefs::init(LPCTSTR filename)
 {
 	m_clientID.setValueRandom();
 	m_lastContact = 0;
@@ -91,24 +89,18 @@ void CPrefs::readFile(void)
 {
 	try
 	{
-		CFileIO file;
-		if (file.Open(m_filename.GetBuffer(0), CFile::modeRead))
+		CSafeBufferedFile file;
+		CFileException fexp;
+		if (file.Open(m_filename.GetBuffer(0),CFile::modeRead|CFile::osSequentialScan|CFile::typeBinary|CFile::shareDenyWrite, &fexp))
 		{
-			m_ip			= file.readUInt32();
-			file.readUInt16();
-			file.readUInt128(&m_clientID);
-			TagList *tags = file.readTagList();
-			CTag *tag;
-			TagList::const_iterator it;
-			for (it = tags->begin(); it != tags->end(); it++)
-			{
-				tag = *it;
-				delete tag;
-			}
-			delete tags;
+			setvbuf(file.m_pStream, NULL, _IOFBF, 16384);
+			m_ip = file.ReadUInt32();
+			file.ReadUInt16();
+			file.ReadUInt128(&m_clientID);
 			file.Close();
 		}
-	} 
+	}
+	//TODO: Make this catch an CFileException..
 	catch (...) 
 	{
 		TRACE("Exception in CPrefs::readFile\n");
@@ -119,16 +111,19 @@ void CPrefs::writeFile(void)
 {
 	try
 	{
-		CFileIO file;
-		if (file.Open(m_filename.GetBuffer(0), CFile::modeWrite | CFile::modeCreate))
+		CSafeBufferedFile file;
+		CFileException fexp;
+		if (file.Open(m_filename.GetBuffer(0), CFile::modeWrite|CFile::modeCreate|CFile::typeBinary|CFile::shareDenyWrite, &fexp))
 		{
-			file.writeUInt32(m_ip);
-			file.writeUInt16(0);
-			file.writeUInt128(m_clientID);
-			file.writeByte(0);
+			setvbuf(file.m_pStream, NULL, _IOFBF, 16384);
+			file.WriteUInt32(m_ip);
+			file.WriteUInt16(0); //This is no longer used.
+			file.WriteUInt128(&m_clientID);
+			file.WriteUInt8(0); //This is to tell older clients there are no tags..
 			file.Close();
 		}
 	} 
+	//TODO: Make this catch an CFileException 
 	catch (...) 
 	{
 		TRACE("Exception in CPrefs::writeFile\n");

@@ -31,6 +31,7 @@
 #include "KademliaWnd.h"
 #include "IrcWnd.h"
 #include "WebServices.h"
+#include "HelpIDs.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -69,11 +70,13 @@ BEGIN_MESSAGE_MAP(CPPgGeneral, CPropertyPage)
 	ON_BN_CLICKED(IDC_ONLINESIG, OnSettingsChange)
 	ON_BN_CLICKED(IDC_CHECK4UPDATE, OnBnClickedCheck4Update)
 	ON_WM_HSCROLL()
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 void CPPgGeneral::LoadSettings(void)
 {
-	GetDlgItem(IDC_NICK)->SetWindowText(thePrefs.nick);
+	USES_CONVERSION;
+	GetDlgItem(IDC_NICK)->SetWindowText(A2CT(thePrefs.GetUserNick()));
 
 	for(int i = 0; i < m_language.GetCount(); i++)
 		if(m_language.GetItemData(i) == thePrefs.GetLanguageID())
@@ -115,7 +118,7 @@ void CPPgGeneral::LoadSettings(void)
 		CheckDlgButton(IDC_CHECK4UPDATE,0);
 
 	CString strBuffer;
-	strBuffer.Format("%i %s",thePrefs.versioncheckdays,GetResString(IDS_DAYS2));
+	strBuffer.Format(_T("%i %s"),thePrefs.versioncheckdays,GetResString(IDS_DAYS2));
 	GetDlgItem(IDC_DAYS)->SetWindowText(strBuffer);
 }
 
@@ -134,7 +137,7 @@ BOOL CPPgGeneral::OnInitDialog()
 		m_language.SetItemData(m_language.AddString(szLang), aLanguageIDs[i]);
 	}
 
-	GetDlgItem(IDC_ED2KFIX)->EnableWindow(Ask4RegFix(true));
+	UpdateEd2kLinkFixCtrl();
 
 	CSliderCtrl *sliderUpdate = (CSliderCtrl*)GetDlgItem(IDC_CHECKDAYS);
 	sliderUpdate->SetRange(2, 7, true);
@@ -200,6 +203,17 @@ BOOL CPPgGeneral::OnApply()
 	return CPropertyPage::OnApply();
 }
 
+void CPPgGeneral::UpdateEd2kLinkFixCtrl()
+{
+	GetDlgItem(IDC_ED2KFIX)->EnableWindow(HaveEd2kRegAccess() && Ask4RegFix(true));
+}
+
+BOOL CPPgGeneral::OnSetActive()
+{
+	UpdateEd2kLinkFixCtrl();
+	return __super::OnSetActive();
+}
+
 void CPPgGeneral::OnBnClickedEd2kfix()
 {
 	Ask4RegFix(false);
@@ -234,7 +248,7 @@ void CPPgGeneral::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	if (pScrollBar==GetDlgItem(IDC_CHECKDAYS)) {
 		CSliderCtrl* slider =(CSliderCtrl*)pScrollBar;
 		CString text;
-		text.Format("%i %s",slider->GetPos(),GetResString(IDS_DAYS2));
+		text.Format(_T("%i %s"),slider->GetPos(),GetResString(IDS_DAYS2));
 		GetDlgItem(IDC_DAYS)->SetWindowText(text);
 	}
 
@@ -249,7 +263,7 @@ void CPPgGeneral::OnBnClickedEditWebservices()
 
 void CPPgGeneral::OnLangChange()
 {
-#define MIRRORS_URL	"http://langmirror%i.emule-project.org/lang/%i%i%i%i/"
+#define MIRRORS_URL	_T("http://langmirror%i.emule-project.org/lang/%i%i%i%i/")
 
 	WORD byNewLang =  m_language.GetItemData(m_language.GetCurSel());
 	if (thePrefs.GetLanguageID() != byNewLang){
@@ -268,6 +282,7 @@ void CPPgGeneral::OnLangChange()
 				strFilename.Append(thePrefs.GetLangDLLNameByID(byNewLang));
 				// start
 				CHttpDownloadDlg dlgDownload;
+				dlgDownload.m_strTitle = _T("Downloading language file");
 				dlgDownload.m_sURLToDownload = strUrl;
 				dlgDownload.m_sFileToDownloadInto = strFilename;
 				if (dlgDownload.DoModal() == IDOK && thePrefs.IsLanguageSupported(byNewLang, true))
@@ -296,4 +311,25 @@ void CPPgGeneral::OnBnClickedCheck4Update()
 	SetModified();
 	GetDlgItem(IDC_CHECKDAYS)->ShowWindow( IsDlgButtonChecked(IDC_CHECK4UPDATE)?SW_SHOW:SW_HIDE );
 	GetDlgItem(IDC_DAYS)->ShowWindow( IsDlgButtonChecked(IDC_CHECK4UPDATE)?SW_SHOW:SW_HIDE );
+}
+
+void CPPgGeneral::OnHelp()
+{
+	theApp.ShowHelp(eMule_FAQ_Preferences_General);
+}
+
+BOOL CPPgGeneral::OnCommand(WPARAM wParam, LPARAM lParam)
+{
+	if (wParam == ID_HELP)
+	{
+		OnHelp();
+		return TRUE;
+	}
+	return __super::OnCommand(wParam, lParam);
+}
+
+BOOL CPPgGeneral::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	OnHelp();
+	return TRUE;
 }

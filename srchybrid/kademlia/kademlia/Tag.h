@@ -34,11 +34,46 @@ there client on the eMule forum..
 namespace Kademlia {
 ////////////////////////////////////////
 
+class CTagNameString : public CStringA
+{
+public:
+	CTagNameString(){}
+
+	// A tag name may include character values >= 0xD0 and therefor also >= 0xF0. to prevent those
+	// characters be interpreted as multi byte character sequences we have to sensure that a binary
+	// string compare is performed.
+	int Compare(LPCSTR psz) const throw()
+	{
+		ATLASSERT( AtlIsValidString(psz) );
+		// Do a binary string compare. (independant from any codepage and/or LC_CTYPE setting.)
+		return strcmp(GetString(), psz);
+	}
+
+	int CompareNoCase(LPCSTR psz) const throw()
+	{
+		ATLASSERT( AtlIsValidString(psz) );
+
+		// Version #1
+		// Do a case-insensitive ASCII string compare.
+		// NOTE: The current locale category LC_CTYPE *MUST* be set to "C"!
+		//return stricmp(GetString(), psz);
+
+		// Version #2 - independant from any codepage and/or LC_CTYPE setting.
+		return __ascii_stricmp(GetString(), psz);
+	}
+
+	CTagNameString& operator=(LPCSTR pszSrc)
+	{
+		CStringA::operator=(pszSrc);
+		return *this;
+	}
+};
+
 class CTag
 {
 public:
 	byte	m_type;
-	CString m_name;
+	CTagNameString m_name;
 
 	CTag(byte type, LPCSTR name) { m_type = type; m_name = name; }
 	virtual ~CTag() {}
@@ -70,10 +105,11 @@ class CTagStr : public CTag
 {
 public:
 	CTagStr(LPCSTR name, LPCSTR value) { m_type = 0x02; m_name = name; m_value = value; }
+	CTagStr(LPCSTR name, LPCWSTR value) { m_type = 0x02; m_name = name; m_value = value; }
 
 	virtual CString GetStr() const { return m_value; }
-	virtual uint32 GetInt() const { return atoi(m_value); }
-	virtual float GetFloat() const { return atof(m_value); }
+	virtual uint32 GetInt() const { return _tstoi(m_value); }
+	virtual float GetFloat() const { return _tstof(m_value); }
 
 protected:
 	CString m_value;
@@ -84,7 +120,7 @@ class CTagUInt : public CTag
 public:
 	CTagUInt(LPCSTR name, uint32 value) { m_type = 0xFE; m_name = name; m_value = value; }
 
-	virtual CString GetStr() const { CString str; ultoa(m_value, str.GetBuffer(10), 10); return str; }
+	virtual CString GetStr() const { CString str; _ultot(m_value, str.GetBuffer(10), 10); return str; }
 	virtual uint32 GetInt() const { return m_value; }
 	virtual float GetFloat() const { return m_value; }
 
@@ -97,7 +133,7 @@ class CTagUInt32 : public CTag
 public:
 	CTagUInt32(LPCSTR name, uint32 value) { m_type = 0x03; m_name = name; m_value = value; }
 
-	virtual CString GetStr() const { CString str; ultoa(m_value, str.GetBuffer(10), 10); return str; }
+	virtual CString GetStr() const { CString str; _ultot(m_value, str.GetBuffer(10), 10); return str; }
 	virtual uint32 GetInt() const { return m_value; }
 	virtual float GetFloat() const { return m_value; }
 
@@ -110,7 +146,7 @@ class CTagFloat : public CTag
 public:
 	CTagFloat(LPCSTR name, float value) { m_type = 0x04; m_name = name; m_value = value; }
 
-	virtual CString GetStr() const { CString str; ultoa(m_value, str.GetBuffer(10), 10); return str; }
+	virtual CString GetStr() const { CString str; _ultot(m_value, str.GetBuffer(10), 10); return str; }
 	virtual uint32 GetInt() const { return m_value; }
 	virtual float GetFloat() const { return m_value; }
 
@@ -123,7 +159,7 @@ class CTagBool : public CTag
 public:
 	CTagBool(LPCSTR name, bool value) { m_type = 0x05; m_name = name; m_value = value; }
 
-	virtual CString GetStr() const { CString str; ultoa(m_value, str.GetBuffer(10), 10); return str; }
+	virtual CString GetStr() const { CString str; _ultot(m_value, str.GetBuffer(10), 10); return str; }
 	virtual uint32 GetInt() const { return m_value; }
 	virtual float GetFloat() const { return m_value; }
 
@@ -136,7 +172,7 @@ class CTagUInt16 : public CTag
 public:
 	CTagUInt16(LPCSTR name, uint16 value) { m_type = 0x08; m_name = name; m_value = value; }
 
-	virtual CString GetStr() const { CString str; ultoa(m_value, str.GetBuffer(10), 10); return str; }
+	virtual CString GetStr() const { CString str; _ultot(m_value, str.GetBuffer(10), 10); return str; }
 	virtual uint32 GetInt() const { return m_value; }
 	virtual float GetFloat() const { return m_value; }
 
@@ -149,7 +185,7 @@ class CTagUInt8 : public CTag
 public:
 	CTagUInt8(LPCSTR name, uint8 value) { m_type = 0x09; m_name = name; m_value = value; }
 
-	virtual CString GetStr() const { CString str; ultoa(m_value, str.GetBuffer(10), 10); return str; }
+	virtual CString GetStr() const { CString str; _ultot(m_value, str.GetBuffer(10), 10); return str; }
 	virtual uint32 GetInt() const { return m_value; }
 	virtual float GetFloat() const { return m_value; }
 

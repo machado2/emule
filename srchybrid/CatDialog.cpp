@@ -50,16 +50,9 @@ BOOL CCatDialog::OnInitDialog(){
 }
 
 void CCatDialog::UpdateData(){
-	CString buffer;
-
-	buffer.Format("%s",m_myCat->title);
-	GetDlgItem(IDC_TITLE)->SetWindowText(buffer);
-
-	buffer.Format("%s",m_myCat->incomingpath);
-	GetDlgItem(IDC_INCOMING)->SetWindowText(buffer);
-
-	buffer.Format("%s",m_myCat->comment);
-	GetDlgItem(IDC_COMMENT)->SetWindowText(buffer);
+	GetDlgItem(IDC_TITLE)->SetWindowText(m_myCat->title);
+	GetDlgItem(IDC_INCOMING)->SetWindowText(m_myCat->incomingpath);
+	GetDlgItem(IDC_COMMENT)->SetWindowText(m_myCat->comment);
 
 	COLORREF selcolor=m_myCat->color;
 	newcolor=m_myCat->color;
@@ -102,18 +95,18 @@ void CCatDialog::Localize(){
 	GetDlgItem(IDC_STATIC_PRIO)->SetWindowText(GetResString(IDS_STARTPRIO));
 	GetDlgItem(IDC_STATIC_AUTOCAT)->SetWindowText(GetResString(IDS_AUTOCAT_LABEL));
 
-	m_ctlColor.CustomText = _T(GetResString(IDS_COL_MORECOLORS));
-	m_ctlColor.DefaultText = _T(GetResString(IDS_DEFAULT));
+	m_ctlColor.CustomText = GetResString(IDS_COL_MORECOLORS);
+	m_ctlColor.DefaultText = GetResString(IDS_DEFAULT);
 	m_ctlColor.SetDefaultColor(NULL);
 
 	SetWindowText(GetResString(IDS_EDITCAT));
 
 	while (m_prio.GetCount()>0) m_prio.DeleteString(0);
-	m_prio.AddString(GetResString(IDS_DONTCHANGE));
+	//m_prio.AddString(GetResString(IDS_DONTCHANGE)); //ZZ:DownloadManager
 	m_prio.AddString(GetResString(IDS_PRIOLOW));
 	m_prio.AddString(GetResString(IDS_PRIONORMAL));
 	m_prio.AddString(GetResString(IDS_PRIOHIGH));
-	m_prio.AddString(GetResString(IDS_PRIOAUTO));
+	//m_prio.AddString(GetResString(IDS_PRIOAUTO)); //ZZ:DownloadManager
 	m_prio.SetCurSel(m_myCat->prio);
 }
 
@@ -139,14 +132,14 @@ void CCatDialog::OnBnClickedOk()
 
 	MakeFoldername(m_myCat->incomingpath);
 	if (!thePrefs.IsShareableDirectory(m_myCat->incomingpath)){
-		_snprintf(m_myCat->incomingpath, ARRSIZE(m_myCat->incomingpath), "%s", thePrefs.GetIncomingDir());
+		_sntprintf(m_myCat->incomingpath, ARRSIZE(m_myCat->incomingpath), _T("%s"), thePrefs.GetIncomingDir());
 		MakeFoldername(m_myCat->incomingpath);
 	}
 
 	if (!PathFileExists(m_myCat->incomingpath)){
 		if (!::CreateDirectory(m_myCat->incomingpath, 0)){
 			AfxMessageBox(GetResString(IDS_ERR_BADFOLDER));
-			strcpy(m_myCat->incomingpath,oldpath);
+			_tcscpy(m_myCat->incomingpath,oldpath);
 			return;
 		}
 	}
@@ -155,7 +148,7 @@ void CCatDialog::OnBnClickedOk()
 		theApp.sharedfiles->Reload();
 
 	m_myCat->color=newcolor;
-	m_myCat->prio=m_prio.GetCurSel();
+    m_myCat->prio=m_prio.GetCurSel();
 	GetDlgItem(IDC_AUTOCATEXT)->GetWindowText(m_myCat->autocat);
 
 	theApp.emuledlg->transferwnd->downloadlistctrl.Invalidate();

@@ -568,9 +568,10 @@
 #define IDS_IRC_PRIVMESSAGE             645
 #define IDS_IRC_OP                      646
 #define IDS_IRC_DEOP                    647
-#define IDS_IRC_VOICE                   648
+#define IDS_SOURCEEXCHANGESWAP          648
 #define IDS_IRC_HALFOP                  649
 #define IDS_IRC_DEHALFOP                650
+#define IDS_PR_SHORT_LOW                650
 #define IDS_IRC_KICK                    651
 #define IDS_IRC_SLAP                    652
 #define IDS_IRC_JOIN                    653
@@ -582,6 +583,7 @@
 #define IDS_IRC_WASKICKEDBY             659
 #define IDS_IRC_NICKUSED                660
 #define IDS_IRC_DEVOICE                 661
+#define IDS_DOWNLOAD_ALPHABETICAL       661
 #define IDS_IRC_HASQUIT                 662
 #define IDS_IRC_NOWKNOWNAS              663
 #define IDS_IRC_SETSMODE                664
@@ -1174,6 +1176,7 @@
 #define IDS_MORE                        1229
 #define IDS_TOOLS                       1230
 #define IDS_ERR_JIGLENEEDSTYPE          1231
+#define IDS_SEARCHPARAMS                1231
 #define IDS_CREATEHOSTNAMESRCLINK       1232
 #define IDS_HASHINGFILESCOUNT           1233
 #define IDS_CHECKDISKSPACE              1234
@@ -1227,6 +1230,7 @@
 #define IDS_KADUDPPORTERR               1282
 #define IDS_CONFIRM_FILEDELETE          1283
 #define IDS_OPENFOLDER                  1284
+#define IDS_RUNASUSER                   1285
 #define IDS_DELETE                      1286
 #define IDS_BOOTSTRAP                   1287
 #define IDS_VIAED2KSQ                   1288
@@ -1276,7 +1280,7 @@
 #define IDS_DELETEIPFILTERS             1332
 #define IDS_TOTAL_IPFILTER_LABEL        1333
 #define IDS_TOTAL_IPS_LABEL             1334
-#define IDS_DELETE2                     1335
+#define IDS_RAU_WARNING                 1335
 #define IDS_APPEND                      1336
 #define IDS_SAVE                        1337
 #define IDS_IP_START                    1338
@@ -1291,6 +1295,54 @@
 #define IDS_IRC_IGNOREMISCMESSAGE       1347
 #define IDD_DIRECT_DOWNLOAD             1347
 #define IDS_KNOWN                       1348
+#define IDD_SEARCH_PARAMS               1348
+#define IDS_RAU_RUNNING                 1349
+#define IDI_KadCurrentSearches          1350
+#define IDS_RAU_FAILED                  1350
+#define IDI_ICON1                       1351
+#define IDS_KADCONTACTSREAD             1351
+#define IDS_ERR_KADCONTACTS             1352
+#define IDS_METATAGS                    1353
+#define IDS_FILEFORMAT                  1354
+#define IDS_STRING1355                  1355
+#define IDS_UDPREASKS                   1355
+#define IDS_DYNUP_PINGTOLERANCE_MS      1356
+#define IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 1357
+#define IDS_DYNUP_RADIO_PINGTOLERANCE_MS 1358
+#define IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 1359
+#define IDS_LOG_A4AF                    1360
+#define IDS_A4AF_SAVE_CPU               1361
+#define IDS_A4AF_GROUP_HEADING          1362
+#define IDS_SEARCH_DOC                  1362
+#define IDS_STRING1363                  1363
+#define IDS_ENABLE_SOURCE_BALANCING     1363
+#define IDS_INSTALL_SKIN                1363
+#define IDS_INSTALL_SKIN_NODIR          1364
+#define IDS_INSTALL_SKIN_DIR_ERROR      1365
+#define IDS_INSTALL_SKIN_FILE_ERROR     1366
+#define IDS_INSTALL_SKIN_PKG_ERROR      1367
+#define IDS_NEXT_REASK                  1368
+#define IDS_A4AF_FILES                  1369
+#define IDS_FO_TEMPTCP_S                1370
+#define IDS_FO_TEMPTCP_F                1371
+#define IDS_FO_TEMPUDP_S                1372
+#define IDS_FO_TEMPUDP_F                1373
+#define IDS_FO_PREFBUTTON               1374
+#define IDS_FO_PREF_SUCCCEEDED          1375
+#define IDS_FO_PREF_EXISTED             1376
+#define IDS_FO_PREF_FAILED              1377
+#define IDS_FO_PREF_STARTUP             1378
+#define IDS_LOG_LEVEL                   1379
+#define IDS_DISABLEPEERACHE             1380
+#define IDS_NEWMSG                      1381
+#define IDS_PREF_STARTNEXTFILECATONLY   1382
+#define IDS_LOG_ULDL_EVENTS             1383
+#define IDS_PEERCACHE_ENABLED           1384
+#define IDS_IRC_EMULEPROTO_ALLOWADDFRIEND 1385
+#define IDS_SOURCESWAPBLOCKED           1386
+#define IDS_IRC_VOICE                   1387
+#define IDS_A4AF_CHECK_THIS_NOW         1388
+#define IDS_PR_SHORT_HIGH               1389
 #define IDC_ANIMATE1                    2000
 #define IDC_STATUS                      2001
 #define IDC_FILESTATUS                  2002
@@ -1380,6 +1432,7 @@
 #define IDC_SHOWOVERHEAD                2132
 #define IDC_INDICATERATINGS             2133
 #define IDC_USESECIDENT                 2134
+#define IDC_RUNASUSER                   2135
 #define IDC_MMENABLED                   2136
 #define IDC_WIZ_ME_RADIO                2139
 #define IDC_SHOWDWLPERCENT              2140
@@ -1838,6 +1891,7 @@
 #define IDC_STARTNEXTFILECAT            2716
 #define IDD_WIZ1_WELCOME                2717
 #define IDD_WIZ1_GENERAL                2718
+#define IDC_STARTNEXTFILECAT2           2718
 #define IDD_WIZ1_DL_PRIO                2719
 #define IDD_WIZ1_UL_PRIO                2720
 #define IDD_WIZ1_UPLOAD                 2721
@@ -1926,14 +1980,26 @@
 #define IDC_DL_ACTIVE_TIME_LBL          2820
 #define IDC_SEARCH_OPTS                 2833
 #define IDC_DISABLEHIST                 2834
+#define IDC_OPEN_PARAMS_WND             2835
+#define IDC_PREVIEW                     2837
+#define IDC_KADICO1                     2838
+#define IDC_KADICO2                     2839
+#define IDC_CATLABEL                    2840
+#define IDC_CATS                        2841
+#define IDC_STATICFI                    2843
+#define IDC_BUTTON1                     2844
+#define IDC_RESET                       2844
+#define IDC_OPENPORTS                   2844
+#define IDS_STATS_FRATIO                2845
+#define IDS_STATS_UDATA_FRIENDS         2846
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        1348
+#define _APS_NEXT_RESOURCE_VALUE        1360
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         2835
+#define _APS_NEXT_CONTROL_VALUE         2847
 #define _APS_NEXT_SYMED_VALUE           106
 #endif
 #endif

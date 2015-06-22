@@ -59,6 +59,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "languages - Japanese", "jp_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "languages - Czech", "cz_CZ.vcproj", "{0C42D310-84EB-462F-944B-7166C0D071E9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "languages - Romania", "ro_RO.vcproj", "{4AE4AB3A-FD80-4DFE-BF9B-AC845DCF2449}"
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		ConfigName.0 = Debug
@@ -309,6 +311,14 @@ Global
 		{0C42D310-84EB-462F-944B-7166C0D071E9}.Release.Build.0 = Dynamic|Win32
 		{0C42D310-84EB-462F-944B-7166C0D071E9}.Static.ActiveCfg = Static|Win32
 		{0C42D310-84EB-462F-944B-7166C0D071E9}.Static.Build.0 = Static|Win32
+		{4AE4AB3A-FD80-4DFE-BF9B-AC845DCF2449}.Debug.ActiveCfg = Dynamic|Win32
+		{4AE4AB3A-FD80-4DFE-BF9B-AC845DCF2449}.Debug.Build.0 = Dynamic|Win32
+		{4AE4AB3A-FD80-4DFE-BF9B-AC845DCF2449}.Dynamic.ActiveCfg = Dynamic|Win32
+		{4AE4AB3A-FD80-4DFE-BF9B-AC845DCF2449}.Dynamic.Build.0 = Dynamic|Win32
+		{4AE4AB3A-FD80-4DFE-BF9B-AC845DCF2449}.Release.ActiveCfg = Dynamic|Win32
+		{4AE4AB3A-FD80-4DFE-BF9B-AC845DCF2449}.Release.Build.0 = Dynamic|Win32
+		{4AE4AB3A-FD80-4DFE-BF9B-AC845DCF2449}.Static.ActiveCfg = Static|Win32
+		{4AE4AB3A-FD80-4DFE-BF9B-AC845DCF2449}.Static.Build.0 = Static|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

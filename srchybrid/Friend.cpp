@@ -15,7 +15,9 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include "stdafx.h"
+#include "emule.h"
 #include "Friend.h"
+#include "FriendList.h"
 #include "OtherFunctions.h"
 #include "UpDownClient.h"
 #include "Packets.h"
@@ -40,6 +42,8 @@ CFriend::CFriend(void)
 	m_LinkedClient = 0;
 	md4cpy(m_abyUserhash, sm_abyNullHash);
 	m_dwHasHash = 0;
+
+    m_friendSlot = false;
 }
 
 //Added this to work with the IRC.. Probably a better way to do it.. But wanted this in the release..
@@ -59,6 +63,7 @@ CFriend::CFriend(const uchar* abyUserhash, uint32 dwLastSeen, uint32 dwLastUsedI
 	}
 	m_strName = pszName;
 	m_LinkedClient = 0;
+    m_friendSlot = false;
 }
 
 CFriend::CFriend(CUpDownClient* client){
@@ -67,14 +72,18 @@ CFriend::CFriend(CUpDownClient* client){
 	m_dwLastUsedIP = client->GetIP();
 	m_nLastUsedPort = client->GetUserPort();
 	m_dwLastChatted = 0;
-	m_strName = client->GetUserName();
-	md4cpy(m_abyUserhash,client->GetUserHash());
-	m_dwHasHash = md4cmp(m_abyUserhash, sm_abyNullHash) ? 1 : 0;
-	m_LinkedClient = client;
+    m_LinkedClient = NULL;
+    m_friendSlot = false;
+    SetLinkedClient(client);
 }
 
 CFriend::~CFriend(void)
 {
+    if(m_LinkedClient != NULL) {
+        m_LinkedClient->SetFriendSlot(false);
+        m_LinkedClient->m_Friend = NULL;
+        m_LinkedClient = NULL;
+    }
 }
 
 void CFriend::LoadFromFile(CFileDataIO* file)
@@ -91,10 +100,16 @@ void CFriend::LoadFromFile(CFileDataIO* file)
 		CTag* newtag = new CTag(file);
 		switch(newtag->tag.specialtag){
 			case FF_NAME:{
-				m_strName = newtag->tag.stringvalue;
+				ASSERT( newtag->IsStr() );
+				if (newtag->IsStr()){
+#ifdef _UNICODE
+					if (m_strName.IsEmpty())
+#endif
+						m_strName = newtag->GetStr();
+				}
 				break;
 			}
-		}	
+		}
 		delete newtag;
 	}
 }
@@ -109,12 +124,80 @@ void CFriend::WriteToFile(CFileDataIO* file)
 	file->WriteUInt32(m_dwLastSeen);
 	file->WriteUInt32(m_dwLastChatted);
 
-	UINT tagcount = 0;
-	if (!m_strName.IsEmpty())
-		tagcount++;
-	file->WriteUInt32(tagcount);
+	uint32 uTagCount = 0;
+	ULONG uTagCountFilePos = (ULONG)file->GetPosition();
+	file->WriteUInt32(uTagCount);
+
 	if (!m_strName.IsEmpty()){
+#ifdef _UNICODE
+		if (WriteOptED2KUTF8Tag(file, m_strName, FF_NAME))
+			uTagCount++;
+#endif
 		CTag nametag(FF_NAME, m_strName);
 		nametag.WriteTagToFile(file);
+		uTagCount++;
 	}
+
+	file->Seek(uTagCountFilePos, CFile::begin);
+	file->WriteUInt32(uTagCount);
+	file->Seek(0, CFile::end);
+}
+
+bool CFriend::HasUserhash() {
+    for(int counter = 0; counter < 16; counter++) {
+        if(m_abyUserhash[counter] != 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void CFriend::SetFriendSlot(bool newValue) {
+    if(m_LinkedClient != NULL) {
+        m_LinkedClient->SetFriendSlot(newValue);
+    }
+
+    m_friendSlot = newValue;
+}
+
+bool CFriend::GetFriendSlot() const {
+    if(m_LinkedClient != NULL) {
+        return m_LinkedClient->GetFriendSlot();
+    } else {
+        return m_friendSlot;
+    }
+}
+
+void CFriend::SetLinkedClient(CUpDownClient* linkedClient) {
+    if(linkedClient != m_LinkedClient) {
+        if(linkedClient != NULL) {
+            if(m_LinkedClient == NULL) {
+                linkedClient->SetFriendSlot(m_friendSlot);
+            } else {
+                linkedClient->SetFriendSlot(m_LinkedClient->GetFriendSlot());
+            }
+
+            m_dwLastSeen = time(NULL);
+            m_dwLastUsedIP = linkedClient->GetIP();
+            m_nLastUsedPort = linkedClient->GetUserPort();
+            m_strName = linkedClient->GetUserName();
+            md4cpy(m_abyUserhash,linkedClient->GetUserHash());
+            m_dwHasHash = md4cmp(m_abyUserhash, sm_abyNullHash) ? 1 : 0;
+
+            linkedClient->m_Friend = this;
+        } else if(m_LinkedClient != NULL) {
+            m_friendSlot = m_LinkedClient->GetFriendSlot();
+        }
+
+        if(m_LinkedClient != NULL) {
+            // the old client is no longer friend, since it is no longer the linked client
+            m_LinkedClient->SetFriendSlot(false);
+            m_LinkedClient->m_Friend = NULL;
+        }
+
+        m_LinkedClient = linkedClient;
+    }
+
+    theApp.friendlist->RefreshFriend(this);
 }

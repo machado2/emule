@@ -20,6 +20,7 @@
 #include "OScopeCtrl.h"
 #include "emuledlg.h"
 #include "Preferences.h"
+#include "OtherFunctions.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -119,8 +120,8 @@ COScopeCtrl::COScopeCtrl(int NTrends)
 	m_brushBack.CreateSolidBrush(m_crBackColor);
 	
 	// public member variables, can be set directly 
-	m_str.XUnits.Format("Samples");  // can also be set with SetXUnits
-	m_str.YUnits.Format("Y units");  // can also be set with SetYUnits
+	m_str.XUnits.Format(_T("Samples"));  // can also be set with SetXUnits
+	m_str.YUnits.Format(_T("Y units"));  // can also be set with SetYUnits
 	
 	// protected bitmaps to restore the memory DC's
 	m_pbitmapOldGrid = NULL;
@@ -351,8 +352,15 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 	
 	// draw the plot rectangle:
 	// determine how wide the y axis scaling values are
-	nCharacters = abs((int)log10(fabs(m_PlotData[0].dUpperLimit)));
-	nCharacters = max(nCharacters, abs((int)log10(fabs(m_PlotData[0].dLowerLimit))));
+	double fAbsUpperLimit = fabs(m_PlotData[0].dUpperLimit);
+	if (fAbsUpperLimit > 0.0)
+		nCharacters = abs((int)log10(fAbsUpperLimit));
+	else
+		nCharacters = 0;
+
+	double fAbsLowerLimit = fabs(m_PlotData[0].dLowerLimit);
+	if (fAbsLowerLimit > 0.0)
+		nCharacters = max(nCharacters, abs((int)log10(fAbsLowerLimit)));
 	
 	// add the units digit, decimal point and a minus sign, and an extra space
 	// as well as the number of decimal places to display
@@ -403,14 +411,14 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 		OUT_DEFAULT_PRECIS, 
 		CLIP_DEFAULT_PRECIS,
 		DEFAULT_QUALITY, 
-		DEFAULT_PITCH | FF_SWISS, "Arial");
+		DEFAULT_PITCH | FF_SWISS, _T("Arial"));
 	yUnitFont.CreateFont(14, 0, 900, 0, 300,
 		//FALSE, FALSE, 0, ANSI_CHARSET,
 		FALSE, FALSE, 0, DEFAULT_CHARSET, // EC
 		OUT_DEFAULT_PRECIS, 
 		CLIP_DEFAULT_PRECIS,
 		DEFAULT_QUALITY, 
-		DEFAULT_PITCH | FF_SWISS, "Arial");
+		DEFAULT_PITCH | FF_SWISS, _T("Arial"));
 	
 	// grab the horizontal font
 	oldFont = m_dcGrid.SelectObject(&axisFont);
@@ -419,23 +427,30 @@ void COScopeCtrl::InvalidateCtrl(bool deleteGraph)
 	m_dcGrid.SetTextColor(m_crGridColor);
 	m_dcGrid.SetTextAlign(TA_RIGHT | TA_TOP);
 	if(m_str.YMax.IsEmpty())
-		strTemp.Format("%.*lf", m_nYDecimals, m_PlotData[0].dUpperLimit);
+		strTemp.Format(_T("%.*lf"), m_nYDecimals, m_PlotData[0].dUpperLimit);
 	else
 		strTemp = m_str.YMax;
 	m_dcGrid.TextOut(m_rectPlot.left - 4, m_rectPlot.top - 7, strTemp);
 	
-	// y/2
-	strTemp.Format("%.*lf", m_nYDecimals, m_PlotData[0].dUpperLimit / 2);
-	m_dcGrid.TextOut(m_rectPlot.left - 2, m_rectPlot.bottom+ ((m_rectPlot.top - m_rectPlot.bottom)/2) - 7 , strTemp);
-	
+    if(m_rectPlot.Height()/(m_nYGrids+1) >= 14) {
+	    for(j = 1; j < (m_nYGrids + 1); j++) {
+		    GridPos = m_rectPlot.Height()*j/ (m_nYGrids + 1) + m_rectPlot.top;
+
+    	    strTemp.Format(_T("%.*lf"), m_nYDecimals, m_PlotData[0].dUpperLimit*(m_nYGrids-j+1)/(m_nYGrids+1));
+    	    m_dcGrid.TextOut(m_rectPlot.left - 4, GridPos-7, strTemp);
+        }
+    } else {
+	    // y/2
+	    strTemp.Format(_T("%.*lf"), m_nYDecimals, m_PlotData[0].dUpperLimit / 2);
+	    m_dcGrid.TextOut(m_rectPlot.left - 2, m_rectPlot.bottom+ ((m_rectPlot.top - m_rectPlot.bottom)/2) - 7 , strTemp);
+    }	
 	
 	// y min
-	m_dcGrid.SetTextAlign(TA_RIGHT | TA_BASELINE);
 	if(m_str.YMin.IsEmpty())
-		strTemp.Format("%.*lf", m_nYDecimals, m_PlotData[0].dLowerLimit);
+		strTemp.Format(_T("%.*lf"), m_nYDecimals, m_PlotData[0].dLowerLimit);
 	else
 		strTemp = m_str.YMin;
-	m_dcGrid.TextOut(m_rectPlot.left - 4, m_rectPlot.bottom, strTemp);
+	m_dcGrid.TextOut(m_rectPlot.left - 4, m_rectPlot.bottom-7, strTemp);
 	/*
 	// x min
 	m_dcGrid.SetTextAlign(TA_LEFT | TA_TOP);

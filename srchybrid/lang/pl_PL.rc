@@ -270,6 +270,7 @@ BEGIN
                             "Otrzymano niew³aœciwy pakiet z list¹ serwerów"
     IDS_STATUS              "Status"
     IDS_DL_REMAINS          "Pozosta³o"
+    IDS_UPDATEFROM          "Update from URL: (filter.dat- or PeerGuardian-format)"
     IDS_QL_USERNAME         "U¿ytkownik"
     IDS_ERR_PACKAGEHANDLING "Nie obs³u¿ony b³¹d podczas obróbki pakietu z serwera (%s)"
     IDS_QL_RATING           "Ranking"
@@ -415,7 +416,7 @@ BEGIN
     IDS_ERR_FOUNDCORRUPTION "Znaleziono uszkodzon¹ czêœæ pliku (%i) w %s"
     IDS_HASHINGDONE         "Zakoñczono rehashing %s, plik wygl¹da na poprawny"
     IDS_ERR_PARTCORRUPT     "Pobrana czêœæ %i jest uszkodzona :(  (%s)"
-    IDS_ICHWORKED           "ICH: Odzyskano uszkodzon¹ czêœæ %i  (%s)"
+    IDS_ICHWORKED           "ICH: Odzyskano uszkodzon¹ czêœæ %i  (%s), Saved: %s"
     IDS_ERR_OUTOFSPACE      "Nie ma wystarczaj¹cej iloœci miejsca na dysku na plik %s!"
     IDS_SE                  "Wymiana Ÿróde³"
 END
@@ -476,6 +477,7 @@ BEGIN
     IDS_NOTHING             "nic"
     IDS_SETUPSPEED          "ustaw limit wysy³ania"
     IDS_SETDOWNSPEED        "ustaw limit pobierania"
+    IDS_UNDO                "Undo"
     IDS_DAYLY               "dziennie"
 END
 
@@ -757,6 +759,7 @@ BEGIN
     IDS_STREE               "Drzewo statystyk"
     IDS_IRC_IGNOREQUITMESSAGE "Ignore Quit info messages"
     IDS_STATSSETUPINFO      "Ustawienia wyœwietlania statystyk"
+    IDS_IRC_SOUNDEVENTS     "Play sound events"
 END
 
 STRINGTABLE 
@@ -772,7 +775,7 @@ BEGIN
     IDS_PW_TBN_ONLOG        "Nowa pozycja w logu"
     IDS_PW_TBN_ONCHAT       "Rozpoczyna now¹ rozmowê"
     IDS_PW_TBN_POP_ALWAYS   "Otrzymano now¹ wiadomoœæ"
-    IDS_PW_TBN_ONDOWNLOAD   "A download is finished"
+    IDS_PW_TBN_ONDOWNLOAD   "Pobieranie zakoñczone"
     IDS_PW_EKDEV_OPTIONS    "Powiadomienia"
     IDS_PW_TASKBARNOTIFIER  "Wiadomoœæ"
     IDS_PW_TBN_OPTIONS      "Poka¿ kiedy"
@@ -787,11 +790,6 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* Rozpoczêto prywatn¹ rozmowê"
     IDS_IRC_SLAPMSG         "* %s przywalil %s z bejsbola!"
     IDS_IRC_PRIVMESSAGE     "Wiadomoœæ prywatna"
-    IDS_IRC_OP              "Op"
-    IDS_IRC_DEOP            "OdOp"
-    IDS_IRC_VOICE           "Voice"
-    IDS_IRC_HALFOP          "Pó³Op"
-    IDS_IRC_DEHALFOP        "OdPó³Op"
     IDS_IRC_KICK            "Kick"
     IDS_IRC_SLAP            "Walnij"
     IDS_IRC_JOIN            "Pod³¹cz"
@@ -806,7 +804,6 @@ BEGIN
     IDS_IRC_HASPARTED       "* %s poszed³ z %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s zosta³ wykopany przez %s (%s)"
     IDS_IRC_NICKUSED        "Twoj nick jest ju¿ u¿ywany na serwerze. Wybierz inny z zak³adki ustawieñ."
-    IDS_IRC_DEVOICE         "DeVoice"
     IDS_IRC_HASQUIT         "* %s wy³¹czy³ siê (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s zmieni³ nicka na %s"
     IDS_IRC_SETSMODE        "* %s ustawi³ tryb: %s %s"
@@ -908,7 +905,7 @@ BEGIN
     IDS_VIEWFILES           "Obejrzyj pliki"
     IDS_FRIENDSLOT          "Ustanów slot dla znajomych"
     IDS_FRIENDDETAIL        "(Slot znajomych)"
-    IDS_ASCWOP_PROXYSUPPORT "Automatic server connect without proxy"
+    IDS_ASCWOP_PROXYSUPPORT "Automatyczne pod³¹czenie do serwera bez proxy"
     IDS_UDPDISABLED         "wy³¹cz"
     IDS_CTINFO              "Wybierz typ twojego po³¹czenia:"
     IDS_WIZ_CTFRAME         "Typ po³¹czenia"
@@ -1026,7 +1023,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "Utracono przez uszkodzenia: %s       Zyskano przez kompresje: %s\nCzêœci uratowane przez I.C.H.: %i"
-    IDS_ERR_NOHELP          "Nie znaleziono pliku pomocy.\n Pobierz najnowsza wersje pomocy z naszej strony domowej."
+    IDS_ERR_NOHELP          "Please visit our homepage's download section to get a copy of the newest help file!\n\nDo you want to browse the online help now instead?"
     IDS_SHOWOVERHEAD        "Poka¿ narzut przepustowoœci"
     IDS_UPDOWNSMALL         "Wys³.: %.1f | Pobr.: %.1f"
     IDS_EDITLIST            "List"
@@ -1074,6 +1071,7 @@ BEGIN
     IDS_COMMENT             "Komentarz"
     IDS_IPFILTERED          "Odfiltrowane IP: %s (%s)"
     IDS_DL_TRANSFCOMPL      "Zakoñczone"
+    IDS_DL_ACTIVE_TIME      "Czas pobierania"
     IDS_STATS_FILTEREDCLIENTS "Odfiltrowane: %i"
     IDS_FILTERLABEL         "Filtruj wiadomoœci zawieraj¹ce: (Separator | )"
     IDS_ERR_LARGEREQBLOCK   "Klient za¿¹da³ zbyt du¿ego bloku danych."
@@ -1149,10 +1147,10 @@ BEGIN
     IDS_ENTERUSERNAME       "Wpisz swoj¹ nazwê u¿ytkownika:"
     IDS_STATIC_CPUMEM       "Oszczêdzaj zu¿ycie procesora i pamiêci."
     IDS_KAD_SEARCH_KEYWORD_TOO_SHORT 
-                            "Keyword too short.\r\n\r\nThe keyword(s) used in a Kad search expression must have a minimum length of 3 characters."
-    IDS_LOG2DISK            "Save log to disk"
+                            "S³owo kluczowe za krótkie.\r\n\r\nS³owe kluczowe musz¹ mieæ minimum 3 znaki."
+    IDS_LOG2DISK            "Zapisz log na dysk"
     IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING 
-                            "There is already a Kad search ongoing for the keyword ""%s"".\r\n\r\nTo search again for that keyword, either wait until this keyword search is finished or close the according search results pane."
+                            "Ju¿ trwa wyszukiwanie s³owa kluczowego ""%s"".\r\n\r\nAby spróbowaæ ponownie, zaczekaj a¿ wyszukiwanie siê skoñczy, lub zamknij odpowiednie okno poszukiwañ."
     IDS_KAD_SEARCH_KEYWORD_INVALID 
                             "Invalid Kad keyword.\r\n\r\nA Kad search expression has the following format:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nThe <kad-keyword> must not contain any of the following characters:\r\n\r\n\t%s"
     IDS_EDITCAT             "Edytuj kategorie-w³aœciwoœci"
@@ -1243,7 +1241,7 @@ BEGIN
     IDS_WIZ1_UPLOAD_SUBTITLE "Przesy³anie pe³nych kawa³ków"
     IDS_DL_RESUMENEXT       "Podejmij nastêpny wtrzymany"
     IDS_DONTCHANGE          "Nie zmieinaj"
-    IDS_STARTPRIO           "Zmieñ priorytet nowo przydzielonych plików"
+    IDS_STARTPRIO           "Priority for this category"
     IDS_PREF_STARTNEXTFILECAT "przeferuj t¹ sam¹ kategorie"
     IDS_REPAINTGRAPHS       "Nie odtwarzaj wykresów statystyk po zmianie rozmiaru"
     IDS_SOFTFILES           "Miêkki limit plików"
@@ -1300,7 +1298,7 @@ BEGIN
     IDS_STATS_SRATIO        "Ratio sesji UL:DL:"
     IDS_STATS_CRATIO        "Ratio ca³k. UL:DL:"
     IDS_SEARCH_NORESULT     "Nie znaleziono odpowiadaj¹cego wpisu."
-    IDS_STATS_CURRSRVDUR    "CZas dzia³ania serwera"
+    IDS_STATS_CURRSRVDUR    "Czas dzia³ania serwera"
     IDS_LONGSECS            "Sekund"
     IDS_STATS_DLSES         "Sesji pobierania"
     IDS_LONGMINS            "Minut"
@@ -1391,6 +1389,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_CUT                 "Cut"
     IDS_STATS_SECUREIDENT   "Bezp. Ident. (OK : Nieudana )"
     IDS_ONDISK              "Rozmiar na dysku: "
     IDS_CLIENTCOL           "Uwaga: Znaleziono identycznego klienta, podobnego do juz podlaczonego: %s (%s) i %s (%s)"
@@ -1412,6 +1411,7 @@ STRINGTABLE
 BEGIN
     IDS_VERSION             "Wersja"
     IDS_ALL_A4AF_TO_THIS    "Prze³¹cz wszystkie Ÿród³a do tego pliku"
+    IDS_PASTE               "Paste"
     IDS_ALL_A4AF_TO_OTHER   "Prze³¹cz wszystkie Ÿród³a do innego pliku"
     IDS_ALL_A4AF_AUTO       "Automatycznie prze³¹cz wszystkie Ÿród³a do tego pliku"
     IDS_SWAP_A4AF_TO_THIS   "Prze³¹cz Ÿród³o do tego pliku"
@@ -1488,7 +1488,7 @@ BEGIN
                             "Interwa³ odœwie¿ania po³¹czenia z serwerem [min.]"
     IDS_MORE                "&Wiêcej"
     IDS_TOOLS               "&Narzêdzia"
-    IDS_ERR_JIGLENEEDSTYPE  "Jeœli chcesz przeszukaæ Jigle bez podawania typu pliku, musisz podaæ rozszerzenie!"
+    IDS_SEARCHPARAMS        "Search Parameters"
 END
 
 STRINGTABLE 
@@ -1525,7 +1525,7 @@ BEGIN
     IDS_IMP_RETRYBTN        "&Ponów wybrane"
     IDS_IMP_REMOVEBTN       "&Usuñ wybrane"
     IDS_IMP_SELFOLDER       "Wybierz pojedyñszy katalog z plikami czêœci!"
-    IDS_IMP_DELSRC          "CZy chcesz by po udanym imporcie skasowaæ Ÿród³owe pliki czêœci?"
+    IDS_IMP_DELSRC          "Czy chcesz by po udanym imporcie skasowaæ Ÿród³owe pliki czêœci?"
     IDS_IMP_SIZE            "%s (Dysk:%s)"
     IDS_IMP_STATUS          "Import %s: %s"
     IDS_DYNUPENABLED        "ZnajdŸ najlepsz¹ prêdkoœæ wysy³ania automatycznie"
@@ -1544,6 +1544,7 @@ BEGIN
     IDS_CMT_COPYCLIPBOARD   "Kopiuj komentarz do schowka"
     IDS_ASKDOWNLOADLANG     "Jêzyk, który wybra³eœ nie jest zainstalowany. Czy checsz ¿eby eMule pobra³ odpowiedni plik z emule-project.net?"
     IDS_ASKDOWNLOADLANGCAP  "Pobieranie plików t³umaczeñ"
+    IDS_DELETESELECTED      "Usuñ"
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "Nie uda³o siê pobraæ i zainstalowaæ pliku t³umaczeñ z %s!"
     IDS_ERR_BADFOLDER       "B³êdny katalog.\nKatalog nie mog³ byæ utworzony. SprawdŸ nazwe i lokalizacje."
@@ -1579,6 +1580,7 @@ BEGIN
     IDS_KADUDPPORTERR       "Kads port UDP konfliktuje z zewnêtrznym portem eMule'a lub z portem serwera. Port zosta³ zmieniony na %u."
     IDS_CONFIRM_FILEDELETE  "Czy jesteœ pewnien ¿e chcesz usun¹æ wybrane pliki z dysku?"
     IDS_OPENFOLDER          "Otwórz folder"
+    IDS_RUNASUSER           "Run eMule as unprivileged User"
     IDS_DELETE              "Usuñ z dysku"
     IDS_BOOTSTRAP           "Bootstrap"
     IDS_VIAED2KSQ           "przez ED2K Serwer/Kolejkê"
@@ -1620,7 +1622,7 @@ BEGIN
     IDS_DELETEIPFILTERS     "Czy chcesz usun¹æ wybrane filtry IP?"
     IDS_TOTAL_IPFILTER_LABEL "Iloœæ filtrów IP:"
     IDS_TOTAL_IPS_LABEL     "Iloœæ IP:"
-    IDS_DELETE2             "Usuñ"
+    IDS_RAU_WARNING         "This setting will give eMule additional security against attacks and exploits and we encourage the usage of this option.\nHowever it is strongly recommended to read the manual before activating it!\n\nChanges will take effect after restarting eMule."
     IDS_APPEND              "Do³¹cz..."
     IDS_SAVE                "Zapisz"
     IDS_IP_START            "Start"
@@ -1633,12 +1635,64 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ERR_NOTCONNECTEDKAD "You are currently not connected to the Kad Network!"
-    IDS_IRC_NOSFS           "No Shared Files Selected"
-    IDS_IRC_IGNOREMISCMESSAGE "Ignore Misc info messages"
-    IDS_KNOWN               "Known"
-    IDS_DL_ACTIVE_TIME      "Download time"
-    IDS_RESETLABEL          "Auto completion (history function)"
+    IDS_ERR_NOTCONNECTEDKAD "Nie jesteœ pod³¹czony do sieci Kad!"
+    IDS_IRC_NOSFS           "Brak wybranych udostêpnianych plików"
+    IDS_RESETLABEL          "Automatyczne uzupe³nianie (funkcja historyczna)"
+    IDS_IRC_IGNOREMISCMESSAGE "Ignoruj ró¿ne wiadomoœci informacyjne"
+    IDS_KNOWN               "Znane"
+    IDS_RAU_RUNNING         "eMule running as unprivileged user ""%s"""
+    IDS_RAU_FAILED          "Failed to start eMule as unprivileged user ""eMule_Secure"". Keeping the privileges of the current user (""%S"")."
+    IDS_KADCONTACTSREAD     "Read %ld contacts from file."
+    IDS_ERR_KADCONTACTS     "No contacts found, please bootstrap, or download a nodes.dat file."
+    IDS_METATAGS            "Meta Tag Count:"
+    IDS_FILEFORMAT          "File format"
+    IDS_UDPREASKS           "UDP File Reasks"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping tolerance (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Method for ping tolerance"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milliseconds (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Percent (%)"
+    IDS_LOG_A4AF            "Log A4AF actions"
+    IDS_A4AF_SAVE_CPU       "Disable A4AF checks to save CPU"
+    IDS_SEARCH_DOC          "Document"
+    IDS_DOWNLOAD_ALPHABETICAL "Download in alphabetical order"
+    IDS_INSTALL_SKIN        "Install eMule Skin"
+    IDS_INSTALL_SKIN_NODIR  "No eMule Skin profile directory selected or directory is not accessible!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            "Failed to create directory ""%s"" for eMule Skin - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "Failed to extract file ""%s"" from eMule Skin to local file ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "This is not a valid eMule Skin package file."
+    IDS_NEXT_REASK          "Next ask to this client"
+    IDS_A4AF_FILES          "A4AF files"
+    IDS_STATS_FRATIO        "Session UL:DL ratio (friends UL excluded):"
+    IDS_STATS_UDATA_FRIENDS "Uploaded data to friend slots (Session): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FO_PREF_EXISTED     "eMule detected existing rules for the selected ports, which were not overwritten or replaced. Missing rules have been added successfully.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_FO_PREF_FAILED      "Failed to configure the internal WinXP firewall for the selected ports!"
+    IDS_FO_PREF_STARTUP     "Open/close ports on WinXP firewall when starting/exiting eMule"
+    IDS_LOG_LEVEL           "Log Level"
+    IDS_DISABLEPEERACHE     "Disable downloading from PeerCache"
+    IDS_FO_TEMPTCP_S        "Opened port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPTCP_F        "Failed to open port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_S        "Opened port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_F        "Failed to open port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_PREFBUTTON       "Open these ports on internal WinXP firewall"
+    IDS_FO_PREF_SUCCCEEDED  "Succeeded to open selected ports on the internal WinXP firewall.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_SOURCESWAPBLOCKED   "Swap blocked"
+    IDS_A4AF_CHECK_THIS_NOW "Check this source now (debug)"
+    IDS_SOURCEEXCHANGESWAP  "Temporary Source Exchange Swap"
+    IDS_NEWMSG              "New Message from '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
+    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
+    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
 END
 
 #endif    // Polish resources

@@ -90,13 +90,16 @@ void CClientListCtrl::SetAllIcons()
 	imagelist.DeleteImageList();
 	imagelist.Create(16,16,theApp.m_iDfltImageListColorFlags|ILC_MASK,0,1);
 	imagelist.SetBkColor(CLR_NONE);
-	imagelist.Add(CTempIconLoader("ClientEDonkey"));
-	imagelist.Add(CTempIconLoader("ClientCompatible"));
-	imagelist.Add(CTempIconLoader("Friend"));
-	imagelist.Add(CTempIconLoader("ClientMLDonkey"));
-	imagelist.Add(CTempIconLoader("ClientEDonkeyHybrid"));
-	imagelist.Add(CTempIconLoader("ClientShareaza"));
-	imagelist.SetOverlayImage(imagelist.Add(CTempIconLoader("ClientSecureOvl")), 1);
+	imagelist.Add(CTempIconLoader(_T("ClientEDonkey")));
+	imagelist.Add(CTempIconLoader(_T("ClientCompatible")));
+	imagelist.Add(CTempIconLoader(_T("Friend")));
+	imagelist.Add(CTempIconLoader(_T("ClientMLDonkey")));
+	imagelist.Add(CTempIconLoader(_T("ClientEDonkeyHybrid")));
+	imagelist.Add(CTempIconLoader(_T("ClientShareaza")));
+	imagelist.Add(CTempIconLoader(_T("Server")));
+	imagelist.Add(CTempIconLoader(_T("ClientAMule")));
+	imagelist.Add(CTempIconLoader(_T("ClientLPhant")));
+	imagelist.SetOverlayImage(imagelist.Add(CTempIconLoader(_T("ClientSecureOvl"))), 1);
 }
 
 void CClientListCtrl::Localize()
@@ -263,6 +266,12 @@ void CClientListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 						image = 3;
 					else if (client->GetClientSoft() == SO_SHAREAZA)
 						image = 5;
+					else if (client->GetClientSoft() == SO_URL)
+						image = 6;
+					else if (client->GetClientSoft() == SO_AMULE)
+						image = 7;
+					else if (client->GetClientSoft() == SO_LPHANT)
+						image = 8;
 					else if (client->ExtProtocolAvailable())
 						image = 1;
 					else
@@ -271,7 +280,7 @@ void CClientListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					POINT point = {cur_rec.left, cur_rec.top+1};
 					imagelist.Draw(dc,image, point, ILD_NORMAL | ((client->Credits() && client->Credits()->GetCurrentIdentState(client->GetIP()) == IS_IDENTIFIED) ? INDEXTOOVERLAYMASK(1) : 0));
 					if (client->GetUserName()==NULL)
-						Sbuffer.Format("(%s)", GetResString(IDS_UNKNOWN));
+						Sbuffer.Format(_T("(%s)"), GetResString(IDS_UNKNOWN));
 					else
 						Sbuffer = client->GetUserName();
 					cur_rec.left +=20;
@@ -280,34 +289,7 @@ void CClientListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					break;
 				}
 				case 1:{
-					switch (client->GetUploadState()){
-						case US_ONUPLOADQUEUE:
-							Sbuffer = GetResString(IDS_ONQUEUE);
-							break;
-						case US_PENDING:
-							Sbuffer = GetResString(IDS_CL_PENDING);
-							break;
-						case US_LOWTOLOWIP:
-							Sbuffer = GetResString(IDS_CL_LOW2LOW);
-							break;
-						case US_BANNED:
-							Sbuffer = GetResString(IDS_BANNED);
-							break;
-						case US_ERROR:
-							Sbuffer = GetResString(IDS_ERROR);
-							break;
-						case US_CONNECTING:
-							Sbuffer = GetResString(IDS_CONNECTING);
-							break;
-						case US_WAITCALLBACK:
-							Sbuffer = GetResString(IDS_CONNVIASERVER);
-							break;
-						case US_UPLOADING:
-							Sbuffer = GetResString(IDS_TRANSFERRING);
-							break;
-						default:
-							Sbuffer.Empty();
-						}
+					Sbuffer = client->GetUploadStateDisplayString();
 					break;
 				}
 				case 2:{
@@ -318,40 +300,7 @@ void CClientListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					break;
 				}
 				case 3:{
-					switch (client->GetDownloadState()) {
-						case DS_CONNECTING:
-							Sbuffer = GetResString(IDS_CONNECTING);
-							break;
-						case DS_CONNECTED:
-							Sbuffer = GetResString(IDS_ASKING);
-							break;
-						case DS_WAITCALLBACK:
-							Sbuffer = GetResString(IDS_CONNVIASERVER);
-							break;
-						case DS_ONQUEUE:
-							if( client->IsRemoteQueueFull() )
-								Sbuffer = GetResString(IDS_QUEUEFULL);
-							else
-								Sbuffer = GetResString(IDS_ONQUEUE);
-							break;
-						case DS_DOWNLOADING:
-							Sbuffer = GetResString(IDS_TRANSFERRING);
-							break;
-						case DS_REQHASHSET:
-							Sbuffer = GetResString(IDS_RECHASHSET);
-							break;
-						case DS_NONEEDEDPARTS:
-							Sbuffer = GetResString(IDS_NONEEDEDPARTS);
-							break;
-						case DS_LOWTOLOWIP:
-							Sbuffer = GetResString(IDS_NOCONNECTLOW2LOW);
-							break;
-						case DS_TOOMANYCONNS:
-							Sbuffer = GetResString(IDS_TOOMANYCONNS);
-							break;
-						default:
-							Sbuffer.Empty();
-					}
+					Sbuffer = client->GetDownloadStateDisplayString();
 					break;
 				}
 				case 4:{
@@ -424,19 +373,18 @@ END_MESSAGE_MAP()
 void CClientListCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	int iSel = GetNextItem(-1, LVIS_SELECTED | LVIS_FOCUSED);
-	UINT uFlags = (iSel != -1) ? MF_ENABLED : MF_GRAYED;
 	const CUpDownClient* client = (iSel != -1) ? (CUpDownClient*)GetItemData(iSel) : NULL;
 
 	CTitleMenu ClientMenu;
 	ClientMenu.CreatePopupMenu();
 	ClientMenu.AddMenuTitle(GetResString(IDS_CLIENTS));
-	ClientMenu.AppendMenu(MF_STRING | uFlags, MP_DETAIL, GetResString(IDS_SHOWDETAILS));
+	ClientMenu.AppendMenu(MF_STRING | (client ? MF_ENABLED : MF_GRAYED), MP_DETAIL, GetResString(IDS_SHOWDETAILS));
 	ClientMenu.SetDefaultItem(MP_DETAIL);
-	ClientMenu.AppendMenu(MF_STRING | ((client && !client->IsFriend()) ? MF_ENABLED : MF_GRAYED), MP_ADDFRIEND, GetResString(IDS_ADDFRIEND));
-	ClientMenu.AppendMenu(MF_STRING | uFlags, MP_MESSAGE, GetResString(IDS_SEND_MSG));
-	ClientMenu.AppendMenu(MF_STRING | ((!client || !client->GetViewSharedFilesSupport()) ? MF_GRAYED : MF_ENABLED), MP_SHOWLIST, GetResString(IDS_VIEWFILES));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && !client->IsFriend()) ? MF_ENABLED : MF_GRAYED), MP_ADDFRIEND, GetResString(IDS_ADDFRIEND));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient()) ? MF_ENABLED : MF_GRAYED), MP_MESSAGE, GetResString(IDS_SEND_MSG));
+	ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetViewSharedFilesSupport()) ? MF_ENABLED : MF_GRAYED), MP_SHOWLIST, GetResString(IDS_VIEWFILES));
 	if (Kademlia::CKademlia::isRunning() && !Kademlia::CKademlia::isConnected())
-		ClientMenu.AppendMenu(MF_STRING | ((!client || client->GetKadPort()==0) ? MF_GRAYED : MF_ENABLED), MP_BOOT, GetResString(IDS_BOOTSTRAP));
+		ClientMenu.AppendMenu(MF_STRING | ((client && client->IsEd2kClient() && client->GetKadPort()!=0) ? MF_ENABLED : MF_GRAYED), MP_BOOT, GetResString(IDS_BOOTSTRAP));
 	GetPopupMenuPos(*this, point);
 	ClientMenu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 }
@@ -523,14 +471,14 @@ int CClientListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 			return item2->GetUploadState()-item1->GetUploadState();
 		case 2:
 			if( item1->credits && item2->credits )
-				return item1->credits->GetUploadedTotal()-item2->credits->GetUploadedTotal();
+				return CompareUnsigned64(item1->credits->GetUploadedTotal(), item2->credits->GetUploadedTotal());
 			else if( !item1->credits )
 				return 1;
 			else
 				return -1;
 		case 102:
 			if( item1->credits && item2->credits )
-				return item2->credits->GetUploadedTotal()-item1->credits->GetUploadedTotal();
+				return CompareUnsigned64(item2->credits->GetUploadedTotal(), item1->credits->GetUploadedTotal());
 			else if( !item1->credits )
 				return 1;
 			else
@@ -561,14 +509,14 @@ int CClientListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 			return item2->GetDownloadState()-item1->GetDownloadState();
 		case 4:
 			if( item1->credits && item2->credits )
-				return item1->credits->GetDownloadedTotal()-item2->credits->GetDownloadedTotal();
+				return CompareUnsigned64(item1->credits->GetDownloadedTotal(), item2->credits->GetDownloadedTotal());
 			else if( !item1->credits )
 				return 1;
 			else
 				return -1;
 		case 104:
 			if( item1->credits && item2->credits )
-				return item2->credits->GetDownloadedTotal()-item1->credits->GetDownloadedTotal();
+				return CompareUnsigned64(item2->credits->GetDownloadedTotal(), item1->credits->GetDownloadedTotal());
 			else if( !item1->credits )
 				return 1;
 			else

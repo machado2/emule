@@ -19,6 +19,7 @@
 #include "Loggable.h"
 
 class CKnownFile;
+typedef CMap<CCKey,const CCKey&,CKnownFile*,CKnownFile*> CKnownFilesMap;
 
 class CKnownFileList : public CLoggable
 {
@@ -38,11 +39,12 @@ public:
 	CKnownFile* FindKnownFileByID(const uchar* hash) const;
 	bool	IsKnownFile(const CKnownFile* file) const;
 	bool	IsFilePtrInList(const CKnownFile* file) const;
+	const CKnownFilesMap& GetKnownFiles() const { return m_Files_map; }
 
 private:
 	uint16 	requested;
 	uint16 	accepted;
 	uint64 	transferred;
 	uint32 	m_nLastSaved;
-	CMap<CCKey,const CCKey&,CKnownFile*,CKnownFile*> m_Files_map;
+	CKnownFilesMap m_Files_map;
 };

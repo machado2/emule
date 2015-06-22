@@ -15,6 +15,9 @@ extern CStringArray _astrParserErrors;
 
 void ParsedSearchExpression(const CSearchExpr* pexpr);
 int yyerror(const char* errstr);
+#ifdef _UNICODE
+int yyerror(LPCTSTR errstr);
+#endif
 
 #pragma warning(disable:4065) // switch statement contains 'default' but no 'case' labels
 #pragma warning(disable:4102) // 'yyerrlab1' : unreferenced label
@@ -28,9 +31,10 @@ int yyerror(const char* errstr);
 
 %token TOK_STRING
 %token TOK_AND TOK_OR TOK_NOT
+%token TOK_ED2K_LINK
 
 %type <pexpr> searchexpr and_strings
-%type <pstr> TOK_STRING
+%type <pstr> TOK_STRING TOK_ED2K_LINK
 
 %left TOK_OR
 %left TOK_AND
@@ -42,6 +46,14 @@ int yyerror(const char* errstr);
 action			: searchexpr
 					{
 						ParsedSearchExpression($1);
+						delete $1;
+						return 0;
+					}
+				| TOK_ED2K_LINK
+					{
+						CSearchExpr* pexpr = new CSearchExpr($1);
+						ParsedSearchExpression(pexpr);
+						delete pexpr;
 						delete $1;
 						return 0;
 					}
@@ -160,6 +172,15 @@ int yyerror(const char* errstr)
 	//yyerror ("syntax error");
 	//yyerror ("parser stack overflow");
 
+	USES_CONVERSION;
+	_astrParserErrors.Add(A2CT(errstr));
+	return EXIT_FAILURE;
+}
+
+#ifdef _UNICODE
+int yyerror(LPCTSTR errstr)
+{
 	_astrParserErrors.Add(errstr);
 	return EXIT_FAILURE;
 }
+#endif

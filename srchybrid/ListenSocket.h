@@ -22,17 +22,21 @@ class CPacket;
 class CTimerWnd;
 
 class CClientReqSocket : public CEMSocket{
+	DECLARE_DYNCREATE(CClientReqSocket)
 	friend class CListenSocket;
 public:
 	CClientReqSocket(CUpDownClient* in_client = NULL);	
-	void	Disconnect(CString strReason);
+	void	SetClient(CUpDownClient* pClient);
+	void	Disconnect(LPCTSTR pszReason);
 
 	void	ResetTimeOutTimer();
 	bool	CheckTimeOut();
-	void	Safe_Delete();
+	virtual UINT GetTimeOut();
+	virtual void Safe_Delete();
 	
 	bool	Create();
-    virtual SocketSentBytes Send(uint32 maxNumberOfBytesToSend, bool onlyAllowedToSendControlPacket = false);
+	virtual void SendPacket(Packet* packet, bool delpacket = true, bool controlpacket = true, uint32 actualPayloadSize = 0);
+    virtual SocketSentBytes Send(uint32 maxNumberOfBytesToSend, uint32 overchargeMaxBytesToSend, bool onlyAllowedToSendControlPacket = false);
 
 	void	DbgAppendClientInfo(CString& str);
 	CString DbgGetClientInfo();
@@ -47,17 +51,16 @@ protected:
 	void		 OnSend(int nErrorCode);
 	void		 OnReceive(int nErrorCode);
 	void		 OnError(int nErrorCode);
-	bool		 PacketReceived(Packet* packet);
+	virtual bool PacketReceived(Packet* packet);
 	int			 PacketReceivedSEH(Packet* packet);
 	bool		 PacketReceivedCppEH(Packet* packet);
 
-private:
 	void	Delete_Timed();
-	~CClientReqSocket();
+	virtual ~CClientReqSocket();
 
 	bool	ProcessPacket(char* packet, uint32 size, UINT opcode);
 	bool	ProcessExtPacket(char* packet, uint32 size, UINT opcode, UINT uRawSize);
-	void	PacketToDebugLogLine(const char* protocol, const char* packet, uint32 size, UINT opcode);
+	void	PacketToDebugLogLine(LPCTSTR protocol, const char* packet, uint32 size, UINT opcode, EDebugLogPriority dlpPriority);
 
 	uint32	timeout_timer;
 	bool	deletethis;
@@ -101,7 +104,7 @@ private:
 	uint16	m_OpenSocketsInterval;
 	uint32	maxconnectionreached;
 	uint16	m_ConnectionStates[3];
-	uint16	m_nPeningConnections;
+	uint16	m_nPendingConnections;
 	uint32	peakconnections;
 	uint32	totalconnectionchecks;
 	float	averageconnections;

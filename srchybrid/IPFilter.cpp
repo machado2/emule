@@ -15,6 +15,7 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include "stdafx.h"
+#include <share.h>
 #include "emule.h"
 #include "IPFilter.h"
 #include "otherfunctions.h"
@@ -38,7 +39,7 @@ CIPFilter::CIPFilter()
 
 CIPFilter::~CIPFilter()
 {
-	RemoveAllIPs();
+	RemoveAllIPFilters();
 }
 
 void CIPFilter::AddIPRange(uint32 start, uint32 end, UINT level, const CString& desc)
@@ -59,15 +60,20 @@ static int __cdecl CmpSIPFilterByStartAddr(const void* p1, const void* p2)
 	return CompareUnsigned(rng1->start, rng2->start);
 }
 
+CString CIPFilter::GetDefaultFilePath() const
+{
+	return thePrefs.GetConfigDir() + DFLT_IPFILTER_FILENAME;
+}
+
 int CIPFilter::LoadFromDefaultFile(bool bShowResponse)
 {
-	RemoveAllIPs();
-	return AddFromFile(thePrefs.GetConfigDir() + DFLT_IPFILTER_FILENAME, bShowResponse);
+	RemoveAllIPFilters();
+	return AddFromFile(GetDefaultFilePath(), bShowResponse);
 }
 
 int CIPFilter::AddFromFile(LPCTSTR pszFilePath, bool bShowResponse)
 {
-	FILE* readFile = fopen(pszFilePath, "r");
+	FILE* readFile = _tfsopen(pszFilePath, _T("r"), _SH_DENYWR);
 	if (readFile != NULL)
 	{
 		enum EIPFilterFileType
@@ -90,8 +96,8 @@ int CIPFilter::AddFromFile(LPCTSTR pszFilePath, bool bShowResponse)
 		int iDuplicate = 0;
 		int iMerged = 0;
 		CString sbuffer;
-		char szBuffer[1024];
-		while (fgets(szBuffer, ARRSIZE(szBuffer), readFile) != NULL)
+		TCHAR szBuffer[1024];
+		while (_fgetts(szBuffer, ARRSIZE(szBuffer), readFile) != NULL)
 		{
 			iLine++;
 			sbuffer = szBuffer;
@@ -197,23 +203,20 @@ int CIPFilter::AddFromFile(LPCTSTR pszFilePath, bool bShowResponse)
 void CIPFilter::SaveToDefaultFile()
 {
 	CString strFilePath = thePrefs.GetConfigDir() + DFLT_IPFILTER_FILENAME;
-	FILE* fp = fopen(strFilePath, "wt");
+	FILE* fp = _tfsopen(strFilePath, _T("wt"), _SH_DENYWR);
 	if (fp != NULL)
 	{
 		for (int i = 0; i < m_iplist.GetCount(); i++)
 		{
 			const SIPFilter* flt = m_iplist[i];
 
-			char szStart[16];
-			in_addr ip;
-			ip.S_un.S_addr = htonl(flt->start);
-			strcpy(szStart, inet_ntoa(ip));
+			TCHAR szStart[16];
+			_tcscpy(szStart, ipstr(htonl(flt->start)));
 
-			char szEnd[16];
-			ip.S_un.S_addr = htonl(flt->end);
-			strcpy(szEnd, inet_ntoa(ip));
+			TCHAR szEnd[16];
+			_tcscpy(szEnd, ipstr(htonl(flt->end)));
 
-			if (fprintf(fp, "%-15s - %-15s , %3u , %s\n", szStart, szEnd, flt->level, flt->desc) == 0 || ferror(fp))
+			if (_ftprintf(fp, _T("%-15s - %-15s , %3u , %s\n"), szStart, szEnd, flt->level, flt->desc) == 0 || ferror(fp))
 			{
 				CString strError;
 				strError.Format(_T("Failed to save IP filter to file \"%s\" - %hs"), strFilePath, strerror(errno));
@@ -269,8 +272,8 @@ bool CIPFilter::ParseFilterLine1(const CString& sbuffer, uint32& ip1, uint32& ip
 
 bool CIPFilter::ParseFilterLine2(const CString& sbuffer, uint32& ip1, uint32& ip2, UINT& level, CString& desc) const
 {
-	int iPos = sbuffer.Find(_T(':'));
-	if (iPos < 1)
+	int iPos = sbuffer.ReverseFind(_T(':'));
+	if (iPos < 0)
 		return false;
 
 	desc = sbuffer.Left(iPos);
@@ -297,7 +300,7 @@ bool CIPFilter::ParseFilterLine2(const CString& sbuffer, uint32& ip1, uint32& ip
 	return true;
 }
 
-void CIPFilter::RemoveAllIPs()
+void CIPFilter::RemoveAllIPFilters()
 {
 	for (int i = 0; i < m_iplist.GetCount(); i++)
 		delete m_iplist[i];

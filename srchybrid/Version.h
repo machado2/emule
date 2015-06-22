@@ -29,9 +29,9 @@
 //	<major>.<minor>			 is used for the protocol(!) version
 //
 #define VERSION_MJR		0
-#define VERSION_MIN		42
-#define VERSION_UPDATE	4
-#define VERSION_BUILD	27
+#define VERSION_MIN		43
+#define VERSION_UPDATE	1
+#define VERSION_BUILD	23
 #ifdef _DEBUG
   #ifdef _UNICODE
     #define VERSION_SPECIAL_BUILD	_T(" - Unicode Debug")

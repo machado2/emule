@@ -411,12 +411,12 @@ BEGIN
     IDS_SKIN_PROF           "Perfils de Temes"
     IDS_ERR_PART_FNF        "fitxer .part no trobat"
     IDS_ERR_OPENMETFILE     "Fallada al obrir el fitxer part.met"
-    IDS_KADOPEN             "Obrir"
+    IDS_KADOPEN             "Obert"
     IDS_ERR_SAVEMET         "ERROR grabant el fitxer de parts: %s (%s)"
     IDS_ERR_FOUNDCORRUPTION "S'ha trobat una part corrupte (%i) a %s"
     IDS_HASHINGDONE         "Finalitzat el rehash de %s, el fitxer sembla  \nestar bé"
     IDS_ERR_PARTCORRUPT     "La part descarregada %i és corrupte:(  (%s)"
-    IDS_ICHWORKED           "ICH: La part %i corrupte s'ha recuperat (%s)"
+    IDS_ICHWORKED           "ICH: La part %i corrupte s'ha recuperat (%s), Saved: %s"
     IDS_ERR_OUTOFSPACE      "No tens espai de disc suficient per a  \ndescarregar %s!"
     IDS_SE                  "Intercanvi de Fonts"
 END
@@ -477,6 +477,7 @@ BEGIN
     IDS_NOTHING             "res"
     IDS_SETUPSPEED          "posar límit de pujada"
     IDS_SETDOWNSPEED        "posar límit de descàrrega"
+    IDS_UNDO                "Desfer"
     IDS_DAYLY               "diari"
 END
 
@@ -758,6 +759,7 @@ BEGIN
     IDS_STREE               "Arbre d'Estadístiques"
     IDS_IRC_IGNOREQUITMESSAGE "Ignore Quit info messages"
     IDS_STATSSETUPINFO      "Configurar la mostra d'estadístiques"
+    IDS_IRC_SOUNDEVENTS     "Tocar sons d'events"
 END
 
 STRINGTABLE 
@@ -808,11 +810,6 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* S'ha iniciat una sessió de xat privada"
     IDS_IRC_SLAPMSG         "* %s fueteja %s amb un gran Babelfish!"
     IDS_IRC_PRIVMESSAGE     "Missatge Privat"
-    IDS_IRC_OP              "Donar Op"
-    IDS_IRC_DEOP            "Treure Op"
-    IDS_IRC_VOICE           "Donar Veu"
-    IDS_IRC_HALFOP          "Donar Mig Op"
-    IDS_IRC_DEHALFOP        "Treure Mig Op"
     IDS_IRC_KICK            "Patejar"
     IDS_IRC_SLAP            "Fuetejar"
     IDS_IRC_JOIN            "Entrar"
@@ -827,7 +824,6 @@ BEGIN
     IDS_IRC_HASPARTED       "* %s ha sortit de %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s ha sigut patejat per %s (%s)"
     IDS_IRC_NICKUSED        "El teu àlies ja es fa servir a aquest servidor  \nIRC. Per favor, tria un pseudònim diferent a Preferències d'IRC."
-    IDS_IRC_DEVOICE         "Treure Veu"
     IDS_IRC_HASQUIT         "* %s ha desconnectat (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s ara es diu %s"
     IDS_IRC_SETSMODE        "* %s posa mode: %s %s"
@@ -1027,7 +1023,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "Perdut per corrupció: %s       Guanyat per  \ncompressió: %s\nPaquets salvats per I.C.H.: %i"
-    IDS_ERR_NOHELP          "No hi ha fitxer d'ajuda.\n Per favor visita la  \nplana principal per descarregar una còpia del fitxer més nou (secció de  \ndescàrregues)"
+    IDS_ERR_NOHELP          "Please visit our homepage's download section to get a copy of the newest help file!\n\nDo you want to browse the online help now instead?"
     IDS_SHOWOVERHEAD        "Mostrar sobrecàrrega de ample de banda"
     IDS_UPDOWNSMALL         "Env: %.1f | Desc: %.1f"
     IDS_EDITLIST            "Llista"
@@ -1076,6 +1072,7 @@ BEGIN
     IDS_COMMENT             "Comentari"
     IDS_IPFILTERED          "IP Filtrada: %s (%s)"
     IDS_DL_TRANSFCOMPL      "Completat"
+    IDS_DL_ACTIVE_TIME      "Temps Descàrrega"
     IDS_STATS_FILTEREDCLIENTS "Filtrat: %i"
     IDS_FILTERLABEL         "Filtrar missatges que continguin: (Separador |  \n)"
     IDS_ERR_LARGEREQBLOCK   "Client ha sol·licitat un bloc massa gran."
@@ -1246,7 +1243,7 @@ BEGIN
     IDS_WIZ1_UPLOAD_SUBTITLE "Transferència de troços complerts"
     IDS_DL_RESUMENEXT       "Continuar amb el següent en pausa"
     IDS_DONTCHANGE          "No canviar"
-    IDS_STARTPRIO           "Canviar prioritat per nous fitxers assignats"
+    IDS_STARTPRIO           "Priority for this category"
     IDS_PREF_STARTNEXTFILECAT "preferir la mateixa categoria"
     IDS_REPAINTGRAPHS       "No recrear gràfics d'estadística al canviar  \ntamany"
     IDS_SOFTFILES           "Limit Tou de Fitxer"
@@ -1394,6 +1391,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_CUT                 "Tallar"
     IDS_STATS_SECUREIDENT   "Identificació Segura (OK : Fallada)"
     IDS_ONDISK              "Granària a disk: "
     IDS_CLIENTCOL           "Atenció: Client coincident trobat, a un client actualment connectat: %s (%s) i %s (%s)"
@@ -1415,6 +1413,7 @@ STRINGTABLE
 BEGIN
     IDS_VERSION             "Version"
     IDS_ALL_A4AF_TO_THIS    "Swap all sources to this file now"
+    IDS_PASTE               "Enganxar"
     IDS_ALL_A4AF_TO_OTHER   "Swap all sources to any other file now"
     IDS_ALL_A4AF_AUTO       "Automatically swap all (A4AF)sources to this file"
     IDS_SWAP_A4AF_TO_THIS   "Swap source to this file now"
@@ -1491,7 +1490,6 @@ BEGIN
                             "Interval de Refresc de Connexió de Servidor [min.]"
     IDS_MORE                "&Més"
     IDS_TOOLS               "&Eines"
-    IDS_ERR_JIGLENEEDSTYPE  "If you want to search the Jigle database without specifying a file type, you have to specify at least a file extension!"
 END
 
 STRINGTABLE 
@@ -1547,6 +1545,7 @@ BEGIN
     IDS_CMT_COPYCLIPBOARD   "Copiar comentari al portapapers"
     IDS_ASKDOWNLOADLANG     "L'idioma que has triat no és instal·lat al sistema. Vols que eMule el descarregui des de emule-project.net?"
     IDS_ASKDOWNLOADLANGCAP  "Descarregar fitxers d'idioma"
+    IDS_DELETESELECTED      "Esborrar"
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "Error al descarregar i instal·lar la dll de l' idioma seleccionat des de %s!"
     IDS_ERR_BADFOLDER       "Carpeta incorrecta.\nLa carpeta no pot ser creada. Per favor, comprova el nom i la localització."
@@ -1582,6 +1581,7 @@ BEGIN
     IDS_KADUDPPORTERR       "El port UDP de Kad entra en conflicte bé amb el port extés d'eMule o del servidor UDP d'eMule. El port ha sigut canviat a %u."
     IDS_CONFIRM_FILEDELETE  "Realment vols esborrar tots els arxius seleccionats del disc?"
     IDS_OPENFOLDER          "Obrir Carpeta"
+    IDS_RUNASUSER           "Executar eMule sense privilegis"
     IDS_DELETE              "Esborrar del Disc"
     IDS_BOOTSTRAP           "Arrancada"
     IDS_VIAED2KSQ           "via Servidor ED2K/Cua"
@@ -1623,7 +1623,7 @@ BEGIN
     IDS_DELETEIPFILTERS     "Realment vols esborrar els fitxers de filtre seleccionats?"
     IDS_TOTAL_IPFILTER_LABEL "Total filtres IP:"
     IDS_TOTAL_IPS_LABEL     "Total IPs:"
-    IDS_DELETE2             "Esborrar"
+    IDS_RAU_WARNING         "Aquest ajustament donarà a eMule més seguretat contra atacs i trampes i recomanem l'ús d'aquesta opció.\nDe totes formes, millor llegir el manual abans de activar-ho!\n\nEls canvis seràn efectius quan reiniciis l'eMule."
     IDS_APPEND              "Afegir..."
     IDS_SAVE                "Desar"
     IDS_IP_START            "Començar"
@@ -1638,10 +1638,59 @@ STRINGTABLE
 BEGIN
     IDS_ERR_NOTCONNECTEDKAD "Actualment no ets connectat a la xarxa Kad!"
     IDS_IRC_NOSFS           "No hi ha arxius compartits seleccionats"
+    IDS_RESETLABEL          "Auto Completar (funció història)"
     IDS_IRC_IGNOREMISCMESSAGE "Ingorar missatges varis d'Informació"
     IDS_KNOWN               "Coneguts"
-    IDS_DL_ACTIVE_TIME      "Download time"
-    IDS_RESETLABEL          "Auto completion (history function)"
+    IDS_RAU_RUNNING         "eMule execuntant-se com usuari sense privilegis ""%s"""
+    IDS_RAU_FAILED          "Fallada a l'iniciar eMule com usuari sense privilegis ""eMule_Secure"". Mantenint els privilegis de l'usuari actual (""%S"")."
+    IDS_KADCONTACTSREAD     "Llegir %ld contactes de l'arxiu."
+    IDS_ERR_KADCONTACTS     "No es troben contactes, per favor reinicia, o descarrega l'arxiu nodes.dat"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping tolerance (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Method for ping tolerance"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milliseconds (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Percent (%)"
+    IDS_LOG_A4AF            "Log A4AF actions"
+    IDS_A4AF_SAVE_CPU       "Disable A4AF checks to save CPU"
+    IDS_SEARCH_DOC          "Document"
+    IDS_DOWNLOAD_ALPHABETICAL "Download in alphabetical order"
+    IDS_INSTALL_SKIN        "Install eMule Skin"
+    IDS_INSTALL_SKIN_NODIR  "No eMule Skin profile directory selected or directory is not accessible!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            "Failed to create directory ""%s"" for eMule Skin - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "Failed to extract file ""%s"" from eMule Skin to local file ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "This is not a valid eMule Skin package file."
+    IDS_NEXT_REASK          "Next ask to this client"
+    IDS_A4AF_FILES          "A4AF files"
+    IDS_STATS_FRATIO        "Session UL:DL ratio (friends UL excluded):"
+    IDS_STATS_UDATA_FRIENDS "Uploaded data to friend slots (Session): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FO_TEMPTCP_S        "Opened port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPTCP_F        "Failed to open port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_S        "Opened port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_F        "Failed to open port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_PREFBUTTON       "Open these ports on internal WinXP firewall"
+    IDS_FO_PREF_SUCCCEEDED  "Succeeded to open selected ports on the internal WinXP firewall.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_FO_PREF_EXISTED     "eMule detected existing rules for the selected ports, which were not overwritten or replaced. Missing rules have been added successfully.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_FO_PREF_FAILED      "Failed to configure the internal WinXP firewall for the selected ports!"
+    IDS_FO_PREF_STARTUP     "Open/close ports on WinXP firewall when starting/exiting eMule"
+    IDS_LOG_LEVEL           "Log Level"
+    IDS_DISABLEPEERACHE     "Disable downloading from PeerCache"
+    IDS_SOURCESWAPBLOCKED   "Swap blocked"
+    IDS_A4AF_CHECK_THIS_NOW "Check this source now (debug)"
+    IDS_SOURCEEXCHANGESWAP  "Temporary Source Exchange Swap"
+    IDS_NEWMSG              "New Message from '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
+    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
+    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
 END
 
 #endif    // Catalan resources

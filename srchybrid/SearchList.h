@@ -120,7 +120,7 @@ private:
 	CSimpleArray<SClient> m_aClients;
 	CSimpleArray<SServer> m_aServers;
 	CSimpleArray<CxImage*> m_listImages;
-	LPSTR m_pszDirectory;
+	LPTSTR m_pszDirectory;
 
 	// GUI helpers
 	bool		m_bPreviewPossible;
@@ -149,7 +149,7 @@ public:
 	CSearchList();
 	~CSearchList();
 	void	Clear();
-	void	NewSearch(CSearchListCtrl* in_wnd, CString resTypes, uint32 nSearchID, bool MobilMuleSearch = false);
+	void	NewSearch(CSearchListCtrl* in_wnd, CStringA strResultFileType, uint32 nSearchID, bool MobilMuleSearch = false);
 	uint16	ProcessSearchanswer(char* packet, uint32 size, CUpDownClient* Sender, bool* pbMoreResultsAvailable, LPCTSTR pszDirectory = NULL);
 	uint16	ProcessSearchanswer(char* packet, uint32 size, uint32 nServerIP, uint16 nServerPort, bool* pbMoreResultsAvailable);
 	uint16	ProcessUDPSearchanswer(CFileDataIO& packet, uint32 nServerIP, uint16 nServerPort);
@@ -165,7 +165,7 @@ public:
 	void	AddFileToDownloadByHash(const uchar* hash, uint8 cat);
 	bool	AddToList(CSearchFile* toadd, bool bClientResponse = false);
 	CSearchFile* GetSearchFileByHash(const uchar* hash) const;
-	void	KademliaSearchKeyword(uint32 searchID, const Kademlia::CUInt128* pfileID, LPCSTR name, uint32 size, LPCSTR type, uint16 numProperties, ...);
+	void	KademliaSearchKeyword(uint32 searchID, const Kademlia::CUInt128* pfileID, LPCTSTR name, uint32 size, LPCTSTR type, uint16 numProperties, ...);
 
 	uint16	GetFoundFiles(uint32 searchID) const {
 		uint16 returnVal=0;
@@ -181,7 +181,7 @@ private:
 	CMap<uint32, uint32, uint16, uint16> m_foundSourcesCount;
 
 	CSearchListCtrl*	outputwnd;
-	CString m_strResultType;
+	CStringA m_strResultFileType;
 	uint32	m_nCurrentSearch;
 	bool	m_MobilMuleSearch;
 };

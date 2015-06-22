@@ -23,6 +23,8 @@
 #include "UpDownClient.h"
 #include "OtherFunctions.h"
 #include "MenuCmds.h"
+#include "HelpIDs.h"
+#include "Opcodes.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -63,6 +65,7 @@ BEGIN_MESSAGE_MAP(CChatWnd, CResizableDialog)
 	ON_MESSAGE(WM_CLOSETAB, OnCloseTab)
 	ON_WM_SYSCOLORCHANGE()
     ON_WM_CONTEXTMENU()
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 // CChatWnd message handlers
@@ -71,6 +74,7 @@ BOOL CChatWnd::OnInitDialog()
 {
 	CResizableDialog::OnInitDialog();
 
+	inputtext.SetLimitText(MAX_CLIENT_MSG_LEN);
 	chatselector.Init();
 	m_FriendListCtrl.Init();
 
@@ -110,8 +114,8 @@ void CChatWnd::SetAllIcons()
 		VERIFY( DestroyIcon(icon_friend) );
 	if (icon_msg)
 		VERIFY( DestroyIcon(icon_msg) );
-	icon_friend = theApp.LoadIcon("Friend", 16, 16);
-	icon_msg = theApp.LoadIcon("Message", 16, 16);
+	icon_friend = theApp.LoadIcon(_T("Friend"), 16, 16);
+	icon_msg = theApp.LoadIcon(_T("Message"), 16, 16);
 	((CStatic*)GetDlgItem(IDC_MESSAGEICON))->SetIcon(icon_msg);
 	((CStatic*)GetDlgItem(IDC_FRIENDSICON))->SetIcon(icon_friend);
 }
@@ -143,7 +147,7 @@ void CChatWnd::ScrollHistory(bool down) {
 	
 	if (down) ++ci->history_pos; else --ci->history_pos;
 
-	buffer= (ci->history_pos==ci->history.GetCount())?"":ci->history.GetAt(ci->history_pos);
+	buffer = (ci->history_pos == ci->history.GetCount()) ? _T("") : ci->history.GetAt(ci->history_pos);
 
 	inputtext.SetWindowText(buffer);
 	inputtext.SetSel(buffer.GetLength(),buffer.GetLength());
@@ -183,8 +187,14 @@ void CChatWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 
 void CChatWnd::UpdateFriendlistCount(uint16 count) {
 	CString temp;
-	temp.Format(" (%i)",count);
+	temp.Format(_T(" (%i)"),count);
 	temp=GetResString(IDS_CW_FRIENDS)+temp;
 
 	GetDlgItem(IDC_FRIENDS_LBL)->SetWindowText(temp);
+}
+
+BOOL CChatWnd::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	theApp.ShowHelp(eMule_FAQ_Friends);
+	return TRUE;
 }

@@ -40,7 +40,7 @@ public:
 	void ShowQueueCount(uint32 number);
 	void UpdateListCount(uint8 listindex, int iCount = -1);
 	void Localize();
-	void UpdateCatTabTitles();
+	void UpdateCatTabTitles(bool force=true);
 	void VerifyCatTabSize();
 	void SwitchUploadList();
 
@@ -74,6 +74,7 @@ protected:
 	void SetInitLayout();
 	void DoSplitResize(int delta);
 	void SetAllIcons();
+	void SetWnd2Icon();
 	void UpdateTabToolTips() {UpdateTabToolTips(-1);}
 	void UpdateTabToolTips(int tab);
 	CString GetTabStatistic(uint8 tab);

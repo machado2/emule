@@ -266,6 +266,7 @@ BEGIN
     IDS_ERR_BADSERVERLISTRECEIVED "Iegûta nepareiza serveru saraksta pakete"
     IDS_STATUS              "Statuss"
     IDS_DL_REMAINS          "Atlicis"
+    IDS_UPDATEFROM          "Update from URL: (filter.dat- or PeerGuardian-format)"
     IDS_QL_USERNAME         "Niks"
     IDS_ERR_PACKAGEHANDLING "Nezinâma kïûda iegûstot paketi no servera (%s)"
     IDS_QL_RATING           "Reitings"
@@ -410,7 +411,7 @@ BEGIN
     IDS_ERR_FOUNDCORRUPTION "Atrasta bojâta daïa (%i) iekð %s"
     IDS_HASHINGDONE         "Pabeigts pârbaudît %s, fials râdâs OK"
     IDS_ERR_PARTCORRUPT     "Novilktâ daïa %i ir bojâta :(  (%s)"
-    IDS_ICHWORKED           "ICH: Atjaunota bojâtâ daïa %i  (%s)"
+    IDS_ICHWORKED           "ICH: Atjaunota bojâtâ daïa %i  (%s), Saved: %s"
     IDS_ERR_OUTOFSPACE      "Nepietied bºivâs diskâ vietas lai novilktu %s!"
     IDS_SE                  "Source Exchange"
 END
@@ -471,6 +472,7 @@ BEGIN
     IDS_NOTHING             "nothing"
     IDS_SETUPSPEED          "set uploadlimit"
     IDS_SETDOWNSPEED        "set downloadlimit"
+    IDS_UNDO                "Undo"
     IDS_DAYLY               "daily"
 END
 
@@ -751,6 +753,7 @@ BEGIN
     IDS_STREE               "Statistikas koks"
     IDS_IRC_IGNOREQUITMESSAGE "Ignore Quit info messages"
     IDS_STATSSETUPINFO      "Konfigurçt statistiku"
+    IDS_IRC_SOUNDEVENTS     "Play sound events"
 END
 
 STRINGTABLE 
@@ -801,11 +804,6 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* Uzsâkts privâtais èats"
     IDS_IRC_SLAPMSG         "* %s iecirta %s pliíi ar siïíi :)"
     IDS_IRC_PRIVMESSAGE     "Privâta ziòa"
-    IDS_IRC_OP              "Op"
-    IDS_IRC_DEOP            "DeOp"
-    IDS_IRC_VOICE           "Voice"
-    IDS_IRC_HALFOP          "HalfOp"
-    IDS_IRC_DEHALFOP        "DeHalfOp"
     IDS_IRC_KICK            "Kick"
     IDS_IRC_SLAP            "Slap"
     IDS_IRC_JOIN            "Join"
@@ -820,7 +818,6 @@ BEGIN
     IDS_IRC_HASPARTED       "* %s has parted %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s was kicked by %s (%s)"
     IDS_IRC_NICKUSED        "Your nick is already being used in the IRC server. Please choose a different nick in the IRC tab in Preferences."
-    IDS_IRC_DEVOICE         "DeVoice"
     IDS_IRC_HASQUIT         "* %s ir aizgâjis (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s tagad saucas: %s"
     IDS_IRC_SETSMODE        "* %s uzlicis reþîmu: %s %s"
@@ -1019,7 +1016,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "Lost to corruption: %s       Gained by compression: %s\nPackages saved by I.C.H.: %i"
-    IDS_ERR_NOHELP          "No help-file found.\n Please visit our homepage to get a copy of the newest help-file! (download section)"
+    IDS_ERR_NOHELP          "Please visit our homepage's download section to get a copy of the newest help file!\n\nDo you want to browse the online help now instead?"
     IDS_SHOWOVERHEAD        "Show overhead bandwidth"
     IDS_UPDOWNSMALL         "Iet: %.1f | Nâk: %.1f"
     IDS_EDITLIST            "List"
@@ -1067,6 +1064,7 @@ BEGIN
     IDS_COMMENT             "Comment"
     IDS_IPFILTERED          "Filtered IP: %s (%s)"
     IDS_DL_TRANSFCOMPL      "Completed"
+    IDS_DL_ACTIVE_TIME      "Download time"
     IDS_STATS_FILTEREDCLIENTS "Filtered: %i"
     IDS_FILTERLABEL         "Filter messages containing: (Separator | )"
     IDS_ERR_LARGEREQBLOCK   "Client requested too large of a block."
@@ -1237,7 +1235,7 @@ BEGIN
     IDS_WIZ1_UPLOAD_SUBTITLE "Full Chunk Transfer"
     IDS_DL_RESUMENEXT       "Resume next paused"
     IDS_DONTCHANGE          "Don't change"
-    IDS_STARTPRIO           "Change priority for new assigned files"
+    IDS_STARTPRIO           "Priority for this category"
     IDS_PREF_STARTNEXTFILECAT "prefer same category"
     IDS_REPAINTGRAPHS       "Don't recreate statistic graphs on resize"
     IDS_SOFTFILES           "Soft File Limit"
@@ -1385,6 +1383,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_CUT                 "Cut"
     IDS_STATS_SECUREIDENT   "Secure Ident (OK : Failed )"
     IDS_ONDISK              "Size on disk: "
     IDS_CLIENTCOL           "Warning: Found matching client, to a currently connected client: %s (%s) and %s (%s)"
@@ -1406,6 +1405,7 @@ STRINGTABLE
 BEGIN
     IDS_VERSION             "Version"
     IDS_ALL_A4AF_TO_THIS    "Swap all sources to this file now"
+    IDS_PASTE               "Paste"
     IDS_ALL_A4AF_TO_OTHER   "Swap all sources to any other file now"
     IDS_ALL_A4AF_AUTO       "Automatically swap all (A4AF)sources to this file"
     IDS_SWAP_A4AF_TO_THIS   "Swap source to this file now"
@@ -1481,7 +1481,7 @@ BEGIN
     IDS_SERVERKEEPALIVETIMEOUT "Server connection refresh interval [min.]"
     IDS_MORE                "&More"
     IDS_TOOLS               "T&ools"
-    IDS_ERR_JIGLENEEDSTYPE  "If you want to search the Jigle database without specifying a file type, you have to specify at least a file extension!"
+    IDS_SEARCHPARAMS        "Search Parameters"
 END
 
 STRINGTABLE 
@@ -1537,6 +1537,7 @@ BEGIN
     IDS_CMT_COPYCLIPBOARD   "Copy comment to clipboard"
     IDS_ASKDOWNLOADLANG     "The language you selected is not installed on your system. Do you want eMule to download it from emule-project.net?"
     IDS_ASKDOWNLOADLANGCAP  "Download language files"
+    IDS_DELETESELECTED      "Delete"
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "Failed to download and install selected language dll from %s!"
     IDS_ERR_BADFOLDER       "Invalid folder.\nFolder can not be created. Please check name and location."
@@ -1551,6 +1552,7 @@ BEGIN
     IDS_KADUDPPORTERR       "Kads UDP port conflicts with either eMule's Ext UDP port or eMule's Server UDP port. Port has been changed to %u."
     IDS_CONFIRM_FILEDELETE  "Do you really want to remove all selected files from disk?"
     IDS_OPENFOLDER          "Open folder"
+    IDS_RUNASUSER           "Run eMule as unprivileged User"
     IDS_DELETE              "Delete from disk"
     IDS_BOOTSTRAP           "Bootstrap"
     IDS_VIAED2KSQ           "via ED2K Server/Queue"
@@ -1613,7 +1615,7 @@ BEGIN
     IDS_DELETEIPFILTERS     "Do you really want to delete the selected IP filters?"
     IDS_TOTAL_IPFILTER_LABEL "Total IP filters:"
     IDS_TOTAL_IPS_LABEL     "Total IPs:"
-    IDS_DELETE2             "Delete"
+    IDS_RAU_WARNING         "This setting will give eMule additional security against attacks and exploits and we encourage the usage of this option.\nHowever it is strongly recommended to read the manual before activating it!\n\nChanges will take effect after restarting eMule."
     IDS_APPEND              "Append..."
     IDS_SAVE                "Save"
     IDS_IP_START            "Start"
@@ -1628,10 +1630,62 @@ STRINGTABLE
 BEGIN
     IDS_ERR_NOTCONNECTEDKAD "You are currently not connected to the Kad Network!"
     IDS_IRC_NOSFS           "No Shared Files Selected"
+    IDS_RESETLABEL          "Auto completion (history function)"
     IDS_IRC_IGNOREMISCMESSAGE "Ignore Misc info messages"
     IDS_KNOWN               "Known"
-    IDS_DL_ACTIVE_TIME      "Download time"
-    IDS_RESETLABEL          "Auto completion (history function)"
+    IDS_RAU_RUNNING         "eMule running as unprivileged user ""%s"""
+    IDS_RAU_FAILED          "Failed to start eMule as unprivileged user ""eMule_Secure"". Keeping the privileges of the current user (""%S"")."
+    IDS_KADCONTACTSREAD     "Read %ld contacts from file."
+    IDS_ERR_KADCONTACTS     "No contacts found, please bootstrap, or download a nodes.dat file."
+    IDS_METATAGS            "Meta Tag Count:"
+    IDS_FILEFORMAT          "File format"
+    IDS_UDPREASKS           "UDP File Reasks"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping tolerance (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Method for ping tolerance"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milliseconds (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Percent (%)"
+    IDS_LOG_A4AF            "Log A4AF actions"
+    IDS_A4AF_SAVE_CPU       "Disable A4AF checks to save CPU"
+    IDS_SEARCH_DOC          "Document"
+    IDS_DOWNLOAD_ALPHABETICAL "Download in alphabetical order"
+    IDS_INSTALL_SKIN        "Install eMule Skin"
+    IDS_INSTALL_SKIN_NODIR  "No eMule Skin profile directory selected or directory is not accessible!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            "Failed to create directory ""%s"" for eMule Skin - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "Failed to extract file ""%s"" from eMule Skin to local file ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "This is not a valid eMule Skin package file."
+    IDS_NEXT_REASK          "Next ask to this client"
+    IDS_A4AF_FILES          "A4AF files"
+    IDS_STATS_FRATIO        "Session UL:DL ratio (friends UL excluded):"
+    IDS_STATS_UDATA_FRIENDS "Uploaded data to friend slots (Session): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FO_PREF_EXISTED     "eMule detected existing rules for the selected ports, which were not overwritten or replaced. Missing rules have been added successfully.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_FO_PREF_FAILED      "Failed to configure the internal WinXP firewall for the selected ports!"
+    IDS_FO_PREF_STARTUP     "Open/close ports on WinXP firewall when starting/exiting eMule"
+    IDS_LOG_LEVEL           "Log Level"
+    IDS_DISABLEPEERACHE     "Disable downloading from PeerCache"
+    IDS_FO_TEMPTCP_S        "Opened port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPTCP_F        "Failed to open port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_S        "Opened port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_F        "Failed to open port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_PREFBUTTON       "Open these ports on internal WinXP firewall"
+    IDS_FO_PREF_SUCCCEEDED  "Succeeded to open selected ports on the internal WinXP firewall.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_SOURCESWAPBLOCKED   "Swap blocked"
+    IDS_A4AF_CHECK_THIS_NOW "Check this source now (debug)"
+    IDS_SOURCEEXCHANGESWAP  "Temporary Source Exchange Swap"
+    IDS_NEWMSG              "New Message from '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
+    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
+    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
 END
 
 #endif    // Latvian resources

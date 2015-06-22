@@ -10,9 +10,11 @@ public:
 	CHTRichEditCtrl();
 	virtual ~CHTRichEditCtrl();
 
-	void Init(LPCTSTR pszTitle);
+	void Init(LPCTSTR pszTitle, LPCTSTR pszSkinKey = NULL);
+	void SetProfileSkinKey(LPCTSTR pszSkinKey);
 	void SetTitle(LPCTSTR pszTitle);
 	void Localize();
+	void ApplySkin();
 
 	void AddEntry(LPCTSTR pszMsg);
 	void Add(LPCTSTR pszMsg, int iLen = -1);
@@ -40,6 +42,7 @@ protected:
 	bool m_bNoPaint;
 	bool m_bEnErrSpace;
 	CString m_strTitle;
+	CString m_strSkinKey;
 	bool m_bRestoreFormat;
 	CHARFORMAT m_cfDefault;
 
@@ -62,4 +65,5 @@ protected:
 	afx_msg void OnEnErrspace();
 	afx_msg void OnEnMaxtext();
 	afx_msg BOOL OnEnLink(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnSysColorChange();
 };

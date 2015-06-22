@@ -34,6 +34,7 @@
 #include "Opcodes.h"
 #include "InputBox.h"
 #include "WebServices.h"
+#include "TransferWnd.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -166,7 +167,8 @@ void CSharedFilesCtrl::Init(){
 	SortItems(SortProc, sortItem + (sortAscending ? 0:20));
 }
 
-void CSharedFilesCtrl::Localize() {
+void CSharedFilesCtrl::Localize()
+{
 	CHeaderCtrl* pHeaderCtrl = GetHeaderCtrl();
 	HDITEM hdi;
 	hdi.mask = HDI_TEXT;
@@ -233,6 +235,10 @@ void CSharedFilesCtrl::Localize() {
 	strRes.ReleaseBuffer();
 
 	CreateMenues();
+
+	int iItems = GetItemCount();
+	for (int i = 0; i < iItems; i++)
+		Update(i);
 }
 
 void CSharedFilesCtrl::ShowFileList(const CSharedFileList* pSharedFiles)
@@ -281,14 +287,13 @@ void CSharedFilesCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	else
 		iOldBkMode = OPAQUE;
 
-	CString buffer;
-
 	CHeaderCtrl *pHeaderCtrl = GetHeaderCtrl();
 	int iCount = pHeaderCtrl->GetItemCount();
 	const int iMarginX = 4;
 	cur_rec.right = cur_rec.left - iMarginX*2;
 	cur_rec.left += iMarginX;
 
+	CString buffer;
 	int iIconDrawWidth = theApp.GetSmallSytemIconSize().cx + 3;
 	for(int iCurrent = 0; iCurrent < iCount; iCurrent++){
 		int iColumn = pHeaderCtrl->OrderToIndex(iCurrent);
@@ -309,7 +314,7 @@ void CSharedFilesCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					uDTFlags |= DT_RIGHT;
 					break;
 				case 2:
-					buffer = file->GetFileType();
+					buffer = file->GetFileTypeDisplayStr();
 					break;
 				case 3:{
 					switch (file->GetUpPriority()) {
@@ -370,20 +375,19 @@ void CSharedFilesCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					break;
 				case 10:
 					if (file->m_nCompleteSourcesCountLo == 0){
-						buffer.Format("< %u", file->m_nCompleteSourcesCountHi);
+						buffer.Format(_T("< %u"), file->m_nCompleteSourcesCountHi);
 					}
 					else if (file->m_nCompleteSourcesCountLo == file->m_nCompleteSourcesCountHi)
-						buffer.Format("%u", file->m_nCompleteSourcesCountLo);
+						buffer.Format(_T("%u"), file->m_nCompleteSourcesCountLo);
 					else
-						buffer.Format("%u - %u", file->m_nCompleteSourcesCountLo, file->m_nCompleteSourcesCountHi);
+						buffer.Format(_T("%u - %u"), file->m_nCompleteSourcesCountLo, file->m_nCompleteSourcesCountHi);
 					break;
 				case 11:{
-					CString ed2k;
 					if(file->GetPublishedED2K())
 						buffer = GetResString(IDS_YES);
 					else
 						buffer = GetResString(IDS_NO);
-					buffer += "|";
+					buffer += _T("|");
 					if( (uint32)time(NULL)-file->GetLastPublishTimeKadSrc() < KADEMLIAREPUBLISHTIMES )
 						buffer += GetResString(IDS_YES);
 					else
@@ -432,9 +436,8 @@ void CSharedFilesCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 void CSharedFilesCtrl::ShowFile(const CKnownFile* file)
 {
-	uint32 itemnr = GetItemCount();
-	itemnr = InsertItem(LVIF_TEXT|LVIF_PARAM,itemnr,LPSTR_TEXTCALLBACK,0,0,0,(LPARAM)file);
-	UpdateFile(file);
+	if (InsertItem(LVIF_TEXT|LVIF_PARAM,GetItemCount(),LPSTR_TEXTCALLBACK,0,0,0,(LPARAM)file) >= 0)
+		UpdateFile(file);
 }
 
 void CSharedFilesCtrl::RemoveFile(const CKnownFile *toRemove)
@@ -453,6 +456,7 @@ BEGIN_MESSAGE_MAP(CSharedFilesCtrl, CMuleListCtrl)
 	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnClick)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnNMDblclk)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetDispInfo)
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 
@@ -465,10 +469,15 @@ void CSharedFilesCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 	int iSelectedItems = GetSelectedCount();
 	int iCompleteFileSelected = -1;
 	UINT uPrioMenuItem = 0;
+	const CKnownFile* pSingleSelFile = NULL;
 	POSITION pos = GetFirstSelectedItemPosition();
 	while (pos)
 	{
 		const CKnownFile* pFile = (CKnownFile*)GetItemData(GetNextSelectedItem(pos));
+		if (bFirstItem)
+			pSingleSelFile = pFile;
+		else
+			pSingleSelFile = NULL;
 
 		int iCurCompleteFile = pFile->IsPartFile() ? 0 : 1;
 		if (bFirstItem)
@@ -505,6 +514,23 @@ void CSharedFilesCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 
 	bool bSingleCompleteFileSelected = (iSelectedItems == 1 && iCompleteFileSelected == 1);
 	m_SharedFilesMenu.EnableMenuItem(MP_OPEN, bSingleCompleteFileSelected ? MF_ENABLED : MF_GRAYED);
+	UINT uInsertedMenuItem = 0;
+	static const TCHAR _szSkinPkgSuffix[] = _T(".") EMULSKIN_BASEEXT _T(".zip");
+	if (bSingleCompleteFileSelected 
+		&& pSingleSelFile 
+		&& pSingleSelFile->GetFilePath().Right(ARRSIZE(_szSkinPkgSuffix)-1).CompareNoCase(_szSkinPkgSuffix) == 0)
+	{
+		MENUITEMINFO mii = {0};
+		mii.cbSize = sizeof mii;
+		mii.fMask = MIIM_TYPE | MIIM_STATE | MIIM_ID;
+		mii.fType = MFT_STRING;
+		mii.fState = MFS_ENABLED;
+		mii.wID = MP_INSTALL_SKIN;
+		CString strBuff(GetResString(IDS_INSTALL_SKIN));
+		mii.dwTypeData = const_cast<LPTSTR>((LPCTSTR)strBuff);
+		if (::InsertMenuItem(m_SharedFilesMenu, MP_OPENFOLDER, FALSE, &mii))
+			uInsertedMenuItem = mii.wID;
+	}
 	m_SharedFilesMenu.EnableMenuItem(MP_OPENFOLDER, bSingleCompleteFileSelected ? MF_ENABLED : MF_GRAYED);
 	m_SharedFilesMenu.EnableMenuItem(MP_RENAME, bSingleCompleteFileSelected ? MF_ENABLED : MF_GRAYED);
 	m_SharedFilesMenu.EnableMenuItem(MP_REMOVE, iCompleteFileSelected > 0 ? MF_ENABLED : MF_GRAYED);
@@ -513,6 +539,7 @@ void CSharedFilesCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 	m_SharedFilesMenu.EnableMenuItem(MP_DETAIL, iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED);
 
 	m_SharedFilesMenu.EnableMenuItem(MP_GETED2KLINK, iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED);
+	m_SharedFilesMenu.EnableMenuItem(MP_GETED2KHASHSETLINK, iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED);
 	m_SharedFilesMenu.EnableMenuItem(MP_GETHTMLED2KLINK, iSelectedItems > 0 ? MF_ENABLED : MF_GRAYED);
 	m_SharedFilesMenu.EnableMenuItem(MP_GETSOURCEED2KLINK, (iSelectedItems > 0 && theApp.IsConnected() && !theApp.IsFirewalled()) ? MF_ENABLED : MF_GRAYED);
 
@@ -538,6 +565,8 @@ void CSharedFilesCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
 
 	m_SharedFilesMenu.RemoveMenu(m_SharedFilesMenu.GetMenuItemCount()-1,MF_BYPOSITION);
 	VERIFY( WebMenu.DestroyMenu() );
+	if (uInsertedMenuItem)
+		VERIFY( m_SharedFilesMenu.RemoveMenu(uInsertedMenuItem, MF_BYCOMMAND) );
 }
 
 BOOL CSharedFilesCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
@@ -574,7 +603,7 @@ BOOL CSharedFilesCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 				theApp.CopyTextToClipboard(str);
 				break;
 			}
-			case MP_GETHTMLED2KLINK:{
+			case MP_GETED2KHASHSETLINK:{
 				CString str;
 				POSITION pos = selectedList.GetHeadPosition();
 				while (pos != NULL)
@@ -582,6 +611,19 @@ BOOL CSharedFilesCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 					file = selectedList.GetNext(pos);
 					if (!str.IsEmpty())
 						str += _T("\r\n");
+					str += CreateED2kHashsetLink(file);
+				}
+				theApp.CopyTextToClipboard(str);
+				break;
+			}
+			case MP_GETHTMLED2KLINK:{
+				CString str;
+				POSITION pos = selectedList.GetHeadPosition();
+				while (pos != NULL)
+				{
+					file = selectedList.GetNext(pos);
+					if (!str.IsEmpty())
+						str += _T("<br />\r\n");
 					str += CreateHTMLED2kLink(file);
 				}
 				theApp.CopyTextToClipboard(str);
@@ -618,6 +660,10 @@ BOOL CSharedFilesCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 				if (file && !file->IsPartFile())
 					OpenFile(file);
 				break; 
+			case MP_INSTALL_SKIN:
+				if (file && !file->IsPartFile())
+					InstallSkin(file->GetFilePath());
+				break;
 			case MP_OPENFOLDER:
 				if (file && !file->IsPartFile()){
 					CString path = file->GetPath();
@@ -666,6 +712,8 @@ BOOL CSharedFilesCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 						UpdateFile(file);
 					}
 				}
+				else if (wParam == MPG_F2)
+					MessageBeep((UINT)-1);
 				break;
 			case MP_REMOVE:
 			case MPG_DELETE:{
@@ -701,8 +749,11 @@ BOOL CSharedFilesCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 							delsucc = (SHFileOperation(&fp) == 0);
 						}
 					}
-					if (delsucc)
+					if (delsucc){
 						theApp.sharedfiles->RemoveFile(myfile);
+						if (myfile->IsKindOf(RUNTIME_CLASS(CPartFile)))
+							theApp.emuledlg->transferwnd->downloadlistctrl.ClearCompleted(static_cast<CPartFile*>(myfile));
+					}
 					else{
 						CString strError;
 						strError.Format(_T("Failed to delete file \"%s\"\r\n\r\n%s"), myfile->GetFilePath(), GetErrorMessage(GetLastError()));
@@ -849,9 +900,9 @@ int CSharedFilesCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort
 
 
 		case 2: //filetype asc
-			return item1->GetFileType().CompareNoCase(item2->GetFileType());
+			return item1->GetFileTypeDisplayStr().Compare(item2->GetFileTypeDisplayStr());
 		case 22: //filetype desc
-			return item2->GetFileType().CompareNoCase(item1->GetFileType());
+			return item2->GetFileTypeDisplayStr().Compare(item1->GetFileTypeDisplayStr());
 
 		case 3: //prio asc
 		{
@@ -941,30 +992,30 @@ int CSharedFilesCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort
 	}
 }
 
-void CSharedFilesCtrl::UpdateFile(const CKnownFile* toupdate)
+void CSharedFilesCtrl::UpdateFile(const CKnownFile* pFile)
 {
 	if (!theApp.emuledlg->IsRunning())
 		return;
+
 	LVFINDINFO find;
 	find.flags = LVFI_PARAM;
-	find.lParam = (LPARAM)toupdate;
-	sint16 result = FindItem(&find);
-	if (result != -1) {
-		Update(result);   // Added by Tarod to real time refresh - DonGato - 11/11/2002
-		theApp.emuledlg->sharedfileswnd->Check4StatUpdate(toupdate);
+	find.lParam = (LPARAM)pFile;
+	int iItem = FindItem(&find);
+	if (iItem != -1)
+	{
+		Update(iItem);
+		theApp.emuledlg->sharedfileswnd->Check4StatUpdate(pFile);
 	}
 }
 
 void CSharedFilesCtrl::ShowFilesCount()
 {
 	CString counter;
-	// SLUGFILLER: SafeHash - hashing counter
 	if (theApp.sharedfiles->GetHashingCount())
-		counter.Format(_T(" (%i, hashing %i)"), theApp.sharedfiles->GetCount(), theApp.sharedfiles->GetHashingCount());
+		counter.Format(_T(" (%i, %s %i)"), theApp.sharedfiles->GetCount(), GetResString(IDS_HASHING), theApp.sharedfiles->GetHashingCount());
 	else
 		counter.Format(_T(" (%i)"), theApp.sharedfiles->GetCount());
-	// SLUGFILLER: SafeHash
-	theApp.emuledlg->sharedfileswnd->GetDlgItem(IDC_TRAFFIC_TEXT)->SetWindowText(GetResString(IDS_SF_FILES)+counter  );
+	theApp.emuledlg->sharedfileswnd->GetDlgItem(IDC_TRAFFIC_TEXT)->SetWindowText(GetResString(IDS_SF_FILES) + counter);
 }
 
 void CSharedFilesCtrl::OpenFile(const CKnownFile* file)
@@ -1012,11 +1063,11 @@ void CSharedFilesCtrl::CreateMenues()
 
 	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_OPEN, GetResString(IDS_OPENFILE));
 	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_OPENFOLDER, GetResString(IDS_OPENFOLDER));
-	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_RENAME, GetResString(IDS_RENAME));
+	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_RENAME, GetResString(IDS_RENAME) + _T("..."));
 	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_REMOVE, GetResString(IDS_DELETE));
 
 	m_SharedFilesMenu.AppendMenu(MF_STRING|MF_SEPARATOR);
-	m_SharedFilesMenu.AppendMenu(MF_STRING|MF_POPUP,(UINT_PTR)m_PrioMenu.m_hMenu, GetResString(IDS_PRIORITY) +" ("+GetResString(IDS_PW_CON_UPLBL)+")" );
+	m_SharedFilesMenu.AppendMenu(MF_STRING|MF_POPUP,(UINT_PTR)m_PrioMenu.m_hMenu, GetResString(IDS_PRIORITY) + _T(" (") + GetResString(IDS_PW_CON_UPLBL) + _T(")"));
 	m_SharedFilesMenu.AppendMenu(MF_STRING|MF_SEPARATOR);
 	
 	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_DETAIL, GetResString(IDS_SHOWDETAILS));
@@ -1024,6 +1075,7 @@ void CSharedFilesCtrl::CreateMenues()
 	m_SharedFilesMenu.AppendMenu(MF_STRING|MF_SEPARATOR); 
 
 	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_GETED2KLINK, GetResString(IDS_DL_LINK1));
+	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_GETED2KHASHSETLINK, GetResString(IDS_DL_LINK1) + _T(" (Hashset)"));
 	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_GETHTMLED2KLINK, GetResString(IDS_DL_LINK2));
 	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_GETSOURCEED2KLINK, GetResString(IDS_CREATESOURCELINK));
 	m_SharedFilesMenu.AppendMenu(MF_STRING,MP_GETHOSTNAMESOURCEED2KLINK, GetResString(IDS_CREATEHOSTNAMESRCLINK));	// itsonlyme: hostnameSource
@@ -1074,4 +1126,15 @@ void CSharedFilesCtrl::OnGetDispInfo(NMHDR *pNMHDR, LRESULT *pResult)
 		}
 	}
 	*pResult = 0;
+}
+
+void CSharedFilesCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	if (nChar == 'C' && (GetKeyState(VK_CONTROL) & 0x8000))
+	{
+		// Ctrl+C: Copy listview items to clipboard
+		SendMessage(WM_COMMAND, MP_GETED2KLINK);
+		return;
+	}
+	CMuleListCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
 }

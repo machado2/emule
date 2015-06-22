@@ -264,6 +264,7 @@ BEGIN
     IDS_ERR_BADSERVERLISTRECEIVED "잘못된 서버목록 패킷 수신"
     IDS_STATUS              "상태"
     IDS_DL_REMAINS          "남은 양"
+    IDS_UPDATEFROM          "Update from URL: (filter.dat- or PeerGuardian-format)"
     IDS_QL_USERNAME         "사용자명"
     IDS_ERR_PACKAGEHANDLING "서버 (%s)에서 수신한 패킷을 처리하던 중 알 수 없는 오류 발생"
     IDS_QL_RATING           "등급"
@@ -407,7 +408,7 @@ BEGIN
     IDS_ERR_FOUNDCORRUPTION "깨진 part 발견 (%i) in %s"
     IDS_HASHINGDONE         "%s 파일의 재 해시를 끝냈고, 파일은 이상이 없어 보입니다"
     IDS_ERR_PARTCORRUPT     "다운로드된 %i 번 part가 깨짐 :(  (%s)"
-    IDS_ICHWORKED           "ICH: 깨진 %i번 part 복구됨  (%s)"
+    IDS_ICHWORKED           "ICH: 깨진 %i번 part 복구됨  (%s), Saved: %s"
     IDS_ERR_OUTOFSPACE      "%s를 다운로드 하기에는 디스크 용량이 부족합니다!"
     IDS_SE                  "소스 교환"
 END
@@ -468,6 +469,7 @@ BEGIN
     IDS_NOTHING             "없음"
     IDS_SETUPSPEED          "업로드 제한 설정"
     IDS_SETDOWNSPEED        "다운로드 제한 설정"
+    IDS_UNDO                "실행 취소"
     IDS_DAYLY               "매일"
 END
 
@@ -748,6 +750,7 @@ BEGIN
     IDS_STREE               "통계 트리"
     IDS_IRC_IGNOREQUITMESSAGE "종료 정보 메시지 무시"
     IDS_STATSSETUPINFO      "통계 표시 설정"
+    IDS_IRC_SOUNDEVENTS     "소리 이벤트 재생"
 END
 
 STRINGTABLE 
@@ -798,11 +801,6 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* 비공개 채팅 세션이 시작되었습니다"
     IDS_IRC_SLAPMSG         "* %s slaps %s around with a large Babelfish!"
     IDS_IRC_PRIVMESSAGE     "비공개 메시지"
-    IDS_IRC_OP              "Op"
-    IDS_IRC_DEOP            "DeOp"
-    IDS_IRC_VOICE           "Voice"
-    IDS_IRC_HALFOP          "HalfOp"
-    IDS_IRC_DEHALFOP        "DeHalfOp"
     IDS_IRC_KICK            "추방"
     IDS_IRC_SLAP            "Slap"
     IDS_IRC_JOIN            "입장"
@@ -817,7 +815,6 @@ BEGIN
     IDS_IRC_HASPARTED       "* %s님이 %s (%s)에서 나갔습니다"
     IDS_IRC_WASKICKEDBY     "* %s님을 %s님이 추방했습니다(%s)"
     IDS_IRC_NICKUSED        "별명이 이미 IRC 서버에서 사용 중입니다. 설정의 IRC 탭에서 다른 멸명으로 바꾸어 주십시오."
-    IDS_IRC_DEVOICE         "DeVoice"
     IDS_IRC_HASQUIT         "* %s님이 끝냈습니다 (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s님이 별명을 %s로 바꿨습니다"
     IDS_IRC_SETSMODE        "* %s님이 모드를 켬: %s %s"
@@ -933,8 +930,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_STATS_MAXDL         "최대 다운로드 속도 (세션): %.2f kB/s"
-    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
-                            "eMule 친구 추가 프로토콜 메시지 무시"
+    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND "eMule 친구 추가 프로토콜 메시지 무시"
     IDS_PW_FASTSRVCON       "빠른 서버 접속"
     IDS_SOURCELINKFAILED    "유효한 소스 링크를 생성하려면 HighID여야 합니다"
     IDS_CREATESOURCELINK    "ED2K 링크 복사 (소스)"
@@ -1014,7 +1010,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "깨짐으로 인한 손실: %s       압축으로 인한 이득: %s\nI.C.H.로 구한 패키지 수: %i"
-    IDS_ERR_NOHELP          "도움말 파일을 찾을 수 없습니다.\n 저희 홈 페이지에 방문하셔서 최신 도움말 파일을 받아 가세요! (download section)"
+    IDS_ERR_NOHELP          "새로운 도움말 파일을 저희 홈페이지의 다운로드 영역에서 받으십시요!\n\n온라인 도움말을 대신 보겠습니까?"
     IDS_SHOWOVERHEAD        "오버헤드 대역폭 보기"
     IDS_UPDOWNSMALL         "업: %.1f | 다운: %.1f"
     IDS_EDITLIST            "편집"
@@ -1023,8 +1019,7 @@ BEGIN
     IDS_DESCRIPTIONRECV     "'%s' 파일의 설명 수신: %s"
     IDS_WEBSERVICES         "웹 서비스"
     IDS_WEBSVEDIT           "웹 서비스 편집"
-    IDS_IRC_EMULEPROTO_IGNORESENDLINK 
-                            "eMule 링크 보내기 프로토콜 메시지 무시"
+    IDS_IRC_EMULEPROTO_IGNORESENDLINK "eMule 링크 보내기 프로토콜 메시지 무시"
     IDS_CHECK4UPDATE        "새로운 버젼 확인"
     IDS_STARTUP             "시작"
     IDS_NEWVERSIONAVL       "eMule의 새로운 버젼이 나왔습니다! 프로젝트 홈 페이지에서 자세한 내용을 확인하세요."
@@ -1062,6 +1057,7 @@ BEGIN
     IDS_COMMENT             "주석"
     IDS_IPFILTERED          "걸러진 IP: %s (%s)"
     IDS_DL_TRANSFCOMPL      "완료"
+    IDS_DL_ACTIVE_TIME      "다운로드 시간"
     IDS_STATS_FILTEREDCLIENTS "걸러짐: %i"
     IDS_FILTERLABEL         "다음 문자를 포함한 메시지 걸러냄: (구분자 |)"
     IDS_ERR_LARGEREQBLOCK   "클라이언트가 너무 큰 블럭을 요청함."
@@ -1230,7 +1226,7 @@ BEGIN
     IDS_WIZ1_UPLOAD_SUBTITLE "덩어리 단위 전송"
     IDS_DL_RESUMENEXT       "다음 일시 중지 파일 시작"
     IDS_DONTCHANGE          "변경 안함"
-    IDS_STARTPRIO           "새로 지정된 파일의 우선 순위 변경"
+    IDS_STARTPRIO           "이 분류의 우선 순위"
     IDS_PREF_STARTNEXTFILECAT "동일 분류 선호"
     IDS_REPAINTGRAPHS       "크기 조정할 때 통계 그래프 새로 만들지 않음"
     IDS_SOFTFILES           "소프트 파일 제한"
@@ -1378,6 +1374,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_CUT                 "잘라내기"
     IDS_STATS_SECUREIDENT   "보안 ID (성공 : 실패)"
     IDS_ONDISK              "디스크에서의 용량: "
     IDS_CLIENTCOL           "경고: 동일한 클라이언트 발견, 현재 접속된 클라이언트: %s (%s) 와 %s (%s)"
@@ -1399,6 +1396,7 @@ STRINGTABLE
 BEGIN
     IDS_VERSION             "버전"
     IDS_ALL_A4AF_TO_THIS    "지금 바로 모든 A4AF 소스를 이 파일로 전환"
+    IDS_PASTE               "붙여넣기"
     IDS_ALL_A4AF_TO_OTHER   "지금 바로 모든 A4AF 소스를 다른 파일로 전환"
     IDS_ALL_A4AF_AUTO       "자동으로 모든 A4AF 소스를 이 파일로 전환"
     IDS_SWAP_A4AF_TO_THIS   "지금 바로 A4AF 소스를 이 파일로 전환"
@@ -1474,7 +1472,7 @@ BEGIN
     IDS_SERVERKEEPALIVETIMEOUT "서버 연결 새로 고침 간격 [분]"
     IDS_MORE                "좀 더(&M)"
     IDS_TOOLS               "도구(&o)"
-    IDS_ERR_JIGLENEEDSTYPE  "Jigle에서 파일 종류를 지정하지 않고 검색을 하려면 최소한 파일 확장자는 지정해야 합니다!"
+    IDS_SEARCHPARAMS        "검색 파라미터"
 END
 
 STRINGTABLE 
@@ -1528,8 +1526,9 @@ BEGIN
     IDS_TRANSFER_RATE_LABEL "전송 속도:"
     IDS_SAVELOG             "로그 저장"
     IDS_CMT_COPYCLIPBOARD   "주석 복사"
-    IDS_ASKDOWNLOADLANG     "선택한 언어가 시스템에 설치되어 있지 않습니다. eMule이 emule-project.net에서 다운로드 하시겠습니까?"
+    IDS_ASKDOWNLOADLANG     "선택한 언어가 시스템에 설치되어 있지 않습니다. eMule이 emule-project.net에서 다운로드 할까요?"
     IDS_ASKDOWNLOADLANGCAP  "언어 파일 다운로드"
+    IDS_DELETESELECTED      "삭제"
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "%s에서 선택한 언어 DLL을 다운로드하고 설치하는데 실패했습니다!"
     IDS_ERR_BADFOLDER       "잘못된 폴더.\n폴더를 생성할 수 없습니다. 이름과 위치를 확인해 주십시요."
@@ -1580,6 +1579,7 @@ STRINGTABLE
 BEGIN
     IDS_CONFIRM_FILEDELETE  "선택한 모든 파일을 디스크에서 지우시겠습니까?"
     IDS_OPENFOLDER          "폴더 열기"
+    IDS_RUNASUSER           "eMule을 제한된 사용자 계정으로 실행"
     IDS_DELETE              "디스크에서 삭제"
     IDS_BOOTSTRAP           "부트스트랩"
     IDS_VIAED2KSQ           "via ED2K 서버/큐"
@@ -1601,7 +1601,7 @@ BEGIN
     IDS_DELETEIPFILTERS     "정말로 선택된 IP 필터를 삭제하겠습니까?"
     IDS_TOTAL_IPFILTER_LABEL "모든 IP 필터:"
     IDS_TOTAL_IPS_LABEL     "모든 IP:"
-    IDS_DELETE2             "삭제"
+    IDS_RAU_WARNING         "이 설정은 eMule을 각종 공격으로부터 더 안전하게 해 줍니다. 이 옵션의 사용은 권장되지만, 꼭 미리 메뉴얼을 읽어 주시기 바랍니다. eMule을 재시작해야 설정이 적용됩니다."
     IDS_APPEND              "추가..."
     IDS_SAVE                "저장"
     IDS_IP_START            "시작"
@@ -1616,10 +1616,62 @@ STRINGTABLE
 BEGIN
     IDS_ERR_NOTCONNECTEDKAD "현재 Kad 네트웍에 연결되어 있지 않습니다!"
     IDS_IRC_NOSFS           "선택된 공유 파일이 없음"
+    IDS_RESETLABEL          "자동 완성 (히스토리 기능)"
     IDS_IRC_IGNOREMISCMESSAGE "잡다한 정보 메시지 무시"
     IDS_KNOWN               "Known"
-    IDS_DL_ACTIVE_TIME      "다운로드 시간"
-    IDS_RESETLABEL          "자동 완성 (히스토리 기능)"
+    IDS_RAU_RUNNING         "eMule이 제한된 사용자 ""%s""에 의해 실행 중 입니다."
+    IDS_RAU_FAILED          "제한된 사용자 ""eMule_Secure""로 eMule을 시작하지 못했습니다. 현재 사용자 (""%S"") 권한을 유지합니다."
+    IDS_KADCONTACTSREAD     "%ld개의 연락처를 파일에서 찾음."
+    IDS_ERR_KADCONTACTS     "연락처를 찾을 수 없음, 부트스트랩을 다시 하거나 nodes.dat 파일을 다운로드 하십시요."
+    IDS_METATAGS            "메타 태그 개수:"
+    IDS_FILEFORMAT          "파일 형태"
+    IDS_UDPREASKS           "UDP 파일 재요청"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping 허용오차 (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Ping 허용오차 방식"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"밀리초 (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"퍼센트 (%)"
+    IDS_LOG_A4AF            "A4AF 동작 로그"
+    IDS_A4AF_SAVE_CPU       "CPU 사용을 줄이기 위해 A4AF 검사 안함"
+    IDS_SEARCH_DOC          "문서"
+    IDS_DOWNLOAD_ALPHABETICAL "알파벳 순으로 다운로드"
+    IDS_INSTALL_SKIN        "eMule 스킨 설치"
+    IDS_INSTALL_SKIN_NODIR  "스킨 프로파일 디렉토리가 지정되지 않았거나 잘못된 디렉토리 입니다!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            """%s"" 디렉토리를 생성할 수 없음 (eMule 스킨 - %s)"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "eMule 스킨에서 ""%s"" 파일을 ""%s"" 파일로 추출하지 못했습니다 - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "잘못된 eMule 스킨 패키지 파일입니다."
+    IDS_NEXT_REASK          "이 클라이언트에 다음 요청"
+    IDS_A4AF_FILES          "A4AF 파일"
+    IDS_STATS_FRATIO        "세션 업:다운 비율 (친구에게 업한 것 제외):"
+    IDS_STATS_UDATA_FRIENDS "친구 슬롯에 업로드 한 데이터 (세션): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FO_PREF_EXISTED     "선택된 포트에는 이미 규칙이 설정되어 있고, 성공적으로 재조정되었습니다.\n다른 데스크탑 방화벽이나 라우터는 영향을 받지 않음을 유의하십시요!"
+    IDS_FO_PREF_FAILED      "선택된 포트에 대한 WinXP 내부 방화벽 설정에 실패했습니다!"
+    IDS_FO_PREF_STARTUP     "eMule을 시작하거나 끝낼 때 WinXP 방화벽의 포트 열고 닫기"
+    IDS_LOG_LEVEL           "로그 레벨"
+    IDS_DISABLEPEERACHE     "PeerCache 사용 안함"
+    IDS_FO_TEMPTCP_S        "eMule 세션에서 WinXP 내부 방화벽의 %u (TCP) 포트 열었음"
+    IDS_FO_TEMPTCP_F        "eMule 세션에서 WinXP 내부 방화벽의 %u (TCP) 포트를 여는데 실패 함"
+    IDS_FO_TEMPUDP_S        "eMule 세션에서 WinXP 내부 방화벽의 %u (UDP) 포트 열었음"
+    IDS_FO_TEMPUDP_F        "eMule 세션에서 WinXP 내부 방화벽의 %u (UDP) 포트를 여는데 실패 함"
+    IDS_FO_PREFBUTTON       "WinXP 내부 방화벽에서 포트 열기"
+    IDS_FO_PREF_SUCCCEEDED  "WinXP 내부 방화벽에서 선택된 포트를 성공적으로 열었습니다.\n다른 데스크탑 방화벽이나 라우터는 영향을 받지 않음을 유의하십시요!"
+    IDS_SOURCESWAPBLOCKED   "스왑 막힘"
+    IDS_A4AF_CHECK_THIS_NOW "소스 확인 (디버그)"
+    IDS_SOURCEEXCHANGESWAP  "임시 소스 교환 스왑"
+    IDS_NEWMSG              "'%s'의 새로운 메시지 (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "같은 분류에서만"
+    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
+    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
 END
 
 #endif    // Korean resources

@@ -27,27 +27,24 @@ public:
 	~CServerSocket();
 
 	void	ConnectToServer(CServer* server);
-	sint8	GetConnectionState()	{return connectionstate;} 
+	sint8	GetConnectionState() const	{ return connectionstate; } 
 	DWORD	GetLastTransmission() const { return m_dwLastTransmission; }
-	bool	SendPacket(Packet* packet, bool delpacket = true, bool controlpacket = true);
+	virtual void 	SendPacket(Packet* packet, bool delpacket = true, bool controlpacket = true, uint32 actualPayloadSize = 0);
 
-	CString info;
 protected:
 	void	OnClose(int nErrorCode);
 	void	OnConnect(int nErrorCode);
 	void	OnReceive(int nErrorCode);
 	void	OnError(int nErrorCode);
 	bool	PacketReceived(Packet* packet);
+
 private:
 	bool	ProcessPacket(char* packet, uint32 size, uint8 opcode);
 	void	SetConnectionState(sint8 newstate);
-	CServerConnect*	serverconnect; 
+
+	CServerConnect*	serverconnect;
 	sint8	connectionstate;
 	CServer* cur_server; // holds a copy of a CServer from the CServerList
-	bool	headercomplete;
-	uint32	sizetoget;
-	uint32	sizereceived;
-	char*	rbuffer;
 	bool	m_bIsDeleting;	// true: socket is already in deletion phase, don't destroy it in ::StopConnectionTry
 	DWORD	m_dwLastTransmission;
 };

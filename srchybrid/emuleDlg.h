@@ -41,13 +41,15 @@ class CStatisticsDlg;
 class CTaskbarNotifier;
 class CTransferWnd;
 struct Status;
-struct SLogItem;
 class CSplashScreen;
 class CMuleSystrayDlg;
 
 // emuleapp <-> emuleapp
 #define OP_ED2KLINK				12000
 #define OP_CLCOMMAND			12001
+
+#define	EMULE_HOTMENU_ACCEL		'x'
+#define	EMULSKIN_BASEEXT		_T("eMuleSkin")
 
 class CemuleDlg : public CTrayDialog, public CLoggable
 {
@@ -63,7 +65,7 @@ public:
 	void			ShowNotifier(CString Text, int MsgType, bool ForceSoundOFF = false); 
 	void			ShowUserCount();
 	void			ShowMessageState(uint8 iconnr);
-	void			SetActiveDialog(CDialog* dlg);
+	void			SetActiveDialog(CWnd* dlg);
 	void			ShowTransferRate(bool forceAll=false);
 	// ZZ:UploadSpeedSense -->
     void            ShowPing();
@@ -78,15 +80,6 @@ public:
 	CString			GetLastDebugLogEntry();
 	CString			GetAllLogEntries();
 	CString			GetAllDebugLogEntries();
-    // Elandal:ThreadSafeLogging -->
-    // thread safe log calls
-    void			QueueDebugLogLine(bool addtostatusbar, LPCTSTR line,...);
-    void			HandleDebugLogQueue();
-    void			ClearDebugLogQueue(bool bDebugPendingMsgs = false);
-    void			QueueLogLine(bool addtostatusbar, LPCTSTR line,...);
-    void			HandleLogQueue();
-    void			ClearLogQueue(bool bDebugPendingMsgs = false);
-    // Elandal:ThreadSafeLogging <--
 
 	void			OnCancel();
 	void			StopTimer();
@@ -98,6 +91,8 @@ public:
 	void			SetKadButtonState();
 	void			ProcessED2KLink(LPCTSTR pszData);
 	void			SetStatusBarPartsSize();
+
+	virtual void HtmlHelp(DWORD_PTR dwData, UINT nCmd = 0x000F);
 
 	CTransferWnd*	transferwnd;
 	CServerWnd*		serverwnd;
@@ -111,7 +106,7 @@ public:
 	CTaskbarNotifier* m_wndTaskbarNotifier;
 	CMuleToolbarCtrl* toolbar;
 	CKademliaWnd*	kademliawnd;
-	CDialog*		activewnd;
+	CWnd*			activewnd;
 	uint8			status;
 	CFont			m_fontHyperText;
 	CFont			m_fontMarlett;
@@ -154,11 +149,11 @@ protected:
 	
 	afx_msg LRESULT OnTaskbarNotifierClicked(WPARAM wParam,LPARAM lParam);
 	afx_msg LRESULT OnWMData(WPARAM wParam,LPARAM lParam);
-	// SLUGFILLER: SafeHash
 	afx_msg LRESULT OnFileHashed(WPARAM wParam,LPARAM lParam);
 	afx_msg LRESULT OnHashFailed(WPARAM wParam,LPARAM lParam);
 	afx_msg LRESULT OnFileAllocExc(WPARAM wParam,LPARAM lParam);
 	afx_msg LRESULT OnFileCompleted(WPARAM wParam,LPARAM lParam);
+	afx_msg LRESULT OnFileOpProgress(WPARAM wParam,LPARAM lParam);
 
 	//Framegrabbing
 	afx_msg LRESULT OnFrameGrabFinished(WPARAM wParam,LPARAM lParam);
@@ -171,11 +166,11 @@ protected:
 	afx_msg LRESULT OnWebServerRemove(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnWebSharedFilesReload(WPARAM wParam, LPARAM lParam);
 
-	// Jigle SOAP service
-	afx_msg LRESULT OnJigleSearchResponse(WPARAM wParam, LPARAM lParam);
-
 	// VersionCheck DNS
 	afx_msg LRESULT OnVersionCheckResponse(WPARAM wParam, LPARAM lParam);
+
+	// Peercache DNS
+	afx_msg LRESULT OnPeerCacheResponse(WPARAM wParam, LPARAM lParam);
 	
 	void OnOK() {}
 	void OnClose();
@@ -202,6 +197,9 @@ private:
 	CTitleMenu		trayPopup;
 	CMuleSystrayDlg* m_pSystrayDlg;
 	CMainFrameDropTarget* m_pDropTarget;
+	CMenu			m_SysMenuOptions;
+	CMenu			m_menuUploadCtrl;
+	CMenu			m_menuDownloadCtrl;
 
 	UINT_PTR m_hTimer;
 	static void CALLBACK StartupTimer(HWND hwnd, UINT uiMsg, UINT idEvent, DWORD dwTime);
@@ -222,12 +220,6 @@ private:
 
 	char m_acVCDNSBuffer[MAXGETHOSTSTRUCT];
 
-    // Elandal:ThreadSafeLogging -->
-    // thread safe log calls
-    CCriticalSection m_queueLock;
-    CTypedPtrList<CPtrList, SLogItem*> m_QueueDebugLog;
-    CTypedPtrList<CPtrList, SLogItem*> m_QueueLog;
-    // Elandal:ThreadSafeLogging <--
 };
 
 
@@ -246,19 +238,20 @@ enum EEmuleUserMsgs
 	WEB_REMOVE_SERVER,
 	WEB_SHARED_FILES_RELOAD,
 
-	WM_JIGLE_SEARCH_RESPONSE,
-
 	// VC
 	WM_VERSIONCHECK_RESPONSE,
+
+	// PC
+	WM_PEERCHACHE_RESPONSE
 };
 
 enum EEmlueAppMsgs
 {
 	//thread messages
 	TM_FINISHEDHASHING = WM_APP + 10,
-	// SLUGFILLER: SafeHash - new handling
 	TM_HASHFAILED,
 	TM_FRAMEGRABFINISHED,
 	TM_FILEALLOCEXC,
-	TM_FILECOMPLETED
+	TM_FILECOMPLETED,
+	TM_FILEOPPROGRESS
 };

@@ -270,6 +270,7 @@ BEGIN
     IDS_ERR_BADSERVERLISTRECEIVED "Neveljaven paket strežniške liste sprejet"
     IDS_STATUS              "Stanje"
     IDS_DL_REMAINS          "Preostaja še"
+    IDS_UPDATEFROM          "Update from URL: (filter.dat- or PeerGuardian-format)"
     IDS_QL_USERNAME         "Uporabniško ime"
     IDS_ERR_PACKAGEHANDLING "Napaka med obdelavo paketa s strežnika (%s)"
     IDS_QL_RATING           "Ocena"
@@ -414,7 +415,7 @@ BEGIN
     IDS_ERR_FOUNDCORRUPTION "Najden pokvarjen del dat. (%i) v %s"
     IDS_HASHINGDONE         "Rehashiranje %s konèano, datoteka je brez napake"
     IDS_ERR_PARTCORRUPT     "Prenešen del %i je pokvarjen :-(  (%s)"
-    IDS_ICHWORKED           "IRN: Rešen pokvarjen del %i  (%s)"
+    IDS_ICHWORKED           "IRN: Rešen pokvarjen del %i  (%s), Saved: %s"
     IDS_ERR_OUTOFSPACE      "Imate premalo prostora na disku za prenos %s!"
     IDS_SE                  "Izmenjava virov"
 END
@@ -475,6 +476,7 @@ BEGIN
     IDS_NOTHING             "Niè"
     IDS_SETUPSPEED          "Nastavi omejitev prenosa(dol)"
     IDS_SETDOWNSPEED        "nastavi omejitev prenosa(gor)"
+    IDS_UNDO                "Undo"
     IDS_DAYLY               "dnevno"
 END
 
@@ -755,6 +757,7 @@ BEGIN
     IDS_STREE               "Statistièno drevo"
     IDS_IRC_IGNOREQUITMESSAGE "Ignoriraj sporoèila ob odhodu"
     IDS_STATSSETUPINFO      "Nastavitve za statistiko"
+    IDS_IRC_SOUNDEVENTS     "Play sound events"
 END
 
 STRINGTABLE 
@@ -806,11 +809,6 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* Zaèetek zasebnega pogovora"
     IDS_IRC_SLAPMSG         "* %s udari %s z veliko mastno in debelo ribico!"
     IDS_IRC_PRIVMESSAGE     "Zasebno sporoèilo"
-    IDS_IRC_OP              "Op"
-    IDS_IRC_DEOP            "DeOp"
-    IDS_IRC_VOICE           "Glas"
-    IDS_IRC_HALFOP          "HalfOp"
-    IDS_IRC_DEHALFOP        "DeHalfOp"
     IDS_IRC_KICK            "Vrzi ven"
     IDS_IRC_SLAP            "Udari"
     IDS_IRC_JOIN            "Pojdi na"
@@ -825,7 +823,6 @@ BEGIN
     IDS_IRC_HASPARTED       "* %s je odšel z %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s je vrgel ven %s (%s)"
     IDS_IRC_NICKUSED        "Vaš vzdevek je že v uporabi. Prosim nastavite si novega v lastnostih."
-    IDS_IRC_DEVOICE         "Odvzemi glas"
     IDS_IRC_HASQUIT         "* %s je odšel (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s se je preimenoval v %s"
     IDS_IRC_SETSMODE        "* %s nastavi: %s %s"
@@ -1022,7 +1019,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "Izguba zaradi kompresije: %s       Pridobitev zaradi kompresije: %s\nRešenih paketov: %i"
-    IDS_ERR_NOHELP          "Nobene help datoteke.\n Obišèite našo stran za najnovejšo razlièico! (download stran)"
+    IDS_ERR_NOHELP          "Please visit our homepage's download section to get a copy of the newest help file!\n\nDo you want to browse the online help now instead?"
     IDS_SHOWOVERHEAD        "Prikaži presežen prenos"
     IDS_UPDOWNSMALL         "Gor: %.1f | Dol: %.1f"
     IDS_EDITLIST            "Prikaži"
@@ -1236,7 +1233,7 @@ BEGIN
     IDS_WIZ1_UPLOAD_SUBTITLE "Prenos celih delov"
     IDS_DL_RESUMENEXT       "Nadaljuj naslednjega na pavzi"
     IDS_DONTCHANGE          "Ne spremeni"
-    IDS_STARTPRIO           "Spremeni prioriteto novim datotekam"
+    IDS_STARTPRIO           "Priority for this category"
     IDS_PREF_STARTNEXTFILECAT "drži se iste kategorije"
     IDS_REPAINTGRAPHS       "Ne naredi novih grafov ob poveèanju"
     IDS_SOFTFILES           "Mehka omejitev datotek"
@@ -1384,6 +1381,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_CUT                 "Cut"
     IDS_STATS_SECUREIDENT   "Varna ident. (OK : Neuspel )"
     IDS_ONDISK              "Velikost na disku: "
     IDS_CLIENTCOL           "Opozorilo: Najden enak odjemalec na trenutno povezanem odjemalcu: %s (%s) in %s (%s)"
@@ -1406,6 +1404,7 @@ STRINGTABLE
 BEGIN
     IDS_VERSION             "Razlièica"
     IDS_ALL_A4AF_TO_THIS    "Prenesi vse vire na to dat."
+    IDS_PASTE               "Paste"
     IDS_ALL_A4AF_TO_OTHER   "Prenesi vse vire na katerokoli drugo dat."
     IDS_ALL_A4AF_AUTO       "Samodejno prenesi vse (A4AF)vire na to dat."
     IDS_SWAP_A4AF_TO_THIS   "Prenesi vire na to datoteko"
@@ -1482,7 +1481,7 @@ BEGIN
                             "Razmak med osvežitvama povezave na strežnik [min.]"
     IDS_MORE                "&veè"
     IDS_TOOLS               "O&rodja"
-    IDS_ERR_JIGLENEEDSTYPE  "Èe želite iskati po bazi Jigle brez doloèenega tipa datoteke, morate doloèiti vsaj konènico datoteke!"
+    IDS_SEARCHPARAMS        "Search Parameters"
 END
 
 STRINGTABLE 
@@ -1539,6 +1538,7 @@ BEGIN
     IDS_CMT_COPYCLIPBOARD   "Kopiraj komentarje na odložišèe"
     IDS_ASKDOWNLOADLANG     "Jezik, ki ste ga izbrali, ni namešèen na vašem sistemu. Želite, da ga eMule prenese s strani emule-project.net?"
     IDS_ASKDOWNLOADLANGCAP  "Prenesi datoteke z jeziki"
+    IDS_DELETESELECTED      "Izbriši"
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "Neuspel prenos in namestitev izbranega jezika dll z %s!"
     IDS_AUTOREMOVEFD        "Samodejno izbriši konèane prenose"
@@ -1593,6 +1593,7 @@ BEGIN
     IDS_KADUDPPORTERR       "Kad UDP port je bil v sporu z eMule UDP portom oz. eMule server UDP portom. Št. porta je bila spremenjena na %u."
     IDS_CONFIRM_FILEDELETE  "Res želite odstraniti vse izbrane datoteke z diska?"
     IDS_OPENFOLDER          "Odpri mapo"
+    IDS_RUNASUSER           "Run eMule as unprivileged User"
     IDS_DELETE              "Odstrani z diska"
     IDS_BOOTSTRAP           "Bootstrap"
     IDS_VIAED2KSQ           "preko ED2k strežnik/vrsta"
@@ -1614,7 +1615,7 @@ BEGIN
     IDS_DELETEIPFILTERS     "Zares želite izbrisati izbrane IP filtre?"
     IDS_TOTAL_IPFILTER_LABEL "Skupno IP filtrov:"
     IDS_TOTAL_IPS_LABEL     "Skupno IPjev:"
-    IDS_DELETE2             "Izbriši"
+    IDS_RAU_WARNING         "This setting will give eMule additional security against attacks and exploits and we encourage the usage of this option.\nHowever it is strongly recommended to read the manual before activating it!\n\nChanges will take effect after restarting eMule."
     IDS_APPEND              "Pripni..."
     IDS_SAVE                "Shrani"
     IDS_IP_START            "Zaèni"
@@ -1629,9 +1630,62 @@ STRINGTABLE
 BEGIN
     IDS_ERR_NOTCONNECTEDKAD "Trenutno niste povezani v Kad omrežje!"
     IDS_IRC_NOSFS           "Ni izbranih deljenih datotek"
+    IDS_RESETLABEL          "Auto completion (history function)"
     IDS_IRC_IGNOREMISCMESSAGE "Ignoriraj nedoloèna sporoèila"
     IDS_KNOWN               "Znan"
-    IDS_RESETLABEL          "Auto completion (history function)"
+    IDS_RAU_RUNNING         "eMule running as unprivileged user ""%s"""
+    IDS_RAU_FAILED          "Failed to start eMule as unprivileged user ""eMule_Secure"". Keeping the privileges of the current user (""%S"")."
+    IDS_KADCONTACTSREAD     "Read %ld contacts from file."
+    IDS_ERR_KADCONTACTS     "No contacts found, please bootstrap, or download a nodes.dat file."
+    IDS_METATAGS            "Meta Tag Count:"
+    IDS_FILEFORMAT          "File format"
+    IDS_UDPREASKS           "UDP File Reasks"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE_MS 			"Ping tolerance (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Method for ping tolerance"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milliseconds (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Percent (%)"
+    IDS_LOG_A4AF            "Log A4AF actions"
+    IDS_A4AF_SAVE_CPU       "Disable A4AF checks to save CPU"
+    IDS_SEARCH_DOC          "Document"
+    IDS_DOWNLOAD_ALPHABETICAL "Download in alphabetical order"
+    IDS_INSTALL_SKIN        "Install eMule Skin"
+    IDS_INSTALL_SKIN_NODIR  "No eMule Skin profile directory selected or directory is not accessible!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            "Failed to create directory ""%s"" for eMule Skin - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "Failed to extract file ""%s"" from eMule Skin to local file ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "This is not a valid eMule Skin package file."
+    IDS_NEXT_REASK          "Next ask to this client"
+    IDS_A4AF_FILES          "A4AF files"
+    IDS_STATS_FRATIO        "Session UL:DL ratio (friends UL excluded):"
+    IDS_STATS_UDATA_FRIENDS "Uploaded data to friend slots (Session): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FO_PREF_EXISTED     "eMule detected existing rules for the selected ports, which were not overwritten or replaced. Missing rules have been added successfully.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_FO_PREF_FAILED      "Failed to configure the internal WinXP firewall for the selected ports!"
+    IDS_FO_PREF_STARTUP     "Open/close ports on WinXP firewall when starting/exiting eMule"
+    IDS_LOG_LEVEL           "Log Level"
+    IDS_DISABLEPEERACHE     "Disable downloading from PeerCache"
+    IDS_FO_TEMPTCP_S        "Opened port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPTCP_F        "Failed to open port %u (TCP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_S        "Opened port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_TEMPUDP_F        "Failed to open port %u (UDP) on internal WinXP firewall for this eMule session"
+    IDS_FO_PREFBUTTON       "Open these ports on internal WinXP firewall"
+    IDS_FO_PREF_SUCCCEEDED  "Succeeded to open selected ports on the internal WinXP firewall.\nPlease note that third-party desktopfirewalls or routers are not effected by this!"
+    IDS_SOURCESWAPBLOCKED   "Swap blocked"
+    IDS_A4AF_CHECK_THIS_NOW "Check this source now (debug)"
+    IDS_SOURCEEXCHANGESWAP  "Temporary Source Exchange Swap"
+    IDS_NEWMSG              "New Message from '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "only in same category"
+    IDS_LOG_ULDL_EVENTS     "Log upload/download events"
+    IDS_PEERCACHE_ENABLED   "Your ISP supports the PeerCache technology, enabling cache downloads!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
 END
 
 #endif    // Slovenian resources

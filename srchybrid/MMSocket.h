@@ -29,11 +29,17 @@ public:
 	void	WriteByte(uint8 write)		{m_pBuffer->Write(&write,1);}
 	void	WriteShort(uint16 write)	{m_pBuffer->Write(&write,2);}
 	void	WriteInt(uint32 write)		{m_pBuffer->Write(&write,4);}
-	void	WriteString(CString write){
+	void	WriteString(CStringA write){
 		uint8 len = (write.GetLength() > 255) ? 255 : write.GetLength();
 		WriteByte(len);
 		m_pBuffer->Write(write.GetBuffer(),len);
 	}
+#ifdef _UNICODE
+	void	WriteString(CString write){
+		CStringA strA(write);
+		WriteString(strA);
+	}
+#endif
 	CMemFile* m_pBuffer;
 	bool	  m_bSpecialHeader;
 };
@@ -177,5 +183,5 @@ private:
 #define MMT_PARTFILFE		0x01
 #define MMT_FINISHEDFILE	0x02
 
-#define MM_VERSION			0x7a
-#define MM_STRVERSION		"0.7a"
+#define MM_VERSION			0x08
+#define MM_STRVERSION		"0.8a"

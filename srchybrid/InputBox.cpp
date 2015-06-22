@@ -32,10 +32,6 @@ IMPLEMENT_DYNAMIC(InputBox, CDialog)
 InputBox::InputBox(CWnd* pParent /*=NULL*/)
 	: CDialog(InputBox::IDD, pParent)
 {
-	m_label="";
-	m_title="";
-	m_default="";
-	m_return="";
 	m_cancel=true;
 	m_bFilenameMode=false;
 }
@@ -54,12 +50,13 @@ BEGIN_MESSAGE_MAP(InputBox, CDialog)
 END_MESSAGE_MAP()
 
 void InputBox::OnOK()
-{	char buffer[510];
+{	
+	TCHAR buffer[510];
 	m_cancel=false;
 	if(GetDlgItem(IDC_TEXT)->GetWindowTextLength())
 	{ 
-		GetDlgItem(IDC_TEXT)->GetWindowText(buffer,510);
-		m_return.Format("%s",buffer);
+		GetDlgItem(IDC_TEXT)->GetWindowText(buffer,ARRSIZE(buffer));
+		m_return.Format(_T("%s"),buffer);
 	}
 	CDialog::OnOK();
 }

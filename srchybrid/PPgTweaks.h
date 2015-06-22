@@ -26,6 +26,8 @@ protected:
 	int m_iLogSecureIdent;
 	int m_iLogFilteredIPs;
 	int m_iLogFileSaving;
+    int m_iLogA4AF; // ZZ:DownloadManager
+	int m_iLogUlDlEvents;
 	int m_iCreditSystem;
 	int m_iLog2Disk;
 	int m_iDebug2Disk;
@@ -36,15 +38,22 @@ protected:
 	int m_iCheckDiskspace;	// SLUGFILLER: checkDiskspace
 	float m_fMinFreeDiskSpaceMB;
 	CString m_sYourHostname;	// itsonlyme: hostnameSource
+	int m_iFirewallStartup;
+	int m_iLogLevel;
+	int m_iDisablePeerCache;
 
 	// ZZ:UploadSpeedSense -->
     int m_iDynUpEnabled;
     int m_iDynUpMinUpload;
     int m_iDynUpPingTolerance;
+    int m_iDynUpPingToleranceMilliseconds;
+    int m_iDynUpRadioPingTolerance;
     int m_iDynUpGoingUpDivider;
     int m_iDynUpGoingDownDivider;
     int m_iDynUpNumberOfPings;
 	// ZZ:UploadSpeedSense <--
+
+    int m_iA4AFSaveCpu; // ZZ:DownloadManager
 
     CTreeOptionsCtrlEx m_ctrlTreeOptions;
 	bool m_bInitializedTreeOpts;
@@ -58,6 +67,8 @@ protected:
 	HTREEITEM m_htiLogSecureIdent;
 	HTREEITEM m_htiLogFilteredIPs;
 	HTREEITEM m_htiLogFileSaving;
+    HTREEITEM m_htiLogA4AF; // ZZ:DownloadManager
+	HTREEITEM m_htiLogUlDlEvents;
 	HTREEITEM m_htiCreditSystem;
 	HTREEITEM m_htiLog2Disk;
 	HTREEITEM m_htiDebug2Disk;
@@ -71,24 +82,38 @@ protected:
 	HTREEITEM m_htiCheckDiskspace;	// SLUGFILLER: checkDiskspace
 	HTREEITEM m_htiMinFreeDiskSpace;
 	HTREEITEM m_htiYourHostname;	// itsonlyme: hostnameSource
+	HTREEITEM m_htiFirewallStartup;
+	HTREEITEM m_htiLogLevel;
+	HTREEITEM m_htiDisablePeerCache;
 
 	// ZZ:UploadSpeedSense -->
     HTREEITEM m_htiDynUp;
 	HTREEITEM m_htiDynUpEnabled;
     HTREEITEM m_htiDynUpMinUpload;
     HTREEITEM m_htiDynUpPingTolerance;
+    HTREEITEM m_htiDynUpPingToleranceMilliseconds;
+    HTREEITEM m_htiDynUpPingToleranceGroup;
+    HTREEITEM m_htiDynUpRadioPingTolerance;
+    HTREEITEM m_htiDynUpRadioPingToleranceMilliseconds;
     HTREEITEM m_htiDynUpGoingUpDivider;
     HTREEITEM m_htiDynUpGoingDownDivider;
     HTREEITEM m_htiDynUpNumberOfPings;
 	// ZZ:UploadSpeedSense <--
 
+	// ZZ:DownloadManager -->
+    HTREEITEM m_htiA4AFSaveCpu;
+	// ZZ:DownloadManager <--
+
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 	virtual BOOL OnApply();
 	virtual BOOL OnKillActive();
+	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()
     afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnDestroy();
 	afx_msg LRESULT OnTreeOptsCtrlNotify(WPARAM wParam, LPARAM lParam);
+	afx_msg void OnHelp();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 };

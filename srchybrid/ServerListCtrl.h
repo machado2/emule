@@ -16,7 +16,7 @@ public:
 	void	RemoveServer(CServer* todel);
 	bool	AddServermetToList(const CString& strFile);
 	void	RefreshServer(const CServer* server);
-	void	RemoveDeadServer();
+	void	RemoveAllDeadServers();
 	void	Hide() {ShowWindow(SW_HIDE);}
 	void	Visable() {ShowWindow(SW_SHOW);}
 	void	Localize();
@@ -37,4 +37,5 @@ protected:
 	afx_msg	void OnColumnClick(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnNMLdblclk (NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };

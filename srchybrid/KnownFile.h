@@ -33,6 +33,7 @@ typedef CTypedPtrList<CPtrList, CUpDownClient*> CUpDownClientPtrList;
 class CFileStatistic
 {
 	friend class CKnownFile;
+	friend class CPartFile;
 public:
 	CFileStatistic()
 	{
@@ -85,20 +86,29 @@ public:
 	virtual ~CAbstractFile() { }
 
 	const CString& GetFileName() const { return m_strFileName; }
-	virtual void SetFileName(LPCTSTR pszFileName, bool bReplaceInvalidFileSystemChars = false); // 'bReplaceInvalidFileSystemChars' is set to 'false' for backward compatibility!
+	virtual void SetFileName(LPCTSTR pszFileName, bool bReplaceInvalidFileSystemChars = false, bool bAutoSetFileType = true); // 'bReplaceInvalidFileSystemChars' is set to 'false' for backward compatibility!
 
-	const CString& GetFileType() const { return m_strFileType; }
-	virtual void SetFileType(LPCTSTR pszFileType);
+	// returns the ED2K file type (an ASCII string)
+	const CStringA& GetFileType() const { return m_strFileType; }
+	virtual void SetFileType(LPCSTR pszFileType);
+
+	// returns the file type which is used to be shown in the GUI
+	CString GetFileTypeDisplayStr() const;
 
 	const uchar* GetFileHash() const { return m_abyFileHash; }
+	void SetFileHash(const uchar* pucFileHash);
+	bool HasNullHash() const;
+
 	uint32 GetFileSize() const { return m_nFileSize; }
 	virtual void SetFileSize(uint32 nFileSize) { m_nFileSize = nFileSize; }
 
 	uint32 GetIntTagValue(uint8 tagname) const;
 	uint32 GetIntTagValue(LPCSTR tagname) const;
 	bool GetIntTagValue(uint8 tagname, uint32& ruValue) const;
-	LPCSTR GetStrTagValue(uint8 tagname) const;
-	LPCSTR GetStrTagValue(LPCSTR tagname) const;
+	LPCSTR GetStrTagValueA(uint8 tagname) const;
+	LPCSTR GetStrTagValueA(LPCSTR tagname) const;
+	CString GetStrTagValue(uint8 tagname) const;
+	CString GetStrTagValue(LPCSTR tagname) const;
 	CTag* GetTag(uint8 tagname, uint8 tagtype) const;
 	CTag* GetTag(LPCSTR tagname, uint8 tagtype) const;
 	CTag* GetTag(uint8 tagname) const;
@@ -118,7 +128,7 @@ protected:
 	uint32	m_nFileSize;
 	CString m_strComment;
 	uint8	m_iRate;
-	CString m_strFileType;	// this holds the localized(!) file type, TODO: change to ed2k file type
+	CStringA m_strFileType;
 	CArray<CTag*,CTag*> taglist;
 };
 
@@ -138,20 +148,23 @@ public:
 	const CString& GetFilePath() const { return m_strFilePath; }
 	void SetFilePath(LPCTSTR pszFilePath);
 
-	virtual bool CreateFromFile(LPCTSTR directory,LPCTSTR filename); // create date, hashset and tags from a file
+	virtual bool CreateFromFile(LPCTSTR directory, LPCTSTR filename, LPVOID pvProgressParam); // create date, hashset and tags from a file
 	virtual bool IsPartFile() const { return false; }
 	virtual bool LoadFromFile(CFileDataIO* file);	//load date, hashset and tags from a .met file
 	bool	WriteToFile(CFileDataIO* file);
-	CTime	GetCFileDate() const { return CTime(date); }
-	uint32	GetFileDate() const { return date; }
-	CTime	GetCrCFileDate() const { return CTime(dateC); }
-	uint32	GetCrFileDate() const { return dateC; }
+
+	// last file modification time in (DST corrected, if NTFS) real UTC format
+	// NOTE: this value can *not* be compared with NT's version of the UTC time
+	CTime	GetUtcCFileDate() const { return CTime(m_tUtcLastModified); }
+	uint32	GetUtcFileDate() const { return m_tUtcLastModified; }
 
 	virtual void SetFileSize(uint32 nFileSize);
 
 	// local available part hashs
 	uint16	GetHashCount() const { return hashlist.GetCount(); }
 	uchar*	GetPartHash(uint16 part) const;
+	const CArray<uchar*, uchar*>& GetHashset() const { return hashlist; }
+	bool	SetHashset(const CArray<uchar*, uchar*>& aHashset);
 
 	// nr. of part hashs according the file size wrt ED2K protocol
 	UINT	GetED2KPartHashCount() const { return m_iED2KPartHashCount; }
@@ -182,11 +195,11 @@ public:
 	virtual	void	DrawShareStatusBar(CDC* dc, LPCRECT rect, bool onlygreyrect, bool bFlat) const;
 
 	// comment
-	CString GetFileComment() /*const*/ { if (!m_bCommentLoaded) LoadComment(); return m_strComment; }
-	void	SetFileComment(CString strNewComment);
+	const CString& GetFileComment() /*const*/;
+	void	SetFileComment(LPCTSTR pszComment);
 
-	uint8	GetFileRate() /*const*/ { if (!m_bCommentLoaded) LoadComment(); return m_iRate; }
-	void	SetFileRate(uint8 iNewRate);
+	uint8	GetFileRate() /*const*/;
+	void	SetFileRate(uint8 uRate);
 
 	bool	GetPublishedED2K() const { return m_PublishedED2K; }
 	void	SetPublishedED2K(bool val);
@@ -216,8 +229,10 @@ public:
 	virtual bool GrabImage(uint8 nFramesToGrab, double dStartTime, bool bReduceColor, uint16 nMaxWidth, void* pSender);
 	virtual void GrabbingFinished(CxImage** imgResults, uint8 nFramesGrabbed, void* pSender);
 
-	uint32	date;
-	uint32	dateC;
+	// last file modification time in (DST corrected, if NTFS) real UTC format
+	// NOTE: this value can *not* be compared with NT's version of the UTC time
+	uint32	m_tUtcLastModified;
+
 	CFileStatistic statistic;
 	time_t m_nCompleteSourcesTime;
 	uint16 m_nCompleteSourcesCount;

@@ -27,9 +27,7 @@
 #include <crypto51/osrng.h>
 #include <crypto51/files.h>
 #include <crypto51/sha.h>
-#ifndef _CONSOLE
 #include "emuledlg.h"
-#endif
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -153,7 +151,7 @@ CClientCreditsList::~CClientCreditsList()
 void CClientCreditsList::LoadList()
 {
 	CString strFileName = thePrefs.GetConfigDir() + CString(CLIENTS_MET_FILENAME);
-	const int iOpenFlags = CFile::modeRead|CFile::osSequentialScan|CFile::typeBinary;
+	const int iOpenFlags = CFile::modeRead|CFile::osSequentialScan|CFile::typeBinary|CFile::shareDenyWrite;
 	CSafeBufferedFile file;
 	CFileException fexp;
 	if (!file.Open(strFileName, iOpenFlags, &fexp)){
@@ -256,8 +254,8 @@ void CClientCreditsList::LoadList()
 		if (error->m_cause == CFileException::endOfFile)
 			AddLogLine(true, GetResString(IDS_CREDITFILECORRUPT));
 		else{
-			char buffer[MAX_CFEXP_ERRORMSG];
-			error->GetErrorMessage(buffer, MAX_CFEXP_ERRORMSG);
+			TCHAR buffer[MAX_CFEXP_ERRORMSG];
+			error->GetErrorMessage(buffer, ARRSIZE(buffer));
 			AddLogLine(true, GetResString(IDS_ERR_CREDITFILEREAD), buffer);
 		}
 		error->Delete();
@@ -267,13 +265,13 @@ void CClientCreditsList::LoadList()
 void CClientCreditsList::SaveList()
 {
 	if (thePrefs.GetLogFileSaving())
-		AddDebugLogLine(false, "Saving clients credit list file \"%s\"", CLIENTS_MET_FILENAME);
+		AddDebugLogLine(false, _T("Saving clients credit list file \"%s\""), CLIENTS_MET_FILENAME);
 	m_nLastSaved = ::GetTickCount();
 
 	CString name = thePrefs.GetConfigDir() + CString(CLIENTS_MET_FILENAME);
 	CFile file;// no buffering needed here since we swap out the entire array
 	CFileException fexp;
-	if (!file.Open(name, CFile::modeWrite|CFile::modeCreate|CFile::typeBinary, &fexp)){
+	if (!file.Open(name, CFile::modeWrite|CFile::modeCreate|CFile::typeBinary|CFile::shareDenyWrite, &fexp)){
 		CString strError(GetResString(IDS_ERR_FAILED_CREDITSAVE));
 		TCHAR szError[MAX_CFEXP_ERRORMSG];
 		if (fexp.GetErrorMessage(szError, ARRSIZE(szError))){
@@ -370,7 +368,7 @@ void CClientCredits::Verified(uint32 dwForIP){
 			m_pCredits->nUploadedHi = 0;
 			m_pCredits->nUploadedLo = 1; // in order to safe this client, set 1 byte
 			if (thePrefs.GetVerbose())
-				DEBUG_ONLY(AddDebugLogLine(false, "Credits deleted due to new SecureIdent"));
+				DEBUG_ONLY(AddDebugLogLine(false, _T("Credits deleted due to new SecureIdent")));
 		}
 	}
 	IdentState = IS_IDENTIFIED;
@@ -424,7 +422,7 @@ void CClientCreditsList::InitalizeCrypting(){
 	// load key
 	try{
 		// load private key
-		FileSource filesource(CString(thePrefs.GetConfigDir() + CString("cryptkey.dat")), true,new Base64Decoder);
+		FileSource filesource(CStringA(thePrefs.GetConfigDir() + _T("cryptkey.dat")), true,new Base64Decoder);
 		m_pSignkey = new RSASSA_PKCS1v15_SHA_Signer(filesource);
 		// calculate and store public key
 		RSASSA_PKCS1v15_SHA_Verifier pubkey(*m_pSignkey);
@@ -451,17 +449,17 @@ bool CClientCreditsList::CreateKeyPair(){
 		InvertibleRSAFunction privkey;
 		privkey.Initialize(rng,RSAKEYSIZE);
 
-		Base64Encoder privkeysink(new FileSink(CString(thePrefs.GetConfigDir())+"cryptkey.dat"));
+		Base64Encoder privkeysink(new FileSink(CStringA(thePrefs.GetConfigDir() + _T("cryptkey.dat"))));
 		privkey.DEREncode(privkeysink);
 		privkeysink.MessageEnd();
 
 		if (thePrefs.GetLogSecureIdent())
-			AddDebugLogLine(false, "Created new RSA keypair");
+			AddDebugLogLine(false, _T("Created new RSA keypair"));
 	}
 	catch(...)
 	{
 		if (thePrefs.GetVerbose())
-			AddDebugLogLine(false, "Failed to create new RSA keypair");
+			AddDebugLogLine(false, _T("Failed to create new RSA keypair"));
 		ASSERT ( false );
 		return false;
 	}
@@ -539,7 +537,7 @@ bool CClientCreditsList::VerifyIdent(CClientCredits* pTarget, uchar* pachSignatu
 				case CRYPT_CIP_REMOTECLIENT:
 					if (theApp.serverconnect->GetClientID() == 0 || theApp.serverconnect->IsLowID()){
 						if (thePrefs.GetLogSecureIdent())
-							AddDebugLogLine(false, "Warning: Maybe SecureHash Ident fails because LocalIP is unknown");
+							AddDebugLogLine(false, _T("Warning: Maybe SecureHash Ident fails because LocalIP is unknown"));
 						ChallengeIP = theApp.serverconnect->GetLocalIP();
 					}
 					else
@@ -559,7 +557,7 @@ bool CClientCreditsList::VerifyIdent(CClientCredits* pTarget, uchar* pachSignatu
 	catch(...)
 	{
 		if (thePrefs.GetVerbose())
-			AddDebugLogLine(false, _T("Error: Unknown exception in %s"), __FUNCTION__);
+			AddDebugLogLine(false, _T("Error: Unknown exception in %hs"), __FUNCTION__);
 		//ASSERT(0);
 		bResult = false;
 	}

@@ -82,9 +82,9 @@ void CFriendListCtrl::SetAllIcons()
 	CImageList iml;
 	iml.Create(16,16,theApp.m_iDfltImageListColorFlags|ILC_MASK,0,1);
 	iml.SetBkColor(CLR_NONE);
-	iml.Add(CTempIconLoader("FriendNoClient"));
-	iml.Add(CTempIconLoader("FriendWithClient"));
-	iml.Add(CTempIconLoader("FriendConnected"));
+	iml.Add(CTempIconLoader(_T("FriendNoClient")));
+	iml.Add(CTempIconLoader(_T("FriendWithClient")));
+	iml.Add(CTempIconLoader(_T("FriendConnected")));
 	ASSERT( (GetStyle() & LVS_SHAREIMAGELISTS) == 0 );
 	HIMAGELIST himlOld = ApplyImageList(iml.Detach());
 	if (himlOld)
@@ -102,45 +102,53 @@ void CFriendListCtrl::Localize()
 	hdi.pszText = strRes.GetBuffer();
 	pHeaderCtrl->SetItem(0, &hdi);
 	strRes.ReleaseBuffer();
+
+	int iItems = GetItemCount();
+	for (int i = 0; i < iItems; i++)
+		UpdateFriend(i, (CFriend*)GetItemData(i));
 }
 
-void CFriendListCtrl::AddFriend(const CFriend* toadd)
+void CFriendListCtrl::UpdateFriend(int iItem, const CFriend* pFriend)
 {
-	int itemnr = GetItemCount();
-	InsertItem(LVIF_TEXT|LVIF_PARAM|LVIF_IMAGE,itemnr,(LPCTSTR)toadd->m_strName,0,0,1,(LPARAM)toadd);
-	RefreshFriend(toadd);
+	SetItemText(iItem,0,pFriend->m_strName);
+
+	int iImage;
+    if (!pFriend->GetLinkedClient())
+		iImage = 0;
+	else if (pFriend->GetLinkedClient()->socket && pFriend->GetLinkedClient()->socket->IsConnected())
+		iImage = 2;
+	else
+		iImage = 1;
+	SetItem(iItem,0,LVIF_IMAGE,0,iImage,0,0,0,0);
+}
+
+void CFriendListCtrl::AddFriend(const CFriend* pFriend)
+{
+	int iItem = InsertItem(LVIF_TEXT|LVIF_PARAM,GetItemCount(),pFriend->m_strName,0,0,0,(LPARAM)pFriend);
+	if (iItem >= 0)
+		UpdateFriend(iItem, pFriend);
 	theApp.emuledlg->chatwnd->UpdateFriendlistCount(theApp.friendlist->GetCount());
 }
 
-void CFriendListCtrl::RemoveFriend(const CFriend* toremove)
+void CFriendListCtrl::RemoveFriend(const CFriend* pFriend)
 {
 	LVFINDINFO find;
 	find.flags = LVFI_PARAM;
-	find.lParam = (LPARAM)toremove;
-	int result = FindItem(&find);
-	if (result != -1)
-		DeleteItem(result);
+	find.lParam = (LPARAM)pFriend;
+	int iItem = FindItem(&find);
+	if (iItem != -1)
+		DeleteItem(iItem);
 	theApp.emuledlg->chatwnd->UpdateFriendlistCount(theApp.friendlist->GetCount());
 }
 
-void CFriendListCtrl::RefreshFriend(const CFriend* toupdate)
+void CFriendListCtrl::RefreshFriend(const CFriend* pFriend)
 {
 	LVFINDINFO find;
 	find.flags = LVFI_PARAM;
-	find.lParam = (LPARAM)toupdate;
-	int itemnr = FindItem(&find);
-	if (itemnr != -1)
-	{
-		SetItemText(itemnr,0,(LPCTSTR)toupdate->m_strName);
-		int image;
-		if (!toupdate->m_LinkedClient)
-			image = 0;
-		else if (toupdate->m_LinkedClient->socket && toupdate->m_LinkedClient->socket->IsConnected())
-			image = 2;
-		else
-			image = 1;
-		SetItem(itemnr,0,LVIF_IMAGE,0,image,0,0,0,0);
-	}
+	find.lParam = (LPARAM)pFriend;
+	int iItem = FindItem(&find);
+	if (iItem != -1)
+		UpdateFriend(iItem, pFriend);
 	else
 		ASSERT(0);
 }
@@ -162,14 +170,11 @@ void CFriendListCtrl::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	ClientMenu.AppendMenu(MF_STRING, MP_ADDFRIEND, GetResString(IDS_ADDAFRIEND));
 	ClientMenu.AppendMenu(MF_STRING | (cur_friend ? MF_ENABLED : MF_GRAYED), MP_REMOVEFRIEND, GetResString(IDS_REMOVEFRIEND));
 	ClientMenu.AppendMenu(MF_STRING | (cur_friend ? MF_ENABLED : MF_GRAYED), MP_MESSAGE, GetResString(IDS_SEND_MSG));
-	ClientMenu.AppendMenu(MF_STRING | ((cur_friend==NULL || (cur_friend && cur_friend->m_LinkedClient && !cur_friend->m_LinkedClient->GetViewSharedFilesSupport())) ? MF_GRAYED : MF_ENABLED), MP_SHOWLIST, GetResString(IDS_VIEWFILES));
+	ClientMenu.AppendMenu(MF_STRING | ((cur_friend==NULL || (cur_friend && cur_friend->GetLinkedClient() && !cur_friend->GetLinkedClient()->GetViewSharedFilesSupport())) ? MF_GRAYED : MF_ENABLED), MP_SHOWLIST, GetResString(IDS_VIEWFILES));
 	ClientMenu.AppendMenu(MF_STRING, MP_FRIENDSLOT, GetResString(IDS_FRIENDSLOT));
-	if (cur_friend && cur_friend->m_LinkedClient && !cur_friend->m_LinkedClient->HasLowID()){
-		ClientMenu.EnableMenuItem(MP_FRIENDSLOT, MF_ENABLED);
-		ClientMenu.CheckMenuItem(MP_FRIENDSLOT, (cur_friend->m_LinkedClient->GetFriendSlot()) ? MF_CHECKED : MF_UNCHECKED);
-	}
-	else
-		ClientMenu.EnableMenuItem(MP_FRIENDSLOT, MF_GRAYED);
+
+    ClientMenu.EnableMenuItem(MP_FRIENDSLOT, (cur_friend)?MF_ENABLED : MF_GRAYED);
+	ClientMenu.CheckMenuItem(MP_FRIENDSLOT, (cur_friend && cur_friend->GetFriendSlot()) ? MF_CHECKED : MF_UNCHECKED);
 
 	GetPopupMenuPos(*this, point);
 	ClientMenu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
@@ -185,11 +190,11 @@ BOOL CFriendListCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 	switch (wParam){
 		case MP_MESSAGE:{
 			if (cur_friend){
-				if (cur_friend->m_LinkedClient)
-					theApp.emuledlg->chatwnd->StartSession(cur_friend->m_LinkedClient);
+				if (cur_friend->GetLinkedClient())
+					theApp.emuledlg->chatwnd->StartSession(cur_friend->GetLinkedClient());
 				else{
 					CUpDownClient* chatclient = new CUpDownClient(0,cur_friend->m_nLastUsedPort,cur_friend->m_dwLastUsedIP,0,0,true);
-					chatclient->SetUserName(cur_friend->m_strName.GetBuffer());
+					chatclient->SetUserName(cur_friend->m_strName);
 					theApp.clientlist->AddClient(chatclient);
 					theApp.emuledlg->chatwnd->StartSession(chatclient);
 				}
@@ -220,11 +225,11 @@ BOOL CFriendListCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 		case MP_SHOWLIST:
 		{
 			if (cur_friend){
-				if (cur_friend->m_LinkedClient)
-					cur_friend->m_LinkedClient->RequestSharedFileList();
+				if (cur_friend->GetLinkedClient())
+					cur_friend->GetLinkedClient()->RequestSharedFileList();
 				else{
 					CUpDownClient* newclient = new CUpDownClient(0,cur_friend->m_nLastUsedPort,cur_friend->m_dwLastUsedIP,0,0,true);
-					newclient->SetUserName(cur_friend->m_strName.GetBuffer());
+					newclient->SetUserName(cur_friend->m_strName);
 					theApp.clientlist->AddClient(newclient);
 					newclient->RequestSharedFileList();
 				}
@@ -233,12 +238,12 @@ BOOL CFriendListCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 		}
 		case MP_FRIENDSLOT:
 		{
-			if (cur_friend && cur_friend->m_LinkedClient){
+			if (cur_friend){
 				bool IsAlready;
-				IsAlready = cur_friend->m_LinkedClient->GetFriendSlot();
+                IsAlready = cur_friend->GetFriendSlot();
 				theApp.friendlist->RemoveAllFriendSlots();
 				if( !IsAlready )
-					cur_friend->m_LinkedClient->SetFriendSlot(true);
+                    cur_friend->SetFriendSlot(true);
 			}
 			break;
 		}
@@ -257,8 +262,8 @@ void CFriendListCtrl::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 void CFriendListCtrl::ShowFriendDetails(const CFriend* pFriend)
 {
 	if (pFriend){
-		if (pFriend->m_LinkedClient){
-			CClientDetailDialog dialog(pFriend->m_LinkedClient);
+		if (pFriend->GetLinkedClient()){
+			CClientDetailDialog dialog(pFriend->GetLinkedClient());
 			dialog.DoModal();
 		}
 		else{

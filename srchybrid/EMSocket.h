@@ -16,6 +16,8 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
 #include "AsyncSocketEx.h"
+#include "OtherFunctions.h"
+#include "ThrottledSocket.h" // ZZ:UploadBandWithThrottler (UDP)
 
 class CAsyncProxySocketLayer;
 class Packet;
@@ -29,31 +31,30 @@ class Packet;
 
 #define PACKET_HEADER_SIZE	6
 
-struct SocketSentBytes {
-    bool    success;
-	uint32	sentBytesStandardPackets;
-	uint32	sentBytesControlPackets;
-};
-
 struct StandardPacketQueueEntry {
     uint32 actualPayloadSize;
     Packet* packet;
 };
 
-class CEMSocket : public CAsyncSocketEx
+class CEMSocket : public CAsyncSocketEx, public ThrottledFileSocket // ZZ:UploadBandWithThrottler (UDP)
 {
-    friend class UploadBandwidthThrottler;
+//    friend class UploadBandwidthThrottler;
+	DECLARE_DYNAMIC(CEMSocket)
 public:
 	CEMSocket(void);
-	~CEMSocket(void);
+	virtual ~CEMSocket(void);
 
-	void 	SendPacket(Packet* packet, bool delpacket = true, bool controlpacket = true, uint32 actualPayloadSize = 0);
+	virtual void 	SendPacket(Packet* packet, bool delpacket = true, bool controlpacket = true, uint32 actualPayloadSize = 0);
     bool    HasQueues();
     bool	IsConnected() const {return byConnected == ES_CONNECTED;}
 	uint8	GetConState() const {return byConnected;}
+	virtual bool IsRawDataMode() const { return false; }
 	void	SetDownloadLimit(uint32 limit);
 	void	DisableDownloadLimit();
 	BOOL	AsyncSelect(long lEvent);
+
+	virtual UINT GetTimeOut() const;
+	virtual void SetTimeOut(UINT uTimeOut);
 
 	// deadlake PROXYSUPPORT
 	// By Maverick: Connection necessary initalizing calls are done by class itself and not anymore by the Owner
@@ -74,6 +75,9 @@ public:
     uint64 GetSentPayloadSinceLastCallAndReset();
     void TruncateQueues();
 
+    virtual SocketSentBytes Send(uint32 maxNumberOfBytesToSend, uint32 minFragSize, bool onlyAllowedToSendControlPacket);
+
+    uint32	GetNeededBytes();
 #ifdef _DEBUG
 	// Diagnostic Support
 	virtual void AssertValid() const;
@@ -82,6 +86,8 @@ public:
 
 protected:
 	virtual int	OnLayerCallback(const CAsyncSocketExLayer *pLayer, int nType, int nParam1, int nParam2);	// deadlake PROXYSUPPORT
+	
+	virtual void	DataReceived(const BYTE* pcData, UINT uSize);
 	virtual bool	PacketReceived(Packet* packet) = 0;
 	virtual void	OnError(int nErrorCode) = 0;
 	virtual void	OnClose(int nErrorCode);
@@ -89,16 +95,18 @@ protected:
 	virtual void	OnReceive(int nErrorCode);
 
 	uint8	byConnected;
+	UINT	m_uTimeOut;
 
 	// deadlake PROXYSUPPORT
 	bool	m_ProxyConnectFailed;
 	CAsyncProxySocketLayer* m_pProxyLayer;
 
-    virtual SocketSentBytes Send(uint32 maxNumberOfBytesToSend, bool onlyAllowedToSendControlPacket = false);
-
 private:
 	void	ClearQueues();	
 	virtual int Receive(void* lpBuf, int nBufLen, int nFlags = 0);
+
+    uint32 GetNextFragSize(uint32 current, uint32 minFragSize);
+    bool    HasSent() { return m_hasSent; }
 
 	// Download (pseudo) rate control	
 	uint32	downloadLimit;
@@ -106,7 +114,7 @@ private:
 	bool	pendingOnReceive;
 
 	// Download partial header
-	char*	pendingHeader[PACKET_HEADER_SIZE];      
+	char	pendingHeader[PACKET_HEADER_SIZE];	// actually, this holds only 'PACKET_HEADER_SIZE-1' bytes.
 	uint32	pendingHeaderSize;
 
 	// Download partial packet
@@ -132,7 +140,10 @@ private:
     uint64 m_numberOfSentBytesControlPacket;
     bool m_currentPackageIsFromPartFile;
 
+	bool	m_bAccelerateUpload;
     DWORD lastCalledSend;
+    DWORD lastSent;
+	uint32	lastFinishedStandard;
 
     //void StoppedSendSoUpdateStats();
     //void CleanSendLatencyList();
@@ -144,4 +155,7 @@ private:
 
     uint32 m_actualPayloadSize;
     uint32 m_actualPayloadSizeSent;
+
+    boolean m_bBusy;
+    boolean m_hasSent;
 };

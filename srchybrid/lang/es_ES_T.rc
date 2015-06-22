@@ -111,8 +111,10 @@ BEGIN
                             "Ha ocurrido un error al abrir el archivo, error:%s"
     IDS_HTTPDOWNLOAD_ABORTING_TRANSFER "Cancelando transferencia"
     IDS_FD_COMPR            "Compresión"
+    IDS_WIZARD_NETWORK      "Elige la(s) red(s) que quieres utilizar."
     IDS_MAIN_READY          "Versión %s de eMule lista"
-    IDS_SEL_SKIN            "Seleccionar Skin.."
+    IDS_WIZARD_ED2K         "Configuración ED2k"
+    IDS_SEL_SKIN            "Seleccionar Tema visual.."
 END
 
 STRINGTABLE 
@@ -164,7 +166,7 @@ BEGIN
     IDS_PING                "Ping"
     IDS_FILES               "Archivos"
     IDS_PREFERENCE          "Preferencia"
-    IDS_PRIONOPREF          "No Preferencia"
+    IDS_PRIONOPREF          "Sin Pref."
     IDS_CONNECTTHIS         "Conectar al servidor seleccionado"
     IDS_CHAT_WELCOME        "Mensajería Instantánea\n  \nClick derecho en cualquier cliente y seleccionar 'Enviar mensaje' para empezar una sesión de chat"
     IDS_MAIN_BTN_CANCEL_TOOLTIP "Detiene los intentos de conexión actuales"
@@ -269,6 +271,7 @@ BEGIN
                             "Recibido paquete de lista de servidores no válido"
     IDS_STATUS              "Estado"
     IDS_DL_REMAINS          "Restante"
+    IDS_UPDATEFROM          "Actualizar desde URL: (filter.dat ó formato PeerGuardian)"
     IDS_QL_USERNAME         "Nombre de usuario"
     IDS_ERR_PACKAGEHANDLING "Error al procesar un paquete del servidor (%s)"
     IDS_QL_RATING           "Valoración"
@@ -307,12 +310,12 @@ BEGIN
     IDS_PRIOVERYLOW         "Muy baja"
     IDS_PRIORELEASE         "Lanzamiento"
     IDS_FSTATUS_LOCKED      "Excluido"
-    IDS_KADALPHA            "Kademlia is still in an early development stage. We recommend to enabled it only if you are interested in testing it"
+    IDS_KADALPHA            "Kademlia está todavía en desarrollo. Te recomendamos activarlo solo si estás interesado en evaluarlo"
     IDS_FSTATUS_FRIENDSONLY "Sólo amigos"
     IDS_FSTATUS_PUBLIC      "Público"
     IDS_ERR_RENAMESF        "Error al renombrar\r\n    ""%s""\r\nto\r\n    ""%s""\r\n\r\n%hs"
     IDS_PRIOHIGHEST         "Más alta"
-    IDS_AVAILABLE           "available"
+    IDS_AVAILABLE           "disponible"
     IDS_ERR_NOPRIMCHANGE    "¡No puedes cambiar los permisos mientras aún se descarga el archivo!"
     IDS_HIDDEN              "Oculto"
 END
@@ -341,7 +344,7 @@ STRINGTABLE
 BEGIN
     IDS_STATS_WAITCONN      "Esperando a conectar..."
     IDS_STATS_CONNECTEDSINCE "Conectado al servidor desde: %s"
-    IDS_STATS_RATIO         "Ratio SU:DE (Sesión (Total)):"
+    IDS_STATS_RATIO         "Índice SU:DE (Sesión (Total)):"
     IDS_STATS_UNKNOWNCLIENT "Desconocido: %i"
     IDS_STATS_TOTAL         "Total: %i"
     IDS_STATS_WORKING       "Funcionando: %i"
@@ -404,9 +407,9 @@ BEGIN
     IDS_ERR_METCORRUPT      "Error: %s (%s) corrupto, imposible cargar el archivo"
     IDS_ERR_FILEERROR       "Error de archivo al leer %s (%s): %s"
     IDS_ERR_FILEOPEN        "Error al abrir %s (%s)"
-    IDS_SEL_SKINDIR         "Seleccionar Carpeta de Skin.."
+    IDS_SEL_SKINDIR         "Seleccionar Carpeta de Temas visuales.."
     IDS_ERR_REHASH          "Atención: %s podría estar corrupto, recodificando el hash de las partes completadas"
-    IDS_SKIN_PROF           "Perfiles Skin"
+    IDS_SKIN_PROF           "Perfiles de Temas visuales"
     IDS_ERR_PART_FNF        "No se encontró el archivo .part"
     IDS_ERR_OPENMETFILE     "Error al abrir el archivo part.met"
     IDS_KADOPEN             "Abierto"
@@ -414,7 +417,7 @@ BEGIN
     IDS_ERR_FOUNDCORRUPTION "Parte corrupta (%i) en %s"
     IDS_HASHINGDONE         "Finalizado recodificación del hash en %s, el archivo parece estar bien"
     IDS_ERR_PARTCORRUPT     "Parte descargada %i corrupta :(  (%s)"
-    IDS_ICHWORKED           "ICH: Recuperada parte corrupta %i (%s)"
+    IDS_ICHWORKED           "ICH: Recuperada parte corrupta %i (%s), Saved: %s"
     IDS_ERR_OUTOFSPACE      "¡Insuficiente espacio en disco para descargar %s!"
     IDS_SE                  "Intercambio Fuentes"
 END
@@ -475,6 +478,7 @@ BEGIN
     IDS_NOTHING             "nada"
     IDS_SETUPSPEED          "configurar límite de subida"
     IDS_SETDOWNSPEED        "configurar límite de descarga"
+    IDS_UNDO                "Deshacer"
     IDS_DAYLY               "diariamente"
 END
 
@@ -729,9 +733,9 @@ BEGIN
     IDS_ED2KLINKFIX         "enlaces ED2K"
     IDS_RECONNECT           "Se reintentará la conexión automática al servidor en %d segundos"
     IDS_SERVERADDED         "Servidor añadido: %s"
-    IDS_IRC_IGNOREJOINMESSAGE "Ignore Join info messages"
+    IDS_IRC_IGNOREJOINMESSAGE "Ignorar mensajes de información de Union"
     IDS_STATS_SUCCUPCOUNT   "Total de subidas satisfactorias: %i (%.2f%%)"
-    IDS_IRC_IGNOREPARTMESSAGE "Ignore Part info messages"
+    IDS_IRC_IGNOREPARTMESSAGE "Ignorar mensajes de información de Partes"
     IDS_STATS_FAILUPCOUNT   "Total de subidas erróneas: %i (%.2f%%)"
     IDS_STATS_AVEUPTIME     "Tiempo medio de subida: %s"
     IDS_SEARCHMINSIZE       "Tamaño mín."
@@ -753,8 +757,9 @@ BEGIN
     IDS_STATS_AVGLABEL      "Tiempo de promedio del gráfico: %i minutos"
     IDS_GRAPHS              "Gráficos"
     IDS_STREE               "Árbol de estadísticas"
-    IDS_IRC_IGNOREQUITMESSAGE "Ignore Quit info messages"
+    IDS_IRC_IGNOREQUITMESSAGE "Ignorar mensajes de información al Salir"
     IDS_STATSSETUPINFO      "Configurar estadísticas"
+    IDS_IRC_SOUNDEVENTS     "Sonido en eventos"
 END
 
 STRINGTABLE 
@@ -806,11 +811,6 @@ BEGIN
     IDS_IRC_PRIVATECHANSTART "* sesion privada de chat iniciada"
     IDS_IRC_SLAPMSG         "* %s da una bofetada a %s around with a large Babelfish!"
     IDS_IRC_PRIVMESSAGE     "Mensaje privado"
-    IDS_IRC_OP              "Op"
-    IDS_IRC_DEOP            "Quitar Op"
-    IDS_IRC_VOICE           "Voz"
-    IDS_IRC_HALFOP          "Medio Op"
-    IDS_IRC_DEHALFOP        "Quitar Medio Op"
     IDS_IRC_KICK            "Patear"
     IDS_IRC_SLAP            "Bofetada"
     IDS_IRC_JOIN            "Entrar al canal"
@@ -825,8 +825,7 @@ BEGIN
     IDS_IRC_HASPARTED       "* %s ha salido de %s (%s)"
     IDS_IRC_WASKICKEDBY     "* %s fue expulsado por %s (%s)"
     IDS_IRC_NICKUSED        "Tu nombre ya se está usando en el servidor IRC. Por favor, escoge otro nombre en la pestaña IRC en Preferencias."
-    IDS_IRC_DEVOICE         "Quitar voz"
-    IDS_IRC_HASQUIT         "* %s a salido (%s)"
+    IDS_IRC_HASQUIT         "* %s ha salido (%s)"
     IDS_IRC_NOWKNOWNAS      "* %s es ahora %s"
     IDS_IRC_SETSMODE        "* %s pone modo: %s %s"
     IDS_IRC_NOTSUPPORTED    "** Algunos modos que se has seleccionado no estan soportados todavía. Podrías necesitar salir y reentrar en el canal para actualizar la lista de nicks..."
@@ -854,8 +853,8 @@ BEGIN
     IDS_IRC_SENDLINK        "Enviar a amigo: "
     IDS_IRC_RECIEVEDLINK    "%s enviado (%s) para que comience automáticamente."
     IDS_IRC_ACCEPTLINKS     "Aceptar enlaces ED2K en IRC. (Usar con precaución!)"
-    IDS_SHARED              "Shared"
-    IDS_DOWNLOADED          "Downloaded"
+    IDS_SHARED              "Compartido"
+    IDS_DOWNLOADED          "Descargado"
 END
 
 STRINGTABLE 
@@ -883,14 +882,14 @@ BEGIN
     IDS_PW_TIT_DOWN         "Cambiar límite de velocidad en Descarga"
     IDS_PW_UNLIMITED        "Ilimitado"
     IDS_PW_MINREC           "mínimo recomendado\t%i "
-    IDS_PW_UA               "Velocidad completa de subida/descarga"
-    IDS_PW_PA               "Regular velocidad subida/descarga"
+    IDS_PW_UA               "Velocidad máx. de subida/descarga"
+    IDS_PW_PA               "Velocidad mín. subida/descarga"
     IDS_IRC_IGNOREINFOMESSAGE "Ignorar mensajes de información."
     IDS_CONNECTIONLOST      "Conexión perdida"
     IDS_WIZ_OS_FRAME        "Sistema Operativo"
     IDS_WIZ_CONCURENTDOWN_FRAME 
                             "¿Cuántas descargas sueles tener al mismo tiempo?"
-    IDS_HASHINGFILE         "Hashing file:"
+    IDS_HASHINGFILE         "Codificando hash de archivo:"
     IDS_WIZ_CUSTOM_FRAME    "Si has testeado tu velocidad de conexión, pon los valores aquí."
     IDS_WIZ_HOTBUTTON_FRAME "Preseleccionar Botones"
     IDS_WIZ_TRUEUPLOAD_TEXT "Capacidad de Subida"
@@ -943,7 +942,7 @@ STRINGTABLE
 BEGIN
     IDS_STATS_MAXDL         "Descarga máxima: %.2f kB/s"
     IDS_IRC_EMULEPROTO_IGNOREADDFRIEND 
-                            "Ignore eMule add friend protocol messages"
+                            "Ignorar mensajes amigo añadido de eMule"
     IDS_PW_FASTSRVCON       "Conexión segura"
     IDS_SOURCELINKFAILED    "Necesitas una ID alta para crear un enlace de fuente válido"
     IDS_CREATESOURCELINK    "Copiar enlace ED2k (fuente) al portapapeles"
@@ -1025,7 +1024,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FD_STATS            "Perdido por corrupción: %s       Ganado por compresión: %s\nPaquetes salvados por ICH: %i"
-    IDS_ERR_NOHELP          "Archivo de ayuda no encontrado.\n Visita nuestra página web para conseguir una copia del archivo de ayuda mas reciente! (sección de descarga)\n¿Quieres en cambio ver la ayuda desde la web?"
+    IDS_ERR_NOHELP          "Please visit our homepage's download section to get a copy of the newest help file!\n\nDo you want to browse the online help now instead?"
     IDS_SHOWOVERHEAD        "Mostrar ancho de banda excedente"
     IDS_UPDOWNSMALL         "Subida: %.1f | Descarga: %.1f"
     IDS_EDITLIST            "Editar"
@@ -1035,7 +1034,7 @@ BEGIN
     IDS_WEBSERVICES         "Servicios &Web"
     IDS_WEBSVEDIT           "Editar Servicios Web"
     IDS_IRC_EMULEPROTO_IGNORESENDLINK 
-                            "Ignore eMule send link protocol messages"
+                            "Ignorar mensajes enviar enlace de eMule"
     IDS_CHECK4UPDATE        "Comprobar si hay una nueva versión"
     IDS_STARTUP             "Al iniciar"
     IDS_NEWVERSIONAVL       "Existe una nueva versión de eMule! Para mas información ve a la web de emule-project."
@@ -1073,6 +1072,7 @@ BEGIN
     IDS_COMMENT             "Comentario"
     IDS_IPFILTERED          "IP filtrada: %s (%s)"
     IDS_DL_TRANSFCOMPL      "Completado"
+    IDS_DL_ACTIVE_TIME      "Tiempo de descarga"
     IDS_STATS_FILTEREDCLIENTS "Filtrados: %i"
     IDS_FILTERLABEL         "Filtrar mensajes que contengan: (Separador | )"
     IDS_ERR_LARGEREQBLOCK   "Un cliente ha solicitado un bloque mayor."
@@ -1148,12 +1148,12 @@ BEGIN
     IDS_ENTERUSERNAME       "Por favor introduce tu nombre de usuario:"
     IDS_STATIC_CPUMEM       "Conservar uso de CPU y Memoria"
     IDS_KAD_SEARCH_KEYWORD_TOO_SHORT 
-                            "Keyword too short.\r\n\r\nThe keyword(s) used in a Kad search expression must have a minimum length of 3 characters."
-    IDS_LOG2DISK            "Save log to disk"
+                            "PalabraClave demasiado corta.\r\n\r\nLa PalabraClave(s) usada en la expresión de búsqueda Kad debe tener un mínimo de 3 caracteres."
+    IDS_LOG2DISK            "Guardar a disco"
     IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING 
-                            "There is already a Kad search ongoing for the keyword ""%s"".\r\n\r\nTo search again for that keyword, either wait until this keyword search is finished or close the according search results pane."
+                            "Ya existe una búsqueda en curso para la PalabraClave ""%s"".\r\n\r\nPara buscar otra vez esa PalabraClave, espere hasta que la búsqueda de la PalabraClave finalice o se cierre el panel de resultados de búsqueda."
     IDS_KAD_SEARCH_KEYWORD_INVALID 
-                            "Invalid Kad keyword.\r\n\r\nA Kad search expression has the following format:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nThe <kad-keyword> must not contain any of the following characters:\r\n\r\n\t%s"
+                            "PalabraClave No válida.\r\n\r\nUna expresión de búsqueda de Kad tiene the siguiente formato:\r\n\r\n\t<kad-keyword> [ <ed2k-search-expression> ]\r\n\r\nThe <kad-keyword> no debe contener ninguno de los siguientes caracteres:\r\n\r\n\t%s"
     IDS_EDITCAT             "Editar Categoría-Propiedades"
     IDS_PW_WS               "Servidor Web"
     IDS_ENABLED             "activado"
@@ -1242,7 +1242,7 @@ BEGIN
     IDS_WIZ1_UPLOAD_SUBTITLE "Transferencia Partes Completas"
     IDS_DL_RESUMENEXT       "Reanudar siguiente archivo pausado"
     IDS_DONTCHANGE          "Sin cambios"
-    IDS_STARTPRIO           "Cambiar prioridad a los nuevos archivos asignados"
+    IDS_STARTPRIO           "Priority for this category"
     IDS_PREF_STARTNEXTFILECAT "misma categoría"
     IDS_REPAINTGRAPHS       "No redibujar gráficos de estadísticas al cambiar de tamaño"
     IDS_SOFTFILES           "Límite de archivo bajo"
@@ -1390,6 +1390,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_CUT                 "Cortar"
     IDS_STATS_SECUREIDENT   "Ident. seguras (OK : Erróneas )"
     IDS_ONDISK              "Tamaño en disco: "
     IDS_CLIENTCOL           "Aviso: Se ha encontrado un cliente igual a otro ya conectado: %s (%s) y %s (%s)"
@@ -1412,6 +1413,7 @@ STRINGTABLE
 BEGIN
     IDS_VERSION             "Versión"
     IDS_ALL_A4AF_TO_THIS    "Intercambiar ahora todas las fuentes a ÉSTE archivo"
+    IDS_PASTE               "Pegar"
     IDS_ALL_A4AF_TO_OTHER   "Intercambiar ahora todas las fuentes a OTRO archivo"
     IDS_ALL_A4AF_AUTO       "Intercambiar automáticamente todas las fuentes (A4AF) a ÉSTE archivo"
     IDS_SWAP_A4AF_TO_THIS   "Intercambiar fuente (A4AF) a ÉSTE archivo"
@@ -1488,7 +1490,7 @@ BEGIN
                             "Intervalo actualiz. conexión a Servidor [min.]"
     IDS_MORE                "&Más"
     IDS_TOOLS               "He&rramientas"
-    IDS_ERR_JIGLENEEDSTYPE  "Si quieres buscar en la base de datos Jigle sin especificar el tipo de archivo, ¡tienes que especificar al menos la extensión!"
+    IDS_SEARCHPARAMS        "Parámetros de Búsqueda"
 END
 
 STRINGTABLE 
@@ -1534,15 +1536,17 @@ END
 STRINGTABLE 
 BEGIN
     IDS_DYNUP_PINGTOLERANCE "Tolerancia de Ping (% del ping mas bajo)"
-    IDS_DYNUP_GOINGUPDIVIDER "Aumentando lentitud"
-    IDS_DYNUP_GOINGDOWNDIVIDER "Disminuyendo lentitud"
+    IDS_DYNUP_GOINGUPDIVIDER "Aumentar velocidad"
+    IDS_DYNUP_GOINGDOWNDIVIDER "Disminuir velocidad"
     IDS_DYNUP_NUMBEROFPINGS "Número máx. de pings de promedio"
     IDS_DYNUP_MINUPLOAD     "Velocidad de subida permitida mas baja"
     IDS_ESTTIMELEFT         "Tiempo restante estimado:"
     IDS_TRANSFER_RATE_LABEL "Índice de transferencia:"
+    IDS_SAVELOG             "Guardar registro"
     IDS_CMT_COPYCLIPBOARD   "Copiar comentario al portapapeles"
     IDS_ASKDOWNLOADLANG     "El lenguaje seleccionado no está instalado en tu sistema. ¿Quieres que eMule lo descarge desde emule-project.net?"
     IDS_ASKDOWNLOADLANGCAP  "Archivos de idiomas descargados"
+    IDS_DELETESELECTED      "Eliminar"
     IDS_ERR_FAILEDDOWNLOADLANG 
                             "Error al descargar e instalar el idioma seleccionado (archivo dll) desde %s!"
     IDS_ERR_BADFOLDER       "Carpeta no válida.\nNo puede crearse la carpeta. Comprobar Nombre y Localización."
@@ -1557,7 +1561,8 @@ BEGIN
     IDS_KADUDPPORTERR       "El puerto UDP Kademlia está en conflicto con otro puerto UDP externo ó puerto Servidor de eMule. El puerto se ha cambiado a %u."
     IDS_CONFIRM_FILEDELETE  "¿Estás seguro de eliminar todos los archivos seleccionados del disco?"
     IDS_OPENFOLDER          "Abrir carpeta"
-    IDS_DELETE              "eliminar del disco"
+    IDS_RUNASUSER           "Iniciar eMule como Usuario limitado"
+    IDS_DELETE              "Eliminar del disco"
     IDS_BOOTSTRAP           "Autoarranque"
     IDS_VIAED2KSQ           "via Servidor/Cola ED2K"
     IDS_EM_KADEMLIA         "&Kad"
@@ -1565,7 +1570,7 @@ BEGIN
     IDS_VIASE               "via Intercambio de Fuentes"
     IDS_SELECTTOOLBARBITMAP "Seleccionar imagen para barra de herramientas"
     IDS_SELECTTOOLBARBITMAPDIR "Seleccionar directorio de la imagen"
-    IDS_TOOLBARSKINS        "Skins Barra de herramientas"
+    IDS_TOOLBARSKINS        "Temas visuales para Barra de herramientas"
     IDS_NOTEXTLABELS        "Sin etiquetas"
 END
 
@@ -1579,7 +1584,7 @@ BEGIN
     IDS_KADSEARCHLAB        "Búsquedas actuales"
     IDS_SRV_UDPSR           "Protocolo UDP extendido para peticiones de fuentes"
     IDS_SRV_UDPFR           "Protocolo UDP extendido para peticiones de archivo"
-    IDS_MINLENGTH           "Min. length [hh:mm:ss]"
+    IDS_MINLENGTH           "Duración min. [hh:mm:ss]"
     IDS_EM_HELP             "A&yuda"
     IDS_WRN_FRIENDDUPLIPPORT 
                             "Amigo no añadido.\r\n\r\nYa existe un amigo con la misma dirección IP y puerto disponible."
@@ -1596,11 +1601,11 @@ BEGIN
     IDS_TEXTLABELS          "Etiquetas de texto"
     IDS_ENABLETEXTLABELS    "debajo del icono"
     IDS_CUSTOMIZETOOLBAR    "Personalizar barra de herramientas"
-    IDS_MINBITRATE          "Min. bitrate [kBit/s]"
+    IDS_MINBITRATE          "Bitrate min. [kBit/s]"
     IDS_KAD_RECHECKFW       "Comprobar Cortafuegos"
     IDS_SHAREDTITLE         "Compartido ED2K|Kad"
     IDS_WARNINGNOBS         "Autoarranque inactivo (Kad desactivado o ya conectado)."
-    IDS_FIREWALLED          "Firewalled"
+    IDS_FIREWALLED          "Tras cortafuegos"
     IDS_KADEMLIA            "Kad"
     IDS_KADCONTACTLAB       "Contactos"
     IDS_KADDISTANCE         "Distancia"
@@ -1613,13 +1618,13 @@ END
 STRINGTABLE 
 BEGIN
     IDS_LOG_SECURE_IDENT    "Registrar identidad segura"
-    IDS_LOG_FILTERED_IPS    "Registar IPs filtradas y/o ignoradas"
+    IDS_LOG_FILTERED_IPS    "Registrar IPs filtradas y/o ignoradas"
     IDS_LOG_FILE_SAVING     "Registrar al guardar archivo"
     IDS_IPFILTERFILES       "Todos los archivos de filtros IP (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Archivos Peer Guardian (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|Todos los archivos (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "¿Quieres realmente elimiar los filtros IP seleccionados?"
     IDS_TOTAL_IPFILTER_LABEL "Total de IP filtradas:"
     IDS_TOTAL_IPS_LABEL     "Total IPs:"
-    IDS_DELETE2             "Eliminar"
+    IDS_RAU_WARNING         "Ésta configuración proporcionará una seguridad adicional a eMule contra ataques y exploits y recomendamos el uso de ésta opción.\nSin embargo recomendamos encarecidamente leer el manual antes de acivarlo!\n\nLos cambios tendrán efecto después de reiniciar eMule."
     IDS_APPEND              "Añadir..."
     IDS_SAVE                "Guardar"
     IDS_IP_START            "Inicio"
@@ -1632,13 +1637,66 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ERR_NOTCONNECTEDKAD "You are currently not connected to the Kad Network!"
-    IDS_IRC_NOSFS           "No Shared Files Selected"
-    IDS_IRC_IGNOREMISCMESSAGE "Ignore Misc info messages"
-    IDS_KNOWN               "Known"
-    IDS_DL_ACTIVE_TIME      "Download time"
-    IDS_RESETLABEL          "Auto completion (history function)"
+    IDS_ERR_NOTCONNECTEDKAD "Ahora mismo No estás conectado a la red Kademlia!"
+    IDS_IRC_NOSFS           "No se han seleccionado archivos compartidos"
+    IDS_RESETLABEL          "AutoCompletar (función registro)"
+    IDS_IRC_IGNOREMISCMESSAGE "Ignorar otros mensajes de información"
+    IDS_KNOWN               "Conocido"
+    IDS_RAU_RUNNING         "eMule está funcionanco como usuario limitado ""%s"""
+    IDS_RAU_FAILED          "Error al iniciar eMule como usuario limitado ""eMule_Secure"". Guardando los privilegios del usuario actual (""%S"")."
+    IDS_KADCONTACTSREAD     "Leer %ld contactos de archivo."
+    IDS_ERR_KADCONTACTS     "No se han encontrado contactos, Autoarranca, ó, descarga un archivo nodes.dat."
+    IDS_METATAGS            "Número de Meta Tag:"
+    IDS_FILEFORMAT          "Formato de archivo"
+    IDS_UDPREASKS           "Peticiones reiteradas de archivo via UDP"
 END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE_MS 			"Tolerancia de Ping (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER 	"Método de tolerancia de ping"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS 		"Milisegundos (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT 	"Porcentaje (%)"
+    IDS_LOG_A4AF            "Registrar acciones A4AF"
+    IDS_A4AF_SAVE_CPU       "Desactivar comprobación A4AF para conservar CPU"
+    IDS_SEARCH_DOC          "Documento"
+    IDS_DOWNLOAD_ALPHABETICAL "Descarga en orden alfabético"
+    IDS_INSTALL_SKIN        "Instalar Tema visual de eMule"
+    IDS_INSTALL_SKIN_NODIR  "No se ha seleccionado una carpeta para Temas visuales de eMule, ó la carpeta no es accesible!"
+    IDS_INSTALL_SKIN_DIR_ERROR 
+                            "Error al crear la carpeta ""%s"" para Temas visuales de eMule - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR 
+                            "Error al extraer el archivo ""%s"" desde el archivo local de Temas visuales de eMule ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "Éste no es un paquete de archivos válido de Temas visuales para eMule.."
+    IDS_NEXT_REASK          "Siguiente petición para éste cliente"
+    IDS_A4AF_FILES          "Archivos A4AF"
+    IDS_STATS_FRATIO        "Sesión Índice SU:DE (Excluídas Subidas a amigos):"
+    IDS_STATS_UDATA_FRIENDS "Datos subidos a puestos reservados de amigos (Sesión): %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_FO_TEMPTCP_S        "Puerto abierto %u (TCP) en cortafuegos interno de WinXP para ésta sesión de eMule"
+    IDS_FO_TEMPTCP_F        "Error al abrir el puerto %u (TCP) en cortafuegos interno de WinXP para ésta sesión de eMule"
+    IDS_FO_TEMPUDP_S        "Puerto abierto %u (UDP) en cortafuegos interno de WinXP para ésta sesión de eMule"
+    IDS_FO_TEMPUDP_F        "Error al abrir el puerto %u (UDP) en cortafuegos interno de WinXP para ésta sesión de eMule"
+    IDS_FO_PREFBUTTON       "Abrir éstos puerto en el cortafuegos interno de WinXP"
+    IDS_FO_PREF_SUCCCEEDED  "Puertos abiertos con éxito en el cortafuegos interno de WinXP.\nTener en cuenta que ésto no afecta a los routers ó cortafuegos de terceros!"
+    IDS_FO_PREF_EXISTED     "eMule ha detectado que existen reglas para los puertos seleccionados, las cuales no pueden ser reemplazadas. Se han añadido las reglas que faltan.\nTener en cuenta que ésto no afecta a los Routers ó cortafuegos de terceros!"
+    IDS_FO_PREF_FAILED      "Error al configurar el cortafuegos interno de WinXP para los puertos seleccionados!"
+    IDS_FO_PREF_STARTUP     "Abrir/Cerrar puertos en el cortafuegos de WinXP cuando se inicia/cierra eMule"
+    IDS_LOG_LEVEL           "Registrar Nivel"
+    IDS_DISABLEPEERACHE     "Desactivar descarga desde PeerCache"
+    IDS_SOURCESWAPBLOCKED   "Intercambio bloqueado"
+    IDS_A4AF_CHECK_THIS_NOW "Comprobar ésta fuente ahora (debug)"
+    IDS_SOURCEEXCHANGESWAP  "Intercambio de Fuentes Temporales"
+    IDS_NEWMSG              "Nuevo Mensaje de '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "solo en la misma categoría"
+    IDS_LOG_ULDL_EVENTS     "Registrar eventos de subida/descarga"
+    IDS_PEERCACHE_ENABLED   "Tu proveedor de acceso a Internet (ISP) soporta PeerCache, habilitadas descargas de cache!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Allow user to add you as a friend."
+END
+
 
 #endif    // Spanish (Castilian) resources
 /////////////////////////////////////////////////////////////////////////////

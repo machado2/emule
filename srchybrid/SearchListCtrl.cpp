@@ -21,6 +21,9 @@
 #include "emuledlg.h"
 #include "MetaDataDlg.h"
 #include "SearchDlg.h"
+#include "SearchListCtrl.h"
+#include "SearchParams.h"
+#include "ClosableTabCtrl.h"
 #include "PreviewDlg.h"
 #include "UpDownClient.h"
 #include "ClientList.h"
@@ -152,17 +155,18 @@ void CSearchListCtrl::Init(CSearchList* in_searchlist)
 
 	InsertColumn(0,GetResString(IDS_DL_FILENAME),LVCFMT_LEFT,250);
 	InsertColumn(1,GetResString(IDS_DL_SIZE),LVCFMT_LEFT,70);
-	InsertColumn(2,GetResString(IDS_SEARCHAVAIL) + _T("/") + GetResString(IDS_COMPLETE) + _T(" (") + GetResString(IDS_DL_SOURCES) + _T(')'),LVCFMT_LEFT,50);
-	InsertColumn(3,GetResString(IDS_TYPE),LVCFMT_LEFT,65);
-	InsertColumn(4,GetResString(IDS_FILEID),LVCFMT_LEFT,220);
-	InsertColumn(5,GetResString(IDS_ARTIST),LVCFMT_LEFT,100);
-	InsertColumn(6,GetResString(IDS_ALBUM),LVCFMT_LEFT,100);
-	InsertColumn(7,GetResString(IDS_TITLE),LVCFMT_LEFT,100);
-	InsertColumn(8,GetResString(IDS_LENGTH),LVCFMT_LEFT,50);
-	InsertColumn(9,GetResString(IDS_BITRATE),LVCFMT_LEFT,50);
-	InsertColumn(10,GetResString(IDS_CODEC),LVCFMT_LEFT,50);
-	InsertColumn(11,GetResString(IDS_FOLDER),LVCFMT_LEFT,220);
-	InsertColumn(12,GetResString(IDS_KNOWN),LVCFMT_LEFT,50);
+	InsertColumn(2,GetResString(IDS_SEARCHAVAIL) + (thePrefs.IsExtControlsEnabled() ? _T(" (") + GetResString(IDS_DL_SOURCES) + _T(')') : _T("")),LVCFMT_LEFT,50);
+	InsertColumn(3,GetResString(IDS_COMPLETE) + _T(" ") + GetResString(IDS_DL_SOURCES),LVCFMT_LEFT,50);
+	InsertColumn(4,GetResString(IDS_TYPE),LVCFMT_LEFT,65);
+	InsertColumn(5,GetResString(IDS_FILEID),LVCFMT_LEFT,220);
+	InsertColumn(6,GetResString(IDS_ARTIST),LVCFMT_LEFT,100);
+	InsertColumn(7,GetResString(IDS_ALBUM),LVCFMT_LEFT,100);
+	InsertColumn(8,GetResString(IDS_TITLE),LVCFMT_LEFT,100);
+	InsertColumn(9,GetResString(IDS_LENGTH),LVCFMT_LEFT,50);
+	InsertColumn(10,GetResString(IDS_BITRATE),LVCFMT_LEFT,50);
+	InsertColumn(11,GetResString(IDS_CODEC),LVCFMT_LEFT,50);
+	InsertColumn(12,GetResString(IDS_FOLDER),LVCFMT_LEFT,220);
+	InsertColumn(13,GetResString(IDS_KNOWN),LVCFMT_LEFT,50);
 
 	CreateMenues();
 
@@ -191,17 +195,18 @@ void CSearchListCtrl::Localize()
 		switch (icol) {
 			case 0: strRes = GetResString(IDS_DL_FILENAME); break;
 			case 1: strRes = GetResString(IDS_DL_SIZE); break;
-			case 2: strRes = GetResString(IDS_SEARCHAVAIL) + _T("/") + GetResString(IDS_COMPLETE) + _T(" (") + GetResString(IDS_DL_SOURCES) + _T(')'); break;
-			case 3: strRes = GetResString(IDS_TYPE); break;
-			case 4: strRes = GetResString(IDS_FILEID); break;
-			case 5: strRes = GetResString(IDS_ARTIST); break;
-			case 6: strRes = GetResString(IDS_ALBUM); break;
-			case 7: strRes = GetResString(IDS_TITLE); break;
-			case 8: strRes = GetResString(IDS_LENGTH); break;
-			case 9: strRes = GetResString(IDS_BITRATE); break;
-			case 10: strRes = GetResString(IDS_CODEC); break;
-			case 11: strRes = GetResString(IDS_FOLDER); break;
-			case 12: strRes = GetResString(IDS_KNOWN); break;
+			case 2: strRes = GetResString(IDS_SEARCHAVAIL) + (thePrefs.IsExtControlsEnabled() ? _T(" (") + GetResString(IDS_DL_SOURCES) + _T(')') : _T("")); break;
+			case 3: strRes = GetResString(IDS_COMPLETE) + _T(" ") + GetResString(IDS_DL_SOURCES); break;
+			case 4: strRes = GetResString(IDS_TYPE); break;
+			case 5: strRes = GetResString(IDS_FILEID); break;
+			case 6: strRes = GetResString(IDS_ARTIST); break;
+			case 7: strRes = GetResString(IDS_ALBUM); break;
+			case 8: strRes = GetResString(IDS_TITLE); break;
+			case 9: strRes = GetResString(IDS_LENGTH); break;
+			case 10: strRes = GetResString(IDS_BITRATE); break;
+			case 11: strRes = GetResString(IDS_CODEC); break;
+			case 12: strRes = GetResString(IDS_FOLDER); break;
+			case 13: strRes = GetResString(IDS_KNOWN); break;
 		}
 	
 		hdi.pszText = strRes.GetBuffer();
@@ -219,6 +224,7 @@ BEGIN_MESSAGE_MAP(CSearchListCtrl, CMuleListCtrl)
 	ON_NOTIFY_REFLECT(LVN_DELETEALLITEMS, OnLvnDeleteallitems)
 	ON_NOTIFY_REFLECT(NM_CLICK, OnClick)
 	ON_NOTIFY_REFLECT(NM_DBLCLK,OnDblClick)
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 // CSearchListCtrl message handlers
@@ -226,7 +232,7 @@ END_MESSAGE_MAP()
 void CSearchListCtrl::AddResult(const CSearchFile* toshow)
 {
 	// update tab-counter for the given searchfile
-	CClosableTabCtrl& searchselect = theApp.emuledlg->searchwnd->searchselect;
+	CClosableTabCtrl& searchselect = theApp.emuledlg->searchwnd->GetSearchSelector();
 	int iTabItems = searchselect.GetItemCount();
 	if (iTabItems > 0)
 	{
@@ -236,31 +242,34 @@ void CSearchListCtrl::AddResult(const CSearchFile* toshow)
 		for (int tabCounter = 0; tabCounter < iTabItems; tabCounter++)
 		{
 			if (searchselect.GetItem(tabCounter, &tabitem) && tabitem.lParam != NULL)
-				if (((const SSearchParams*)tabitem.lParam)->dwSearchID == toshow->GetSearchID())
-					break;
-		}
-
-		if (tabitem.lParam != -1 && tabitem.lParam != NULL && ((const SSearchParams*)tabitem.lParam)->dwSearchID == toshow->GetSearchID())
-		{
-			TCHAR szText[510];
-			tabitem.pszText = szText;
-			tabitem.cchTextMax = ARRSIZE(szText);
-			tabitem.mask = TCIF_TEXT;
-			if (searchselect.GetItem(tabCounter, &tabitem))
 			{
-				LPTSTR psz = _tcsrchr(szText, _T('('));
-				if (psz){
-					if (psz > szText)
-						psz--;
-					*psz = _T('\0');
+				if (((const SSearchParams*)tabitem.lParam)->dwSearchID == toshow->GetSearchID())
+				{
+					TCHAR szText[MAX_SEARCH_EXPRESSION_LEN+1];
+					tabitem.pszText = szText;
+					tabitem.cchTextMax = ARRSIZE(szText);
+					tabitem.mask = TCIF_TEXT;
+					if (searchselect.GetItem(tabCounter, &tabitem))
+					{
+						// TODO: Searching for the last '(' is wrong.
+						// If the search expression contains '(' and ')' characters, we'll truncate the string.
+						LPTSTR psz = _tcsrchr(szText, _T('('));
+						if (psz){
+							if (psz > szText)
+								psz--;
+							*psz = _T('\0');
+						}
+
+						CString sourceStr;
+						sourceStr.Format(_T("%s (%u)"), szText, searchlist->GetFoundFiles(toshow->GetSearchID()));
+						tabitem.pszText = const_cast<LPTSTR>((LPCTSTR)sourceStr);
+						searchselect.SetItem(tabCounter, &tabitem);
+
+						if (searchselect.GetCurSel() != tabCounter)
+							searchselect.HighlightItem(tabCounter);
+					}
+					break;
 				}
-
-				CString sourceStr;
-				sourceStr.Format(_T("%s (%u)"), szText, searchlist->GetFoundFiles(toshow->GetSearchID()));
-
-				tabitem.mask = TCIF_TEXT;
-				tabitem.pszText = const_cast<LPTSTR>((LPCTSTR)sourceStr);
-				searchselect.SetItem(tabCounter, &tabitem);
 			}
 		}
 	}
@@ -273,22 +282,36 @@ void CSearchListCtrl::AddResult(const CSearchFile* toshow)
 	//wrong item contents (which are stored in the listview items right here in this function).
 
 	int itemnr = InsertItem(LVIF_TEXT|LVIF_PARAM,GetItemCount(),toshow->GetFileName(),0,0,0,(LPARAM)toshow);
-	TCHAR cbuffer[80];
+	
 	SetItemText(itemnr,1,CastItoXBytes(toshow->GetFileSize()));
-	_itot(toshow->GetSourceCount(),cbuffer,10);
-	uint32 uCompleteSources;
-	if (toshow->GetIntTagValue(FT_COMPLETE_SOURCES, uCompleteSources))
-		_sntprintf(cbuffer,ARRSIZE(cbuffer),_T("%s/%u"),cbuffer,uCompleteSources);
+	
+	CString strBuffer;
+	uint32 nSources = toshow->GetSourceCount();	
 	int iClients = toshow->GetClientsCount();
-	if (iClients)
-		_sntprintf(cbuffer,ARRSIZE(cbuffer),_T("%s (%u)"),cbuffer,iClients);
-	SetItemText(itemnr,2,cbuffer);
-	SetItemText(itemnr,3,toshow->GetFileType());
-	SetItemText(itemnr,4,md4str(toshow->GetFileHash()));
-	SetItemText(itemnr,5,toshow->GetStrTagValue(FT_MEDIA_ARTIST));
-	SetItemText(itemnr,6,toshow->GetStrTagValue(FT_MEDIA_ALBUM));
-	SetItemText(itemnr,7,toshow->GetStrTagValue(FT_MEDIA_TITLE));
+	if ( thePrefs.IsExtControlsEnabled() && iClients > 0)
+		strBuffer.Format(_T("%u (%u)"), nSources, iClients);
+	else
+		strBuffer.Format(_T("%u"), nSources);
+	SetItemText(itemnr,2,strBuffer);
+
+	uint32 uCompleteSources;
+	if (toshow->IsKademlia())
+		strBuffer = _T("?");
+	else{
+		if ( (uCompleteSources = toshow->GetIntTagValue(FT_COMPLETE_SOURCES))  > 0 && nSources > 0)
+			strBuffer.Format(_T("%u%%"), (uCompleteSources*100)/nSources);	
+		else
+			strBuffer = _T("0%");
+	}
+	SetItemText(itemnr,3,strBuffer);
+
+	SetItemText(itemnr,4,toshow->GetFileTypeDisplayStr());
+	SetItemText(itemnr,5,md4str(toshow->GetFileHash()));
+	SetItemText(itemnr,6,toshow->GetStrTagValue(FT_MEDIA_ARTIST));
+	SetItemText(itemnr,7,toshow->GetStrTagValue(FT_MEDIA_ALBUM));
+	SetItemText(itemnr,8,toshow->GetStrTagValue(FT_MEDIA_TITLE));
 	uint32 nMediaLength = toshow->GetIntTagValue(FT_MEDIA_LENGTH);
+	TCHAR cbuffer[80];
 	if (nMediaLength){
 		CString strMediaLength;
 		SecToTimeLength(nMediaLength, strMediaLength);
@@ -296,24 +319,24 @@ void CSearchListCtrl::AddResult(const CSearchFile* toshow)
 	}
 	else
 		cbuffer[0] = _T('\0');
-	SetItemText(itemnr,8,cbuffer);
+	SetItemText(itemnr,9,cbuffer);
 	uint32 nBitrate = toshow->GetIntTagValue(FT_MEDIA_BITRATE);
 	if (nBitrate)
 		_sntprintf(cbuffer,ARRSIZE(cbuffer),_T("%u kBit/s"),nBitrate);
 	else
 		cbuffer[0] = _T('\0');
-	SetItemText(itemnr,9,cbuffer);
-	SetItemText(itemnr,10,toshow->GetStrTagValue(FT_MEDIA_CODEC));
+	SetItemText(itemnr,10,cbuffer);
+	SetItemText(itemnr,11,toshow->GetStrTagValue(FT_MEDIA_CODEC));
 
 	if (toshow->GetDirectory())
-		SetItemText(itemnr,11,toshow->GetDirectory());
+		SetItemText(itemnr,12,toshow->GetDirectory());
 
 	if (toshow->m_eKnown == CSearchFile::Shared)
-		SetItemText(itemnr,12,GetResString(IDS_SHARED));
+		SetItemText(itemnr,13,GetResString(IDS_SHARED));
 	else if (toshow->m_eKnown == CSearchFile::Downloading)
-		SetItemText(itemnr,12,GetResString(IDS_DOWNLOADING));
+		SetItemText(itemnr,13,GetResString(IDS_DOWNLOADING));
 	else if (toshow->m_eKnown == CSearchFile::Downloaded)
-		SetItemText(itemnr,12,GetResString(IDS_DOWNLOADED));
+		SetItemText(itemnr,13,GetResString(IDS_DOWNLOADED));
 }
 
 void CSearchListCtrl::UpdateSources(const CSearchFile* toupdate)
@@ -323,16 +346,26 @@ void CSearchListCtrl::UpdateSources(const CSearchFile* toupdate)
 	find.lParam = (LPARAM)toupdate;
 	int index = FindItem(&find);
 	if (index != (-1)){
-		CString buffer;
-		buffer.Format(_T("%u"), toupdate->GetSourceCount());
-		uint32 uCompleteSources;
-		if (toupdate->GetIntTagValue(FT_COMPLETE_SOURCES, uCompleteSources))
-			buffer.AppendFormat(_T("/%u"), uCompleteSources);
-		int iClientsCount = toupdate->GetClientsCount();
-		if (iClientsCount)
-			buffer.AppendFormat(_T(" (%u)"), iClientsCount);
 
-		SetItemText(index,2,buffer);
+		CString strBuffer;
+		uint32 nSources = toupdate->GetSourceCount();	
+		int iClients = toupdate->GetClientsCount();
+		if ( thePrefs.IsExtControlsEnabled() && iClients > 0)
+			strBuffer.Format(_T("%u (%u)"), nSources, iClients);
+		else
+			strBuffer.Format(_T("%u"), nSources);
+		SetItemText(index,2,strBuffer);
+
+		uint32 uCompleteSources;
+		if (toupdate->IsKademlia())
+			strBuffer = _T("?");
+		else{
+			if ( (uCompleteSources = toupdate->GetIntTagValue(FT_COMPLETE_SOURCES))  > 0 && nSources > 0)
+				strBuffer.Format(_T("%u%%"), (uCompleteSources*100)/nSources);	
+			else
+				strBuffer = _T("0%");
+		}
+		SetItemText(index,3,strBuffer);
 
 		uint16 maxhitsname = (uint16)-1;
 		bool change=false;
@@ -485,54 +518,63 @@ int CSearchListCtrl::Compare(const CSearchFile* item1, const CSearchFile* item2,
 		case 102: //sources desc
 			return CompareUnsigned(item2->GetIntTagValue(FT_SOURCES), item1->GetIntTagValue(FT_SOURCES));
 
-		case 3: //type asc
-			return item1->GetFileType().Compare(item2->GetFileType());
-		case 103: //type  desc
-			return item2->GetFileType().Compare(item1->GetFileType());
+		case 3: // complete sources asc
+			if (item1->GetIntTagValue(FT_SOURCES) == 0 || item2->GetIntTagValue(FT_SOURCES) == 0 || item1->IsKademlia() || item2->IsKademlia() )
+				return 0; // should never happen, just a sanity check
+			return CompareUnsigned((item1->GetIntTagValue(FT_COMPLETE_SOURCES)*100)/item1->GetIntTagValue(FT_SOURCES), (item2->GetIntTagValue(FT_COMPLETE_SOURCES)*100)/item2->GetIntTagValue(FT_SOURCES));
+		case 103: //complete sources desc
+			if (item1->GetIntTagValue(FT_SOURCES) == 0 || item2->GetIntTagValue(FT_SOURCES) == 0 || item1->IsKademlia() || item2->IsKademlia())
+				return 0; // should never happen, just a sanity check
+			return CompareUnsigned((item2->GetIntTagValue(FT_COMPLETE_SOURCES)*100)/item2->GetIntTagValue(FT_SOURCES), (item1->GetIntTagValue(FT_COMPLETE_SOURCES)*100)/item1->GetIntTagValue(FT_SOURCES));
 
-		case 4: //filehash asc
+		case 4: //type asc
+			return item1->GetFileTypeDisplayStr().Compare(item2->GetFileTypeDisplayStr());
+		case 104: //type  desc
+			return item2->GetFileTypeDisplayStr().Compare(item1->GetFileTypeDisplayStr());
+
+		case 5: //filehash asc
 			return memcmp(item1->GetFileHash(),item2->GetFileHash(),16);
-		case 104: //filehash desc
+		case 105: //filehash desc
 			return memcmp(item2->GetFileHash(),item1->GetFileHash(),16);
 
-		case 5:
+		case 6:
 			return CompareOptStringNoCase(item1->GetStrTagValue(FT_MEDIA_ARTIST), item2->GetStrTagValue(FT_MEDIA_ARTIST));
-		case 105:
+		case 106:
 			return -CompareOptStringNoCase(item1->GetStrTagValue(FT_MEDIA_ARTIST), item2->GetStrTagValue(FT_MEDIA_ARTIST));
 
-		case 6:
+		case 7:
 			return CompareOptStringNoCase(item1->GetStrTagValue(FT_MEDIA_ALBUM), item2->GetStrTagValue(FT_MEDIA_ALBUM));
-		case 106:
+		case 107:
 			return -CompareOptStringNoCase(item1->GetStrTagValue(FT_MEDIA_ALBUM), item2->GetStrTagValue(FT_MEDIA_ALBUM));
 
-		case 7:
+		case 8:
 			return CompareOptStringNoCase(item1->GetStrTagValue(FT_MEDIA_TITLE), item2->GetStrTagValue(FT_MEDIA_TITLE));
-		case 107:
+		case 108:
 			return -CompareOptStringNoCase(item1->GetStrTagValue(FT_MEDIA_TITLE), item2->GetStrTagValue(FT_MEDIA_TITLE));
 
-		case 8:
+		case 9:
 			return CompareUnsigned(item1->GetIntTagValue(FT_MEDIA_LENGTH), item2->GetIntTagValue(FT_MEDIA_LENGTH));
-		case 108:
+		case 109:
 			return -CompareUnsigned(item1->GetIntTagValue(FT_MEDIA_LENGTH), item2->GetIntTagValue(FT_MEDIA_LENGTH));
 
-		case 9:
+		case 10:
 			return CompareUnsigned(item1->GetIntTagValue(FT_MEDIA_BITRATE), item2->GetIntTagValue(FT_MEDIA_BITRATE));
-		case 109:
+		case 110:
 			return -CompareUnsigned(item1->GetIntTagValue(FT_MEDIA_BITRATE), item2->GetIntTagValue(FT_MEDIA_BITRATE));
 
-		case 10:
+		case 11:
 			return CompareOptStringNoCase(item1->GetStrTagValue(FT_MEDIA_CODEC), item2->GetStrTagValue(FT_MEDIA_CODEC));
-		case 110:
+		case 111:
 			return -CompareOptStringNoCase(item1->GetStrTagValue(FT_MEDIA_CODEC), item2->GetStrTagValue(FT_MEDIA_CODEC));
 
-		case 11: //path asc
+		case 12: //path asc
 			return CompareOptStringNoCase(item1->GetDirectory(), item2->GetDirectory());
-		case 111: //path desc
+		case 112: //path desc
 			return -CompareOptStringNoCase(item1->GetDirectory(), item2->GetDirectory());
 
-		case 12:
+		case 13:
 			return item1->GetKnownType() - item2->GetKnownType();
-		case 121:
+		case 113:
 			return -(item1->GetKnownType() - item2->GetKnownType());
 
 		default:
@@ -623,7 +665,7 @@ BOOL CSearchListCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 				while (pos!=NULL)
 				{
 					if (!clpbrd.IsEmpty())
-						clpbrd += _T("\r\n");
+						clpbrd += _T("<br />\r\n");
 					clpbrd += CreateHTMLED2kLink((CSearchFile*)GetItemData(GetNextSelectedItem(pos)));
 				}
 				theApp.CopyTextToClipboard(clpbrd);
@@ -666,7 +708,7 @@ BOOL CSearchListCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 						}
 						newclient->SendPreviewRequest(file);
 						// add to res - later
-						AddLogLine(true, "Preview Requested - Please wait");
+						AddLogLine(true, _T("Preview Requested - Please wait"));
 					}
 				}
 				return TRUE;
@@ -760,16 +802,16 @@ void CSearchListCtrl::OnLvnGetInfoTip(NMHDR *pNMHDR, LRESULT *pResult)
 					CString strTag;
 					switch (tag->tag.specialtag){
 						case FT_FILENAME:
-							strTag.Format(_T("%s: %s"), GetResString(IDS_SW_NAME), tag->tag.stringvalue);
+							strTag.Format(_T("%s: %s"), GetResString(IDS_SW_NAME), tag->GetStr());
 							break;
 						case FT_FILESIZE:
 							strTag.Format(_T("%s: %s"), GetResString(IDS_DL_SIZE), CastItoXBytes(tag->tag.intvalue));
 							break;
 						case FT_FILETYPE:
-							strTag.Format(_T("%s: %s"), GetResString(IDS_TYPE), tag->tag.stringvalue);
+							strTag.Format(_T("%s: %s"), GetResString(IDS_TYPE), tag->GetStr());
 							break;
 						case FT_FILEFORMAT:
-							strTag.Format(_T("%s: %s"), GetResString(IDS_SEARCHEXTENTION), tag->tag.stringvalue);
+							strTag.Format(_T("%s: %s"), GetResString(IDS_SEARCHEXTENTION), tag->GetStr());
 							break;
 						case FT_SOURCES:
 							strTag.Format(_T("%s: %u"), GetResString(IDS_SEARCHAVAIL), tag->tag.intvalue);
@@ -808,7 +850,7 @@ void CSearchListCtrl::OnLvnGetInfoTip(NMHDR *pNMHDR, LRESULT *pResult)
 							}
 							if (!bUnkTag){
 								if (tag->tag.type == 2)
-									strTag += tag->tag.stringvalue;
+									strTag += tag->GetStr();
 								else if (tag->tag.type == 3){
 									if (tag->tag.specialtag == FT_MEDIA_LENGTH){
 										CString strTemp;
@@ -1321,23 +1363,25 @@ void CSearchListCtrl::DrawSourceChild(CDC *dc, int nColumn, LPRECT lpRect, /*con
 				buffer.Format(_T("%u"), src->GetListChildCount());
 				dc->DrawText(buffer,buffer.GetLength(), lpRect, DLC_DT_TEXT | DT_RIGHT);
 				break;
-			case 3:			// file type
+			case 3:
 				break;
-			case 4:			// file hash
+			case 4:			// file type
 				break;
-			case 5:
+			case 5:			// file hash
+				break;
+			case 6:
 				buffer = src->GetStrTagValue(FT_MEDIA_ARTIST);
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				break;
-			case 6:
+			case 7:
 				buffer = src->GetStrTagValue(FT_MEDIA_ALBUM);
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				break;
-			case 7:
+			case 8:
 				buffer = src->GetStrTagValue(FT_MEDIA_TITLE);
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				break;
-			case 8:{
+			case 9:{
 				uint32 nMediaLength = src->GetIntTagValue(FT_MEDIA_LENGTH);
 				if (nMediaLength){
 					SecToTimeLength(nMediaLength, buffer);
@@ -1345,7 +1389,7 @@ void CSearchListCtrl::DrawSourceChild(CDC *dc, int nColumn, LPRECT lpRect, /*con
 				}
 				break;
 			}
-			case 9:{
+			case 10:{
 				uint32 nBitrate = src->GetIntTagValue(FT_MEDIA_BITRATE);
 				if (nBitrate){
 					buffer.Format(_T("%u kBit/s"), nBitrate);
@@ -1353,17 +1397,17 @@ void CSearchListCtrl::DrawSourceChild(CDC *dc, int nColumn, LPRECT lpRect, /*con
 				}
 				break;
 			}
-			case 10:
+			case 11:
 				buffer = src->GetStrTagValue(FT_MEDIA_CODEC);
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				break;
-			case 11:		// dir
+			case 12:		// dir
 				if (src->GetDirectory()){
 					buffer = src->GetDirectory();
 					dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				}
 				break;
-			case 12:
+			case 13:
 				if (src->m_eKnown == CSearchFile::Shared)
 					buffer = GetResString(IDS_SHARED);
 				else if (src->m_eKnown == CSearchFile::Downloading)
@@ -1399,37 +1443,56 @@ void CSearchListCtrl::DrawSourceParent(CDC *dc, int nColumn, LPRECT lpRect, /*co
 				buffer = CastItoXBytes(src->GetFileSize());
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT | DT_RIGHT);
 				break;
-			case 2:{		// avail
-				buffer.Format(_T("%u"), src->GetIntTagValue(FT_SOURCES));
-				uint32 uCompleteSources;
-				if (src->GetIntTagValue(FT_COMPLETE_SOURCES, uCompleteSources))
-					buffer.AppendFormat(_T("/%u"), uCompleteSources);
-				int iClientsCount = src->GetClientsCount();
-				if (iClientsCount)
-					buffer.AppendFormat(_T(" (%u)"), iClientsCount);
+			case 2:{ // avail
+				uint32 nSources = src->GetSourceCount();	
+				int iClients = src->GetClientsCount();
+				if ( thePrefs.IsExtControlsEnabled() && iClients > 0)
+					buffer.Format(_T("%u (%u)"), nSources, iClients);
+				else
+					buffer.Format(_T("%u"), nSources);
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT | DT_RIGHT);
 				break;
+
 			}
-			case 3:			// file type
-				dc->DrawText(src->GetFileType(), src->GetFileType().GetLength(), lpRect, DLC_DT_TEXT);
+			case 3:{		// complete sources
+				if (!src->IsKademlia()){
+					uint32 nSources = src->GetSourceCount();	
+					uint32 uCompleteSources;
+					if ( (uCompleteSources = src->GetIntTagValue(FT_COMPLETE_SOURCES))  > 0 && nSources > 0){
+						buffer.Format(_T("%u%%"), (uCompleteSources*100)/nSources);
+						dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT | DT_RIGHT);
+					}
+					else{
+						buffer = _T("0%");
+						COLORREF crColorBuffer = dc->SetTextColor(RGB(255,0,0));
+						dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT | DT_RIGHT);
+						dc->SetTextColor(crColorBuffer);
+					}
+				}
+				else
+					dc->DrawText(_T("?"), 1, lpRect, DLC_DT_TEXT | DT_RIGHT);
 				break;
-			case 4:			// file hash
+			}
+			case 4:			// file type
+				dc->DrawText(src->GetFileTypeDisplayStr(), src->GetFileTypeDisplayStr().GetLength(), lpRect, DLC_DT_TEXT);
+				break;
+			case 5:			// file hash
 				buffer = md4str(src->GetFileHash());
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				break;
-			case 5:
+			case 6:
 				buffer = src->GetStrTagValue(FT_MEDIA_ARTIST);
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				break;
-			case 6:
+			case 7:
 				buffer = src->GetStrTagValue(FT_MEDIA_ALBUM);
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				break;
-			case 7:
+			case 8:
 				buffer = src->GetStrTagValue(FT_MEDIA_TITLE);
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				break;
-			case 8:{
+			case 9:{
 				uint32 nMediaLength = src->GetIntTagValue(FT_MEDIA_LENGTH);
 				if (nMediaLength){
 					SecToTimeLength(nMediaLength, buffer);
@@ -1437,7 +1500,7 @@ void CSearchListCtrl::DrawSourceParent(CDC *dc, int nColumn, LPRECT lpRect, /*co
 				}
 				break;
 			}
-			case 9:{
+			case 10:{
 				uint32 nBitrate = src->GetIntTagValue(FT_MEDIA_BITRATE);
 				if (nBitrate){
 					buffer.Format(_T("%u kBit/s"), nBitrate);
@@ -1445,17 +1508,17 @@ void CSearchListCtrl::DrawSourceParent(CDC *dc, int nColumn, LPRECT lpRect, /*co
 				}
 				break;
 			}
-			case 10:
+			case 11:
 				buffer = src->GetStrTagValue(FT_MEDIA_CODEC);
 				dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				break;
-			case 11:		// dir
+			case 12:		// dir
 				if (src->GetDirectory()){
 					buffer = src->GetDirectory();
 					dc->DrawText(buffer, buffer.GetLength(), lpRect, DLC_DT_TEXT);
 				}
 				break;
-			case 12:
+			case 13:
 				if (src->m_eKnown == CSearchFile::Shared)
 					buffer = GetResString(IDS_SHARED);
 				else if (src->m_eKnown == CSearchFile::Downloading)
@@ -1469,4 +1532,15 @@ void CSearchListCtrl::DrawSourceParent(CDC *dc, int nColumn, LPRECT lpRect, /*co
 		}
 		dc->SetTextColor(crOldTextColor);
 	}
+}
+
+void CSearchListCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	if (nChar == 'C' && (GetKeyState(VK_CONTROL) & 0x8000))
+	{
+		// Ctrl+C: Copy listview items to clipboard
+		SendMessage(WM_COMMAND, MP_GETED2KLINK);
+		return;
+	}
+	CMuleListCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
 }

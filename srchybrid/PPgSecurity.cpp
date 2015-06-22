@@ -23,6 +23,8 @@
 #include "CustomAutoComplete.h"
 #include "HttpDownloadDlg.h"
 #include "emuledlg.h"
+#include "HelpIDs.h"
+#include "ZipFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -64,13 +66,15 @@ BEGIN_MESSAGE_MAP(CPPgSecurity, CPropertyPage)
 	ON_BN_CLICKED(IDC_LOADURL, OnLoadIPFFromURL)
 	ON_EN_CHANGE(IDC_UPDATEURL, OnEnChangeUpdateUrl)
 	ON_BN_CLICKED(IDC_DD,OnDDClicked)
+	ON_WM_HELPINFO()
+	ON_BN_CLICKED(IDC_RUNASUSER, OnBnClickedRunasuser)
 END_MESSAGE_MAP()
 
 void CPPgSecurity::LoadSettings(void)
 {
 	CString strBuffer;
 	
-	strBuffer.Format("%i",thePrefs.filterlevel);
+	strBuffer.Format(_T("%i"),thePrefs.filterlevel);
 	GetDlgItem(IDC_FILTERLEVEL)->SetWindowText(strBuffer);
 
 	if(thePrefs.filterserverbyip)
@@ -97,6 +101,16 @@ void CPPgSecurity::LoadSettings(void)
 		CheckDlgButton(IDC_USESECIDENT,1);
 	else
 		CheckDlgButton(IDC_USESECIDENT,0);
+
+	if (thePrefs.GetWindowsVersion() == _WINVER_XP_ || thePrefs.GetWindowsVersion() == _WINVER_2K_)
+		GetDlgItem(IDC_RUNASUSER)->EnableWindow(TRUE);
+	else
+		GetDlgItem(IDC_RUNASUSER)->EnableWindow(FALSE);
+
+	if(thePrefs.IsRunAsUserEnabled())
+		CheckDlgButton(IDC_RUNASUSER,1);
+	else
+		CheckDlgButton(IDC_RUNASUSER,0);
 
 	GetDlgItem(IDC_FILTER)->SetWindowText(thePrefs.messageFilter);
 	GetDlgItem(IDC_COMMENTFILTER)->SetWindowText(thePrefs.commentFilter);
@@ -132,11 +146,11 @@ BOOL CPPgSecurity::OnInitDialog()
 
 BOOL CPPgSecurity::OnApply()
 {
-	char buffer[510];
+	TCHAR buffer[510];
 	if(GetDlgItem(IDC_FILTERLEVEL)->GetWindowTextLength())
 	{
 		GetDlgItem(IDC_FILTERLEVEL)->GetWindowText(buffer,4);
-		thePrefs.filterlevel=atoi(buffer);
+		thePrefs.filterlevel=_tstoi(buffer);
 	}
 
 	thePrefs.filterserverbyip = (uint8)IsDlgButtonChecked(IDC_FILTERSERVERBYIPFILTER);
@@ -144,6 +158,7 @@ BOOL CPPgSecurity::OnApply()
 	thePrefs.msgsecure = (uint8)IsDlgButtonChecked(IDC_MSGONLYSEC);
 	thePrefs.m_bAdvancedSpamfilter = IsDlgButtonChecked(IDC_ADVSPAMFILTER);
 	thePrefs.m_bUseSecureIdent = IsDlgButtonChecked(IDC_USESECIDENT);
+	thePrefs.m_bRunAsUser = (uint8)IsDlgButtonChecked(IDC_RUNASUSER);
 
 	GetDlgItem(IDC_FILTER)->GetWindowText(thePrefs.messageFilter,511);
 	GetDlgItem(IDC_COMMENTFILTER)->GetWindowText(thePrefs.commentFilter,511);
@@ -161,7 +176,7 @@ void CPPgSecurity::Localize(void)
 		GetDlgItem(IDC_STATIC_IPFILTER)->SetWindowText(GetResString(IDS_IPFILTER));
 		GetDlgItem(IDC_RELOADFILTER)->SetWindowText(GetResString(IDS_SF_RELOAD));
 		GetDlgItem(IDC_EDITFILTER)->SetWindowText(GetResString(IDS_EDIT));
-		GetDlgItem(IDC_STATIC_FILTERLEVEL)->SetWindowText(GetResString(IDS_FILTERLEVEL)+":");
+		GetDlgItem(IDC_STATIC_FILTERLEVEL)->SetWindowText(GetResString(IDS_FILTERLEVEL)+_T(":"));
 		GetDlgItem(IDC_FILTERSERVERBYIPFILTER)->SetWindowText(GetResString(IDS_FILTERSERVERBYIPFILTER));
 
 		GetDlgItem(IDC_FILTERCOMMENTSLABEL)->SetWindowText(GetResString(IDS_FILTERCOMMENTSLABEL));
@@ -179,6 +194,8 @@ void CPPgSecurity::Localize(void)
 
 		SetDlgItemText(IDC_STATIC_UPDATEFROM,GetResString(IDS_UPDATEFROM));
 		SetDlgItemText(IDC_LOADURL,GetResString(IDS_LOADURL));
+
+		SetDlgItemText(IDC_RUNASUSER,GetResString(IDS_RUNASUSER));
 	}
 }
 
@@ -198,16 +215,58 @@ void CPPgSecurity::OnLoadIPFFromURL() {
 	GetDlgItemText(IDC_UPDATEURL,url);
 	if (!url.IsEmpty())
 	{
-		CString tempfile;
-		tempfile.Format("%s\\%s",thePrefs.GetConfigDir(), DFLT_IPFILTER_FILENAME);
+		TCHAR szTempFilePath[MAX_PATH];
+		_tmakepath(szTempFilePath, NULL, thePrefs.GetConfigDir(), DFLT_IPFILTER_FILENAME, _T("tmp"));
 
 		CHttpDownloadDlg dlgDownload;
+		dlgDownload.m_strTitle = _T("Downloading IP filter file");
 		dlgDownload.m_sURLToDownload = url;
-		dlgDownload.m_sFileToDownloadInto = tempfile;
+		dlgDownload.m_sFileToDownloadInto = szTempFilePath;
 		if (dlgDownload.DoModal() != IDOK)
 		{
-			AddLogLine(true, "IP Filter download failed");
+			_tremove(szTempFilePath);
+			AddLogLine(true, _T("IP Filter download failed"));
 			return;
+		}
+
+		bool bIsZipFile = false;
+		bool bUnzipped = false;
+		CZIPFile zip;
+		if (zip.Open(szTempFilePath))
+		{
+			bIsZipFile = true;
+
+			CZIPFile::File* zfile = zip.GetFile(_T("guarding.p2p"));
+			if (zfile)
+			{
+				TCHAR szTempUnzipFilePath[MAX_PATH];
+				_tmakepath(szTempUnzipFilePath, NULL, thePrefs.GetConfigDir(), DFLT_IPFILTER_FILENAME, _T(".unzip.tmp"));
+				if (zfile->Extract(szTempUnzipFilePath))
+				{
+					zip.Close();
+					zfile = NULL;
+
+					if (_tremove(theApp.ipfilter->GetDefaultFilePath()) != 0)
+						TRACE("*** Error: Failed to remove default IP filter file \"%s\" - %s\n", theApp.ipfilter->GetDefaultFilePath(), strerror(errno));
+					if (_trename(szTempUnzipFilePath, theApp.ipfilter->GetDefaultFilePath()) != 0)
+						TRACE("*** Error: Failed to rename uncompressed IP filter file \"%s\" to default IP filter file \"%s\" - %s\n", szTempUnzipFilePath, theApp.ipfilter->GetDefaultFilePath(), strerror(errno));
+					if (_tremove(szTempFilePath) != 0)
+						TRACE("*** Error: Failed to remove temporary IP filter file \"%s\" - %s\n", szTempFilePath, strerror(errno));
+					bUnzipped = true;
+				}
+				else
+					AddLogLine(true, _T("Failed to extract IP filter file from downloaded IP filter ZIP file \"%s\"."), szTempFilePath);
+			}
+			else
+				AddLogLine(true, _T("Downloaded IP filter file \"%s\" is a ZIP file with unexpected content."), szTempFilePath);
+
+			zip.Close();
+		}
+
+		if (!bIsZipFile && !bUnzipped)
+		{
+			_tremove(theApp.ipfilter->GetDefaultFilePath());
+			_trename(szTempFilePath, theApp.ipfilter->GetDefaultFilePath());
 		}
 
 		if (m_pacIPFilterURL && m_pacIPFilterURL->IsBound())
@@ -264,7 +323,36 @@ void CPPgSecurity::OnDDClicked() {
 	
 	CWnd* box=GetDlgItem(IDC_UPDATEURL);
 	box->SetFocus();
-	box->SetWindowText("");
+	box->SetWindowText(_T(""));
 	box->SendMessage(WM_KEYDOWN,VK_DOWN,0x00510001);
-	
+}
+
+void CPPgSecurity::OnHelp()
+{
+	theApp.ShowHelp(eMule_FAQ_Preferences_Security);
+}
+
+BOOL CPPgSecurity::OnCommand(WPARAM wParam, LPARAM lParam)
+{
+	if (wParam == ID_HELP)
+	{
+		OnHelp();
+		return TRUE;
+	}
+	return __super::OnCommand(wParam, lParam);
+}
+
+BOOL CPPgSecurity::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	OnHelp();
+	return TRUE;
+}
+
+void CPPgSecurity::OnBnClickedRunasuser()
+{
+	if ( ((CButton*)GetDlgItem(IDC_RUNASUSER))->GetCheck() == BST_CHECKED){
+		if (AfxMessageBox(GetResString(IDS_RAU_WARNING),MB_OKCANCEL | MB_ICONINFORMATION,0) == IDCANCEL)
+			((CButton*)GetDlgItem(IDC_RUNASUSER))->SetCheck(BST_UNCHECKED);
+	}
+	OnSettingsChange();
 }

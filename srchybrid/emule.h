@@ -43,9 +43,12 @@ class CClientUDPSocket;
 class CIPFilter;
 class CWebServer;
 class CMMServer;
-class CStatistics;
 class CAbstractFile;
 class CUpDownClient;
+class CPeerCacheFinder;
+class CFirewallOpener;
+
+struct SLogItem;
 
 enum AppState{
 	APP_STATE_RUNNING=0,
@@ -79,10 +82,12 @@ public:
 	CWebServer*			webserver;
 	CScheduler*			scheduler;
 	CMMServer*			mmserver;
-	CStatistics*		statistics;
+	CPeerCacheFinder*	m_pPeerCache;
+	CFirewallOpener*	m_pFirewallOpener;
 
 	uint64				stat_sessionReceivedBytes;
 	uint64				stat_sessionSentBytes;
+	uint64				stat_sessionSentBytesToFriend;
 	uint16				stat_reconnects;
 	DWORD				stat_transferStarttime;
 	DWORD				stat_serverConnectTime;
@@ -99,7 +104,7 @@ public:
 	AppState			m_app_state; // defines application state for shutdown 
 	CMutex				hashing_mut;
 	CString*			pendinglink;
-	tagCOPYDATASTRUCT	sendstruct;
+	COPYDATASTRUCT		sendstruct;
 
 // Implementierung
 	virtual BOOL InitInstance();
@@ -108,10 +113,10 @@ public:
 	void		AddEd2kLinksToDownload(CString strLinks, uint8 cat);
 	void		SearchClipboard();
 	void		IgnoreClipboardLinks(CString strLinks) {m_strLastClipboardContents = strLinks;}
-	void		PasteClipboard();
+	void		PasteClipboard(uint8 uCategory = 0);
 	bool		IsEd2kFileLinkInClipboard();
 	bool		IsEd2kServerLinkInClipboard();
-	bool		IsEd2kLinkInClipboard(LPCTSTR pszLinkType, int iLinkTypeLen);
+	bool		IsEd2kLinkInClipboard(LPCSTR pszLinkType, int iLinkTypeLen);
 
 	CString		CreateED2kSourceLink(const CAbstractFile* f);
 	CString		CreateED2kHostnameSourceLink(const CAbstractFile* f);
@@ -122,7 +127,7 @@ public:
 
 	void		OnlineSig();
 	void		UpdateReceivedBytes(uint32 bytesToAdd);
-	void		UpdateSentBytes(uint32 bytesToAdd);
+	void		UpdateSentBytes(uint32 bytesToAdd, bool sentToFriend = false);
 	int			GetFileTypeSystemImageIdx(LPCTSTR pszFilePath, int iLength = -1);
 	HIMAGELIST	GetSystemImageList() { return m_hSystemImageList; }
 	CSize		GetSmallSytemIconSize() { return m_sizSmallSystemIcon; }
@@ -130,13 +135,31 @@ public:
 	bool		IsFirewalled();
 	bool		DoCallback( CUpDownClient *client );
 	uint32		GetID();
+	uint32		GetPublicIP() const;	// return current (valid) public IP or 0 if unknown
+	void		SetPublicIP(const uint32 dwIP);
 
 	// because nearly all icons we are loading are 16x16, the default size is specified as 16 and not as 32 nor LR_DEFAULTSIZE
 	HICON		LoadIcon(LPCTSTR lpszResourceName, int cx = 16, int cy = 16, UINT uFlags = LR_DEFAULTCOLOR) const;
 	HICON		LoadIcon(UINT nIDResource) const;
 	HBITMAP		LoadImage(LPCTSTR lpszResourceName, LPCTSTR pszResourceType) const;
 	HBITMAP		LoadImage(UINT nIDResource, LPCTSTR pszResourceType) const;
+	bool		LoadSkinColor(LPCTSTR pszKey, COLORREF& crColor);
 	void		ApplySkin(LPCTSTR pszSkinProfile);
+
+	CString		GetLangHelpFilePath();
+	void		SetHelpFilePath(LPCTSTR pszHelpFilePath);
+	void		ShowHelp(UINT uTopic, UINT uCmd = HELP_CONTEXT);
+
+    // Elandal:ThreadSafeLogging -->
+    // thread safe log calls
+    void			QueueDebugLogLine(bool addtostatusbar, LPCTSTR line,...);
+    void			HandleDebugLogQueue();
+    void			ClearDebugLogQueue(bool bDebugPendingMsgs = false);
+    void			QueueLogLine(bool addtostatusbar, LPCTSTR line,...);
+    void			HandleLogQueue();
+    void			ClearLogQueue(bool bDebugPendingMsgs = false);
+    // Elandal:ThreadSafeLogging <--
+
 
 protected:
 	bool ProcessCommandline();
@@ -152,6 +175,16 @@ protected:
 
 	bool		m_bGuardClipboardPrompt;
 	CString		m_strLastClipboardContents;
+
+    // Elandal:ThreadSafeLogging -->
+    // thread safe log calls
+    CCriticalSection m_queueLock;
+    CTypedPtrList<CPtrList, SLogItem*> m_QueueDebugLog;
+    CTypedPtrList<CPtrList, SLogItem*> m_QueueLog;
+    // Elandal:ThreadSafeLogging <--
+
+	uint32 m_dwPublicIP;
+
 };
 
 extern CemuleApp theApp;

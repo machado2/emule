@@ -19,6 +19,7 @@
 #include <io.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <share.h>
 #ifdef _DEBUG
 #include "DebugHelpers.h"
 #endif
@@ -27,14 +28,12 @@
 #include "KnownFileList.h"
 #include "SharedFileList.h"
 #include "UpDownClient.h"
-#include "UploadQueue.h"
 #include "MMServer.h"
 #include "ClientList.h"
 #include "opcodes.h"
 #include "ini2.h"
 #define NOMD4MACROS
 #include "kademlia/utils/md4.h"
-#include "QArray.h"
 #include "FrameGrabThread.h"
 #include "CxImage/xImage.h"
 #include "OtherFunctions.h"
@@ -68,10 +67,8 @@ typedef struct tagVIDEOINFOHEADER {
     BITMAPINFOHEADER bmiHeader;
 } VIDEOINFOHEADER;
 
-#ifndef _CONSOLE
 #include "emuledlg.h"
 #include "SharedFilesWnd.h"
-#endif
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -84,7 +81,7 @@ static char THIS_FILE[]=__FILE__;
 
 void CFileStatistic::MergeFileStats( CFileStatistic *toMerge )
 {
-	requested += toMerge->GetAccepts();
+	requested += toMerge->GetRequests();
 	accepted += toMerge->GetAccepts();
 	transferred += toMerge->GetTransferred();
 	alltimerequested += toMerge->GetAllTimeRequests();
@@ -148,8 +145,7 @@ CKnownFile::CKnownFile()
 	m_iPartCount = 0;
 	m_iED2KPartCount = 0;
 	m_iED2KPartHashCount = 0;
-	date = 0;
-	dateC =0;
+	m_tUtcLastModified = 0;
 	if(thePrefs.GetNewAutoUp()){
 		m_iUpPriority = PR_HIGH;
 		m_bAutoUpPriority = true;
@@ -185,8 +181,7 @@ void CKnownFile::AssertValid() const
 {
 	CAbstractFile::AssertValid();
 
-	(void)date;
-	(void)dateC;
+	(void)m_tUtcLastModified;
 	(void)statistic;
 	(void)m_nCompleteSourcesTime;
 	(void)m_nCompleteSourcesCount;
@@ -221,32 +216,31 @@ CBarShader CKnownFile::s_ShareStatusBar(16);
 
 void CKnownFile::DrawShareStatusBar(CDC* dc, LPCRECT rect, bool onlygreyrect, bool  bFlat) const
 {
-	COLORREF crProgress;
-	COLORREF crHave;
-	COLORREF crPending;
-	COLORREF crMissing = RGB(255, 0, 0);
+	const COLORREF crMissing = RGB(255, 0, 0);
+	s_ShareStatusBar.SetFileSize(GetFileSize());
+	s_ShareStatusBar.SetHeight(rect->bottom - rect->top);
+	s_ShareStatusBar.SetWidth(rect->right - rect->left);
+	s_ShareStatusBar.Fill(crMissing);
 
-	if(bFlat) { 
-		crProgress = RGB(0, 150, 0);
-		crHave = RGB(0, 0, 0);
-		crPending = RGB(255,208,0);
-	} else { 
-		crProgress = RGB(0, 224, 0);
-		crHave = RGB(104, 104, 104);
-		crPending = RGB(255, 208, 0);
-	} 
-
-	s_ShareStatusBar.SetFileSize(this->GetFileSize()); 
-	s_ShareStatusBar.SetHeight(rect->bottom - rect->top); 
-	s_ShareStatusBar.SetWidth(rect->right - rect->left); 
-	s_ShareStatusBar.Fill(crMissing); 
-	COLORREF color;
-	if (!onlygreyrect && !m_AvailPartFrequency.IsEmpty()) { 
-		for (int i = 0;i < GetPartCount();i++)
+	if (!onlygreyrect && !m_AvailPartFrequency.IsEmpty()) {
+		COLORREF crProgress;
+		COLORREF crHave;
+		COLORREF crPending;
+		if(bFlat) { 
+			crProgress = RGB(0, 150, 0);
+			crHave = RGB(0, 0, 0);
+			crPending = RGB(255,208,0);
+		} else { 
+			crProgress = RGB(0, 224, 0);
+			crHave = RGB(104, 104, 104);
+			crPending = RGB(255, 208, 0);
+		} 
+		for (int i = 0; i < GetPartCount(); i++){
 			if(m_AvailPartFrequency[i] > 0 ){
-				color = RGB(0, (210-(22*(m_AvailPartFrequency[i]-1)) <  0)? 0:210-(22*(m_AvailPartFrequency[i]-1)), 255);
+				COLORREF color = RGB(0, (210-(22*(m_AvailPartFrequency[i]-1)) <	0)? 0:210-(22*(m_AvailPartFrequency[i]-1)), 255);
 				s_ShareStatusBar.FillRange(PARTSIZE*(i),PARTSIZE*(i+1),color);
 			}
+		}
 	}
    	s_ShareStatusBar.Draw(dc, rect->left, rect->top, bFlat); 
 } 
@@ -424,7 +418,7 @@ void CKnownFile::SetFilePath(LPCTSTR pszFilePath)
 	m_strFilePath = pszFilePath;
 }
 
-bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename)
+bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename, LPVOID pvProgressParam)
 {
 	SetPath(in_directory);
 	SetFileName(in_filename);
@@ -434,9 +428,9 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename)
 	_tmakepath(strFilePath.GetBuffer(MAX_PATH), NULL, in_directory, in_filename, NULL);
 	strFilePath.ReleaseBuffer();
 	SetFilePath(strFilePath);
-	FILE* file = fopen(strFilePath, "rbS");
+	FILE* file = _tfsopen(strFilePath, _T("rbS"), _SH_DENYNO); // can not use _SH_DENYWR because we may access a completing part file
 	if (!file){
-		AddLogLine(false, GetResString(IDS_ERR_FILEOPEN) + CString(_T(" - %s")), strFilePath, _T(""), strerror(errno));
+		theApp.QueueLogLine(false, GetResString(IDS_ERR_FILEOPEN) + _T(" - %hs"), strFilePath, _T(""), strerror(errno));
 		return false;
 	}
 
@@ -460,7 +454,7 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename)
 		uchar* newhash = new uchar[16];
 		CreateHashFromFile(file, PARTSIZE, newhash);
 		// SLUGFILLER: SafeHash - quick fallback
-		if (!theApp.emuledlg->IsRunning()){	// in case of shutdown while still hashing
+		if (theApp.emuledlg==NULL || !theApp.emuledlg->IsRunning()){ // in case of shutdown while still hashing
 			fclose(file);
 			delete[] newhash;
 			return false;
@@ -469,6 +463,14 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename)
 		hashlist.Add(newhash);
 		togo -= PARTSIZE;
 		hashcount++;
+
+		if (pvProgressParam && theApp.emuledlg && theApp.emuledlg->IsRunning()){
+			ASSERT( ((CKnownFile*)pvProgressParam)->IsKindOf(RUNTIME_CLASS(CKnownFile)) );
+			ASSERT( ((CKnownFile*)pvProgressParam)->GetFileSize() == GetFileSize() );
+			UINT uProgress = ((ULONGLONG)(GetFileSize() - togo) * 100) / GetFileSize();
+			ASSERT( uProgress <= 100 );
+			VERIFY( PostMessage(theApp.emuledlg->GetSafeHwnd(), TM_FILEOPPROGRESS, uProgress, (LPARAM)pvProgressParam) );
+		}
 	}
 	uchar* lasthash = new uchar[16];
 	md4clr(lasthash);
@@ -486,11 +488,19 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename)
 		delete[] buffer;
 	}
 
+	if (pvProgressParam && theApp.emuledlg && theApp.emuledlg->IsRunning()){
+		ASSERT( ((CKnownFile*)pvProgressParam)->IsKindOf(RUNTIME_CLASS(CKnownFile)) );
+		ASSERT( ((CKnownFile*)pvProgressParam)->GetFileSize() == GetFileSize() );
+		UINT uProgress = 100;
+		ASSERT( uProgress <= 100 );
+		VERIFY( PostMessage(theApp.emuledlg->GetSafeHwnd(), TM_FILEOPPROGRESS, uProgress, (LPARAM)pvProgressParam) );
+	}
+
 	// set lastwrite date
 	struct _stat fileinfo = {0};
 	_fstat(file->_file, &fileinfo);
-	date = fileinfo.st_mtime;
-	AdjustNTFSDaylightFileTime(date, strFilePath);
+	m_tUtcLastModified = fileinfo.st_mtime;
+	AdjustNTFSDaylightFileTime(m_tUtcLastModified, strFilePath);
 	
 	fclose(file);
 	file = NULL;
@@ -572,7 +582,8 @@ void CKnownFile::SetFileSize(uint32 nFileSize)
 	}
 
 	// nr. of data parts
-	m_iPartCount = (nFileSize + (PARTSIZE - 1)) / PARTSIZE;
+	ASSERT( (uint64)(((uint64)nFileSize + (PARTSIZE - 1)) / PARTSIZE) <= (UINT)USHRT_MAX );
+	m_iPartCount = ((uint64)nFileSize + (PARTSIZE - 1)) / PARTSIZE;
 
 	// nr. of parts to be used with OP_FILESTATUS
 	m_iED2KPartCount = nFileSize / PARTSIZE + 1;
@@ -589,6 +600,7 @@ bool CKnownFile::LoadHashsetFromFile(CFileDataIO* file, bool checkhash){
 	file->ReadHash16(checkid);
 	//TRACE("File size: %u (%u full parts + %u bytes)\n", GetFileSize(), GetFileSize()/PARTSIZE, GetFileSize()%PARTSIZE);
 	//TRACE("File hash: %s\n", md4str(checkid));
+	ASSERT( hashlist.GetCount() == 0 );
 	UINT parts = file->ReadUInt16();
 	//TRACE("Nr. hashs: %u\n", (UINT)parts);
 	for (UINT i = 0; i < parts; i++){
@@ -604,11 +616,21 @@ bool CKnownFile::LoadHashsetFromFile(CFileDataIO* file, bool checkhash){
 		if (parts <= 1)	// nothing to check
 			return true;
 	}
-	else if (md4cmp(m_abyFileHash, checkid))
+	else if (md4cmp(m_abyFileHash, checkid)){
+		// delete hashset
+		for (int i = 0; i < hashlist.GetSize(); i++)
+			delete[] hashlist[i];
+		hashlist.RemoveAll();
 		return false;	// wrong file?
+	}
 	else{
-		if (parts != GetED2KPartHashCount())
+		if (parts != GetED2KPartHashCount()){
+			// delete hashset
+			for (int i = 0; i < hashlist.GetSize(); i++)
+				delete[] hashlist[i];
+			hashlist.RemoveAll();
 			return false;
+		}
 	}
 	// SLUGFILLER: SafeHash
 
@@ -622,6 +644,7 @@ bool CKnownFile::LoadHashsetFromFile(CFileDataIO* file, bool checkhash){
 	if (!md4cmp(m_abyFileHash, checkid))
 		return true;
 	else{
+		// delete hashset
 		for (int i = 0; i < hashlist.GetSize(); i++)
 			delete[] hashlist[i];
 		hashlist.RemoveAll();
@@ -629,6 +652,43 @@ bool CKnownFile::LoadHashsetFromFile(CFileDataIO* file, bool checkhash){
 	}
 }
 
+bool CKnownFile::SetHashset(const CArray<uchar*, uchar*>& aHashset)
+{
+	// delete hashset
+	for (int i = 0; i < hashlist.GetSize(); i++)
+		delete[] hashlist[i];
+	hashlist.RemoveAll();
+
+	// set new hash
+	for (int i = 0; i < aHashset.GetSize(); i++)
+	{
+		uchar* pucHash = new uchar[16];
+		md4cpy(pucHash, aHashset.GetAt(i));
+		hashlist.Add(pucHash);
+	}
+
+	// verify new hash
+	if (hashlist.IsEmpty())
+		return true;
+
+	uchar aucHashsetHash[16];
+	uchar* buffer = new uchar[hashlist.GetCount()*16];
+	for (int i = 0; i < hashlist.GetCount(); i++)
+		md4cpy(buffer+(i*16), hashlist[i]);
+	CreateHashFromString(buffer, hashlist.GetCount()*16, aucHashsetHash);
+	delete[] buffer;
+
+	bool bResult = (md4cmp(aucHashsetHash, m_abyFileHash) == 0);
+	if (!bResult)
+	{
+		// delete hashset
+		for (int i = 0; i < hashlist.GetSize(); i++)
+			delete[] hashlist[i];
+		hashlist.RemoveAll();
+	}
+	return bResult;
+}
+ 
 bool CKnownFile::LoadTagsFromFile(CFileDataIO* file)
 {
 	UINT tagcount = file->ReadUInt32();
@@ -636,60 +696,86 @@ bool CKnownFile::LoadTagsFromFile(CFileDataIO* file)
 		CTag* newtag = new CTag(file);
 		switch(newtag->tag.specialtag){
 			case FT_FILENAME:{
-				SetFileName(newtag->tag.stringvalue);
+				ASSERT( newtag->IsStr() );
+				if (newtag->IsStr()){
+#ifdef _UNICODE
+					if (GetFileName().IsEmpty())
+#endif
+						SetFileName(newtag->GetStr());
+				}
 				delete newtag;
 				break;
 			}
 			case FT_FILESIZE:{
-				SetFileSize(newtag->tag.intvalue);
-				m_AvailPartFrequency.SetSize(GetPartCount());
-				for (uint32 i = 0; i < GetPartCount();i++)
-					m_AvailPartFrequency[i] = 0;
+				ASSERT( newtag->IsInt() );
+				if (newtag->IsInt())
+				{
+					SetFileSize(newtag->tag.intvalue);
+					m_AvailPartFrequency.SetSize(GetPartCount());
+					for (uint32 i = 0; i < GetPartCount();i++)
+						m_AvailPartFrequency[i] = 0;
+				}
 				delete newtag;
 				break;
 			}
 			case FT_ATTRANSFERED:{
-				statistic.alltimetransferred = newtag->tag.intvalue;
+				ASSERT( newtag->IsInt() );
+				if (newtag->IsInt())
+					statistic.alltimetransferred = newtag->tag.intvalue;
 				delete newtag;
 				break;
 			}
 			case FT_ATTRANSFEREDHI:{
-				uint32 hi,low;
-				low=statistic.alltimetransferred;
-				hi = newtag->tag.intvalue;
-				uint64 hi2;
-				hi2=hi;
-				hi2=hi2<<32;
-				statistic.alltimetransferred=low+hi2;
+				ASSERT( newtag->IsInt() );
+				if (newtag->IsInt())
+				{
+					uint32 hi,low;
+					low=statistic.alltimetransferred;
+					hi = newtag->tag.intvalue;
+					uint64 hi2;
+					hi2=hi;
+					hi2=hi2<<32;
+					statistic.alltimetransferred=low+hi2;
+				}
 				delete newtag;
 				break;
 			}
 			case FT_ATREQUESTED:{
-				statistic.alltimerequested = newtag->tag.intvalue;
+				ASSERT( newtag->IsInt() );
+				if (newtag->IsInt())
+					statistic.alltimerequested = newtag->tag.intvalue;
 				delete newtag;
 				break;
 			}
  			case FT_ATACCEPTED:{
-				statistic.alltimeaccepted = newtag->tag.intvalue;
+				ASSERT( newtag->IsInt() );
+				if (newtag->IsInt())
+					statistic.alltimeaccepted = newtag->tag.intvalue;
 				delete newtag;
 				break;
 			}
 			case FT_ULPRIORITY:{
-				m_iUpPriority = newtag->tag.intvalue;
-				if( m_iUpPriority == PR_AUTO ){
-					m_iUpPriority = PR_HIGH;
-					m_bAutoUpPriority = true;
-				}
-				else{
-					if (m_iUpPriority != PR_VERYLOW && m_iUpPriority != PR_LOW && m_iUpPriority != PR_NORMAL && m_iUpPriority != PR_HIGH && m_iUpPriority != PR_VERYHIGH)
-						m_iUpPriority = PR_NORMAL;
-					m_bAutoUpPriority = false;
+				ASSERT( newtag->IsInt() );
+				if (newtag->IsInt())
+				{
+					m_iUpPriority = newtag->tag.intvalue;
+					if( m_iUpPriority == PR_AUTO ){
+						m_iUpPriority = PR_HIGH;
+						m_bAutoUpPriority = true;
+					}
+					else{
+						if (m_iUpPriority != PR_VERYLOW && m_iUpPriority != PR_LOW && m_iUpPriority != PR_NORMAL && m_iUpPriority != PR_HIGH && m_iUpPriority != PR_VERYHIGH)
+							m_iUpPriority = PR_NORMAL;
+						m_bAutoUpPriority = false;
+					}
 				}
 				delete newtag;
 				break;
 			}
 			case FT_KADLASTPUBLISHSRC:{
-				m_lastPublishTimeKadSrc = newtag->tag.intvalue;
+				ASSERT( newtag->IsInt() );
+				if (newtag->IsInt())
+					m_lastPublishTimeKadSrc = newtag->tag.intvalue;
 				delete newtag;
 				break;
 			}
@@ -700,14 +786,18 @@ bool CKnownFile::LoadTagsFromFile(CFileDataIO* file)
 				//				0 = Unknown
 				//				1 = we have created that meta data by examining the file contents.
 				// Bits 31-4: Reserved
-				m_uMetaDataVer = newtag->tag.intvalue & 0x0F;
+				ASSERT( newtag->IsInt() );
+				if (newtag->IsInt())
+					m_uMetaDataVer = newtag->tag.intvalue & 0x0F;
 				delete newtag;
 				break;
 			// old tags: as long as they are not needed, take the chance to purge them
 			case FT_PERMISSIONS:
+				ASSERT( newtag->IsInt() );
 				delete newtag;
 				break;
 			case FT_KADLASTPUBLISHKEY:
+				ASSERT( newtag->IsInt() );
 				delete newtag;
 				break;
 			default:
@@ -728,7 +818,7 @@ bool CKnownFile::LoadTagsFromFile(CFileDataIO* file)
 }
 
 bool CKnownFile::LoadDateFromFile(CFileDataIO* file){
-	date = file->ReadUInt32();
+	m_tUtcLastModified = file->ReadUInt32();
 	return true;
 }
 
@@ -742,58 +832,67 @@ bool CKnownFile::LoadFromFile(CFileDataIO* file){
 	// SLUGFILLER: SafeHash
 }
 
-bool CKnownFile::WriteToFile(CFileDataIO* file){
+bool CKnownFile::WriteToFile(CFileDataIO* file)
+{
 	// date
-	file->WriteUInt32(date);
+	file->WriteUInt32(m_tUtcLastModified);
+
 	// hashset
 	file->WriteHash16(m_abyFileHash);
 	UINT parts = hashlist.GetCount();
 	file->WriteUInt16(parts);
 	for (UINT i = 0; i < parts; i++)
 		file->WriteHash16(hashlist[i]);
-	//tags
-	const int iFixedTags = 8 + (m_uMetaDataVer > 0 ? 1 : 0);
-	uint32 tagcount = iFixedTags;
-	// Float meta tags are currently not written. All older eMule versions < 0.28a have 
-	// a bug in the meta tag reading+writing code. To achive maximum backward 
-	// compatibility for met files with older eMule versions we just don't write float 
-	// tags. This is OK, because we (eMule) do not use float tags. The only float tags 
-	// we may have to handle is the '# Sent' tag from the Hybrid, which is pretty 
-	// useless but may be received from us via the servers.
-	// 
-	// The code for writing the float tags SHOULD BE ENABLED in SOME MONTHS (after most 
-	// people are using the newer eMule versions which do not write broken float tags).	
-	for (int j = 0; j < taglist.GetCount(); j++){
-		if (taglist[j]->tag.type == 2 || taglist[j]->tag.type == 3)
-			tagcount++;
-	}
-	// standard tags
-	file->WriteUInt32(tagcount);
-	
+
+	uint32 uTagCount = 0;
+	ULONG uTagCountFilePos = (ULONG)file->GetPosition();
+	file->WriteUInt32(uTagCount);
+
+#ifdef _UNICODE
+	if (WriteOptED2KUTF8Tag(file, GetFileName(), FT_FILENAME))
+		uTagCount++;
+#endif
 	CTag nametag(FT_FILENAME, GetFileName());
 	nametag.WriteTagToFile(file);
+	uTagCount++;
 	
 	CTag sizetag(FT_FILESIZE, m_nFileSize);
 	sizetag.WriteTagToFile(file);
+	uTagCount++;
 	
 	// statistic
-	CTag attag1(FT_ATTRANSFERED, (uint32)statistic.alltimetransferred);
-	attag1.WriteTagToFile(file);
-	CTag attag4(FT_ATTRANSFEREDHI, (uint32)(statistic.alltimetransferred >> 32));
-	attag4.WriteTagToFile(file);
+	if (statistic.alltimetransferred){
+		CTag attag1(FT_ATTRANSFERED, (uint32)statistic.alltimetransferred);
+		attag1.WriteTagToFile(file);
+		uTagCount++;
+		
+		CTag attag4(FT_ATTRANSFEREDHI, (uint32)(statistic.alltimetransferred >> 32));
+		attag4.WriteTagToFile(file);
+		uTagCount++;
+	}
 
-	CTag attag2(FT_ATREQUESTED, statistic.GetAllTimeRequests());
-	attag2.WriteTagToFile(file);
+	if (statistic.GetAllTimeRequests()){
+		CTag attag2(FT_ATREQUESTED, statistic.GetAllTimeRequests());
+		attag2.WriteTagToFile(file);
+		uTagCount++;
+	}
 	
-	CTag attag3(FT_ATACCEPTED, statistic.GetAllTimeAccepts());
-	attag3.WriteTagToFile(file);
+	if (statistic.GetAllTimeAccepts()){
+		CTag attag3(FT_ATACCEPTED, statistic.GetAllTimeAccepts());
+		attag3.WriteTagToFile(file);
+		uTagCount++;
+	}
 
 	// priority N permission
 	CTag priotag(FT_ULPRIORITY, IsAutoUpPriority() ? PR_AUTO : m_iUpPriority);
 	priotag.WriteTagToFile(file);
+	uTagCount++;
 
-	CTag kadLastPubSrc(FT_KADLASTPUBLISHSRC, m_lastPublishTimeKadSrc);
-	kadLastPubSrc.WriteTagToFile(file);
+	if (m_lastPublishTimeKadSrc){
+		CTag kadLastPubSrc(FT_KADLASTPUBLISHSRC, m_lastPublishTimeKadSrc);
+		kadLastPubSrc.WriteTagToFile(file);
+		uTagCount++;
+	}
 
 	if (m_uMetaDataVer > 0)
 	{
@@ -807,13 +906,21 @@ bool CKnownFile::WriteToFile(CFileDataIO* file){
 		uint32 uFlags = m_uMetaDataVer & 0x0F;
 		CTag tagFlags(FT_FLAGS, uFlags);
 		tagFlags.WriteTagToFile(file);
+		uTagCount++;
 	}
 
 	//other tags
 	for (int j = 0; j < taglist.GetCount(); j++){
-		if (taglist[j]->tag.type == 2 || taglist[j]->tag.type == 3)
+		if (taglist[j]->tag.type == 2 || taglist[j]->tag.type == 3){
 			taglist[j]->WriteTagToFile(file);
+			uTagCount++;
+		}
 	}
+
+	file->Seek(uTagCountFilePos, CFile::begin);
+	file->WriteUInt32(uTagCount);
+	file->Seek(0, CFile::end);
+
 	return true;
 }
 
@@ -951,7 +1058,7 @@ static void MD4Transform(uint32 Hash[4], uint32 x[16])
   Hash[3] += d;
 }
 
-void CAbstractFile::SetFileName(LPCTSTR pszFileName, bool bReplaceInvalidFileSystemChars)
+void CAbstractFile::SetFileName(LPCTSTR pszFileName, bool bReplaceInvalidFileSystemChars, bool bAutoSetFileType)
 { 
 	m_strFileName = pszFileName;
 	if (bReplaceInvalidFileSystemChars){
@@ -961,14 +1068,37 @@ void CAbstractFile::SetFileName(LPCTSTR pszFileName, bool bReplaceInvalidFileSys
 		m_strFileName.Replace(_T('*'), _T('-'));
 		m_strFileName.Replace(_T(':'), _T('-'));
 		m_strFileName.Replace(_T('?'), _T('-'));
+		m_strFileName.Replace(_T('\"'), _T('-'));
+		m_strFileName.Replace(_T('\\'), _T('-'));
+		m_strFileName.Replace(_T('|'), _T('-'));
 	}
-	SetFileType(GetFiletypeByName(m_strFileName));
+	if (bAutoSetFileType)
+		SetFileType(GetFileTypeByName(m_strFileName));
 } 
       
-void CAbstractFile::SetFileType(LPCTSTR pszFileType)
+void CAbstractFile::SetFileType(LPCSTR pszFileType)
 { 
 	m_strFileType = pszFileType;
-} 
+}
+
+CString CAbstractFile::GetFileTypeDisplayStr() const
+{
+	CString strFileTypeDisplayStr(GetFileTypeDisplayStrFromED2KFileType(GetFileType()));
+	if (strFileTypeDisplayStr.IsEmpty())
+		strFileTypeDisplayStr = GetFileType();
+	return strFileTypeDisplayStr;
+}
+
+
+void CAbstractFile::SetFileHash(const uchar* pucFileHash)
+{
+	md4cpy(m_abyFileHash, pucFileHash);
+}
+
+bool CAbstractFile::HasNullHash() const
+{
+	return isnulmd4(m_abyFileHash);
+}
 
 uint32 CAbstractFile::GetIntTagValue(uint8 tagname) const
 {
@@ -996,28 +1126,48 @@ uint32 CAbstractFile::GetIntTagValue(LPCSTR tagname) const
 {
 	for (int i = 0; i < taglist.GetSize(); i++){
 		const CTag* pTag = taglist[i];
-		if (pTag->tag.specialtag==0 && pTag->tag.type==3 && stricmp(pTag->tag.tagname, tagname)==0)
+		if (pTag->tag.specialtag==0 && pTag->tag.type==3 && CmpED2KTagName(pTag->tag.tagname, tagname)==0)
 			return pTag->tag.intvalue;
 	}
 	return NULL;
 }
 
-LPCSTR CAbstractFile::GetStrTagValue(uint8 tagname) const
+LPCSTR CAbstractFile::GetStrTagValueA(uint8 tagname) const
 {
 	for (int i = 0; i < taglist.GetSize(); i++){
 		const CTag* pTag = taglist[i];
 		if (pTag->tag.specialtag==tagname && pTag->tag.type==2)
-			return pTag->tag.stringvalue;			
+			return pTag->tag.stringvalue;
 	}
 	return NULL;
 }
 
-LPCSTR CAbstractFile::GetStrTagValue(LPCSTR tagname) const
+LPCSTR CAbstractFile::GetStrTagValueA(LPCSTR tagname) const
 {
 	for (int i = 0; i < taglist.GetSize(); i++){
 		const CTag* pTag = taglist[i];
-		if (pTag->tag.specialtag==0 && pTag->tag.type==2 && stricmp(pTag->tag.tagname, tagname)==0)
+		if (pTag->tag.specialtag==0 && pTag->tag.type==2 && CmpED2KTagName(pTag->tag.tagname, tagname)==0)
 			return pTag->tag.stringvalue;
+	}
+	return NULL;
+}
+
+CString CAbstractFile::GetStrTagValue(uint8 tagname) const
+{
+	for (int i = 0; i < taglist.GetSize(); i++){
+		const CTag* pTag = taglist[i];
+		if (pTag->tag.specialtag==tagname && pTag->tag.type==2)
+			return pTag->GetStr();
+	}
+	return NULL;
+}
+
+CString CAbstractFile::GetStrTagValue(LPCSTR tagname) const
+{
+	for (int i = 0; i < taglist.GetSize(); i++){
+		const CTag* pTag = taglist[i];
+		if (pTag->tag.specialtag==0 && pTag->tag.type==2 && CmpED2KTagName(pTag->tag.tagname, tagname)==0)
+			return pTag->GetStr();
 	}
 	return NULL;
 }
@@ -1036,7 +1186,7 @@ CTag* CAbstractFile::GetTag(LPCSTR tagname, uint8 tagtype) const
 {
 	for (int i = 0; i < taglist.GetSize(); i++){
 		CTag* pTag = taglist[i];
-		if (pTag->tag.specialtag==0 && pTag->tag.type==tagtype && stricmp(pTag->tag.tagname, tagname)==0)
+		if (pTag->tag.specialtag==0 && pTag->tag.type==tagtype && CmpED2KTagName(pTag->tag.tagname, tagname)==0)
 			return pTag;
 	}
 	return NULL;
@@ -1056,7 +1206,7 @@ CTag* CAbstractFile::GetTag(LPCSTR tagname) const
 {
 	for (int i = 0; i < taglist.GetSize(); i++){
 		CTag* pTag = taglist[i];
-		if (pTag->tag.specialtag==0 && stricmp(pTag->tag.tagname, tagname)==0)
+		if (pTag->tag.specialtag==0 && CmpED2KTagName(pTag->tag.tagname, tagname)==0)
 			return pTag;
 	}
 	return NULL;
@@ -1067,7 +1217,7 @@ void CAbstractFile::AddTagUnique(CTag* pTag)
 	for (int i = 0; i < taglist.GetSize(); i++){
 		const CTag* pCurTag = taglist[i];
 		if ( (   (pCurTag->tag.specialtag!=0 && pCurTag->tag.specialtag==pTag->tag.specialtag)
-			  || (pCurTag->tag.tagname!=NULL && pTag->tag.tagname!=NULL && stricmp(pCurTag->tag.tagname, pTag->tag.tagname)==0)
+			  || (pCurTag->tag.tagname!=NULL && pTag->tag.tagname!=NULL && CmpED2KTagName(pCurTag->tag.tagname, pTag->tag.tagname)==0)
 			 )
 			 && pCurTag->tag.type == pTag->tag.type){
 			delete pCurTag;
@@ -1094,6 +1244,8 @@ Packet*	CKnownFile::CreateSrcInfoPacket(CUpDownClient* forClient) const
 		const CUpDownClient *cur_src = m_ClientUploadList.GetNext(pos);
 		if(cur_src->HasLowID() || cur_src == forClient || !(cur_src->GetUploadState() == US_UPLOADING || cur_src->GetUploadState() == US_ONUPLOADQUEUE))
 			continue;
+		if (!cur_src->IsEd2kClient())
+			continue;
 
 		bool bNeeded = false;
 		uint8* rcvstatus = forClient->GetUpPartStatus();
@@ -1118,7 +1270,7 @@ Packet*	CKnownFile::CreateSrcInfoPacket(CUpDownClient* forClient) const
 				{
 					// should never happen
 					if (thePrefs.GetVerbose())
-						DEBUG_ONLY(AddDebugLogLine(false,"*** %s - found source (%s) with wrong partcount (%u) attached to file \"%s\" (partcount=%u)", __FUNCTION__, cur_src->DbgGetClientInfo(), cur_src->GetUpPartCount(), GetFileName(), GetPartCount()));
+						DEBUG_ONLY(AddDebugLogLine(false,_T("*** %hs - found source (%s) with wrong partcount (%u) attached to file \"%s\" (partcount=%u)"), __FUNCTION__, cur_src->DbgGetClientInfo(), cur_src->GetUpPartCount(), GetFileName(), GetPartCount()));
 				}
 			}
 			else
@@ -1181,63 +1333,57 @@ Packet*	CKnownFile::CreateSrcInfoPacket(CUpDownClient* forClient) const
 	if ( result->size > 354 )
 		result->PackPacket();
 	if (thePrefs.GetDebugSourceExchange())
-		AddDebugLogLine( false, "Send:Source User(%s) File(%s) Count(%i)", forClient->GetUserName(), GetFileName(), nCount );
+		AddDebugLogLine( false, _T("Send:Source User(%s) File(%s) Count(%i)"), forClient->GetUserName(), GetFileName(), nCount );
 	return result;
 }
 
-//For File Comment // 
-void CKnownFile::LoadComment(){ 
-	char buffer[100]; 
-	char* fullpath = new char[strlen(thePrefs.GetConfigDir())+13]; 
-	sprintf(fullpath,"%sfileinfo.ini",thePrefs.GetConfigDir()); 
-
-	buffer[0] = 0;
-	for (uint16 i = 0;i != 16;i++) 
-		sprintf(buffer,"%s%02X",buffer,m_abyFileHash[i]); 
-
-	CIni ini( fullpath, buffer); 
-	m_strComment = ini.GetString("Comment").Left(50); 
-	m_iRate = ini.GetInt("Rate", 0);//For rate
-	m_bCommentLoaded=true;
-	delete[] fullpath;
-}    
-
-void CKnownFile::SetFileComment(CString strNewComment){ 
-	char buffer[100]; 
-	char* fullpath = new char[strlen(thePrefs.GetConfigDir())+13]; 
-	sprintf(fullpath,"%sfileinfo.ini",thePrefs.GetConfigDir()); 
-	    
-	buffer[0] = 0; 
-	for (uint16 i = 0;i != 16;i++) 
-		sprintf(buffer,"%s%02X",buffer,m_abyFileHash[i]); 
-    
-	CIni ini( fullpath, buffer ); 
-	ini.WriteString ("Comment", strNewComment); 
-	m_strComment = strNewComment;
-	delete[] fullpath;
-   
-	for (POSITION pos = m_ClientUploadList.GetHeadPosition();pos != 0;)
-		m_ClientUploadList.GetNext(pos)->SetCommentDirty();
+void CKnownFile::LoadComment()
+{
+	CIni ini(thePrefs.GetFileCommentsFilePath(), md4str(GetFileHash()));
+	m_strComment = ini.GetString(_T("Comment")).Left(MAXFILECOMMENTLEN);
+	m_iRate = ini.GetInt(_T("Rate"), 0);
+	m_bCommentLoaded = true;
 }
 
-// For File rate 
-void CKnownFile::SetFileRate(uint8 iNewRate){
-	char buffer[100]; 
-	char* fullpath = new char[strlen(thePrefs.GetConfigDir())+13]; 
-	sprintf(fullpath,"%sfileinfo.ini",thePrefs.GetConfigDir()); 
-	    
-	buffer[0] = 0; 
-	for (uint16 i = 0;i != 16;i++) 
-		sprintf(buffer,"%s%02X",buffer,m_abyFileHash[i]); 
+const CString& CKnownFile::GetFileComment() /*const*/
+{
+	if (!m_bCommentLoaded)
+		LoadComment();
+	return m_strComment;
+}
 
-	CIni ini( fullpath, buffer ); 
-	ini.WriteInt ("Rate", iNewRate); 
-	m_iRate = iNewRate; 
-	delete[] fullpath;
+void CKnownFile::SetFileComment(LPCTSTR pszComment)
+{
+	if (m_strComment.Compare(pszComment) != 0)
+	{
+		CIni ini(thePrefs.GetFileCommentsFilePath(), md4str(GetFileHash()));
+		ini.WriteString(_T("Comment"), pszComment);
+		m_strComment = pszComment;
 
-	for (POSITION pos = m_ClientUploadList.GetHeadPosition();pos != 0;)
-		m_ClientUploadList.GetNext(pos)->SetCommentDirty();
-} 
+		for (POSITION pos = m_ClientUploadList.GetHeadPosition();pos != 0;)
+			m_ClientUploadList.GetNext(pos)->SetCommentDirty();
+	}
+}
+
+uint8 CKnownFile::GetFileRate() /*const*/
+{
+	if (!m_bCommentLoaded)
+		LoadComment();
+	return m_iRate;
+}
+
+void CKnownFile::SetFileRate(uint8 uRate)
+{
+	if (m_iRate != uRate)
+	{
+		CIni ini(thePrefs.GetFileCommentsFilePath(), md4str(GetFileHash()));
+		ini.WriteInt(_T("Rate"), uRate);
+		m_iRate = uRate;
+
+		for (POSITION pos = m_ClientUploadList.GetHeadPosition();pos != 0;)
+			m_ClientUploadList.GetNext(pos)->SetCommentDirty();
+	}
+}
 
 void CKnownFile::UpdateAutoUpPriority(){
 	if( !IsAutoUpPriority() )
@@ -1285,6 +1431,23 @@ void SecToTimeLength(unsigned long ulSec, CStringA& rstrTimeLength)
 		UINT uMin = ulSec/60;
 		UINT uSec = ulSec - uMin*60;
 		rstrTimeLength.Format("%u:%02u", uMin, uSec);
+	}
+}
+
+void SecToTimeLength(unsigned long ulSec, CStringW& rstrTimeLength)
+{
+	// this function creates the content for the "length" ed2k meta tag which was introduced by eDonkeyHybrid 
+	// with the data type 'string' :/  to save some bytes we do not format the duration with leading zeros
+	if (ulSec >= 3600){
+		UINT uHours = ulSec/3600;
+		UINT uMin = (ulSec - uHours*3600)/60;
+		UINT uSec = ulSec - uHours*3600 - uMin*60;
+		rstrTimeLength.Format(L"%u:%02u:%02u", uHours, uMin, uSec);
+	}
+	else{
+		UINT uMin = ulSec/60;
+		UINT uSec = ulSec - uMin*60;
+		rstrTimeLength.Format(L"%u:%02u", uMin, uSec);
 	}
 }
 
@@ -1344,8 +1507,9 @@ void CKnownFile::UpdateMetaDataTags()
 		_tmakepath(szFullPath, NULL, GetPath(), GetFileName(), NULL);
 
 		try{
+			USES_CONVERSION;
 			ID3_Tag myTag;
-			myTag.Link(szFullPath);
+			myTag.Link(T2A(szFullPath));
 
 			const Mp3_Headerinfo* mp3info;
 			mp3info = myTag.GetMp3HeaderInfo();
@@ -1431,142 +1595,149 @@ void CKnownFile::UpdateMetaDataTags()
 		EED2KFileType eFileType = GetED2KFileTypeID(GetFileName());
 		if ((eFileType == ED2KFT_AUDIO || eFileType == ED2KFT_VIDEO) && GetFileSize() >= 32768)
 		{
-			TCHAR szFullPath[MAX_PATH];
-			_tmakepath(szFullPath, NULL, GetPath(), GetFileName(), NULL);
-			try{
-				CComPtr<IMediaDet> pMediaDet;
-				HRESULT hr = pMediaDet.CoCreateInstance(__uuidof(MediaDet));
-				if (SUCCEEDED(hr))
-				{
-					USES_CONVERSION;
-					if (SUCCEEDED(hr = pMediaDet->put_Filename(CComBSTR(T2W(szFullPath)))))
+			// Avoid processing of some file types which are known to crash due to bugged DirectShow filters.
+			TCHAR szExt[_MAX_EXT];
+			_tsplitpath(GetFileName(), NULL, NULL, NULL, szExt);
+			_tcslwr(szExt);
+			if (_tcscmp(szExt, _T(".ogm"))!=0 && _tcscmp(szExt, _T(".ogg"))!=0 && _tcscmp(szExt, _T(".mkv"))!=0)
+			{
+				TCHAR szFullPath[MAX_PATH];
+				_tmakepath(szFullPath, NULL, GetPath(), GetFileName(), NULL);
+				try{
+					CComPtr<IMediaDet> pMediaDet;
+					HRESULT hr = pMediaDet.CoCreateInstance(__uuidof(MediaDet));
+					if (SUCCEEDED(hr))
 					{
-						// Get the first audio/video streams
-						long lAudioStream = -1;
-						long lVideoStream = -1;
-						double fVideoStreamLengthSec = 0.0;
-						DWORD dwVideoBitRate = 0;
-						DWORD dwVideoCodec = 0;
-						double fAudioStreamLengthSec = 0.0;
-						DWORD dwAudioBitRate = 0;
-						//DWORD dwAudioCodec = 0;
-						long lStreams;
-						if (SUCCEEDED(hr = pMediaDet->get_OutputStreams(&lStreams)))
+						USES_CONVERSION;
+						if (SUCCEEDED(hr = pMediaDet->put_Filename(CComBSTR(T2W(szFullPath)))))
 						{
-							for (long i = 0; i < lStreams; i++)
+							// Get the first audio/video streams
+							long lAudioStream = -1;
+							long lVideoStream = -1;
+							double fVideoStreamLengthSec = 0.0;
+							DWORD dwVideoBitRate = 0;
+							DWORD dwVideoCodec = 0;
+							double fAudioStreamLengthSec = 0.0;
+							DWORD dwAudioBitRate = 0;
+							//DWORD dwAudioCodec = 0;
+							long lStreams;
+							if (SUCCEEDED(hr = pMediaDet->get_OutputStreams(&lStreams)))
 							{
-								if (SUCCEEDED(hr = pMediaDet->put_CurrentStream(i)))
+								for (long i = 0; i < lStreams; i++)
 								{
-									GUID major_type;
-									if (SUCCEEDED(hr = pMediaDet->get_StreamType(&major_type)))
+									if (SUCCEEDED(hr = pMediaDet->put_CurrentStream(i)))
 									{
-										if (major_type == MEDIATYPE_Video)
+										GUID major_type;
+										if (SUCCEEDED(hr = pMediaDet->get_StreamType(&major_type)))
 										{
-											if (lVideoStream == -1){
-												lVideoStream = i;
-												pMediaDet->get_StreamLength(&fVideoStreamLengthSec);
+											if (major_type == MEDIATYPE_Video)
+											{
+												if (lVideoStream == -1){
+													lVideoStream = i;
+													pMediaDet->get_StreamLength(&fVideoStreamLengthSec);
 
-												AM_MEDIA_TYPE mt = {0};
-												if (SUCCEEDED(hr = pMediaDet->get_StreamMediaType(&mt))){
-													if (mt.formattype == FORMAT_VideoInfo){
-														VIDEOINFOHEADER* pVIH = (VIDEOINFOHEADER*)mt.pbFormat;
-														// do not use that 'dwBitRate', whatever this number is, it's not
-														// the bitrate of the encoded video stream. seems to be the bitrate
-														// of the uncompressed stream divided by 2 !??
-														//dwVideoBitRate = pVIH->dwBitRate / 1000;
+													AM_MEDIA_TYPE mt = {0};
+													if (SUCCEEDED(hr = pMediaDet->get_StreamMediaType(&mt))){
+														if (mt.formattype == FORMAT_VideoInfo){
+															VIDEOINFOHEADER* pVIH = (VIDEOINFOHEADER*)mt.pbFormat;
+															// do not use that 'dwBitRate', whatever this number is, it's not
+															// the bitrate of the encoded video stream. seems to be the bitrate
+															// of the uncompressed stream divided by 2 !??
+															//dwVideoBitRate = pVIH->dwBitRate / 1000;
 
-														// for AVI files this gives that used codec
-														// for MPEG(1) files this just gives "Y41P"
-														dwVideoCodec = pVIH->bmiHeader.biCompression;
+															// for AVI files this gives that used codec
+															// for MPEG(1) files this just gives "Y41P"
+															dwVideoCodec = pVIH->bmiHeader.biCompression;
+														}
 													}
+
+													if (mt.pUnk != NULL)
+														mt.pUnk->Release();
+													if (mt.pbFormat != NULL)
+														CoTaskMemFree(mt.pbFormat);
 												}
-
-												if (mt.pUnk != NULL)
-													mt.pUnk->Release();
-												if (mt.pbFormat != NULL)
-													CoTaskMemFree(mt.pbFormat);
 											}
-										}
-										else if (major_type == MEDIATYPE_Audio)
-										{
-											if (lAudioStream == -1){
-												lAudioStream = i;
-												pMediaDet->get_StreamLength(&fAudioStreamLengthSec);
+											else if (major_type == MEDIATYPE_Audio)
+											{
+												if (lAudioStream == -1){
+													lAudioStream = i;
+													pMediaDet->get_StreamLength(&fAudioStreamLengthSec);
 
-												AM_MEDIA_TYPE mt = {0};
-												if (SUCCEEDED(hr = pMediaDet->get_StreamMediaType(&mt))){
-													if (mt.formattype == FORMAT_WaveFormatEx){
-														WAVEFORMATEX* wfx = (WAVEFORMATEX*)mt.pbFormat;
-														dwAudioBitRate = ((wfx->nAvgBytesPerSec * 8.0) + 500.0) / 1000.0;
+													AM_MEDIA_TYPE mt = {0};
+													if (SUCCEEDED(hr = pMediaDet->get_StreamMediaType(&mt))){
+														if (mt.formattype == FORMAT_WaveFormatEx){
+															WAVEFORMATEX* wfx = (WAVEFORMATEX*)mt.pbFormat;
+															dwAudioBitRate = ((wfx->nAvgBytesPerSec * 8.0) + 500.0) / 1000.0;
+														}
 													}
+
+													if (mt.pUnk != NULL)
+														mt.pUnk->Release();
+													if (mt.pbFormat != NULL)
+														CoTaskMemFree(mt.pbFormat);
 												}
-
-												if (mt.pUnk != NULL)
-													mt.pUnk->Release();
-												if (mt.pbFormat != NULL)
-													CoTaskMemFree(mt.pbFormat);
 											}
-										}
-										else{
-											TRACE("%s - Unknown stream type\n", GetFileName());
-										}
+											else{
+												TRACE("%s - Unknown stream type\n", GetFileName());
+											}
 
-										if (lVideoStream != -1 && lAudioStream != -1)
-											break;
+											if (lVideoStream != -1 && lAudioStream != -1)
+												break;
+										}
 									}
 								}
 							}
-						}
 
-						uint32 uLengthSec = 0.0;
-						CStringA strCodec;
-						uint32 uBitrate = 0;
-						if (fVideoStreamLengthSec > 0.0){
-							uLengthSec = fVideoStreamLengthSec;
-							if (dwVideoCodec == BI_RGB)
-								strCodec = "rgb";
-							else if (dwVideoCodec == BI_RLE8)
-								strCodec = "rle8";
-							else if (dwVideoCodec == BI_RLE4)
-								strCodec = "rle4";
-							else if (dwVideoCodec == BI_BITFIELDS)
-								strCodec = "bitfields";
-							else{
-								memcpy(strCodec.GetBuffer(4), &dwVideoCodec, 4);
-								strCodec.ReleaseBuffer(4);
-								strCodec.MakeLower();
+							uint32 uLengthSec = 0.0;
+							CStringA strCodec;
+							uint32 uBitrate = 0;
+							if (fVideoStreamLengthSec > 0.0){
+								uLengthSec = fVideoStreamLengthSec;
+								if (dwVideoCodec == BI_RGB)
+									strCodec = "rgb";
+								else if (dwVideoCodec == BI_RLE8)
+									strCodec = "rle8";
+								else if (dwVideoCodec == BI_RLE4)
+									strCodec = "rle4";
+								else if (dwVideoCodec == BI_BITFIELDS)
+									strCodec = "bitfields";
+								else{
+									memcpy(strCodec.GetBuffer(4), &dwVideoCodec, 4);
+									strCodec.ReleaseBuffer(4);
+									strCodec.MakeLower();
+								}
+								uBitrate = dwVideoBitRate;
 							}
-							uBitrate = dwVideoBitRate;
-						}
-						else if (fAudioStreamLengthSec > 0.0){
-							uLengthSec = fAudioStreamLengthSec;
-							uBitrate = dwAudioBitRate;
-						}
+							else if (fAudioStreamLengthSec > 0.0){
+								uLengthSec = fAudioStreamLengthSec;
+								uBitrate = dwAudioBitRate;
+							}
 
-						if (uLengthSec){
-							CTag* pTag = new CTag(FT_MEDIA_LENGTH, (uint32)uLengthSec);
-							AddTagUnique(pTag);
-							m_uMetaDataVer = META_DATA_VER;
-						}
+							if (uLengthSec){
+								CTag* pTag = new CTag(FT_MEDIA_LENGTH, (uint32)uLengthSec);
+								AddTagUnique(pTag);
+								m_uMetaDataVer = META_DATA_VER;
+							}
 
-						if (!strCodec.IsEmpty()){
-							CTag* pTag = new CTag(FT_MEDIA_CODEC, strCodec);
-							AddTagUnique(pTag);
-							m_uMetaDataVer = META_DATA_VER;
-						}
+							if (!strCodec.IsEmpty()){
+								CTag* pTag = new CTag(FT_MEDIA_CODEC, strCodec);
+								AddTagUnique(pTag);
+								m_uMetaDataVer = META_DATA_VER;
+							}
 
-						if (uBitrate){
-							CTag* pTag = new CTag(FT_MEDIA_BITRATE, (uint32)uBitrate);
-							AddTagUnique(pTag);
-							m_uMetaDataVer = META_DATA_VER;
+							if (uBitrate){
+								CTag* pTag = new CTag(FT_MEDIA_BITRATE, (uint32)uBitrate);
+								AddTagUnique(pTag);
+								m_uMetaDataVer = META_DATA_VER;
+							}
 						}
 					}
 				}
-			}
-			catch(...){
-				if (thePrefs.GetVerbose())
-					AddDebugLogLine(false, _T("Unhandled exception while extracting meta data (MediaDet) from \"%s\""), szFullPath);
-				ASSERT(0);
+				catch(...){
+					if (thePrefs.GetVerbose())
+						AddDebugLogLine(false, _T("Unhandled exception while extracting meta data (MediaDet) from \"%s\""), szFullPath);
+					ASSERT(0);
+				}
 			}
 		}
 	}
@@ -1629,7 +1800,7 @@ void CKnownFile::GrabbingFinished(CxImage** imgResults, uint8 nFramesGrabbed, vo
 	else{
 		//probably a client which got deleted while grabbing the frames for some reason
 		if (thePrefs.GetVerbose())
-			AddDebugLogLine(false, "Couldn't find Sender of FrameGrabbing Request");
+			AddDebugLogLine(false, _T("Couldn't find Sender of FrameGrabbing Request"));
 	}
 	//cleanup
 	for (int i = 0; i != nFramesGrabbed; i++){

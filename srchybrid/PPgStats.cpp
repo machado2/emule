@@ -21,6 +21,7 @@
 #include "emuledlg.h"
 #include "Preferences.h"
 #include "StatisticsDlg.h"
+#include "HelpIDs.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -37,6 +38,7 @@ BEGIN_MESSAGE_MAP(CPPgStats, CPropertyPage)
     ON_MESSAGE(CPN_SELCHANGE, OnColorPopupSelChange)
 	ON_CBN_SELCHANGE(IDC_CRATIO, OnCbnSelchangeCRatio)
 	ON_EN_CHANGE(IDC_CGRAPHSCALE, OnEnChangeCGraphScale)
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 CPPgStats::CPPgStats()
@@ -122,7 +124,7 @@ BOOL CPPgStats::OnApply()
 
 		TCHAR buffer[20];
 		GetDlgItem(IDC_CGRAPHSCALE)->GetWindowText(buffer, ARRSIZE(buffer));
-		int statsMax = atoi(buffer);
+		int statsMax = _tstoi(buffer);
 		if (statsMax > thePrefs.GetMaxConnections() + 5)
 		{
 			if (thePrefs.GetStatsMax() != thePrefs.GetMaxConnections() + 5){
@@ -260,5 +262,26 @@ LONG CPPgStats::OnColorPopupSelChange(UINT /*lParam*/, LONG /*wParam*/)
 		thePrefs.SetStatsColor(m_colors.GetCurSel(), setcolor);
 		SetModified(TRUE);
 	}
+	return TRUE;
+}
+
+void CPPgStats::OnHelp()
+{
+	theApp.ShowHelp(eMule_FAQ_Preferences_Statistics);
+}
+
+BOOL CPPgStats::OnCommand(WPARAM wParam, LPARAM lParam)
+{
+	if (wParam == ID_HELP)
+	{
+		OnHelp();
+		return TRUE;
+	}
+	return __super::OnCommand(wParam, lParam);
+}
+
+BOOL CPPgStats::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	OnHelp();
 	return TRUE;
 }

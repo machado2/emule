@@ -38,10 +38,19 @@ public:
 	uint32	m_dwHasHash;
 	CString m_strName;
 
-	CUpDownClient* m_LinkedClient;
+    CUpDownClient* GetLinkedClient() const { return m_LinkedClient; };
+    void SetLinkedClient(CUpDownClient* linkedClient);
 
 	void	LoadFromFile(CFileDataIO* file);
 	void	WriteToFile(CFileDataIO* file);
 
 	static const char sm_abyNullHash[16];
+
+    void SetFriendSlot(bool newValue);
+    bool GetFriendSlot() const;
+private:
+    bool HasUserhash();
+    bool m_friendSlot;
+
+	CUpDownClient* m_LinkedClient;
 };

@@ -18,16 +18,18 @@
 
 #define	PARTSIZE			9728000
 
-#define PS_READY			0
-#define PS_EMPTY			1
-#define PS_WAITINGFORHASH	2
-#define PS_HASHING			3
-#define PS_ERROR			4
-#define PS_INSUFFICIENT		5	// SLUGFILLER: checkDiskspace
-#define PS_UNKNOWN			6
-#define PS_PAUSED			7
-#define PS_COMPLETING		8
-#define PS_COMPLETE			9
+enum EPartFileStatus{
+	PS_READY			= 0,
+	PS_EMPTY			= 1,
+	PS_WAITINGFORHASH	= 2,
+	PS_HASHING			= 3,
+	PS_ERROR			= 4,
+	PS_INSUFFICIENT		= 5,	// SLUGFILLER: checkDiskspace
+	PS_UNKNOWN			= 6,
+	PS_PAUSED			= 7,
+	PS_COMPLETING		= 8,
+	PS_COMPLETE			= 9
+};
 
 #define PR_VERYLOW			4 // I Had to change this because it didn't save negative number correctly.. Had to modify the sort function for this change..
 #define PR_LOW				0 //*
@@ -52,6 +54,13 @@
 #define	FILE_COMPLETION_THREAD_FAILED	0x0000
 #define	FILE_COMPLETION_THREAD_SUCCESS	0x0001
 #define	FILE_COMPLETION_THREAD_RENAMED	0x0002
+
+enum EPartFileOp{
+	PFOP_NONE = 0,
+	PFOP_HASHING,
+	PFOP_COPYING,
+	PFOP_UNCOMPRESSING
+};
 
 class CSearchFile;
 class CUpDownClient;
@@ -115,8 +124,16 @@ public:
 	void	GetSizeToTransferAndNeededSpace(uint32& pui32SizeToTransfer, uint32& pui32NeededSpace) const;
 	uint32	GetNeededSpace() const; // SLUGFILLER: checkDiskspace
 
+	// last file modification time (NT's version of UTC), to be used for stats only!
+	CTime	GetCFileDate() const { return CTime(m_tLastModified); }
+	uint32	GetFileDate() const { return m_tLastModified; }
+
+	// file creation time (NT's version of UTC), to be used for stats only!
+	CTime	GetCrCFileDate() const { return CTime(m_tCreated); }
+	uint32	GetCrFileDate() const { return m_tCreated; }
+
 	void	InitializeFromLink(CED2KFileLink* fileLink);
-	bool	CreateFromFile(LPCTSTR directory, LPCTSTR filename) { return false; }// not supported in this class
+	bool	CreateFromFile(LPCTSTR directory, LPCTSTR filename, LPVOID pvProgressParam) {return false;}// not supported in this class
 	bool	LoadFromFile(FILE* file) { return false; }
 	bool	WriteToFile(FILE* file) { return false; }
 	uint32	Process(uint32 reducedownload, uint8 m_icounter);
@@ -133,17 +150,21 @@ public:
 	bool	IsPureGap(uint32 start, uint32 end) const;
 	bool	IsAlreadyRequested(uint32 start, uint32 end) const;
 	bool	IsCorruptedPart(uint16 partnumber) const;
+	uint32	GetTotalGapSizeInRange(uint32 uRangeStart, uint32 uRangeEnd) const;
+	uint32	GetTotalGapSizeInPart(UINT uPart) const;
 	void	UpdateCompletedInfos();
+	void	UpdateCompletedInfos(uint32 uTotalGaps);
 	virtual void	UpdatePartsInfo();
 
 	bool	GetNextRequestedBlock(CUpDownClient* sender, Requested_Block_Struct** newblocks, uint16* count) /*const*/;
 	void	WritePartStatus(CSafeMemFile* file) const;
 	void	WriteCompleteSourcesCount(CSafeMemFile* file) const;
 	void	AddSources(CSafeMemFile* sources,uint32 serverip, uint16 serverport);
-	static bool CanAddSource(uint32 userid, uint16 port, uint32 serverip, uint16 serverport, UINT* pdebug_lowiddropped = NULL);
+	void	AddSource(LPCTSTR pszURL, uint32 nIP);
+	static bool CanAddSource(uint32 userid, uint16 port, uint32 serverip, uint16 serverport, UINT* pdebug_lowiddropped = NULL, bool Ed2kID = true);
 	
-	uint8	GetStatus(bool ignorepause = false) const;
-	void	SetStatus(uint8 in);
+	EPartFileStatus	GetStatus(bool ignorepause = false) const;
+	void	SetStatus(EPartFileStatus in);
 	bool	IsStopped() const { return stopped; }
 	bool	GetCompletionError() const { return m_bCompletionError; }
 	uint32  GetCompletedSize() const { return completedsize; }
@@ -168,10 +189,11 @@ public:
 	int		GetValidSourcesCount() const;
 	bool	IsArchive(bool onlyPreviewable = false) const; // Barry - Also want to preview archives
 	sint32	getTimeRemaining() const;
+	sint32	getTimeRemainingSimple() const;
 	uint32	GetDlActiveTime() const;
 
 	// Barry - Added as replacement for BlockReceived to buffer data before writing to disk
-	uint32	WriteToBuffer(uint32 transize, BYTE *data, uint32 start, uint32 end, Requested_Block_Struct *block);
+	uint32	WriteToBuffer(uint32 transize, const BYTE *data, uint32 start, uint32 end, Requested_Block_Struct *block);
 	void	FlushBuffer(bool forcewait=false);
 	// Barry - This will invert the gap list, up to caller to delete gaps when done
 	// 'Gaps' returned are really the filled areas, and guaranteed to be in order
@@ -247,6 +269,11 @@ public:
 
 	void	PerformFileCompleteEnd(DWORD dwResult);
 
+	void	SetFileOp(EPartFileOp eFileOp);
+	EPartFileOp GetFileOp() const { return m_eFileOp; }
+	void	SetFileOpProgress(UINT uProgress);
+	UINT	GetFileOpProgress() const { return m_uFileOpProgress; }
+
 	uint32	lastsearchtime;
 	uint32	lastsearchtimeKad;
 	uint32	m_iAllocinfo;
@@ -261,6 +288,8 @@ public:
 	bool	m_bLocalSrcReqQueued;
 	bool	srcarevisible;				// used for downloadlistctrl
 	bool	hashsetneeded;
+    bool    AllowSwapForSourceExchange() { return ::GetTickCount()-lastSwapForSourceExchangeTick > 30*1000; } // ZZ:DownloadManager
+    void    SetSwapForSourceExchangeTick() { lastSwapForSourceExchangeTick = ::GetTickCount(); } // ZZ:DownloadManager
 
 #ifdef _DEBUG
 	// Diagnostic Support
@@ -294,7 +323,7 @@ private:
 	bool	m_bCompletionError;
 	uint8	m_iDownPriority;
 	bool	m_bAutoDownPriority;
-	uint8	status;
+	EPartFileStatus	status;
 	bool	newdate;	// indicates if there was a writeaccess to the .part file
 	uint32	lastpurgetime;
 	uint32	m_LastNoNeededCheck;
@@ -321,6 +350,10 @@ private:
 	DWORD	m_dwFileAttributes;
 	time_t	m_tActivated;
 	uint32	m_nDlActiveTime;
+	uint32	m_tLastModified;	// last file modification time (NT's version of UTC), to be used for stats only!
+	uint32	m_tCreated;			// file creation time (NT's version of UTC), to be used for stats only!
+	volatile EPartFileOp m_eFileOp;
+	volatile UINT m_uFileOpProgress;
 
 
 	BOOL 	PerformFileComplete(); // Lord KiRon
@@ -328,4 +361,6 @@ private:
 	static UINT AFX_CDECL AllocateSpaceThread(LPVOID lpParam);
 
 	void	CharFillRange(CString* buffer,uint32 start, uint32 end, char color) const;
+
+    DWORD   lastSwapForSourceExchangeTick; // ZZ:DownloadManaager
 };

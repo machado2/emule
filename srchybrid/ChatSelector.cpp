@@ -20,7 +20,7 @@
 #include "packets.h"
 #include "HTRichEditCtrl.h"
 #include "emuledlg.h"
-#include "UploadQueue.h"
+#include "Statistics.h"
 #include "OtherFunctions.h"
 #include "UpDownClient.h"
 #include "Preferences.h"
@@ -46,7 +46,6 @@ CChatItem::CChatItem()
 {
 	client = NULL;
 	log = NULL;
-	messagepending = NULL;
 	notify = false;
 	history_pos = 0;
 }
@@ -54,7 +53,6 @@ CChatItem::CChatItem()
 CChatItem::~CChatItem()
 {
 	delete log;
-	delete[] messagepending;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -74,9 +72,9 @@ END_MESSAGE_MAP()
 
 CChatSelector::CChatSelector()
 {
-	m_pCloseBtn = NULL;
-	m_pMessageBox = NULL;
-	m_pSendBtn = NULL;
+	m_hwndCloseBtn = NULL;
+	m_hwndMessageBox = NULL;
+	m_hwndSendBtn = NULL;
 	m_lastemptyicon = false;
 	m_blinkstate = false;
 	m_Timer = 0;
@@ -89,12 +87,14 @@ CChatSelector::~CChatSelector()
 
 void CChatSelector::Init()
 {
-	m_pCloseBtn = GetParent()->GetDlgItem(IDC_CCLOSE);
-	m_pCloseBtn->SetParent(this);
-	m_pSendBtn = GetParent()->GetDlgItem(IDC_CSEND);
-	m_pSendBtn->SetParent(this);
-	m_pMessageBox = GetParent()->GetDlgItem(IDC_CMESSAGE);
-	m_pMessageBox->SetParent(this);
+	m_hwndCloseBtn = GetParent()->GetDlgItem(IDC_CCLOSE)->m_hWnd;
+	::SetParent(m_hwndCloseBtn, m_hWnd);
+
+	m_hwndSendBtn = GetParent()->GetDlgItem(IDC_CSEND)->m_hWnd;
+	::SetParent(m_hwndSendBtn, m_hWnd);
+
+	m_hwndMessageBox = GetParent()->GetDlgItem(IDC_CMESSAGE)->m_hWnd;
+	::SetParent(m_hwndMessageBox, m_hWnd);
 
 	ModifyStyle(0, WS_CLIPCHILDREN);
 
@@ -135,7 +135,7 @@ void CChatSelector::UpdateFonts(CFont* pFont)
 
 CChatItem* CChatSelector::StartSession(CUpDownClient* client, bool show)
 {
-	m_pMessageBox->SetFocus();
+	::SetFocus(m_hwndMessageBox);
 	if (GetTabByClient(client) != 0xFFFF){
 		if (show){
 			SetCurSel(GetTabByClient(client));
@@ -157,9 +157,11 @@ CChatItem* CChatSelector::StartSession(CUpDownClient* client, bool show)
 	chatitem->log->SendMessage(EM_SETMARGINS, EC_LEFTMARGIN | EC_RIGHTMARGIN, MAKELONG(3, 3));
 	chatitem->log->SetEventMask(chatitem->log->GetEventMask() | ENM_LINK);
 	chatitem->log->SetFont(&theApp.emuledlg->m_fontHyperText);
+	chatitem->log->SetProfileSkinKey(_T("Chat"));
+	chatitem->log->ApplySkin();
 
 	CTime theTime = CTime::GetCurrentTime();
-	CString sessions = GetResString(IDS_CHAT_START) + client->GetUserName() + CString(_T(" - ")) + theTime.Format(_T("%c"))+ _T("\n");
+	CString sessions = GetResString(IDS_CHAT_START) + client->GetUserName() + CString(_T(" - ")) + theTime.Format(_T("%c")) + _T("\n");
 	chatitem->log->AppendKeyWord(sessions, RGB(255,0,0));
 	client->SetChatState(MS_CHATTING);
 
@@ -270,6 +272,7 @@ void CChatSelector::ProcessMessage(CUpDownClient* sender, char* message)
 
 bool CChatSelector::SendMessage(LPCTSTR message)
 {
+	USES_CONVERSION;
 	CChatItem* ci = GetCurrentChatItem();
 	if (!ci)
 		return false;
@@ -289,21 +292,22 @@ bool CChatSelector::SendMessage(LPCTSTR message)
 		AddTimeStamp(ci);
 	if (ci->client->socket && ci->client->socket->IsConnected())
 	{
-		uint16 mlen = (uint16)strlen(message);
+		CStringA strMsgA(message);
+		uint16 mlen = strMsgA.GetLength();
 		Packet* packet = new Packet(OP_MESSAGE, mlen+2);
 		PokeUInt16(packet->pBuffer, mlen);
-		memcpy(packet->pBuffer + 2, message, mlen);
-		theApp.uploadqueue->AddUpDataOverheadOther(packet->size);
+		memcpy(packet->pBuffer + 2, strMsgA, mlen);
+		theStats.AddUpDataOverheadOther(packet->size);
 		ci->client->socket->SendPacket(packet, true, true);
 
-		ci->log->AppendKeyWord(thePrefs.GetUserNick(), RGB(1,180,20));
+		ci->log->AppendKeyWord(A2CT(thePrefs.GetUserNick()), RGB(1,180,20));
 		ci->log->AppendText(_T(": "));
 		ci->log->AppendText(CString(message) + _T("\n"));
 	}
 	else
 	{
 		ci->log->AppendKeyWord(_T("*** ") + GetResString(IDS_CONNECTING), RGB(255,0,0));
-		ci->messagepending = nstrdup(message);
+		ci->strMessagePendingA = message;
 		ci->client->SetChatState(MS_CONNECTING);
 		ci->client->TryToConnect();
 	}
@@ -312,16 +316,16 @@ bool CChatSelector::SendMessage(LPCTSTR message)
 
 void CChatSelector::ConnectingResult(CUpDownClient* sender, bool success)
 {
+	USES_CONVERSION;
 	CChatItem* ci = GetItemByClient(sender);
 	if (!ci)
 		return;
 
 	ci->client->SetChatState(MS_CHATTING);
 	if (!success){
-		if (ci->messagepending){
+		if (!ci->strMessagePendingA.IsEmpty()){
 			ci->log->AppendKeyWord(_T(" ") + GetResString(IDS_FAILED) + _T("\n"), RGB(255,0,0));
-			delete[] ci->messagepending;
-			ci->messagepending = NULL;
+			ci->strMessagePendingA.Empty();
 		}
 		else{
 			if (thePrefs.GetIRCAddTimestamp())
@@ -329,24 +333,23 @@ void CChatSelector::ConnectingResult(CUpDownClient* sender, bool success)
 			ci->log->AppendKeyWord(GetResString(IDS_CHATDISCONNECTED) + _T("\n"), RGB(255,0,0));
 		}
 	}
-	else if (ci->messagepending){
+	else if (!ci->strMessagePendingA.IsEmpty()){
 		ci->log->AppendKeyWord(_T(" ok\n"), RGB(255,0,0));
 		
-		uint16 mlen = (uint16)strlen(ci->messagepending);
+		uint16 mlen = ci->strMessagePendingA.GetLength();
 		Packet* packet = new Packet(OP_MESSAGE, mlen+2);
 		PokeUInt16(packet->pBuffer, mlen);
-		memcpy(packet->pBuffer + 2, ci->messagepending, mlen);
-		theApp.uploadqueue->AddUpDataOverheadOther(packet->size);
+		memcpy(packet->pBuffer + 2, ci->strMessagePendingA, mlen);
+		theStats.AddUpDataOverheadOther(packet->size);
 		ci->client->socket->SendPacket(packet, true, true);
 
 		if (thePrefs.GetIRCAddTimestamp())
 			AddTimeStamp(ci);
-		ci->log->AppendKeyWord(thePrefs.GetUserNick(), RGB(1,180,20));
+		ci->log->AppendKeyWord(A2CT(thePrefs.GetUserNick()), RGB(1,180,20));
 		ci->log->AppendText(_T(": "));
-		ci->log->AppendText(CString(ci->messagepending) + _T("\n"));
+		ci->log->AppendText(CString(ci->strMessagePendingA) + _T("\n"));
 		
-		delete[] ci->messagepending;
-		ci->messagepending = NULL;
+		ci->strMessagePendingA.Empty();
 	}
 	else{
 		if (thePrefs.GetIRCAddTimestamp())
@@ -422,7 +425,7 @@ void CChatSelector::ShowChat()
 
 	// show current chat window
 	ci->log->ShowWindow(SW_SHOW);
-	m_pMessageBox->SetFocus();
+	::SetFocus(m_hwndMessageBox);
 
 	TCITEM item;
 	item.mask = TCIF_IMAGE;
@@ -500,9 +503,9 @@ void CChatSelector::EndSession(CUpDownClient* client)
 void CChatSelector::GetChatSize(CRect& rcChat)
 {
 	CRect rcClose, rcSend, rcMessage;
-	m_pCloseBtn->GetWindowRect(&rcClose);
-	m_pSendBtn->GetWindowRect(&rcSend);
-	m_pMessageBox->GetWindowRect(&rcMessage);
+	::GetWindowRect(m_hwndCloseBtn, &rcClose);
+	::GetWindowRect(m_hwndSendBtn, &rcSend);
+	::GetWindowRect(m_hwndMessageBox, &rcMessage);
 
 	int iTop = rcClose.Height() > rcSend.Height() ? rcClose.Height() : rcSend.Height();
 	if (iTop < rcMessage.Height())
@@ -526,19 +529,19 @@ void CChatSelector::OnSize(UINT nType, int cx, int cy)
 	AdjustRect(FALSE, rect);
 
 	CRect rClose;
-	m_pCloseBtn->GetWindowRect(&rClose);
-	m_pCloseBtn->SetWindowPos(NULL, rect.right-7-rClose.Width(), rect.bottom-7-rClose.Height(),
-							  rClose.Width(), rClose.Height(), SWP_NOZORDER);
+	::GetWindowRect(m_hwndCloseBtn, &rClose);
+	::SetWindowPos(m_hwndCloseBtn, NULL, rect.right-7-rClose.Width(), rect.bottom-7-rClose.Height(),
+				   rClose.Width(), rClose.Height(), SWP_NOZORDER);
 	
 	CRect rSend;
-	m_pSendBtn->GetWindowRect(&rSend);
-	m_pSendBtn->SetWindowPos(NULL, rect.right-7-rClose.Width()-7-rSend.Width(), rect.bottom-7-rSend.Height(),
-							 rSend.Width(), rSend.Height(), SWP_NOZORDER);
+	::GetWindowRect(m_hwndSendBtn, &rSend);
+	::SetWindowPos(m_hwndSendBtn, NULL, rect.right-7-rClose.Width()-7-rSend.Width(), rect.bottom-7-rSend.Height(),
+				   rSend.Width(), rSend.Height(), SWP_NOZORDER);
 	
 	CRect rMessage;
-	m_pMessageBox->GetWindowRect(&rMessage);
-	m_pMessageBox->SetWindowPos(NULL, rect.left+7, rect.bottom-9-rMessage.Height(), 
-								rect.right-7-rClose.Width()-7-rSend.Width()-21, rMessage.Height(), SWP_NOZORDER);
+	::GetWindowRect(m_hwndMessageBox, &rMessage);
+	::SetWindowPos(m_hwndMessageBox, NULL, rect.left+7, rect.bottom-9-rMessage.Height(), 
+				   rect.right-7-rClose.Width()-7-rSend.Width()-21, rMessage.Height(), SWP_NOZORDER);
 
 	CRect rcChat;
 	GetChatSize(rcChat);
@@ -560,15 +563,16 @@ void CChatSelector::OnBnClickedCclose()
 void CChatSelector::OnBnClickedCsend()
 {
 	CString strMessage;
-	m_pMessageBox->GetWindowText(strMessage);
+	::GetWindowText(m_hwndMessageBox, strMessage.GetBuffer(MAX_CLIENT_MSG_LEN), MAX_CLIENT_MSG_LEN+1);
+	strMessage.ReleaseBuffer();
 	strMessage.Trim();
 	if (!strMessage.IsEmpty())
 	{
 		if (SendMessage(strMessage))
-			m_pMessageBox->SetWindowText(_T(""));
+			::SetWindowText(m_hwndMessageBox, _T(""));
 	}
 
-	m_pMessageBox->SetFocus();
+	::SetFocus(m_hwndMessageBox);
 }
 
 BOOL CChatSelector::PreTranslateMessage(MSG* pMsg)
@@ -576,11 +580,11 @@ BOOL CChatSelector::PreTranslateMessage(MSG* pMsg)
 	if (pMsg->message == WM_KEYDOWN)
 	{
 		if (pMsg->wParam == VK_RETURN){
-			if (pMsg->hwnd == m_pMessageBox->m_hWnd)
+			if (pMsg->hwnd == m_hwndMessageBox)
 				OnBnClickedCsend();
 		}
 
-		if (pMsg->hwnd == m_pMessageBox->m_hWnd && (pMsg->wParam == VK_UP || pMsg->wParam == VK_DOWN)){
+		if (pMsg->hwnd == m_hwndMessageBox && (pMsg->wParam == VK_UP || pMsg->wParam == VK_DOWN)){
 			theApp.emuledlg->chatwnd->ScrollHistory(pMsg->wParam == VK_DOWN);
 			return TRUE;
 		}
@@ -592,13 +596,13 @@ void CChatSelector::Localize(void)
 {
 	if (m_hWnd)
 	{
-		if (m_pSendBtn)
-			m_pSendBtn->SetWindowText(GetResString(IDS_CW_SEND));
+		if (m_hwndSendBtn)
+			::SetWindowText(m_hwndSendBtn, GetResString(IDS_CW_SEND));
 		else
 			GetParent()->GetDlgItem(IDC_CSEND)->SetWindowText(GetResString(IDS_CW_SEND));
 
-		if (m_pCloseBtn)
-			m_pCloseBtn->SetWindowText(GetResString(IDS_CW_CLOSE));
+		if (m_hwndCloseBtn)
+			::SetWindowText(m_hwndCloseBtn, GetResString(IDS_CW_CLOSE));
 		else
 			GetParent()->GetDlgItem(IDC_CCLOSE)->SetWindowText(GetResString(IDS_CW_CLOSE));
 	}
