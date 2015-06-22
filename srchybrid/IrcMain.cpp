@@ -137,7 +137,7 @@ void CIrcMain::ProcessLink( CString ed2kLink )
 				pSrv->SetListName(defName.GetBuffer());
 
 				// Barry - Default all new irc servers to high priority
-				if( thePrefs.GetManualHighPrio() )
+				if (thePrefs.GetManualAddedServersHighPriority())
 					pSrv->SetPreference(SRV_PR_HIGH);
 
 				if (!theApp.emuledlg->serverwnd->serverlistctrl.AddServer(pSrv,true)) 

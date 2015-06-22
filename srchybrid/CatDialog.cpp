@@ -57,7 +57,7 @@ CCatDialog::CCatDialog(int index)
 CCatDialog::~CCatDialog()
 {
 	if (m_pacRegExp){
-		m_pacRegExp->SaveList(CString(thePrefs.GetConfigDir()) + _T("\\") REGULAREXPRESSIONS_STRINGS_PROFILE);
+		m_pacRegExp->SaveList(thePrefs.GetConfigDir() + REGULAREXPRESSIONS_STRINGS_PROFILE);
 		m_pacRegExp->Unbind();
 		m_pacRegExp->Release();
 	}
@@ -72,28 +72,21 @@ BOOL CCatDialog::OnInitDialog()
 	m_bCancelled = false;
 
 	if (!thePrefs.IsExtControlsEnabled()) {
-		GetDlgItem(IDC_STATIC_AUTOCAT)->ShowWindow(SW_HIDE);
-		GetDlgItem(IDC_AUTOCATEXT)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_REGEXPR)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_STATIC_REGEXP)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_REGEXP)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_REB)->ShowWindow(SW_HIDE);
 	}
 
-	if (true/*thePrefs.GetUseAutocompletion()*/)
-	{
-		m_pacRegExp = new CCustomAutoComplete();
-		m_pacRegExp->AddRef();
-		if (m_pacRegExp->Bind(::GetDlgItem(m_hWnd, IDC_REGEXP), ACO_UPDOWNKEYDROPSLIST | ACO_AUTOSUGGEST  )) {
-			m_pacRegExp->LoadList(CString(thePrefs.GetConfigDir()) +  _T("\\") REGULAREXPRESSIONS_STRINGS_PROFILE);
-		}
-		if (theApp.m_fontSymbol.m_hObject){
-			GetDlgItem(IDC_REB)->SetFont(&theApp.m_fontSymbol);
-			GetDlgItem(IDC_REB)->SetWindowText(_T("6")); // show a down-arrow
-		}
+	m_pacRegExp = new CCustomAutoComplete();
+	m_pacRegExp->AddRef();
+	if (m_pacRegExp->Bind(::GetDlgItem(m_hWnd, IDC_REGEXP), ACO_UPDOWNKEYDROPSLIST | ACO_AUTOSUGGEST)) {
+		m_pacRegExp->LoadList(thePrefs.GetConfigDir() + REGULAREXPRESSIONS_STRINGS_PROFILE);
 	}
-	else
-		GetDlgItem(IDC_REB)->ShowWindow(SW_HIDE);
+	if (theApp.m_fontSymbol.m_hObject){
+		GetDlgItem(IDC_REB)->SetFont(&theApp.m_fontSymbol);
+		GetDlgItem(IDC_REB)->SetWindowText(_T("6")); // show a down-arrow
+	}
 
 	return TRUE;
 }

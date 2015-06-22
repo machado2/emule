@@ -39,7 +39,7 @@ protected:
 	bool	PacketReceived(Packet* packet);
 
 private:
-	bool	ProcessPacket(char* packet, uint32 size, uint8 opcode);
+	bool	ProcessPacket(const BYTE* packet, uint32 size, uint8 opcode);
 	void	SetConnectionState(sint8 newstate);
 
 	CServerConnect*	serverconnect;

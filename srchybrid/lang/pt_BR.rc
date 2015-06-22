@@ -439,7 +439,7 @@ BEGIN
     IDS_SW_DOWNLOAD         "Baixar Selecionados"
     IDS_SV_SERVERLIST       "Lista de Servidores"
     IDS_SV_SERVERINFO       "Informações do Servidor"
-    IDS_SV_LOG              "Log"
+    IDS_SV_LOG              "Registro"
     IDS_SV_NEWSERVER        "Novo Servidor"
     IDS_SV_ADDRESS          "IP ou Endereço"
     IDS_SV_PORT             "Porta"
@@ -596,7 +596,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Usuário:"
     IDS_CD_UHASH            "Userhash:"
-    IDS_CD_CSOFT            "Software:"
+    IDS_CD_CSOFT            "Software"
     IDS_CD_UIP              "Endereço IP:"
     IDS_CD_SIP              "IP do Servidor:"
     IDS_CD_VERSION          "Versão:"
@@ -746,7 +746,7 @@ BEGIN
     IDS_PW_CON_LIMITFRM     "Limites"
     IDS_PW_FILE_ICH         "I.C.H ativo"
     IDS_STATS_AVGLABEL      "Limite de tempo para o Gráfico: %i min."
-    IDS_GRAPHS              "Estatísticas"
+    IDS_GRAPHS              "Gráficos"
     IDS_STREE               "Estrutura das Estátisticas"
     IDS_IRC_IGNOREQUITMESSAGE "Ignorar mensagens de Saída"
     IDS_STATSSETUPINFO      "Estatísticas"
@@ -784,7 +784,7 @@ BEGIN
     IDS_TBN_DOWNLOADDONE    "Transferido:"
     IDS_TBN_DOWNLOADADDED   "Adicionado para downloads:"
     IDS_PW_TBN_USESOUND     "Usar o som:"
-    IDS_PW_TBN_ONLOG        "Ocorrer novas informações no Log"
+    IDS_PW_TBN_ONLOG        "Ocorrer novas informações no Registro"
     IDS_PW_TBN_ONCHAT       "Iniciar uma nova sessão de Bate-papo"
     IDS_PW_TBN_POP_ALWAYS   "Uma nova mensagem for recebida"
     IDS_PW_TBN_ONDOWNLOAD   "Houver Download Concluído"
@@ -797,7 +797,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_PW_CON_CAPFRM       "Capacidades"
-    IDS_IRC_STATUSLOG       "Status do Log"
+    IDS_IRC_STATUSLOG       "Status do Registro"
     IDS_IRC_STATUS          "Status"
     IDS_IRC_PRIVATECHANSTART "* Iniciada uma sessão de Bate-papo Privativa"
     IDS_IRC_SLAPMSG         "* %s empurrado %s de lado como um joão-ninguém!"
@@ -1124,13 +1124,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Desativar Lista de Usuários Conhecidos (menor uso da CPU)"
     IDS_DISABLEQUEUELIST    "Desabilitar Lista de Filas"
     IDS_USECREDITSYSTEM     "Ativar Sistema de Crédito (Recompensar Uploaders)"
-    IDS_FIRSTAUTODOWN       "Você deseja que o eMule controle as propriedades dos seus downloads?\r\rAtivando esta opção você permitirá que o eMule faça os downloads com muitas fontes não interferindo nos downloads que possuem poucas fontes.\r\rSe você atualizar da versão v0.26 e anteriores, todos os downloads atuais seram optados para o opção de AutoPrioridade por padrão.\rEsta opção terá efeito somente nos downloads futuros. (Padrão Sim)"
-    IDS_FIRSTAUTOUP         "Você deseja que o eMule controle as propriedades dos seus uploads?\r\rAtivando esta opção você permitirá que o eMule impulsione os arquivos raros, dificultando que as pessoas baixem os arquivos populares.\rDesativando esta opção você permitirá que o eMule impulsione os arquivos populares, dificultando que as pessoas baixem os arquivos raros.\r\rSe você atualizar da versão v0.26 e anteriores, todos os Arquivos Compartilhados atuais seram optados para o opção de AutoPrioridade por padrão.\rEsta opção terá efeito somente nos downloads futuros. (Padrão Sim)"
-    IDS_FIRSTCREDITSYSTEM   "Você deseja recompensar as pessoas que fazem upload para você?\r\rIsto é conhecido como Sistema de Créditos. Ativando esta opção você ajudará na luta contra os sugadores (leachers). Se você for um lançador de arquivos, você devera desabilitar esta opção.\r\r(Padrão Sim)"
-    IDS_FIRSTFULLCHUNK      "Você deseja fazer Upload de partes completas?\r\rAtivando as partes completas você dará uma melhor possibilidade de comcluir uma parte. Não utilizar está função ajudará uma mais rápida rotação de sua fila. Se você for um lançador de arquivos, você devera marcar isto.\r\r(Padrão Sim)"
-    IDS_FIRSTSAFECON        "Você deseja que o eMule utilize  a Conexão Segura?\r\rAtivando esta caracteristica você permitirá que o eMule conecte aos Servidores mais rapidamente, mas poderá fazer com que você conecte com ID Baixo.\r\r(Padrão Não)"
+    IDS_FIRSTAUTODOWN       "Habilite esta opção se você quiser que o eMule controle a prioridade de download.\n\nDeixando esta opção ativada você permitirá que o eMule verifique que os downloads com muitas fontes não interferem com os downloads que possuem poucas fontes. Esta opção afetará somente os downloads futuros."
+    IDS_FIRSTAUTOUP         "Habilite esta opção se você quiser que o eMule controle a prioridade de upload.\n\nDeixando esta opção ativada você permitirá que o eMule impulsione os arquivos raros o que significa que os arquivos populares serão mais difíceis para os usuarios iniciarem. Deixando esta opção desativada você permitirá que o eMule envie arquivos mais populares o que significa que arquivos raros serão mais difíceis para os usuarios iniciarem. Esta opção afetará somente os arquivos compartilhados futuramente."
+    IDS_FIRSTCREDITSYSTEM   "Você deseja recompensar os usuarios que permitem upload para você?\n\nIsto é conhecido como sistema de crédito. Deixando esta opção ativada você ajudará na luta de encontro aos leachers. Se você for um releaser dedicado, você deve desligar esta opção."
+    IDS_FIRSTFULLCHUNK      "Habilite esta opção se você deseja enviar pedaços inteiros dos arquivos.\n\nAtivar esta opção dá ao usuario uma possibilidade maior terminar um pedaço do arquivo. Não habilitar esta opção ajudará a girar sua fila mais rápidamente. Se você for um releaser dedicado, você deve ativar esta opção."
+    IDS_FIRSTSAFECON        "Habilite esta opção se você deseja que o eMule conecte-se usando Conexão Segura.\n\nHabilitando esta característica de segurança permitirá que o eMule conecte aos servidores um pouco mais rapidamente, mas poderá causar com que você conecte com uma ID Baixa."
     IDS_FIRSTRUNASSIST      "Você deseja iniciar o Assistente de Configuração?"
-    IDS_FIRSTAUTOCON        "Você deseja que o eMule conecte-se ao iniciar?\r\r(Padrão Não)"
+    IDS_FIRSTAUTOCON        "Habilite esta opção se você deseja que o eMule se conecte ao iniciar."
     IDS_FIRSTCOMPLETE       "Você completou com sucesso o Assistente.\r\rTodos estes ajustes ou outros podem ser alterados clicando no Ícone Preferências. Para maiores informações e suporte verifique a Ajuda pressionando F1 no eMule!"
 END
 
@@ -1140,7 +1140,7 @@ BEGIN
     IDS_STATIC_CPUMEM       "Preservar Uso de CPU &e Memória"
     IDS_KAD_SEARCH_KEYWORD_TOO_SHORT 
                             "Palavra chave muito curta.\r\n\r\nA(s) palavra(s) usadas na busca da rede Kad necessita(m) uma expressão de no minimo de 3 caracteres."
-    IDS_LOG2DISK            "Log"
+    IDS_LOG2DISK            "Registro"
     IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING 
                             "Já existe uma busca na rede Kad por esta palavra chave ""%s"".\r\n\r\nPara buscar novamente por esta palavra chave espere até que a busca por esta palavra chave termine ou feche a aba da busca correspondente."
     IDS_KAD_SEARCH_KEYWORD_INVALID 
@@ -1170,7 +1170,7 @@ BEGIN
     IDS_WEB_REFRESH_COMMENT "Tempo em segundos (zero=desabilitado):"
     IDS_SV_URL              "URL"
     IDS_WS_RELOAD_TMPL      "Recarregar Modelo"
-    IDS_SV_DEBUGLOG         "Log do Debug"
+    IDS_SV_DEBUGLOG         "Registro do Debug"
     IDS_WS_PASS             "Senha"
     IDS_WEB_FILESETTINGS    "Configurações de Arquivos"
     IDS_WS_ERR_LOADTEMPLATE "Não é possivel carregar modelos: substitua o arquivo %s para uma versão mais recente!"
@@ -1326,7 +1326,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problemático"
     IDS_LONGHRS             "Horas"
     IDS_STATS_LARGESTFILE   "Maior arquivo compartilhado"
-    IDS_CLIENTSOFTWARE      "Software"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Parte do arquivo"
     IDS_STATS_DATASOURCE    "Origem dos Dados"
     IDS_STATS_DSFILE        "Arquivo Completo"
@@ -1350,7 +1350,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Copiar todas Estatísticas"
     IDS_STATS_MNUTREEHTML   "Funções HTML"
     IDS_STATS_EXPORT2HTML   "Exportar todas Estatísticas"
-    IDS_STATS_EXPORTVIS     "Exportar todos Visíveis"
     IDS_STATS_MNUTREECPYVIS "Copiar todos Visíveis"
     IDS_STATS_MNUTREEEXPANDALL "Expandir todas Sessões"
     IDS_STATS_MNUTREECOLLAPSEALL "Recolher todas Sessões"
@@ -1404,13 +1403,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Versão"
-    IDS_ALL_A4AF_TO_THIS    "Trocar todas as fontes para este arquivo agora"
     IDS_PASTE               "Colar"
-    IDS_ALL_A4AF_TO_OTHER   "Trocar todas as fontes para qualquer arquivo agora"
-    IDS_ALL_A4AF_AUTO       "Trocar automaticamente todas as fontes A4AF para este arquivo"
-    IDS_SWAP_A4AF_TO_THIS   "Procurar por fontes para este arquivo agora"
-    IDS_SWAP_A4AF_TO_OTHER  "Procurar por fontes para qualquer arquivo agora"
-    IDS_A4AF                "Manipulador de Fontes A4AF"
+    IDS_A4AF                "Manipulador de Fontes"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "Ativar MobileMule"
     IDS_AUTOCAT_LABEL       "Tarefa automatica de Categorias (Padrão, separado por |)"
@@ -1457,7 +1451,7 @@ BEGIN
     IDS_FILEINFORMATION     "Informação do Arquivo"
     IDS_STATS_FREESPACE     "Espaço Livre"
     IDS_IRC_HELPCHANNEL     "Connectar ao canal de ajuda."
-    IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-poruguese"
+    IDS_IRC_HELPCHANNELPERFORM "/join #emule | /join #emule-portuguese"
     IDS_IRC_ACCEPTLINKSFRIENDS "Somente de Amigos."
     IDS_COMPLSOURCES        "Fontes Completas"
     IDS_CHECKNOENDTIME      "sem tempo final"
@@ -1613,7 +1607,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Registrar Identificação Segura"
     IDS_LOG_FILTERED_IPS    "Registrar os IPs filtrados e/ou ignorados"
     IDS_LOG_FILE_SAVING     "Registrar as ações de salvamento de arquivos"
-    IDS_IPFILTERFILES       "Todos arquivos de Filtros de IP (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|Arquivos de Filtros de IP do eMule (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Arquivos do Peer Guardian (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Arquivos de texto (*.txt)|*.txt|Todos arquivos (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "Todos arquivos de filtro de IP (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|Arquivos de filtro de IP do eMule (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Arquivos do Peer Guardian (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Arquivos de Texto (*.txt)|*.txt|Arquivos ZIP (*.zip;*.gz)|*.zip;*.gz|Todos arquivos (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "Você deseja realmente deletar os Filtros de IP selecionados?"
     IDS_TOTAL_IPFILTER_LABEL "Total de Filtros de IP:"
     IDS_TOTAL_IPS_LABEL     "Total de IPs:"
@@ -1703,9 +1697,9 @@ BEGIN
     IDS_NOPORTCHANGEPOSSIBLE 
                             "A mudança de portas não é possível após você conectar com os clientes ou quando conectado a um Servidor/Kad!\n\nReinicie por favor o eMule após ter alterado os ajustes de portas ."
     IDS_NETWORK_INFO        "Informação da Rede"
-    IDS_SP_TOTALUL          "Número total de uploads"
+    IDS_SP_TOTALUL          "Total de uploads"
     IDS_SP_ULFRIENDS        "Slots de amigos enviados"
-    IDS_SP_ULSLOTSNOOVERHEAD "Upload atual excluindo a banda acima do normal (UL somente em Slots)"
+    IDS_SP_ULSLOTSNOOVERHEAD "Upload Atual (excl. banda acima do normal)"
     IDS_ST_ACTIVEU_ZZ       "Uploads ativos"
     IDS_ST_ULCURRENT        "Upload+Banda acima do normal"
     IDS_ST_ULSLOTSNOOVERHEAD "Upload"
@@ -1724,9 +1718,9 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_MAXHALFOPENCONS     "Méia max. de Conexões Abertas"
+    IDS_MAXHALFOPENCONS     "Média max. de Conexões Abertas"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Ativar isto de modo que o eMule funcione quando você iniciar o Windows. [Padrão: Desativado]"
+                            "Ativando esta opção o eMule iniciará quando você iniciar o Windows. (Padrão: Desativado)"
     IDS_KAD_WAITCBK         "Aguardar nova chamada no Kad"
     IDS_KAD_TOOMANDYKADLKPS "Muitas procuras no Kad"
     IDS_PCDS_CLIENTWAIT     "Espera do Cliente"
@@ -1809,7 +1803,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_SPARSEPARTFILES     "Criar novos arquivos part quando escassos (somente NTFS)"
-    IDS_ASPECTRATIO         "Aspect Ratio"
+    IDS_ASPECTRATIO         "Formato de Tela"
     IDS_NEGATEFILTER        "Negar Filtro"
     IDS_SEENCOMPL           "Sempre visualizar arquivos completos"
     IDS_SELSKINPROFILEDIR   "Selecionar Diretório de Perfis"
@@ -1817,34 +1811,119 @@ BEGIN
     IDS_DEADSOURCES         "Fontes mortas"
     IDS_LARGEICONS          "Ícones grandes"
     IDS_SMALLICONS          "Ícones pequenos"
-    IDS_SHORTTAGS           "Tags curtas"
+    IDS_SHORTTAGS           "Etiquetas curtas"
     IDS_THELOAD             "Carregar"
     IDS_PACKSENT            "Pacotes Enviados"
     IDS_RESPONSES           "Respostas"
-    IDS_EXTRACT_META_DATA   "Extract meta data"
-    IDS_META_DATA_MEDIADET  "DirectShow (for all other audio/video files)"
-    IDS_META_DATA_ID3LIB    "ID3 Library (only for MPEG audio files)"
+    IDS_EXTRACT_META_DATA   "Extrair meta data"
+    IDS_META_DATA_MEDIADET  "DirectShow (Para todos os outros arquivos de audio/video)"
+    IDS_META_DATA_ID3LIB    "Biblioteca ID3 (apenas para arquivos de audio MPEG)"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_COMCTRL32_DLL_TOOOLD 
-                            "Windows Common Controls library (COMCTL32.DLL) is too old!\r\n\r\neMule detected a version of the ""Windows Common Controls library (COMCTL32.DLL)"" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the ""Windows Common Controls library (COMCTL32.DLL)"" to at least version 5.8.\r\n\r\nDownload and install an update of the ""Windows Common Controls library (COMCTL32.DLL)"" at Microsoft (R) Download Center. Do you want to visit the corresponding URL?"
-    IDS_ASREGEXPR           "As Regular Expression"
-    IDS_STATIC_REGEXP       "Regular expression for view filter:"
-    IDS_CARE4ALL            "Evaluate All Files"
-    IDS_REGEXPRESSION       "Regular Expression"
-    IDS_SEARCHKAD           "Search Kad"
-    IDS_DWL_IPFILTERFILE    "Downloading IP filter file"
-    IDS_DWLIPFILTERFAILED   "IP filter download failed"
-    IDS_FINDBUDDY           "Find Buddy"
-    IDS_ERR_IPFILTERZIPEXTR "Failed to extract IP filter file from downloaded IP filter ZIP file ""%s""."
+                            "A biblioteca de Controle Comuns do Windows (COMCTL32.DLL) é muito antiga!\r\n\r\nO eMule detectou uma versão da ""biblioteca de Controle Comuns do Windows"" (COMCTL32.DLL) que é muito antiga para ser devidamente utilizada pelo eMule. Para assegurar o funcionamento total do eMule, recomendamos que você atualize a ""biblioteca de Controle Comuns do Windows"" (COMCTL32.DLL)  para a versão 5.8 ou superior.\r\n\r\nBaixe e instale a atualização no centro de downloads da Microsoft(R). Deseja acessar a URL correspondente?"
+    IDS_ASREGEXPR           "Como Expressão Regular"
+    IDS_STATIC_REGEXP       "Expressão Regular para o filtro de visualização:"
+    IDS_CARE4ALL            "Avaliar todos os arquivos"
+    IDS_REGEXPRESSION       "Expressão Regular"
+    IDS_SEARCHKAD           "Pesquisa na rede Kad"
+    IDS_DWL_IPFILTERFILE    "Baixando arquivo de filtro de IP"
+    IDS_DWLIPFILTERFAILED   "Falha no download do filtro de IP"
+    IDS_FINDBUDDY           "Encontrar Amigo"
+    IDS_ERR_IPFILTERZIPEXTR "Falha na extração do arquivo de filtro de IP a partir do arquivo ZIP ""%s"" baixado."
     IDS_ERR_IPFILTERCONTENTERR 
-                            "Downloaded IP filter file ""%s"" is a ZIP file with unexpected content."
-    IDS_STORENOTES          "Store Notes"
-    IDS_NOTES               "Notes"
-    IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
+                            "O arquivo de filtro de IP ""%s"" baixado é um arquivo ZIP com conteúdo inesperado."
+    IDS_STORENOTES          "Guardar Notas"
+    IDS_NOTES               "Notas"
+    IDS_KADSEARCHALREADY    "Uma outra busca está em progresso. Por favor tente mais tarde!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Fechar eMule"
+    IDS_WEB_REBOOT          "Reiniciar o Sistema"
+    IDS_WEB_SHUTDOWNSYSTEM  "Desligar o Sistema"
+    IDS_WEB_ADMINMENU       "Menu de Admin"
+    IDS_WEB_MAIN_CLOSE      "Você realmente deseja finalizar o eMule?"
+    IDS_WEB_MAIN_REBOOT     "Você realmente deseja reiniciar o Sistema?"
+    IDS_WEB_MAIN_SHUTDOWN   "Você realmente deseja desligar o Sistema?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Exibir usuarios banidos na fila"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Exibir amigos na fila"
+    IDS_WEB_SESSIONTIMEOUT  "Esgotado tempo de sessão"
+    IDS_WEB_ALLOWHILEVFUNC  "Permitir fechamento do eMule, reiniciar e desligar"
+    IDS_SETPFSLIMIT         "Limite de Fontes..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Por favor insira um novo limite de fontes para selecionar o(s) arquivo(s) ! \n(Insira 0 para configuração global)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Você deseja que as pastas completas (incoming) incluindo as pastas completas antigas sejam atualizadas agora?"
+    IDS_USESPEECH           "Fale a mensagem de notificação"
+    IDS_CONDTCPACCEPT       "Rejeição de conexão rápida"
+    IDS_TCPIP_CONNS         "Conexões TCP/IP"
+    IDS_ERR_DELFILE         "Falha ao deletar o arquivo ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Você deseja limpar os nomes dos arquivos selecionados?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s parece corrompido e será substituído"
+    IDS_UPLOADING           "Enviando"
+    IDS_CANCELLED           "Cancelado"
+    IDS_PW_REMEMBERDOWNLOADED "Relembrar arquivos baixados"
+    IDS_PW_REMEMBERCANCELLED "Relembrar arquivos cancelados"
+    IDS_AVAILABLEPARTS      "Partes disponíveis"
+    IDS_NOSOUND             "Sem som"
+    IDS_PW_RECEIVERADDRESS  "Endereço recipiente:"
+    IDS_PW_ENABLEEMAIL      "Habilitar notificações por Email"
+    IDS_EMULENOTIFICATION   "Notificações do eMule"
+    IDS_PW_EMAILNOTIFICATIONS "Notificações por Email"
+    IDS_PW_SMTPSERVER       "Servidor SMTP:"
+    IDS_PW_SENDERADDRESS    "Endereço de envio:"
+    IDS_PW_SHOWTRANSTOOLBAR "Exibir a barra de ferramentas adicional na janela de transferência"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Partes compartilhadas"
+    IDS_INCOMING_FILES      "Arquivos completos"
+    IDS_INCOMPLETE_FILES    "Arquivos incompletos"
+    IDS_SHARED_DIRECTORIES  "Diretórios compartilhadas"
+    IDS_SHAREDIR            "Diretório compartilhado"
+    IDS_SHAREDIRSUB         "Compartilhar com subdirectórios"
+    IDS_UNSHAREDIR          "Descompartilhar diretório"
+    IDS_UNSHAREDIRSUB       "Descompartilhar com subdirectórios"
+    IDS_ALLSHAREDFILES      "All Shared Files"
+    IDS_ALLDIRECTORIES      "All Directories"
+    IDS_SEARCHRELATED       "procurar arquivos relacionados"
+    IDS_RELATED             "Relacionado"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Lista de Coleção"
+    IDS_SEARCH_EMULECOLLECTION "Coleção"
+    IDS_COLL_REPLACEEXISTING "Você deseja sobrescrever o arquivo existente?"
+    IDS_COLL_ERR_DELETING   "Ocorreu um erro desconhecido ao excluir um arquivo antigo. Sair sem salva-lo?"
+    IDS_CREATECOLLECTION    "Criar Coleção"
+    IDS_COLL_SIGN           "Registrar Coleção com Nome e Chave"
+    IDS_AUTHOR              "Autor"
+    IDS_AUTHORKEY           "Chave do Autor"
+    IDS_COLL_ADDINCAT       "Adicionar novos downloads em uma Categoria de Coleção"
+    IDS_MODIFYCOLLECTION    "Modificar Coleção"
+    IDS_VIEWCOLLECTION      "Exibir Coleção"
+    IDS_COLL_TEXTFORMAT     "Save collection In A Simple Text Format"
+    IDS_SEARCHAUTHORCOLLECTION "Search Author's Collections"
+    IDS_ERR_DUPL_FILES      "Duplicate shared files: ""%s"" and ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting failed too many times. Disabling Upload SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Done with preparations. Starting control of upload speed. (First 60 seconds will be in fast reaction mode)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Raised upload limit in prefs detected. Going into fast reaction mode for 60 seconds."
+    IDS_USS_STATE_PREPARING "Preparing..."
+    IDS_USS_STATE_WAITING   "Waiting..."
+    IDS_USS_STATE_ERROR     "Error!"
 END
 
 #endif    // Portuguese (Brazil) resources

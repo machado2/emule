@@ -20,13 +20,13 @@
 #include "opcodes.h"
 #include "md5sum.h"
 #include "packets.h"
+#include "searchFile.h"
 #include "searchlist.h"
 #include "Exceptions.h"
 #include "UploadQueue.h"
 #include "DownloadQueue.h"
 #include "Statistics.h"
 #include "MMSocket.h"
-#include "OtherFunctions.h"
 #include "Sockets.h"
 #include "Server.h"
 #include "PartFile.h"
@@ -44,10 +44,6 @@
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
-#endif
-
-#ifndef EWX_FORCEIFHUNG
-#define EWX_FORCEIFHUNG     0x00000010
 #endif
 
 
@@ -179,12 +175,12 @@ void CMMServer::ProcessStatusRequest(CMMSocket* sender, CMMPacket* packet){
 		packet->WriteByte(MMP_STATUSANSWER);
 
 	packet->WriteShort((uint16)theApp.uploadqueue->GetDatarate()/100);
-	packet->WriteShort((uint16)((thePrefs.GetMaxGraphUploadRate()*1024)/100));
+	packet->WriteShort((uint16)((thePrefs.GetMaxGraphUploadRate(true)*1024)/100));
 	packet->WriteShort((uint16)theApp.downloadqueue->GetDatarate()/100);
 	packet->WriteShort((uint16)((thePrefs.GetMaxGraphDownloadRate()*1024)/100));
 	packet->WriteByte((uint8)theApp.downloadqueue->GetDownloadingFileCount());
 	packet->WriteByte((uint8)theApp.downloadqueue->GetPausedFileCount());
-	packet->WriteInt(theStats.sessionReceivedBytes/1048576);
+	packet->WriteInt((uint32)(theStats.sessionReceivedBytes/1048576));
 	packet->WriteShort((uint16)((theStats.GetAvgDownloadRate(0)*1024)/100));
 	if (theApp.serverconnect->IsConnected()){
 		if(theApp.serverconnect->IsLowID())
@@ -414,6 +410,9 @@ void  CMMServer::ProcessSearchRequest(CMMData* data, CMMSocket* sender){
 		case 5:
 			Params.strFileType = ED2KFTSTR_VIDEO;
 			break;
+		case 6:
+			Params.strFileType = ED2KFTSTR_EMULECOLLECTION;
+			break;
 		default:
 			ASSERT ( false );
 			Params.strFileType.Empty();
@@ -458,7 +457,7 @@ void  CMMServer::ProcessSearchRequest(CMMData* data, CMMSocket* sender){
 	m_byPendingCommand = MMT_SEARCH;
 	m_pPendingCommandSocket = sender;
 
-	theApp.searchlist->NewSearch(NULL, Params.strFileType, MMS_SEARCHID, true);
+	theApp.searchlist->NewSearch(NULL, Params.strFileType, MMS_SEARCHID, Params.eType, true);
 	Packet* searchpacket = new Packet(&searchdata);
 	searchpacket->opcode = OP_SEARCHREQUEST;
 	theStats.AddUpDataOverheadServer(searchpacket->size);
@@ -510,7 +509,7 @@ void CMMServer::SearchFinished(bool bTimeOut){
 		CMMPacket* packet = new CMMPacket(MMP_SEARCHANS);
 		packet->m_bSpecialHeader = true;
 		packet->WriteByte(MMT_OK);
-		packet->WriteByte(results);
+		packet->WriteByte((uint8)results);
 		for (int i = 0; i != results; i++){
 			CSearchFile* cur_file = theApp.searchlist->DetachNextFile(MMS_SEARCHID);
 			m_SendSearchList[i] = cur_file;
@@ -714,9 +713,9 @@ void  CMMServer::ProcessStatisticsRequest(CMMData* data, CMMSocket* sender){
 			}
 			nPos++;
 		}
-		packet->WriteInt(ROUND(nAddUp/i));
-		packet->WriteInt(ROUND(nAddDown/i));
-		packet->WriteShort(ROUND(nAddCon/i));
+		packet->WriteInt((uint32)ROUND(nAddUp/i));
+		packet->WriteInt((uint32)ROUND(nAddDown/i));
+		packet->WriteShort((uint16)ROUND(nAddCon/i));
 	}
 	ASSERT ( nPos == nRawDataSize );
 	sender->SendPacket(packet);

@@ -21,6 +21,7 @@
 
 class CSharedFileList;
 class CKnownFile;
+class CDirectoryItem;
 
 class CSharedFilesCtrl : public CMuleListCtrl, public CListCtrlItemWalk
 {
@@ -39,13 +40,16 @@ public:
 	void	Localize();
 	void	ShowFilesCount();
 	void	ShowComments(CKnownFile* file);
-	void	SetAICHHashing(uint32 nVal)				{ nAICHHashing = nVal; } 
+	void	SetAICHHashing(uint32 nVal)				{ nAICHHashing = nVal; }
+	void	SetDirectoryFilter(CDirectoryItem* pNewFilter, bool bRefresh = true);
 
 protected:
-	CTitleMenu	m_SharedFilesMenu;
-	CMenu		m_PrioMenu;
-	bool		sortstat[4];
-	CImageList	m_ImageList;
+	CTitleMenu		m_SharedFilesMenu;
+	CTitleMenu		m_CollectionsMenu;
+	CMenu			m_PrioMenu;
+	bool			sortstat[4];
+	CImageList		m_ImageList;
+	CDirectoryItem*	m_pDirectoryFilter;
 	volatile uint32 nAICHHashing;
 
 	static int CALLBACK SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);

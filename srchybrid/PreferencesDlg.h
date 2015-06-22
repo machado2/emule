@@ -50,6 +50,7 @@ public:
 
 protected:
 	LPCTSTR m_pPshStartPage;
+	bool m_bSaveIniFile;
 
 	virtual BOOL OnInitDialog();
 	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);

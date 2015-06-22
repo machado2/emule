@@ -23,12 +23,21 @@
 
 class CSearchList;
 class CSearchFile;
+class CToolTipCtrlX;
 
 struct SearchCtrlItem_Struct{
    CSearchFile*		value;
    CSearchFile*     owner;
    uchar			filehash[16];
    uint16			childcount;
+};
+
+class CSortSelectionState{
+public:
+	uint32	m_nSortItem;
+	bool	m_bSortAscending;
+	uint32	m_nScrollPosition;
+	CArray<int, int>	m_aSelectedItems;
 };
 
 class CSearchListCtrl : public CMuleListCtrl, public CListCtrlItemWalk
@@ -46,18 +55,24 @@ public:
 	void	RemoveResult(const CSearchFile* toremove);
 	void	Localize();
 	void	ShowResults(uint32 nResultsID);
+	void	ClearResultViewState(uint32 nResultsID);
 	void	NoTabs()	{ m_nResultsID = 0; }
+	void	UpdateSearch(CSearchFile* toupdate);
 
 protected:
 	uint32		m_nResultsID;
 	CTitleMenu	m_SearchFileMenu;
 	CSearchList* searchlist;
-
+	CToolTipCtrlX* m_tooltip;
+	CImageList	m_ImageList;
 	COLORREF	m_crSearchResultDownloading;
 	COLORREF	m_crSearchResultDownloadStopped;
 	COLORREF	m_crSearchResultKnown;
 	COLORREF	m_crSearchResultShareing;
+	COLORREF	m_crSearchResultCancelled;
 	COLORREF	m_crShades[AVBLYSHADECOUNT];
+
+	CMap<int,int, CSortSelectionState*, CSortSelectionState*> 	m_mapSortSelectionStates;
 
 	COLORREF GetSearchItemColor(/*const*/ CSearchFile* src);
 	CString GetCompleteSourcesDisplayString(const CSearchFile* pFile, UINT uSources, bool* pbComplete = NULL) const;
@@ -65,6 +80,7 @@ protected:
 	void	HideSources(CSearchFile* toCollapse);
 	void	SetStyle();
 	void	SetHighlightColors();
+	void	SetAllIcons();
 
 	void	DrawSourceParent(CDC *dc, int nColumn, LPRECT lpRect, /*const*/ CSearchFile* src);
 	void	DrawSourceChild(CDC *dc, int nColumn, LPRECT lpRect, /*const*/ CSearchFile* src);

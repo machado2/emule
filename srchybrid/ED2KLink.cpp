@@ -168,6 +168,9 @@ CED2KFileLink::CED2KFileLink(const TCHAR* pszName, const TCHAR* pszSize, const T
 	// to a greater mess in the network) we always try to decode from UTF8, even if the string
 	// did not contain escape sequences.
 	m_name = OptUtf8ToStr(URLDecode(pszName));
+	m_name.Trim();
+	if (m_name.IsEmpty())
+		throw GetResString(IDS_ERR_NOTAFILELINK);
 
 	SourcesList = NULL;
 	m_hashset = NULL;
@@ -281,7 +284,6 @@ CED2KFileLink::CED2KFileLink(const TCHAR* pszName, const TCHAR* pszSize, const T
 			}
 			else
 				ASSERT( false );
-
 		}
 		else
 			ASSERT(0);
@@ -449,19 +451,19 @@ CED2KLink* CED2KLink::CreateLinkFromUrl(const TCHAR* uri)
 {
 	CString strURI(uri);
 	int iPos = 0;
-	CString strTok = strURI.Tokenize(_T("|"), iPos);
+	CString strTok = GetNextString(strURI, _T("|"), iPos);
 	if (strTok == _T("ed2k://"))
 	{
-		strTok = strURI.Tokenize(_T("|"), iPos);
+		strTok = GetNextString(strURI, _T("|"), iPos);
 		if (strTok == _T("file"))
 		{
-			CString strName = strURI.Tokenize(_T("|"), iPos);
+			CString strName = GetNextString(strURI, _T("|"), iPos);
 			if (!strName.IsEmpty())
 			{
-				CString strSize = strURI.Tokenize(_T("|"), iPos);
+				CString strSize = GetNextString(strURI, _T("|"), iPos);
 				if (!strSize.IsEmpty())
 				{
-					CString strHash = strURI.Tokenize(_T("|"), iPos);
+					CString strHash = GetNextString(strURI, _T("|"), iPos);
 					if (!strHash.IsEmpty())
 					{
 						CStringArray astrEd2kParams;
@@ -469,7 +471,7 @@ CED2KLink* CED2KLink::CreateLinkFromUrl(const TCHAR* uri)
 						CString strEmuleExt;
 
 						CString strLastTok;
-						strTok = strURI.Tokenize(_T("|"), iPos);
+						strTok = GetNextString(strURI, _T("|"), iPos);
 						while (!strTok.IsEmpty())
 						{
 							strLastTok = strTok;
@@ -490,7 +492,7 @@ CED2KLink* CED2KLink::CreateLinkFromUrl(const TCHAR* uri)
 								else
 									astrEd2kParams.Add(strTok);
 							}
-							strTok = strURI.Tokenize(_T("|"), iPos);
+							strTok = GetNextString(strURI, _T("|"), iPos);
 						}
 
 						if (strLastTok == _T("/"))
@@ -501,22 +503,21 @@ CED2KLink* CED2KLink::CreateLinkFromUrl(const TCHAR* uri)
 		}
 		else if (strTok == _T("serverlist"))
 		{
-			CString strURL = strURI.Tokenize(_T("|"), iPos);
-			if (!strURL.IsEmpty() && strURI.Tokenize(_T("|"), iPos) == _T("/"))
+			CString strURL = GetNextString(strURI, _T("|"), iPos);
+			if (!strURL.IsEmpty() && GetNextString(strURI, _T("|"), iPos) == _T("/"))
 				return new CED2KServerListLink(strURL);
 		}
 		else if (strTok == _T("server"))
 		{
-			CString strServer = strURI.Tokenize(_T("|"), iPos);
+			CString strServer = GetNextString(strURI, _T("|"), iPos);
 			if (!strServer.IsEmpty())
 			{
-				CString strPort = strURI.Tokenize(_T("|"), iPos);
-				if (!strPort.IsEmpty() && strURI.Tokenize(_T("|"), iPos) == _T("/"))
+				CString strPort = GetNextString(strURI, _T("|"), iPos);
+				if (!strPort.IsEmpty() && GetNextString(strURI, _T("|"), iPos) == _T("/"))
 					return new CED2KServerLink(strServer, strPort);
 			}
 		}
 	}
 
 	throw GetResString(IDS_ERR_NOSLLINK);
-	return NULL;
 }

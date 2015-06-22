@@ -35,10 +35,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
-#ifndef LVS_EX_LABELTIP
-#define LVS_EX_LABELTIP         0x00004000 // listview unfolds partly hidden labels if it does not have infotip text
-#endif
-
 #define	SEARCH_STRINGS_PROFILE	_T("AC_SearchStrings.dat")
 
 IMPLEMENT_DYNAMIC(CSearchParamsWnd, CDialogBar);
@@ -175,7 +171,7 @@ LRESULT CSearchParamsWnd::OnInitDialog(WPARAM wParam, LPARAM lParam)
 		m_pacSearchString = new CCustomAutoComplete();
 		m_pacSearchString->AddRef();
 		if (m_pacSearchString->Bind(m_ctlName, ACO_UPDOWNKEYDROPSLIST | ACO_AUTOSUGGEST))
-			m_pacSearchString->LoadList(thePrefs.GetConfigDir() +  _T("\\") SEARCH_STRINGS_PROFILE);
+			m_pacSearchString->LoadList(thePrefs.GetConfigDir() + SEARCH_STRINGS_PROFILE);
 		if (theApp.m_fontSymbol.m_hObject)
 		{
 			GetDlgItem(IDC_DD)->SetFont(&theApp.m_fontSymbol);
@@ -501,6 +497,7 @@ void CSearchParamsWnd::SetAllIcons()
 	iml.Add(CTempIconLoader(_T("SearchFileType_Program"), 16, 16));
 	iml.Add(CTempIconLoader(_T("SearchFileType_Video"), 16, 16));
 	iml.Add(CTempIconLoader(_T("SearchFileType_Document"), 16, 16));
+	iml.Add(CTempIconLoader(_T("SearchFileType_EmuleCollection"), 16, 16));
 	m_ctlFileType.SetImageList(&iml);
 	m_imlFileType.DeleteImageList();
 	m_imlFileType.Attach(iml.Detach());
@@ -573,6 +570,7 @@ void CSearchParamsWnd::InitFileTypesCtrl()
 	lstFileTypeCbEntries.push_back(SFileTypeCbEntry(GetResString(IDS_SEARCH_PRG), ED2KFTSTR_PROGRAM, 5));
 	lstFileTypeCbEntries.push_back(SFileTypeCbEntry(GetResString(IDS_SEARCH_VIDEO), ED2KFTSTR_VIDEO, 6));
 	lstFileTypeCbEntries.push_back(SFileTypeCbEntry(GetResString(IDS_SEARCH_DOC), ED2KFTSTR_DOCUMENT, 7));
+	lstFileTypeCbEntries.push_back(SFileTypeCbEntry(GetResString(IDS_SEARCH_EMULECOLLECTION), ED2KFTSTR_EMULECOLLECTION, 8));
 
 	// sort list with current language locale
 	lstFileTypeCbEntries.sort();
@@ -736,7 +734,7 @@ BOOL CSearchParamsWnd::SaveSearchStrings()
 {
 	if (m_pacSearchString == NULL)
 		return FALSE;
-	return m_pacSearchString->SaveList(thePrefs.GetConfigDir() + _T("\\") SEARCH_STRINGS_PROFILE);
+	return m_pacSearchString->SaveList(thePrefs.GetConfigDir() + SEARCH_STRINGS_PROFILE);
 }
 
 void CSearchParamsWnd::SaveSettings()
@@ -1009,7 +1007,7 @@ SSearchParams* CSearchParamsWnd::GetParameters()
 	pParams->ulMaxSize = ulMaxSize;
 	pParams->uAvailability = uAvailability;
 	pParams->strExtension = strExtension;
-	//pParams->bMatchKeywords = IsDlgButtonChecked(IDC_MATCH_KEYWORDS);
+	//pParams->bMatchKeywords = IsDlgButtonChecked(IDC_MATCH_KEYWORDS)!=0;
 	pParams->uComplete = uComplete;
 	pParams->strCodec = strCodec;
 	pParams->ulMinBitrate = ulMinBitrate;

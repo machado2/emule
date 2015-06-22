@@ -42,12 +42,12 @@ static char THIS_FILE[] = __FILE__;
 
 UINT GetPeerCacheSocketUploadTimeout()
 {
-	return SEC2MS(DOWNLOADTIMEOUT + 20 + 30);
+	return DOWNLOADTIMEOUT + SEC2MS(20 + 30);
 }
 
 UINT GetPeerCacheSocketDownloadTimeout()
 {
-	return SEC2MS(DOWNLOADTIMEOUT + 20);	// must be lower than Upload timeout
+	return DOWNLOADTIMEOUT + SEC2MS(20);	// must be lower than Upload timeout
 }
 
 
@@ -208,7 +208,6 @@ bool CPeerCacheDownSocket::ProcessHttpResponseBody(const BYTE* pucData, UINT uSi
 bool CPeerCacheDownSocket::ProcessHttpRequest()
 {
 	throw CString(_T("Unexpected HTTP request received"));
-	return false;
 }
 
 
@@ -277,7 +276,6 @@ bool CPeerCacheUpSocket::ProcessHttpResponse()
 bool CPeerCacheUpSocket::ProcessHttpResponseBody(const BYTE* pucData, UINT uSize)
 {
 	throw CString(_T("Unexpected HTTP body in response received"));
-	return false;
 }
 
 bool CPeerCacheUpSocket::ProcessHttpRequest()
@@ -418,7 +416,7 @@ bool CUpDownClient::ProcessPeerCacheDownHttpResponse(const CStringAArray& astrHe
 		CSafeMemFile dataAck(128);
 		dataAck.WriteUInt8( bCacheHit ? 1 : 0 );
 		if (thePrefs.GetDebugClientTCPLevel() > 0){
-			DebugSend("OP__PeerCacheAck", this, (char*)reqfile->GetFileHash());
+			DebugSend("OP__PeerCacheAck", this, reqfile->GetFileHash());
 			Debug(_T("  %s\n"), bCacheHit ? _T("CacheHit") : _T("CacheMiss"));
 		}
 
@@ -564,8 +562,6 @@ bool CUpDownClient::ProcessPeerCacheUpHttpResponse(const CStringAArray& astrHead
 	CString strError;
 	strError.Format(_T("Unexpected HTTP status code \"%u\""), uHttpStatusCode);
 	throw strError;
-
-	return false;
 }
 
 bool CUpDownClient::SendHttpBlockRequests()
@@ -587,6 +583,7 @@ bool CUpDownClient::SendHttpBlockRequests()
 			SetPeerCacheDownState(PCDS_NONE);
 		}
 		SetDownloadState(DS_NONEEDEDPARTS);
+        SwapToAnotherFile(_T("A4AF for NNP file. CUpDownClient::SendHttpBlockRequests()"), true, false, false, NULL, true, true);
 		return false;
 	}
 
@@ -634,7 +631,7 @@ bool CUpDownClient::SendHttpBlockRequests()
 	strPCRequest.AppendFormat("\r\n");
 
 	if (thePrefs.GetDebugClientTCPLevel() > 0){
-		DebugSend("PeerCache-GET", this, (char*)reqfile->GetFileHash());
+		DebugSend("PeerCache-GET", this, reqfile->GetFileHash());
 		Debug(_T("  %hs\n"), strPCRequest);
 	}
 	CRawPacket* pHttpPacket = new CRawPacket(strPCRequest);
@@ -682,7 +679,7 @@ bool CUpDownClient::SendPeerCacheFileRequest()
 	tagCachePort.WriteNewEd2kTag(&data);
 
 	if (thePrefs.GetDebugClientTCPLevel() > 0){
-		DebugSend("OP__PeerCacheQuery", this, (char*)reqfile->GetFileHash());
+		DebugSend("OP__PeerCacheQuery", this, reqfile->GetFileHash());
 		Debug(_T("  CacheIP=%s  PushId=%u  PublicIP=%s  FileId=%s\n"), ipstr(tagCacheIP.GetInt()), tagPushId.GetInt(), ipstr(tagPublicIP.GetInt()), md4str(tagFileId.GetHash()));
 	}
 
@@ -695,7 +692,7 @@ bool CUpDownClient::SendPeerCacheFileRequest()
 	return true;
 }
 
-bool CUpDownClient::ProcessPeerCacheQuery(const char* packet, UINT size)
+bool CUpDownClient::ProcessPeerCacheQuery(const uchar* packet, UINT size)
 {
 	const bool bDebug = (thePrefs.GetDebugClientTCPLevel() > 0);
 	if (bDebug)
@@ -706,7 +703,7 @@ bool CUpDownClient::ProcessPeerCacheQuery(const char* packet, UINT size)
 		return false;
 	}
 
-	CSafeMemFile dataRecv((const BYTE*)packet, size);
+	CSafeMemFile dataRecv(packet, size);
 	uint8 uPCVersion = dataRecv.ReadUInt8();
 	if (uPCVersion != PCPCK_VERSION){
 		if (bDebug)
@@ -733,7 +730,7 @@ bool CUpDownClient::ProcessPeerCacheQuery(const char* packet, UINT size)
 	UINT uTags = dataRecv.ReadUInt8();
 	while (uTags--)
 	{
-		CTag tag(&dataRecv, GetUnicodeSupport());
+		CTag tag(&dataRecv, GetUnicodeSupport()!=utf8strNone);
 		if (tag.GetNameID() == PCTAG_CACHEIP && tag.IsInt())
 		{
 			uCacheIP = tag.GetInt();
@@ -814,7 +811,7 @@ bool CUpDownClient::ProcessPeerCacheQuery(const char* packet, UINT size)
 	strPCRequest.AppendFormat("GIVE %u\r\n", uPushId);
 
 	if (thePrefs.GetDebugClientTCPLevel() > 0){
-		DebugSend("PeerCache-GIVE", this, (char*)pUploadFile->GetFileHash());
+		DebugSend("PeerCache-GIVE", this, pUploadFile->GetFileHash());
 		Debug(_T("  %hs\n"), strPCRequest);
 	}
 	
@@ -838,7 +835,7 @@ bool CUpDownClient::ProcessPeerCacheQuery(const char* packet, UINT size)
 	tagFileId.WriteNewEd2kTag(&dataSend);
 	
 	if (thePrefs.GetDebugClientTCPLevel() > 0){
-		DebugSend("OP__PeerCacheAnswer", this, (char*)aucFileHash);
+		DebugSend("OP__PeerCacheAnswer", this, aucFileHash);
 		Debug(_T("  PushId=%u  PublicIP=%s  FileId=%s\n"), tagPushId.GetInt(), ipstr(tagPublicIP.GetInt()), md4str(tagFileId.GetHash()));
 	}
 	
@@ -848,7 +845,7 @@ bool CUpDownClient::ProcessPeerCacheQuery(const char* packet, UINT size)
 	return true;
 }
 
-bool CUpDownClient::ProcessPeerCacheAnswer(const char* packet, UINT size)
+bool CUpDownClient::ProcessPeerCacheAnswer(const uchar* packet, UINT size)
 {
 	const bool bDebug = (thePrefs.GetDebugClientTCPLevel() > 0);
 	ASSERT( GetDownloadState() == DS_DOWNLOADING );
@@ -862,7 +859,7 @@ bool CUpDownClient::ProcessPeerCacheAnswer(const char* packet, UINT size)
 		return false;
 	}
 
-	CSafeMemFile dataRecv((const BYTE*)packet, size);
+	CSafeMemFile dataRecv(packet, size);
 	uint8 uPCVersion = dataRecv.ReadUInt8();
 	if (uPCVersion != PCPCK_VERSION){
 		if (bDebug)
@@ -892,7 +889,7 @@ bool CUpDownClient::ProcessPeerCacheAnswer(const char* packet, UINT size)
 	UINT uTags = dataRecv.ReadUInt8();
 	while (uTags--)
 	{
-		CTag tag(&dataRecv, GetUnicodeSupport());
+		CTag tag(&dataRecv, GetUnicodeSupport()!=utf8strNone);
 		if (tag.GetNameID() == PCTAG_PUSHID && tag.IsInt())
 		{
 			uPushId = tag.GetInt();
@@ -949,7 +946,7 @@ bool CUpDownClient::ProcessPeerCacheAnswer(const char* packet, UINT size)
 	return true;
 }
 
-bool CUpDownClient::ProcessPeerCacheAcknowledge(const char* packet, UINT size)
+bool CUpDownClient::ProcessPeerCacheAcknowledge(const uchar* packet, UINT size)
 {
 	const bool bDebug = (thePrefs.GetDebugClientTCPLevel() > 0);
 	if (bDebug)
@@ -961,7 +958,7 @@ bool CUpDownClient::ProcessPeerCacheAcknowledge(const char* packet, UINT size)
 	}
 
 	m_bPeerCacheUpHit = false;
-	CSafeMemFile data((BYTE*)packet, size);
+	CSafeMemFile data(packet, size);
 	UINT uAck = data.ReadUInt8();
 	if (uAck == 1)
 	{

@@ -167,7 +167,7 @@ BOOL CIrcWnd::OnInitDialog()
 	
 	int PosStatinit = rcSpl.left;
 	int PosStatnew = thePrefs.GetSplitterbarPositionIRC();
-	if (thePrefs.GetSplitterbarPositionIRC() > 700) PosStatnew = 700;
+	if (thePrefs.GetSplitterbarPositionIRC() > 600) PosStatnew = 600;
 	else if (thePrefs.GetSplitterbarPositionIRC() < 200) PosStatnew = 200;
 	rcSpl.left = PosStatnew;
 	rcSpl.right = PosStatnew+5;
@@ -227,11 +227,8 @@ void CIrcWnd::DoResize(int delta)
 	RemoveAnchor(m_wndSplitterIRC);
 	AddAnchor(m_wndSplitterIRC,TOP_LEFT, BOTTOM_LEFT);
 
-	m_wndSplitterIRC.SetRange(rcW.left+190, rcW.left+700);
+	m_wndSplitterIRC.SetRange(rcW.left+190, rcW.left+600);
 	//initCSize(thePrefs.GetSplitterbarPositionIRC());
-
-	m_nicklist.SetColumnWidth(0,rcspl.Width()-75);
-	m_nicklist.SetColumnWidth(1,70);
 
 	Invalidate();
 	UpdateWindow();
@@ -263,13 +260,7 @@ switch (message) {
     rcSpl.bottom=rcW.bottom-40;
     
     m_wndSplitterIRC.MoveWindow(rcSpl,true);
-
-	m_nicklist.SetColumnWidth(0,rctree.Width()-75);
-	m_nicklist.SetColumnWidth(1,70);
-
-
    }
-
   }
   break;
  case WM_NOTIFY:
@@ -296,7 +287,7 @@ switch (message) {
     CRect rc;
     GetWindowRect(rc);
     ScreenToClient(rc);
-    m_wndSplitterIRC.SetRange(rc.left+190 , rc.left+700);
+    m_wndSplitterIRC.SetRange(rc.left+190 , rc.left+600);
    }
    break;
   }

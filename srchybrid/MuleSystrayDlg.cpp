@@ -5,7 +5,6 @@
 #include "MuleSystrayDlg.h"
 #include "emule.h"
 #include "preferences.h"
-#include "version.h"
 #include "opcodes.h"
 #include "otherfunctions.h"
 
@@ -310,9 +309,9 @@ BOOL CMuleSystrayDlg::OnInitDialog()
 	if((p = GetDlgItem(IDC_UPLBL)) != NULL)
 		p->SetWindowText(GetResString(IDS_PW_CON_UPLBL));
 	if((p = GetDlgItem(IDC_DOWNKB)) != NULL)
-		p->SetWindowText(GetResString(IDS_KBYTESEC));
+		p->SetWindowText(GetResString(IDS_KBYTESPERSEC));
 	if((p = GetDlgItem(IDC_UPKB)) != NULL)
-		p->SetWindowText(GetResString(IDS_KBYTESEC));
+		p->SetWindowText(GetResString(IDS_KBYTESPERSEC));
 
 	m_ctrlDownSpeedSld.SetRange(0,m_iMaxDown);
 	m_ctrlDownSpeedSld.SetPos(m_nDownSpeedTxt);
@@ -327,17 +326,17 @@ BOOL CMuleSystrayDlg::OnInitDialog()
 	Font.CreateFont(-16,0,900,0,700,0,0,0,0,3,2,1,34,_T("Tahoma"));
 
 	UINT winver = thePrefs.GetWindowsVersion();
-	if(winver == _WINVER_95_ || winver == _WINVER_NT4_)
+	if (winver == _WINVER_95_ || winver == _WINVER_NT4_ || g_bLowColorDesktop)
 	{
 		m_ctrlSidebar.SetColors(GetSysColor(COLOR_CAPTIONTEXT), 
-									GetSysColor(COLOR_ACTIVECAPTION), 
-										GetSysColor(COLOR_ACTIVECAPTION));
+								GetSysColor(COLOR_ACTIVECAPTION), 
+								GetSysColor(COLOR_ACTIVECAPTION));
 	}
 	else
 	{
 		m_ctrlSidebar.SetColors(GetSysColor(COLOR_CAPTIONTEXT), 
-									GetSysColor(COLOR_ACTIVECAPTION), 
-										GetSysColor(27));	//COLOR_GRADIENTACTIVECAPTION
+								GetSysColor(COLOR_ACTIVECAPTION), 
+								GetSysColor(COLOR_GRADIENTACTIVECAPTION));
 	}
 
 	m_ctrlSidebar.SetHorizontal(false);
@@ -396,13 +395,13 @@ void CMuleSystrayDlg::OnChangeDowntxt()
 void CMuleSystrayDlg::OnChangeUptxt() 
 {
 	UpdateData();
-	if(thePrefs.GetMaxGraphUploadRate() == UNLIMITED)
+	if(thePrefs.GetMaxGraphUploadRate(true) == UNLIMITED)
 	{
 		if(m_nUpSpeedTxt > 16)
 			m_nUpSpeedTxt = 16;
 	} else {
-		if(m_nUpSpeedTxt > thePrefs.GetMaxGraphUploadRate())
-			m_nUpSpeedTxt = thePrefs.GetMaxGraphUploadRate();
+		if(m_nUpSpeedTxt > thePrefs.GetMaxGraphUploadRate(true))
+			m_nUpSpeedTxt = thePrefs.GetMaxGraphUploadRate(true);
 	}
 	m_ctrlUpSpeedSld.SetPos(m_nUpSpeedTxt);
 	

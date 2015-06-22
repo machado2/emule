@@ -16,9 +16,12 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include "stdafx.h"
 #include <share.h>
+#include <fcntl.h>
+#include <io.h>
 #include "emule.h"
 #include "IPFilter.h"
-#include "otherfunctions.h"
+#include "OtherFunctions.h"
+#include "StringConversion.h"
 #include "Preferences.h"
 #include "emuledlg.h"
 #include "Log.h"
@@ -74,6 +77,7 @@ int CIPFilter::LoadFromDefaultFile(bool bShowResponse)
 
 int CIPFilter::AddFromFile(LPCTSTR pszFilePath, bool bShowResponse)
 {
+	DWORD dwStart = GetTickCount();
 	FILE* readFile = _tfsopen(pszFilePath, _T("r"), _SH_DENYWR);
 	if (readFile != NULL)
 	{
@@ -81,8 +85,11 @@ int CIPFilter::AddFromFile(LPCTSTR pszFilePath, bool bShowResponse)
 		{
 			Unknown = 0,
 			FilterDat = 1,		// ipfilter.dat/ip.prefix format
-			PeerGuardian = 2	// PeerGuardian format
+			PeerGuardian = 2,	// PeerGuardian text format
+			PeerGuardian2 = 3	// PeerGuardian binary format
 		} eFileType = Unknown;
+
+		setvbuf(readFile, NULL, _IOFBF, 32768);
 
 		TCHAR szNam[_MAX_FNAME];
 		TCHAR szExt[_MAX_EXT];
@@ -91,73 +98,129 @@ int CIPFilter::AddFromFile(LPCTSTR pszFilePath, bool bShowResponse)
 			eFileType = PeerGuardian;
 		else if (_tcsicmp(szExt, _T(".prefix")) == 0)
 			eFileType = FilterDat;
-
-		int iLine = 0;
-		int iFoundRanges = 0;
-		int iDuplicate = 0;
-		int iMerged = 0;
-		CString sbuffer;
-		TCHAR szBuffer[1024];
-		while (_fgetts(szBuffer, ARRSIZE(szBuffer), readFile) != NULL)
+		else
 		{
-			iLine++;
-			sbuffer = szBuffer;
-			
-			// ignore comments & too short lines
-			if (sbuffer.GetAt(0) == _T('#') || sbuffer.GetAt(0) == _T('/') || sbuffer.GetLength() < 5) {
-				sbuffer.Trim(_T(" \t\r\n"));
-				DEBUG_ONLY( (!sbuffer.IsEmpty()) ? TRACE("IP filter: ignored line %u\n", iLine) : 0 );
-				continue;
-			}
-
-			if (eFileType == Unknown)
+			_setmode(fileno(readFile), _O_BINARY);
+			static const BYTE _aucP2Bheader[] = "\xFF\xFF\xFF\xFFP2B";
+			BYTE aucHeader[sizeof _aucP2Bheader - 1];
+			if (fread(aucHeader, sizeof aucHeader, 1, readFile) == 1)
 			{
-				// looks like html
-				if (sbuffer.Find(_T('>')) > -1 && sbuffer.Find(_T('<')) > -1)
-					sbuffer.Delete(0, sbuffer.ReverseFind(_T('>')) + 1);
-
-				// check for <IP> - <IP> at start of line
-				UINT u1, u2, u3, u4, u5, u6, u7, u8;
-				if (_stscanf(sbuffer, _T("%u.%u.%u.%u - %u.%u.%u.%u"), &u1, &u2, &u3, &u4, &u5, &u6, &u7, &u8) == 8)
-				{
-					eFileType = FilterDat;
-				}
+				if (memcmp(aucHeader, _aucP2Bheader, sizeof _aucP2Bheader - 1)==0)
+					eFileType = PeerGuardian2;
 				else
 				{
-					// check for <description> ':' <IP> '-' <IP>
-					int iColon = sbuffer.Find(_T(':'));
-					if (iColon > -1)
+					fseek(readFile, 0, SEEK_SET);
+					_setmode(fileno(readFile), _O_TEXT); // ugly!
+				}
+			}
+		}
+
+		int iFoundRanges = 0;
+		int iLine = 0;
+		if (eFileType == PeerGuardian2)
+		{
+			// Version 1: strings are ISO-8859-1 encoded
+			// Version 2: strings are UTF-8 encoded
+			uint8 nVersion;
+			if (fread(&nVersion, sizeof nVersion, 1, readFile)==1 && (nVersion==1 || nVersion==2))
+			{
+				while (!feof(readFile))
+				{
+					CHAR szName[256];
+					int iLen = 0;
+					for (;;) // read until NUL or EOF
 					{
-						CString strIPRange = sbuffer.Mid(iColon + 1);
-						UINT u1, u2, u3, u4, u5, u6, u7, u8;
-						if (_stscanf(strIPRange, _T("%u.%u.%u.%u - %u.%u.%u.%u"), &u1, &u2, &u3, &u4, &u5, &u6, &u7, &u8) == 8)
+						int iChar = getc(readFile);
+						if (iChar == EOF)
+							break;
+						if (iLen < sizeof szName - 1)
+							szName[iLen++] = (CHAR)iChar;
+						if (iChar == '\0')
+							break;
+					}
+					szName[iLen] = '\0';
+					
+					uint32 uStart;
+					if (fread(&uStart, sizeof uStart, 1, readFile) != 1)
+						break;
+					uStart = ntohl(uStart);
+
+					uint32 uEnd;
+					if (fread(&uEnd, sizeof uEnd, 1, readFile) != 1)
+						break;
+					uEnd = ntohl(uEnd);
+
+					iLine++;
+					AddIPRange(uStart, uEnd, DFLT_FILTER_LEVEL, (nVersion == 2) ? OptUtf8ToStr(szName, iLen) : CString(szName));
+					iFoundRanges++;
+				}
+			}
+		}
+		else
+		{
+			CString sbuffer;
+			TCHAR szBuffer[1024];
+			while (_fgetts(szBuffer, ARRSIZE(szBuffer), readFile) != NULL)
+			{
+				iLine++;
+				sbuffer = szBuffer;
+				
+				// ignore comments & too short lines
+				if (sbuffer.GetAt(0) == _T('#') || sbuffer.GetAt(0) == _T('/') || sbuffer.GetLength() < 5) {
+					sbuffer.Trim(_T(" \t\r\n"));
+					DEBUG_ONLY( (!sbuffer.IsEmpty()) ? TRACE("IP filter: ignored line %u\n", iLine) : 0 );
+					continue;
+				}
+
+				if (eFileType == Unknown)
+				{
+					// looks like html
+					if (sbuffer.Find(_T('>')) > -1 && sbuffer.Find(_T('<')) > -1)
+						sbuffer.Delete(0, sbuffer.ReverseFind(_T('>')) + 1);
+
+					// check for <IP> - <IP> at start of line
+					UINT u1, u2, u3, u4, u5, u6, u7, u8;
+					if (_stscanf(sbuffer, _T("%u.%u.%u.%u - %u.%u.%u.%u"), &u1, &u2, &u3, &u4, &u5, &u6, &u7, &u8) == 8)
+					{
+						eFileType = FilterDat;
+					}
+					else
+					{
+						// check for <description> ':' <IP> '-' <IP>
+						int iColon = sbuffer.Find(_T(':'));
+						if (iColon > -1)
 						{
-							eFileType = PeerGuardian;
+							CString strIPRange = sbuffer.Mid(iColon + 1);
+							UINT u1, u2, u3, u4, u5, u6, u7, u8;
+							if (_stscanf(strIPRange, _T("%u.%u.%u.%u - %u.%u.%u.%u"), &u1, &u2, &u3, &u4, &u5, &u6, &u7, &u8) == 8)
+							{
+								eFileType = PeerGuardian;
+							}
 						}
 					}
 				}
-			}
 
-			bool bValid = false;
-			uint32 start = 0;
-			uint32 end = 0;
-			UINT level = 0;
-			CString desc;
-			if (eFileType == FilterDat)
-				bValid = ParseFilterLine1(sbuffer, start, end, level, desc);
-			else if (eFileType == PeerGuardian)
-				bValid = ParseFilterLine2(sbuffer, start, end, level, desc);
+				bool bValid = false;
+				uint32 start = 0;
+				uint32 end = 0;
+				UINT level = 0;
+				CString desc;
+				if (eFileType == FilterDat)
+					bValid = ParseFilterLine1(sbuffer, start, end, level, desc);
+				else if (eFileType == PeerGuardian)
+					bValid = ParseFilterLine2(sbuffer, start, end, level, desc);
 
-			// add a filter
-			if (bValid)
-			{
-				AddIPRange(start, end, level, desc);
-				iFoundRanges++;
-			}
-			else
-			{
-				sbuffer.Trim(_T(" \t\r\n"));
-				DEBUG_ONLY( (!sbuffer.IsEmpty()) ? TRACE("IP filter: ignored line %u\n", iLine) : 0 );
+				// add a filter
+				if (bValid)
+				{
+					AddIPRange(start, end, level, desc);
+					iFoundRanges++;
+				}
+				else
+				{
+					sbuffer.Trim(_T(" \t\r\n"));
+					DEBUG_ONLY( (!sbuffer.IsEmpty()) ? TRACE("IP filter: ignored line %u\n", iLine) : 0 );
+				}
 			}
 		}
 		fclose(readFile);
@@ -166,6 +229,8 @@ int CIPFilter::AddFromFile(LPCTSTR pszFilePath, bool bShowResponse)
 		qsort(m_iplist.GetData(), m_iplist.GetCount(), sizeof(m_iplist[0]), CmpSIPFilterByStartAddr);
 
 		// merge overlapping and adjacent filter ranges
+		int iDuplicate = 0;
+		int iMerged = 0;
 		if (m_iplist.GetCount() >= 2)
 		{
 			SIPFilter* pPrv = m_iplist[0];
@@ -203,8 +268,9 @@ int CIPFilter::AddFromFile(LPCTSTR pszFilePath, bool bShowResponse)
 		AddLogLine(bShowResponse, GetResString(IDS_IPFILTERLOADED), m_iplist.GetCount());
 		if (thePrefs.GetVerbose())
 		{
+			DWORD dwEnd = GetTickCount();
 			AddDebugLogLine(false, _T("Loaded IP filters from \"%s\""), pszFilePath);
-			AddDebugLogLine(false, _T("Parsed lines:%u  Found IP ranges:%u  Duplicate:%u  Merged:%u"), iLine, iFoundRanges, iDuplicate, iMerged);
+			AddDebugLogLine(false, _T("Parsed lines/entries:%u  Found IP ranges:%u  Duplicate:%u  Merged:%u  Time:%s"), iLine, iFoundRanges, iDuplicate, iMerged, CastSecondsToHM((dwEnd-dwStart+500)/1000));
 		}
 	}
 	return m_iplist.GetCount();

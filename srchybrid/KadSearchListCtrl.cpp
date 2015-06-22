@@ -56,7 +56,7 @@ END_MESSAGE_MAP()
 CKadSearchListCtrl::CKadSearchListCtrl()
 {
 	SetGeneralPurposeFind(true);
-	m_strLVName = _T("KadSearchListCtrl");
+	SetName(_T("KadSearchListCtrl") );
 }
 
 CKadSearchListCtrl::~CKadSearchListCtrl()
@@ -78,27 +78,15 @@ void CKadSearchListCtrl::Init()
 	SetAllIcons();
 	Localize();
 
-	CString strIniFile;
-	strIniFile.Format(_T("%spreferences.ini"), thePrefs.GetConfigDir());
-	CIni ini(strIniFile, _T("eMule"));
-	LoadSettings(&ini, m_strLVName);
-	int iSortItem = ini.GetInt(m_strLVName + _T("SortItem"));
-	bool bSortAscending = ini.GetInt(m_strLVName + _T("SortAscending"));
-	SetSortArrow(iSortItem, bSortAscending);
-	SortItems(SortProc, MAKELONG(iSortItem, (bSortAscending ? 0 : 0x0001)));
+	LoadSettings();
+	SetSortArrow();
+	SortItems(SortProc, MAKELONG(GetSortItem(), (GetSortAscending()? 0 : 0x0001)));
 }
 
 void CKadSearchListCtrl::UpdateKadSearchCount() {
 	CString id;
 	id.Format(_T("%s (%i)"),GetResString(IDS_KADSEARCHLAB), GetItemCount() );
 	theApp.emuledlg->kademliawnd->GetDlgItem(IDC_KADSEARCHLAB)->SetWindowText(id);
-}
-
-void CKadSearchListCtrl::SaveAllSettings(CIni* ini)
-{
-	SaveSettings(ini, m_strLVName);
-	ini->WriteInt(m_strLVName + _T("SortItem"), GetSortItem());
-	ini->WriteInt(m_strLVName + _T("SortAscending"), GetSortAscending());
 }
 
 void CKadSearchListCtrl::OnSysColorChange()
@@ -217,10 +205,10 @@ void CKadSearchListCtrl::UpdateSearch(int iItem, const Kademlia::CSearch* search
 	id.Format( _T("%u (%u|%u)"), search->getNodeLoad(), search->getNodeLoadResonse(), search->getNodeLoadTotal() );
 	SetItemText(iItem, colLoad, id );
 
-	id.Format( _T("%u"), search->getCount() );
-	SetItemText(iItem, colResponses, id );
+	id.Format( _T("%u"), search->getAnswers());
+	SetItemText(iItem, colResponses, id);
 
-	id.Format( _T("%u"), search->getCountSent());
+	id.Format( _T("%u|%u"), search->getKadPacketSent(), search->getRequestAnswer());
 	SetItemText(iItem, colPacketsSent, id );
 }
 
@@ -298,6 +286,7 @@ void CKadSearchListCtrl::OnColumnClick( NMHDR* pNMHDR, LRESULT* pResult)
 	iSortItem = pNMListView->iSubItem;
 
 	// Sort table
+	UpdateSortHistory(MAKELONG(iSortItem, (bSortAscending ? 0 : 0x0001)));
 	SetSortArrow(iSortItem, bSortAscending);
 	SortItems(SortProc, MAKELONG(iSortItem, (bSortAscending ? 0 : 0x0001)));
 
@@ -326,10 +315,10 @@ int CKadSearchListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 			iResult = item1->getNodeLoad() - item2->getNodeLoad();
 			break;
 		case colResponses:
-			iResult = item1->getCount() - item2->getCount();
+			iResult = item1->getAnswers() - item2->getAnswers();
 			break;
 		case colPacketsSent:
-			iResult = item1->getCountSent() - item2->getCountSent();
+			iResult = item1->getKadPacketSent() - item2->getKadPacketSent();
 			break;
 		default:
 			return 0;

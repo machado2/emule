@@ -21,6 +21,7 @@ typedef CTypedPtrList<CPtrList, CUpDownClient*> CUpDownClientPtrList;
 
 class CUploadQueue
 {
+
 public:
 	CUploadQueue();
 	~CUploadQueue();
@@ -64,6 +65,9 @@ public:
     CUpDownClient* FindBestClientInQueue();
     void ReSortUploadSlots(bool force = false);
 
+	CUpDownClientPtrList waitinglist;
+	CUpDownClientPtrList uploadinglist;
+
 protected:
 	void	RemoveFromWaitingQueue(POSITION pos, bool updatewindow);
 	bool		AcceptNewClient(bool addOnNextConnect = false);
@@ -82,8 +86,6 @@ private:
     void InsertInUploadingList(CUpDownClient* newclient);
     float GetAverageCombinedFilePrioAndCredit();
 
-	CUpDownClientPtrList waitinglist;
-	CUpDownClientPtrList uploadinglist;
 
 	// By BadWolf - Accurate Speed Measurement
 	typedef struct TransferredData {

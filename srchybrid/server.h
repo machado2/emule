@@ -36,10 +36,14 @@ struct ServerMet_Struct {
 #define	SRV_TCPFLG_COMPRESSION		0x00000001
 #define	SRV_TCPFLG_NEWTAGS			0x00000008
 #define	SRV_TCPFLG_UNICODE			0x00000010
+#define SRV_TCPFLG_RELATEDSEARCH	0x00000040
 
 // Server UDP flags
 #define	SRV_UDPFLG_EXT_GETSOURCES	0x00000001
 #define	SRV_UDPFLG_EXT_GETFILES		0x00000002
+#define	SRV_UDPFLG_NEWTAGS			0x00000008
+#define	SRV_UDPFLG_UNICODE			0x00000010
+#define	SRV_UDPFLG_EXT_GETSOURCES2	0x00000020
 
 class CServer{
 public:
@@ -83,6 +87,7 @@ public:
 	void	SetMaxUsers(uint32 in_maxusers) 		{maxusers = in_maxusers;}
 
 	uint32	GetFailedCount() const					{return failedcount;}
+	void	SetFailedCount(uint32 nCount)			{failedcount = nCount;}
 	void	AddFailedCount()						{failedcount++;} 
 	void	ResetFailedCount()						{failedcount = 0;}
 
@@ -96,7 +101,7 @@ public:
 	void	SetLastDescPingedCount(bool reset);
 
 	bool	IsStaticMember() const					{return staticservermember;}
-	void	SetIsStaticMember(bool in)				{staticservermember=in;}
+	void	SetIsStaticMember(bool in)				{staticservermember = in;}
 
 	uint32	GetChallenge() const					{return challenge;}
 	void	SetChallenge(uint32 in_challenge)		{challenge = in_challenge;}
@@ -122,7 +127,10 @@ public:
 	uint32	GetLowIDUsers() const					{return m_uLowIDUsers;}
 	void	SetLowIDUsers(uint32 uLowIDUsers)		{m_uLowIDUsers = uLowIDUsers;}
 
-	bool	GetUnicodeSupport() const				{return GetTCPFlags() & SRV_TCPFLG_UNICODE;}
+	bool	GetUnicodeSupport() const				{return (GetTCPFlags() & SRV_TCPFLG_UNICODE)!=0;}
+	bool	GetRelatedSearchSupport() const			{return (GetTCPFlags() & SRV_TCPFLG_RELATEDSEARCH)!=0;}
+
+	bool	IsEqual(const CServer* pServer) const;
 
 private:
 	uint32		challenge;
@@ -143,7 +151,7 @@ private:
 	TCHAR		ipfull[3+1+3+1+3+1+3+1]; // 16
 	uint32		ip;
 	uint16		port;
-	uint8		staticservermember;
+	bool		staticservermember;
 	uint32		failedcount; 
 	CString		m_strVersion;
 	uint32		m_uTCPFlags;

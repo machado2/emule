@@ -19,6 +19,7 @@ enum EDebugLogPriority{
 #define	LOG_DEFAULT		0x00
 #define	LOG_DEBUG		0x10
 #define	LOG_STATUSBAR	0x20
+#define	LOG_DONTNOTIFY	0x40
 
 
 void Log(LPCTSTR pszLine, ...);
@@ -49,6 +50,12 @@ void AddLogTextV(UINT uFlags, EDebugLogPriority dlpPriority, LPCTSTR pszLine, va
 ///////////////////////////////////////////////////////////////////////////////
 // CLogFile
 
+enum ELogFileFormat
+{
+	Unicode = 0,
+	Utf8
+};
+
 class CLogFile
 {
 public:
@@ -59,11 +66,13 @@ public:
 	const CString& GetFilePath() const;
 	bool SetFilePath(LPCTSTR pszFilePath);
 	void SetMaxFileSize(UINT uMaxFileSize);
+	bool SetFileFormat(ELogFileFormat eFileFormat);
 
-	bool Create(LPCTSTR pszFilePath, UINT uMaxFileSize = 1024*1024);
+	bool Create(LPCTSTR pszFilePath, UINT uMaxFileSize = 1024*1024, ELogFileFormat eFileFormat = Unicode);
 	bool Open();
 	bool Close();
-	bool Log(LPCTSTR psz, int iLen = -1);
+	bool Log(LPCTSTR pszMsg, int iLen = -1);
+	bool Logf(LPCTSTR pszFmt, ...);
 	void StartNewLogFile();
 
 protected:
@@ -73,6 +82,7 @@ protected:
 	UINT m_uBytesWritten;
 	UINT m_uMaxFileSize;
 	bool m_bInOpenCall;
+	ELogFileFormat m_eFileFormat;
 };
 
 extern CLogFile theLog;

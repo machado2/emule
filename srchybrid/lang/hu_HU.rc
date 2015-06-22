@@ -597,7 +597,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Felhasználó neve:"
     IDS_CD_UHASH            "Felhasználó hash:"
-    IDS_CD_CSOFT            "Ügyfélszoftver:"
+    IDS_CD_CSOFT            "Ügyfélszoftver"
     IDS_CD_UIP              "IP cím:"
     IDS_CD_SIP              "Kiszolgáló IP:"
     IDS_CD_VERSION          "Ügyfélverzió:"
@@ -1127,13 +1127,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Ismert klienslista tiltása"
     IDS_DISABLEQUEUELIST    "Letöltési lista tiltása"
     IDS_USECREDITSYSTEM     "Kreditrendszer engedélyezése (Feltöltõk jutalmazása)"
-    IDS_FIRSTAUTODOWN       "Szeretnéd, hogy az eMule kezelje a letöltések prioritását?\r\rHa engedélyezed, akkor biztos lehetsz benne, hogy a sok forrással rendelkezõ letöltések nem fognak összegabalyodni a kevés forrással rendelkezõ letöltésekkel.\r\rHa a kliensedet 0.26-os verziónál régebbirõl frissítetted, akkor az összes jelenlegi letöltésed automatikus prioritásra lett állítva.\rEz az opció csak a jövõbeli letöltésekre van hatással. (Alapértelmezés Igen)"
-    IDS_FIRSTAUTOUP         "Szeretnéd, hogy az eMule kezelje a feltöltések prioritását?\r\rHa engedélyezed, akkor a ritka fájlok könnyebben, míg a népszerû fájlok nehezebben lesznek elérhetõek.\r\rHa a kliensedet 0.26-os verziónál régebbirõl frissítetted, akkor az összes jelenlegi megosztásod automatikus prioritásra lett állítva.\rEz az opció csak a jövõbeli megosztásokra van hatással. (Alapértelmezés Igen)"
-    IDS_FIRSTCREDITSYSTEM   "Szeretnéd megjutalmazni azokat, akik feltöltenek neked?\r\rEzt többnyire kreditrendszerként ismerik. Ha engedélyezed, felveheted a harcot a csak letöltõk ellen. Azonban ha te egy lelkes forgalmazó vagy, valószínûleg ki szeretnéd kapcsolni.\r\r(Alapértelmezés Igen)"
-    IDS_FIRSTFULLCHUNK      "Szeretnéd, ha teljes szeleteket töltenénk fel?\r\rTeljes szeletek feltöltésével a klienseknek nagyobb esélye van, hogy befejezzenek egy szeletet.Ha azonban kikapcsolod, a letöltési listád gyorsabban fog pörögni. Ha te egy lelkes forgalmazó vagy, valószínûleg ezt be szeretnéd kapcsolni.\r\r(Alapértelmezés Igen)"
-    IDS_FIRSTSAFECON        "Szeretnéd, hogy az eMule Biztonságos kapcsolódáson kerül csatlakozzon?\r\rHa kikapcsolod ezt az opciót, az eMule gyorsabban fog kapcsolódni a kiszolgálókhoz, azonban több esetben fogsz tévesen alacsony azonosítót kapni.\r\r(Alapértelmezés Nem)"
+    IDS_FIRSTAUTODOWN       "Enable this option if you want eMule to manage your download priorities.\n\nTurning this on will allow eMule to make sure downloads with a lot of sources do not interfere with downloads that have few sources. This option will only affect future downloads."
+    IDS_FIRSTAUTOUP         "Enable this option if you want eMule to manage your upload priorities.\n\nTurning this on will allow eMule to boost rare files meaning popular files will be harder for other people to get. Turning this off will allow eMule to upload popular files more often meaning rare files will be harder for other people to get. This option will only affect future shared files."
+    IDS_FIRSTCREDITSYSTEM   "Do you want to reward people that upload to you?\n\nThis is commonly known as the Credit System. Turning this on will help fight against leachers. If you are a dedicated releaser, you will want to turn this off."
+    IDS_FIRSTFULLCHUNK      "Enable this option if you want to upload full chunks.\n\nUsing full chunk gives the client a better chance to complete a chunk. Turning this off will help rotate your queue faster. If you are a dedicated releaser, you will want to turn this on."
+    IDS_FIRSTSAFECON        "Enable this option if you want eMule to connect using Safe Connect.\n\nTurning this feature off allows eMule to connect to servers a little faster, but can cause you to get more false LowID connects."
     IDS_FIRSTRUNASSIST      "Szeretnéd elindítani az elsõ futtatáskor felajánlott telepítõ varázslót?"
-    IDS_FIRSTAUTOCON        "Szeretnéd, hogy az eMule csatlakozzon elindításkor?\r\r(Alapértelmezés Nem)"
+    IDS_FIRSTAUTOCON        "Enable this option if you want eMule to connect at startup."
     IDS_FIRSTCOMPLETE       "Sikeresen befejezted az elsõ futtatás utáni varázslót.\r\rA beállítások ikonra kattintva megváltoztathatod az imént megadott és egyéb beállításokat. Magyarázatokért és támogatásért nézd át a súgót, azaz nyomj F1 billentyût az eMule-ben!"
 END
 
@@ -1329,7 +1329,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problematikus"
     IDS_LONGHRS             "Óra"
     IDS_STATS_LARGESTFILE   "Legnagyobb megosztott fájl"
-    IDS_CLIENTSOFTWARE      "Ügyfélszoftver"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Szelet"
     IDS_STATS_DATASOURCE    "Adatforrás"
     IDS_STATS_DSFILE        "Teljes fájl"
@@ -1353,7 +1353,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Minden másolása"
     IDS_STATS_MNUTREEHTML   "HTML tulajdonságok"
     IDS_STATS_EXPORT2HTML   "Összes statisztika exportálása"
-    IDS_STATS_EXPORTVIS     "Láthatóak exportálása"
     IDS_STATS_MNUTREECPYVIS "Láthatóak másolása"
     IDS_STATS_MNUTREEEXPANDALL "Összes szekció kibontása"
     IDS_STATS_MNUTREECOLLAPSEALL "Összes szekció bezárása"
@@ -1406,13 +1405,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Verzió"
-    IDS_ALL_A4AF_TO_THIS    "Összes forrás váltása erre a fájlra"
     IDS_PASTE               "Paste"
-    IDS_ALL_A4AF_TO_OTHER   "Összes forrás váltása más fájlra"
-    IDS_ALL_A4AF_AUTO       "Automatikus forrásváltás (A4AF) forrásokból erre a fájlra"
-    IDS_SWAP_A4AF_TO_THIS   "Forrásváltás erre a fájlra"
-    IDS_SWAP_A4AF_TO_OTHER  "Forrásváltás más fájlra"
-    IDS_A4AF                "Forráskezelés (A4AF)"
+    IDS_A4AF                "Forráskezelés"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "MobileMule engedélyezése"
     IDS_AUTOCAT_LABEL       "Automatikus kategória hozzárendelés (a mintákat | jellel kell elválasztani)"
@@ -1613,7 +1607,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Biztonságos azonosítók naplózása"
     IDS_LOG_FILTERED_IPS    "Szûrt és mellõzött IP-k naplózása"
     IDS_LOG_FILE_SAVING     "Fájlmentések naplózása"
-    IDS_IPFILTERFILES       "Minden IP szûrõ fájl (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Szûrõ fájlok (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian fájlok(*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Szöveges fájlok (*.txt)|*.txt|Minden fájl (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|ZIP Files (*.zip;*.gz)|*.zip;*.gz|All Files (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "Biztosan törölni akarod a kiválasztott IP szûrõk?"
     IDS_TOTAL_IPFILTER_LABEL "Összes IP szûrõ:"
     IDS_TOTAL_IPS_LABEL     "Összes IP:"
@@ -1726,7 +1720,7 @@ STRINGTABLE
 BEGIN
     IDS_MAXHALFOPENCONS     "Max. Half Open Connections"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Enable this so that eMule will run when you start windows. [Default disabled]"
+                            "Enable this so that eMule will run when you start windows."
     IDS_KAD_WAITCBK         "Wait Callback Kad"
     IDS_KAD_TOOMANDYKADLKPS "Too Many Kad Lookups"
     IDS_PCDS_CLIENTWAIT     "ClientWait"
@@ -1845,6 +1839,91 @@ BEGIN
     IDS_NOTES               "Notes"
     IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Shutdown eMule"
+    IDS_WEB_REBOOT          "Reboot system"
+    IDS_WEB_SHUTDOWNSYSTEM  "Shutdown system"
+    IDS_WEB_ADMINMENU       "Admin Menu"
+    IDS_WEB_MAIN_CLOSE      "Do you really want eMule to terminate?"
+    IDS_WEB_MAIN_REBOOT     "Do you really want the system to reboot?"
+    IDS_WEB_MAIN_SHUTDOWN   "Do you really want the system to shutdown?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Show banned clients on queue"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Show friends on queue"
+    IDS_WEB_SESSIONTIMEOUT  "Session Timeout"
+    IDS_WEB_ALLOWHILEVFUNC  "Allow exit eMule, reboot and shutdown"
+    IDS_SETPFSLIMIT         "Source Limit..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Please enter the new source limit for the selected file(s) ! \n(set to 0 to use global setting)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Do you want incoming folders included in the old incoming folder to be updated now?"
+    IDS_USESPEECH           "Speak notification message"
+    IDS_CONDTCPACCEPT       "Fast connection reject"
+    IDS_TCPIP_CONNS         "TCP/IP connections"
+    IDS_ERR_DELFILE         "Failed to delete file ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Do you want to cleanup the filenames of the selected files?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s seems to be corrupted and will be replaced"
+    IDS_UPLOADING           "Uploading"
+    IDS_CANCELLED           "Cancelled"
+    IDS_PW_REMEMBERDOWNLOADED "Remember downloaded files"
+    IDS_PW_REMEMBERCANCELLED "Remember cancelled files"
+    IDS_AVAILABLEPARTS      "Available Parts"
+    IDS_NOSOUND             "No sound"
+    IDS_PW_RECEIVERADDRESS  "Recipient address:"
+    IDS_PW_ENABLEEMAIL      "Enable Email Notifications"
+    IDS_EMULENOTIFICATION   "eMule Notification"
+    IDS_PW_EMAILNOTIFICATIONS "Email Notifications"
+    IDS_PW_SMTPSERVER       "SMTP-Server:"
+    IDS_PW_SENDERADDRESS    "Sender address:"
+    IDS_PW_SHOWTRANSTOOLBAR "Show additional toolbar on transferwindow"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Shared parts"
+    IDS_INCOMING_FILES      "Incoming Files"
+    IDS_INCOMPLETE_FILES    "Incomplete Files"
+    IDS_SHARED_DIRECTORIES  "Shared Directories"
+    IDS_SHAREDIR            "Share directory"
+    IDS_SHAREDIRSUB         "Share with subdirectories"
+    IDS_UNSHAREDIR          "Unshare directory"
+    IDS_UNSHAREDIRSUB       "Unshare with subdirectories"
+    IDS_ALLSHAREDFILES      "All Shared Files"
+    IDS_ALLDIRECTORIES      "All Directories"
+    IDS_SEARCHRELATED       "Find related files"
+    IDS_RELATED             "Related"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Collection List"
+    IDS_SEARCH_EMULECOLLECTION "Collection"
+    IDS_COLL_REPLACEEXISTING "Do you want to replace existing file?"
+    IDS_COLL_ERR_DELETING   "Some Unknown error in deleting old file. Exit without saving?"
+    IDS_CREATECOLLECTION    "Create Collection"
+    IDS_COLL_SIGN           "Sign Collection with Name and Key"
+    IDS_AUTHOR              "Author"
+    IDS_AUTHORKEY           "Author Key"
+    IDS_COLL_ADDINCAT       "Add new downloads in a Collection Category"
+    IDS_MODIFYCOLLECTION    "Modify Collection"
+    IDS_VIEWCOLLECTION      "View Collection"
+    IDS_COLL_TEXTFORMAT     "Save collection In A Simple Text Format"
+    IDS_SEARCHAUTHORCOLLECTION "Search Author's Collections"
+    IDS_ERR_DUPL_FILES      "Duplicate shared files: ""%s"" and ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting failed too many times. Disabling Upload SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Done with preparations. Starting control of upload speed. (First 60 seconds will be in fast reaction mode)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Raised upload limit in prefs detected. Going into fast reaction mode for 60 seconds."
+    IDS_USS_STATE_PREPARING "Preparing..."
+    IDS_USS_STATE_WAITING   "Waiting..."
+    IDS_USS_STATE_ERROR     "Error!"
 END
 
 #endif    // Hungarian resources

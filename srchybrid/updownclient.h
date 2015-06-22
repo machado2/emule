@@ -117,10 +117,7 @@ enum EKadState{
 	KS_QUEUED_BUDDY,
 	KS_INCOMING_BUDDY,
 	KS_CONNECTING_BUDDY,
-	KS_CONNECTED_BUDDY,
-	KS_NONE_LOWID,
-	KS_WAITCALLBACK_LOWID,
-	KS_QUEUE_LOWID
+	KS_CONNECTED_BUDDY
 };
 
 enum EClientSoftware{
@@ -176,6 +173,8 @@ class CUpDownClient : public CObject
 
 	friend class CUploadQueue;
 public:
+    void PrintUploadStatus();
+
 	//base
 	CUpDownClient(CClientReqSocket* sender = 0);
 	CUpDownClient(CPartFile* in_reqfile, uint16 in_port, uint32 in_userid, uint32 in_serverup, uint16 in_serverport, bool ed2kID = false);
@@ -202,7 +201,7 @@ public:
 							m_dwUserIP = val;
 							m_nConnectIP = val;
 						}
-	bool			HasLowID() const;
+	__inline bool	HasLowID() const								{ return (m_nUserIDHybrid < 16777216); }
 	uint32			GetConnectIP() const							{ return m_nConnectIP; }
 	uint16			GetUserPort() const								{ return m_nUserPort; }
 	void			SetUserPort(uint16 val)							{ m_nUserPort = val; }
@@ -229,13 +228,13 @@ public:
 	EClientSoftware	GetClientSoft() const							{ return (EClientSoftware)m_clientSoft; }
 	const CString&	GetClientSoftVer() const						{ return m_strClientSoftware; }
 	const CString&	GetClientModVer() const							{ return m_strModVersion; }
-	void			ReGetClientSoft();
+	void			InitClientSoftwareVersion();
 	uint32			GetVersion() const								{ return m_nClientVersion; }
 	uint8			GetMuleVersion() const							{ return m_byEmuleVersion; }
 	bool			ExtProtocolAvailable() const					{ return m_bEmuleProtocol; }
 	bool			SupportMultiPacket() const						{ return m_bMultiPacket; }
 	bool			SupportPeerCache() const						{ return m_fPeerCache; }
-	bool			IsEmuleClient() const							{ return m_byEmuleVersion; }
+	bool			IsEmuleClient() const							{ return m_byEmuleVersion!=0; }
 	uint8			GetSourceExchangeVersion() const				{ return m_bySourceExchangeVer; }
 	CClientCredits* Credits() const									{ return credits; }
 	bool			IsBanned() const;
@@ -249,17 +248,18 @@ public:
 	void			SetKadPort(uint16 nPort)						{ m_nKadPort = nPort; }
 	uint8			GetExtendedRequestsVersion() const				{ return m_byExtendedRequestsVer; }
 	void			RequestSharedFileList();
-	void			ProcessSharedFileList(char* pachPacket, uint32 nSize, LPCTSTR pszDirectory = NULL);
+	void			ProcessSharedFileList(const uchar* pachPacket, uint32 nSize, LPCTSTR pszDirectory = NULL);
+
 	void			ClearHelloProperties();
-	bool			ProcessHelloAnswer(char* pachPacket, uint32 nSize);
-	bool			ProcessHelloPacket(char* pachPacket, uint32 nSize);
+	bool			ProcessHelloAnswer(const uchar* pachPacket, uint32 nSize);
+	bool			ProcessHelloPacket(const uchar* pachPacket, uint32 nSize);
 	void			SendHelloAnswer();
 	virtual bool	SendHelloPacket();
 	void			SendMuleInfoPacket(bool bAnswer);
-	void			ProcessMuleInfoPacket(char* pachPacket, uint32 nSize);
-	void			ProcessMuleCommentPacket(char* pachPacket, uint32 nSize);
-	void			ProcessEmuleQueueRank(char* packet, UINT size);
-	void			ProcessEdonkeyQueueRank(char* packet, UINT size);
+	void			ProcessMuleInfoPacket(const uchar* pachPacket, uint32 nSize);
+	void			ProcessMuleCommentPacket(const uchar* pachPacket, uint32 nSize);
+	void			ProcessEmuleQueueRank(const uchar* packet, UINT size);
+	void			ProcessEdonkeyQueueRank(const uchar* packet, UINT size);
 	void			CheckQueueRankFlood();
 	bool			Compare(const CUpDownClient* tocomp, bool bIgnoreUserhash = false) const;
 	void			ResetFileStatusInfo();
@@ -284,18 +284,18 @@ public:
 	// secure ident
 	void			SendPublicKeyPacket();
 	void			SendSignaturePacket();
-	void			ProcessPublicKeyPacket(uchar* pachPacket, uint32 nSize);
-	void			ProcessSignaturePacket(uchar* pachPacket, uint32 nSize);
+	void			ProcessPublicKeyPacket(const uchar* pachPacket, uint32 nSize);
+	void			ProcessSignaturePacket(const uchar* pachPacket, uint32 nSize);
 	uint8			GetSecureIdentState() const						{ return m_SecureIdentState; }
 	void			SendSecIdentStatePacket();
-	void			ProcessSecIdentStatePacket(uchar* pachPacket, uint32 nSize);
+	void			ProcessSecIdentStatePacket(const uchar* pachPacket, uint32 nSize);
 	uint8			GetInfoPacketsReceived() const					{ return m_byInfopacketsReceived; }
 	void			InfoPacketsReceived();
 	// preview
 	void			SendPreviewRequest(const CAbstractFile* pForFile);
 	void			SendPreviewAnswer(const CKnownFile* pForFile, CxImage** imgFrames, uint8 nCount);
-	void			ProcessPreviewReq(char* pachPacket, uint32 nSize);
-	void			ProcessPreviewAnswer(char* pachPacket, uint32 nSize);
+	void			ProcessPreviewReq(const uchar* pachPacket, uint32 nSize);
+	void			ProcessPreviewAnswer(const uchar* pachPacket, uint32 nSize);
 	bool			GetPreviewSupport() const						{ return m_fSupportsPreview && GetViewSharedFilesSupport(); }
 	bool			GetViewSharedFilesSupport() const				{ return m_fNoViewSharedFiles==0; }
 	bool			SafeSendPacket(Packet* packet);
@@ -315,7 +315,7 @@ public:
 	void			CreateNextBlockPackage();
 	uint32			GetUpStartTimeDelay() const						{ return ::GetTickCount() - m_dwUploadTime; }
 	void 			SetUpStartTime()								{ m_dwUploadTime = ::GetTickCount(); }
-	void			SendHashsetPacket(char* forfileid);
+	void			SendHashsetPacket(const uchar* fileid);
 	const uchar*	GetUploadFileID() const							{ return requpfileid; }
 	void			SetUploadFileID(CKnownFile* newreqfile);
 	uint32			SendBlockData();
@@ -331,6 +331,8 @@ public:
 	void			FlushSendBlocks(); // call this when you stop upload, or the socket might be not able to send
 	uint32			GetLastUpRequest() const						{ return m_dwLastUpRequest; }
 	void			SetLastUpRequest()								{ m_dwLastUpRequest = ::GetTickCount(); }
+	void			SetCollectionUploadSlot(bool bValue);
+	bool			HasCollectionUploadSlot() const					{ return m_bCollectionUploadSlot; }
 
 	uint32			GetSessionUp() const							{ return m_nTransferredUp - m_nCurSessionUp; }
 	void			ResetSessionUp() {
@@ -350,7 +352,7 @@ public:
 	uint16			GetUpPartCount() const							{ return m_nUpPartCount; }
 	void			DrawUpStatusBar(CDC* dc, RECT* rect, bool onlygreyrect, bool  bFlat) const;
 	bool			IsUpPartAvailable(uint16 iPart) const {
-						return (iPart>=m_nUpPartCount || !m_abyUpPartStatus) ? 0 : m_abyUpPartStatus[iPart];
+						return (iPart>=m_nUpPartCount || !m_abyUpPartStatus) ? false : m_abyUpPartStatus[iPart]!=0;
 					}
 	uint8*			GetUpPartStatus() const							{ return m_abyUpPartStatus; }
     float           GetCombinedFilePrioAndCredit();
@@ -364,13 +366,13 @@ public:
 	uint32			GetLastAskedTime(const CPartFile* partFile = NULL) const;
     void            SetLastAskedTime()								{ m_fileReaskTimes.SetAt(reqfile, ::GetTickCount()); }
 	bool			IsPartAvailable(uint16 iPart) const {
-						return (iPart>=m_nPartCount || !m_abyPartStatus) ? 0 : m_abyPartStatus[iPart];
+						return (iPart>=m_nPartCount || !m_abyPartStatus) ? false : m_abyPartStatus[iPart]!=0;
 					}
 	uint8*			GetPartStatus() const							{ return m_abyPartStatus; }
 	uint16			GetPartCount() const							{ return m_nPartCount; }
 	uint32			GetDownloadDatarate() const						{ return m_nDownDatarate; }
 	uint16			GetRemoteQueueRank() const						{ return m_nRemoteQueueRank; }
-	void			SetRemoteQueueRank(uint16 nr);
+	void			SetRemoteQueueRank(uint16 nr, bool bUpdateDisplay = false);
 	bool			IsRemoteQueueFull() const						{ return m_bRemoteQueueFull; }
 	void			SetRemoteQueueFull(bool flag)					{ m_bRemoteQueueFull = flag; }
 	void			DrawStatusBar(CDC* dc, LPCRECT rect, bool onlygreyrect, bool  bFlat) const;
@@ -379,13 +381,13 @@ public:
 	void			SendStartupLoadReq();
 	void			ProcessFileInfo(CSafeMemFile* data, CPartFile* file);
 	void			ProcessFileStatus(bool bUdpPacket, CSafeMemFile* data, CPartFile* file);
-	void			ProcessHashSet(char* data, uint32 size);
+	void			ProcessHashSet(const uchar* data, uint32 size);
 	void			ProcessAcceptUpload();
 	bool			AddRequestForAnotherFile(CPartFile* file);
 	void			CreateBlockRequests(int iMaxBlocks);
 	virtual void	SendBlockRequests();
 	virtual bool	SendHttpBlockRequests();
-	virtual void	ProcessBlockPacket(char* packet, uint32 size, bool packed = false);
+	virtual void	ProcessBlockPacket(const uchar* packet, uint32 size, bool packed = false);
 	virtual void	ProcessHttpBlockPacket(const BYTE* pucData, UINT uSize);
 	void			ClearDownloadBlockRequests();
 	void			SendOutOfPartReqsAndAddToWaitingQueue();
@@ -439,7 +441,7 @@ public:
     void			SetFileRating(uint8 uRating)					{ m_uFileRating = uRating; }
 
 	// Barry - Process zip file as it arrives, don't need to wait until end of block
-	int				unzip(Pending_Block_Struct* block, BYTE* zipped, uint32 lenZipped, BYTE** unzipped, uint32* lenUnzipped, int iRecursion = 0);
+	int				unzip(Pending_Block_Struct *block, const BYTE *zipped, uint32 lenZipped, BYTE **unzipped, uint32 *lenUnzipped, int iRecursion = 0);
 	void			UpdateDisplayedInfo(bool force = false);
 	int             GetFileListRequested() const					{ return m_iFileListRequested; }
     void            SetFileListRequested(int iFileListRequested)	{ m_iFileListRequested = iFileListRequested; }
@@ -465,8 +467,8 @@ public:
 	bool			IsSupportingAICH() const						{ return m_fSupportsAICH & 0x01; }
 	void			SendAICHRequest(CPartFile* pForFile, uint16 nPart);
 	bool			IsAICHReqPending() const						{ return m_fAICHRequested; }
-	void			ProcessAICHAnswer(char* packet, UINT size);
-	void			ProcessAICHRequest(char* packet, UINT size);
+	void			ProcessAICHAnswer(const uchar* packet, UINT size);
+	void			ProcessAICHRequest(const uchar* packet, UINT size);
 	void			ProcessAICHFileHash(CSafeMemFile* data, CPartFile* file);
 
 	EUtf8Str		GetUnicodeSupport() const;
@@ -476,6 +478,7 @@ public:
 
 	LPCTSTR			DbgGetDownloadState() const;
 	LPCTSTR			DbgGetUploadState() const;
+	LPCTSTR			DbgGetKadState() const;
 	CString			DbgGetClientInfo(bool bFormatIP = false) const;
 	CString			DbgGetFullClientSoftVer() const;
 	const CString&	DbgGetHelloInfo() const							{ return m_strHelloInfo; }
@@ -518,9 +521,9 @@ public:
 	void SetHttpSendState(int iState)								{ m_iHttpSendState = iState; }
 
 	bool SendPeerCacheFileRequest();
-	bool ProcessPeerCacheQuery(const char* packet, UINT size);
-	bool ProcessPeerCacheAnswer(const char* packet, UINT size);
-	bool ProcessPeerCacheAcknowledge(const char* packet, UINT size);
+	bool ProcessPeerCacheQuery(const uchar* packet, UINT size);
+	bool ProcessPeerCacheAnswer(const uchar* packet, UINT size);
+	bool ProcessPeerCacheAcknowledge(const uchar* packet, UINT size);
 	void OnPeerCacheDownSocketClosed(int nErrorCode);
 	bool OnPeerCacheDownSocketTimeout();
 	
@@ -651,6 +654,7 @@ protected:
 	uint16		m_nUpCompleteSourcesCount;
 	uchar		requpfileid[16];
     uint32      m_slotNumber;
+	bool		m_bCollectionUploadSlot;
 
 	typedef struct TransferredData {
 		uint32	datalen;

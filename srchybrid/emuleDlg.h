@@ -48,6 +48,7 @@ class CMiniMule;
 // emuleapp <-> emuleapp
 #define OP_ED2KLINK				12000
 #define OP_CLCOMMAND			12001
+#define OP_COLLECTION			12002
 
 #define	EMULE_HOTMENU_ACCEL		'x'
 #define	EMULSKIN_BASEEXT		_T("eMuleSkin")
@@ -65,7 +66,8 @@ public:
 
 	bool IsRunning();
 	void ShowConnectionState();
-	void ShowNotifier(CString Text, int MsgType, LPCTSTR pszLink = NULL, bool ForceSoundOFF = false);
+	void ShowNotifier(LPCTSTR pszText, int iMsgType, LPCTSTR pszLink = NULL, bool bForceSoundOFF = false);
+	void SendNotificationMail(int iMsgType, LPCTSTR pszText);
 	void ShowUserCount();
 	void ShowMessageState(uint8 iconnr);
 	void SetActiveDialog(CWnd* dlg);
@@ -78,11 +80,14 @@ public:
 	void AddServerMessageLine(LPCTSTR pszText);
 	void ResetLog();
 	void ResetDebugLog();
+	void ResetServerInfo();
 	CString GetLastLogEntry();
 	CString	GetLastDebugLogEntry();
 	CString	GetAllLogEntries();
 	CString	GetAllDebugLogEntries();
+	CString GetServerInfoText();
 	CString	GetConnectionStateString();
+	UINT GetConnectionStateIconIndex() const;
 	CString	GetTransferRateString();
 	CString	GetUpDatarateString(UINT uUpDatarate = -1);
 	CString	GetDownDatarateString(UINT uDownDatarate = -1);
@@ -153,9 +158,9 @@ protected:
 	CMiniMule* m_pMiniMule;
 	void DestroyMiniMule();
 
-	//CMap<UINT, UINT, LPCTSTR, LPCTSTR> m_mapCmdToIcon;
-	//void CreateMenuCmdIconMap();
-	//LPCTSTR GetIconFromCmdId(UINT uId);
+	CMap<UINT, UINT, LPCTSTR, LPCTSTR> m_mapTbarCmdToIcon;
+	void CreateToolbarCmdIconMap();
+	LPCTSTR GetIconFromCmdId(UINT uId);
 
 	// Startup Timer
 	UINT_PTR m_hTimer;
@@ -187,6 +192,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnClose();
+	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType,int cx,int cy);
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
@@ -196,6 +202,7 @@ protected:
 	afx_msg void OnBnClickedHotmenu();
 	afx_msg LRESULT OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
 	afx_msg void OnSysColorChange();
+	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
 	afx_msg BOOL OnQueryEndSession();
 	afx_msg void OnEndSession(BOOL bEnding);
 	afx_msg LRESULT OnKickIdle(UINT nWhy, long lIdleCount);
@@ -221,11 +228,13 @@ protected:
 
 	afx_msg LRESULT OnAreYouEmule(WPARAM, LPARAM);
 
-	//Webserver [kuchin]
-	afx_msg LRESULT OnWebServerConnect(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnWebServerDisonnect(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnWebServerRemove(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnWebSharedFilesReload(WPARAM wParam, LPARAM lParam);
+	//Webinterface
+	afx_msg LRESULT OnWebGUIInteraction(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnWebServerClearCompleted(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnWebServerFileRename(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnWebAddDownloads(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnWebSetCatPrio(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnAddRemoveFriend(WPARAM wParam, LPARAM lParam);
 
 	// VersionCheck DNS
 	afx_msg LRESULT OnVersionCheckResponse(WPARAM wParam, LPARAM lParam);
@@ -247,4 +256,27 @@ enum EEMuleAppMsgs
 	TM_FILEALLOCEXC,
 	TM_FILECOMPLETED,
 	TM_FILEOPPROGRESS
+};
+
+enum EWebinterfaceOrders
+{
+	WEBGUIIA_UPDATEMYINFO = 1,
+	WEBGUIIA_WINFUNC,
+	WEBGUIIA_UPD_CATTABS,
+	WEBGUIIA_UPD_SFUPDATE,
+	WEBGUIIA_UPDATESERVER,
+	WEBGUIIA_STOPCONNECTING,
+	WEBGUIIA_CONNECTTOSERVER,
+	WEBGUIIA_DISCONNECT,
+	WEBGUIIA_SERVER_REMOVE,
+	WEBGUIIA_SHARED_FILES_RELOAD,
+	WEBGUIIA_ADD_TO_STATIC,
+	WEBGUIIA_REMOVE_FROM_STATIC,
+	WEBGUIIA_UPDATESERVERMETFROMURL,
+	WEBGUIIA_SHOWSTATISTICS,
+	WEBGUIIA_DELETEALLSEARCHES,
+	WEBGUIIA_KAD_BOOTSTRAP,
+	WEBGUIIA_KAD_START,
+	WEBGUIIA_KAD_STOP,
+	WEBGUIIA_KAD_RCFW
 };

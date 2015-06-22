@@ -19,11 +19,12 @@
 
 class CKnownFile;
 typedef CMap<CCKey,const CCKey&,CKnownFile*,CKnownFile*> CKnownFilesMap;
+typedef CMap<CSKey,const CSKey&,int,int> CancelledFilesMap;
 
 class CKnownFileList 
 {
 	friend class CSharedFilesWnd;
-	friend class CFileStatistic;
+	friend class CStatisticFile;
 public:
 	CKnownFileList();
 	~CKnownFileList();
@@ -36,14 +37,24 @@ public:
 
 	CKnownFile* FindKnownFile(LPCTSTR filename, uint32 date, uint32 size) const;
 	CKnownFile* FindKnownFileByID(const uchar* hash) const;
+	CKnownFile* FindKnownFileByPath(const CString& sFilePath) const;
 	bool	IsKnownFile(const CKnownFile* file) const;
 	bool	IsFilePtrInList(const CKnownFile* file) const;
+
+	void	AddCancelledFileID(const uchar* hash);
+	bool	IsCancelledFileByID(const uchar* hash) const;
+
 	const CKnownFilesMap& GetKnownFiles() const { return m_Files_map; }
+	void	CopyKnownFileMap(CMap<CCKey,const CCKey&,CKnownFile*,CKnownFile*> &Files_Map);
 
 private:
+	bool	LoadKnownFiles();
+	bool	LoadCancelledFiles();
+
 	uint16 	requested;
 	uint16 	accepted;
 	uint64 	transferred;
 	uint32 	m_nLastSaved;
-	CKnownFilesMap m_Files_map;
+	CKnownFilesMap		m_Files_map;
+	CancelledFilesMap	m_mapCancelledFiles;
 };

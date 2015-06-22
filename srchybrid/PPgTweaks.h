@@ -19,32 +19,32 @@ protected:
 	UINT m_iQueueSize;
 	int m_iMaxConnPerFive;
 	int m_iMaxHalfOpen;
-	int m_iAutoTakeEd2kLinks;
-	int m_iVerbose;
-	int m_iDebugSourceExchange;
-	int m_iLogBannedClients;
-	int m_iLogRatingDescReceived;
-	int m_iLogSecureIdent;
-	int m_iLogFilteredIPs;
-	int m_iLogFileSaving;
-    int m_iLogA4AF; // ZZ:DownloadManager
-	int m_iLogUlDlEvents;
-	int m_iCreditSystem;
-	int m_iLog2Disk;
-	int m_iDebug2Disk;
+	bool m_bConditionalTCPAccept;
+	bool m_bAutoTakeEd2kLinks;
+	bool m_bVerbose;
+	bool m_bDebugSourceExchange;
+	bool m_bLogBannedClients;
+	bool m_bLogRatingDescReceived;
+	bool m_bLogSecureIdent;
+	bool m_bLogFilteredIPs;
+	bool m_bLogFileSaving;
+    bool m_bLogA4AF;
+	bool m_bLogUlDlEvents;
+	bool m_bCreditSystem;
+	bool m_bLog2Disk;
+	bool m_bDebug2Disk;
 	int m_iCommitFiles;
-	int m_iFilterLANIPs;
-	int m_iExtControls;
+	bool m_bFilterLANIPs;
+	bool m_bExtControls;
 	UINT m_uServerKeepAliveTimeout;
-	int m_iSparsePartFiles;
-	int m_iCheckDiskspace;	// SLUGFILLER: checkDiskspace
+	bool m_bSparsePartFiles;
+	bool m_bCheckDiskspace;
 	float m_fMinFreeDiskSpaceMB;
-	CString m_sYourHostname;	// itsonlyme: hostnameSource
-	int m_iFirewallStartup;
+	CString m_sYourHostname;
+	bool m_bFirewallStartup;
 	int m_iLogLevel;
-	int m_iDisablePeerCache;
-	// ZZ:UploadSpeedSense -->
-    int m_iDynUpEnabled;
+	bool m_bDisablePeerCache;
+    bool m_bDynUpEnabled;
     int m_iDynUpMinUpload;
     int m_iDynUpPingTolerance;
     int m_iDynUpPingToleranceMilliseconds;
@@ -52,16 +52,17 @@ protected:
     int m_iDynUpGoingUpDivider;
     int m_iDynUpGoingDownDivider;
     int m_iDynUpNumberOfPings;
-	// ZZ:UploadSpeedSense <--
-    int m_iA4AFSaveCpu; // ZZ:DownloadManager
+    bool m_bA4AFSaveCpu;
 	int m_iExtractMetaData;
 
 	CSliderCtrl m_ctlFileBuffSize;
 	CSliderCtrl m_ctlQueueSize;
     CTreeOptionsCtrlEx m_ctrlTreeOptions;
 	bool m_bInitializedTreeOpts;
+	HTREEITEM m_htiTCPGroup;
 	HTREEITEM m_htiMaxCon5Sec;
 	HTREEITEM m_htiMaxHalfOpen;
+	HTREEITEM m_htiConditionalTCPAccept;
 	HTREEITEM m_htiAutoTakeEd2kLinks;
 	HTREEITEM m_htiVerboseGroup;
 	HTREEITEM m_htiVerbose;
@@ -71,7 +72,7 @@ protected:
 	HTREEITEM m_htiLogSecureIdent;
 	HTREEITEM m_htiLogFilteredIPs;
 	HTREEITEM m_htiLogFileSaving;
-    HTREEITEM m_htiLogA4AF; // ZZ:DownloadManager
+    HTREEITEM m_htiLogA4AF;
 	HTREEITEM m_htiLogUlDlEvents;
 	HTREEITEM m_htiCreditSystem;
 	HTREEITEM m_htiLog2Disk;
@@ -84,13 +85,12 @@ protected:
 	HTREEITEM m_htiExtControls;
 	HTREEITEM m_htiServerKeepAliveTimeout;
 	HTREEITEM m_htiSparsePartFiles;
-	HTREEITEM m_htiCheckDiskspace;	// SLUGFILLER: checkDiskspace
+	HTREEITEM m_htiCheckDiskspace;
 	HTREEITEM m_htiMinFreeDiskSpace;
-	HTREEITEM m_htiYourHostname;	// itsonlyme: hostnameSource
+	HTREEITEM m_htiYourHostname;
 	HTREEITEM m_htiFirewallStartup;
 	HTREEITEM m_htiLogLevel;
 	HTREEITEM m_htiDisablePeerCache;
-	// ZZ:UploadSpeedSense -->
     HTREEITEM m_htiDynUp;
 	HTREEITEM m_htiDynUpEnabled;
     HTREEITEM m_htiDynUpMinUpload;
@@ -102,16 +102,13 @@ protected:
     HTREEITEM m_htiDynUpGoingUpDivider;
     HTREEITEM m_htiDynUpGoingDownDivider;
     HTREEITEM m_htiDynUpNumberOfPings;
-	// ZZ:UploadSpeedSense <--
-	// ZZ:DownloadManager -->
     HTREEITEM m_htiA4AFSaveCpu;
-	// ZZ:DownloadManager <--
 	HTREEITEM m_htiExtractMetaData;
 	HTREEITEM m_htiExtractMetaDataNever;
 	HTREEITEM m_htiExtractMetaDataID3Lib;
-	HTREEITEM m_htiExtractMetaDataMediaDet;
+	//HTREEITEM m_htiExtractMetaDataMediaDet;
 
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
 	virtual BOOL OnApply();
 	virtual BOOL OnKillActive();

@@ -38,34 +38,29 @@ struct StandardPacketQueueEntry {
 
 class CEMSocket : public CAsyncSocketEx, public ThrottledFileSocket // ZZ:UploadBandWithThrottler (UDP)
 {
-//    friend class UploadBandwidthThrottler;
 	DECLARE_DYNAMIC(CEMSocket)
+
 public:
-	CEMSocket(void);
-	virtual ~CEMSocket(void);
+	CEMSocket();
+	virtual ~CEMSocket();
 
 	virtual void 	SendPacket(Packet* packet, bool delpacket = true, bool controlpacket = true, uint32 actualPayloadSize = 0);
-    bool    HasQueues();
-    bool	IsConnected() const {return byConnected == ES_CONNECTED;}
-	uint8	GetConState() const {return byConnected;}
-	virtual bool IsRawDataMode() const { return false; }
+    bool	IsConnected() const			{return byConnected == ES_CONNECTED;}
+	uint8	GetConState() const			{return byConnected;}
+	virtual bool IsRawDataMode() const	{ return false; }
 	void	SetDownloadLimit(uint32 limit);
 	void	DisableDownloadLimit();
 	BOOL	AsyncSelect(long lEvent);
+	virtual bool IsBusy() const			{return m_bBusy;}
+    virtual bool HasQueues() const		{return (sendbuffer || standartpacket_queue.GetCount() > 0 || controlpacket_queue.GetCount() > 0);} // not trustworthy threaded? but it's ok if we don't get the correct result now and then
 
 	virtual UINT GetTimeOut() const;
 	virtual void SetTimeOut(UINT uTimeOut);
 
-	// deadlake PROXYSUPPORT
-	// By Maverick: Connection necessary initalizing calls are done by class itself and not anymore by the Owner
 	virtual BOOL Connect(LPCTSTR lpszHostAddress, UINT nHostPort);
 	virtual BOOL Connect(SOCKADDR* pSockAddr, int iSockAddrLen);
 	void InitProxySupport();
-	// Reset Layer Chain
 	virtual void RemoveAllLayers();
-
-    //DWORD   GetLastSendLatency() { return (m_Average_sendlatency_list.GetCount() > 0)?(m_Average_sendlatency_list.GetTail().latency):0; }
-    //DWORD   GetAverageLatency() { return (m_Average_sendlatency_list.GetCount() > 0)?(m_latency_sum/m_Average_sendlatency_list.GetCount()):0; }
 
     DWORD GetLastCalledSend() { return lastCalledSend; }
 
@@ -79,6 +74,7 @@ public:
     virtual SocketSentBytes SendFileAndControlData(uint32 maxNumberOfBytesToSend, uint32 minFragSize) { return Send(maxNumberOfBytesToSend, minFragSize, false); };
 
     uint32	GetNeededBytes();
+
 #ifdef _DEBUG
 	// Diagnostic Support
 	virtual void AssertValid() const;
@@ -86,7 +82,7 @@ public:
 #endif
 
 protected:
-	virtual int	OnLayerCallback(const CAsyncSocketExLayer *pLayer, int nType, int nParam1, int nParam2);	// deadlake PROXYSUPPORT
+	virtual int	OnLayerCallback(const CAsyncSocketExLayer *pLayer, int nType, int nParam1, int nParam2);
 	
 	virtual void	DataReceived(const BYTE* pcData, UINT uSize);
 	virtual bool	PacketReceived(Packet* packet) = 0;
@@ -97,8 +93,6 @@ protected:
 
 	uint8	byConnected;
 	UINT	m_uTimeOut;
-
-	// deadlake PROXYSUPPORT
 	bool	m_ProxyConnectFailed;
 	CAsyncProxySocketLayer* m_pProxyLayer;
 
@@ -130,34 +124,18 @@ private:
 
 	CTypedPtrList<CPtrList, Packet*> controlpacket_queue;
 	CList<StandardPacketQueueEntry> standartpacket_queue;
-
     bool m_currentPacket_is_controlpacket;
-
     CCriticalSection sendLocker;
-    //uint64 m_controlSize;
-    //uint64 m_standardSize;
-
     uint64 m_numberOfSentBytesCompleteFile;
     uint64 m_numberOfSentBytesPartFile;
     uint64 m_numberOfSentBytesControlPacket;
     bool m_currentPackageIsFromPartFile;
-
-	bool	m_bAccelerateUpload;
+	bool m_bAccelerateUpload;
     DWORD lastCalledSend;
     DWORD lastSent;
-	uint32	lastFinishedStandard;
-
-    //void StoppedSendSoUpdateStats();
-    //void CleanSendLatencyList();
-    //DWORD   m_startSendTick;
-    //CList<SocketTransferStats> m_Average_sendlatency_list;
-    //DWORD   m_lastSendLatency;
-    //uint32 m_latency_sum;
-    //bool m_wasBlocked;
-
+	uint32 lastFinishedStandard;
     uint32 m_actualPayloadSize;
     uint32 m_actualPayloadSizeSent;
-
     bool m_bBusy;
     bool m_hasSent;
 };

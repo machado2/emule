@@ -18,7 +18,6 @@
 #include "emule.h"
 #include "Sockets.h"
 #include "Opcodes.h"
-#include "SearchList.h"
 #include "UDPSocket.h"
 #include "Exceptions.h"
 #include "OtherFunctions.h"
@@ -30,7 +29,6 @@
 #include "SafeFile.h"
 #include "Packets.h"
 #include "SharedFileList.h"
-#include "Version.h"
 #include "PeerCacheFinder.h"
 #include "emuleDlg.h"
 #include "SearchDlg.h"
@@ -71,7 +69,7 @@ void CServerConnect::TryAnotherConnectionrequest()
 		}
 
 		// Barry - Only auto-connect to static server option
-		if (thePrefs.AutoConnectStaticOnly())
+		if (thePrefs.GetAutoConnectToStaticServersOnly())
 		{
 			if (next_server->IsStaticMember())
                 ConnectToServer(next_server, true);
@@ -91,7 +89,7 @@ void CServerConnect::ConnectToAnyServer(uint32 startAt, bool prioSort, bool isAu
 	theApp.emuledlg->ShowConnectionState();
 
 	// Barry - Only auto-connect to static server option
-	if (thePrefs.AutoConnectStaticOnly() && isAuto)
+	if (thePrefs.GetAutoConnectToStaticServersOnly() && isAuto)
 	{
 		bool anystatic = false;
 		CServer *next_server; 
@@ -113,7 +111,7 @@ void CServerConnect::ConnectToAnyServer(uint32 startAt, bool prioSort, bool isAu
 	}
 
 	used_list->SetServerPosition(startAt);
-	if (thePrefs.Score() && prioSort)
+	if (thePrefs.GetUseServerPriorities() && prioSort)
 		used_list->Sort();
 
 	if (used_list->GetServerCount() == 0){
@@ -218,10 +216,10 @@ void CServerConnect::ConnectionEstablished(CServerSocket* sender)
 		// eMule Version (14-Mar-2004: requested by lugdunummaster (need for LowID clients which have no chance 
 		// to send an Hello packet to the server during the callback test))
 		CTag tagMuleVersion(CT_EMULE_VERSION, 
-							//(uCompatibleClientID	<< 24) |
-							(VERSION_MJR			<< 17) |
-							(VERSION_MIN			<< 10) |
-							(VERSION_UPDATE			<<  7) );
+							//(uCompatibleClientID		<< 24) |
+							(CemuleApp::m_nVersionMjr	<< 17) |
+							(CemuleApp::m_nVersionMin	<< 10) |
+							(CemuleApp::m_nVersionUpd	<<  7) );
 		tagMuleVersion.WriteTagToFile(&data);
 
 		Packet* packet = new Packet(&data);
@@ -245,7 +243,7 @@ void CServerConnect::ConnectionEstablished(CServerSocket* sender)
 		theApp.emuledlg->serverwnd->serverlistctrl.RemoveAllDeadServers();
 
 		// tecxx 1609 2002 - serverlist update
-		if (thePrefs.AddServersFromServer())
+		if (thePrefs.GetAddServersFromServer())
 		{
 			Packet* packet = new Packet(OP_GETSERVERLIST,0);
 			if (thePrefs.GetDebugServerTCPLevel() > 0)
@@ -349,7 +347,7 @@ void CServerConnect::ConnectionFailed(CServerSocket* sender){
 			if (thePrefs.Reconnect() && !connecting){
 				ConnectToAnyServer();		
 			}
-			if (thePrefs.GetNotifierPopOnImportantError()) {
+			if (thePrefs.GetNotifierOnImportantError()) {
 				theApp.emuledlg->ShowNotifier(GetResString(IDS_CONNECTIONLOST), TBN_IMPORTANTEVENT);
 			}
 			break;
@@ -534,15 +532,28 @@ bool CServerConnect::IsLocalServer(uint32 dwIP, uint16 nPort){
 	return false;
 }
 
-void CServerConnect::InitLocalIP(){
+// wrap 'gethostname' to let compiler know it might throw an exception
+int PASCAL FAR _gethostname(OUT char FAR * name, IN int namelen) throw(...)
+{
+	return gethostname(name, namelen);
+}
+
+// wrap 'gethostbyname' to let compiler know it might throw an exception
+struct hostent FAR * PASCAL FAR _gethostbyname(IN const char FAR * name) throw(...)
+{
+	return gethostbyname(name);
+}
+
+void CServerConnect::InitLocalIP()
+{
 	m_nLocalIP = 0;
 	// Don't use 'gethostbyname(NULL)'. The winsock DLL may be replaced by a DLL from a third party
 	// which is not fully compatible to the original winsock DLL. ppl reported crash with SCORSOCK.DLL
 	// when using 'gethostbyname(NULL)'.
 	try{
 		char szHost[256];
-		if (gethostname(szHost, sizeof szHost) == 0){
-			hostent* pHostEnt = gethostbyname(szHost);
+		if (_gethostname(szHost, sizeof szHost) == 0){
+			hostent* pHostEnt = _gethostbyname(szHost);
 			if (pHostEnt != NULL && pHostEnt->h_length == 4 && pHostEnt->h_addr_list[0] != NULL)
 				m_nLocalIP = *((uint32*)pHostEnt->h_addr_list[0]);
 		}

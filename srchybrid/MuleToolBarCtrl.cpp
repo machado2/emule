@@ -39,15 +39,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
-#if (_WIN32_IE < 0x0500)
-#define TBN_INITCUSTOMIZE       (TBN_FIRST - 23)
-#define    TBNRF_HIDEHELP       0x00000001
-#endif
-
-#ifndef TBSTYLE_EX_HIDECLIPPEDBUTTONS
-#define TBSTYLE_EX_HIDECLIPPEDBUTTONS       0x00000010  // don't show partially obscured buttons
-#endif
-
 #define	NUM_BUTTON_BITMAPS	14
 
 #define	EMULTB_BASEEXT		_T("eMuleToolbar.kad02")
@@ -118,7 +109,7 @@ void CMuleToolbarCtrl::Init(void)
 	// add button-text:
 	TCHAR cButtonStrings[2000];
 	int lLen, lLen2;
-	m_buttoncount=0;
+	m_buttoncount = 0;
 	
 	_tcscpy(cButtonStrings, GetResString(IDS_MAIN_BTN_CONNECT));
 	lLen = _tcslen(GetResString(IDS_MAIN_BTN_CONNECT)) + 1;
@@ -192,23 +183,23 @@ void CMuleToolbarCtrl::Init(void)
 		TBButtons[i].idCommand	= IDC_TOOLBARBUTTON + i;
 		TBButtons[i].iString	= i;
 
-		switch(i)
+		switch (TBButtons[i].idCommand)
 		{
-		case 0:
-		case 9:
-		case 10:
-		case 11:
-			TBButtons[i].fsStyle = TBSTYLE_BUTTON;
-			break;
+			case TBBTN_CONNECT:
+			case TBBTN_OPTIONS:
+			case TBBTN_TOOLS:
+			case TBBTN_HELP:
+				TBButtons[i].fsStyle = TBSTYLE_BUTTON;
+				break;
 		}
 	}
 
 	// set button image indices
 	int iBitmap = 0;
-	for(int i = 0; i < m_buttoncount; i++)
+	for (int i = 0; i < m_buttoncount; i++)
 	{		
 		TBButtons[i].iBitmap = iBitmap;
-		if (i == 0) // 'Connect' button has 3 states
+		if (TBButtons[i].idCommand == TBBTN_CONNECT) // 'Connect' button has 3 states
 			iBitmap += 3;
 		else
 			iBitmap += 1;
@@ -1027,10 +1018,6 @@ void CMuleToolbarCtrl::ForceRecalcLayout()
 }
 
 #ifdef _DEBUG
-
-#ifndef TBIF_BYINDEX
-#define TBIF_BYINDEX            0x80000000
-#endif
 
 void CMuleToolbarCtrl::Dump()
 {

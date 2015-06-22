@@ -589,7 +589,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "사용자명:"
     IDS_CD_UHASH            "사용자해시:"
-    IDS_CD_CSOFT            "소프트웨어:"
+    IDS_CD_CSOFT            "소프트웨어"
     IDS_CD_UIP              "IP 주소:"
     IDS_CD_SIP              "서버 IP:"
     IDS_CD_VERSION          "버젼:"
@@ -1109,13 +1109,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "알려진 클라이언트 목록 사용 안함"
     IDS_DISABLEQUEUELIST    "큐 목록 사용 안함"
     IDS_USECREDITSYSTEM     "신용 시스템 사용 (업로드시 우대)"
-    IDS_FIRSTAUTODOWN       "eMule이 다운로드 우선 순위를 관리하도록 하겠습니까?\r\r이 옵션을 켜면 소스가 많은 다운로드 때문에 소스가 적은 다운로드가 영향을 받는 일이 없도록 해 줍니다.\r\r만약 v0.26이나 그 이하의 클라이언트에서 업데이트 했다면, 진행 중이었던 모든 다운로드는 자동 우선 순위를 사용하도록 설정됩니다.\r이 옵션은 다음 다운로드 부터 적용됩니다. (기본값 예)"
-    IDS_FIRSTAUTOUP         "eMule이 업로드 우선 순위를 관리하도록 하겠습니까?\r\r이 옵션을 켜면 희귀한 파일을 더 많이 밀어주기 때문에 상대적으로 유명한 파일을 다른 사람이 가져가기는 힘들게 됩니다.\r이 옵션을 끄면 유명한 파일을 더 많이 밀어주게 되므로 상대적으로 희귀한 파일을 다른 사람이 가져가기는 힘들게 됩니다.\r\r만약 v0.26이나 그 이하의 클라이언트에서 업데이트 했다면, 공유되어 있던 모든 파일들은 자동 우선 순위를 사용하도록 설정됩니다.\r이 옵션은 앞으로 공유될 파일들에 대해서만 적용됩니다. (기본값 예)"
-    IDS_FIRSTCREDITSYSTEM   "당신한테 업로드한 사람들을 우대하겠습니까?\r\r이것은 신용 시스템이라고도 불립니다. 이 옵션을 켜면 주지는 않고 받아만 가는 사람들에게 불이익을 주게 됩니다. 만약 배포가 주 목적이라면 이 옵션은 꺼 두십시요.\r\r(기본값 예)"
-    IDS_FIRSTFULLCHUNK      "덩어리 단위로 업로드 하겠습니까?\r\r덩어리 단위를 사용하게 되면 클라이언트가 덩어리를 더 빨리 완료할 수 있게 해 줍니다. 이 옵션을 끄면 큐가 더 빨리 순환됩니다. 만약 배포가 주 목적이라면, 이 옵션은 켜 두십시요.\r\r(기본값 예)"
-    IDS_FIRSTSAFECON        "안전한 접속을 사용하겠습니까?\r\r이 기능을 끄면 좀 더 빠른 접속이 가능하지만, 거짓 lowID를 받는 원인이 될 수 있습니다.\r\r(기본값 아니오)"
+    IDS_FIRSTAUTODOWN       "Enable this option if you want eMule to manage your download priorities.\n\nTurning this on will allow eMule to make sure downloads with a lot of sources do not interfere with downloads that have few sources. This option will only affect future downloads."
+    IDS_FIRSTAUTOUP         "Enable this option if you want eMule to manage your upload priorities.\n\nTurning this on will allow eMule to boost rare files meaning popular files will be harder for other people to get. Turning this off will allow eMule to upload popular files more often meaning rare files will be harder for other people to get. This option will only affect future shared files."
+    IDS_FIRSTCREDITSYSTEM   "Do you want to reward people that upload to you?\n\nThis is commonly known as the Credit System. Turning this on will help fight against leachers. If you are a dedicated releaser, you will want to turn this off."
+    IDS_FIRSTFULLCHUNK      "Enable this option if you want to upload full chunks.\n\nUsing full chunk gives the client a better chance to complete a chunk. Turning this off will help rotate your queue faster. If you are a dedicated releaser, you will want to turn this on."
+    IDS_FIRSTSAFECON        "Enable this option if you want eMule to connect using Safe Connect.\n\nTurning this feature off allows eMule to connect to servers a little faster, but can cause you to get more false LowID connects."
     IDS_FIRSTRUNASSIST      "처음 사용자를 위한 설정 마법사를 실행하겠습니까?"
-    IDS_FIRSTAUTOCON        "시작할 때 자동 접속을 하겠습니까?\r\r(기본값 아니오)"
+    IDS_FIRSTAUTOCON        "Enable this option if you want eMule to connect at startup."
     IDS_FIRSTCOMPLETE       "마법사를 통한 설정을 끝냈습니다.\r\r설정 아이콘을 클릭하면 더 많은 옵션을 볼 수 있습니다. 자세한 설명이나 지원이 필요하면 F1을 눌러 도움말을 참조하십시요!"
 END
 
@@ -1310,7 +1310,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "문제가 있음"
     IDS_LONGHRS             "시"
     IDS_STATS_LARGESTFILE   "제일 큰 공유 파일"
-    IDS_CLIENTSOFTWARE      "클라이언트 소프트웨어"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Part 파일"
     IDS_STATS_DATASOURCE    "데이터 소스"
     IDS_STATS_DSFILE        "완료된 파일"
@@ -1334,7 +1334,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "모든 통계 복사"
     IDS_STATS_MNUTREEHTML   "HTML 특징"
     IDS_STATS_EXPORT2HTML   "모든 통계 내보내기"
-    IDS_STATS_EXPORTVIS     "보이는 것 모두 내보내기"
     IDS_STATS_MNUTREECPYVIS "보이는 것 모두 복사"
     IDS_STATS_MNUTREEEXPANDALL "모든 섹션 확장"
     IDS_STATS_MNUTREECOLLAPSEALL "모든 섹션 축소"
@@ -1387,13 +1386,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "버전"
-    IDS_ALL_A4AF_TO_THIS    "지금 바로 모든 A4AF 소스를 이 파일로 전환"
     IDS_PASTE               "붙여넣기"
-    IDS_ALL_A4AF_TO_OTHER   "지금 바로 모든 A4AF 소스를 다른 파일로 전환"
-    IDS_ALL_A4AF_AUTO       "자동으로 모든 A4AF 소스를 이 파일로 전환"
-    IDS_SWAP_A4AF_TO_THIS   "지금 바로 A4AF 소스를 이 파일로 전환"
-    IDS_SWAP_A4AF_TO_OTHER  "지금 바로 A4AF 소스를 다른 파일로 교환"
-    IDS_A4AF                "소스 처리 (A4AF)"
+    IDS_A4AF                "소스 처리"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "MobileMule 사용"
     IDS_AUTOCAT_LABEL       "자동 분류 할당 (패턴, 구분자 |)"
@@ -1594,7 +1588,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "보안 ID 기록"
     IDS_LOG_FILTERED_IPS    "걸러지거나 무시된 IP 기록"
     IDS_LOG_FILE_SAVING     "파일 저장 행위 기록"
-    IDS_IPFILTERFILES       "모든 IP 필터 파일 (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP 필터 파일 (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian 파일 (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|텍스트 파일 (*.txt)|*.txt|모든 파일 (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|ZIP Files (*.zip;*.gz)|*.zip;*.gz|All Files (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "정말로 선택된 IP 필터를 삭제하겠습니까?"
     IDS_TOTAL_IPFILTER_LABEL "총 IP 필터 개수:"
     IDS_TOTAL_IPS_LABEL     "총 IP 개수:"
@@ -1707,7 +1701,7 @@ STRINGTABLE
 BEGIN
     IDS_MAXHALFOPENCONS     "최대 하프 오픈(Half Open) 연결"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "윈도우를 시작할 때 실행되게 하려면 이곳을 체크하세요. [기본값 사용안함]"
+                            "윈도우를 시작할 때 실행되게 하려면 이곳을 체크하세요. (기본값 사용안함)"
     IDS_KAD_WAITCBK         "콜백 Kad 대기"
     IDS_KAD_TOOMANDYKADLKPS "Kad 찾기가 너무 많음"
     IDS_PCDS_CLIENTWAIT     "ClientWait"
@@ -1826,6 +1820,91 @@ BEGIN
     IDS_NOTES               "Notes"
     IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Shutdown eMule"
+    IDS_WEB_REBOOT          "Reboot system"
+    IDS_WEB_SHUTDOWNSYSTEM  "Shutdown system"
+    IDS_WEB_ADMINMENU       "Admin Menu"
+    IDS_WEB_MAIN_CLOSE      "Do you really want eMule to terminate?"
+    IDS_WEB_MAIN_REBOOT     "Do you really want the system to reboot?"
+    IDS_WEB_MAIN_SHUTDOWN   "Do you really want the system to shutdown?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Show banned clients on queue"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Show friends on queue"
+    IDS_WEB_SESSIONTIMEOUT  "Session Timeout"
+    IDS_WEB_ALLOWHILEVFUNC  "Allow exit eMule, reboot and shutdown"
+    IDS_SETPFSLIMIT         "Source Limit..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Please enter the new source limit for the selected file(s) ! \n(set to 0 to use global setting)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Do you want incoming folders included in the old incoming folder to be updated now?"
+    IDS_USESPEECH           "Speak notification message"
+    IDS_CONDTCPACCEPT       "Fast connection reject"
+    IDS_TCPIP_CONNS         "TCP/IP connections"
+    IDS_ERR_DELFILE         "Failed to delete file ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Do you want to cleanup the filenames of the selected files?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s seems to be corrupted and will be replaced"
+    IDS_UPLOADING           "Uploading"
+    IDS_CANCELLED           "Cancelled"
+    IDS_PW_REMEMBERDOWNLOADED "Remember downloaded files"
+    IDS_PW_REMEMBERCANCELLED "Remember cancelled files"
+    IDS_AVAILABLEPARTS      "Available Parts"
+    IDS_NOSOUND             "No sound"
+    IDS_PW_RECEIVERADDRESS  "Recipient address:"
+    IDS_PW_ENABLEEMAIL      "Enable Email Notifications"
+    IDS_EMULENOTIFICATION   "eMule Notification"
+    IDS_PW_EMAILNOTIFICATIONS "Email Notifications"
+    IDS_PW_SMTPSERVER       "SMTP-Server:"
+    IDS_PW_SENDERADDRESS    "Sender address:"
+    IDS_PW_SHOWTRANSTOOLBAR "Show additional toolbar on transferwindow"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Shared parts"
+    IDS_INCOMING_FILES      "Incoming Files"
+    IDS_INCOMPLETE_FILES    "Incomplete Files"
+    IDS_SHARED_DIRECTORIES  "Shared Directories"
+    IDS_SHAREDIR            "Share directory"
+    IDS_SHAREDIRSUB         "Share with subdirectories"
+    IDS_UNSHAREDIR          "Unshare directory"
+    IDS_UNSHAREDIRSUB       "Unshare with subdirectories"
+    IDS_ALLSHAREDFILES      "All Shared Files"
+    IDS_ALLDIRECTORIES      "All Directories"
+    IDS_SEARCHRELATED       "Find related files"
+    IDS_RELATED             "Related"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Collection List"
+    IDS_SEARCH_EMULECOLLECTION "Collection"
+    IDS_COLL_REPLACEEXISTING "Do you want to replace existing file?"
+    IDS_COLL_ERR_DELETING   "Some Unknown error in deleting old file. Exit without saving?"
+    IDS_CREATECOLLECTION    "Create Collection"
+    IDS_COLL_SIGN           "Sign Collection with Name and Key"
+    IDS_AUTHOR              "Author"
+    IDS_AUTHORKEY           "Author Key"
+    IDS_COLL_ADDINCAT       "Add new downloads in a Collection Category"
+    IDS_MODIFYCOLLECTION    "Modify Collection"
+    IDS_VIEWCOLLECTION      "View Collection"
+    IDS_COLL_TEXTFORMAT     "Save collection In A Simple Text Format"
+    IDS_SEARCHAUTHORCOLLECTION "Search Author's Collections"
+    IDS_ERR_DUPL_FILES      "Duplicate shared files: ""%s"" and ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting failed too many times. Disabling Upload SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Done with preparations. Starting control of upload speed. (First 60 seconds will be in fast reaction mode)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Raised upload limit in prefs detected. Going into fast reaction mode for 60 seconds."
+    IDS_USS_STATE_PREPARING "Preparing..."
+    IDS_USS_STATE_WAITING   "Waiting..."
+    IDS_USS_STATE_ERROR     "Error!"
 END
 
 #endif    // Korean resources

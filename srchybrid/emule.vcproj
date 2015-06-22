@@ -24,19 +24,19 @@
 				AdditionalIncludeDirectories=".,..;..\id3lib\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;ID3LIB_LINKOPTION=1"
 				MinimalRebuild="TRUE"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				BufferSecurityCheck="TRUE"
 				EnableFunctionLevelLinking="TRUE"
 				TreatWChar_tAsBuiltInType="TRUE"
 				UsePrecompiledHeader="3"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="FALSE"
+				WarningLevel="4"
 				DebugInformationFormat="3"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib winmm.lib ws2_32.lib gdiplus.lib ADSIId.lib ..\zlib\debug\zlib.lib ..\crypto51\debug\cryptlib.lib ..\id3lib\libprj\id3libD.lib .\CxImage\debug\cximage.lib ..\png\debug\png.lib ..\ResizableLib\DebugUnicode\ResizableLib.lib"
+				AdditionalDependencies="version.lib winmm.lib ws2_32.lib gdiplus.lib ADSIId.lib crypt32.lib ..\zlib\debug\zlib.lib ..\crypto51\debug\cryptlib.lib ..\id3lib\libprj\id3libD.lib .\CxImage\debug\cximage.lib ..\png\debug\png.lib ..\ResizableLib\DebugUnicode\ResizableLib.lib"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				IgnoreDefaultLibraryNames=""
@@ -93,13 +93,75 @@
 				TreatWChar_tAsBuiltInType="TRUE"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="FALSE"
 				DebugInformationFormat="3"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib ws2_32.lib gdiplus.lib ADSIId.lib ..\zlib\release\zlib.lib ..\crypto51\release\cryptlib.lib ..\id3lib\libprj\id3lib.lib .\CxImage\Release\cximage.lib ..\png\Release\png.lib ..\ResizableLib\ReleaseUnicode\ResizableLib.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib ws2_32.lib gdiplus.lib ADSIId.lib crypt32.lib ..\zlib\release\zlib.lib ..\crypto51\release\cryptlib.lib ..\id3lib\libprj\id3lib.lib .\CxImage\Release\cximage.lib ..\png\Release\png.lib ..\ResizableLib\ReleaseUnicode\ResizableLib.lib"
+				SuppressStartupBanner="TRUE"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				DelayLoadDLLs="oleacc.dll;gdiplus.dll"
+				GenerateDebugInformation="TRUE"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="FALSE"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG;_UNICODE;UNICODE"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(IntDir)"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
+		<Configuration
+			Name="Beta|Win32"
+			OutputDirectory="Beta"
+			IntermediateDirectory="Beta"
+			ConfigurationType="1"
+			UseOfMFC="1"
+			CharacterSet="1"
+			DeleteExtensionsOnClean="*.obj;*.ilk;*.pdb;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.bat;*.asm;$(TargetPath)"
+			WholeProgramOptimization="TRUE">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="TRUE"
+				EnableFiberSafeOptimizations="TRUE"
+				OptimizeForProcessor="2"
+				OptimizeForWindowsApplication="TRUE"
+				AdditionalIncludeDirectories=".,..;..\id3lib\include"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;ID3LIB_LINKOPTION=1;_BETA"
+				StringPooling="TRUE"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="TRUE"
+				EnableFunctionLevelLinking="TRUE"
+				TreatWChar_tAsBuiltInType="TRUE"
+				UsePrecompiledHeader="3"
+				WarningLevel="3"
+				DebugInformationFormat="3"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib ws2_32.lib gdiplus.lib ADSIId.lib crypt32.lib ..\zlib\release\zlib.lib ..\crypto51\release\cryptlib.lib ..\id3lib\libprj\id3lib.lib .\CxImage\Release\cximage.lib ..\png\Release\png.lib ..\ResizableLib\ReleaseUnicode\ResizableLib.lib"
 				SuppressStartupBanner="TRUE"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				DelayLoadDLLs="oleacc.dll;gdiplus.dll"
@@ -137,6 +199,9 @@
 				RelativePath="AICHSyncThread.cpp">
 			</File>
 			<File
+				RelativePath="AbstractFile.cpp">
+			</File>
+			<File
 				RelativePath="ArchiveRecovery.cpp">
 			</File>
 			<File
@@ -162,6 +227,15 @@
 			</File>
 			<File
 				RelativePath="ClientUDPSocket.cpp">
+			</File>
+			<File
+				RelativePath="Collection.cpp">
+			</File>
+			<File
+				RelativePath="CollectionFile.cpp">
+			</File>
+			<File
+				RelativePath="CommentListCtrl.cpp">
 			</File>
 			<File
 				RelativePath="CorruptionBlackBox.cpp">
@@ -195,6 +269,9 @@
 			</File>
 			<File
 				RelativePath="FriendList.cpp">
+			</File>
+			<File
+				RelativePath="GZipFile.cpp">
 			</File>
 			<File
 				RelativePath="HttpClientReqSocket.cpp">
@@ -237,6 +314,12 @@
 						Name="VCCLCompilerTool"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Beta|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="MD4_asm.asm">
@@ -250,6 +333,14 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff /Fo $(IntDir)\ &quot;$(InputPath)&quot;
+"
+						Outputs="$(IntDir)\$(InputName).obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Beta|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="ml.exe /c /Cx /coff /Fo $(IntDir)\ &quot;$(InputPath)&quot;
@@ -283,6 +374,12 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Beta|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="OtherFunctions.cpp">
@@ -305,6 +402,12 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Performing Custom Build Step"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Beta|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Performing Custom Build Step"/>
@@ -361,6 +464,14 @@
 "
 						Outputs="$(IntDir)\$(InputName).obj"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Beta|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff /Fo $(IntDir)\ &quot;$(InputPath)&quot;
+"
+						Outputs="$(IntDir)\$(InputName).obj"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="SafeFile.cpp">
@@ -375,6 +486,12 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Beta|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -395,6 +512,9 @@
 				RelativePath="Scheduler.cpp">
 			</File>
 			<File
+				RelativePath="SearchFile.cpp">
+			</File>
+			<File
 				RelativePath="SearchList.cpp">
 			</File>
 			<File
@@ -402,6 +522,9 @@
 			</File>
 			<File
 				RelativePath="SelfTest.cpp">
+			</File>
+			<File
+				RelativePath="SendMail.cpp">
 			</File>
 			<File
 				RelativePath="Server.cpp">
@@ -419,6 +542,9 @@
 				RelativePath="Sockets.cpp">
 			</File>
 			<File
+				RelativePath="StatisticFile.cpp">
+			</File>
+			<File
 				RelativePath="Statistics.cpp">
 			</File>
 			<File
@@ -431,6 +557,12 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Beta|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
@@ -458,6 +590,9 @@
 				RelativePath="UploadQueue.cpp">
 			</File>
 			<File
+				RelativePath="Version.cpp">
+			</File>
+			<File
 				RelativePath="WebSocket.cpp">
 			</File>
 			<File
@@ -474,6 +609,9 @@
 				</File>
 				<File
 					RelativePath="kademlia\io\DataIO.cpp">
+				</File>
+				<File
+					RelativePath="kademlia\kademlia\Entry.cpp">
 				</File>
 				<File
 					RelativePath="kademlia\io\FileIO.cpp">
@@ -536,6 +674,9 @@
 				RelativePath="AICHSyncThread.h">
 			</File>
 			<File
+				RelativePath="AbstractFile.h">
+			</File>
+			<File
 				RelativePath="ArchiveRecovery.h">
 			</File>
 			<File
@@ -561,6 +702,15 @@
 			</File>
 			<File
 				RelativePath="ClientVersionInfo.h">
+			</File>
+			<File
+				RelativePath="Collection.h">
+			</File>
+			<File
+				RelativePath="CollectionFile.h">
+			</File>
+			<File
+				RelativePath="CommentListCtrl.h">
 			</File>
 			<File
 				RelativePath="CorruptionBlackBox.h">
@@ -597,6 +747,9 @@
 			</File>
 			<File
 				RelativePath="FriendList.h">
+			</File>
+			<File
+				RelativePath="GZipFile.h">
 			</File>
 			<File
 				RelativePath="HttpClientReqSocket.h">
@@ -677,6 +830,9 @@
 				RelativePath="Preview.h">
 			</File>
 			<File
+				RelativePath="QArray.h">
+			</File>
+			<File
 				RelativePath="Quantize.h">
 			</File>
 			<File
@@ -695,6 +851,9 @@
 				RelativePath="Scheduler.h">
 			</File>
 			<File
+				RelativePath="SearchFile.h">
+			</File>
+			<File
 				RelativePath="SearchFrm.h">
 			</File>
 			<File
@@ -702,6 +861,9 @@
 			</File>
 			<File
 				RelativePath="SecRunAsUser.h">
+			</File>
+			<File
+				RelativePath="SendMail.h">
 			</File>
 			<File
 				RelativePath="Server.h">
@@ -717,6 +879,9 @@
 			</File>
 			<File
 				RelativePath="Sockets.h">
+			</File>
+			<File
+				RelativePath="StatisticFile.h">
 			</File>
 			<File
 				RelativePath="Statistics.h">
@@ -881,6 +1046,12 @@
 				RelativePath="ClosableTabCtrl.cpp">
 			</File>
 			<File
+				RelativePath="CollectionCreateDialog.cpp">
+			</File>
+			<File
+				RelativePath="CollectionViewDialog.cpp">
+			</File>
+			<File
 				RelativePath="ColorButton.cpp">
 			</File>
 			<File
@@ -917,6 +1088,9 @@
 				RelativePath="DirectoryTreeCtrl.cpp">
 			</File>
 			<File
+				RelativePath="DropDownButton.cpp">
+			</File>
+			<File
 				RelativePath="DropTarget.cpp">
 			</File>
 			<File
@@ -933,6 +1107,12 @@
 			</File>
 			<File
 				RelativePath="FileDetailDialog.cpp">
+			</File>
+			<File
+				RelativePath="FileDetailDialogInfo.cpp">
+			</File>
+			<File
+				RelativePath="FileDetailDialogName.cpp">
 			</File>
 			<File
 				RelativePath="FileInfoDialog.cpp">
@@ -996,9 +1176,6 @@
 			</File>
 			<File
 				RelativePath="MiniMule.cpp">
-			</File>
-			<File
-				RelativePath="MuleListCtrl.cpp">
 			</File>
 			<File
 				RelativePath="MuleStatusBarCtrl.cpp">
@@ -1085,6 +1262,9 @@
 				RelativePath="ServerWnd.cpp">
 			</File>
 			<File
+				RelativePath="SharedDirsTreeCtrl.cpp">
+			</File>
+			<File
 				RelativePath="SharedFilesWnd.cpp">
 			</File>
 			<File
@@ -1106,7 +1286,16 @@
 				RelativePath="TaskbarNotifier.cpp">
 			</File>
 			<File
+				RelativePath="TextToSpeech.cpp">
+			</File>
+			<File
 				RelativePath="TitleMenu.cpp">
+			</File>
+			<File
+				RelativePath="ToolBarCtrlX.cpp">
+			</File>
+			<File
+				RelativePath="ToolTipCtrlX.cpp">
 			</File>
 			<File
 				RelativePath="TransferWnd.cpp">
@@ -1142,6 +1331,12 @@
 					RelativePath="ClientListCtrl.cpp">
 				</File>
 				<File
+					RelativePath="CollectionListCtrl.cpp">
+				</File>
+				<File
+					RelativePath="DownloadClientsCtrl.cpp">
+				</File>
+				<File
 					RelativePath="DownloadListCtrl.cpp">
 				</File>
 				<File
@@ -1152,6 +1347,9 @@
 				</File>
 				<File
 					RelativePath="KadSearchListCtrl.cpp">
+				</File>
+				<File
+					RelativePath="MuleListCtrl.cpp">
 				</File>
 				<File
 					RelativePath="QueueListCtrl.cpp">
@@ -1239,6 +1437,12 @@
 				RelativePath="ClosableTabCtrl.h">
 			</File>
 			<File
+				RelativePath="CollectionCreateDialog.h">
+			</File>
+			<File
+				RelativePath="CollectionViewDialog.h">
+			</File>
+			<File
 				RelativePath="ColorButton.h">
 			</File>
 			<File
@@ -1278,6 +1482,9 @@
 				RelativePath="Drawgdix.h">
 			</File>
 			<File
+				RelativePath="DropDownButton.h">
+			</File>
+			<File
 				RelativePath="DropTarget.h">
 			</File>
 			<File
@@ -1294,6 +1501,12 @@
 			</File>
 			<File
 				RelativePath="FileDetailDialog.h">
+			</File>
+			<File
+				RelativePath="FileDetailDialogInfo.h">
+			</File>
+			<File
+				RelativePath="FileDetailDialogName.h">
 			</File>
 			<File
 				RelativePath="FileInfoDialog.h">
@@ -1464,6 +1677,9 @@
 				RelativePath="ServerWnd.h">
 			</File>
 			<File
+				RelativePath="SharedDirsTreeCtrl.h">
+			</File>
+			<File
 				RelativePath="SharedFilesWnd.h">
 			</File>
 			<File
@@ -1485,7 +1701,16 @@
 				RelativePath="TaskbarNotifier.h">
 			</File>
 			<File
+				RelativePath="TextToSpeech.h">
+			</File>
+			<File
 				RelativePath="TitleMenu.h">
+			</File>
+			<File
+				RelativePath="ToolBarCtrlX.h">
+			</File>
+			<File
+				RelativePath="ToolTipCtrlX.h">
 			</File>
 			<File
 				RelativePath="TransferWnd.h">
@@ -1522,6 +1747,12 @@
 				Filter="">
 				<File
 					RelativePath="ClientListCtrl.h">
+				</File>
+				<File
+					RelativePath="CollectionListCtrl.h">
+				</File>
+				<File
+					RelativePath="DownloadClientsCtrl.h">
 				</File>
 				<File
 					RelativePath="DownloadListCtrl.h">
@@ -1589,7 +1820,7 @@
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;manifest">
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;manifest;gif">
 			<File
 				RelativePath="res\Cancel.ico">
 			</File>
@@ -1687,28 +1918,55 @@
 				RelativePath="res\Connected.gif">
 			</File>
 			<File
+				RelativePath="res\ConnectedHighHigh.gif">
+			</File>
+			<File
 				RelativePath="res\ConnectedHighHigh.ico">
+			</File>
+			<File
+				RelativePath="res\ConnectedHighLow.gif">
 			</File>
 			<File
 				RelativePath="res\ConnectedHighLow.ico">
 			</File>
 			<File
+				RelativePath="res\ConnectedHighNot.gif">
+			</File>
+			<File
 				RelativePath="res\ConnectedHighNot.ico">
+			</File>
+			<File
+				RelativePath="res\ConnectedLowHigh.gif">
 			</File>
 			<File
 				RelativePath="res\ConnectedLowHigh.ico">
 			</File>
 			<File
+				RelativePath="res\ConnectedLowLow.gif">
+			</File>
+			<File
 				RelativePath="res\ConnectedLowLow.ico">
+			</File>
+			<File
+				RelativePath="res\ConnectedLowNot.gif">
 			</File>
 			<File
 				RelativePath="res\ConnectedLowNot.ico">
 			</File>
 			<File
+				RelativePath="res\ConnectedNotHigh.gif">
+			</File>
+			<File
 				RelativePath="res\ConnectedNotHigh.ico">
 			</File>
 			<File
+				RelativePath="res\ConnectedNotLow.gif">
+			</File>
+			<File
 				RelativePath="res\ConnectedNotLow.ico">
+			</File>
+			<File
+				RelativePath="res\ConnectedNotNot.gif">
 			</File>
 			<File
 				RelativePath="res\ConnectedNotNot.ico">
@@ -1744,6 +2002,9 @@
 				RelativePath="res\CopyVisible.ico">
 			</File>
 			<File
+				RelativePath="res\CycleView.ico">
+			</File>
+			<File
 				RelativePath="res\Delete.ico">
 			</File>
 			<File
@@ -1763,6 +2024,9 @@
 			</File>
 			<File
 				RelativePath="res\Download.ico">
+			</File>
+			<File
+				RelativePath="res\DownloadFiles.ico">
 			</File>
 			<File
 				RelativePath="res\Empty.ico">
@@ -1844,6 +2108,9 @@
 			</File>
 			<File
 				RelativePath="res\FileTypeDocument.ico">
+			</File>
+			<File
+				RelativePath="res\FileTypeEmuleCollection.ico">
 			</File>
 			<File
 				RelativePath="res\FileTypePicture.ico">
@@ -2033,6 +2300,9 @@
 				RelativePath="res\RatingBad.ico">
 			</File>
 			<File
+				RelativePath="res\Records.ico">
+			</File>
+			<File
 				RelativePath="res\Rename.ico">
 			</File>
 			<File
@@ -2103,6 +2373,9 @@
 			</File>
 			<File
 				RelativePath="res\SpeedMin.ico">
+			</File>
+			<File
+				RelativePath="res\SplitWindow.ico">
 			</File>
 			<File
 				RelativePath="res\Start.ico">
@@ -2207,6 +2480,15 @@
 				RelativePath="res\UserMessage.ico">
 			</File>
 			<File
+				RelativePath="res\ViewDownload.ico">
+			</File>
+			<File
+				RelativePath="res\ViewUpDown.ico">
+			</File>
+			<File
+				RelativePath="res\ViewUpload.ico">
+			</File>
+			<File
 				RelativePath="res\Web.ico">
 			</File>
 			<File
@@ -2217,6 +2499,9 @@
 			</File>
 			<File
 				RelativePath="res\Wizzard.ico">
+			</File>
+			<File
+				RelativePath="res\all.ico">
 			</File>
 			<File
 				RelativePath="res\eD2kLink.ico">
@@ -2234,10 +2519,37 @@
 				RelativePath="res\emule.rc2">
 			</File>
 			<File
+				RelativePath="res\emuleColl.ico">
+			</File>
+			<File
+				RelativePath="res\emuleCollAdd.ico">
+			</File>
+			<File
+				RelativePath="res\emuleCollEdit.ico">
+			</File>
+			<File
+				RelativePath="res\emuleCollSearch.ico">
+			</File>
+			<File
+				RelativePath="res\emuleCollView.ico">
+			</File>
+			<File
+				RelativePath="res\emuleCollectionFileType.ico">
+			</File>
+			<File
+				RelativePath="res\incomplete.ico">
+			</File>
+			<File
 				RelativePath="res\mule_wiz.gif">
 			</File>
 			<File
 				RelativePath="res\mule_wiz_hdr.gif">
+			</File>
+			<File
+				RelativePath="res\queue.ico">
+			</File>
+			<File
+				RelativePath="res\transfers.ico">
 			</File>
 		</Filter>
 		<Filter
@@ -2247,10 +2559,10 @@
 				RelativePath="..\setup\Template.eMuleSkin.ini">
 			</File>
 			<File
-				RelativePath="..\setup\eMule.tmpl">
+				RelativePath="..\setup\eMule Light.tmpl">
 			</File>
 			<File
-				RelativePath="..\setup\eMule_Chicane.tmpl">
+				RelativePath="..\setup\eMule.tmpl">
 			</File>
 			<File
 				RelativePath="..\setup\staticservers.dat">
@@ -2259,7 +2571,20 @@
 				RelativePath="..\setup\webservices.dat">
 			</File>
 		</Filter>
+		<Filter
+			Name="Documents"
+			Filter="">
+			<File
+				RelativePath="..\docs\kademlia\changelog.txt">
+			</File>
+			<File
+				RelativePath="..\docs\readme.txt">
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="emule.rc"/>
 	</Globals>
 </VisualStudioProject>

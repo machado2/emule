@@ -23,7 +23,6 @@
 #include <io.h>
 #include <share.h>
 #include "emule.h"
-#include "version.h"
 #include "opcodes.h"
 #include "mdump.h"
 #include "Scheduler.h"
@@ -66,15 +65,19 @@
 #include "FirewallOpener.h"
 #include "StringConversion.h"
 #include "Log.h"
+#include "Collection.h"
 
 CLogFile theLog;
 CLogFile theVerboseLog;
+bool g_bLowColorDesktop = false;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+//#define USE_16COLOR_ICONS
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -205,19 +208,22 @@ CemuleApp::CemuleApp(LPCTSTR lpszAppName)
 // MOD Note: Do not change this part - Merkur
 
 	// this is the "base" version number <major>.<minor>.<update>.<build>
-	m_dwProductVersionMS = MAKELONG(VERSION_MIN, VERSION_MJR);
-	m_dwProductVersionLS = MAKELONG(VERSION_BUILD, VERSION_UPDATE);
+	m_dwProductVersionMS = MAKELONG(CemuleApp::m_nVersionMin, CemuleApp::m_nVersionMjr);
+	m_dwProductVersionLS = MAKELONG(CemuleApp::m_nVersionBld, CemuleApp::m_nVersionUpd);
 
 	// create a string version (e.g. "0.30a")
-	ASSERT( VERSION_UPDATE + 'a' <= 'f' );
+	ASSERT( CemuleApp::m_nVersionUpd + 'a' <= 'f' );
 #ifdef _DEBUG
-	m_strCurVersionLong.Format(_T("%u.%u%c.%u"), VERSION_MJR, VERSION_MIN, _T('a') + VERSION_UPDATE, VERSION_BUILD);
+	m_strCurVersionLong.Format(_T("%u.%u%c.%u"), CemuleApp::m_nVersionMjr, CemuleApp::m_nVersionMin, _T('a') + CemuleApp::m_nVersionUpd, CemuleApp::m_nVersionBld);
 #else
-	m_strCurVersionLong.Format(_T("%u.%u%c"), VERSION_MJR, VERSION_MIN, _T('a') + VERSION_UPDATE);
+	m_strCurVersionLong.Format(_T("%u.%u%c"), CemuleApp::m_nVersionMjr, CemuleApp::m_nVersionMin, _T('a') + CemuleApp::m_nVersionUpd);
 #endif
 
 #ifdef _DEBUG
 	m_strCurVersionLong += _T(" DEBUG");
+#endif
+#ifdef _BETA
+	m_strCurVersionLong += _T(" BETA");
 #endif
 
 	// create the protocol version number
@@ -227,7 +233,7 @@ CemuleApp::CemuleApp(LPCTSTR lpszAppName)
 	ASSERT( m_uCurVersionShort < 0x99 );
 
 	// create the version check number
-	strTmp.Format(_T("0x%u%c"), m_dwProductVersionMS, _T('A') + VERSION_UPDATE);
+	strTmp.Format(_T("0x%u%c"), m_dwProductVersionMS, _T('A') + CemuleApp::m_nVersionUpd);
 	VERIFY( _stscanf(strTmp, _T("0x%x"), &m_uCurVersionCheck) == 1 );
 	ASSERT( m_uCurVersionCheck < 0x999 );
 // MOD Note: end
@@ -275,6 +281,11 @@ BOOL CemuleApp::InitInstance()
 	TCHAR szAppDir[MAX_PATH];
 	VERIFY( GetModuleFileName(m_hInstance, szAppDir, ARRSIZE(szAppDir)) );
 	VERIFY( PathRemoveFileSpec(szAppDir) );
+	
+	TCHAR szConfigDir[MAX_PATH];
+	PathCombine(szConfigDir, szAppDir, CONFIGFOLDER);
+	::CreateDirectory(szConfigDir, NULL);
+	
 	TCHAR szPrefFilePath[MAX_PATH];
 	PathCombine(szPrefFilePath, szAppDir, CONFIGFOLDER _T("preferences.ini"));
 	if (m_pszProfileName)
@@ -294,7 +305,9 @@ BOOL CemuleApp::InitInstance()
 	///////////////////////////////////////////////////////////////////////////
 	// Install crash dump creation
 	//
+#ifndef _BETA
 	if (GetProfileInt(_T("eMule"), _T("CreateCrashDump"), 0))
+#endif
 		theCrashDumper.Enable(_T("eMule ") + m_strCurVersionLong, true);
 
 
@@ -307,7 +320,7 @@ BOOL CemuleApp::InitInstance()
 
 	AfxOleInit();
 
-	pendinglink = 0;
+	pstrPendingLink = NULL;
 	if (ProcessCommandline())
 		return false;
 
@@ -327,8 +340,22 @@ BOOL CemuleApp::InitInstance()
 	{
 		if (GetProfileInt(_T("eMule"), _T("CheckComctl32"), 1)) // just in case some user's can not install that package and have to survive without it..
 		{
-			if (AfxMessageBox(GetResString(IDS_COMCTRL32_DLL_TOOOLD),MB_ICONSTOP | MB_YESNO)==IDYES)
+			if (AfxMessageBox(GetResString(IDS_COMCTRL32_DLL_TOOOLD), MB_ICONSTOP | MB_YESNO) == IDYES)
 				ShellOpenFile(_T("http://www.microsoft.com/downloads/details.aspx?FamilyID=cb2cf3a2-8025-4e8f-8511-9b476a8d35d2"));
+
+			// No need to exit eMule, it will most likely work as expected but it will have some GUI glitches here and there..
+		}
+	}
+
+	DWORD dwShellMjr = 4;
+	DWORD dwShellMin = 0;
+	AtlGetShellVersion(&dwShellMjr, &dwShellMin);
+	ULONGLONG ullShellVer = MAKEDLLVERULL(dwShellMjr,dwShellMin,0,0);
+	if (ullShellVer < MAKEDLLVERULL(4,7,0,0))
+	{
+		if (GetProfileInt(_T("eMule"), _T("CheckShell32"), 1)) // just in case some user's can not install that package and have to survive without it..
+		{
+			AfxMessageBox(_T("Windows Shell library (SHELL32.DLL) is too old!\r\n\r\neMule detected a version of the \"Windows Shell library (SHELL32.DLL)\" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the \"Windows Shell library (SHELL32.DLL)\" to at least version 4.7.\r\n\r\nDownload and install an update of the \"Windows Shell library (SHELL32.DLL)\" at Microsoft (R) Download Center."), MB_ICONSTOP);
 
 			// No need to exit eMule, it will most likely work as expected but it will have some GUI glitches here and there..
 		}
@@ -336,15 +363,22 @@ BOOL CemuleApp::InitInstance()
 
 	m_sizSmallSystemIcon.cx = GetSystemMetrics(SM_CXSMICON);
 	m_sizSmallSystemIcon.cy = GetSystemMetrics(SM_CYSMICON);
+	UpdateDesktopColorDepth();
 
-	m_iDfltImageListColorFlags = GetAppImageListColorFlag();
-
-	// don't use 32bit color resources if not supported by commctl
-	if (m_iDfltImageListColorFlags == ILC_COLOR32 && m_ullComCtrlVer < MAKEDLLVERULL(6,0,0,0))
-		m_iDfltImageListColorFlags = ILC_COLOR16;
-	// don't use >8bit color resources with OSs with restricted memory for GDI resources
-	if (afxData.bWin95)
-		m_iDfltImageListColorFlags = ILC_COLOR8;
+	if (g_bLowColorDesktop)
+	{
+		m_iDfltImageListColorFlags = ILC_COLOR4;
+	}
+	else
+	{
+		m_iDfltImageListColorFlags = GetAppImageListColorFlag();
+		// don't use 32bit color resources if not supported by commctl
+		if (m_iDfltImageListColorFlags == ILC_COLOR32 && m_ullComCtrlVer < MAKEDLLVERULL(6,0,0,0))
+			m_iDfltImageListColorFlags = ILC_COLOR16;
+		// don't use >8bit color resources with OSs with restricted memory for GDI resources
+		if (afxData.bWin95)
+			m_iDfltImageListColorFlags = ILC_COLOR8;
+	}
 
 	CWinApp::InitInstance();
 
@@ -380,26 +414,36 @@ BOOL CemuleApp::InitInstance()
 	// check if we have to restart eMule as Secure user
 	if (thePrefs.IsRunAsUserEnabled()){
 		CSecRunAsUser rau;
-		if ( rau.PrepareUser() && rau.RestartAsUser() )
+		eResult res = rau.RestartSecure();
+		if (res == RES_OK_NEED_RESTART)
 			return FALSE; // emule restart as secure user, kill this instance
-		else if ( !rau.IsRunningEmuleAccount() ){
+		else if (res == RES_FAILED){
 			// something went wrong
 			theApp.QueueLogLine(false, GetResString(IDS_RAU_FAILED), rau.GetCurrentUserW()); 
 		}
 	}
 
+	if (thePrefs.GetRTLWindowsLayout())
+		EnableRTLWindowsLayout();
 
 #ifdef _DEBUG
-	_sntprintf(_szCrtDebugReportFilePath, ARRSIZE(_szCrtDebugReportFilePath), _T("%s\\%s"), thePrefs.GetAppDir(), APP_CRT_DEBUG_LOG_FILE);
+	_sntprintf(_szCrtDebugReportFilePath, ARRSIZE(_szCrtDebugReportFilePath), _T("%s%s"), thePrefs.GetLogDir(), APP_CRT_DEBUG_LOG_FILE);
 #endif
 	VERIFY( theLog.SetFilePath(thePrefs.GetLogDir() + _T("eMule.log")) );
 	VERIFY( theVerboseLog.SetFilePath(thePrefs.GetLogDir() + _T("eMule_Verbose.log")) );
 	theLog.SetMaxFileSize(thePrefs.GetMaxLogFileSize());
+	theLog.SetFileFormat(thePrefs.GetLogFileFormat());
 	theVerboseLog.SetMaxFileSize(thePrefs.GetMaxLogFileSize());
-	if (thePrefs.GetLog2Disk())
+	theVerboseLog.SetFileFormat(thePrefs.GetLogFileFormat());
+	if (thePrefs.GetLog2Disk()){
 		theLog.Open();
-	if (thePrefs.GetDebug2Disk())
+		theLog.Log(_T("\r\n"));
+	}
+	if (thePrefs.GetDebug2Disk()){
 		theVerboseLog.Open();
+		theVerboseLog.Log(_T("\r\n"));
+	}
+	Log(_T("Starting eMule v%s"), m_strCurVersionLong);
 
 	CemuleDlg dlg;
 	emuledlg = &dlg;
@@ -407,9 +451,9 @@ BOOL CemuleApp::InitInstance()
 
 	// Barry - Auto-take ed2k links
 	if (thePrefs.AutoTakeED2KLinks())
-		Ask4RegFix(false, true);
+		Ask4RegFix(false, true, false);
 
-	if( thePrefs.GetAutoStart() )
+	if (thePrefs.GetAutoStart())
 		::AddAutoStart();
 	else
 		::RemAutoStart();
@@ -464,7 +508,7 @@ BOOL CemuleApp::InitInstance()
 	thePerfLog.Startup();
 	dlg.DoModal();
 
-
+	DisableRTLWindowsLayout();
 
 	// Barry - Restore old registry if required
 	if (thePrefs.AutoTakeED2KLinks())
@@ -489,7 +533,14 @@ BOOL CemuleApp::InitInstance()
 	ClearDebugLogQueue(true);
 	ClearLogQueue(true);
 
+	AddDebugLogLine(DLP_VERYLOW, _T("%hs: returning: FALSE"), __FUNCTION__);
 	return FALSE;
+}
+
+int CemuleApp::ExitInstance()
+{
+	AddDebugLogLine(DLP_VERYLOW, _T("%hs"), __FUNCTION__);
+	return CWinApp::ExitInstance();
 }
 
 #ifdef _DEBUG
@@ -565,24 +616,39 @@ bool CemuleApp::ProcessCommandline()
 	}
 
     if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen) {
-		CString command = cmdInfo.m_strFileName;
-		if (command.Find(_T("://"))>0) {
-			sendstruct.cbData = (command.GetLength() + 1)*sizeof(TCHAR);
+		CString* command = new CString(cmdInfo.m_strFileName);
+		if (command->Find(_T("://"))>0) {
+			sendstruct.cbData = (command->GetLength() + 1)*sizeof(TCHAR);
 			sendstruct.dwData = OP_ED2KLINK; 
-			sendstruct.lpData = command.GetBuffer(); 
+			sendstruct.lpData = command->GetBuffer(); 
     		if (maininst){
       			SendMessage(maininst, WM_COPYDATA, (WPARAM)0, (LPARAM)(PCOPYDATASTRUCT)&sendstruct);
+				delete command;
       			return true; 
 			} 
     		else 
-      			pendinglink = new CString(command);
-		} else {
-			sendstruct.cbData = (command.GetLength() + 1)*sizeof(TCHAR);
-			sendstruct.dwData = OP_CLCOMMAND;
-			sendstruct.lpData = command.GetBuffer(); 
+      			pstrPendingLink = command;
+		}
+		else if (CCollection::HasCollectionExtention(*command)){
+			sendstruct.cbData = (command->GetLength() + 1)*sizeof(TCHAR);
+			sendstruct.dwData = OP_COLLECTION; 
+			sendstruct.lpData = command->GetBuffer(); 
     		if (maininst){
       			SendMessage(maininst, WM_COPYDATA, (WPARAM)0, (LPARAM)(PCOPYDATASTRUCT)&sendstruct);
-      			return true; 
+      			delete command;
+				return true; 
+			} 
+    		else 
+      			pstrPendingLink = command;
+		}
+		else {
+			sendstruct.cbData = (command->GetLength() + 1)*sizeof(TCHAR);
+			sendstruct.dwData = OP_CLCOMMAND;
+			sendstruct.lpData = command->GetBuffer(); 
+    		if (maininst){
+      			SendMessage(maininst, WM_COPYDATA, (WPARAM)0, (LPARAM)(PCOPYDATASTRUCT)&sendstruct);
+      			delete command;
+				return true; 
 			}
 		}
     }
@@ -1162,6 +1228,14 @@ HICON CemuleApp::LoadIcon(UINT nIDResource) const
 
 HICON CemuleApp::LoadIcon(LPCTSTR lpszResourceName, int cx, int cy, UINT uFlags) const
 {
+	// Test using of 16 color icons. If 'LR_VGACOLOR' is specified _and_ the icon resource
+	// contains a 16 color version, that 16 color version will be loaded. If there is no
+	// 16 color version available, Windows will use the next (better) color version found.
+#ifdef _DEBUG
+	if (g_bLowColorDesktop)
+		uFlags |= LR_VGACOLOR;
+#endif
+
 	HICON hIcon = NULL;
 	LPCTSTR pszSkinProfile = thePrefs.GetSkinProfile();
 	if (pszSkinProfile != NULL && pszSkinProfile[0] != _T('\0'))
@@ -1208,42 +1282,55 @@ HICON CemuleApp::LoadIcon(LPCTSTR lpszResourceName, int cx, int cy, UINT uFlags)
 
 			if (bExtractIcon)
 			{
-				HICON aIconsLarge[1] = {0};
-				HICON aIconsSmall[1] = {0};
-				int iExtractedIcons = ExtractIconEx(strFullResPath, iIconIndex, aIconsLarge, aIconsSmall, 1);
-				if (iExtractedIcons > 0) // 'iExtractedIcons' is 2(!) if we get a large and a small icon
+				if (uFlags != 0 || !(cx == cy && (cx == 16 || cx == 32)))
 				{
-					// alway try to return the icon size which was requested
-					if (cx == 16 && aIconsSmall[0] != NULL)
+					static UINT (WINAPI *_pfnPrivateExtractIcons)(LPCTSTR, int, int, int, HICON*, UINT*, UINT, UINT) = (UINT (WINAPI *)(LPCTSTR, int, int, int, HICON*, UINT*, UINT, UINT))GetProcAddress(GetModuleHandle(_T("user32")), _TWINAPI("PrivateExtractIcons"));
+					if (_pfnPrivateExtractIcons)
 					{
-						hIcon = aIconsSmall[0];
-						aIconsSmall[0] = NULL;
+						UINT uIconId;
+						(*_pfnPrivateExtractIcons)(strFullResPath, iIconIndex, cx, cy, &hIcon, &uIconId, 1, uFlags);
 					}
-					else if (cx == 32 && aIconsLarge[0] != NULL)
+				}
+
+				if (hIcon == NULL)
+				{
+					HICON aIconsLarge[1] = {0};
+					HICON aIconsSmall[1] = {0};
+					int iExtractedIcons = ExtractIconEx(strFullResPath, iIconIndex, aIconsLarge, aIconsSmall, 1);
+					if (iExtractedIcons > 0) // 'iExtractedIcons' is 2(!) if we get a large and a small icon
 					{
-						hIcon = aIconsLarge[0];
-						aIconsLarge[0] = NULL;
-					}
-					else
-					{
-						if (aIconsSmall[0] != NULL)
+						// alway try to return the icon size which was requested
+						if (cx == 16 && aIconsSmall[0] != NULL)
 						{
 							hIcon = aIconsSmall[0];
 							aIconsSmall[0] = NULL;
 						}
-						else if (aIconsLarge[0] != NULL)
+						else if (cx == 32 && aIconsLarge[0] != NULL)
 						{
 							hIcon = aIconsLarge[0];
 							aIconsLarge[0] = NULL;
 						}
-					}
+						else
+						{
+							if (aIconsSmall[0] != NULL)
+							{
+								hIcon = aIconsSmall[0];
+								aIconsSmall[0] = NULL;
+							}
+							else if (aIconsLarge[0] != NULL)
+							{
+								hIcon = aIconsLarge[0];
+								aIconsLarge[0] = NULL;
+							}
+						}
 
-					for (int i = 0; i < ARRSIZE(aIconsLarge); i++)
-					{
-						if (aIconsLarge[i] != NULL)
-							VERIFY( DestroyIcon(aIconsLarge[i]) );
-						if (aIconsSmall[i] != NULL)
-							VERIFY( DestroyIcon(aIconsSmall[i]) );
+						for (int i = 0; i < ARRSIZE(aIconsLarge); i++)
+						{
+							if (aIconsLarge[i] != NULL)
+								VERIFY( DestroyIcon(aIconsLarge[i]) );
+							if (aIconsSmall[i] != NULL)
+								VERIFY( DestroyIcon(aIconsSmall[i]) );
+						}
 					}
 				}
 			}
@@ -1513,7 +1600,7 @@ bool CemuleApp::IsEd2kServerLinkInClipboard()
 }
 
 // Elandal:ThreadSafeLogging -->
-void CemuleApp::QueueDebugLogLine(bool addtostatusbar, LPCTSTR line, ...)
+void CemuleApp::QueueDebugLogLine(bool bAddToStatusbar, LPCTSTR line, ...)
 {
 	if (!thePrefs.GetVerbose())
 		return;
@@ -1528,14 +1615,14 @@ void CemuleApp::QueueDebugLogLine(bool addtostatusbar, LPCTSTR line, ...)
 	va_end(argptr);
 
 	SLogItem* newItem = new SLogItem;
-	newItem->uFlags = LOG_DEBUG | LOG_STATUSBAR;
+	newItem->uFlags = LOG_DEBUG | (bAddToStatusbar ? LOG_STATUSBAR : 0);
 	newItem->line = bufferline;
 	m_QueueDebugLog.AddTail(newItem);
 
 	m_queueLock.Unlock();
 }
 
-void CemuleApp::QueueLogLine(bool addtostatusbar, LPCTSTR line,...)
+void CemuleApp::QueueLogLine(bool bAddToStatusbar, LPCTSTR line, ...)
 {
 	m_queueLock.Lock();
 
@@ -1547,7 +1634,7 @@ void CemuleApp::QueueLogLine(bool addtostatusbar, LPCTSTR line,...)
 	va_end(argptr);
 
 	SLogItem* newItem = new SLogItem;
-	newItem->uFlags = LOG_STATUSBAR;
+	newItem->uFlags = bAddToStatusbar ? LOG_STATUSBAR : 0;
 	newItem->line = bufferline;
 	m_QueueLog.AddTail(newItem);
 
@@ -1672,6 +1759,14 @@ void CemuleApp::CreateAllFonts()
 	///////////////////////////////////////////////////////////////////////////
 	// Default GUI Font (Bold)
 	//
+	// OEM_FIXED_FONT		Terminal
+	// ANSI_FIXED_FONT		Courier
+	// ANSI_VAR_FONT		MS Sans Serif
+	// SYSTEM_FONT			System
+	// DEVICE_DEFAULT_FONT	System
+	// SYSTEM_FIXED_FONT	Fixedsys
+	// DEFAULT_GUI_FONT		MS Shell Dlg
+
 	CFont* pFont = CFont::FromHandle((HFONT)GetStockObject(DEFAULT_GUI_FONT));
 	if (pFont)
 	{
@@ -1694,4 +1789,13 @@ void CemuleApp::CreateBackwardDiagonalBrush()
 		logBrush.lbColor = RGB(0, 0, 0);
 		VERIFY( m_brushBackwardDiagonal.CreateBrushIndirect(&logBrush) );
 	}
+}
+
+void CemuleApp::UpdateDesktopColorDepth()
+{
+	g_bLowColorDesktop = (GetDesktopColorDepth() <= 8);
+#ifdef _DEBUG
+	if (!g_bLowColorDesktop)
+		g_bLowColorDesktop = (GetProfileInt(_T("eMule"), _T("LowColorRes"), 0) != 0);
+#endif
 }

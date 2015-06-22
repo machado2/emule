@@ -78,7 +78,7 @@ bool CCBBRecord::CanMerge(uint32 nStartPos, uint32 nEndPos, uint32 dwIP, EBBRSta
 }
 
 void CCorruptionBlackBox::Init(uint32 nFileSize) {
-	m_aaRecords.SetSize(((uint64)nFileSize + (PARTSIZE - 1)) / PARTSIZE);
+	m_aaRecords.SetSize((INT_PTR)(((uint64)nFileSize + (PARTSIZE - 1)) / PARTSIZE));
 }
 
 void CCorruptionBlackBox::Free() {
@@ -144,7 +144,7 @@ void CCorruptionBlackBox::TransferredData(uint32 nStartPos, uint32 nEndPos, cons
 					m_aaRecords[nPart].Add(CCBBRecord(nTmpStartPos2,nTmpEndPos2, dwOldIP));
 					// and are done then
 				}
-				AddDebugLogLine(DLP_DEFAULT, false, _T("CorruptionBlackBox: Debug: %i bytes were rewritten and records replaced with new stats (1)"), (nRelEndPos - nRelStartPos)+1);
+				DEBUG_ONLY( AddDebugLogLine(DLP_DEFAULT, false, _T("CorruptionBlackBox: Debug: %i bytes were rewritten and records replaced with new stats (1)"), (nRelEndPos - nRelStartPos)+1) );
 				return;
 			}
 			else if (m_aaRecords[nPart][i].m_nStartPos >= nRelStartPos && m_aaRecords[nPart][i].m_nStartPos <= nRelEndPos){
@@ -168,7 +168,7 @@ void CCorruptionBlackBox::TransferredData(uint32 nStartPos, uint32 nEndPos, cons
 		m_aaRecords[nPart].Add(CCBBRecord(nRelStartPos, nRelEndPos, dwSenderIP, BBR_NONE));
 	
 	if (ndbgRewritten > 0){
-		AddDebugLogLine(DLP_DEFAULT, false, _T("CorruptionBlackBox: Debug: %i bytes were rewritten and records replaced with new stats (2)"), ndbgRewritten);
+		DEBUG_ONLY( AddDebugLogLine(DLP_DEFAULT, false, _T("CorruptionBlackBox: Debug: %i bytes were rewritten and records replaced with new stats (2)"), ndbgRewritten) );
 	}
 }
 
@@ -190,7 +190,7 @@ void CCorruptionBlackBox::VerifiedData(uint32 nStartPos, uint32 nEndPos){
 		m_aaRecords.SetSize(nPart+1);
 	}
 	uint32 nDbgVerifiedBytes = 0;
-	uint32 nDbgOldEntries = m_aaRecords[nPart].GetCount();
+	//uint32 nDbgOldEntries = m_aaRecords[nPart].GetCount();
 #ifdef _DEBUG
 	CMap<int, int, int, int> mapDebug;
 #endif
@@ -237,12 +237,12 @@ void CCorruptionBlackBox::VerifiedData(uint32 nStartPos, uint32 nEndPos){
 			}
 		}
 	}
-#ifdef _DEBUG
+/*#ifdef _DEBUG
 	uint32 nClients = mapDebug.GetCount();
 #else
 	uint32 nClients = 0;
 #endif
-	AddDebugLogLine(DLP_DEFAULT, false, _T("Found and marked %u recorded bytes of %u as verified in the CorruptionBlackBox records, %u(%u) records found, %u different clients"), nDbgVerifiedBytes, (nEndPos-nStartPos)+1, m_aaRecords[nPart].GetCount(), nDbgOldEntries, nClients);
+	AddDebugLogLine(DLP_DEFAULT, false, _T("Found and marked %u recorded bytes of %u as verified in the CorruptionBlackBox records, %u(%u) records found, %u different clients"), nDbgVerifiedBytes, (nEndPos-nStartPos)+1, m_aaRecords[nPart].GetCount(), nDbgOldEntries, nClients);*/
 }
 
 
@@ -358,7 +358,7 @@ void CCorruptionBlackBox::CorruptedData(uint32 nStartPos, uint32 nEndPos){
 			// him if the limit is reached
 			int nCorruptPercentage;
 			if ((aDataVerified[k] + aDataCorrupt[k]) > 0)
-				nCorruptPercentage = ((uint64)aDataCorrupt[k]*100)/(aDataVerified[k] + aDataCorrupt[k]);
+				nCorruptPercentage = (int)(((uint64)aDataCorrupt[k]*100)/(aDataVerified[k] + aDataCorrupt[k]));
 			else {
 				AddDebugLogLine(DLP_HIGH, false, _T("CorruptionBlackBox: Programm Error: No records for guilty client found!"));
 				ASSERT( false );

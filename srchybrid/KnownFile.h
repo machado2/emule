@@ -16,128 +16,19 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
 #include "BarShader.h"
+#include "StatisticFile.h"
+#include "AbstractFile.h"
 #include <list>
 
-#define	PARTSIZE			9728000
-#define	MAX_EMULE_FILE_SIZE	4290048000	// (4294967295/PARTSIZE)*PARTSIZE
-
-class CTag;
 class CxImage;
-namespace Kademlia{
-	class CUInt128;
-	class CEntry;
-	typedef std::list<CStringW> WordList;
-};
 class CUpDownClient;
 class Packet;
 class CFileDataIO;
 class CAICHHashTree;
 class CAICHHashSet;
+class CCollection;
 
 typedef CTypedPtrList<CPtrList, CUpDownClient*> CUpDownClientPtrList;
-
-class CFileStatistic
-{
-	friend class CKnownFile;
-	friend class CPartFile;
-public:
-	CFileStatistic()
-	{
-		requested = 0;
-		transferred = 0;
-		accepted = 0;
-		alltimerequested = 0;
-		alltimetransferred = 0;
-		alltimeaccepted = 0;
-	}
-
-	void	MergeFileStats( CFileStatistic* toMerge );
-	void	AddRequest();
-	void	AddAccepted();
-	void	AddTransferred(uint64 bytes);
-
-	UINT	GetRequests() const				{return requested;}
-	UINT	GetAccepts() const				{return accepted;}
-	uint64	GetTransferred() const			{return transferred;}
-	UINT	GetAllTimeRequests() const		{return alltimerequested;}
-	UINT	GetAllTimeAccepts() const		{return alltimeaccepted;}
-	uint64	GetAllTimeTransferred() const	{return alltimetransferred;}
-	
-	CKnownFile* fileParent;
-
-private:
-	uint32 requested;
-	uint32 accepted;
-	uint64 transferred;
-	uint32 alltimerequested;
-	uint64 alltimetransferred;
-	uint32 alltimeaccepted;
-};
-
-/*
-					   CPartFile
-					 /
-		  CKnownFile
-		/
-CAbstractFile
-		\
-		  CSearchFile
-*/
-class CAbstractFile: public CObject
-{
-	DECLARE_DYNAMIC(CAbstractFile)
-
-public:
-	CAbstractFile();
-	virtual ~CAbstractFile() { }
-
-	const CString& GetFileName() const { return m_strFileName; }
-	virtual void SetFileName(LPCTSTR pszFileName, bool bReplaceInvalidFileSystemChars = false, bool bAutoSetFileType = true); // 'bReplaceInvalidFileSystemChars' is set to 'false' for backward compatibility!
-
-	// returns the ED2K file type (an ASCII string)
-	const CString& GetFileType() const { return m_strFileType; }
-	virtual void SetFileType(LPCTSTR pszFileType);
-
-	// returns the file type which is used to be shown in the GUI
-	CString GetFileTypeDisplayStr() const;
-
-	const uchar* GetFileHash() const { return m_abyFileHash; }
-	void SetFileHash(const uchar* pucFileHash);
-	bool HasNullHash() const;
-
-	uint32 GetFileSize() const { return m_nFileSize; }
-	virtual void SetFileSize(uint32 nFileSize) { m_nFileSize = nFileSize; }
-
-	uint32 GetIntTagValue(uint8 tagname) const;
-	uint32 GetIntTagValue(LPCSTR tagname) const;
-	bool GetIntTagValue(uint8 tagname, uint32& ruValue) const;
-	const CString& GetStrTagValue(uint8 tagname) const;
-	const CString& GetStrTagValue(LPCSTR tagname) const;
-	CTag* GetTag(uint8 tagname, uint8 tagtype) const;
-	CTag* GetTag(LPCSTR tagname, uint8 tagtype) const;
-	CTag* GetTag(uint8 tagname) const;
-	CTag* GetTag(LPCSTR tagname) const;
-	void AddTagUnique(CTag* pTag);
-	const CArray<CTag*,CTag*>& GetTags() const { return taglist; }
-	void AddNote(Kademlia::CEntry* pEntry);
-	const CTypedPtrList<CPtrList, Kademlia::CEntry*>& getNotes() const { return CKadEntryPtrList; }
-
-#ifdef _DEBUG
-	// Diagnostic Support
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
-
-protected:
-	CString m_strFileName;
-	uchar	m_abyFileHash[16];
-	uint32	m_nFileSize;
-	CString m_strComment;
-	uint8	m_uRating;
-	CString m_strFileType;
-	CArray<CTag*,CTag*> taglist;
-	CTypedPtrList<CPtrList, Kademlia::CEntry*> CKadEntryPtrList;
-};
 
 class CKnownFile : public CAbstractFile
 {
@@ -145,7 +36,7 @@ class CKnownFile : public CAbstractFile
 
 public:
 	CKnownFile();
-	~CKnownFile();
+	virtual ~CKnownFile();
 
 	virtual void SetFileName(LPCTSTR pszFileName, bool bReplaceInvalidFileSystemChars = false); // 'bReplaceInvalidFileSystemChars' is set to 'false' for backward compatibility!
 
@@ -156,7 +47,6 @@ public:
 	void SetFilePath(LPCTSTR pszFilePath);
 
 	virtual bool CreateFromFile(LPCTSTR directory, LPCTSTR filename, LPVOID pvProgressParam); // create date, hashset and tags from a file
-	virtual bool IsPartFile() const { return false; }
 	virtual bool LoadFromFile(CFileDataIO* file);	//load date, hashset and tags from a .met file
 	bool	WriteToFile(CFileDataIO* file);
 	bool	CreateAICHHashSetOnly();
@@ -203,10 +93,8 @@ public:
 	virtual	void	DrawShareStatusBar(CDC* dc, LPCRECT rect, bool onlygreyrect, bool bFlat) const;
 
 	// comment
-	const CString& GetFileComment() /*const*/;
 	void	SetFileComment(LPCTSTR pszComment);
 
-	uint8	GetFileRating() /*const*/;
 	void	SetFileRating(uint8 uRating);
 
 	bool	GetPublishedED2K() const { return m_PublishedED2K; }
@@ -227,7 +115,7 @@ public:
 	bool	PublishNotes();
 
 	// file sharing
-	virtual Packet* CreateSrcInfoPacket(CUpDownClient* forClient) const;
+	virtual Packet* CreateSrcInfoPacket(const CUpDownClient* forClient) const;
 	UINT	GetMetaDataVer() const { return m_uMetaDataVer; }
 	void	UpdateMetaDataTags();
 	void	RemoveMetaDataTags();
@@ -244,13 +132,14 @@ public:
 	// NOTE: this value can *not* be compared with NT's version of the UTC time
 	uint32	m_tUtcLastModified;
 
-	CFileStatistic statistic;
+	CStatisticFile statistic;
 	time_t m_nCompleteSourcesTime;
 	uint16 m_nCompleteSourcesCount;
 	uint16 m_nCompleteSourcesCountLo;
 	uint16 m_nCompleteSourcesCountHi;
 	CUpDownClientPtrList m_ClientUploadList;
 	CArray<uint16, uint16> m_AvailPartFrequency;
+	CCollection* m_pCollection;
 
 #ifdef _DEBUG
 	// Diagnostic Support
@@ -266,7 +155,7 @@ protected:
 	void	CreateHash(CFile* pFile, UINT uSize, uchar* pucHash, CAICHHashTree* pShaHashOut = NULL) const;
 	bool	CreateHash(FILE* fp, UINT uSize, uchar* pucHash, CAICHHashTree* pShaHashOut = NULL) const;
 	bool	CreateHash(const uchar* pucData, UINT uSize, uchar* pucHash, CAICHHashTree* pShaHashOut = NULL) const;
-	void	LoadComment();
+	virtual void	UpdateFileRatingCommentAvail();
 
 	CArray<uchar*, uchar*>	hashlist;
 	CString					m_strDirectory;
@@ -280,7 +169,6 @@ private:
 	uint16	m_iED2KPartHashCount;
 	uint8	m_iUpPriority;
 	bool	m_bAutoUpPriority;
-	bool	m_bCommentLoaded;
 	bool	m_PublishedED2K;
 	uint32	kadFileSearchID;
 	uint32	m_lastPublishTimeKadSrc;

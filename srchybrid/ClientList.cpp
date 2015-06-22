@@ -38,6 +38,7 @@
 #include "serverwnd.h"
 #include "Log.h"
 #include "packets.h"
+#include "Statistics.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -50,7 +51,7 @@ CClientList::CClientList(){
 	m_dwLastBannCleanUp = 0;
 	m_dwLastTrackedCleanUp = 0;
 	m_dwLastClientCleanUp = 0;
-	m_bHaveBuddy = Disconnected;
+	m_nBuddyStatus = Disconnected;
 	m_bannedList.InitHashTable(331);
 	m_trackedClientsList.InitHashTable(2011);
 	m_globDeadSourceList.Init(true);
@@ -58,14 +59,7 @@ CClientList::CClientList(){
 }
 
 CClientList::~CClientList(){
-	POSITION pos = m_trackedClientsList.GetStartPosition();
-	uint32 nKey;
-	CDeletedClient* pResult;
-	while (pos != NULL){
-		m_trackedClientsList.GetNextAssoc( pos, nKey, pResult );
-		m_trackedClientsList.RemoveKey(nKey);
-		delete pResult;
-	}
+	RemoveAllTrackedClients();
 }
 
 void CClientList::GetStatistics(uint32 &ruTotalClients, int stats[NUM_CLIENTLIST_STATS], 
@@ -87,14 +81,10 @@ void CClientList::GetStatistics(uint32 &ruTotalClients, int stats[NUM_CLIENTLIST
 		switch (cur_client->GetClientSoft())
 		{
 			case SO_EMULE:
-			case SO_OLDEMULE:{
+			case SO_OLDEMULE:
 				stats[2]++;
-				//uint8 version = cur_client->GetMuleVersion();
-				//if (version == 0xFF || version == 0x66 || version==0x69 || version==0x90 || version==0x33 || version==0x60)
-				//	continue;
 				clientVersionEMule[cur_client->GetVersion()]++;
 				break;
-			}
 
 			case SO_EDONKEYHYBRID : 
 				stats[4]++;
@@ -198,13 +188,7 @@ bool CClientList::GiveClientsForTraceRoute() {
 void CClientList::RemoveClient(CUpDownClient* toremove, LPCTSTR pszReason){
 	POSITION pos = list.Find(toremove);
 	if (pos){
-		//just to be sure...
-		/*CString strInfo(_T("Client removed from CClientList::RemoveClient()."));
-		if (pszReason){
-			strInfo += _T(" Reason: ");
-			strInfo += pszReason;
-		}*/
-		theApp.uploadqueue->RemoveFromUploadQueue(toremove, /*strInfo*/pszReason);
+		theApp.uploadqueue->RemoveFromUploadQueue(toremove, pszReason);
 		theApp.uploadqueue->RemoveFromWaitingQueue(toremove);
 		theApp.downloadqueue->RemoveSource(toremove);
 		theApp.emuledlg->transferwnd->clientlistctrl.RemoveClient(toremove);
@@ -230,7 +214,7 @@ bool CClientList::AttachToAlreadyKnown(CUpDownClient** client, CClientReqSocket*
 	CUpDownClient* tocheck = (*client);
 	CUpDownClient* found_client = NULL;
 	CUpDownClient* found_client2 = NULL;
-	for (pos1 = list.GetHeadPosition();( pos2 = pos1 ) != NULL;){	//
+	for (pos1 = list.GetHeadPosition(); (pos2 = pos1) != NULL; ){
 		list.GetNext(pos1);
 		CUpDownClient* cur_client =	list.GetAt(pos2);
 		if (tocheck->Compare(cur_client,false)){ //matching userhash
@@ -347,18 +331,6 @@ CUpDownClient* CClientList::FindClientByIP_KadPort(uint32 ip, uint16 port) const
 	return 0;
 }
 
-//TODO: This needs to change to a random Kad user.
-CUpDownClient* CClientList::GetRandomKadClient() const
-{
-	for (POSITION pos = list.GetHeadPosition(); pos != NULL;)
-	{
-		CUpDownClient* cur_client =	list.GetNext(pos);
-		if (cur_client->GetKadPort())
-			return cur_client;
-	}
-	return 0;
-}
-
 CUpDownClient* CClientList::FindClientByServerID(uint32 uServerIP, uint32 uED2KUserID) const
 {
 	uint32 uHybridUserID = ntohl(uED2KUserID);
@@ -371,6 +343,10 @@ CUpDownClient* CClientList::FindClientByServerID(uint32 uServerIP, uint32 uED2KU
 	return 0;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////
+// Banned clients
+
 void CClientList::AddBannedClient(uint32 dwIP){
 	m_bannedList.SetAt(dwIP, ::GetTickCount());
 }
@@ -381,7 +357,6 @@ bool CClientList::IsBannedClient(uint32 dwIP) const
 	if (m_bannedList.Lookup(dwIP, dwBantime)){
 		if (dwBantime + CLIENTBANTIME > ::GetTickCount())
 			return true;
-		//RemoveBannedClient(dwIP);
 	}
 	return false; 
 }
@@ -390,8 +365,14 @@ void CClientList::RemoveBannedClient(uint32 dwIP){
 	m_bannedList.RemoveKey(dwIP);
 }
 
-////////////////////////////////////////
-/// Tracked clients
+void CClientList::RemoveAllBannedClients(){
+	m_bannedList.RemoveAll();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Tracked clients
+
 void CClientList::AddTrackClient(CUpDownClient* toadd){
 	CDeletedClient* pResult = 0;
 	if (m_trackedClientsList.Lookup(toadd->GetIP(), pResult)){
@@ -466,30 +447,51 @@ uint32 CClientList::GetBadRequests(const CUpDownClient* upcClient) const{
 		return 0;
 }
 
-void CClientList::Process(){
+void CClientList::RemoveAllTrackedClients(){
+	POSITION pos = m_trackedClientsList.GetStartPosition();
+	uint32 nKey;
+	CDeletedClient* pResult;
+	while (pos != NULL){
+		m_trackedClientsList.GetNextAssoc(pos, nKey, pResult);
+		m_trackedClientsList.RemoveKey(nKey);
+		delete pResult;
+	}
+}
+
+void CClientList::Process()
+{
+	///////////////////////////////////////////////////////////////////////////
+	// Cleanup banned client list
+	//
 	const uint32 cur_tick = ::GetTickCount();
-	if (m_dwLastBannCleanUp + BAN_CLEANUP_TIME < cur_tick){
+	if (m_dwLastBannCleanUp + BAN_CLEANUP_TIME < cur_tick)
+	{
 		m_dwLastBannCleanUp = cur_tick;
 		
 		POSITION pos = m_bannedList.GetStartPosition();
 		uint32 nKey;
 		uint32 dwBantime;
-		while (pos != NULL){
+		while (pos != NULL)
+		{
 			m_bannedList.GetNextAssoc( pos, nKey, dwBantime );
 			if (dwBantime + CLIENTBANTIME < cur_tick )
 				RemoveBannedClient(nKey);
 		}
 	}
 
-	
-	if (m_dwLastTrackedCleanUp + TRACKED_CLEANUP_TIME < cur_tick ){
+	///////////////////////////////////////////////////////////////////////////
+	// Cleanup tracked client list
+	//
+	if (m_dwLastTrackedCleanUp + TRACKED_CLEANUP_TIME < cur_tick)
+	{
 		m_dwLastTrackedCleanUp = cur_tick;
 		if (thePrefs.GetLogBannedClients())
 			AddDebugLogLine(false, _T("Cleaning up TrackedClientList, %i clients on List..."), m_trackedClientsList.GetCount());
 		POSITION pos = m_trackedClientsList.GetStartPosition();
 		uint32 nKey;
 		CDeletedClient* pResult;
-		while (pos != NULL){
+		while (pos != NULL)
+		{
 			m_trackedClientsList.GetNextAssoc( pos, nKey, pResult );
 			if (pResult->m_dwInserted + KEEPTRACK_TIME < cur_tick ){
 				m_trackedClientsList.RemoveKey(nKey);
@@ -500,7 +502,10 @@ void CClientList::Process(){
 			AddDebugLogLine(false, _T("...done, %i clients left on list"), m_trackedClientsList.GetCount());
 	}
 
-	//We need to try to connect to the clients in KadList
+	///////////////////////////////////////////////////////////////////////////
+	// Process Kad client list
+	//
+	//We need to try to connect to the clients in m_KadList
 	//If connected, remove them from the list and send a message back to Kad so we can send a ACK.
 	//If we don't connect, we need to remove the client..
 	//The sockets timeout should delete this object.
@@ -509,10 +514,10 @@ void CClientList::Process(){
 	// buddy is just a flag that is used to make sure we are still connected or connecting to a buddy.
 	buddyState buddy = Disconnected;
 
-	for (pos1 = KadList.GetHeadPosition();( pos2 = pos1 ) != NULL;)
+	for (pos1 = m_KadList.GetHeadPosition(); (pos2 = pos1) != NULL; )
 	{
-		KadList.GetNext(pos1);
-		CUpDownClient* cur_client =	KadList.GetAt(pos2);
+		m_KadList.GetNext(pos1);
+		CUpDownClient* cur_client =	m_KadList.GetAt(pos2);
 		if( !Kademlia::CKademlia::isRunning() )
 		{
 			//Clear out this list if we stop running Kad.
@@ -542,58 +547,66 @@ void CClientList::Process(){
 				//A firewalled client wants us to be his buddy.
 				//If we already have a buddy, we set Kad state to KS_NONE and it's removed in the next cycle.
 				//If not, this client will change to KS_CONNECTED_BUDDY when it connects.
-				if( m_bHaveBuddy == Connected )
+				if( m_nBuddyStatus == Connected )
 					cur_client->SetKadState(KS_NONE);
 				break;
+
 			case KS_QUEUED_BUDDY:
 				//We are firewalled and want to request this client to be a buddy.
 				//But first we check to make sure we are not already trying another client.
 				//If we are not already trying. We try to connect to this client.
 				//If we are already connected to a buddy, we set this client to KS_NONE and it's removed next cycle.
 				//If we are trying to connect to a buddy, we just ignore as the one we are trying may fail and we can then try this one.
-				if( m_bHaveBuddy == Disconnected )
+				if( m_nBuddyStatus == Disconnected )
 				{
 					buddy = Connecting;
-					m_bHaveBuddy = Connecting;
+					m_nBuddyStatus = Connecting;
 					cur_client->SetKadState(KS_CONNECTING_BUDDY);
 					cur_client->TryToConnect(true);
 					theApp.emuledlg->serverwnd->UpdateMyInfo();
 				}
-				else if( m_bHaveBuddy == Connected )
+				else if( m_nBuddyStatus == Connected )
 					cur_client->SetKadState(KS_NONE);
 				break;
+
 			case KS_CONNECTING_BUDDY:
 				//We are trying to connect to this client.
 				//Although it should NOT happen, we make sure we are not already connected to a buddy.
 				//If we are we set to KS_NONE and it's removed next cycle.
 				//But if we are not already connected, make sure we set the flag to connecting so we know 
 				//things are working correctly.
-				if( m_bHaveBuddy == Connected )
+				if( m_nBuddyStatus == Connected )
 					cur_client->SetKadState(KS_NONE);
 				else
 				{
-					ASSERT( m_bHaveBuddy == Connecting );
+					ASSERT( m_nBuddyStatus == Connecting );
 					buddy = Connecting;
 				}
 				break;
+
 			case KS_CONNECTED_BUDDY:
 				//A potential connected buddy client wanting to me in the Kad network
 				//We set our flag to connected to make sure things are still working correctly.
 				buddy = Connected;
-				//If m_bhaveBuddy is not connected already, we set this client as our buddy!
-				if( m_bHaveBuddy != Connected )
+				
+				//If m_nBuddyStatus is not connected already, we set this client as our buddy!
+				if( m_nBuddyStatus != Connected )
 				{
 					m_pBuddy = cur_client;
-					m_bHaveBuddy = Connected;
+					m_nBuddyStatus = Connected;
 					theApp.emuledlg->serverwnd->UpdateMyInfo();
 				}
 				if( m_pBuddy == cur_client && theApp.IsFirewalled() && cur_client->SendBuddyPingPong() )
 				{
+					if (thePrefs.GetDebugClientTCPLevel() > 0)
+						DebugSend("OP__BuddyPing", cur_client);
 					Packet* buddyPing = new Packet(OP_BUDDYPING, 0, OP_EMULEPROT);
+					theStats.AddUpDataOverheadOther(buddyPing->size);
 					cur_client->SafeSendPacket(buddyPing);
 					cur_client->SetLastBuddyPingPongTime();
 				}
 				break;
+
 			default:
 				RemoveFromKadList(cur_client);
 		}
@@ -602,7 +615,7 @@ void CClientList::Process(){
 	//We either never had a buddy, or lost our buddy..
 	if( buddy == Disconnected )
 	{
-		if( m_bHaveBuddy != Disconnected || m_pBuddy )
+		if( m_nBuddyStatus != Disconnected || m_pBuddy )
 		{
 			if( Kademlia::CKademlia::isRunning() && theApp.IsFirewalled() )
 			{
@@ -611,7 +624,7 @@ void CClientList::Process(){
 				Kademlia::CKademlia::getPrefs()->setFindBuddy();
 			}
 			m_pBuddy = NULL;
-			m_bHaveBuddy = Disconnected;
+			m_nBuddyStatus = Disconnected;
 			theApp.emuledlg->serverwnd->UpdateMyInfo();
 		}
 	}
@@ -620,7 +633,7 @@ void CClientList::Process(){
 	{
 		if( Kademlia::CKademlia::isFirewalled() )
 		{
-			if( m_bHaveBuddy == Disconnected && Kademlia::CKademlia::getPrefs()->getFindBuddy() )
+			if( m_nBuddyStatus == Disconnected && Kademlia::CKademlia::getPrefs()->getFindBuddy() )
 			{
 				//We are a firewalled client with no buddy. We have also waited a set time 
 				//to try to avoid a false firewalled status.. So lets look for a buddy..
@@ -660,11 +673,15 @@ void CClientList::Process(){
 		}
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	// Cleanup client list
+	//
 	CleanUpClientList();
 }
 
 #ifdef _DEBUG
-void CClientList::Debug_SocketDeleted(CClientReqSocket* deleted){
+void CClientList::Debug_SocketDeleted(CClientReqSocket* deleted) const
+{
 	for (POSITION pos = list.GetHeadPosition(); pos != NULL;){
 		CUpDownClient* cur_client =	list.GetNext(pos);
 		if (!AfxIsValidAddress(cur_client, sizeof(CUpDownClient))) {
@@ -679,12 +696,16 @@ void CClientList::Debug_SocketDeleted(CClientReqSocket* deleted){
 }
 #endif
 
-bool CClientList::IsValidClient(CUpDownClient* tocheck)
+bool CClientList::IsValidClient(CUpDownClient* tocheck) const
 {
 	if (thePrefs.m_iDbgHeap >= 2)
 		ASSERT_VALID(tocheck);
-	return list.Find(tocheck);
+	return list.Find(tocheck)!=NULL;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Kad client list
 
 void CClientList::RequestTCP(Kademlia::CContact* contact)
 {
@@ -701,7 +722,7 @@ void CClientList::RequestTCP(Kademlia::CContact* contact)
 	//Add client to the lists to be processed.
 	pNewClient->SetKadPort(contact->getUDPPort());
 	pNewClient->SetKadState(KS_QUEUED_FWCHECK);
-	KadList.AddTail(pNewClient);
+	m_KadList.AddTail(pNewClient);
 	//This method checks if this is a dup already.
 	AddClient(pNewClient);
 }
@@ -755,7 +776,7 @@ void CClientList::IncomingBuddy(Kademlia::CContact* contact, Kademlia::CUInt128*
 }
 
 void CClientList::RemoveFromKadList(CUpDownClient* torem){
-	POSITION pos = KadList.Find(torem);
+	POSITION pos = m_KadList.Find(torem);
 	if(pos)
 	{
 		if(torem == m_pBuddy)
@@ -763,19 +784,19 @@ void CClientList::RemoveFromKadList(CUpDownClient* torem){
 			m_pBuddy = NULL;
 			theApp.emuledlg->serverwnd->UpdateMyInfo();
 		}
-		KadList.RemoveAt(pos);
+		m_KadList.RemoveAt(pos);
 	}
 }
 
 void CClientList::AddToKadList(CUpDownClient* toadd){
 	if(!toadd)
 		return;
-	POSITION pos = KadList.Find(toadd);
+	POSITION pos = m_KadList.Find(toadd);
 	if(pos)
 	{
 		return;
 	}
-	KadList.AddTail(toadd);
+	m_KadList.AddTail(toadd);
 }
 
 void CClientList::CleanUpClientList(){
@@ -820,7 +841,7 @@ CDeletedClient::CDeletedClient(const CUpDownClient* pClient)
 }
 
 // ZZ:DownloadManager -->
-void CClientList::ProcessA4AFClients() {
+void CClientList::ProcessA4AFClients() const {
     //if(thePrefs.GetLogA4AF()) AddDebugLogLine(false, _T(">>> Starting A4AF check"));
 	POSITION pos1, pos2;
 	for (pos1 = list.GetHeadPosition();( pos2 = pos1 ) != NULL;){

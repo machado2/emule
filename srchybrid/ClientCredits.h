@@ -76,7 +76,7 @@ public:
 	uint64	GetDownloadedTotal() const;
 	float	GetScoreRatio(uint32 dwForIP) const;
 	void	SetLastSeen()					{m_pCredits->nLastSeen = time(NULL);}
-	bool	SetSecureIdent(uchar* pachIdent, uint8 nIdentLen); // Public key cannot change, use only if there is not public key yet
+	bool	SetSecureIdent(const uchar* pachIdent, uint8 nIdentLen); // Public key cannot change, use only if there is not public key yet
 	uint32	m_dwCryptRndChallengeFor;
 	uint32	m_dwCryptRndChallengeFrom;
 	EIdentState	GetCurrentIdentState(uint32 dwForIP) const; // can be != IdentState
@@ -104,7 +104,7 @@ public:
 	
 			// return signature size, 0 = Failed | use sigkey param for debug only
 	uint8	CreateSignature(CClientCredits* pTarget, uchar* pachOutput, uint8 nMaxSize, uint32 ChallengeIP, uint8 byChaIPKind, CryptoPP::RSASSA_PKCS1v15_SHA_Signer* sigkey = NULL);
-	bool	VerifyIdent(CClientCredits* pTarget, uchar* pachSignature, uint8 nInputSize, uint32 dwForIP, uint8 byChaIPKind);	
+	bool	VerifyIdent(CClientCredits* pTarget, const uchar* pachSignature, uint8 nInputSize, uint32 dwForIP, uint8 byChaIPKind);
 
 	CClientCredits* GetCredit(const uchar* key) ;
 	void	Process();

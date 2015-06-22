@@ -115,7 +115,7 @@ BOOL CBase64Coding::Encode( const char * source, int len, char * destination_str
       byte_1 = source[ loop_index ];
       byte_to_add = alphabet[ ( byte_1 >> 2 ) ];
 
-      destination[ number_of_bytes_encoded ] = static_cast< TCHAR >( byte_to_add );
+      destination[ number_of_bytes_encoded ] = static_cast< char >( byte_to_add );
       number_of_bytes_encoded++;
 
       loop_index++;

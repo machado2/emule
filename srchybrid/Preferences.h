@@ -16,8 +16,6 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
 
-#define	DFLT_TRANSFER_WND2	1
-
 const CString strDefaultToolbar = _T("0099010203040506070899091011");
 
 enum EViewSharedFilesAccess{
@@ -26,7 +24,14 @@ enum EViewSharedFilesAccess{
 	vsfaNobody = 2
 };
 
+enum ENotifierSoundType{
+	ntfstNoSound = 0,
+	ntfstSoundFile = 1,
+	ntfstSpeech = 2
+};
+
 enum EToolbarLabelType;
+enum ELogFileFormat;
 
 // DO NOT EDIT VALUES like making a uint16 to uint32, or insert any value. ONLY append new vars
 #pragma pack(1)
@@ -83,25 +88,27 @@ public:
 	static	uint16	nServerUDPPort;
 	static	uint16	maxconnections;
 	static	uint16	maxhalfconnections;
-	static	uint8	reconnect;
-	static	uint8	scorsystem;
+	static	bool	m_bConditionalTCPAccept;
+	static	bool	reconnect;
+	static	bool	m_bUseServerPriorities;
 	static	TCHAR	incomingdir[MAX_PATH];
-	static	TCHAR	tempdir[MAX_PATH];
-	static	uint8	ICH;
-	static	uint8	autoserverlist;
-	static	uint8	updatenotify;
-	static	uint8	mintotray;
-	static	uint8	autoconnect;
-	static	uint8	autoconnectstaticonly; // Barry
-	static	uint8	autotakeed2klinks;	   // Barry
-	static	uint8	addnewfilespaused;	   // Barry
+	static	CStringArray	tempdir;
+	static	bool	ICH;
+	static	bool	m_bAutoUpdateServerList;
+	static	bool	updatenotify;
+	static	bool	mintotray;
+	static	bool	autoconnect;
+	static	bool	m_bAutoConnectToStaticServersOnly; // Barry
+	static	bool	autotakeed2klinks;	   // Barry
+	static	bool	addnewfilespaused;	   // Barry
 	static	uint8	depth3D;			   // Barry
 	static	bool	m_bEnableMiniMule;
 	static	int		m_iStraightWindowStyles;
+	static	bool	m_bRTLWindowsLayout;
 	static	CString	m_strSkinProfile;
 	static	CString	m_strSkinProfileDir;
-	static	uint8	addserversfromserver;
-	static	uint8	addserversfromclient;
+	static	bool	m_bAddServersFromServer;
+	static	bool	m_bAddServersFromClients;
 	static	uint16	maxsourceperfile;
 	static	uint16	trafficOMeterInterval;
 	static	uint16	statsInterval;
@@ -109,38 +116,15 @@ public:
 	static	WINDOWPLACEMENT EmuleWindowPlacement;
 	static	int		maxGraphDownloadRate;
 	static	int		maxGraphUploadRate;
-	static	uint8	beepOnError;
-	static	uint8	confirmExit;
-	static	uint16	downloadColumnWidths[13];
-	static	BOOL	downloadColumnHidden[13];
-	static	INT		downloadColumnOrder[13];
-	static	uint16	uploadColumnWidths[8];
-	static	BOOL	uploadColumnHidden[8];
-	static	INT		uploadColumnOrder[8];
-	static	uint16	queueColumnWidths[10];
-	static	BOOL	queueColumnHidden[10];
-	static	INT		queueColumnOrder[10];
-	static	uint16	searchColumnWidths[14];
-	static	BOOL	searchColumnHidden[14];
-	static	INT		searchColumnOrder[14];
-	static	uint16	sharedColumnWidths[12];
-	static	BOOL	sharedColumnHidden[12];
-	static	INT		sharedColumnOrder[12];
-	static	uint16	serverColumnWidths[14];
-	static	BOOL	serverColumnHidden[14];
-	static	INT		serverColumnOrder[14];
-	static	uint16	clientListColumnWidths[8];
-	static	BOOL	clientListColumnHidden[8];
-	static	INT		clientListColumnOrder[8];
-	static	uint16	FilenamesListColumnWidths[2];
-	static	BOOL	FilenamesListColumnHidden[2];
-	static	INT		FilenamesListColumnOrder[2];
+	static	uint32	maxGraphUploadRateEstimated;
+	static	bool	beepOnError;
+	static	bool	confirmExit;
 	static	DWORD	m_adwStatsColors[15];
 
-	static	uint8	splashscreen;
-	static	uint8	filterLANIPs;
+	static	bool	splashscreen;
+	static	bool	filterLANIPs;
 	static	bool	m_bAllocLocalHostIP;
-	static	uint8	onlineSig;
+	static	bool	onlineSig;
 
 	// -khaos--+++> Struct Members for Storing Statistics
 
@@ -299,35 +283,40 @@ public:
 	static	uint64	totalUploadedBytes;
 	// End Original Stats Stuff
 	static	WORD	m_wLanguageID;
-	static	uint8	transferDoubleclick;
+	static	bool	transferDoubleclick;
 	static	EViewSharedFilesAccess m_iSeeShares;
-	static	uint8	m_iToolDelayTime;	// tooltip delay time in seconds
-	static	uint8	bringtoforeground;
-	static	uint8	splitterbarPosition;
-	static	uint8	m_uTransferWnd2;
+	static	UINT	m_iToolDelayTime;	// tooltip delay time in seconds
+	static	bool	bringtoforeground;
+	static	UINT	splitterbarPosition;
+	static	UINT	splitterbarPositionSvr;
+
+	static	UINT	m_uTransferWnd1;
+	static	UINT	m_uTransferWnd2;
 	//MORPH START - Added by SiRoB, Splitting Bar [O²]
-	static	uint8	splitterbarPositionStat;
-	static	uint8	splitterbarPositionStat_HL;
-	static	uint8	splitterbarPositionStat_HR;
-	static	uint16	splitterbarPositionFriend;
-	static	uint16	splitterbarPositionIRC;
+	static	UINT	splitterbarPositionStat;
+	static	UINT	splitterbarPositionStat_HL;
+	static	UINT	splitterbarPositionStat_HR;
+	static	UINT	splitterbarPositionFriend;
+	static	UINT	splitterbarPositionIRC;
+	static	UINT	splitterbarPositionShared;
 	//MORPH END - Added by SiRoB, Splitting Bar [O²]
-	static	uint16	deadserverretries;
+	static	UINT	m_uDeadServerRetries;
 	static	DWORD	m_dwServerKeepAliveTimeout;
 	// -khaos--+++> Changed data type to avoid overflows
 	static	uint16	statsMax;
 	// <-----khaos-
 	static	uint8	statsAverageMinutes;
 
-	static	uint8	useDownloadNotifier;
-	static	uint8	useNewDownloadNotifier;
-	static	uint8	useChatNotifier;
-	static	uint8	useLogNotifier;
-	static	uint8	useSoundInNotifier;
-	static	uint8	notifierPopsEveryChatMsg;
-	static	uint8	notifierImportantError;
-	static	uint8	notifierNewVersion;
-	static	TCHAR	notifierSoundFilePath[510];
+	static	CString	notifierConfiguration;
+	static	bool	notifierOnDownloadFinished;
+	static	bool	notifierOnNewDownload;
+	static	bool	notifierOnChat;
+	static	bool	notifierOnLog;
+	static	bool	notifierOnImportantError;
+	static	bool	notifierOnEveryChatMsg;
+	static	bool	notifierOnNewVersion;
+	static	ENotifierSoundType notifierSoundType;
+	static	CString	notifierSoundFile;
 
 	static	TCHAR	m_sircserver[50];
 	static	TCHAR	m_sircnick[30];
@@ -353,9 +342,9 @@ public:
 	static	bool	m_bRemove2bin;
 	static	bool	m_bShowCopyEd2kLinkCmd;
 	static	bool	m_bpreviewprio;
-	static	bool	smartidcheck;
+	static	bool	m_bSmartServerIdCheck;
 	static	uint8	smartidstate;
-	static	bool	safeServerConnect;
+	static	bool	m_bSafeServerConnect;
 	static	bool	startMinimized;
 	static	bool	m_bAutoStart;
 	static	bool	m_bRestoreLastMainWndDlg;
@@ -363,13 +352,14 @@ public:
 	static	bool	m_bRestoreLastLogPane;
 	static	int		m_iLastLogPaneID;
 	static	uint16	MaxConperFive;
-	static	int		checkDiskspace; // SLUGFILLER: checkDiskspace
+	static	bool	checkDiskspace;
 	static	UINT	m_uMinFreeDiskSpace;
 	static	bool	m_bSparsePartFiles;
 	static	CString	m_strYourHostname;
 	static	bool	m_bEnableVerboseOptions;
 	static	bool	m_bVerbose;
 	static	bool	m_bFullVerbose;
+	static  uint8	m_byLogLevel;
 	static	bool	m_bDebugSourceExchange; // Sony April 23. 2003, button to keep source exchange msg out of verbose log
 	static	bool	m_bLogBannedClients;
 	static	bool	m_bLogRatingDescReceived;
@@ -386,8 +376,9 @@ public:
 	static	int		m_iDebugClientTCPLevel;
 	static	int		m_iDebugClientUDPLevel;
 	static	int		m_iDebugClientKadUDPLevel;
+	static	int		m_iDebugSearchResultDetailLevel;
 	static	bool	m_bupdatequeuelist;
-	static	bool	m_bmanualhighprio;
+	static	bool	m_bManualAddedServersHighPriority;
 	static	bool	m_btransferfullchunks;
 	static	int		m_istartnextfile;
 	static	bool	m_bshowoverhead;
@@ -399,32 +390,13 @@ public:
 	static	bool	m_bTransflstRemain;
 
 	static	uint8	versioncheckdays;
-
-	// Barry - Provide a mechanism for all tables to store/retrieve sort order
-	static	int		tableSortItemDownload;
-	static	int		tableSortItemUpload;
-	static	int		tableSortItemQueue;
-	static	int		tableSortItemSearch;
-	static	int		tableSortItemShared;
-	static	int		tableSortItemServer;
-	static	int		tableSortItemClientList;
-	static  int		tableSortItemFilenames;
-	static	bool	tableSortAscendingDownload;
-	static	bool	tableSortAscendingUpload;
-	static	bool	tableSortAscendingQueue;
-	static	bool	tableSortAscendingSearch;
-	static	bool	tableSortAscendingShared;
-	static	bool	tableSortAscendingServer;
-	static	bool	tableSortAscendingClientList;
-	static  bool	tableSortAscendingFilenames;
-
 	static	bool	showRatesInTitle;
 
 	static	TCHAR	TxtEditor[256];
 	static	TCHAR	VideoPlayer[256];
 	static	bool	moviePreviewBackup;
 	static	int		m_iPreviewSmallBlocks;
-	static	int		m_iPreviewCopiedArchives;
+	static	bool	m_bPreviewCopiedArchives;
 	static	int		m_iInspectAllFileTypes;
 	static	bool	m_bPreviewOnIconDblClk;
 	static	bool	indicateratings;
@@ -437,6 +409,7 @@ public:
 	static	bool	debug2disk;
 	static	int		iMaxLogBuff;
 	static	UINT	uMaxLogFileSize;
+	static	ELogFileFormat m_iLogFileFormat;
 	static	bool	scheduler;
 	static	bool	dontcompressavi;
 	static	bool	msgonlyfriends;
@@ -452,7 +425,6 @@ public:
 	static	TCHAR	messageFilter[512];
 	static	CString	commentFilter;
 	static	TCHAR	filenameCleanups[512];
-	static	TCHAR	notifierConfiguration[510];
 	static	TCHAR	datetimeformat[64];
 	static	TCHAR	datetimeformat4log[64];
 	static	LOGFONT m_lfHyperText;
@@ -473,11 +445,14 @@ public:
 	static	bool	m_bWebLowEnabled;
 	static	TCHAR	m_sWebResDir[MAX_PATH];
 	static	int		m_iWebTimeoutMins;
+	static	int		m_iWebFileUploadSizeLimitMB;
 
 	static	TCHAR	m_sTemplateFile[MAX_PATH];
 	static	ProxySettings proxy; // deadlake PROXYSUPPORT
 	static	bool	m_bIsASCWOP;
 	static	bool	m_bShowProxyErrors;
+	static  bool	m_bAllowAdminHiLevFunc;
+	static	CUIntArray m_aAllowedRemoteAccessIPs;
 
 	static	bool	showCatTabInfos;
 	static	bool	resumeSameCat;
@@ -510,6 +485,8 @@ public:
 	static	bool	m_bReBarToolbar;
 	static	CSize	m_sizToolbarIconSize;
 
+	static	bool	m_bWinaTransToolbar;
+
 	//preview
 	static	bool	m_bPreviewEnabled;
 
@@ -526,11 +503,12 @@ public:
     static bool     m_bA4AFSaveCpu; // ZZ:DownloadManager
 
 	static	CStringList shareddir_list;
-	static	CStringList adresses_list;
+	static	CStringList addresses_list;
 
 	static	int		m_iDbgHeap;
 	static	uint8	m_nWebMirrorAlertLevel;
 	static	bool	m_bRunAsUser;
+	static	bool	m_bPreferRestrictedOverUser;
 
 	static  bool	m_bUseOldTimeRemaining;
 
@@ -546,8 +524,16 @@ public:
 
 	//AICH Options
 	static bool		m_bTrustEveryHash;
+	
+	// files
+	static bool		m_bRememberCancelledFiles;
+	static bool		m_bRememberDownloadedFiles;
 
-	static uint8	m_byLogLevel;
+	//emil notifier
+	static bool		m_bNotifierSendMail;
+	static CString	m_strNotifierMailServer;
+	static CString	m_strNotifierMailSender;
+	static CString	m_strNotifierMailReceiver;
 
 	enum Table
 	{
@@ -558,7 +544,10 @@ public:
 		tableShared, 
 		tableServer, 
 		tableClientList,
-		tableFilenames
+		tableFilenames,
+		tableIrcMain,
+		tableIrcChannels,
+		tableDownloadClients
 	};
 
 	friend class CPreferencesWnd;
@@ -584,8 +573,10 @@ public:
 
 	static	const CString& GetAppDir()				{return appdir;}
 	static	LPCTSTR GetIncomingDir()				{return incomingdir;}
-	static	LPCTSTR GetTempDir()					{return tempdir;}
+	static	LPCTSTR GetTempDir(uint8 id=0)			{return (LPCTSTR)tempdir.GetAt( (id<tempdir.GetCount())?id:0 );}
+	static	uint8	GetTempDirCount()				{return tempdir.GetCount();}
 	static	const CString& GetConfigDir()			{return configdir;}
+	static	LPCTSTR GetConfigFile();
 	static	const CString& GetWebServerDir()		{return m_strWebServerDir;}
 	static	const CString& GetFileCommentsFilePath(){return m_strFileCommentsFilePath;}
 	static	const CString& GetLogDir()				{return m_strLogDir;}
@@ -598,35 +589,35 @@ public:
 	static	bool	Save();
 	static	void	SaveCats();
 
-	static	uint8	Score()							{return scorsystem;}
+	static	bool	GetUseServerPriorities()		{return m_bUseServerPriorities;}
 	static	bool	Reconnect()						{return reconnect;}
 	static	const CString& GetUserNick()			{return strNick;}
 	static	void	SetUserNick(LPCTSTR pszNick);
 	static	int		GetMaxUserNickLength()			{return 50;}
 
-	static	uint16	GetPort()		{return port;}
-	static	uint16	GetUDPPort()	{return udpport;}
-	static	uint16	GetServerUDPPort(){return nServerUDPPort;}
-	static	uchar*	GetUserHash()	{return userhash;}
+	static	uint16	GetPort()						{return port;}
+	static	uint16	GetUDPPort()					{return udpport;}
+	static	uint16	GetServerUDPPort()				{return nServerUDPPort;}
+	static	uchar*	GetUserHash()					{return userhash;}
 	// ZZ:UploadSpeedSense -->
-	static	uint16	GetMinUpload()	{return minupload;}
+	static	uint16	GetMinUpload()					{return minupload;}
 	// ZZ:UploadSpeedSense <--
-	static	uint16	GetMaxUpload()	{return maxupload;}
-	static	bool	IsICHEnabled()	{return ICH;}
-	static	bool	AutoServerlist(){return autoserverlist;}
-	static	bool	UpdateNotify()	{return updatenotify;}
-	static	bool	DoMinToTray()	{return mintotray;}
-	static	bool	DoAutoConnect() {return autoconnect;}
-	static	void	SetAutoConnect( bool inautoconnect) {autoconnect = inautoconnect;}
-	static	bool	AddServersFromServer()		{return addserversfromserver;}
-	static	bool	AddServersFromClient()		{return addserversfromclient;}
-	static	uint8*	GetMinTrayPTR() {return &mintotray;}
-	static	uint16	GetTrafficOMeterInterval() { return trafficOMeterInterval;}
+	static	uint16	GetMaxUpload()					{return maxupload;}
+	static	bool	IsICHEnabled()					{return ICH;}
+	static	bool	GetAutoUpdateServerList()		{return m_bAutoUpdateServerList;}
+	static	bool	UpdateNotify()					{return updatenotify;}
+	static	bool	DoMinToTray()					{return mintotray;}
+	static	bool	DoAutoConnect()					{return autoconnect;}
+	static	void	SetAutoConnect(bool inautoconnect) {autoconnect = inautoconnect;}
+	static	bool	GetAddServersFromServer()		{return m_bAddServersFromServer;}
+	static	bool	GetAddServersFromClients()		{return m_bAddServersFromClients;}
+	static	bool*	GetMinTrayPTR() {return &mintotray;}
+	static	uint16	GetTrafficOMeterInterval()		{return trafficOMeterInterval;}
 	static	void	SetTrafficOMeterInterval(uint16 in) { trafficOMeterInterval=in;}
-	static	uint16	GetStatsInterval() { return statsInterval;}
-	static	void	SetStatsInterval(uint16 in) { statsInterval=in;}
-	static	void	Add2TotalDownloaded(uint64 in) {totalDownloadedBytes+=in;}
-	static	void	Add2TotalUploaded(uint64 in) {totalUploadedBytes+=in;}
+	static	uint16	GetStatsInterval()				{return statsInterval;}
+	static	void	SetStatsInterval(uint16 in)		{statsInterval=in;}
+	static	void	Add2TotalDownloaded(uint64 in)	{totalDownloadedBytes+=in;}
+	static	void	Add2TotalUploaded(uint64 in)	{totalUploadedBytes+=in;}
 
 	// -khaos--+++> Many, many, many, many methods.
 	static	void	SaveStats(int bBackUp = 0);
@@ -872,33 +863,19 @@ public:
 	static	bool	FilterLANIPs()				{return filterLANIPs;}
 	static	bool	GetAllowLocalHostIP()		{return m_bAllocLocalHostIP;}
 	static	bool	IsOnlineSignatureEnabled()	{return onlineSig;}
-	static	int		GetMaxGraphUploadRate()		{return maxGraphUploadRate;}
+	static	int		GetMaxGraphUploadRate(bool bEstimateIfUnlimited);
 	static	int		GetMaxGraphDownloadRate()		{return maxGraphDownloadRate;}
-	static	void	SetMaxGraphUploadRate(int in)	{maxGraphUploadRate	=(in)?in:16;}
+	static	void	SetMaxGraphUploadRate(int in);
 	static	void	SetMaxGraphDownloadRate(int in) {maxGraphDownloadRate=(in)?in:96;}
 
 	static	uint16	GetMaxDownload();
 	static	uint64	GetMaxDownloadInBytesPerSec(bool dynamic = false);
 	static	uint16	GetMaxConnections()			{return maxconnections;}
 	static	uint16	GetMaxHalfConnections()		{return maxhalfconnections;}
-	static	uint16	GetMaxSourcePerFile()		{return maxsourceperfile;}
-	static	uint16	GetMaxSourcePerFileSoft();
-	static	uint16	GetMaxSourcePerFileUDP();
-	static	uint16	GetDeadserverRetries()		{return deadserverretries;}
+	static	uint16	GetMaxSourcePerFileDefault(){return maxsourceperfile;}
+	static	UINT	GetDeadServerRetries()		{return m_uDeadServerRetries;}
 	static	DWORD	GetServerKeepAliveTimeout() {return m_dwServerKeepAliveTimeout;}
-
-	static	int		GetColumnWidth (Table t, int index);
-	static	BOOL	GetColumnHidden(Table t, int index);
-	static	int		GetColumnOrder (Table t, int index);
-	static	void	SetColumnWidth (Table t, int index, int width);
-	static	void	SetColumnHidden(Table t, int index, BOOL bHidden);
-	static	void	SetColumnOrder (Table t, INT *piOrder);
-
-	// Barry - Provide a mechanism for all tables to store/retrieve sort order
-	static	int		GetColumnSortItem (Table t);
-	static	bool	GetColumnSortAscending (Table t);
-	static	void	SetColumnSortItem (Table t, int sortItem);
-	static	void	SetColumnSortAscending (Table t, bool sortAscending);
+	static	bool	GetConditionalTCPAccept()	{return m_bConditionalTCPAccept;}
 
 	static	WORD	GetLanguageID();
 	static	void	SetLanguageID(WORD lid);
@@ -911,31 +888,37 @@ public:
 	static	void	SetRtlLocale(LCID lcid);
 	static	CString GetHtmlCharset();
 
-	static	uint8	IsDoubleClickEnabled()				{return transferDoubleclick;}
+	static	bool	IsDoubleClickEnabled()				{return transferDoubleclick;}
 	static	EViewSharedFilesAccess CanSeeShares(void) {return m_iSeeShares;}
 	static	uint8	GetToolTipDelay(void)				{return m_iToolDelayTime;}
-	static	uint8	IsBringToFront()					{return bringtoforeground;}
+	static	bool	IsBringToFront()					{return bringtoforeground;}
 
-	static	uint8	GetSplitterbarPosition()			{return splitterbarPosition;}
-	static	void	SetSplitterbarPosition(uint8 pos)	{splitterbarPosition=pos;}
-	static	uint8	GetTransferWnd2()					{return m_uTransferWnd2;}
-	static	void	SetTransferWnd2(uint8 uWnd2)		{m_uTransferWnd2 = uWnd2;}
+	static	UINT	GetSplitterbarPosition()			{return splitterbarPosition;}
+	static	void	SetSplitterbarPosition(UINT pos)	{splitterbarPosition=pos;}
+	static	UINT	GetSplitterbarPositionServer()		{return splitterbarPositionSvr;}
+	static	void	SetSplitterbarPositionServer(UINT pos)	{splitterbarPositionSvr=pos;}
+	static	UINT	GetTransferWnd1()					{return m_uTransferWnd1;}
+	static	void	SetTransferWnd1(UINT uWnd1)			{m_uTransferWnd1 = uWnd1;}
+	static	UINT	GetTransferWnd2()					{return m_uTransferWnd2;}
+	static	void	SetTransferWnd2(UINT uWnd2)			{m_uTransferWnd2 = uWnd2;}
 	//MORPH START - Added by SiRoB, Splitting Bar [O²]
-	static	uint8   GetSplitterbarPositionStat()	{return splitterbarPositionStat;}
-	static	void	SetSplitterbarPositionStat(uint8 pos) {splitterbarPositionStat=pos;}
-	static	uint8   GetSplitterbarPositionStat_HL()	{return splitterbarPositionStat_HL;}
-	static	void	SetSplitterbarPositionStat_HL(uint8 pos) {splitterbarPositionStat_HL=pos;}
-	static	uint8   GetSplitterbarPositionStat_HR()	{return splitterbarPositionStat_HR;}
-	static	void	SetSplitterbarPositionStat_HR(uint8 pos) {splitterbarPositionStat_HR=pos;}
-	static	uint16   GetSplitterbarPositionFriend()	{return splitterbarPositionFriend;}
-	static	void	SetSplitterbarPositionFriend(uint16 pos) {splitterbarPositionFriend=pos;}
-	static	uint16  GetSplitterbarPositionIRC()	{return splitterbarPositionIRC;}
-	static	void	SetSplitterbarPositionIRC(uint16 pos) {splitterbarPositionIRC=pos;}
+	static	UINT	GetSplitterbarPositionStat()		{return splitterbarPositionStat;}
+	static	void	SetSplitterbarPositionStat(UINT pos) {splitterbarPositionStat=pos;}
+	static	UINT	GetSplitterbarPositionStat_HL()		{return splitterbarPositionStat_HL;}
+	static	void	SetSplitterbarPositionStat_HL(UINT pos) {splitterbarPositionStat_HL=pos;}
+	static	UINT	GetSplitterbarPositionStat_HR()		{return splitterbarPositionStat_HR;}
+	static	void	SetSplitterbarPositionStat_HR(UINT pos) {splitterbarPositionStat_HR=pos;}
+	static	UINT	GetSplitterbarPositionFriend()		{return splitterbarPositionFriend;}
+	static	void	SetSplitterbarPositionFriend(UINT pos) {splitterbarPositionFriend=pos;}
+	static	UINT	GetSplitterbarPositionIRC()			{return splitterbarPositionIRC;}
+	static	void	SetSplitterbarPositionIRC(UINT pos) {splitterbarPositionIRC=pos;}
+	static	UINT	GetSplitterbarPositionShared()		{return splitterbarPositionShared;}
+	static	void	SetSplitterbarPositionShared(UINT pos) {splitterbarPositionShared=pos;}
 	//MORPH END   - Added by SiRoB, Splitting Bar [O²]
 	// -khaos--+++> Changed datatype to avoid overflows
 	static	uint16	GetStatsMax()						{return statsMax;}
 	// <-----khaos-
-	static	uint8	UseFlatBar()						{return (depth3D==0);}
+	static	bool	UseFlatBar()						{return (depth3D==0);}
 	static	int		GetStraightWindowStyles()			{return m_iStraightWindowStyles;}
 
 	static	const CString& GetSkinProfile()				{return m_strSkinProfile;}
@@ -947,16 +930,20 @@ public:
 	static	uint8	GetStatsAverageMinutes()			{return statsAverageMinutes;}
 	static	void	SetStatsAverageMinutes(uint8 in)	{statsAverageMinutes=in;}
 
-	static	bool	GetUseDownloadNotifier()			{return useDownloadNotifier;}
-	static	bool	GetUseNewDownloadNotifier()			{return useNewDownloadNotifier;}
-	static	bool	GetUseChatNotifier()				{return useChatNotifier;}
-	static	bool	GetUseLogNotifier()					{return useLogNotifier;}
-	static	bool	GetUseSoundInNotifier()				{return useSoundInNotifier;}
-	static	bool	GetNotifierPopsEveryChatMsg()		{return notifierPopsEveryChatMsg;}
-	static	bool	GetNotifierPopOnImportantError()	{return notifierImportantError;}
-	static	bool	GetNotifierPopOnNewVersion()		{return notifierNewVersion;}
-	static	TCHAR*	GetNotifierWavSoundPath()			{return notifierSoundFilePath;}
+	static	const CString& GetNotifierConfiguration()	{return notifierConfiguration;}
+	static	void	SetNotifierConfiguration(LPCTSTR pszConfigPath) {notifierConfiguration = pszConfigPath;}
+	static	bool	GetNotifierOnDownloadFinished()		{return notifierOnDownloadFinished;}
+	static	bool	GetNotifierOnNewDownload()			{return notifierOnNewDownload;}
+	static	bool	GetNotifierOnChat()					{return notifierOnChat;}
+	static	bool	GetNotifierOnLog()					{return notifierOnLog;}
+	static	bool	GetNotifierOnImportantError()		{return notifierOnImportantError;}
+	static	bool	GetNotifierOnEveryChatMsg()			{return notifierOnEveryChatMsg;}
+	static	bool	GetNotifierOnNewVersion()			{return notifierOnNewVersion;}
+	static	ENotifierSoundType GetNotifierSoundType()	{return notifierSoundType;}
+	static	const CString& GetNotifierSoundFile()		{return notifierSoundFile;}
+
 	static	bool	GetEnableMiniMule()					{return m_bEnableMiniMule;}
+	static	bool	GetRTLWindowsLayout()				{return m_bRTLWindowsLayout;}
 
 	static	CString GetIRCNick()						{return m_sircnick;}
 	static	void	SetIRCNick( TCHAR in_nick[] )		{ _tcscpy(m_sircnick,in_nick);}
@@ -993,14 +980,14 @@ public:
 	static	int		GetLastLogPaneID()					{return m_iLastLogPaneID;}
 	static	void	SetLastLogPaneID(int iID)			{m_iLastLogPaneID = iID;}
 
-	static	bool	GetSmartIdCheck()					{return smartidcheck;}
-	static	void	SetSmartIdCheck(bool in_smartidcheck) {smartidcheck = in_smartidcheck;}
+	static	bool	GetSmartIdCheck()					{return m_bSmartServerIdCheck;}
+	static	void	SetSmartIdCheck(bool in_smartidcheck) {m_bSmartServerIdCheck = in_smartidcheck;}
 	static	uint8	GetSmartIdState()					{return smartidstate;}
 	static	void	SetSmartIdState(uint8 in_smartidstate) {smartidstate = in_smartidstate;}
 	static	bool	GetPreviewPrio()					{return m_bpreviewprio;}
 	static	void	SetPreviewPrio(bool in)				{m_bpreviewprio=in;}
 	static	bool	GetUpdateQueueList()				{return m_bupdatequeuelist;}
-	static	bool	GetManualHighPrio()					{return m_bmanualhighprio;}
+	static	bool	GetManualAddedServersHighPriority()	{return m_bManualAddedServersHighPriority;}
 	static	bool	TransferFullChunks()				{return m_btransferfullchunks;}
 	static	void	SetTransferFullChunks( bool m_bintransferfullchunks )				{m_btransferfullchunks = m_bintransferfullchunks;}
 	static	int		StartNextFile()						{return m_istartnextfile;}
@@ -1024,9 +1011,9 @@ public:
 	static	bool	GetShowCopyEd2kLinkCmd()			{return m_bShowCopyEd2kLinkCmd;}
 
 	// Barry
-	static	uint16	Get3DDepth() { return depth3D;}
-	static	bool	AutoTakeED2KLinks() {return autotakeed2klinks;}
-	static	bool	AddNewFilesPaused() {return addnewfilespaused;}
+	static	uint16	Get3DDepth()						{return depth3D;}
+	static	bool	AutoTakeED2KLinks()					{return autotakeed2klinks;}
+	static	bool	AddNewFilesPaused()					{return addnewfilespaused;}
 
 	static	bool	TransferlistRemainSortStyle()	{ return m_bTransflstRemain;}
 	static	void	TransferlistRemainSortStyle(bool in)	{ m_bTransflstRemain=in;}
@@ -1038,7 +1025,7 @@ public:
 	static	bool	SetAllStatsColors(int iCount, const DWORD* pdwColors);
 	static	void	ResetStatsColor(int index);
 
-	static	void	SetMaxConsPerFive(int in)			{MaxConperFive=in;}
+	static	void	SetMaxConsPerFive(uint16 in)		{MaxConperFive=in;}
 	static	LPLOGFONT GetHyperTextLogFont()				{return &m_lfHyperText;}
 	static	void	SetHyperTextFont(LPLOGFONT plf)		{m_lfHyperText = *plf;}
 	static	LPLOGFONT GetLogFont()						{return &m_lfLogText;}
@@ -1050,18 +1037,18 @@ public:
 	static	uint16	GetMaxConperFive()					{return MaxConperFive;}
 	static	uint16	GetDefaultMaxConperFive();
 
-	static	bool	IsSafeServerConnectEnabled()		{return safeServerConnect;}
-	static	void	SetSafeServerConnectEnabled(bool in){safeServerConnect=in;}
+	static	bool	IsSafeServerConnectEnabled()		{return m_bSafeServerConnect;}
+	static	void	SetSafeServerConnectEnabled(bool in){m_bSafeServerConnect=in;}
 	static	bool	IsMoviePreviewBackup()				{return moviePreviewBackup;}
 	static	int		GetPreviewSmallBlocks()				{return m_iPreviewSmallBlocks;}
-	static	int		GetPreviewCopiedArchives()			{return m_iPreviewCopiedArchives;}
+	static	bool	GetPreviewCopiedArchives()			{return m_bPreviewCopiedArchives;}
 	static	int		GetInspectAllFileTypes()			{return m_iInspectAllFileTypes;}
 	static	int		GetExtractMetaData()				{return m_iExtractMetaData;}
 	static	bool	GetAdjustNTFSDaylightFileTime()		{return m_bAdjustNTFSDaylightFileTime;}
 
 	static	const CString& GetYourHostname()			{return m_strYourHostname;}
 	static	void	SetYourHostname(LPCTSTR pszHostname){m_strYourHostname = pszHostname;}
-	static	bool	IsCheckDiskspaceEnabled()			{return checkDiskspace != 0;}	// SLUGFILLER: checkDiskspace
+	static	bool	IsCheckDiskspaceEnabled()			{return checkDiskspace;}
 	static	UINT	GetMinFreeDiskSpace()				{return m_uMinFreeDiskSpace;}
 	static	bool	GetSparsePartFiles()				{return m_bSparsePartFiles;}
 	static	void	SetSparsePartFiles(bool bEnable)	{m_bSparsePartFiles = bEnable;}
@@ -1072,7 +1059,7 @@ public:
 	static	WINDOWPLACEMENT GetEmuleWindowPlacement() {return EmuleWindowPlacement; }
 	static	void	SetWindowLayout(WINDOWPLACEMENT in) {EmuleWindowPlacement=in; }
 
-	static	uint8	AutoConnectStaticOnly() {return autoconnectstaticonly;}
+	static	bool	GetAutoConnectToStaticServersOnly() {return m_bAutoConnectToStaticServersOnly;}
 	static	uint8	GetUpdateDays()			{return versioncheckdays;}
 	static	uint32	GetLastVC()				{return versioncheckLastAutomatic;}
 	static	void	UpdateLastVC();
@@ -1082,8 +1069,6 @@ public:
 	static	CString GetFilenameCleanups()	{ return CString(filenameCleanups);}
 
 	static	bool	ShowRatesOnTitle()		{ return showRatesInTitle;}
-	static	TCHAR*	GetNotifierConfiguration()	  {return notifierConfiguration;}; //<<-- enkeyDEV(kei-kun) -skinnable notifier-
-	static	void	SetNotifierConfiguration(CString configFullPath) {_stprintf(notifierConfiguration,_T("%s"),configFullPath); } //<<-- enkeyDEV(kei-kun) -skinnable notifier-
 	static	void	LoadCats();
 	static	CString GetDateTimeFormat()		{ return CString(datetimeformat);}
 	static	CString GetDateTimeFormat4Log() { return CString(datetimeformat4log);}
@@ -1111,6 +1096,7 @@ public:
 	static	bool	GetDebug2Disk()							{ return m_bVerbose && debug2disk;}
 	static	int		GetMaxLogBuff()							{ return iMaxLogBuff;}
 	static	UINT	GetMaxLogFileSize()						{ return uMaxLogFileSize; }
+	static	ELogFileFormat GetLogFileFormat()				{ return m_iLogFileFormat; }
 
 	// WebServer
 	static	uint16	GetWSPort()								{ return m_nWebPort; }
@@ -1127,7 +1113,10 @@ public:
 	static	void	SetWSIsLowUserEnabled(bool in)			{ m_bWebLowEnabled=in; }
 	static	CString GetWSLowPass()							{ return CString(m_sWebLowPassword); }
 	static	int		GetWebTimeoutMins()						{ return m_iWebTimeoutMins;}
+	static  bool	GetWebAdminAllowedHiLevFunc()			{ return m_bAllowAdminHiLevFunc; }
 	static	void	SetWSLowPass(CString strNewPass);
+	static  const CUIntArray& GetAllowedRemoteAccessIPs()	{ return m_aAllowedRemoteAccessIPs; }
+	static	uint32	GetMaxWebUploadFileSizeMB()				{ return m_iWebFileUploadSizeLimitMB; }
 
 	static	void	SetMaxSourcesPerFile(uint16 in)			{ maxsourceperfile=in;}
 	static	void	SetMaxConnections(uint16 in)			{ maxconnections =in;}
@@ -1202,11 +1191,13 @@ public:
 	static	CSize	GetToolbarIconSize()						{ return m_sizToolbarIconSize; }
 	static	void	SetToolbarIconSize(CSize siz)				{ m_sizToolbarIconSize = siz; }
 
+	static	bool	IsTransToolbarEnabled()						{ return m_bWinaTransToolbar; }
+
 	static	int		GetSearchMethod()							{ return m_iSearchMethod; }
 	static	void	SetSearchMethod(int iMethod)				{ m_iSearchMethod = iMethod; }
 
 	// ZZ:UploadSpeedSense -->
-	static	bool	IsDynUpEnabled()							{ return m_bDynUpEnabled; }
+	static	bool	IsDynUpEnabled();
 	static	void	SetDynUpEnabled(bool newValue)				{ m_bDynUpEnabled = newValue; }
 	static	int		GetDynUpPingTolerance()						{ return m_iDynUpPingTolerance; }
 	static	int		GetDynUpGoingUpDivider()					{ return m_iDynUpGoingUpDivider; }
@@ -1227,6 +1218,7 @@ public:
 	static bool		UseSimpleTimeRemainingComputation()			{ return m_bUseOldTimeRemaining;}
 
 	static	bool	IsRunAsUserEnabled();
+	static	bool	IsPreferingRestrictedOverUser()				{return m_bPreferRestrictedOverUser;}
 
 	// PeerCache
 	static	bool	IsPeerCacheDownloadEnabled()				{ return m_bPeerCacheEnabled; }
@@ -1258,6 +1250,7 @@ public:
 	static	int		GetDebugClientTCPLevel()			{return m_iDebugClientTCPLevel;}
 	static	int		GetDebugClientUDPLevel()			{return m_iDebugClientUDPLevel;}
 	static	int		GetDebugClientKadUDPLevel()			{return m_iDebugClientKadUDPLevel;}
+	static	int		GetDebugSearchResultDetailLevel()	{return m_iDebugSearchResultDetailLevel;}
 	static	uint8	GetVerboseLogPriority()	{return	m_byLogLevel;} // hard coded now, will of course be selectable later
 
 	// Firewall settings
@@ -1265,6 +1258,22 @@ public:
 	
 	//AICH Hash
 	static	bool	IsTrustingEveryHash()				{return m_bTrustEveryHash;} // this is a debug option
+
+	static	bool	IsRememberingDownloadedFiles()		{return m_bRememberDownloadedFiles;}
+	static	bool	IsRememberingCancelledFiles()		{return m_bRememberCancelledFiles;}
+	static	void	SetRememberDownloadedFiles(bool nv)	{m_bRememberDownloadedFiles = nv;}
+	static	void	SetRememberCancelledFiles(bool nv)	{m_bRememberCancelledFiles = nv;}
+	// mail notifier
+	static	bool	IsNotifierSendMailEnabled()			{return m_bNotifierSendMail;}
+	static	CString	GetNotifierMailServer()				{return m_strNotifierMailServer;}
+	static	CString	GetNotifierMailSender()				{return m_strNotifierMailSender;}
+	static	CString	GetNotifierMailReceiver()			{return m_strNotifierMailReceiver;}
+
+	static	void	SetNotifierSendMail(bool nv)		{m_bNotifierSendMail = nv;}
+	static  void	ImportOldTableSetup();
+	static  void	IniCopy(CString si, CString di);
+
+	static	void	EstimateMaxUploadCap(uint32 nCurrentUpload);
 
 protected:
 	static	CString appdir;
@@ -1288,3 +1297,4 @@ protected:
 };
 
 extern CPreferences thePrefs;
+extern bool g_bLowColorDesktop;

@@ -27,13 +27,9 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
-#ifndef M_PI_2
-#define M_PI_2     1.57079632679489661923
-#endif
-
-// Barry
-#ifndef PI
-#define PI 3.14159265358979323846264338328
+// Why does _USE_MATH_DEFINES work in debug builds, but not in release builds??
+#ifndef M_PI
+#define M_PI       3.14159265358979323846
 #endif
 
 #define HALF(X) (((X) + 1) / 2)
@@ -72,7 +68,7 @@ void CBarShader::BuildModifiers() {
 	
 	int depth = (7-m_used3dlevel);
 	int count = HALF(m_iHeight);
-	double piOverDepth = PI/depth;
+	double piOverDepth = M_PI/depth;
 	double base = piOverDepth * ((depth / 2.0) - 1);
 	double increment = piOverDepth / (count - 1);
 
@@ -190,7 +186,7 @@ void CBarShader::Draw(CDC* dc, int iLeft, int iTop, bool bFlat) {
 			int iLast = start;
 			// SLUGFILLER: speedBarShader
 			do {
-				float fWeight = (min(m_Spans.GetKeyAt(pos), iEnd) - iLast) * m_dPixelsPerByte;
+				float fWeight = (float)((min(m_Spans.GetKeyAt(pos), iEnd) - iLast) * m_dPixelsPerByte);
 				fRed   += GetRValue(color) * fWeight;
 				fGreen += GetGValue(color) * fWeight;
 				fBlue  += GetBValue(color) * fWeight;
@@ -203,7 +199,10 @@ void CBarShader::Draw(CDC* dc, int iLeft, int iTop, bool bFlat) {
 			// SLUGFILLER: speedBarShader
 			rectSpan.left = rectSpan.right;
 			rectSpan.right++;
-			FillRect(dc, &rectSpan, fRed, fGreen, fBlue, bFlat);
+			if (g_bLowColorDesktop)
+				FillRect(dc, &rectSpan, color, bFlat);
+			else
+				FillRect(dc, &rectSpan, fRed, fGreen, fBlue, bFlat);
 			start += iBytesInOnePixel;
 		}
 		// SLUGFILLER: speedBarShader
@@ -227,7 +226,6 @@ void CBarShader::FillRect(CDC *dc, LPRECT rectSpan, float fRed, float fGreen,
 	if(bFlat) {
 		COLORREF color = RGB((int)(fRed + .5f), (int)(fGreen + .5f), (int)(fBlue + .5f));
 		dc->FillRect(rectSpan, &CBrush(color));
-
 	} else {
 		if (m_Modifiers == NULL || (m_used3dlevel!=thePrefs.Get3DDepth() && !m_bIsPreview) )
 			BuildModifiers();

@@ -33,6 +33,7 @@
 #include "kademlia/kademlia/Kademlia.h"
 #include "kademlia/net/KademliaUDPListener.h"
 #include "UploadQueue.h"
+#include "ToolTipCtrlX.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,10 +49,12 @@ IMPLEMENT_DYNAMIC(CUploadListCtrl, CMuleListCtrl)
 CUploadListCtrl::CUploadListCtrl()
 	: CListCtrlItemWalk(this)
 {
+	m_tooltip = new CToolTipCtrlX;
 }
 
 void CUploadListCtrl::Init()
 {
+	SetName(_T("UploadListCtrl"));
 	CImageList ilDummyImageList; //dummy list for getting the proper height of listview entries
 	ilDummyImageList.Create(1, theApp.GetSmallSytemIconSize().cy,theApp.m_iDfltImageListColorFlags|ILC_MASK, 1, 1); 
 	SetImageList(&ilDummyImageList, LVSIL_SMALL);
@@ -62,6 +65,7 @@ void CUploadListCtrl::Init()
 
 	CToolTipCtrl* tooltip = GetToolTips();
 	if (tooltip){
+		m_tooltip->SubclassWindow(tooltip->m_hWnd);
 		tooltip->ModifyStyle(0, TTS_NOPREFIX);
 		tooltip->SetDelayTime(TTDT_AUTOPOP, 20000);
 		tooltip->SetDelayTime(TTDT_INITIAL, thePrefs.GetToolTipDelay()*1000);
@@ -78,16 +82,16 @@ void CUploadListCtrl::Init()
 
 	SetAllIcons();
 	Localize();
-	LoadSettings(CPreferences::tableUpload);
+	LoadSettings();
 
 	// Barry - Use preferred sort order from preferences
-	int sortItem = thePrefs.GetColumnSortItem(CPreferences::tableUpload);
-	bool sortAscending = thePrefs.GetColumnSortAscending(CPreferences::tableUpload);
-	SetSortArrow(sortItem, sortAscending);
-	SortItems(SortProc, sortItem + (sortAscending ? 0:100));
+	SetSortArrow();
+	SortItems(SortProc, GetSortItem() + (GetSortAscending() ? 0:100));
 }
 
-CUploadListCtrl::~CUploadListCtrl(){
+CUploadListCtrl::~CUploadListCtrl()
+{
+	delete m_tooltip;
 }
 
 void CUploadListCtrl::OnSysColorChange()
@@ -175,7 +179,7 @@ void CUploadListCtrl::AddClient(const CUpDownClient* client)
 	int iItemCount = GetItemCount();
 	int iItem = InsertItem(LVIF_TEXT|LVIF_PARAM,iItemCount,LPSTR_TEXTCALLBACK,0,0,0,(LPARAM)client);
 	Update(iItem);
-	theApp.emuledlg->transferwnd->UpdateListCount(1, iItemCount+1);
+	theApp.emuledlg->transferwnd->UpdateListCount(CTransferWnd::wnd2Uploading, iItemCount+1);
 }
 
 void CUploadListCtrl::RemoveClient(const CUpDownClient* client)
@@ -189,7 +193,7 @@ void CUploadListCtrl::RemoveClient(const CUpDownClient* client)
 	sint32 result = FindItem(&find);
 	if (result != -1){
 		DeleteItem(result);
-		theApp.emuledlg->transferwnd->UpdateListCount(1);
+		theApp.emuledlg->transferwnd->UpdateListCount(CTransferWnd::wnd2Uploading);
 	}
 }
 
@@ -215,14 +219,14 @@ void CUploadListCtrl::RefreshClient(const CUpDownClient* client)
 
 void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
-	if( !theApp.emuledlg->IsRunning() )
+	if (!theApp.emuledlg->IsRunning())
 		return;
 	if (!lpDrawItemStruct->itemData)
 		return;
 	CDC* odc = CDC::FromHandle(lpDrawItemStruct->hDC);
-	BOOL bCtrlFocused = ((GetFocus() == this ) || (GetStyle() & LVS_SHOWSELALWAYS));
-	if( (lpDrawItemStruct->itemAction | ODA_SELECT) && (lpDrawItemStruct->itemState & ODS_SELECTED )){
-		if(bCtrlFocused)
+	BOOL bCtrlFocused = ((GetFocus() == this) || (GetStyle() & LVS_SHOWSELALWAYS));
+	if (lpDrawItemStruct->itemState & ODS_SELECTED) {
+		if (bCtrlFocused)
 			odc->SetBkColor(m_crHighlight);
 		else
 			odc->SetBkColor(m_crNoHighlight);
@@ -230,11 +234,11 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	else
 		odc->SetBkColor(GetBkColor());
 	const CUpDownClient* client = (CUpDownClient*)lpDrawItemStruct->itemData;
-	CMemDC dc(CDC::FromHandle(lpDrawItemStruct->hDC), &lpDrawItemStruct->rcItem);
+	CMemDC dc(odc, &lpDrawItemStruct->rcItem);
 	CFont* pOldFont = dc.SelectObject(GetFont());
-	RECT cur_rec = lpDrawItemStruct->rcItem;
-	COLORREF crOldTextColor = dc.SetTextColor(m_crWindowText);
-    if(client->GetSlotNumber() > theApp.uploadqueue->GetActiveUploadsCount()) {
+	CRect cur_rec(lpDrawItemStruct->rcItem);
+	COLORREF crOldTextColor = dc.SetTextColor((lpDrawItemStruct->itemState & ODS_SELECTED) ? m_crHighlightText : m_crWindowText);
+    if (client->GetSlotNumber() > theApp.uploadqueue->GetActiveUploadsCount()) {
         dc.SetTextColor(::GetSysColor(COLOR_GRAYTEXT));
     }
 
@@ -246,13 +250,12 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	else
 		iOldBkMode = OPAQUE;
 
-	CString Sbuffer;
 	CKnownFile* file = theApp.sharedfiles->GetFileByID(client->GetUploadFileID());
 	CHeaderCtrl *pHeaderCtrl = GetHeaderCtrl();
 	int iCount = pHeaderCtrl->GetItemCount();
 	cur_rec.right = cur_rec.left - 8;
 	cur_rec.left += 4;
-
+	CString Sbuffer;
 	for (int iCurrent = 0; iCurrent < iCount; iCurrent++)
 	{
 		int iColumn = pHeaderCtrl->OrderToIndex(iCurrent);
@@ -312,7 +315,7 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					imagelist.Draw(dc,image, point, ILD_NORMAL | ((client->Credits() && client->Credits()->GetCurrentIdentState(client->GetIP()) == IS_IDENTIFIED) ? INDEXTOOVERLAYMASK(1) : 0));
 					Sbuffer = client->GetUserName();
 					cur_rec.left += 20;
-					dc->DrawText(Sbuffer, Sbuffer.GetLength(), &cur_rec, DLC_DT_TEXT);
+					dc.DrawText(Sbuffer, Sbuffer.GetLength(), &cur_rec, DLC_DT_TEXT);
 					cur_rec.left -= 20;
 					break;
 				}
@@ -326,14 +329,11 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					Sbuffer = CastItoXBytes(client->GetDatarate(), false, true);
 					break;
 				case 3:
-					// this would be the logical correct data item to show here
-					Sbuffer = CastItoXBytes(client->GetTransferredUp(), false, false);
-
-					//this is something which does not make sense in the context it's shown, but may be useful for debugging..
-					/*if(thePrefs.m_bExtControls)
-						Sbuffer.Format( _T("%s (%s)"), CastItoXBytes(client->GetQueueSessionPayloadUp(), false, false), CastItoXBytes(client->GetSessionUp(), false, false));
+					// NOTE: If you change (add/remove) anything which is displayed here, update also the sorting part..
+					if (thePrefs.m_bExtControls)
+						Sbuffer.Format( _T("%s (%s)"), CastItoXBytes(client->GetSessionUp(), false, false), CastItoXBytes(client->GetQueueSessionPayloadUp(), false, false));
 					else
-						Sbuffer = CastItoXBytes(client->GetSessionUp(), false, false);*/
+						Sbuffer = CastItoXBytes(client->GetSessionUp(), false, false);
 					break;
 				case 4:
 					if (client->HasLowID())
@@ -356,28 +356,28 @@ void CUploadListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					break;
 			}
 			if (iColumn != 7 && iColumn != 0)
-				dc->DrawText(Sbuffer, Sbuffer.GetLength(), &cur_rec, DLC_DT_TEXT);
+				dc.DrawText(Sbuffer, Sbuffer.GetLength(), &cur_rec, DLC_DT_TEXT);
 			cur_rec.left += GetColumnWidth(iColumn);
 		}
 	}
 
 	//draw rectangle around selected item(s)
-	if ((lpDrawItemStruct->itemAction | ODA_SELECT) && (lpDrawItemStruct->itemState & ODS_SELECTED))
+	if (lpDrawItemStruct->itemState & ODS_SELECTED)
 	{
 		RECT outline_rec = lpDrawItemStruct->rcItem;
 
 		outline_rec.top--;
 		outline_rec.bottom++;
-		dc->FrameRect(&outline_rec, &CBrush(GetBkColor()));
+		dc.FrameRect(&outline_rec, &CBrush(GetBkColor()));
 		outline_rec.top++;
 		outline_rec.bottom--;
 		outline_rec.left++;
 		outline_rec.right--;
 
 		if (bCtrlFocused)
-			dc->FrameRect(&outline_rec, &CBrush(m_crFocusLine));
+			dc.FrameRect(&outline_rec, &CBrush(m_crFocusLine));
 		else
-			dc->FrameRect(&outline_rec, &CBrush(m_crNoFocusLine));
+			dc.FrameRect(&outline_rec, &CBrush(m_crNoFocusLine));
 	}
 
 	if (m_crWindowTextBk == CLR_NONE)
@@ -454,17 +454,12 @@ void CUploadListCtrl::OnColumnClick( NMHDR* pNMHDR, LRESULT* pResult){
 
 	// Barry - Store sort order in preferences
 	// Determine ascending based on whether already sorted on this column
-	int sortItem = thePrefs.GetColumnSortItem(CPreferences::tableUpload);
-	bool m_oldSortAscending = thePrefs.GetColumnSortAscending(CPreferences::tableUpload);
-	bool sortAscending = (sortItem != pNMListView->iSubItem) ? true : !m_oldSortAscending;
-	// Item is column clicked
-	sortItem = pNMListView->iSubItem;
-	// Save new preferences
-	thePrefs.SetColumnSortItem(CPreferences::tableUpload, sortItem);
-	thePrefs.SetColumnSortAscending(CPreferences::tableUpload, sortAscending);
+	bool sortAscending = (GetSortItem() != pNMListView->iSubItem) ? true : !GetSortAscending();
+
 	// Sort table
-	SetSortArrow(sortItem, sortAscending);
-	SortItems(SortProc, sortItem + (sortAscending ? 0:100));
+	UpdateSortHistory(pNMListView->iSubItem + (sortAscending ? 0:100));
+	SetSortArrow(pNMListView->iSubItem, sortAscending);
+	SortItems(SortProc, pNMListView->iSubItem + (sortAscending ? 0:100));
 
 	*pResult = 0;
 }
@@ -473,74 +468,108 @@ int CUploadListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
 	const CUpDownClient* item1 = (CUpDownClient*)lParam1;
 	const CUpDownClient* item2 = (CUpDownClient*)lParam2;
+
+	int iResult=0;
 	switch(lParamSort){
 		case 0: 
 			if(item1->GetUserName() && item2->GetUserName())
-				return CompareLocaleStringNoCase(item1->GetUserName(), item2->GetUserName());
+				iResult=CompareLocaleStringNoCase(item1->GetUserName(), item2->GetUserName());
 			else if(item1->GetUserName())
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		case 100:
 			if(item1->GetUserName() && item2->GetUserName())
-				return CompareLocaleStringNoCase(item2->GetUserName(), item1->GetUserName());
+				iResult=CompareLocaleStringNoCase(item2->GetUserName(), item1->GetUserName());
 			else if(item2->GetUserName())
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		case 1: {
 			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
 			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
 			if( (file1 != NULL) && (file2 != NULL))
-				return CompareLocaleStringNoCase(file1->GetFileName(), file2->GetFileName());
+				iResult=CompareLocaleStringNoCase(file1->GetFileName(), file2->GetFileName());
 			else if( file1 == NULL )
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		}
 		case 101:{
 			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
 			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
 			if( (file1 != NULL) && (file2 != NULL))
-				return CompareLocaleStringNoCase(file2->GetFileName(), file1->GetFileName());
+				iResult=CompareLocaleStringNoCase(file2->GetFileName(), file1->GetFileName());
 			else if( file1 == NULL )
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		}
 		case 2: 
-			return CompareUnsigned(item1->GetDatarate(), item2->GetDatarate());
+			iResult=CompareUnsigned(item1->GetDatarate(), item2->GetDatarate());
+			break;
 		case 102:
-			return CompareUnsigned(item2->GetDatarate(), item1->GetDatarate());
+			iResult=CompareUnsigned(item2->GetDatarate(), item1->GetDatarate());
+			break;
 
 		case 3: 
-			return CompareUnsigned(item1->GetTransferredUp(), item2->GetTransferredUp());
+			iResult=CompareUnsigned(item1->GetSessionUp(), item2->GetSessionUp());
+			if (iResult == 0 && thePrefs.m_bExtControls) {
+				iResult = CompareUnsigned(item1->GetQueueSessionPayloadUp(), item2->GetQueueSessionPayloadUp());
+			}
+			break;
 		case 103: 
-			return CompareUnsigned(item2->GetTransferredUp(), item1->GetTransferredUp());
+			iResult=CompareUnsigned(item2->GetSessionUp(), item1->GetSessionUp());
+			if (iResult == 0 && thePrefs.m_bExtControls) {
+				iResult = CompareUnsigned(item2->GetQueueSessionPayloadUp(), item1->GetQueueSessionPayloadUp());
+			}
+			break;
 
 		case 4: 
-			return item1->GetWaitTime() - item2->GetWaitTime();
+			iResult=item1->GetWaitTime() - item2->GetWaitTime();
+			break;
 		case 104: 
-			return item2->GetWaitTime() - item1->GetWaitTime();
+			iResult=item2->GetWaitTime() - item1->GetWaitTime();
+			break;
 
 		case 5: 
-			return item1->GetUpStartTimeDelay() - item2->GetUpStartTimeDelay();
+			iResult=item1->GetUpStartTimeDelay() - item2->GetUpStartTimeDelay();
+			break;
 		case 105: 
-			return item2->GetUpStartTimeDelay() - item1->GetUpStartTimeDelay();
+			iResult=item2->GetUpStartTimeDelay() - item1->GetUpStartTimeDelay();
+			break;
 
 		case 6: 
-			return item1->GetUploadState() - item2->GetUploadState();
+			iResult=item1->GetUploadState() - item2->GetUploadState();
+			break;
 		case 106: 
-			return item2->GetUploadState() - item1->GetUploadState();
+			iResult=item2->GetUploadState() - item1->GetUploadState();
+			break;
 
 		case 7:
-			return item1->GetUpPartCount() - item2->GetUpPartCount();
+			iResult=item1->GetUpPartCount() - item2->GetUpPartCount();
+			break;
 		case 107: 
-			return item2->GetUpPartCount() - item1->GetUpPartCount();
+			iResult=item2->GetUpPartCount() - item1->GetUpPartCount();
+			break;
 
 		default:
-			return 0;
+			iResult=0;
+			break;
 	}
+	int dwNextSort;
+	//call secondary sortorder, if this one results in equal
+	//(Note: yes I know this call is evil OO wise, but better than changing a lot more code, while we have only one instance anyway - might be fixed later)
+	if (iResult == 0 && (dwNextSort = theApp.emuledlg->transferwnd->uploadlistctrl.GetNextSortOrder(lParamSort)) != (-1)){
+		iResult= SortProc(lParam1, lParam2, dwNextSort);
+	}
+
+	return iResult;
+
 }
 
 void CUploadListCtrl::ShowSelectedUserDetails()

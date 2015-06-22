@@ -20,6 +20,7 @@
 #include "IconStatic.h"
 #include "RichEditCtrlX.h"
 #include "ClosableTabCtrl.h"
+#include "SplitterControl.h"
 
 class CHTRichEditCtrl;
 class CCustomAutoComplete;
@@ -43,6 +44,7 @@ public:
 	void ResetHistory();
 	void PasteServerFromClipboard();
 	bool AddServer(uint16 uPort, CString strIP, CString strName = _T(""), bool bShowErrorMB = true);
+	CString GetMyInfoString();
 
 // Dialog Data
 	enum { IDD = IDD_SERVER };
@@ -59,8 +61,16 @@ public:
 	CHTRichEditCtrl* logbox;
 	CHTRichEditCtrl* debuglog;
 	CClosableTabCtrl StatusSelector;
+	CSplitterControl m_wndSplitter;
 
 private:
+	void	DoResize(int delta);
+	void	UpdateSplitterRange();
+	void	DoSplitResize(int delta);
+	void	ShowSplitWindow(bool bReDraw = false);
+	void	InitSplitter();
+	void	ReattachAnchors();
+
 	CIconStatic m_ctrlNewServerFrm;
 	CIconStatic m_ctrlUpdateServerFrm;
 	CIconStatic m_ctrlMyInfoFrm;
@@ -80,10 +90,11 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual LRESULT DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnBnClickedAddserver();
-	afx_msg void OnBnClickedUpdateservermetfromurl();
+	afx_msg void OnBnClickedUpdateServerMetFromUrl();
 	afx_msg void OnBnClickedResetLog();
 	afx_msg void OnBnConnect();
 	afx_msg void OnTcnSelchangeTab3(NMHDR *pNMHDR, LRESULT *pResult);
@@ -93,4 +104,6 @@ protected:
 	afx_msg void OnSvrTextChange();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	afx_msg void OnStnDblclickServlstIco();
+	afx_msg void OnSplitterMoved(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnWindowPosChanged(WINDOWPOS* lpwndpos);
 };

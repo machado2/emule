@@ -26,45 +26,43 @@ public:
 	~CServerList();
 
 	bool		Init();
-	bool		AddServer(CServer* in_server );
-	void		RemoveServer(const CServer* out_server);
-	void		RemoveAllServers(void);
-
-	bool		AddServermetToList(const CString& rstrFile, bool bMerge = true);
+	void		Process();
+	void		Sort();
+	void		MoveServerDown(const CServer* pServer);
+	void		AutoUpdate();
+	bool		AddServerMetToList(const CString& rstrFile, bool bMerge);
 	void		AddServersFromTextFile(const CString& rstrFilename);
 	bool		SaveServermetToFile();
 
-	void		ServerStats();
-	void		ResetServerPos()	{serverpos = 0;}
-	void		ResetSearchServerPos()	{searchserverpos = 0;}
-	CServer*	GetNextServer();
-	CServer*	GetNextSearchServer();
-	CServer*	GetNextStatServer();
-	CServer*	GetServerAt(uint32 pos) const { return list.GetAt(list.FindIndex(pos)); }
+	bool		AddServer(const CServer* pServer);
+	void		RemoveServer(const CServer* pServer);
+	void		RemoveAllServers();
+
 	uint32		GetServerCount() const { return list.GetCount(); }
-	CServer*	GetNextServer(const CServer* lastserver) const; // slow
+	CServer*	GetServerAt(uint32 pos) const { return list.GetAt(list.FindIndex(pos)); }
+	CServer*	GetNextServer(const CServer* lastserver) const;
 	CServer*	GetServerByAddress(LPCTSTR address, uint16 port) const;
 	CServer*	GetServerByIP(uint32 nIP) const;
 	CServer*	GetServerByIP(uint32 nIP, uint16 nPort) const;
-	bool		IsGoodServerIP(const CServer* in_server) const;
-	void		GetStatus(uint32& total, uint32& failed, 
-						  uint32& user, uint32& file, uint32& lowiduser, 
-						  uint32& totaluser, uint32& totalfile, 
-						  float& occ) const;
-	void		GetAvgFile( uint32& average ) const;
-	void		GetUserFileStatus(uint32& user, uint32& file) const;
-	
-	void		Sort();
-	void		MoveServerDown(const CServer* aServer);
-	uint32		GetServerPostion() const { return serverpos; }
-	void		SetServerPosition(uint32 newPosition);
-	uint32		GetDeletedServerCount() const { return delservercount; }
-	void		Process();
-	void		AutoUpdate();
 
-    // ZZ:UploadSpeedSense -->
+	void		SetServerPosition(uint32 newPosition);
+	uint32		GetServerPostion() const { return serverpos; }
+	CServer*	GetNextServer();
+
+	void		ResetSearchServerPos() { searchserverpos = 0; }
+	CServer*	GetNextSearchServer();
+
+	void		ServerStats();
+	CServer*	GetNextStatServer();
+
+	bool		IsGoodServerIP(const CServer* pServer) const;
+	void		GetStatus(uint32& total, uint32& failed, uint32& user, uint32& file, uint32& lowiduser, 
+						  uint32& totaluser, uint32& totalfile, float& occ) const;
+	void		GetAvgFile(uint32& average) const;
+	void		GetUserFileStatus(uint32& user, uint32& file) const;
+	uint32		GetDeletedServerCount() const { return delservercount; }
+
     bool        GiveServersForTraceRoute();
-	// ZZ:UploadSpeedSense <--
 
 private:
 	uint32		serverpos;

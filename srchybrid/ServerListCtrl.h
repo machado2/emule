@@ -3,6 +3,7 @@
 
 class CServerList; 
 class CServer;
+class CToolTipCtrlX;
 
 class CServerListCtrl : public CMuleListCtrl 
 {
@@ -12,21 +13,22 @@ public:
 	virtual ~CServerListCtrl();
 
 	bool	Init(CServerList* in_list);
-	bool	AddServer(CServer* toadd,bool bAddToList = true);
-	void	RemoveServer(CServer* todel);
-	bool	AddServermetToList(const CString& strFile);
-	void	RefreshServer(const CServer* server);
+	bool	AddServer(const CServer* pServer, bool bAddToList = true);
+	void	RemoveServer(const CServer* pServer);
+	bool	AddServerMetToList(const CString& strFile);
+	void	RefreshServer(const CServer* pServer);
 	void	RemoveAllDeadServers();
 	void	Hide() {ShowWindow(SW_HIDE);}
 	void	Visable() {ShowWindow(SW_SHOW);}
 	void	Localize();
 	void	ShowServerCount();
+	bool	StaticServerFileAppend(CServer* pServer);
+	bool	StaticServerFileRemove(CServer* pServer);
 
 protected:
 	CServerList*	server_list;
+	CToolTipCtrlX*	m_tooltip;
 
-	bool StaticServerFileAppend(CServer *server);
-	bool StaticServerFileRemove(const CServer *server);
 	void SetAllIcons();
 	static int CALLBACK SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
 
@@ -38,4 +40,5 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnNMLdblclk (NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnGetInfoTip(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMCustomdraw(NMHDR *pNMHDR, LRESULT *pResult);
 };

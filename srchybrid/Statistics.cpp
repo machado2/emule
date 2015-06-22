@@ -260,8 +260,8 @@ void CStatistics::RecordRate()
 
 	// Accurate datarate Calculation
 	uint32 stick = GetTickCount();
-	TransferredData newitemUP = {theStats.sessionSentBytes, stick};
-	TransferredData newitemDN = {theStats.sessionReceivedBytes, stick};
+	TransferredData newitemUP = {(UINT)theStats.sessionSentBytes, stick};
+	TransferredData newitemDN = {(UINT)theStats.sessionReceivedBytes, stick};
 
 	downrateHistory.push_front(newitemDN);
 	uprateHistory.push_front(newitemUP);

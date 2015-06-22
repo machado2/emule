@@ -26,6 +26,7 @@
 #include "SharedFileList.h"
 #include "emuledlg.h"
 #include "Log.h"
+#include "opcodes.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -297,7 +298,7 @@ int CPartFileConvert::performConvertToeMule(CString folder)
 	{
 		
 		if (!pfconverting->removeSource) 
-			pfconverting->spaceneeded=GetDiskFileSize(oldfile);
+			pfconverting->spaceneeded = (UINT)GetDiskFileSize(oldfile);
 
 		UpdateGUI(pfconverting);
 
@@ -311,7 +312,7 @@ int CPartFileConvert::performConvertToeMule(CString folder)
 
 		file->m_hpartfile.Close();
 
-		bool ret=false;
+		BOOL ret=FALSE;
 		UpdateGUI( 92 ,GetResString(IDS_COPY));
 		DeleteFile(newfilename.Left(newfilename.GetLength()-4));
 
@@ -400,7 +401,7 @@ void CPartFileConvert::UpdateGUI(float percent,CString text, bool fullinfo) {
 	
 	if (m_convertgui==NULL) return;
 
-	m_convertgui->pb_current.SetPos(percent);
+	m_convertgui->pb_current.SetPos((int)percent);
 	CString buffer;
 	buffer.Format(_T("%.2f %%"),percent);
 	m_convertgui->SetDlgItemText(IDC_CONV_PROZENT,buffer);

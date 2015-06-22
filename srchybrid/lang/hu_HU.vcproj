@@ -12,19 +12,14 @@
 	<Configurations>
 		<Configuration
 			Name="Dynamic|Win32"
-			OutputDirectory="Dynamic"
-			IntermediateDirectory="Dynamic"
+			OutputDirectory="dynamic"
+			IntermediateDirectory="obj"
 			ConfigurationType="2"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="1"
-				OmitFramePointers="TRUE"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;HU_HU_EXPORTS"
-				StringPooling="TRUE"
 				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"/>
@@ -38,7 +33,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				ResourceOnlyDLL="TRUE"
-				ImportLibrary="$(OutDir)/hu_HU.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>

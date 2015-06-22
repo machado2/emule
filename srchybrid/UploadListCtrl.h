@@ -19,6 +19,7 @@
 #include "ListCtrlItemWalk.h"
 
 class CUpDownClient;
+class CToolTipCtrlX;
 
 class CUploadListCtrl : public CMuleListCtrl, public CListCtrlItemWalk
 {
@@ -38,6 +39,9 @@ public:
 	void	ShowSelectedUserDetails();
 
 protected:
+	CImageList imagelist;
+	CToolTipCtrlX* m_tooltip;
+
 	void SetAllIcons();
 	static int CALLBACK SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
 
@@ -51,7 +55,4 @@ protected:
 	afx_msg void OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnGetDispInfo(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnGetInfoTip(NMHDR *pNMHDR, LRESULT *pResult);
-
-private:
-	CImageList	imagelist;
 };

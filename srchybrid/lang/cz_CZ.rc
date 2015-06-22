@@ -636,7 +636,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Uživatelské jméno:"
     IDS_CD_UHASH            "Hash uživatele:"
-    IDS_CD_CSOFT            "Software klienta:"
+    IDS_CD_CSOFT            "Software klienta"
     IDS_CD_UIP              "IP adresa:"
     IDS_CD_SIP              "IP serveru:"
     IDS_CD_VERSION          "Verze klienta:"
@@ -900,11 +900,11 @@ BEGIN
     IDS_SP_BACKGROUND       "Pozadí"
     IDS_SP_GRID             "Møížka"
     IDS_SP_DL1              "Download - souèasnì"
-    IDS_SP_DL2              "Download - èasový prùmìr"
-    IDS_SP_DL3              "Download - prùmìr etapy"
+    IDS_SP_DL2              "Prùmìr downloadu"
+    IDS_SP_DL3              "Prùmìr downloadu etapy"
     IDS_SP_UL1              "Upload - souèasnì"
-    IDS_SP_UL2              "Upload - èasový prùmìr"
-    IDS_SP_UL3              "Upload - prùmìr etapy"
+    IDS_SP_UL2              "Prùmìr uploadu"
+    IDS_SP_UL3              "Prùmìr uploadu etapy"
     IDS_SP_ACTCON           "Aktivní pøipojení"
     IDS_SP_ACTDL            "Aktivní downloady"
     IDS_SP_ACTUL            "Aktivní uploady"
@@ -1124,13 +1124,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Zakázat seznam známých klientù"
     IDS_DISABLEQUEUELIST    "Zakázat zobrazení fronty"
     IDS_USECREDITSYSTEM     "Použít kreditní systém (odmìòuje uploadery)"
-    IDS_FIRSTAUTODOWN       "Povolte tuto možnost, pokud požadujete, aby eMule øídil Vaše priority stahování.\n\nZapnutím umožníte eMule, aby zajistil, že downloady s hodnì zdroji nebudou zabraòovat downloadùm s málo zdroji.\n\nPokud jste pøávì pøešli z klienta verze 0.26 a nižší, všechny souèasné downloady byly nastaveny na Auto prioritu.\n\nTato volba ovlivní pouze budoucí downloady. (implicitnì povoleno)"
-    IDS_FIRSTAUTOUP         "Povolte tuto možnost, pokud požadujete, aby eMule øídil Vaše priority uploadování.\n\nZapnutím umožníte eMule, aby podpoøil uploadování vzácných souborù, zatímco rozšíøené soubory budou získatelné obtížnìji.\n\nVupnutím umožníte eMule, aby uploadoval rozšíøené soubory více èasto, zatímco vzácné soubory budou získatelné obtížnìji.\n\nPokud jste pøávì pøešli z klienta verze 0.26 a nižší, všechny doposud sdílené uploady byly nastaveny na Auto prioritu.\n\nTato volba ovlivní pouze budoucí sdílené soubory. (implicitnì povoleno)"
-    IDS_FIRSTCREDITSYSTEM   "Požadujete odmìnit lidi, kteøí k Vám uploadují?\n\nTato možnost je známá jako Kreditní systém. Zapnutím tohoto pomùžete bojovat proti leacherùm. Pokud výhradnì zveøejòujete nové soubory, bude se Vám hodit, tuto funkci vypnout.\n\n(implicitnì Ano)"
-    IDS_FIRSTFULLCHUNK      "Povolte tuto možnost, pokud požadujete uploadovat celé díly.\n\nTímto poskytnete klientovy lepší šanci na dokonèení celého dílu. Naopak vypnutím zrychlíte obrat fronty. Pokud výhradnì zveøejòujete nové soubory, bude se Vám hodit tuto funkci zapnout.\n\n(implicitnì povoleno)"
-    IDS_FIRSTSAFECON        "Povolte tuto možnost, pokud požadujete, aby eMule používal Bezpeèné pøipojení?\n\nVypnutím umožníte eMule, aby se pøipojoval k serverùm trochu rychleji, avšak mùže docházet k více falešným lowID pøipojením.\n\n(implicitnì zakázáno)"
+    IDS_FIRSTAUTODOWN       "Tuto možnost povolte, pokud požadujete, aby eMule øídil priority downloadù.\n\nPOvolení této možnosti umožní eMule zajistit, aby downloady s mnoha zdroji nepøekážely downloadùm s málo zdroji.\n\nTato možnost ovlivní pouze budoucí downloady. (implicitnì povoleno)"
+    IDS_FIRSTAUTOUP         "Tuto možnost povolte, pokud požadujete, aby eMule øídil priority uploadù.\n\nPovolení této možností umožní eMule podpoøit uploadování vzácných souborù (rozšíøené soubory budou uploadovány øidèeji). Vypnutí této možnosti naopak umožní eMule uploadovat populární soubory èastìji na úkor souborù vzásných.\n\nTato možnost ovlivní pouze budoucí sdílené soubory. (implicitnì povoleno)"
+    IDS_FIRSTCREDITSYSTEM   "Máte zájem odmìnit lidi, kteøí k vám uploadují?\n\nTOto je obecnì známo jako Kreditní Systém. Povolením této možnosti podpoøíte boj proti leacherùm. Pokud však výhradnì zveøejòujete soubory, bude pro vás lepší tuto možnost vypnout. (implicitnì povoleno)"
+    IDS_FIRSTFULLCHUNK      "Povolte tuto možnost, pokud požadujete uploadovat celé díly.\n\nTímto poskytnete klientovy lepší šanci na dokonèení celého dílu. Naopak vypnutím zrychlíte obrat fronty. Pokud výhradnì zveøejòujete nové soubory, bude se Vám hodit tuto funkci zapnout. (implicitnì povoleno)"
+    IDS_FIRSTSAFECON        "Povolte tuto možnost, pokud požadujete, aby eMule používal Bezpeèné pøipojení.\n\nVypnutím umožníte eMule, aby se pøipojoval k serverùm trochu rychleji, avšak mùže docházet k více falešným lowID pøipojením. (implicitnì zakázáno)"
+    IDS_FIRSTAUTOCON        "Povolte tuto možnost, pokud požadujete, aby se eMule pøipojoval po spuštìní. (implicitnì zakázáno)"
     IDS_FIRSTRUNASSIST      "Požadujete spustit prùvodce pro první použití?"
-    IDS_FIRSTAUTOCON        "Povolte tuto možnost, pokud požadujete, aby se eMule pøipojoval po spuštìní.\n\n(implicitnì zakázáno)"
     IDS_FIRSTCOMPLETE       "Právì jste dokonèili prùvodce základním nastavením.\n\nNejen všechna tato nastavení, ale i další lze mìnit po kliknutí na ikonu Možnosti. Pro vysvìtlení a podporu si proètìte nápovìdu po stisknutí F1 v eMule!"
 END
 
@@ -1326,7 +1326,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problematický"
     IDS_LONGHRS             "Hodin"
     IDS_STATS_LARGESTFILE   "Nejvìtší sdílený soubor"
-    IDS_CLIENTSOFTWARE      "Software klienta"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Soubory .part"
     IDS_STATS_DATASOURCE    "Zdroj dat"
     IDS_STATS_DSFILE        "Dokonèené soubory"
@@ -1350,7 +1350,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Kopírovat všechny statistiky"
     IDS_STATS_MNUTREEHTML   "Rysy HTML"
     IDS_STATS_EXPORT2HTML   "Exportovat všechny statistiky"
-    IDS_STATS_EXPORTVIS     "Exportovat všechny viditelné"
     IDS_STATS_MNUTREECPYVIS "Kopírovat všechny viditelné"
     IDS_STATS_MNUTREEEXPANDALL "Rozvinout všechny výbìry"
     IDS_STATS_MNUTREECOLLAPSEALL "Složit všechny výbìry"
@@ -1404,13 +1403,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Verze"
-    IDS_ALL_A4AF_TO_THIS    "Pøedat teï všechny zdroje tomuto souboru"
     IDS_PASTE               "Vložit"
-    IDS_ALL_A4AF_TO_OTHER   "Pøedat teï všechny zdroje jinému souboru"
-    IDS_ALL_A4AF_AUTO       "Automaticky pøedat všechny zdroje (A4AF) tomuto souboru"
-    IDS_SWAP_A4AF_TO_THIS   "Pøedat zdroje (A4AF) tomuto soboru"
-    IDS_SWAP_A4AF_TO_OTHER  "Pøedat teï všechny zdroje (A4AF) jinému souboru"
-    IDS_A4AF                "Øízení zdrojù (A4AF)"
+    IDS_A4AF                "Øízení zdrojù"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "Povolit MobileMule"
     IDS_AUTOCAT_LABEL       "Automatické pøidìlení kategorie (pøedloha, oddìlená |)"
@@ -1610,7 +1604,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Logovat bezpeènostní ident"
     IDS_LOG_FILTERED_IPS    "Logovat filtrované nebo ignorované IP"
     IDS_LOG_FILE_SAVING     "Logovat události ukládání souboru"
-    IDS_IPFILTERFILES       "Všechny soubory IP fitrù (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Textové soubory (*.txt)|*.txt|Všechny (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "Všechny soubory IP Filtru (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|Soubory eMule IP Filtru (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian soubory (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Textové soubory (*.txt)|*.txt|Soubory ZIP (*.zip;*.gz)|*.zip;*.gz|Všechny soubory (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "Máte opravdu zájem o smazání vybraných IP filtrù?"
     IDS_TOTAL_IPFILTER_LABEL "Celkem IP filtrù:"
     IDS_TOTAL_IPS_LABEL     "Celkem IP:"
@@ -1697,12 +1691,12 @@ BEGIN
     IDS_NOPORTCHANGEPOSSIBLE 
                             "Bìhem pøipojení k jiným klientùm nebo serveru není možné mìnit porty!\n\nProsím restartujte eMule se zmìnìným nastavením portù."
     IDS_NETWORK_INFO        "Informace ze sítì"
-    IDS_SP_TOTALUL          "Celkové množství uploadù"
+    IDS_SP_TOTALUL          "Celkové uploady"
     IDS_SP_ULFRIENDS        "Pøátelské upload sloty"
-    IDS_SP_ULSLOTSNOOVERHEAD "souèasné uploady vyjma overheadù (pouze UL Sloty)"
-    IDS_ST_ACTIVEU_ZZ       "Activní uploady"
-    IDS_ST_ULCURRENT        "Upload+Overhead"
-    IDS_ST_ULSLOTSNOOVERHEAD "Upload"
+    IDS_SP_ULSLOTSNOOVERHEAD "Souèasné uploady (kromì overhead)"
+    IDS_ST_ACTIVEU_ZZ       "Aktivní uploady"
+    IDS_ST_ULCURRENT        "Souèasné"
+    IDS_ST_ULSLOTSNOOVERHEAD "Souèasné (kromì overhead)"
     IDS_ST_ULFRIEND         "Pøátelský upload"
 END
 
@@ -1716,7 +1710,7 @@ BEGIN
     IDS_CHAT_CLIENT         "Klient:"
     IDS_MAXHALFOPENCONS     "Max. polootevøwných pøipojení"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Povolte tuto možnost, pokovaï máte zájem, aby se eMule spouštìl se startem windows. [Implicitnì zakázáno]"
+                            "Tuto možnost povolte, pokud požadujete, aby se eMule spouštìl startem Windows. (implicitnì zakázáno)"
     IDS_KAD_WAITCBK         "Èekat na zpìtné volání z Kad"
     IDS_KAD_TOOMANDYKADLKPS "Pøíliš mnoho Kad vyhledávání"
     IDS_PCDS_CLIENTWAIT     "Klient Èeká"
@@ -1841,7 +1835,91 @@ BEGIN
 
 END
 
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Ukonèit eMule"
+    IDS_WEB_REBOOT          "Restartovat poèítaè"
+    IDS_WEB_SHUTDOWNSYSTEM  "Vypnout poèítaè"
+    IDS_WEB_ADMINMENU       "Administrátorské Menu"
+    IDS_WEB_MAIN_CLOSE      "Opravdu chcete ukonèit eMule?"
+    IDS_WEB_MAIN_REBOOT     "Opravdu chcete restartovat poèítaè?"
+    IDS_WEB_MAIN_SHUTDOWN   "Opravdu chcete vypnout poèítaè?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Ukázat zakázané klienty ve frontì"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Ukázat pøátele ve frontì"
+    IDS_WEB_SESSIONTIMEOUT  "Timeout etapy"
+    IDS_WEB_ALLOWHILEVFUNC  "Povolit ukonèení eMule, restart a vypnutí poèítaèe"
+    IDS_SETPFSLIMIT         "Limit zdrojù..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Prosím vložte nový limit zdrojù pro vybrané soubory ! \n(nastavte 0 pro použití globálního nastavení)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Máte zájem obnovit pøíchozí složky obsažené ve staré pøíchozí složce?"
+    IDS_USESPEECH           "Vyslovovat oznamovací zprávu"
+    IDS_CONDTCPACCEPT       "Rychlé odmítnutí pøipojení"
+    IDS_TCPIP_CONNS         "TCP/IP pøipojení"
+    IDS_ERR_DELFILE         "Nepodaøilo se smazat soubor ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Máte zájem vyèistit názvy vybraných souborù?"
+    IDS_PW_RECEIVERADDRESS  "Adresa pøíjemce:"
+    IDS_PW_ENABLEEMAIL      "Umožnit oznámení e-mailem"
+    IDS_EMULENOTIFICATION   "eMule oznámení"
+    IDS_PW_EMAILNOTIFICATIONS "E-mailová oznámení"
+    IDS_PW_SMTPSERVER       "SMTP-Server:"
+    IDS_PW_SENDERADDRESS    "Adresa odesílatele:"
+    IDS_PW_SHOWTRANSTOOLBAR "Zobrazit rozšíøený panel nástrojù v oknì pøenosù"
+    IDS_MODIFYCOLLECTION    "Modify Collection"
+    IDS_VIEWCOLLECTION      "View Collection"
+    IDS_COLL_TEXTFORMAT     "Save collection In A Simple Text Format"
+    IDS_SEARCHAUTHORCOLLECTION "Search Author's Collections"
+    IDS_ERR_DUPL_FILES      "Duplicate shared files: ""%s"" and ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting failed too many times. Disabling Upload SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Done with preparations. Starting control of upload speed. (First 60 seconds will be in fast reaction mode)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Raised upload limit in prefs detected. Going into fast reaction mode for 60 seconds."
+    IDS_USS_STATE_PREPARING "Preparing..."
+    IDS_USS_STATE_WAITING   "Waiting..."
+    IDS_USS_STATE_ERROR     "Error!"
+END
 #endif    // Czech resources
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Shared parts"
+    IDS_INCOMING_FILES      "Incoming Files"
+    IDS_INCOMPLETE_FILES    "Incomplete Files"
+    IDS_SHARED_DIRECTORIES  "Shared Directories"
+    IDS_SHAREDIR            "Share directory"
+    IDS_SHAREDIRSUB         "Share with subdirectories"
+    IDS_UNSHAREDIR          "Unshare directory"
+    IDS_UNSHAREDIRSUB       "Unshare with subdirectories"
+    IDS_ALLSHAREDFILES      "All Shared Files"
+    IDS_ALLDIRECTORIES      "All Directories"
+    IDS_SEARCHRELATED       "Find related files"
+    IDS_RELATED             "Related"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Collection List"
+    IDS_SEARCH_EMULECOLLECTION "Collection"
+    IDS_COLL_REPLACEEXISTING "Do you want to replace existing file?"
+    IDS_COLL_ERR_DELETING   "Some Unknown error in deleting old file. Exit without saving?"
+    IDS_CREATECOLLECTION    "Create Collection"
+    IDS_COLL_SIGN           "Sign Collection with Name and Key"
+    IDS_AUTHOR              "Author"
+    IDS_AUTHORKEY           "Author Key"
+    IDS_COLL_ADDINCAT       "Add new downloads in a Collection Category"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s se zdá býti poškozen, proèež bude nahrazen"
+    IDS_UPLOADING           "Uploadování"
+    IDS_CANCELLED           "Zrušený"
+    IDS_PW_REMEMBERDOWNLOADED "Zapamatovat stažené soubory"
+    IDS_PW_REMEMBERCANCELLED "Zapamatovat zrušené soubory"
+    IDS_AVAILABLEPARTS      "Dostupné èásti"
+    IDS_NOSOUND             "Beze zvuku"
+END
+
 /////////////////////////////////////////////////////////////////////////////
 
 

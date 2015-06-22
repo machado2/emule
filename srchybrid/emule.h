@@ -24,6 +24,8 @@
 #define	DEFAULT_TCP_PORT	4662
 #define	DEFAULT_UDP_PORT	(DEFAULT_TCP_PORT+10)
 
+#define PORTTESTURL			_T("http://porttest.emule-project.net/connectiontest.php?tcpport=%i&udpport=%i&lang=%i")
+
 class CSearchList;
 class CUploadQueue;
 class CListenSocket;
@@ -92,6 +94,10 @@ public:
 	CFont				m_fontSymbol;
 	CFont				m_fontLog;
 	CBrush				m_brushBackwardDiagonal;
+	static const UINT	m_nVersionMjr;
+	static const UINT	m_nVersionMin;
+	static const UINT	m_nVersionUpd;
+	static const UINT	m_nVersionBld;
 	DWORD				m_dwProductVersionMS;
 	DWORD				m_dwProductVersionLS;
 	CString				m_strCurVersionLong;
@@ -100,11 +106,12 @@ public:
 	ULONGLONG			m_ullComCtrlVer;
 	AppState			m_app_state; // defines application state for shutdown 
 	CMutex				hashing_mut;
-	CString*			pendinglink;
+	CString*			pstrPendingLink;
 	COPYDATASTRUCT		sendstruct;
 
 // Implementierung
 	virtual BOOL InitInstance();
+	virtual int ExitInstance();
 
 	// ed2k link functions
 	void		AddEd2kLinksToDownload(CString strLinks, uint8 cat);
@@ -114,6 +121,7 @@ public:
 	bool		IsEd2kFileLinkInClipboard();
 	bool		IsEd2kServerLinkInClipboard();
 	bool		IsEd2kLinkInClipboard(LPCSTR pszLinkType, int iLinkTypeLen);
+	LPCTSTR		GetProfileFile()		{ return m_pszProfileName; }
 
 	CString		CreateED2kSourceLink(const CAbstractFile* f);
 //	CString		CreateED2kHostnameSourceLink(const CAbstractFile* f);
@@ -148,6 +156,9 @@ public:
 	bool		LoadSkinColorAlt(LPCTSTR pszKey, LPCTSTR pszAlternateKey, COLORREF& crColor) const;
 	CString		GetSkinFileItem(LPCTSTR lpszResourceName, LPCTSTR pszResourceType) const;
 	void		ApplySkin(LPCTSTR pszSkinProfile);
+	void		EnableRTLWindowsLayout();
+	void		DisableRTLWindowsLayout();
+	void		UpdateDesktopColorDepth();
 
 	bool		GetLangHelpFilePath(CString& strResult);
 	void		SetHelpFilePath(LPCTSTR pszHelpFilePath);

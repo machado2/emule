@@ -596,7 +596,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Ime:"
     IDS_CD_UHASH            "HashKoda:"
-    IDS_CD_CSOFT            "Program:"
+    IDS_CD_CSOFT            "Program"
     IDS_CD_UIP              "IP Naslov:"
     IDS_CD_SIP              "Strežnikov IP:"
     IDS_CD_VERSION          "Razlièica:"
@@ -1117,13 +1117,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Izklopi listo poznanih uporabnikov"
     IDS_DISABLEQUEUELIST    "Izklopi prikaz vrste"
     IDS_USECREDITSYSTEM     "Uporabi bonuse (nagradi uploaderje)"
-    IDS_FIRSTAUTODOWN       "Želite, da eMule opravlja s prioriteto vaših prenosov?\r\rÈe vklopite to bo eMule skrbel, da prenosi z manj viri ne bodo zapostavljeni.\r\rTo bo vplivalo samo na nove prenose. (Privzeto Da)"
-    IDS_FIRSTAUTOUP         "Želite, da eMule opravlja s prioriteto vaših pošiljanj?\r\rÈe vklopite to bo eMule skrbel, da bodo imele redkejše datoteke višjo prioriteto.\r\rTo bo vplivalo samo na nove prenose. (Privzeto Da)"
-    IDS_FIRSTCREDITSYSTEM   "Želite nagraditi ljudi, ki vam pošiljajo datoteke?\r\rBolje znano kot Bonus Sistem. S tem se borimo proti ljudem, ki samo vzemajo in nièesar ne dajo. Èe veliko pošiljate, potem je zaželjeno, da to izklopite.\r\r(Privzeto Da)"
-    IDS_FIRSTFULLCHUNK      "Želite pošiljati samo cele dele datotek?\r\rS tem boste pripomogli, da bodo drugi hitreje dobili datoteko. Èe izklopite se bo vaša vrsta hitreje premikala. Èe veliko pošiljate, potem je zaželjeno, da imate to vklopljeno.\r\r(Privzeto Da)"
-    IDS_FIRSTSAFECON        "Želite, da eMule uporablja varno povezovanje?\r\rÈe izklopite, se bo eMule hitreje povezal, vandar je veèja možnost, da dobite nizek ID.\r\r(Privzeto Ne)"
+    IDS_FIRSTAUTODOWN       "Enable this option if you want eMule to manage your download priorities.\n\nTurning this on will allow eMule to make sure downloads with a lot of sources do not interfere with downloads that have few sources. This option will only affect future downloads."
+    IDS_FIRSTAUTOUP         "Enable this option if you want eMule to manage your upload priorities.\n\nTurning this on will allow eMule to boost rare files meaning popular files will be harder for other people to get. Turning this off will allow eMule to upload popular files more often meaning rare files will be harder for other people to get. This option will only affect future shared files."
+    IDS_FIRSTCREDITSYSTEM   "Do you want to reward people that upload to you?\n\nThis is commonly known as the Credit System. Turning this on will help fight against leachers. If you are a dedicated releaser, you will want to turn this off."
+    IDS_FIRSTFULLCHUNK      "Enable this option if you want to upload full chunks.\n\nUsing full chunk gives the client a better chance to complete a chunk. Turning this off will help rotate your queue faster. If you are a dedicated releaser, you will want to turn this on."
+    IDS_FIRSTSAFECON        "Enable this option if you want eMule to connect using Safe Connect.\n\nTurning this feature off allows eMule to connect to servers a little faster, but can cause you to get more false LowID connects."
     IDS_FIRSTRUNASSIST      "Želite uporabiti èarovnika ob prvem zagonu?"
-    IDS_FIRSTAUTOCON        "Želite, da se eMule poveže ob zagonu?\r\r(Privzeto Ne)"
+    IDS_FIRSTAUTOCON        "Enable this option if you want eMule to connect at startup."
     IDS_FIRSTCOMPLETE       "Vse to in še veliko veè se da spremeniti v nastavitvah.\r\rProsimo vzemite si èas in jih nastavite po svojih potrebah.\r\rNa prvi strani nastavitev si izberite svoje uporabniško ime.\r\rKo si izberete uporabniško ime, kliknite na zavihek povezava in poženite èarovnika."
 END
 
@@ -1317,7 +1317,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problematièen"
     IDS_LONGHRS             "ur"
     IDS_STATS_LARGESTFILE   "Najveèja deljena datoteka"
-    IDS_CLIENTSOFTWARE      "Software odjemalca"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Part dat."
     IDS_STATS_DATASOURCE    "Izvor dat."
     IDS_STATS_DSFILE        "Celotna dat."
@@ -1341,7 +1341,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Kopiraj vse statistike"
     IDS_STATS_MNUTREEHTML   "Možnosti HTML"
     IDS_STATS_EXPORT2HTML   "Izvozi sve statistike"
-    IDS_STATS_EXPORTVIS     "Izvozi vse vidne"
     IDS_STATS_MNUTREECPYVIS "Kopiraj vse vidne"
     IDS_STATS_MNUTREEEXPANDALL "Razširi vse odseke"
     IDS_STATS_MNUTREECOLLAPSEALL "Skrèi vse odseke"
@@ -1395,13 +1394,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Razlièica"
-    IDS_ALL_A4AF_TO_THIS    "Prenesi vse vire na to dat."
     IDS_PASTE               "Paste"
-    IDS_ALL_A4AF_TO_OTHER   "Prenesi vse vire na katerokoli drugo dat."
-    IDS_ALL_A4AF_AUTO       "Samodejno prenesi vse (A4AF)vire na to dat."
-    IDS_SWAP_A4AF_TO_THIS   "Prenesi vire na to datoteko"
-    IDS_SWAP_A4AF_TO_OTHER  "prenesi vire na katerokoli drugo dat."
-    IDS_A4AF                "Upravljanje z viri (A4AF)"
+    IDS_A4AF                "Upravljanje z viri"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "Omogoèi MobileMule"
     IDS_AUTOCAT_LABEL       "Samodejna dol. kategorij (vzorec, deljen z |)"
@@ -1603,7 +1597,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Beleži varno ident."
     IDS_LOG_FILTERED_IPS    "Beleži filtrirane in/ali ignorirane IPje"
     IDS_LOG_FILE_SAVING     "Beleži shranjevanja datotek"
-    IDS_IPFILTERFILES       "Vse datoteke z IP filtri (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|Datoteke z eMule IP filtri (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Zašèitne P2P datoteke (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Besedilne datoteke (*.txt)|*.txt|Vse datoteke (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|ZIP Files (*.zip;*.gz)|*.zip;*.gz|All Files (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "Zares želite izbrisati izbrane IP filtre?"
     IDS_TOTAL_IPFILTER_LABEL "Skupno IP filtrov:"
     IDS_TOTAL_IPS_LABEL     "Skupno IPjev:"
@@ -1716,7 +1710,7 @@ STRINGTABLE
 BEGIN
     IDS_MAXHALFOPENCONS     "Max. Half Open Connections"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Enable this so that eMule will run when you start windows. [Default disabled]"
+                            "Enable this so that eMule will run when you start windows."
     IDS_KAD_WAITCBK         "Wait Callback Kad"
     IDS_KAD_TOOMANDYKADLKPS "Too Many Kad Lookups"
     IDS_PCDS_CLIENTWAIT     "ClientWait"
@@ -1835,6 +1829,91 @@ BEGIN
     IDS_NOTES               "Notes"
     IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Shutdown eMule"
+    IDS_WEB_REBOOT          "Reboot system"
+    IDS_WEB_SHUTDOWNSYSTEM  "Shutdown system"
+    IDS_WEB_ADMINMENU       "Admin Menu"
+    IDS_WEB_MAIN_CLOSE      "Do you really want eMule to terminate?"
+    IDS_WEB_MAIN_REBOOT     "Do you really want the system to reboot?"
+    IDS_WEB_MAIN_SHUTDOWN   "Do you really want the system to shutdown?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Show banned clients on queue"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Show friends on queue"
+    IDS_WEB_SESSIONTIMEOUT  "Session Timeout"
+    IDS_WEB_ALLOWHILEVFUNC  "Allow exit eMule, reboot and shutdown"
+    IDS_SETPFSLIMIT         "Source Limit..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Please enter the new source limit for the selected file(s) ! \n(set to 0 to use global setting)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Do you want incoming folders included in the old incoming folder to be updated now?"
+    IDS_USESPEECH           "Speak notification message"
+    IDS_CONDTCPACCEPT       "Fast connection reject"
+    IDS_TCPIP_CONNS         "TCP/IP connections"
+    IDS_ERR_DELFILE         "Failed to delete file ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Do you want to cleanup the filenames of the selected files?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s seems to be corrupted and will be replaced"
+    IDS_UPLOADING           "Uploading"
+    IDS_CANCELLED           "Cancelled"
+    IDS_PW_REMEMBERDOWNLOADED "Remember downloaded files"
+    IDS_PW_REMEMBERCANCELLED "Remember cancelled files"
+    IDS_AVAILABLEPARTS      "Available Parts"
+    IDS_NOSOUND             "No sound"
+    IDS_PW_RECEIVERADDRESS  "Recipient address:"
+    IDS_PW_ENABLEEMAIL      "Enable Email Notifications"
+    IDS_EMULENOTIFICATION   "eMule Notification"
+    IDS_PW_EMAILNOTIFICATIONS "Email Notifications"
+    IDS_PW_SMTPSERVER       "SMTP-Server:"
+    IDS_PW_SENDERADDRESS    "Sender address:"
+    IDS_PW_SHOWTRANSTOOLBAR "Show additional toolbar on transferwindow"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Shared parts"
+    IDS_INCOMING_FILES      "Incoming Files"
+    IDS_INCOMPLETE_FILES    "Incomplete Files"
+    IDS_SHARED_DIRECTORIES  "Shared Directories"
+    IDS_SHAREDIR            "Share directory"
+    IDS_SHAREDIRSUB         "Share with subdirectories"
+    IDS_UNSHAREDIR          "Unshare directory"
+    IDS_UNSHAREDIRSUB       "Unshare with subdirectories"
+    IDS_ALLSHAREDFILES      "All Shared Files"
+    IDS_ALLDIRECTORIES      "All Directories"
+    IDS_SEARCHRELATED       "Find related files"
+    IDS_RELATED             "Related"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Collection List"
+    IDS_SEARCH_EMULECOLLECTION "Collection"
+    IDS_COLL_REPLACEEXISTING "Do you want to replace existing file?"
+    IDS_COLL_ERR_DELETING   "Some Unknown error in deleting old file. Exit without saving?"
+    IDS_CREATECOLLECTION    "Create Collection"
+    IDS_COLL_SIGN           "Sign Collection with Name and Key"
+    IDS_AUTHOR              "Author"
+    IDS_AUTHORKEY           "Author Key"
+    IDS_COLL_ADDINCAT       "Add new downloads in a Collection Category"
+    IDS_MODIFYCOLLECTION    "Modify Collection"
+    IDS_VIEWCOLLECTION      "View Collection"
+    IDS_COLL_TEXTFORMAT     "Save collection In A Simple Text Format"
+    IDS_SEARCHAUTHORCOLLECTION "Search Author's Collections"
+    IDS_ERR_DUPL_FILES      "Duplicate shared files: ""%s"" and ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting failed too many times. Disabling Upload SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Done with preparations. Starting control of upload speed. (First 60 seconds will be in fast reaction mode)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Raised upload limit in prefs detected. Going into fast reaction mode for 60 seconds."
+    IDS_USS_STATE_PREPARING "Preparing..."
+    IDS_USS_STATE_WAITING   "Waiting..."
+    IDS_USS_STATE_ERROR     "Error!"
 END
 
 #endif    // Slovenian resources

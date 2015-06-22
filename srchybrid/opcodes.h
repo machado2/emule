@@ -55,12 +55,12 @@
 #define SOURCECLIENTREASKS		MIN2MS(40)	//40 mins
 #define SOURCECLIENTREASKF		MIN2MS(5)	//5 mins
 #define KADEMLIAASKTIME			SEC2MS(1)	//1 second
-#define KADEMLIATOTALFILE		7			//Total files to search sources for.
+#define KADEMLIATOTALFILE		5			//Total files to search sources for.
 #define KADEMLIAREASKTIME		HR2MS(1)	//1 hour
 #define KADEMLIAPUBLISHTIME		SEC(2)		//2 second
 #define KADEMLIATOTALSTORENOTES	1			//Total hashes to store.
-#define KADEMLIATOTALSTORESRC	2			//Total hashes to store.
-#define KADEMLIATOTALSTOREKEY	1			//Total hashes to store.
+#define KADEMLIATOTALSTORESRC	3			//Total hashes to store.
+#define KADEMLIATOTALSTOREKEY	2			//Total hashes to store.
 #define KADEMLIAREPUBLISHTIMES	HR2S(5)		//5 hours
 #define KADEMLIAREPUBLISHTIMEN	HR2S(24)	//24 hours
 #define KADEMLIAREPUBLISHTIMEK	HR2S(24)	//24 hours
@@ -77,11 +77,13 @@
 #define	UDPSERVERPORT			4665		//default udp port
 #define UDPMAXQUEUETIME			SEC2MS(30)	//30 Seconds
 #define RSAKEYSIZE				384			//384 bits
-#define	MAX_SOURCES_FILE_SOFT	500
+#define	MAX_SOURCES_FILE_SOFT	750
 #define	MAX_SOURCES_FILE_UDP	50
 #define SESSIONMAXTRANS			(9.3*1024*1024) // 9.3 Mbytes. "Try to send complete chunks" always sends this amount of data
 #define SESSIONMAXTIME			HR2MS(1)	//1 hour
 #define	MAXFILECOMMENTLEN		50
+#define	PARTSIZE				9728000
+#define	MAX_EMULE_FILE_SIZE		4290048000	// (4294967295/PARTSIZE)*PARTSIZE
 // MOD Note: end
 
 #define CONFIGFOLDER			_T("config\\")
@@ -105,8 +107,9 @@
 #define TRACKED_CLEANUP_TIME	HR2MS(1)	// 1 hour
 #define KEEPTRACK_TIME			HR2MS(2)	// 2h	//how long to keep track of clients which were once in the uploadqueue
 #define LOCALSERVERREQUESTS		20000		// only one local src request during this timespan (WHERE IS THIS USED?)
-#define DISKSPACERECHECKTIME	MIN2MS(15)	// SLUGFILLER: checkDiskspace
+#define DISKSPACERECHECKTIME	MIN2MS(15)
 #define CLIENTLIST_CLEANUP_TIME	MIN2MS(34)	// 34 min
+#define MAXPRIORITYCOLL_SIZE	10*1024		// max file size for collection file which are allowed to bypass the queue
 
 // you shouldn't change anything here if you are not really sure, or emule will probaly not work
 #define	MAXFRAGSIZE				1300
@@ -166,6 +169,7 @@
 #define OP_GLOBSEARCHREQ		0x98	// <search_tree>
 #define OP_GLOBSEARCHRES		0x99	// 
 #define OP_GLOBGETSOURCES		0x9A	// <HASH 16>
+#define OP_GLOBGETSOURCES2		0x94	// <HASH 16><FILESIZE 4>
 #define OP_GLOBFOUNDSOURCES		0x9B	//
 #define OP_GLOBCALLBACKREQ		0x9C	// <IP 4><PORT 2><client_ID 4>
 #define OP_INVALID_LOWID		0x9E	// <ID 4>
@@ -257,6 +261,8 @@
 #define ST_PING					0x0C	// <uint32>
 #define ST_FAIL					0x0D	// <uint32>
 #define ST_PREFERENCE			0x0E	// <uint32>
+#define	ST_PORT					0x0F	// <uint32>
+#define	ST_IP					0x10	// <uint32>
 #define	ST_DYNIP				0x85	// <string>
 //#define ST_LASTPING			0x86	// <int> No longer used.
 #define ST_MAXUSERS				0x87	// <uint32>
@@ -319,14 +325,18 @@
 #define  FT_DL_PREVIEW			 0x25
 #define  FT_KADLASTPUBLISHNOTES	 0x26	// <uint32> 
 #define  FT_AICH_HASH			 0x27
+#define  FT_FILEHASH			 0x28
 #define	 FT_COMPLETE_SOURCES	 0x30	// nr. of sources which share a complete version of the associated file (supported by eserver 16.46+)
 #define TAG_COMPLETE_SOURCES	"/x30"
+#define  FT_COLLECTIONAUTHOR	 0x31
+#define  FT_COLLECTIONAUTHORKEY  0x32
 // statistic
 #define  FT_ATTRANSFERRED		 0x50	// <uint32>
 #define  FT_ATREQUESTED			 0x51	// <uint32>
 #define  FT_ATACCEPTED			 0x52	// <uint32>
 #define  FT_CATEGORY			 0x53	// <uint32>
 #define	 FT_ATTRANSFERREDHI		 0x54	// <uint32>
+#define	 FT_MAXSOURCES			 0x55	// <uint32>
 #define	 FT_MEDIA_ARTIST		 0xD0	// <string>
 #define	TAG_MEDIA_ARTIST		"\xD0"	// <string>
 #define	 FT_MEDIA_ALBUM			 0xD1	// <string>
@@ -339,6 +349,8 @@
 #define	TAG_MEDIA_BITRATE		"\xD4"	// <uint32>
 #define	 FT_MEDIA_CODEC			 0xD5	// <string>
 #define	TAG_MEDIA_CODEC			"\xD5"	// <string>
+#define  FT_FILECOMMENT			 0xF6	// <string>
+#define TAG_FILECOMMENT			"/xF6"	// <string>
 #define  FT_FILERATING			 0xF7	// <uint8>
 #define TAG_FILERATING			"\xF7"	// <uint8>
 
@@ -393,6 +405,7 @@
 #define	ED2KFTSTR_PROGRAM		"Pro"	// value for eD2K tag FT_FILETYPE
 #define	ED2KFTSTR_ARCHIVE		"Arc"	// eMule internal use only
 #define	ED2KFTSTR_CDIMAGE		"Iso"	// eMule internal use only
+#define ED2KFTSTR_EMULECOLLECTION	"EmuleCollection" // Value for eD2K tag FT_FILETYPE
 
 // additional media meta data tags from eDonkeyHybrid (note also the uppercase/lowercase)
 #define	FT_ED2K_MEDIA_ARTIST	"Artist"	// <string>
@@ -505,7 +518,7 @@
 
 #define KADEMLIA_FIREWALLED_REQ	0x50	// <TCPPORT (sender) [2]>
 #define KADEMLIA_FINDBUDDY_REQ	0x51	// <TCPPORT (sender) [2]>
-#define KADEMLIA_FINDSOURCE_REQ	0x52	// <TCPPORT (sender) [2]>
+#define KADEMLIA_CALLBACK_REQ	0x52	// <TCPPORT (sender) [2]>
 #define KADEMLIA_FIREWALLED_RES	0x58	// <IP (sender) [4]>
 #define KADEMLIA_FIREWALLED_ACK	0x59	// (null)
 #define KADEMLIA_FINDBUDDY_RES	0x5A	// <TCPPORT (sender) [2]>

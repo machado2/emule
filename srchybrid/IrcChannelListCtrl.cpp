@@ -31,8 +31,8 @@ END_MESSAGE_MAP()
 
 CIrcChannelListCtrl::CIrcChannelListCtrl()
 {
-	memset(m_asc_sort, 0, sizeof m_asc_sort);
 	m_pParent = NULL;
+	SetName(_T("IrcChannelListCtrl"));
 }
 
 CIrcChannelListCtrl::~CIrcChannelListCtrl()
@@ -45,6 +45,7 @@ int CIrcChannelListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamS
 {
 	ChannelList* item1 = (ChannelList*)lParam1;
 	ChannelList* item2 = (ChannelList*)lParam2;
+
 	switch(lParamSort)
 	{
 		case 0: 
@@ -52,7 +53,7 @@ int CIrcChannelListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamS
 		case 10:
 			return item2->name.CompareNoCase(item1->name);
 		case 1: 
-			return _tstoi(item1->users) - _tstoi(item2->users);
+			return  _tstoi(item1->users) - _tstoi(item2->users);
 		case 11:
 			return _tstoi(item2->users) - _tstoi(item1->users);
 		case 2: 
@@ -66,10 +67,17 @@ int CIrcChannelListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamS
 
 void CIrcChannelListCtrl::OnLvnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	m_asc_sort[pNMListView->iSubItem] = !m_asc_sort[pNMListView->iSubItem];
-	SetSortArrow(pNMListView->iSubItem, m_asc_sort[pNMListView->iSubItem]);
-	SortItems(SortProc, pNMListView->iSubItem + ((m_asc_sort[pNMListView->iSubItem]) ? 0 : 10));
+	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+
+	if (m_sortindex != pNMLV->iSubItem)
+		m_sortorder = 1;
+	else
+		m_sortorder = !m_sortorder;
+	m_sortindex = pNMLV->iSubItem;
+
+	SetSortArrow(m_sortindex, m_sortorder);
+	SortItems(&SortProc, m_sortindex + (m_sortorder ? 0 : 10));
+
 	*pResult = 0;
 }
 
@@ -193,8 +201,12 @@ void CIrcChannelListCtrl::Init()
 	InsertColumn(1, GetResString(IDS_UUSERS), LVCFMT_LEFT, 50 );
 	InsertColumn(2, GetResString(IDS_DESCRIPTION), LVCFMT_LEFT, 350 );
 
-	SortItems(SortProc, 11);
-	SetSortArrow(1, false);
+	//SortItems(SortProc, 11);
+	//SetSortArrow(1, false);
+
+	LoadSettings();
+	SetSortArrow();
+	SortItems(&SortProc, GetSortItem() + ( (GetSortAscending()) ? 0:10) );
 }
 
 BOOL CIrcChannelListCtrl::OnCommand(WPARAM wParam,LPARAM lParam )

@@ -38,6 +38,7 @@
 #include "StringConversion.h"
 #include "ClientList.h"
 #include "Log.h"
+#include "Collection.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -58,7 +59,9 @@ public:
 	CPublishKeyword(const CStringW& rstrKeyword)
 	{
 		m_strKeyword = rstrKeyword;
-		ASSERT( rstrKeyword.GetLength() >= 3 );
+		// min. keyword char is allowed to be < 3 in some cases (see also 'CSearchManager::getWords')
+		//ASSERT( rstrKeyword.GetLength() >= 3 );
+		ASSERT( !rstrKeyword.IsEmpty() );
 		KadGetKeywordHash(rstrKeyword, &m_nKadID);
 		SetNextPublishTime(0);
 		SetPublishedCount(0);
@@ -206,7 +209,7 @@ CPublishKeyword* CPublishKeywordList::FindKeyword(const CStringW& rstrKeyword, P
 void CPublishKeywordList::AddKeywords(CKnownFile* pFile)
 {
 	const Kademlia::WordList& wordlist = pFile->GetKadKeywords();
-	ASSERT( wordlist.size() > 0 );
+	//ASSERT( wordlist.size() > 0 );
 	Kademlia::WordList::const_iterator it;
 	for (it = wordlist.begin(); it != wordlist.end(); it++)
 	{
@@ -218,7 +221,14 @@ void CPublishKeywordList::AddKeywords(CKnownFile* pFile)
 			m_lstKeywords.AddTail(pPubKw);
 			SetNextPublishTime(0);
 		}
-		pPubKw->AddRef(pFile);
+		if(pPubKw->AddRef(pFile) && pPubKw->GetNextPublishTime() > MIN2S(30))
+		{
+			// User may be adding and removing files, so if this is a keyword that
+			// has already been published, we reduce the time, but still give the user
+			// enough time to finish what they are doing.
+			// If this is a hot node, the Load list will prevent from republishing.
+			pPubKw->SetNextPublishTime(MIN2S(30));
+		}
 	}
 }
 
@@ -329,10 +339,27 @@ CSharedFileList::~CSharedFileList(){
 	delete m_keywords;
 }
 
+void CSharedFileList::CopySharedFileMap(CMap<CCKey,const CCKey&,CKnownFile*,CKnownFile*> &Files_Map)
+{
+	if (!m_Files_map.IsEmpty())
+	{
+		POSITION pos = m_Files_map.GetStartPosition();
+		while (pos)
+		{
+			CCKey key;
+			CKnownFile* cur_file;
+			m_Files_map.GetNextAssoc(pos, key, cur_file);
+			Files_Map.SetAt(key, cur_file);
+		}
+	}
+}
+
 void CSharedFileList::FindSharedFiles()
 {
 	if (!m_Files_map.IsEmpty())
 	{
+		CSingleLock listlock(&m_mutWriteList);
+		
 		POSITION pos = m_Files_map.GetStartPosition();
 		while (pos)
 		{
@@ -345,9 +372,11 @@ void CSharedFileList::FindSharedFiles()
 				&& _taccess(cur_file->GetFilePath(), 0) == 0)
 				continue;
 			m_UnsharedFiles_map.SetAt(CSKey(cur_file->GetFileHash()), true);
+			listlock.Lock();
 			m_Files_map.RemoveKey(key);
+			listlock.Unlock();
 		}
-	
+		
 		ASSERT( theApp.downloadqueue );
 		if (theApp.downloadqueue)
 			theApp.downloadqueue->AddPartFilesToShare(); // read partfiles
@@ -468,7 +497,7 @@ void CSharedFileList::AddFilesFromDirectory(const CString& rstrDirectory)
 			if (thePrefs.GetVerbose())
 				AddDebugLogLine(false, _T("Failed to get file date of %s - %s"), ff.GetFilePath(), GetErrorMessage(GetLastError()));
 		}
-		uint32 fdate = lwtime.GetTime();
+		uint32 fdate = (UINT)lwtime.GetTime();
 		if (fdate == -1){
 			if (thePrefs.GetVerbose())
 				AddDebugLogLine(false, _T("Failed to convert file date of %s"), ff.GetFilePath());
@@ -486,7 +515,7 @@ void CSharedFileList::AddFilesFromDirectory(const CString& rstrDirectory)
 				TRACE(_T("%hs: File already in shared file list: %s \"%s\"\n"), __FUNCTION__, md4str(pFileInMap->GetFileHash()), pFileInMap->GetFilePath());
 				TRACE(_T("%hs: File to add:                      %s \"%s\"\n"), __FUNCTION__, md4str(toadd->GetFileHash()), ff.GetFilePath());
 				if (!pFileInMap->IsKindOf(RUNTIME_CLASS(CPartFile)) || theApp.downloadqueue->IsPartFile(pFileInMap))
-					LogWarning(_T("Duplicate shared files: \"%s\" and \"%s\""), pFileInMap->GetFilePath(), ff.GetFilePath());
+					LogWarning( GetResString(IDS_ERR_DUPL_FILES) , pFileInMap->GetFilePath(), ff.GetFilePath());
 			}
 			else
 			{
@@ -511,6 +540,20 @@ void CSharedFileList::AddFilesFromDirectory(const CString& rstrDirectory)
 		}
 	}
 	ff.Close();
+}
+
+void CSharedFileList::AddFileFromNewlyCreatedCollection(const CString& path, const CString& fileName)
+{
+	//JOHNTODO: I do not have much knowledge on the hashing 
+	//          process.. Is this safe for me to do??
+	if (!IsHashing(path, fileName))
+	{
+		UnknownFile_Struct* tohash = new UnknownFile_Struct;
+		tohash->strDirectory = path;
+		tohash->strName = fileName;
+		waitingforhash_list.AddTail(tohash);
+		HashNextFile();
+	}
 }
 
 bool CSharedFileList::SafeAddKFile(CKnownFile* toadd, bool bOnlyAdd)
@@ -548,12 +591,42 @@ bool CSharedFileList::AddFile(CKnownFile* pFile)
 		TRACE(_T("%hs: File already in shared file list: %s \"%s\" \"%s\"\n"), __FUNCTION__, md4str(pFileInMap->GetFileHash()), pFileInMap->GetFileName(), pFileInMap->GetFilePath());
 		TRACE(_T("%hs: File to add:                      %s \"%s\" \"%s\"\n"), __FUNCTION__, md4str(pFile->GetFileHash()), pFile->GetFileName(), pFile->GetFilePath());
 		if (!pFileInMap->IsKindOf(RUNTIME_CLASS(CPartFile)) || theApp.downloadqueue->IsPartFile(pFileInMap))
-			LogWarning(_T("Duplicate shared files: \"%s\" and \"%s\""), pFileInMap->GetFilePath(), pFile->GetFilePath());
+			LogWarning(GetResString(IDS_ERR_DUPL_FILES), pFileInMap->GetFilePath(), pFile->GetFilePath());
 		return false;
 	}
 	m_UnsharedFiles_map.RemoveKey(CSKey(pFile->GetFileHash()));
+	
+	CSingleLock listlock(&m_mutWriteList);
+	listlock.Lock();	
 	m_Files_map.SetAt(key, pFile);
-	m_keywords->AddKeywords(pFile);
+	listlock.Unlock();
+
+	bool bKeywordsNeedUpdated = true;
+
+	if(!pFile->IsPartFile() && !pFile->m_pCollection && CCollection::HasCollectionExtention(pFile->GetFileName()))
+	{
+		pFile->m_pCollection = new CCollection();
+		if(!pFile->m_pCollection->InitCollectionFromFile(pFile->GetFilePath(), pFile->GetFileName()))
+		{
+			delete pFile->m_pCollection;
+			pFile->m_pCollection = NULL;
+		}
+		else if (!pFile->m_pCollection->GetCollectionAuthorKeyString().IsEmpty())
+		{
+			//If the collection has a key, resetting the file name will
+			//cause the key to be added into the wordlist to be stored
+			//into Kad.
+			pFile->SetFileName(pFile->GetFileName());
+			//During the initial startup, sharedfiles is not accessable
+			//to SetFileName which will then not call AddKeywords..
+			//But when it is accessable, we don't allow it to readd them.
+			if(theApp.sharedfiles)
+				bKeywordsNeedUpdated = false;
+		}
+	}
+
+	if(bKeywordsNeedUpdated)
+		m_keywords->AddKeywords(pFile);
 
 	return true;
 }
@@ -577,7 +650,7 @@ void CSharedFileList::FileHashingFinished(CKnownFile* file)
 	{
 		TRACE(_T("%hs: File already in shared file list: %s \"%s\"\n"), __FUNCTION__, md4str(found_file->GetFileHash()), found_file->GetFilePath());
 		TRACE(_T("%hs: File to add:                      %s \"%s\"\n"), __FUNCTION__, md4str(file->GetFileHash()), file->GetFilePath());
-		LogWarning(_T("Duplicate shared files: \"%s\" and \"%s\""), found_file->GetFilePath(), file->GetFilePath());
+		LogWarning(GetResString(IDS_ERR_DUPL_FILES), found_file->GetFilePath(), file->GetFilePath());
 
 		RemoveFromHashing(file);
 		if (!IsFilePtrInList(file) && !theApp.knownfiles->IsFilePtrInList(file))
@@ -589,10 +662,19 @@ void CSharedFileList::FileHashingFinished(CKnownFile* file)
 
 void CSharedFileList::RemoveFile(CKnownFile* pFile)
 {
-	output->RemoveFile(pFile);
-	m_UnsharedFiles_map.SetAt(CSKey(pFile->GetFileHash()), true);
-	m_Files_map.RemoveKey(CCKey(pFile->GetFileHash()));
+
+	CSingleLock listlock(&m_mutWriteList);
+	listlock.Lock();
+	BOOL bResult = m_Files_map.RemoveKey(CCKey(pFile->GetFileHash()));
+	listlock.Unlock();
+
+	if (bResult == TRUE){
+		output->RemoveFile(pFile);
+		m_UnsharedFiles_map.SetAt(CSKey(pFile->GetFileHash()), true);
+	}
+
 	m_keywords->RemoveKeywords(pFile);
+
 }
 
 void CSharedFileList::Reload()
@@ -1134,7 +1216,7 @@ void CSharedFileList::Publish()
 	UINT tNow = time(NULL);
 	bool isFirewalled = theApp.IsFirewalled();
 
-	if( Kademlia::CKademlia::isConnected() && ( !isFirewalled || ( isFirewalled && theApp.clientlist->GetBuddyStatus() == 2)) && GetCount() && Kademlia::CKademlia::getPublish())
+	if( Kademlia::CKademlia::isConnected() && ( !isFirewalled || ( isFirewalled && theApp.clientlist->GetBuddyStatus() == Connected)) && GetCount() && Kademlia::CKademlia::getPublish())
 	{ 
 		//We are connected to Kad. We are either open or have a buddy. And Kad is ready to start publishing.
 		if( Kademlia::CKademlia::getTotalStoreKey() < KADEMLIATOTALSTOREKEY)
@@ -1178,8 +1260,7 @@ void CSharedFileList::Publish()
 								if( !aFiles[f]->IsPartFile() )
 								{
 									count++;
-									Kademlia::CUInt128 kadFileID(aFiles[f]->GetFileHash());
-									pSearch->addFileID(kadFileID);
+									pSearch->addFileID(Kademlia::CUInt128(aFiles[f]->GetFileHash()));
 									if( count > 150 )
 									{
 										//We only publish up to 150 files per keyword publish then rotate the list.
@@ -1220,9 +1301,7 @@ void CSharedFileList::Publish()
 				{
 					if(pCurKnownFile->PublishSrc())
 					{
-						Kademlia::CUInt128 kadFileID;
-						kadFileID.setValue(pCurKnownFile->GetFileHash());
-						if(Kademlia::CSearchManager::prepareLookup(Kademlia::CSearch::STOREFILE, true, kadFileID )==NULL)
+						if(Kademlia::CSearchManager::prepareLookup(Kademlia::CSearch::STOREFILE, true, Kademlia::CUInt128(pCurKnownFile->GetFileHash()))==NULL)
 							pCurKnownFile->SetLastPublishTimeKadSrc(0,0);
 					}	
 				}
@@ -1245,9 +1324,7 @@ void CSharedFileList::Publish()
 				{
 					if(pCurKnownFile->PublishNotes())
 					{
-						Kademlia::CUInt128 kadFileID;
-						kadFileID.setValue(pCurKnownFile->GetFileHash());
-						if(Kademlia::CSearchManager::prepareLookup(Kademlia::CSearch::STORENOTES, true, kadFileID )==NULL)
+						if(Kademlia::CSearchManager::prepareLookup(Kademlia::CSearch::STORENOTES, true, Kademlia::CUInt128(pCurKnownFile->GetFileHash()))==NULL)
 							pCurKnownFile->SetLastPublishTimeKadNotes(0);
 					}	
 				}

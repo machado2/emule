@@ -866,7 +866,7 @@ uint32 CEMSocket::GetNeededBytes() {
 	sendLocker.Unlock();
 
 	if (timeleft >= timetotal)
-		return sizeleft;
+		return (UINT)sizeleft;
 	timeleft = timetotal-timeleft;
 	if (timeleft*sizetotal >= timetotal*sizeleft) {
 		// don't use 'GetTimeOut' here in case the timeout value is high,
@@ -876,9 +876,9 @@ uint32 CEMSocket::GetNeededBytes() {
 	}
 	uint64 decval = timeleft*sizetotal/timetotal;
 	if (!decval)
-		return sizeleft;
+		return (UINT)sizeleft;
 	if (decval < sizeleft)
-		return sizeleft-decval+1;	// Round up
+		return (UINT)(sizeleft-decval+1);	// Round up
 	else
 		return 1;
 }

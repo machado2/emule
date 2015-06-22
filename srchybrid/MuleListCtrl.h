@@ -22,12 +22,12 @@ public:
 	void SetName(LPCTSTR lpszName);
 
 	// Save to preferences
-	void SaveSettings(CPreferences::Table tID);
-	void SaveSettings(CIni* ini, LPCTSTR pszLVName);
+	//void SaveSettings(CPreferences::Table tID);
+	void SaveSettings();
 
 	// Load from preferences
-	void LoadSettings(CPreferences::Table tID);
-	void LoadSettings(CIni* ini, LPCTSTR pszLVName);
+	//void LoadSettings(CPreferences::Table tID);
+	void LoadSettings();
 
 	DWORD SetExtendedStyle(DWORD dwNewStyle) { return CListCtrl::SetExtendedStyle(dwNewStyle | LVS_EX_HEADERDRAGDROP); }
 
@@ -90,8 +90,11 @@ public:
 	enum ArrowType { arrowDown = IDB_DOWN, arrowUp = IDB_UP,
 		arrowDoubleDown = IDB_DOWN2X, arrowDoubleUp = IDB_UP2X };
 
+	int	GetSortType(ArrowType at);
+	ArrowType	GetArrowType(int iat);
 	// Places a sort arrow in a column
 	void SetSortArrow(int iColumn, ArrowType atType);
+	void SetSortArrow()		{SetSortArrow(m_iCurrentSortItem, m_atSortArrow); }
 
 	// Places a sort arrow in a column
 	void SetSortArrow(int iColumn, bool bAscending) {
@@ -131,21 +134,22 @@ protected:
 	// Update the colors
 	void         SetColors(LPCTSTR pszLvKey = NULL);
 
-	CString          m_Name;
-	PFNLVCOMPARE     m_SortProc;
-	DWORD            m_dwParamSort;
-	COLORREF         m_crWindow;
-	COLORREF         m_crWindowText;
-	COLORREF         m_crWindowTextBk;
-	COLORREF         m_crHighlight;
-	COLORREF		 m_crGlow;
-	COLORREF         m_crFocusLine;
-	COLORREF         m_crNoHighlight;
-	COLORREF         m_crNoFocusLine;
-	NMLVCUSTOMDRAW   m_lvcd;
-	bool             m_bCustomDraw;
-	CImageList		 m_imlHeaderCtrl;
-	CList<int, int>	 m_liSortHistory;
+	CString         m_Name;
+	PFNLVCOMPARE    m_SortProc;
+	DWORD           m_dwParamSort;
+	COLORREF        m_crWindow;
+	COLORREF        m_crWindowText;
+	COLORREF        m_crWindowTextBk;
+	COLORREF        m_crHighlight;
+	COLORREF		m_crHighlightText;
+	COLORREF		m_crGlow;
+	COLORREF        m_crFocusLine;
+	COLORREF        m_crNoHighlight;
+	COLORREF        m_crNoFocusLine;
+	NMLVCUSTOMDRAW  m_lvcd;
+	BOOL            m_bCustomDraw;
+	CImageList		m_imlHeaderCtrl;
+	CList<int, int>	m_liSortHistory;
 
 	// General purpose listview find dialog+functions (optional)
 	bool m_bGeneralPurposeFind;
@@ -159,7 +163,6 @@ protected:
 
 private:
 	static int	IndexToOrder(CHeaderCtrl* pHeader, int iIndex);
-
 
 	struct MULE_COLUMN {
 		int iWidth;

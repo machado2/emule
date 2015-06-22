@@ -269,13 +269,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "בטל רשימת קליינטים ידועים"
     IDS_DISABLEQUEUELIST    "בטל רשימת תור"
     IDS_USECREDITSYSTEM     "השתמש במערכת הקרדיטים (מדרג מעלים)"
-    IDS_FIRSTAUTODOWN       "הפעל אפשרות זו אם ברצונך שאימיול ינהל את עדיפויות ההורדות שלך.\n\nהפעלת האפשרות תאפשר לאימיול לוודא שהורדות עם מקורות רבים לא יפריעו להורדות עם מקורות מועטים.\n\nאם עכשיו עדכנת מגירסה 0.26 ומטה, כל ההורדות הנוכחיות תקבלנה עדיפות אוטומטית.\n\nאפשרות זו תשפיע רק על הורדות בעתיד. (ברירת מחדל: מופעל)"
-    IDS_FIRSTAUTOUP         "הפעל אפשרות זו אם ברצונך שאימיול ינהל את עדיפויות ההעלאות.\n\nהפעלת האפשרות תאפשר לאימיול להאיץ קבצים נדירים מה שאומר שקבצים פופולארים יהיו קשים יותר לאנשים להשגה.\n\nהפסקת האפשרות תאפשר לאימיול להעלות קבצים פופולארים יותר מה שאומר שיהיה קשה יותר לאנשים להשיג קבצים נדירים.\n\nאם רק עכשיו עדכנת מגירסה 0.26 או מתחת , כל הקבצים שעכשיו משותפים יקבלו עדיפות אוטומטית.\n\nהאפשרות תשפיע רק על קבצים שישותפו בעתיד. (ברירת מחדל: מופעל)"
-    IDS_FIRSTCREDITSYSTEM   "האם ברצונך לתגמל אנשים מהם אתה מוריד?\n\nאפשרות זו ידועה גם כשיטת הקרדיטים. הפעלת האפשרות תאפשר מאבק במסננים. אם אתה משחרר מסור, אתה בטח תרצה להפסיק את האפשרות.\n\n(ברירת מחדל: מופעל)"
-    IDS_FIRSTFULLCHUNK      "הפעל אפשרות זו אם ברצונך להעלות חלקים שלמים.\n\nהפעלת האפשרות מאפשרת לקליינט הזדמנות לסיים להוריד חלק שלם. ביטול האפשרות יאפשר סבב מהיר יותר של התור שלך. אם אתה משחרר מסור, אתה תרצה להשאיר את האשפרות הזו פעילה.\n\n(ברירת מחדל: מופעל)"
-    IDS_FIRSTSAFECON        "הפעל אפשרות זו אם ברצונך שאימיול יבצע התחברות בטוחה?\n\nהפסקת האפשרות  תאפשר לאימיול להתחבר לשרתים קצת מהר יותר, אבל יכולה לגרום לך לקבל יותר מזההים נמוכים שקריים.\n\n(ברירת מחדל: מופסק)"
+    IDS_FIRSTAUTODOWN       "Enable this option if you want eMule to manage your download priorities.\n\nTurning this on will allow eMule to make sure downloads with a lot of sources do not interfere with downloads that have few sources. This option will only affect future downloads."
+    IDS_FIRSTAUTOUP         "Enable this option if you want eMule to manage your upload priorities.\n\nTurning this on will allow eMule to boost rare files meaning popular files will be harder for other people to get. Turning this off will allow eMule to upload popular files more often meaning rare files will be harder for other people to get. This option will only affect future shared files."
+    IDS_FIRSTCREDITSYSTEM   "Do you want to reward people that upload to you?\n\nThis is commonly known as the Credit System. Turning this on will help fight against leachers. If you are a dedicated releaser, you will want to turn this off."
+    IDS_FIRSTFULLCHUNK      "Enable this option if you want to upload full chunks.\n\nUsing full chunk gives the client a better chance to complete a chunk. Turning this off will help rotate your queue faster. If you are a dedicated releaser, you will want to turn this on."
+    IDS_FIRSTSAFECON        "Enable this option if you want eMule to connect using Safe Connect.\n\nTurning this feature off allows eMule to connect to servers a little faster, but can cause you to get more false LowID connects."
     IDS_FIRSTRUNASSIST      "האם ברצונך להריץ את אשף הפעלה ראשונה?"
-    IDS_FIRSTAUTOCON        "הפעל אפשרות זו אם ברצונך שאימיול יתחבר בעת הפעלה.\n\n(ברירת מחדל: מופעל)"
+    IDS_FIRSTAUTOCON        "Enable this option if you want eMule to connect at startup."
     IDS_FIRSTCOMPLETE       "השלמת את אשף הפעלה הראשונה.\n\nכל ההגדרות הללו ואחרות ניתנות לשינוי ע""י לחיצה על העדפות.\nלהסברים ותמיכה בדוק את העזרה ע""י לחיצה על F1 באימיול!"
 END
 
@@ -780,7 +780,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "שם משתמש:"
     IDS_CD_UHASH            "האש:"
-    IDS_CD_CSOFT            "תוכנה:"
+    IDS_CD_CSOFT            "תוכנה"
     IDS_CD_UIP              "כתובת איי פי:"
     IDS_CD_SIP              "איי פי שרת:"
     IDS_CD_VERSION          "גירסה:"
@@ -1079,7 +1079,7 @@ BEGIN
     IDS_STATS_ACTUL         "העלאות פעילות: %i"
     IDS_STATS_WAITINGUSERS  "העלאות בהמתנה: %i"
     IDS_STATS_RECONNECTS    "מתחבר מחדש: %i"
-    IDS_STATS_WAITTRANSF    "ממתין לעברה..."
+    IDS_STATS_WAITTRANSF    "ממתין להעברה..."
 END
 
 STRINGTABLE 
@@ -1312,7 +1312,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "בעייתי"
     IDS_LONGHRS             "שעות"
     IDS_STATS_LARGESTFILE   "קובץ משותף הגדול ביותר"
-    IDS_CLIENTSOFTWARE      "תוכנת הקליינט"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "חלק קובץ"
     IDS_STATS_DATASOURCE    "מקור מידע"
     IDS_STATS_DSFILE        "קובץ שלם"
@@ -1336,7 +1336,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "העתק הכל"
     IDS_STATS_MNUTREEHTML   "HTML מאפייני"
     IDS_STATS_EXPORT2HTML   "יצא הכל"
-    IDS_STATS_EXPORTVIS     "יצא את כל הנראים"
     IDS_STATS_MNUTREECPYVIS "העתק את כל הנראים"
     IDS_STATS_MNUTREEEXPANDALL "הרחב הכל"
     IDS_STATS_MNUTREECOLLAPSEALL "סגור הכל"
@@ -1390,13 +1389,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "גירסה"
-    IDS_ALL_A4AF_TO_THIS    "החלף את כל המקורות לקובץ זה עכשיו"
     IDS_PASTE               "הדבק"
-    IDS_ALL_A4AF_TO_OTHER   "החלף את כל המקורות לכל קובץ אחר עכשיו"
-    IDS_ALL_A4AF_AUTO       "החלף אוטומטית מקורות לקובץ זה (A4AF)"
-    IDS_SWAP_A4AF_TO_THIS   "החלף מקורות לקובץ זה (A4AF)"
-    IDS_SWAP_A4AF_TO_OTHER  "החלף מקורות לכל קובץ אחר (A4AF)"
-    IDS_A4AF                "טיפול במקורות (A4AF)"
+    IDS_A4AF                "טיפול במקורות"
     IDS_MOBILEMULE          "אימיול נייד"
     IDS_ENABLEMM            "הפעל את האימיול הנייד"
     IDS_AUTOCAT_LABEL       "הצב אוטומטית בקטגוריה (תבנית, מופרד ע""י |)"
@@ -1597,7 +1591,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "שמור יומן זהות מאובטחת"
     IDS_LOG_FILTERED_IPS    "שמור יומן למס' איי פי שסוננו או שאימיול התעלם מהם"
     IDS_LOG_FILE_SAVING     "שמור יומן פעולות קובץ שנשמרו"
-    IDS_IPFILTERFILES       "כל קבצי מסנני איי פי (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|קבצי מסנני קבצים של אימיול (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian קבצי (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|כל הקבצים (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "כל קבצי מסנני איי פי (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|קבצי מסנני איי פי של אימיול (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|קבצי Peer Guardian (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|קבצי טקסט (*.txt)|*.txt|קבצי ארכיון zip (*.zip;*.gz)|*.zip;*.gz|כל הקבצים (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "האם אתה בטוח שברצונך למחוק את כל מסנני האיי פי שנבחרו?"
     IDS_TOTAL_IPFILTER_LABEL "סה""כ מס' איי פי מסוננים:"
     IDS_TOTAL_IPS_LABEL     "סה""כ מס' איי פי:"
@@ -1710,7 +1704,7 @@ STRINGTABLE
 BEGIN
     IDS_MAXHALFOPENCONS     "מקס' חיבורים חצי פתוחים"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "הפעל אפשרות זו אם ברצונך שאימיול יפעל בעת הפעלת ""חלונות"". [ברירת מחדל: מופסק]"
+                            "הפעל אפשרות זו אם ברצונך שאימיול יפעל בעת הפעלת ""חלונות"". (ברירת מחדל: מופסק)"
     IDS_KAD_WAITCBK         "Wait Callback Kad"
     IDS_KAD_TOOMANDYKADLKPS "Too Many Kad Lookups"
     IDS_PCDS_CLIENTWAIT     "ClientWait"
@@ -1828,6 +1822,91 @@ BEGIN
     IDS_NOTES               "הערות"
     IDS_KADSEARCHALREADY    "מתבצע חיפוש אחר. אנא נסה שוב יותר מאוחר!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "סגור את אימיול"
+    IDS_WEB_REBOOT          "אתחל מחשב"
+    IDS_WEB_SHUTDOWNSYSTEM  "כבה מחשב"
+    IDS_WEB_ADMINMENU       "תפריט ניהול"
+    IDS_WEB_MAIN_CLOSE      "האם אתה בטוח שברצונך לסגור את אימיול?"
+    IDS_WEB_MAIN_REBOOT     "האם אתה בטוח שברצונך לאתחל את המחשב?"
+    IDS_WEB_MAIN_SHUTDOWN   "האם אתה בטוח שברצונך לכבות את המחשב?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "הצג משתמשים מוחרמים בתור"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "הצג חברים בתור"
+    IDS_WEB_SESSIONTIMEOUT  "Session Timeout"
+    IDS_WEB_ALLOWHILEVFUNC  "אפשר לסגור את אימיול, לאתחל ולכבות"
+    IDS_SETPFSLIMIT         "מגבלת מקורות..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "אנא הכנס את מגבלת המקורות החדשה לקבצים שנבחרו ! \n(הצב 0 כדי להשתמש בהגדרת ברירת מחדל)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Do you want incoming folders included in the old incoming folder to be updated now?"
+    IDS_USESPEECH           "התראה בדיבור"
+    IDS_CONDTCPACCEPT       "דחה התחברות מהירה"
+    IDS_TCPIP_CONNS         "TCP/IP חיבורי"
+    IDS_ERR_DELFILE         "נכשל במחיקת קובץ ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "האם ברצונך לנקות שם קובץ של הקבצים שנבחרו?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "נראה ש-%s פגום והוא יוחלף"
+    IDS_UPLOADING           "מעלה"
+    IDS_CANCELLED           "בוטל"
+    IDS_PW_REMEMBERDOWNLOADED "זכור קבצים שהורדו"
+    IDS_PW_REMEMBERCANCELLED "זכור קבצים שבוטלו"
+    IDS_AVAILABLEPARTS      "חלקים זמינים"
+    IDS_NOSOUND             "ללא קול"
+    IDS_PW_RECEIVERADDRESS  "כתובת נמען:"
+    IDS_PW_ENABLEEMAIL      "הפעל התראה בדוא""ל"
+    IDS_EMULENOTIFICATION   "התראות של אימיול"
+    IDS_PW_EMAILNOTIFICATIONS "התראות דוא""ל"
+    IDS_PW_SMTPSERVER       "SMTP-שרת:"
+    IDS_PW_SENDERADDRESS    "כתובת שולח:"
+    IDS_PW_SHOWTRANSTOOLBAR "הצג סרגל כלים נוסף בחלון העברות"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "חלקים משותפים"
+    IDS_INCOMING_FILES      "קבצים שהתקבלו"
+    IDS_INCOMPLETE_FILES    "קבצים לא שלמים"
+    IDS_SHARED_DIRECTORIES  "תיקיות משותפות"
+    IDS_SHAREDIR            "שתף תיקייה"
+    IDS_SHAREDIRSUB         "שתף עם תתי-תיקיות"
+    IDS_UNSHAREDIR          "בטל שיתוף תיקייה"
+    IDS_UNSHAREDIRSUB       "בטל שיתוף עם תתי-תיקיות"
+    IDS_ALLSHAREDFILES      "כל הקבצים המשותפים"
+    IDS_ALLDIRECTORIES      "כל התיקיות"
+    IDS_SEARCHRELATED       "מצא קבצים קשורים"
+    IDS_RELATED             "קשור"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "רשימת אוספים"
+    IDS_SEARCH_EMULECOLLECTION "אוסף של אימיול"
+    IDS_COLL_REPLACEEXISTING "האם ברצונך להחליף את הקובץ הקיים?"
+    IDS_COLL_ERR_DELETING   "שגיאה לא ידועה במחיקת קובץ ישן. לצאת בלי לשמור?"
+    IDS_CREATECOLLECTION    "צור אוסף"
+    IDS_COLL_SIGN           "חתום אוסף עם שם ומפתח"
+    IDS_AUTHOR              "יוצר"
+    IDS_AUTHORKEY           "מפתח יוצר"
+    IDS_COLL_ADDINCAT       "הוסף הורדות חדשות לקטגורית אוסף"
+    IDS_MODIFYCOLLECTION    "שנה אוסף"
+    IDS_VIEWCOLLECTION      "צפה באוסף"
+    IDS_COLL_TEXTFORMAT     "שמור אוסף בפורמט טקסט פשוט"
+    IDS_SEARCHAUTHORCOLLECTION "חפש אוספים של יוצר"
+    IDS_ERR_DUPL_FILES      "קובץ משותף כפול: ""%s"" ו-""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting failed too many times. Disabling Upload SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Done with preparations. Starting control of upload speed. (First 60 seconds will be in fast reaction mode)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Raised upload limit in prefs detected. Going into fast reaction mode for 60 seconds."
+    IDS_USS_STATE_PREPARING "מכין..."
+    IDS_USS_STATE_WAITING   "ממתין..."
+    IDS_USS_STATE_ERROR     "שגיאה!"
 END
 
 #endif    // Hebrew resources

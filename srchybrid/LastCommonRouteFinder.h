@@ -38,6 +38,7 @@ public:
 
 	void EndThread();
 
+    bool AddHostToCheck(uint32 ip);
 	bool AddHostsToCheck(CTypedPtrList<CPtrList, CServer*> &list);
 	bool AddHostsToCheck(CUpDownClientPtrList &list);
 
@@ -46,6 +47,7 @@ public:
 	bool AcceptNewClient();
 
 	void SetPrefs(bool pEnabled, uint32 pCurUpload, uint32 pMinUpload, uint32 pMaxUpload, bool pUseMillisecondPingTolerance, double pPingTolerance, uint32 pPingToleranceMilliseconds, uint32 pGoingUpDivider, uint32 pGoingDownDivider, uint32 pNumberOfPingsForAverage, uint64 pLowestInitialPingAllowed);
+    void InitiateFastReactionPeriod();
 
 	uint32 GetUpload();
 private:
@@ -53,6 +55,10 @@ private:
 	UINT RunInternal();
 
 	void SetUpload(uint32 newValue);
+    bool AddHostToCheckNoLock(uint32 ip);
+
+	typedef CList<uint32,uint32> UInt32Clist;        
+    uint32 Median(UInt32Clist& list);
 
 	bool doRun;
 	bool acceptNewClient;
@@ -68,9 +74,10 @@ private:
 	CEvent* newTraceRouteHostEvent;
 	CEvent* prefsEvent;
 
-	CList<uint32,uint32> hostsToTraceRoute;
+	CMap<uint32,uint32,uint32,uint32> hostsToTraceRoute;
 
-	CList<uint32,uint32> pingDelays;
+    UInt32Clist pingDelays;
+
 	uint64 pingDelaysTotal;
 
 	uint32 minUpload;
@@ -88,6 +95,8 @@ private:
 	uint32 m_pingAverage;
 	uint32 m_lowestPing;
 	uint64 m_LowestInitialPingAllowed;
+
+    bool m_initiateFastReactionPeriod;
 
 	CString m_state;
 };

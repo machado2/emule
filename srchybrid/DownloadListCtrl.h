@@ -28,6 +28,7 @@
 class CPartFile;
 class CUpDownClient;
 class CDownloadListCtrl;
+class CToolTipCtrlX;
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -90,7 +91,7 @@ public:
 	void	AddSource(CPartFile* owner, CUpDownClient* source, bool notavailable);
 	void	RemoveSource(CUpDownClient* source, CPartFile* owner);
 	bool	RemoveFile(const CPartFile* toremove);
-	void	ClearCompleted(bool ignorecats=false);
+	void	ClearCompleted(int incat=-2);
 	void	ClearCompleted(const CPartFile* pFile);
 	void	SetStyle();
 	void	CreateMenues();
@@ -113,12 +114,13 @@ protected:
 	CImageList  m_ImageList;
 	CTitleMenu	m_PrioMenu;
 	CTitleMenu	m_FileMenu;
-	CMenu		m_A4AFMenu;
+	CMenu		m_SourcesMenu;
 	bool		m_bRemainSort;
 	typedef std::pair<void*, CtrlItem_Struct*> ListItemsPair;
 	typedef std::multimap<void*, CtrlItem_Struct*> ListItems;
     ListItems	m_ListItems;
 	CFont		m_fontBold;
+	CToolTipCtrlX* m_tooltip;
 
 	void ShowFileDialog(CPartFile* pFile, UINT uInvokePage = 0);
 	void ShowClientDialog(CUpDownClient* pClient);

@@ -104,7 +104,7 @@ void CSplashScreen::OnPaint()
 			if (pOldBM)
 				dcMem.SelectObject(pOldBM);
 
-			CRect rc(0, BM.bmHeight * 0.65, BM.bmWidth, BM.bmHeight);
+			CRect rc(0, (int)(BM.bmHeight * 0.65), BM.bmWidth, BM.bmHeight);
 			dc.FillSolidRect(rc.left+1, rc.top+1, rc.Width()-2, rc.Height()-2, RGB(255,255,255));
 
 			LOGFONT lf = {0};

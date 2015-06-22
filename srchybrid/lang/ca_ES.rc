@@ -597,7 +597,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Usuari:"
     IDS_CD_UHASH            "Hash Us.:"
-    IDS_CD_CSOFT            "Soft. Client:"
+    IDS_CD_CSOFT            "Soft. Client"
     IDS_CD_UIP              "Adreça IP:"
     IDS_CD_SIP              "IP Servidor:"
     IDS_CD_VERSION          "Versió client:"
@@ -1125,13 +1125,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Desactivar llista de clients coneguts"
     IDS_DISABLEQUEUELIST    "Desactivar llista de cua"
     IDS_USECREDITSYSTEM     "Sistema de Crèdits (Recompensar Enviadors)"
-    IDS_FIRSTAUTODOWN       "Vols que eMule manegui les teves prioritats de  \ndescàrrega?\r\rActivant això farà que eMule s'asseguri de que les  \ndescàrregues amb moltes fonts no interfereixen amb les que tenen  \npoques.\r\rSi has actualitzat d'un client 0.26 o posterior, totes les  \ndescàrregues han sigut possades per defecte a auto.\rAquesta opció només  \nafectarà a les futures descàrregues. (Defecte Si)"
-    IDS_FIRSTAUTOUP         "Vols que eMule manegui les prioritats de  \nenviament?\r\rActivant això permetrà a eMule accelerar els fitxers poc  \nfrequents fent que els fitxers més populars siguin més dificils de trobar  \nper els altres.\rDesactivant això farà que els fitxers més populars surtin  \nabans, fent que els fitxers poc frequents siguin més dificils de trobar per  \nels altres.\r\rSi has actualitzat de un client v0.26 o posterior, tots els  \nfitxers compartits s'han possat a Auto per defecte.\rAquesta opció només  \nafectarà als fitxers nous. (Defecte Si)"
-    IDS_FIRSTCREDITSYSTEM   "Vols recompensar a la gent que t'envia a  \ntu?\r\rAixò es coneix normalment com a Sistema de Crèdit. Activant això  \najudarà a lluitar contra els 'leechers'. Si ets un publicador dedicat,  \nvoldràs desactivar això.\r\r(Defecte Si)"
-    IDS_FIRSTFULLCHUNK      "Vols pujar troços senzers\r\rFent servir troços  \nsenzers dona al client millors possibilitats de completar un troç.  \nDesactivant això ajudarà a fer còrrer més la cua. Si ets un publicador  \ndedicat, voldràs tenir això activat.\r\r(Defecte Si)"
-    IDS_FIRSTSAFECON        "Vols que eMule connecti amb 'Connexió  \nSegura'?\r\rActivant això permet eMule connectar més ràpid, pero pot fer que  \nagafis més falses lowID's.\r\r(Defecte No)"
+    IDS_FIRSTAUTODOWN       "Enable this option if you want eMule to manage your download priorities.\n\nTurning this on will allow eMule to make sure downloads with a lot of sources do not interfere with downloads that have few sources. This option will only affect future downloads."
+    IDS_FIRSTAUTOUP         "Enable this option if you want eMule to manage your upload priorities.\n\nTurning this on will allow eMule to boost rare files meaning popular files will be harder for other people to get. Turning this off will allow eMule to upload popular files more often meaning rare files will be harder for other people to get. This option will only affect future shared files."
+    IDS_FIRSTCREDITSYSTEM   "Do you want to reward people that upload to you?\n\nThis is commonly known as the Credit System. Turning this on will help fight against leachers. If you are a dedicated releaser, you will want to turn this off."
+    IDS_FIRSTFULLCHUNK      "Enable this option if you want to upload full chunks.\n\nUsing full chunk gives the client a better chance to complete a chunk. Turning this off will help rotate your queue faster. If you are a dedicated releaser, you will want to turn this on."
+    IDS_FIRSTSAFECON        "Enable this option if you want eMule to connect using Safe Connect.\n\nTurning this feature off allows eMule to connect to servers a little faster, but can cause you to get more false LowID connects."
     IDS_FIRSTRUNASSIST      "Vols un asistent de primera execució?"
-    IDS_FIRSTAUTOCON        "Vols que eMule connecti al iniciar?\r\r(Defecte  \nNo)"
+    IDS_FIRSTAUTOCON        "Enable this option if you want eMule to connect at startup."
     IDS_FIRSTCOMPLETE       "Has completat l'assitent de primera  \nexecució.\r\rAquests ajustaments i més es poden tornar a canviar fent clic a  \nl'icona de preferències. Per explicacions i ajuda mira l'ajut picant F1 a  \neMule!"
 END
 
@@ -1327,7 +1327,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problemàtic"
     IDS_LONGHRS             "Hores"
     IDS_STATS_LARGESTFILE   "Fitxer Compartit més Gran"
-    IDS_CLIENTSOFTWARE      "Software de Client"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Fitxer de Parts"
     IDS_STATS_DATASOURCE    "Font de Dades"
     IDS_STATS_DSFILE        "Arxiu Complet"
@@ -1351,7 +1351,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Copiar Totes les Estadístiques"
     IDS_STATS_MNUTREEHTML   "Posibilitats HTML"
     IDS_STATS_EXPORT2HTML   "Exportar Totes les Estadístiques"
-    IDS_STATS_EXPORTVIS     "Exportar Tot el Visible"
     IDS_STATS_MNUTREECPYVIS "Copiar Tot el Visible"
     IDS_STATS_MNUTREEEXPANDALL "Expandir Totes les Seccions"
     IDS_STATS_MNUTREECOLLAPSEALL "Col·lapsar Totes les Seccions"
@@ -1404,13 +1403,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Version"
-    IDS_ALL_A4AF_TO_THIS    "Swap all sources to this file now"
     IDS_PASTE               "Enganxar"
-    IDS_ALL_A4AF_TO_OTHER   "Swap all sources to any other file now"
-    IDS_ALL_A4AF_AUTO       "Automatically swap all (A4AF)sources to this file"
-    IDS_SWAP_A4AF_TO_THIS   "Swap source to this file now"
-    IDS_SWAP_A4AF_TO_OTHER  "Intercanviar font a qualsevol altre fitxer ara"
-    IDS_A4AF                "Manegament de Fonts (A4AF)"
+    IDS_A4AF                "Manegament de Fonts"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "Activar MobileMule"
     IDS_AUTOCAT_LABEL       "Auto Asignació Cat (patró separat per |)"
@@ -1611,7 +1605,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Enregistrar identificacions segures"
     IDS_LOG_FILTERED_IPS    "Enregistrar IPs filtrades i/o ignorades"
     IDS_LOG_FILE_SAVING     "Enregistrar accions de desat d'arxius"
-    IDS_IPFILTERFILES       "Tots els arxius de filtre (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|Fitxers de filtre eMule IP (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Fitxers de Peer Guardian (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Fitxers de Texte (*.txt)|*.txt|Tots els Fitxers (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|ZIP Files (*.zip;*.gz)|*.zip;*.gz|All Files (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "Realment vols esborrar els fitxers de filtre seleccionats?"
     IDS_TOTAL_IPFILTER_LABEL "Total filtres IP:"
     IDS_TOTAL_IPS_LABEL     "Total IPs:"
@@ -1721,7 +1715,7 @@ STRINGTABLE
 BEGIN
     IDS_MAXHALFOPENCONS     "Max. Half Open Connections"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Enable this so that eMule will run when you start windows. [Default disabled]"
+                            "Enable this so that eMule will run when you start windows."
     IDS_KAD_WAITCBK         "Wait Callback Kad"
     IDS_KAD_TOOMANDYKADLKPS "Too Many Kad Lookups"
     IDS_PCDS_CLIENTWAIT     "ClientWait"
@@ -1840,6 +1834,91 @@ BEGIN
     IDS_NOTES               "Notes"
     IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Shutdown eMule"
+    IDS_WEB_REBOOT          "Reboot system"
+    IDS_WEB_SHUTDOWNSYSTEM  "Shutdown system"
+    IDS_WEB_ADMINMENU       "Admin Menu"
+    IDS_WEB_MAIN_CLOSE      "Do you really want eMule to terminate?"
+    IDS_WEB_MAIN_REBOOT     "Do you really want the system to reboot?"
+    IDS_WEB_MAIN_SHUTDOWN   "Do you really want the system to shutdown?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Show banned clients on queue"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Show friends on queue"
+    IDS_WEB_SESSIONTIMEOUT  "Session Timeout"
+    IDS_WEB_ALLOWHILEVFUNC  "Allow exit eMule, reboot and shutdown"
+    IDS_SETPFSLIMIT         "Source Limit..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Please enter the new source limit for the selected file(s) ! \n(set to 0 to use global setting)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Do you want incoming folders included in the old incoming folder to be updated now?"
+    IDS_USESPEECH           "Speak notification message"
+    IDS_CONDTCPACCEPT       "Fast connection reject"
+    IDS_TCPIP_CONNS         "TCP/IP connections"
+    IDS_ERR_DELFILE         "Failed to delete file ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Do you want to cleanup the filenames of the selected files?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s seems to be corrupted and will be replaced"
+    IDS_UPLOADING           "Uploading"
+    IDS_CANCELLED           "Cancelled"
+    IDS_PW_REMEMBERDOWNLOADED "Remember downloaded files"
+    IDS_PW_REMEMBERCANCELLED "Remember cancelled files"
+    IDS_AVAILABLEPARTS      "Available Parts"
+    IDS_NOSOUND             "No sound"
+    IDS_PW_RECEIVERADDRESS  "Recipient address:"
+    IDS_PW_ENABLEEMAIL      "Enable Email Notifications"
+    IDS_EMULENOTIFICATION   "eMule Notification"
+    IDS_PW_EMAILNOTIFICATIONS "Email Notifications"
+    IDS_PW_SMTPSERVER       "SMTP-Server:"
+    IDS_PW_SENDERADDRESS    "Sender address:"
+    IDS_PW_SHOWTRANSTOOLBAR "Show additional toolbar on transferwindow"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Shared parts"
+    IDS_INCOMING_FILES      "Incoming Files"
+    IDS_INCOMPLETE_FILES    "Incomplete Files"
+    IDS_SHARED_DIRECTORIES  "Shared Directories"
+    IDS_SHAREDIR            "Share directory"
+    IDS_SHAREDIRSUB         "Share with subdirectories"
+    IDS_UNSHAREDIR          "Unshare directory"
+    IDS_UNSHAREDIRSUB       "Unshare with subdirectories"
+    IDS_ALLSHAREDFILES      "All Shared Files"
+    IDS_ALLDIRECTORIES      "All Directories"
+    IDS_SEARCHRELATED       "Find related files"
+    IDS_RELATED             "Related"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Collection List"
+    IDS_SEARCH_EMULECOLLECTION "Collection"
+    IDS_COLL_REPLACEEXISTING "Do you want to replace existing file?"
+    IDS_COLL_ERR_DELETING   "Some Unknown error in deleting old file. Exit without saving?"
+    IDS_CREATECOLLECTION    "Create Collection"
+    IDS_COLL_SIGN           "Sign Collection with Name and Key"
+    IDS_AUTHOR              "Author"
+    IDS_AUTHORKEY           "Author Key"
+    IDS_COLL_ADDINCAT       "Add new downloads in a Collection Category"
+    IDS_MODIFYCOLLECTION    "Modify Collection"
+    IDS_VIEWCOLLECTION      "View Collection"
+    IDS_COLL_TEXTFORMAT     "Save collection In A Simple Text Format"
+    IDS_SEARCHAUTHORCOLLECTION "Search Author's Collections"
+    IDS_ERR_DUPL_FILES      "Duplicate shared files: ""%s"" and ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting failed too many times. Disabling Upload SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Done with preparations. Starting control of upload speed. (First 60 seconds will be in fast reaction mode)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Raised upload limit in prefs detected. Going into fast reaction mode for 60 seconds."
+    IDS_USS_STATE_PREPARING "Preparing..."
+    IDS_USS_STATE_WAITING   "Waiting..."
+    IDS_USS_STATE_ERROR     "Error!"
 END
 
 #endif    // Catalan resources

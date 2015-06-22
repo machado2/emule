@@ -395,7 +395,7 @@ BEGIN
     IDS_ERR_METCORRUPT      "Fejl: %s (%s) er fejlbehæftet, kunne ikke indlæse fil"
     IDS_ERR_FILEERROR       "Uventet filfejl ved indlæsning af %s (%s): %s"
     IDS_ERR_FILEOPEN        "Kunne ikke åbne %s (%s)"
-    IDS_SEL_SKINDIR         "Vælg Skin Directory..."
+    IDS_SEL_SKINDIR         "Vælg Skin bibliotek..."
     IDS_ERR_REHASH          "Advarsel: %s kan være fejlbehæftet, udfører rehashing af færdige dele"
     IDS_SKIN_PROF           "Skin Profiles"
     IDS_ERR_PART_FNF        ".part fil ikke fundet"
@@ -594,7 +594,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Brugernavn:"
     IDS_CD_UHASH            "Brugerhash:"
-    IDS_CD_CSOFT            "Klientsoftware:"
+    IDS_CD_CSOFT            "Klientsoftware"
     IDS_CD_UIP              "IP Adresse:"
     IDS_CD_SIP              "Server IP:"
     IDS_CD_VERSION          "Klientversion:"
@@ -867,10 +867,10 @@ BEGIN
     IDS_SP_BACKGROUND       "Baggrund"
     IDS_SP_GRID             "Gitternet/akser"
     IDS_SP_DL1              "Download nuværende"
-    IDS_SP_DL2              "Download tidsgennemsnit"
+    IDS_SP_DL2              "Download gennemsnit"
     IDS_SP_DL3              "Download sessionsgennemsnit"
     IDS_SP_UL1              "Upload nuværende"
-    IDS_SP_UL2              "Upload tidsgennemsnit"
+    IDS_SP_UL2              "Upload gennemsnit"
     IDS_SP_UL3              "Upload sessionsgennemsnit"
     IDS_SP_ACTCON           "Aktive forbindelser"
     IDS_SP_ACTDL            "Aktive downloads"
@@ -1133,13 +1133,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Deaktiver liste af kendte klienter"
     IDS_DISABLEQUEUELIST    "Deaktiver køliste"
     IDS_USECREDITSYSTEM     "Benyt kreditsystem (belønner uploadere)"
-    IDS_FIRSTAUTODOWN       "Skal eMule håndtere dine download prioriteter?\r\rHvis du aktiverer dette vil eMule kunne sikre, at downloads med mange kilder ikke forstyrrer downloads med få kilder.\r\rHvis du lige har opdateret fra version 0.26 og lavere vil alle nuværende downloads blive sat til autoprioritet.\rDenne option vil kun have betydning for fremtidige downloads. (Tilvalgt som standard)"
-    IDS_FIRSTAUTOUP         "Skal eMule håndtere dine upload prioriteter?\r\rHvis du aktiverer dette vil eMule automatisk gøre sjældne filer mere tilgængelige end populære filer.\rHvis du ikke aktiverer dette vil sjældne filer blive sværere at få fat på i netværket.\r\rHvis du lige har opdateret fra version 0.26 og lavere vil alle nuværende delte filer blive sat til autoprioritet. Denne option vil kun have betydning for fremtidige delte filer. (Tilvalgt som standard)"
-    IDS_FIRSTCREDITSYSTEM   "Ønsker du at belønne dem som uploader til dig?\r\rDette kendes som et kreditsystem. Hvis du aktiverer dette vil du hjælpe i kampen mod leachere (folk som kun downloader og ikke bidrager med upload). Hvis du er en dedikeret releaser skal du ikke aktivere dette. (Tilvalgt som standard)"
-    IDS_FIRSTFULLCHUNK      "Ønsker du at uploade hele dele?\r\rHvis du aktiverer dette vil du give en klient bedre mulighed for at færdiggøre en del. Hvis du deaktiverer dette vil der ske større udskiftning i din upload kø. Hvis du er en dedikeret releaser skal du aktivere dette. (Tilvalgt som standard)"
-    IDS_FIRSTSAFECON        "Ønsker du at eMule skal forbinde til servere ved at benytte smart lav-id check?\r\rHvis du deaktiverer dette kan eMule forbinde til servere en smule hurtigere, men til gengæld kan du risikere at få et lavt id. (Fravalgt som standard)"
+    IDS_FIRSTAUTODOWN       "Aktiver denne valgmulighed hvis du ønsker at eMule skal håndtere dine download prioteter.\n\nHvis du aktiverer dette vil eMule sørge for at downloads med mange kilder forstyrrer downloads, der har få kilder. Denne valgmulighed vil kun påvirke fremtidige downloads."
+    IDS_FIRSTAUTOUP         "Aktiver denne valgmulighed hvis du ønsker at eMule skal håndtere dine upload prioteter.\n\nHvis du aktiverer dette vil eMule sørge for at booste sjældne filer, hvilket vil betyde at populære filer vil blive svære for andre at få. Aktiveres dette ikke vil eMule uploade populære filer oftere, hvilket betyder at sjældne filer vil være svære for andre folk at få. Denne valgmulighed vil kun vedrører fremtidige delte filer."
+    IDS_FIRSTCREDITSYSTEM   "Ønsker du at belønne folk som uploader til dig?\n\nDette er kendt som Kredit Systemet. Aktiveres dette vil det hjælpe i kampen mod leechers. Er du en dedikeret releaser vil du ønske at deaktiverer dette."
+    IDS_FIRSTFULLCHUNK      "Aktiver denne valgmulighed, hvis du ønsker at uploade hele chunks.\n\nBrug af fulde chunks giver de andre klienter en bedre mulighed for at modtage en komplet chunk. Deaktiveres dette vil flere mennesker komme igennem din kø. Er du en dedikeret releaser vil du ønske at aktiverer dette."
+    IDS_FIRSTSAFECON        "Aktiver denne valgmulighed, hvis du ønsker at eMule skal forbinde med Safe Connect.\n\nDeaktiveres denne feature kan eMule forbinde lidt hurtigere til serverne, men du risikere flere falske Lavt ID forbindelser."
     IDS_FIRSTRUNASSIST      "Ønsker du at køre en førstegangs installationsvejledning?"
-    IDS_FIRSTAUTOCON        "Ønsker du at eMule forbinder ved opstart? (Fravalgt som standard)"
+    IDS_FIRSTAUTOCON        "Aktiver denne valgmulighed, hvis du ønsker at eMule skal forbinde ved opstart."
     IDS_FIRSTCOMPLETE       "Du har nu gennemført installationsvejledningen.\r\rAlle de valgte indstillinger kan ændres ved at klikke på indstillinger ikonet. Hvis du ønsker hjælp eller forklaringer til indstillingerne kan du trykke på F1 i eMule!"
 END
 
@@ -1335,7 +1335,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problematisk"
     IDS_LONGHRS             "Timer"
     IDS_STATS_LARGESTFILE   "Største delte fil"
-    IDS_CLIENTSOFTWARE      "Klient software"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Part fil"
     IDS_STATS_DATASOURCE    "Datakilde"
     IDS_STATS_DSFILE        "Komplet fil"
@@ -1359,7 +1359,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Kopier al statistik"
     IDS_STATS_MNUTREEHTML   "HTML Features"
     IDS_STATS_EXPORT2HTML   "Eksporter al statistik"
-    IDS_STATS_EXPORTVIS     "Eksporter alt synligt"
     IDS_STATS_MNUTREECPYVIS "Kopier alt synligt"
     IDS_STATS_MNUTREEEXPANDALL "Udvid alle sektioner"
     IDS_STATS_MNUTREECOLLAPSEALL "Sammentræk alle sektioner"
@@ -1413,13 +1412,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Version"
-    IDS_ALL_A4AF_TO_THIS    "Byt alle kilder til denne fil nu"
     IDS_PASTE               "Sæt ind"
-    IDS_ALL_A4AF_TO_OTHER   "Byt alle kilder til alle andre filer nu"
-    IDS_ALL_A4AF_AUTO       "Byt automatisk alle (A4AF) kilder til denne fil"
-    IDS_SWAP_A4AF_TO_THIS   "Byt kilder til denne fil nu"
-    IDS_SWAP_A4AF_TO_OTHER  "Byt kilder til alle andre filer nu"
-    IDS_A4AF                "Kilde håndtering (A4AF)"
+    IDS_A4AF                "Kilde håndtering"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "Aktivér MobileMule"
     IDS_AUTOCAT_LABEL       "Auto kategori-tildeling (mønster, adskilt af |)"
@@ -1621,7 +1615,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Log sikker identifikation"
     IDS_LOG_FILTERED_IPS    "Log filtrerede og/eller ignorerede IP'er"
     IDS_LOG_FILE_SAVING     "Log filskrivningsbegivenheder"
-    IDS_IPFILTERFILES       "Alle IP Filter Filer (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Filter Filer (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Filer (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Tekst Filer (*.txt)|*.txt|Alle Filer (*.*)|*.*||"
+	  IDS_IPFILTERFILES      "Alle IP Filter Filer (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|eMule IP Filter Filer (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Filer (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Tekst Filer (*.txt)|*.txt|ZIP Filer (*.zip;*.gz)|*.zip;*.gz|Alle Filer (*.*)|*.*||"    
     IDS_DELETEIPFILTERS     "Ønsker du virkelig at slette de valgte IP filtrer?"
     IDS_TOTAL_IPFILTER_LABEL "Total IP filtrer:"
     IDS_TOTAL_IPS_LABEL     "Total IP'er:"
@@ -1697,12 +1691,12 @@ BEGIN
     IDS_NOPORTCHANGEPOSSIBLE 
                             "Ændringen af porte er ikke mulig efter du har forbundet til klienter eller mens forbundet til en server eller Kad!\n\nGenstart venligst eMule med de ændrede port indstillinger."
     IDS_NETWORK_INFO        "Netværk Information"
-    IDS_SP_TOTALUL          "Totalt antal af uploads"
+    IDS_SP_TOTALUL          "Total uploads"
     IDS_SP_ULFRIENDS        "Upload venne-slots"
-    IDS_SP_ULSLOTSNOOVERHEAD "Aktuel upload excl. overhead (UL Slots udelukkende)"
+    IDS_SP_ULSLOTSNOOVERHEAD "Aktuel upload excl. overhead"
     IDS_ST_ACTIVEU_ZZ       "Aktive Uploads"
-    IDS_ST_ULCURRENT        "Upload+Overhead"
-    IDS_ST_ULSLOTSNOOVERHEAD "Upload"
+    IDS_ST_ULCURRENT        "Nuværrende"
+    IDS_ST_ULSLOTSNOOVERHEAD "Nuværrende excl. overhead"
     IDS_ST_ULFRIEND         "Venne-upload"
 END
 
@@ -1720,7 +1714,7 @@ STRINGTABLE
 BEGIN
     IDS_MAXHALFOPENCONS     "Max. Havle Åbne Forbindelser"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Aktiver dette så eMule vil starte sammen med Windows. [Deaktiveret som standard]"
+                            "Aktiver dette så eMule vil starte sammen med Windows. (Deaktiveret som standard)"
     IDS_KAD_WAITCBK         "Afventer Callback Kad"
     IDS_KAD_TOOMANDYKADLKPS "For mange Kad Lookups"
     IDS_PCDS_CLIENTWAIT     "KlientVent"
@@ -1839,6 +1833,91 @@ BEGIN
     IDS_NOTES               "Noter"
     IDS_KADSEARCHALREADY    "En anden søgning er allerede undervejs. Prøv venligtst igen senere!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Afslut eMule"
+    IDS_WEB_REBOOT          "Genstart system"
+    IDS_WEB_SHUTDOWNSYSTEM  "Luk system"
+    IDS_WEB_ADMINMENU       "Admin Menu"
+    IDS_WEB_MAIN_CLOSE      "Ønsker du virkeligt at afslutte eMule?"
+    IDS_WEB_MAIN_REBOOT     "Ønsker du virkeligt at at genstarte systemet?"
+    IDS_WEB_MAIN_SHUTDOWN   "Ønsker du virkeligt at at lukke systemet?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Vis banned klienter i køen"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Vis venner i køen"
+    IDS_WEB_SESSIONTIMEOUT  "Session Timeout"
+    IDS_WEB_ALLOWHILEVFUNC  "Tillad afslut eMule, genstart og lukning"
+    IDS_SETPFSLIMIT         "Kilde Begrænsning..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Indtast venligtst den nye kilde begrænsning for den/de valgte fil(er)! \n(Sæt til 0 for at lave en gloabl indstilling)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Ønsker du at incoming mapper inkluderet i den gamle incoming mappe bliver opdateret nu?"
+    IDS_USESPEECH           "Tale Notifikationsbesked"
+    IDS_CONDTCPACCEPT       "Hurtig forbindelse afvist"
+    IDS_TCPIP_CONNS         "TCP/IP forbindelser"
+    IDS_ERR_DELFILE         "Mislykkedes at slette filen ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Ønsker du at rydde op i filnavnene på de valgte filer?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s synes at være korrupt og vil blive erstattet"
+    IDS_UPLOADING           "Uploader"
+    IDS_CANCELLED           "Annulerede"
+    IDS_PW_REMEMBERDOWNLOADED "Husk downloadede filer"
+    IDS_PW_REMEMBERCANCELLED "Husk annulerede filer"
+    IDS_AVAILABLEPARTS      "Tilgængelige Dele"
+    IDS_NOSOUND             "Ingen lyd"
+    IDS_PW_RECEIVERADDRESS  "Modtager adresse:"
+    IDS_PW_ENABLEEMAIL      "Aktiver Email Notifikation"
+    IDS_EMULENOTIFICATION   "eMule Notifikation"
+    IDS_PW_EMAILNOTIFICATIONS "Email Notifikationer"
+    IDS_PW_SMTPSERVER       "SMTP-Server:"
+    IDS_PW_SENDERADDRESS    "Afsender adresse:"
+    IDS_PW_SHOWTRANSTOOLBAR "Vis yderligere værktøjslinie på overførselsvinduet"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Delte dele"
+    IDS_INCOMING_FILES      "Indkomne Filer"
+    IDS_INCOMPLETE_FILES    "Ufuldstændige Filer"
+    IDS_SHARED_DIRECTORIES  "Delte Mapper"
+    IDS_SHAREDIR            "Del Mappe"
+    IDS_SHAREDIRSUB         "Del med undermapper"
+    IDS_UNSHAREDIR          "Fjern deling af mappe"
+    IDS_UNSHAREDIRSUB       "Fjern deling af undermapper"
+    IDS_ALLSHAREDFILES      "Alle Delte Filer"
+    IDS_ALLDIRECTORIES      "Alle Mapper"
+    IDS_SEARCHRELATED       "Find relaterede filer"
+    IDS_RELATED             "Relaterede"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Kollektionsliste"
+    IDS_SEARCH_EMULECOLLECTION "Kollektion"
+    IDS_COLL_REPLACEEXISTING "Ønsker du at erstatte den exsisterende fil?"
+    IDS_COLL_ERR_DELETING   "Ukendt fejl ved sletning at gamle fil. Afslut uden at gemme?"
+    IDS_CREATECOLLECTION    "Skab Kollektion"
+    IDS_COLL_SIGN           "Signér Kollektion med Navn og Nøgle"
+    IDS_AUTHOR              "Ophavsmand"
+    IDS_AUTHORKEY           "Ophavsmandsnøgle"
+    IDS_COLL_ADDINCAT       "Tilføj nye downloads til en Kollektionskategori"
+    IDS_MODIFYCOLLECTION    "Redigér Kollektion"
+    IDS_VIEWCOLLECTION      "Se Kollektion"
+    IDS_COLL_TEXTFORMAT     "Gem kollektion i et simpelt tekstformat"
+    IDS_SEARCHAUTHORCOLLECTION "Søg i ophavsmandens kollektioner"
+    IDS_ERR_DUPL_FILES      "Duplikerede delte filer: ""%s"" og ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting mislykket for mange gange. Deaktiverer Upload SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Afsluttet forberedelser. Starter kontrol af upload hastighed. (Første 60 sekunder vil være i hurtig-reaktion mode)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Raised upload limit in prefs detected. Going into fast reaction mode for 60 seconds."
+    IDS_USS_STATE_PREPARING "Forbereder..."
+    IDS_USS_STATE_WAITING   "Venter..."
+    IDS_USS_STATE_ERROR     "Fejl!"
 END
 
 #endif    // Danish resources

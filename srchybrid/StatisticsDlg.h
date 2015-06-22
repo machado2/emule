@@ -25,6 +25,7 @@
 #define	MAX_CLIENTS_WITH_SUB_VERSION	4	// eMule, eDHyb, eD, aMule
 #define	MAX_SUB_CLIENT_VERSIONS			8
 
+
 class CStatisticsDlg : public CResizableDialog
 {
 	DECLARE_DYNAMIC(CStatisticsDlg)
@@ -51,6 +52,7 @@ public:
 
 private:
     COScopeCtrl m_DownloadOMeter,m_UploadOMeter,m_Statistics;
+	TOOLINFO tt;
 
 	double m_dPlotDataMore[4];
 	uint32 m_ilastMaxConnReached;
@@ -125,7 +127,9 @@ protected:
 	void initCSize();
 	virtual LRESULT DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	//MORPH END   - Added by SiRoB, Splitting Bar [O²]
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
+	CToolTipCtrl* m_TimeToolTips;
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnSysColorChange();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
@@ -133,4 +137,5 @@ protected:
 	afx_msg void OnStnDblclickScopeD();
 	afx_msg void OnStnDblclickScopeU();
 	afx_msg void OnStnDblclickStatsscope();
+	afx_msg LRESULT OnOscopePositionMsg(WPARAM wParam, LPARAM lParam);
 };

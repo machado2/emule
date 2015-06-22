@@ -591,7 +591,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Vartotojas:"
     IDS_CD_UHASH            "Vartotojo hað:"
-    IDS_CD_CSOFT            "Klientas:"
+    IDS_CD_CSOFT            "Klientas"
     IDS_CD_UIP              "IP adresas:"
     IDS_CD_SIP              "Serverio IP:"
     IDS_CD_VERSION          "Versija:"
@@ -921,7 +921,7 @@ BEGIN
     IDS_WIZARD_CUSTOM       "Individualus"
     IDS_WIZARD_ENTERBELOW   "(áveskite þemiau!)"
     IDS_STATS_MAXAVGDL      "Max vidutinis gavimø greitis (sesija): %s"
-    IDS_USS_MIN             "Dëmesio: USS ðiuo metu nepalaiko iðsiuntimo greièiø maþesniø nei 10KB. Jei jûs þinote, kad jûsø internetas nepatemps ðito greièio, praðom iðjungti USS."
+    IDS_USS_MIN             "Dëmesio: IGA ðiuo metu nepalaiko iðsiuntimo greièio maþesnio nei 10KB. Jei jûs þinote, kad jûsø internetas nepatemps ðito greièio, praðom iðjungti IGA."
 END
 
 STRINGTABLE 
@@ -1119,14 +1119,14 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Uþdrausti þinomø klientø sàraðà"
     IDS_DISABLEQUEUELIST    "Uþdrausti eilës sàraðà"
     IDS_USECREDITSYSTEM     "Naudoti kreditø sistemà (apdovanoti dosniuosius)"
-    IDS_FIRSTAUTODOWN       "Ar jûs norite, kad eMule tvarkytø jûsø gavimø svarbumus?\r\rTai leis eMule, kad gavimai su daug ðaltiniø netrukdys gavimams su maþai ðaltiniø.\r\rJeigu jûs atsinaujinote ið 0.26 versijos ar þemesnës, tai visi esantys gavimai bus paþymëti Auto svarbumu.\rÐis punktas átakos tik bûsimus gavimus. (Numatyta Taip)"
-    IDS_FIRSTAUTOUP         "Ar jûs norite, kad eMule tvarkytø jûsø iðsiuntimo svarbumus?\r\rTai leis eMule pagreitinti maþiau paplitusiø failø siuntimà kitiems vartotojams nei failams su dideliu paplitimu.\rJei uþdrausti - tai eMule greièiau siøs didesná palitimà turinèius failus kitiems vartotojams, ir kitiems bus sunkiau gauti maþiau paplitusius failus.\r\rJeigu jûs atsinaujinote ið 0.26 versijos ar þemesnës, tai visi ðarinti failai bus paþymëti Auto svarbumu.\rÐis punktas átakos tik bûsimus ðarintus failus. (Numatyta Taip)"
-    IDS_FIRSTCREDITSYSTEM   "Ar jûs norite apdovanoti þmones kurie siunèia jums?\r\rTai yra þinoma kaip Kreditø sistema. Ájungus padeda kovoti su 'tik gaunanèiais' bet ne 'duodanèiais' vartotojais. Jei jûs esate didelis failø platintojas, tai jûs tikriausiai norësite tai iðjungti.\r\r(Numatyta Taip)"
-    IDS_FIRSTFULLCHUNK      "Ar jûs norite iðsiøsti pilnas dalis?\r\rPilnø daliø naudojimas suteikia klientui didesná ðansà baigti dalá. Iðjungus jûsø eilë keisis greièiau. Jei jûs esate didelis failø platintojas, tai jûs tikriausiai norësite tai ájungti.\r\r(Numatyta Taip)"
-    IDS_FIRSTSAFECON        "Ar jûs norite, kad eMule naudotø saugø prisijungimà?\r\rTai leis eMule jungtis prie serveriø greièiau, bet jûs galite daugiau gauti netikrø Þemas ID susijungimø.\r\r(Numatyta Ne)"
+    IDS_FIRSTAUTODOWN       "Ájunkite jei norite, kad eMule tvarkytu jûsø gaunamø failø svarbumus.\n\nTai lems, kad gaunami failai su daug ðaltiniø netrukdys gaunamiems failams su maþai ðaltiniø. Ðis punktas átakos tik bûsimus gavimus."
+    IDS_FIRSTAUTOUP         "Ájunkite jei norite, kad eMule tvarkytu jûsø iðsiuntimø svarbumus.\n\nTai leis eMule pagreitinti maþiau paplitusiø failø iðsiuntimà kitiems vartotojams nei failams su dideliu paplitimu. Jei uþdrausti - tai eMule greièiau siøs didesná palitimà turinèius failus kitiems vartotojams, ir kitiems bus sunkiau gauti maþiau paplitusius failus. Ðis punktas átakos tik bûsimus ðarintus failus."
+    IDS_FIRSTCREDITSYSTEM   "Ar jûs norite apdovanoti þmones kurie siunèia jums?\n\nTai yra þinoma kaip Kreditø sistema. Ájungus padeda kovoti su 'tik siurbianèiais' bet ne 'duodanèiais' vartotojais. Jei jûs esate didelis failø platintojas, tai jûs tikriausiai norësite tai iðjungti."
+    IDS_FIRSTFULLCHUNK      "Ájunkite jei norite iðsiøsti pilnas dalis.\n\nPilnø daliø naudojimas suteikia klientui didesná ðansà greièiau uþbaigti dalá. Iðjungus jûsø eilë keisis greièiau. Jei jûs esate didelis failø platintojas, tai jûs tikriausiai norësite tai ájungti."
+    IDS_FIRSTSAFECON        "Ájunkite jei norite, kad eMule naudotø saugø prisijungimà.\n\nTai leis eMule jungtis prie serveriø greièiau, bet yra ðansû, kad gausite netikrø Þemas ID susijungimø."
     IDS_FIRSTRUNASSIST      "Ar jûs norite paleisti pirmo paleidimo vedlá?"
-    IDS_FIRSTAUTOCON        "Ar jûs norite, kad eMule jungtøsi startuojant?\r\r(Numatyta Ne)"
-    IDS_FIRSTCOMPLETE       "Jûs jau baigëte pirmo paleidimo vedlá.\r\rVisi ðitie ir kiti nustatymai gali bûti keièiami Nustatymai skiltyje. Dël paaiðkinimø ir pagalbos kreipkitës á pagalbos failà spausdami F1 eMulëje!"
+    IDS_FIRSTAUTOCON        "Ájunkite jei norite, kad eMule prisijungtu startuojant."
+    IDS_FIRSTCOMPLETE       "Jûs jau praëjote pirmo paleidimo vedlá.\n\nVisi ðitie ir kiti nustatymai gali bûti keièiami Nustatymai skiltyje. Dël paaiðkinimø ir pagalbos kreipkitës á pagalbos failà spausdami F1 eMule'je!"
 END
 
 STRINGTABLE 
@@ -1321,7 +1321,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problematiðka"
     IDS_LONGHRS             "Valandø"
     IDS_STATS_LARGESTFILE   "Didþiausias ðarintas failas"
-    IDS_CLIENTSOFTWARE      "Programa"
+    IDS_SPLIT_WINDOW        "Padalintas langas"
     IDS_STATS_DSPF          "Part failas"
     IDS_STATS_DATASOURCE    "Duomenø ðaltinis"
     IDS_STATS_DSFILE        "Baigtas failas"
@@ -1345,7 +1345,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Kopijuoti visà statistikà"
     IDS_STATS_MNUTREEHTML   "HTML galimybës"
     IDS_STATS_EXPORT2HTML   "Eksportuoti visà statistikà"
-    IDS_STATS_EXPORTVIS     "Eksportuoti visà matomà"
     IDS_STATS_MNUTREECPYVIS "Kopijuoti visà matomà"
     IDS_STATS_MNUTREEEXPANDALL "Iðskleisti visas sekcijas"
     IDS_STATS_MNUTREECOLLAPSEALL "Suskleisti visas sekcijas"
@@ -1399,13 +1398,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Versija"
-    IDS_ALL_A4AF_TO_THIS    "Permesti dabar visus ðaltinius á ðità failà"
     IDS_PASTE               "Áterpti"
-    IDS_ALL_A4AF_TO_OTHER   "Permesti dabar visus ðaltinius á bet koká kità failà"
-    IDS_ALL_A4AF_AUTO       "Automatiðkai permesti visus (UKF) ðaltinius á ðità failà"
-    IDS_SWAP_A4AF_TO_THIS   "Permesti dabar ðaltinius á ðità failà"
-    IDS_SWAP_A4AF_TO_OTHER  "Permesti dabar ðaltinius á bet koká kità failà"
-    IDS_A4AF                "Ðaltiniø tvarkymas (UKF)"
+    IDS_A4AF                "Ðaltiniø tvarkymas"
     IDS_MOBILEMULE          "Mobilus eMule"
     IDS_ENABLEMM            "Ájungti Mobilø eMule"
     IDS_AUTOCAT_LABEL       "Auto kategorijø priskyrimas (atskyrëjas |)"
@@ -1556,7 +1550,7 @@ BEGIN
     IDS_EM_HELP             "Pa&galba"
     IDS_WRN_FRIENDDUPLIPPORT 
                             "Draugas nepridëtas.\r\n\r\nSàraðe jau yra draugas su tokiu paèiu IP ir portu."
-    IDS_DYNUP               "(USS) Siuntimo greièio jautrumas"
+    IDS_DYNUP               "Iðsiuntimo greièio automatika (IGA)"
     IDS_KADOVERHEAD         "Kad perkrova (paketai): %s (%s)"
     IDS_FIND                "Rasti..."
     IDS_LOG_BANNED_CLIENTS  "Loginti uþbanintus klientus"
@@ -1608,7 +1602,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Loginti saugø identifikavimà"
     IDS_LOG_FILTERED_IPS    "Loginti filtruotus ir/arba ignoruotus IP"
     IDS_LOG_FILE_SAVING     "Loginti failø iðssaugojimo veiksmus"
-    IDS_IPFILTERFILES       "Visi IP filtro failai (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP filtro failai (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian failai (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Tekstiniai failai (*.txt)|*.txt|All Files (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "Visi IP filtro failai (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|eMule IP filtro failai (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian failai (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Tekstiniai failai (*.txt)|*.txt|ZIP failai (*.zip;*.gz)|*.zip;*.gz|All Files (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "Ar jûs tikrai norite iðtrinti iðsirinktus IP filtrus?"
     IDS_TOTAL_IPFILTER_LABEL "Viso IP filtrø:"
     IDS_TOTAL_IPS_LABEL     "Viso IP:"
@@ -1721,7 +1715,7 @@ STRINGTABLE
 BEGIN
     IDS_MAXHALFOPENCONS     "Max dalinai atidarytø susijungimø"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Ájunkite ir eMule pasileis kartu su Windows. [pagal nutilëjimà iðjungta]"
+                            "Ájunkite ir eMule pasileis kartu su Windows. (pagal nutilëjimà iðjungta)"
     IDS_KAD_WAITCBK         "Laukti Kad Callback"
     IDS_KAD_TOOMANDYKADLKPS "Perdaug Kad paieðkø"
     IDS_PCDS_CLIENTWAIT     "KlientoLaukimas"
@@ -1840,6 +1834,91 @@ BEGIN
     IDS_NOTES               "Pastabos"
     IDS_KADSEARCHALREADY    "Ðiuo metu vykdoma kita paieðka. Praðom bandyti vëliau!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Iðjungti eMule"
+    IDS_WEB_REBOOT          "Perkrauti sistemà"
+    IDS_WEB_SHUTDOWNSYSTEM  "Iðjungti sistemà"
+    IDS_WEB_ADMINMENU       "Administratoriaus meniu"
+    IDS_WEB_MAIN_CLOSE      "Ar tikrai norite iðjungti?"
+    IDS_WEB_MAIN_REBOOT     "Ar tikrai norite perkrauti sistemà?"
+    IDS_WEB_MAIN_SHUTDOWN   "Ar tikrai norite iðjungti sistemà?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Rodyti uþbanintu klientus eilëje"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Rodyti draugus eilëje"
+    IDS_WEB_SESSIONTIMEOUT  "Iðseko sesijos laikas"
+    IDS_WEB_ALLOWHILEVFUNC  "Leisti iðjungti eMule, perkrauti ir iðjungti sistemà"
+    IDS_SETPFSLIMIT         "Ðaltiniø limitas..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Áveskite naujà ðaltiniø limità pasirinktiem failams! \n(áveskite 0 ir bus naudojami globalûs nustatymai)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Ar norite dabar atnaujinti ateinanèiø failø katalogus esanèius senuose ateinanèiø failø kataloguose?"
+    IDS_USESPEECH           "Tarti balsu praneðimus"
+    IDS_CONDTCPACCEPT       "Greitas susijungimas atmestas"
+    IDS_TCPIP_CONNS         "TCP/IP susijungimai"
+    IDS_ERR_DELFILE         "Nepavyko iðtrinti ""%s"" failo"
+    IDS_MANUAL_FILENAMECLEANUP "Ar tikrai norite sutvarkyti pasirinktø failø pavadinimus?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s yra paþeistas ir bus pakeistas"
+    IDS_UPLOADING           "Iðsiuntimai"
+    IDS_CANCELLED           "Atðaukta"
+    IDS_PW_REMEMBERDOWNLOADED "Atsiminti gautus failus"
+    IDS_PW_REMEMBERCANCELLED "Atsiminti atðauktus failus"
+    IDS_AVAILABLEPARTS      "Prieinamos dalys"
+    IDS_NOSOUND             "Be garso"
+    IDS_PW_RECEIVERADDRESS  "Gavëjo adresas:"
+    IDS_PW_ENABLEEMAIL      "Ájungti e-paðto praneðimus"
+    IDS_EMULENOTIFICATION   "eMule praneðimas"
+    IDS_PW_EMAILNOTIFICATIONS "E-paðto praneðimai"
+    IDS_PW_SMTPSERVER       "SMTP serveris:"
+    IDS_PW_SENDERADDRESS    "Siuntëjo adresas:"
+    IDS_PW_SHOWTRANSTOOLBAR "Rodyti papildomà uþduoèiø juostà siuntimø lange"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Ðarintos dalys"
+    IDS_INCOMING_FILES      "Ateinantys failai"
+    IDS_INCOMPLETE_FILES    "Nepilni failai"
+    IDS_SHARED_DIRECTORIES  "Ðarinti katalogai"
+    IDS_SHAREDIR            "Ðarinti katalogà"
+    IDS_SHAREDIRSUB         "Ðarinti su pokatalogiais"
+    IDS_UNSHAREDIR          "Neðarinti katalogà"
+    IDS_UNSHAREDIRSUB       "Neðarinti su pokatalogiais"
+    IDS_ALLSHAREDFILES      "Visi ðarinami failai"
+    IDS_ALLDIRECTORIES      "Visi katalogai"
+    IDS_SEARCHRELATED       "Rasti susijusius failus"
+    IDS_RELATED             "Susijæ"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Kolekcijos sàraðas"
+    IDS_SEARCH_EMULECOLLECTION "Kolekcija"
+    IDS_COLL_REPLACEEXISTING "Ar jûs norite pakeisti esamà failà?"
+    IDS_COLL_ERR_DELETING   "Neþinoma klaida trinants senà failà. Iðeiti neiðsaugojus?"
+    IDS_CREATECOLLECTION    "Sukurti kolekcijà"
+    IDS_COLL_SIGN           "Pasiraðyti kolekcijà vardu ir raktu"
+    IDS_AUTHOR              "Autorius"
+    IDS_AUTHORKEY           "Autoriaus raktas"
+    IDS_COLL_ADDINCAT       "Pridëti naujus krovimus á kolekcijos kategorijà"
+    IDS_MODIFYCOLLECTION    "Keisti kolekcijà"
+    IDS_VIEWCOLLECTION      "Þiûrëti kolekcijà"
+    IDS_COLL_TEXTFORMAT     "Iðsaugoti kolekcijà paprasto teksto formatu"
+    IDS_SEARCHAUTHORCOLLECTION "Ieðkoti autoriaus kolekcijas"
+    IDS_ERR_DUPL_FILES      "Pasikartojantys ðarinti failai: ""%s"" and ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "Iðsiuntimo greièio automatika: Traceroutas per daþnai nepavyko. Iðjungiu iðsiuntimo greièio automatikà."
+    IDS_USS_STARTING        "Iðsiuntimo greièio automatika: Pasiruoðimas baigtas. Pradedu iðsiuntimo greièio kontrolæ. (Pirmos 60 sek. bus greito reagavimo bûsenoje)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "Iðsiuntimo greièio automatika: Nustatymuose aptiktas iðsiuntimo greièio padidinimas. Persijungiu 60 sek. á greito reagavimo bûsenà."
+    IDS_USS_STATE_PREPARING "Ruoðiuosi..."
+    IDS_USS_STATE_WAITING   "Laukiu..."
+    IDS_USS_STATE_ERROR     "Klaida!"
 END
 
 #endif    // Lithuanian resources

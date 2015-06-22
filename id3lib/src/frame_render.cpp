@@ -33,7 +33,7 @@
 
 //#include <string.h>
 #include <memory.h>
-#include <zlib.h>
+#include "../../zlib/zlib.h"
 
 #include "tag.h"
 #include "frame_impl.h"

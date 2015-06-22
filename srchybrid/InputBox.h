@@ -38,6 +38,7 @@ protected:
 	CString m_return;
 	bool	m_cancel;
 	bool	m_bFilenameMode;
+	HICON	m_icMain;
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();

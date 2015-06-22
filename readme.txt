@@ -1,4 +1,4 @@
-eMule Copyright (C)2002-2004 Merkur (merkur-@users.sourceforge.net)
+eMule Copyright (C)2002-2005 Merkur (merkur-@users.sourceforge.net)
 
 
 This program is free software; you can redistribute it and/or modify it under 
@@ -165,7 +165,7 @@ FAQ: (for more, see http://www.emule-project.net/faq/ )
 
 
 
---"What is the adresses.dat file for?"
+--"What is the addresses.dat file for?"
 
  You can enter a serverlist URL in that file. eMule will then get the 
  serverlist from that URL at startup (when the option "Auto-update serverlist 
@@ -271,7 +271,7 @@ COMPILING THE SOURCECODE:
 
 The sourcecode of eMule is availible as seperate download at:
  http://sourceforge.net/projects/emule
-You need Microsoft(C) Visual C++ .NET 2002 to compile eMule.
+You need Microsoft(C) Visual Studio .NET 2002 Service Pack 1 to compile eMule.
 
 -Unzip the sources (with subdirs) into a new folder
 
@@ -282,7 +282,7 @@ within our distribution. You need the following libs:
 1. Crypto++ v5.1
 	http://www.eskimo.com/~weidai/cryptlib.html
 
-2. zlib v1.2.1
+2. zlib v1.2.2
 	http://www.gzip.org/zlib/
 
 3. id3lib v3.8.3

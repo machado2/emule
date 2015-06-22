@@ -1,0 +1,1911 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "sq_AL.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "..\resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Albanian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_SQI)
+#ifdef _WIN32
+LANGUAGE LANG_ALBANIAN, SUBLANG_DEFAULT
+#pragma code_page(1250)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "sq_AL.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""..\\resource.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""..\\version.h""\r\n"
+    "#include ""lang.rc2""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_SOCKETS_INIT_FAILED "Gabim në nisjen e foleve të Windows."
+    IDS_ABOUTBOX            "&Rreth eMule..."
+    IDS_HTTPDOWNLOAD_FILESTATUS "%s nga %s"
+    IDS_HTTPDOWNLOAD_CONNECTED "Lidhur te %s"
+    IDS_HTTPDOWNLOAD_RESOLVING_NAME "Emri zbërthyes: %s"
+    IDS_HTTPDOWNLOAD_RESOLVED_NAME "Emri i zbërthyer te %s"
+    IDS_HTTPDOWNLOAD_CONNECTING "Lidhje te %s"
+    IDS_HTTPDOWNLOAD_REDIRECTING "Ridrejtim te %s"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_HTTPDOWNLOAD_GETTING_FILE_INFORMATION "Marrje informacionit për skedarin"
+    IDS_HTTPDOWNLOAD_FAIL_PARSE_ERROR "Gjatë analizës së URLit ndodhi një gabim: %s"
+    IDS_HTTPDOWNLOAD_GENERIC_ERROR
+                            "Gjatë pritjes për shkarkim të skedarit ndodhi një gabim, Gabim:%s"
+    IDS_HTTPDOWNLOAD_FAIL_CONNECT_SERVER
+                            "Gjatë lidhjes tek serveri ndodhi një gabim, Gabim:%s"
+    IDS_HTTPDOWNLOAD_INVALID_SERVER_RESPONSE
+                            "Dështim në marrjen e përgjigjes së vlefshme nga serveri"
+    IDS_HTTPDOWNLOAD_INVALID_HTTP_RESPONSE
+                            "Dështim në marrjen e përgjigjes së vlefshme HTTP nga serveri"
+    IDS_HTTPDOWNLOAD_ERROR_READFILE
+                            "Gjatë shkarkimit të skedarit ndodhi një gabim, Gabim:%s"
+    IDS_HTTPDOWNLOAD_PERCENTAGE "Në shkarkim: %s%% nga %s ka përfunduar"
+    IDS_HTTPDOWNLOAD_RETREIVEING_FILE "Rigjetje e skedarit"
+    IDS_HTTPDOWNLOAD_OF     "%s nga %s"
+    IDS_FILELINK            "Linku i skedarit"
+    IDS_LD_BASICOPT         "Mundësitë Bazike"
+    IDS_LD_ADDSOURCE        "Shtoje veten si burim"
+    IDS_LD_EMULEHASH        "Shtoje 'eMule AICH Hash' për trajtim të avancuar korruptimi"
+    IDS_LD_ADVANCEDOPT      "Mundësi Përparuese"
+    IDS_CANCEL              "Hiqe"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LD_ADDHTML          "Shto etiketa HTML"
+    IDS_HTTP_CAPTION        "Ridatim i listë-serverit"
+    IDS_HTTPDOWNLOAD_TIMELEFT "%s (%s e kopjuar)"
+    IDS_LD_ADDHASHSET       "Shto 'hashset' të plotë"
+    IDS_HSAV                "'Hashset' i vlefshëm"
+    IDS_DL_SHOWED2KLINK     "Shfaq linkun eD2K..."
+    IDS_FD_CORR             "I korruptuar"
+    IDS_HTTPDOWNLOAD_OK_TO_OVERWRITE
+                            "Skedari '%s' ekziston që më parë.\nA doni ta zëvendësoni atë?"
+    IDS_FD_RECOV            "U përtërit"
+    IDS_HTTPDOWNLOAD_FAIL_FILE_OPEN
+                            "Gjatë hapjes së skedarit për shkarkim ndodhi një gabim, Gabim:%s"
+    IDS_HTTPDOWNLOAD_ABORTING_TRANSFER "Prishje e transfertës"
+    IDS_FD_COMPR            "Ngjeshje"
+    IDS_WIZARD_NETWORK      "Zgjidhni cilin rrjet doni të përdorni."
+    IDS_MAIN_READY          "Versioni eMule %s gati"
+    IDS_WIZARD_ED2K         "Të dhënat e eD2K"
+    IDS_SEL_SKIN            "Zgjidhni Lëvoren..."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_MAIN_SOCKETERROR    "Gabim Fatal: Pamundësi për të krijuar fole në portin %i"
+    IDS_MAIN_BTN_DISCONNECT "Shkë&putu"
+    IDS_MAIN_BTN_DISCONNECT_TOOLTIP "Shkëputu nga serveri i tanishëm"
+    IDS_ERR_WRONGFILEID     "Gabim dërgimi i ID-së së skedarit"
+    IDS_ERR_BADHASHSET      "Marrje e një 'hashset'-i të korruptuar ose të pavlerë"
+    IDS_ERR_BADDATABLOCK    "Marrje e një 'DataBlock'-u të korruptuar ose të pavlerë"
+    IDS_ERR_ILLFORMEDHASH   "'Hash' i keqformuar"
+    IDS_ERR_BADED2KLINK     "Linku eD2K jo i mirëformuar"
+    IDS_ERR_NOSLLINK        "Asnjë server ose link skedari eD2K"
+    IDS_ERR_WRONGPACKAGESIZE "Përmasë e pavlerë e paketës OP_REQUESTFILENAME"
+    IDS_ERR_WRONGHPACKAGESIZE "Përmasë e pavlerë e paketës OP_HASHSETREQUEST"
+    IDS_ERR_BADCLIENTACTION "Një klient shkaktoi një gabim ose veproi keq: %s. Shkëputje e klientit!"
+    IDS_ERR_UNKNOWNCLIENTACTION
+                            "Klientë të panjohur dërgojnë paketa të zgjeruara protokolli"
+    IDS_ERR_OPENMET         "Gabim: Dështim në hapjen e skedarit part.met! (%s => %s)"
+    IDS_ERR_BADMETVERSION   "Gabim: Version i pavlerë i skedarit part.met! (%s => %s)"
+    IDS_ERR_BADGAP          "Etiketë-hendek i pavlerë në skedarin part.met"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_EMPTYADRESSESDAT_TITLE "Pamundësi për të rigjetur listë-serverin"
+    IDS_ERR_BADSERVERMETVERSION "Version i pavlerë i etiketës në server.met (0x%X)!"
+    IDS_SERVERSFOUND        "U gjetën %i servera në server.met"
+    IDS_SERVERSADDED        "U shtuan %d servera, %d nuk u shtuan (të listuar që më parë/të pavlerë)"
+    IDS_ERR_BADSERVERLIST   "Gabim: skedari server.met është i korruptuar, pamundësi për të ngarkuar listë-serverin"
+    IDS_ERR_FILEERROR_SERVERMET
+                            "Gabim i papritur skedari gjatë leximit të server.met: %s, pamundësi për të ngarkuar listë-serverin"
+    IDS_ERR_SAVESERVERMET   "Dështim në ruajtjen e server.met!"
+    IDS_PASSIVE             "Pasive"
+    IDS_MAIN_CONNECTEDTO    "Lidhja u themelua në:"
+    IDS_MAIN_BTN_CANCEL     "&Hiqe"
+    IDS_AVAIL               "Pjesë: %u, Të vlefshme: %u (%.1f%%)\n\n"
+    IDS_TYPE                "Lloji"
+    IDS_FILEID              "ID-ja e skedarit"
+    IDS_FILE                "Skedari"
+    IDS_DOWNLOAD            "Shkarkoje"
+    IDS_SL_SERVERNAME       "Emri i serverit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IP                  "IP"
+    IDS_DESCRIPTION         "Përshkrim"
+    IDS_PING                "Ping"
+    IDS_FILES               "Skedarë"
+    IDS_PREFERENCE          "Parapëlqim"
+    IDS_PRIONOPREF          "Asnjë Parapëlqim"
+    IDS_CONNECTTHIS         "Lidhu Tek Serverat e Zgjedhur"
+    IDS_CHAT_WELCOME        "Mesazhe të Çastit\n  \nKliko djathtas mbi çdo klient dhe zgjidh 'Dërgoje Mesazhin' për të nisur një sesion çati"
+    IDS_MAIN_BTN_CANCEL_TOOLTIP "Ndal orvatjet lidhjes së tanishme"
+    IDS_MAIN_BTN_CONNECT    "&Lidhu"
+    IDS_ERR_SAVESERVERMET2  "Dështim në ruajtjen e server.met! Juve mund t'ju duhet ta fshini server.met dhe ta riemërtoni server.met.old në server.met!"
+    IDS_NOTCONNECTED        "I palidhur"
+    IDS_DISCONNECTED        "I shkëputur"
+    IDS_USERS               "Përdoruesi: %i"
+    IDS_UPDOWN              "Lart: %.1f(%.1f) | Poshtë: %.1f(%.1f)"
+    IDS_CONNECTED           "I lidhur"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_WRITEERROR      "Gabim i papritur skedari gjatë shkrimit të %s : %s"
+    IDS_ERR_COMPLETIONFAILED
+                            "Gabim i papritur skedari gjatë përfundimit të %s. Skedari u pushua, rinise eMule për të nisur një tjetër përpjekje përfunduese"
+    IDS_ERR_DELETEFAILED    "Dështim në fshirjen e %s, ju duhet ta bëni vetë këtë"
+    IDS_DOWNLOADDONE        "Mbaruar së shkarkuari %s :-)"
+    IDS_ERR_DELETE          "Dështim në fshirjen e %s"
+    IDS_ERR_HASHERRORWARNING
+                            "Kujdes: Pamundësi për të grirë pjesën e shkarkuar - 'hashset' jo i plotë (%s)"
+    IDS_ERR_INCOMPLETEHASH  "Gabim: Pamundësi për të grirë pjesën e shkarkuar - 'hashset' jo i plote (%s). Kjo s'duhet të ndodhë kurrë"
+    IDS_DOWNLOADING         "Në shkarkim"
+    IDS_WAITING             "Në pritje"
+    IDS_HASHING             "Në grirje"
+    IDS_COMPLETING          "Në përfundim"
+    IDS_COMPLETE            "Përfundoi"
+    IDS_PAUSED              "Pushoi"
+    IDS_ERRORLIKE           "I gabuar"
+    IDS_ASSIGNED2K          "eMule nuk është shënuar për linket eD2K. A doni ta shënoni tani eMule për linket eD2K (rekomandohet)?"
+    IDS_ERR_EMPTYADRESSESDAT
+                            "Nuk u gjet asnjë hyrje e adresës tek listë-serveri në 'adresses.dat'. Ju lutemi ngjitini këtij skedari një adresë të vlefshme të listë-serverit në mënyrë që ta autoridatoni atë"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LINKNOTADDED        "Linku nuk mundi të shtohej"
+    IDS_MAIN_EXIT           "Vërtet doni që të dilni nga eMule?"
+    IDS_MAIN_EXITTITLE      "Konfirmim i daljes"
+    IDS_MAIN_POPUP_RESTORE  "Riktheje"
+    IDS_CONNECTTOANYSERVER  "Lidhu tek Çfarëdo Serveri"
+    IDS_EXIT                "D&il"
+    IDS_CONNECTING          "Në lidhje"
+    IDS_FAILED              "dështim"
+    IDS_ERR_BADSERVERREPLY  "Përgjigje hyrjeje e korruptuar a e pavlerë nga serveri i marrë"
+    IDS_NEWCLIENTID         "Klienti i ri është %u"
+    IDS_NOSHAREDFOLDERS     "Asnjë dosje e shpërndarë"
+    IDS_SHAREDFOLDERS       "Dosjet e shpërndara"
+    IDS_VIEW1               "Shih "
+    IDS_VIEW2               " (I pashpërndarë)"
+    IDS_PRIOLOW             "I ulët"
+    IDS_PRIONORMAL          "Normal"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PRIOHIGH            "I lartë"
+    IDS_DOWNLOADMENUTITLE   "Shkarkesat"
+    IDS_PRIORITY            "Parësia"
+    IDS_NEWSERVERS          "U morën %d servera të rinj"
+    IDS_DL_STOP             "&Ndalo"
+    IDS_DL_PAUSE            "&Pusho"
+    IDS_DL_RESUME           "&Rimerr"
+    IDS_DL_OPEN             "&Hape Skedarin"
+    IDS_DL_INFO             "Shfaq &Detajet e Skedarit..."
+    IDS_DL_CLEAR            "P&astroji të Përfunduarit"
+    IDS_DL_LINK1            "Kopjoji &Linket eD2K në Fushëkapje"
+    IDS_DL_LINK2            "Kopjoji Linket eD2K në Fushëkapje (&HTML)"
+    IDS_SHOWDETAILS         "Shfaq &Detajet..."
+    IDS_SEND_MSG            "Dërgoje &Mesazhin"
+    IDS_ASKING              "Në pyetje"
+    IDS_CONNVIASERVER       "Lidhje me anë të serverit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ONQUEUE             "Në Pritje"
+    IDS_TRANSFERRING        "Të Transferuar"
+    IDS_RECHASHSET          "Marrje e 'hashset'-it"
+    IDS_NONEEDEDPARTS       "Asnjë pjesë e nevojitur"
+    IDS_NOCONNECTLOW2LOW    "Nuk mund ta lidh LowID tek LowID"
+    IDS_UNKNOWN             "I panjohur"
+    IDS_ASKED4ANOTHERFILE   "Kërkoi për një tjetër skedar"
+    IDS_Q_CANCELDL          "A jeni të sigurt se doni t'i hiqni e fshini këta skedarë?\n"
+    IDS_Q_CANCELDL2         "A jeni të sigurt se doni ta hiqni e fshini këtë skedar?\n"
+    IDS_COPIED2CB           "U kopjua në fushëkapje: \n"
+    IDS_PROCDONE            "% e kryer"
+    IDS_SELECTINCOMINGDIR   "Zgjidh një dosje për skedarët e ardhur"
+    IDS_SELECTTEMPDIR       "Zgjidh një dosje për skedarët e përkohshëm"
+    IDS_DL_FILENAME         "Emri i Skedarit"
+    IDS_DL_SIZE             "Përmasa"
+    IDS_DL_TRANSF           "Të Transferuar"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DL_SPEED            "Shpejtësia"
+    IDS_DL_PROGRESS         "Progresi"
+    IDS_DL_SOURCES          "Burimet"
+    IDS_ERR_BADSERVERLISTRECEIVED "Invalid serverlist packet received"
+    IDS_STATUS              "Statusi"
+    IDS_DL_REMAINS          "Kohëmbetja"
+    IDS_UPDATEFROM          "Ridatoje nga URLi: (filter.dat- ose format-PeerGuardian)"
+    IDS_QL_USERNAME         "Përdoruesi"
+    IDS_LOADURL             "Ngarkoje"
+    IDS_DELETEAFTERALLOC    "Skedari '%s' deri tani po cakton hapësirën e diskut dhe paskëtaj do të fshihet"
+    IDS_ERR_PACKAGEHANDLING "Gabim i patrajtueshëm gjatë procesimit të paketës nga serveri (%s)"
+    IDS_QL_RATING           "Klasifikimi"
+    IDS_CONNECTINGTO        "Lidhje tek %s (%s:%i)..."
+    IDS_CLIENTS             "Klientët"
+    IDS_SEARCH_ANY          "Çfarëdo"
+    IDS_SEARCH_AUDIO        "Audio"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SEARCH_PICS         "Figurë"
+    IDS_SEARCH_PRG          "Program"
+    IDS_SEARCH_VIDEO        "Video"
+    IDS_SEARCH_CDIMG        "CD-Image"
+    IDS_SEARCH_ARC          "Arkiv"
+    IDS_ERR_INVALIDLINK     "Ky link eD2K është i pavlerë (%s)"
+    IDS_ERR_LINKERROR       "Link i pavlerë: %s"
+    IDS_ERR_NOTCONNECTED    "Ju nuk jeni lidhur tek një server!"
+    IDS_REMOVETHIS          "Fshiji Serverat e Zgjedhur"
+    IDS_REMOVEALL           "Fshiji Gjithë Serverat"
+    IDS_SRV_ADDR            "Ju lutemi futni një adresë serveri"
+    IDS_SRV_PORT            "Port serveri i paplotë: Ju lutemi futni një port serveri"
+    IDS_SRV_NOTADDED        "Serveri nuk u shtua!"
+    IDS_SRV_READD           "Serveri u shenjua si i mpirë, ai u analizua!"
+    IDS_SRV_NOURLAV         "Asnjë URL i vlefshëm."
+    IDS_INVALIDURL          "URL i pavlerë"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_FAILEDDOWNLOADMET "Dështim gjatë shkarkimit të listë-serverit nga %s"
+    IDS_PERMISSION          "Lejimi"
+    IDS_SHAREDFILES         "Skedarët e Shpërndarë"
+    IDS_PRIOVERYLOW         "Tepër Ulët"
+    IDS_PRIORELEASE         "Liroje"
+    IDS_TRAYDLG_SPEED       "Shpejtësia e eMule"
+    IDS_FSTATUS_LOCKED      "I kyçur"
+    IDS_KADALPHA            "Kademlia është akoma në një fazë të hershme zhvillimi. Ne ju rekomandojmë ta mundësoni atë vetëm nëse jeni të interesuar ta testoni atë."
+    IDS_FSTATUS_FRIENDSONLY "Vetëm Miq"
+    IDS_VIAPASSIVE          "me Pasivitet"
+    IDS_FSTATUS_PUBLIC      "Publik"
+    IDS_ERR_RENAMESF        "Dështim gjatë emërtimit të\r\n    ""%s""\r\nto\r\n    ""%s""\r\n\r\n%hs"
+    IDS_PRIOHIGHEST         "Më i larti"
+    IDS_AVAILABLE           "të vlefshëm"
+    IDS_ERR_NOPRIMCHANGE    "Ju nuk mund t'i ndryshoni lejet ndërsa skedari është ende duke u shkarkuar!"
+    IDS_HIDDEN              "I fshehur"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_FSTAT_TRANSFER      "Transferimi"
+    IDS_FSTAT_CONNECTION    "Lidhja"
+    IDS_FSTAT_CLIENTS       "Klientët"
+    IDS_FSTAT_SERVERS       "Serverat"
+    IDS_FSTAT_WAITING       "Në pritje..."
+    IDS_TIME                "Ora"
+    IDS_STATS_DDATA         "Të dhënat e shkarkuara: %s"
+    IDS_STATS_UDATA         "Të dhënat e ngarkuara: %s"
+    IDS_STATS_AVGDL         "Vlera Mesatare e Shkarkimit: %s"
+    IDS_STATS_AVGUL         "Vlera Mesatare e Ngarkimit: %s"
+    IDS_STATS_FOUNDSRC      "Burimet e gjetura: %i"
+    IDS_STATS_ACTDL         "Shkarkesat Aktive (thelat): %i"
+    IDS_STATS_ACTUL         "Ngarkesat Aktive: %i"
+    IDS_STATS_WAITINGUSERS  "Ngarkesat në pritje: %i"
+    IDS_STATS_RECONNECTS    "Rilidhje: %i"
+    IDS_STATS_WAITTRANSF    "në pritje për transfertën..."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_WAITCONN      "në pritje për lidhjen..."
+    IDS_STATS_CONNECTEDSINCE "Lidhje tek Serveri që prej: %s"
+    IDS_STATS_RATIO         "Raporti i Sesionit UL:DL (Sesion (Total)):"
+    IDS_STATS_UNKNOWNCLIENT "I panjohur: %i"
+    IDS_STATS_TOTAL         "Total: %i"
+    IDS_STATS_WORKING       "Në punë: %i"
+    IDS_STATS_DEAD          "Të mpirë/fshirë: %i"
+    IDS_DISABLED            "Të paaftë"
+    IDS_STOPPED             "Të ndaluar"
+    IDS_STATS_UPDATELABEL   "Ridatimi i vonesës: %i sek"
+    IDS_QUEUECOUNT          "%u (%u të dëbuar)"
+    IDS_NICKNAME            "Nofka:"
+    IDS_CLIENTSFILENAME     "\nEmri i skedarit të klientit: "
+    IDS_ASKEDFAF            "\nI pyetur për një tjetër skedar"
+    IDS_WAITED              "Të pritur"
+    IDS_ERR_LOADCREDITFILE  "Dështim në ngarkimin e skedarit të kreditit, do të krijohet një skedar i ri"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_CREDITFILEOLD   "Skedari i kreditit është jashtë date dhe do të zëvendësohet"
+    IDS_CREDITFILELOADED    "Skedari i kreditit u ngarkua, njihen %u klientë"
+    IDS_CREDITFILECORRUPT   "Gabim: skedari i kreditit është i korruptuar dhe do të zëvendësohet!"
+    IDS_ERR_CREDITFILEREAD  "Gabim i papritur skedari gjatë leximit të skedarit të kreditit: %s"
+    IDS_ERR_FAILED_CREDITSAVE "Dështim në ruajtjen e skedarit të kreditit"
+    IDS_NOPARTSFOUND        "Nuk u gjet asnjë pjesë e skedarit"
+    IDS_FOUNDPARTS          "U gjetën %i pjesë skedari"
+    IDS_NEWDOWNLOAD         "Në shkarkim %s"
+    IDS_ERR_ALREADY_DOWNLOADING
+                            "Ju po përpiqeni që më parë ta shkarkoni skedarin %s"
+    IDS_ERR_ALREADY_DOWNLOADED "Ju e keni tashmë skedarin %s"
+    IDS_ERR_SERVERMET_BAD   "Gabim: skedari known.met është korruptuar, pamundësi për të hapur skedarët"
+    IDS_ERR_SERVERMET_UNKNOWN
+                            "Gabim i papritur skedari gjatë leximit të known.met: %s, pamundësi për të hapur skedarët e njohur"
+    IDS_ERR_CONNECTIONERROR "Gabim gjatë lidhjes tek %s (%s:%i): %s"
+    IDS_ERR_SOCKET          "Gabim në folenë e serverit: %s (%s:%i): %s"
+    IDS_SHAREDFOUND         "U gjetën %i skedarë të shpërndarë të njohur"
+    IDS_SHAREDFOUNDHASHING  "U gjetën %i skedarë të shpërndarë të njohur, grirje e %i skedarëve të rinj"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_FILECOMPLETIONTHREAD "Krijimi i plotësimit të fillit të skedarit dështoi"
+    IDS_FILEBUFFERSIZE      "Përmasa e amortizatorit të skedarit"
+    IDS_QUEUESIZE           "Përmasa e pritjes"
+    IDS_DAYS2               "ditë"
+    IDS_ERR_MAKEBAKCREDITFILE "Dështim në prapsimin e skedarit të kreditit"
+    IDS_COMMENT             "Komente"
+    IDS_IPFILTERED          "IP e filtruar: %s (%s)"
+    IDS_DL_TRANSFCOMPL      "Përfundoi"
+    IDS_DL_ACTIVE_TIME      "Koha e shkarkimit"
+    IDS_STATS_FILTEREDCLIENTS "I filtruar: %i"
+    IDS_FILTERLABEL         "Përmbajtja e mesazheve filtruese: (Ndarësja | )"
+    IDS_ERR_LARGEREQBLOCK   "Klienti kërkoi bllok tepër të gjerë."
+    IDS_SHOWRATEONTITLE     "Shfaqi vlerat e transfertës mbi titull"
+    IDS_TBN_NOMESSAGEHISTORY "Asnjë mesazh historie!"
+    IDS_PW_DAP              "Shtoji shkarkesat e reja me autoparësi"
+    IDS_FD_LASTCHANGE       "Marrja e fundit:"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_RUNTIME       "Kohëveprimi"
+    IDS_ALL                 "Gjithçka"
+    IDS_CAT_ADD             "Shto Kategori..."
+    IDS_CAT_EDIT            "Editoje Kategorinë..."
+    IDS_CAT_REMOVE          "Fshije Kategorinë"
+    IDS_CAT                 "Kategoria"
+    IDS_TITLE               "Titulli"
+    IDS_COLOR               "Ngjyra"
+    IDS_DEFAULT             "Tipike"
+    IDS_PW_DISPLAY          "Ekranizimi"
+    IDS_CAT_INVADD          "Shfaqi gjithë të pacaktuarit"
+    IDS_CAT_REINVADD        "Shfaq Gjithçka"
+    IDS_INDICATERATINGS     "Tregoji shkarkesat me komente/vlerësime me ikonë"
+    IDS_ALLOTHERS           "E pakategorizuar"
+    IDS_TOCAT               "Caktoje tek Kategoria"
+    IDS_CAT_UNASSIGN        "(Mos e cakto)"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_UDPEXT          "Gabim në procesimin e paketës së zgjeruar të protokollit të ardhur UDP"
+    IDS_ERR_INCOMPLETEBLOCK "I pyetur për bllok të paplotë "
+    IDS_ERR_OPEN            "Dështim në hapjen e skedarit të kërkuar"
+    IDS_ERR_CLIENTERRORED   "Klienti '%s' shkaktoi gabim gjatë krijimit të paketës (%s) - shkëputje e klientit"
+    IDS_ERR_REQ_FNF         "Skedari i kërkuar nuk u gjet"
+    IDS_CLIENTBLOCKED       "Klienti '%s' duket të jetë një klient agresiv, prandaj u dëbua nga pritja e ngarkimit"
+    IDS_LUSERS              "Përdorues"
+    IDS_LFILES              "Skedarë"
+    IDS_DESC                "Përshkrimi: %s"
+    IDS_PORT                "Porti"
+    IDS_ERR_NOVALIDSERVERSFOUND
+                            "Nuk u gjetën servera të vlefshëm për t'u lidhur në listë-server"
+    IDS_CONNECTEDTOREQ      "I lidhur tek %s (%s:%i), dërgim i kërkesës për hyrje"
+    IDS_ERR_FATAL           "Gabim Fatal gjatë përpjekjes për lidhje. Lidhja e Internetit mund të jetë ndërprerë"
+    IDS_ERR_LOSTC           "Humbje e lidhjes tek %s (%s:%i)"
+    IDS_ERR_DEAD            "%s (%s:%i) duket të jetë i mpirë."
+    IDS_ERR_FULL            "%s (%s:%i) duket të jetë plot"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_METCORRUPT      "Gabim: %s (%s) është korruptuar, pamundësi për hapjen e skedarit"
+    IDS_ERR_FILEERROR       "Gabim i papritur skedari gjatë leximit të %s (%s): %s"
+    IDS_ERR_FILEOPEN        "Dështim në hapjen e %s (%s)"
+    IDS_SEL_SKINDIR         "Zgjidh Direktorinë e Lëvores..."
+    IDS_ERR_REHASH          "Kujdes: %s mund të jetë korruptuar, kryerje e rigrirjes së pjesëve të plotësuara"
+    IDS_SKIN_PROF           "Profilet e Lëvores"
+    IDS_ERR_PART_FNF        "Pjesa e skedarit nuk u gjet"
+    IDS_ERR_OPENMETFILE     "Dështim në hapjen e skedarit part.met"
+    IDS_KADOPEN             "Hape"
+    IDS_ERR_SAVEMET         "GABIM në ruajtjen e pjesës së skedarit: %s (%s)"
+    IDS_ERR_FOUNDCORRUPTION "Pjesa (%i) u gjend e korruptuar në %s"
+    IDS_HASHINGDONE         "Mbarim i rigrirjes së %s, skedari duket të jetë OK"
+    IDS_ERR_PARTCORRUPT     "Pjesa e shkarkuar %i është e korruptuar :(  (%s)"
+    IDS_ICHWORKED           "I.C.H.: U rikthye pjesa e korruptuar %i (%s), U ruajt: %s"
+    IDS_ERR_OUTOFSPACE      "Ju nuk keni hapësirë të mjaftueshme për shkarkim ""%s""!"
+    IDS_SE                  "Shkëmbim Burimi"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_NOSERVERSC      "Nuk u gjetën servera të vlefshëm për t'u lidhur në listë-server"
+    IDS_CONNECTEDTO         "Lidhja u themelua tek: %s"
+    IDS_DL_PREVIEW          "Para&shikoje"
+    IDS_VIEWQUEUE           "Shfaq Pritjet"
+    IDS_VIEWUPLOADS         "Shfaq Ngarkesat"
+    IDS_TW_UPLOADS          "Ngarkesa"
+    IDS_TW_DOWNLOADS        "Shkarkesa"
+    IDS_TW_QUEUE            "Klientët në pritje:"
+    IDS_SW_SEARCHBOX        "Kërko"
+    IDS_SW_NAME             "Emri"
+    IDS_SW_GLOBAL           "Kërko &botërisht"
+    IDS_SW_TYPE             "Lloji"
+    IDS_SW_DIRECTDOWNLOAD   "Ngjiti Linket eD2K"
+    IDS_SW_LINK             "Linket eD2K"
+    IDS_SW_START            "Fillo"
+    IDS_SCHEDULER           "Planifikuesi"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IRC                 "&IRC"
+    IDS_SW_RESULT           "Rezultatet e Kërkimit"
+    IDS_SW_DOWNLOAD         "Shkarkoje të Zgjedhurin"
+    IDS_SV_SERVERLIST       "Serverat"
+    IDS_SV_SERVERINFO       "Informacion Serveri"
+    IDS_SV_LOG              "Ditar"
+    IDS_SV_NEWSERVER        "Server i Ri"
+    IDS_SV_ADDRESS          "IP ose Adresë"
+    IDS_SV_PORT             "Porti"
+    IDS_SV_ADD              "Shtoje në listë"
+    IDS_SV_MET              "Ridatoje server.met nga URLi"
+    IDS_SV_UPDATE           "Ridatoje"
+    IDS_SF_FILES            "Skedarët e Shpërndarë"
+    IDS_SF_STATISTICS       "Statistikat"
+    IDS_SF_RELOAD           "Ringarkoje"
+    IDS_SF_CURRENT          "Sesioni i Tanishëm"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PRIORITY_UP         "Rrite Parësinë"
+    IDS_PRIORITY_DOWN       "Ule Parësinë"
+    IDS_SPEED_LIMITS        "Kufijtë e Shpejtësisë"
+    IDS_CAPACITY_LIMITS     "Kufijtë e Shtrirjes së Bandës"
+    IDS_ADMIN               "Administratori"
+    IDS_ACCESSDENIED        "Hyrja s'lejohet!"
+    IDS_WEB_LOWUSER         "I ftuar"
+    IDS_WEB_ERR_CANTLOAD    "Tempujkat s'mund të hapen: S'mund të hapet skedari %s"
+    IDS_GLOBALSEARCH        "Global (Server)"
+    IDS_METHOD              "Metoda"
+    IDS_SW_WEBBASED         "Kërkim me bazë Rrjeti"
+    IDS_NOTHING             "asgjë"
+    IDS_SETUPSPEED          "vendos kufirin e ngarkesës"
+    IDS_SETDOWNSPEED        "vendos kufirin e shkarkesës"
+    IDS_UNDO                "Zhbëje"
+    IDS_DAYLY               "Përditë"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DAY_MO_FR           "Hën-Pre"
+    IDS_DAY_SA_SO           "Sht-Die"
+    IDS_MO                  "të Hënën"
+    IDS_DI                  "të Martën"
+    IDS_MI                  "të Mërkurën"
+    IDS_DO                  "të Enjten"
+    IDS_FR                  "të Premten"
+    IDS_SA                  "të Shtunën"
+    IDS_SO                  "të Dielën"
+    IDS_WEB_ADMINLOGIN      "Ndërfaqja Rrjet: Hyrje-Admin"
+    IDS_WEB_GUESTLOGIN      "Ndërfaqja Rrjet: Hyrje-Ftuar"
+    IDS_WEB_SESSIONEND      "Ndërfaqja Rrjet: Dalje"
+    IDS_DETAILS             "Detaje"
+    IDS_ACTION              "Veprimi"
+    IDS_REMOVE              "Fshije"
+    IDS_NEW                 "E Re"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SF_TOTAL            "Totali"
+    IDS_SF_TRANS            "Të Transferuar:"
+    IDS_SF_ACCEPTED         "Ngarkesat e Pranuara:"
+    IDS_SF_REQUESTED        "Kërkesa:"
+    IDS_ST_DOWNLOAD         "Shpejtësia e Shkarkimit"
+    IDS_ST_UPLOAD           "Shpejtësia e Ngarkimit"
+    IDS_ST_CURRENT          "I tanishmi"
+    IDS_ST_SESSION          "Sesion mesatar"
+    IDS_ST_ACTIVED          "Shkarkesat aktive"
+    IDS_ST_ACTIVEU          "Ngarkesat aktive"
+    IDS_ST_WAITINGU         "Ngarkesat në pritje"
+    IDS_CW_MESSAGES         "Mesazhet"
+    IDS_CW_FRIENDS          "Shokët"
+    IDS_CW_SEND             "Dërgoje"
+    IDS_CW_CLOSE            "Mbylle"
+    IDS_PW_GENERAL          "Përgjithësi"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PW_DIR              "Direktoritë"
+    IDS_PW_NICK             "Nofka"
+    IDS_PW_INCOMING         "Skedarët e ardhur"
+    IDS_PW_TEMP             "Skedarët e përkohshëm"
+    IDS_PW_BROWSE           "Shfletoje..."
+    IDS_PW_SHARED           "Direktoritë e Shpërndara (Ctrl-Klikim përfshin nëndirektoritë)"
+    IDS_PW_CONNECTION       "Lidhja"
+    IDS_PW_DOWNC            "Kapaciteti i shkarkimit"
+    IDS_PW_DOWNL            "Kufiri i shkarkimit"
+    IDS_PW_UPC              "Kapaciteti i ngarkimit"
+    IDS_PW_UPL              "Kufiri i ngarkimit"
+    IDS_PW_MAXC             "Lidhjet maks."
+    IDS_PW_CLIENTPORT       "Porti i klientit"
+    IDS_PW_AUTOCON          "Autolidhu gjatë fillesës"
+    IDS_PW_RECON            "Rilidhu gjatë humbjes"
+    IDS_PW_SERVER           "Serveri"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PW_RDEAD            "Fshiji serverat e mpirë pas"
+    IDS_PW_RETRIES          "ripërpjekjesh"
+    IDS_PW_SCORE            "Përdor sistem me parësi"
+    IDS_PW_USC              "Ridatoje listë-serverin kur lidhesh tek një server"
+    IDS_PW_UCC              "Ridatoje listë-serverin kur një klient lidhet"
+    IDS_PW_FILTER           "Filtroji 'LAN IP'-të e serverit dhe klientit"
+    IDS_PW_USS              "Ridatoje listë-serverin gjatë fillesës"
+    IDS_PW_MISC             "Të përziera"
+    IDS_PW_TRAY             "Zvogëloje në tabakanë e sistemit"
+    IDS_PW_BEEP             "Tingëllo gjatë gabimeve"
+    IDS_PW_PROMPT           "Më lajmëro gjatë daljes"
+    IDS_PW_SPLASH           "Shfaqe ekranin-pullë"
+    IDS_PW_DBLCLICK         "Klikim dyfish i listës së shkarkimit për ta zgjeruar"
+    IDS_PW_TOOL             "Koha e vonimit të këshillave [sek.]"
+    IDS_PW_FRONT            "Sille përballë gjatë klikimit në link"
+    IDS_PW_LANG             "Gjuha"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PW_FILES            "Skedarët"
+    IDS_PW_ICH              "&Trajtim me Korruptim Inteligjent"
+    IDS_PW_SHARE            "Shikoji skedarët/direktoritë e shpërndara"
+    IDS_PW_EVER             "Çdokush"
+    IDS_PW_FRIENDS          "Shokët"
+    IDS_PW_NOONE            "Askush"
+    IDS_PW_RESET            "Rivendose"
+    IDS_PW_APPLY            "Zbatoje"
+    IDS_EM_TRANS            "&Transfertat"
+    IDS_EM_SERVER           "Ser&verat"
+    IDS_EM_SEARCH           "&Kërko"
+    IDS_EM_FILES            "Skedarët e &Shpërndarë"
+    IDS_EM_MESSAGES         "&Mesazhet"
+    IDS_EM_STATISTIC        "St&atistikat"
+    IDS_EM_PREFS            "&Mundësi"
+    IDS_MB_LANGUAGEINFO     "U zgjodh një gjuhë tipike. Ju mund ta ndryshoni të dhënën çdoherë në tabelën e parapëlqimeve."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_FD_GENERAL          "Përgjithësi"
+    IDS_FD_NAME             "Emri i Plotë:"
+    IDS_FD_MET              "skedari part.met:"
+    IDS_FD_HASH             "Hash:"
+    IDS_FD_SIZE             "Përmasa:"
+    IDS_FD_STATUS           "Statusi i pjesës së skedarit:"
+    IDS_FD_TRANSFER         "Transferta"
+    IDS_FD_SOURCES          "Burimet e Gjetura:"
+    IDS_FD_PARTS            "Pjesët"
+    IDS_FD_TRANS            "Të transferuar:"
+    IDS_FD_DATARATE         "Vlera e të dhënave:"
+    IDS_FD_TRANSI           "Në transferim:"
+    IDS_FD_COMPSIZE         "Përfundoi:"
+    IDS_FD_CLOSE            "Mbylle"
+    IDS_FD_TITLE            "Detajet e Skedarit"
+    IDS_CD_GENERAL          "Përgjithësi"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CD_UNAME            "Përdoruesi:"
+    IDS_CD_UHASH            "Hashi i përdoruesit:"
+    IDS_CD_CSOFT            "Programi i klientit:"
+    IDS_CD_UIP              "Adresa IP:"
+    IDS_CD_SIP              "Server IP:"
+    IDS_CD_VERSION          "Versioni i klientit:"
+    IDS_CD_UID              "ID:"
+    IDS_CD_SNAME            "Emri i serverit:"
+    IDS_CD_CDOWN            "Tanimë në shkarkim:"
+    IDS_CD_DOWN             "Të shkarkuar (këtë sesion):"
+    IDS_CD_ADOWN            "Vlera Mesatare e Shkarkimit:"
+    IDS_CD_TDOWN            "Totali i shkarkimit:"
+    IDS_CD_UP               "Të ngarkuar (këtë sesion):"
+    IDS_CD_AUP              "Vlera Mesatare e Ngarkimit:"
+    IDS_CD_TUP              "Totali i ngarkimit:"
+    IDS_CD_TRANS            "Transferta"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CD_SCORES           "Pikë"
+    IDS_CD_MOD              "Modifikuesi DL/UP:"
+    IDS_CD_RATING           "Vlerësimi (total):"
+    IDS_CD_USCORE           "Pikët e pritjes për Ngarkim:"
+    IDS_CD_TITLE            "Detajet e klientit"
+    IDS_EMULEW              "Kliko"
+    IDS_EMULEW2             "për të verifikuar nëse ka ndonjë version të ri"
+    IDS_EMULEW3             "këtu"
+    IDS_PW_MAXSOURCES       "Burimet maks./skedar"
+    IDS_SHAREDFILESCOUNT    "Nurmi i Skedarëve të Shpërndarë: %i"
+    IDS_SF_SIZE             "Përmasa totale e Skedarëve të Shpërndarë: %s"
+    IDS_ERR_WRONGPARTNUMBER "numër i gabuar i pjesës"
+    IDS_ERR_BADPORT         "numër i keq i portit"
+    IDS_ERR_NOHELLO         "Pyet për diçka pa thënë përshëndetje"
+    IDS_ERR_INVALIDPACKAGE  "Marrje e nje pakete të pavlerë a të korruptuar"
+    IDS_ERR_CLIENTERROR     "Klienti '%s' (IP:%s) shkaktoi një gabim: %s. Shkëputje e klientit!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_BADSIZE         "përmasë e pavlerë (OP_QUEUERANKING)"
+    IDS_ERR_BADCLIENT2      "Klienti '%s' (IP:%s) shkaktoi një gabim: %u. Shkëputje e klientit!"
+    IDS_ERR_NOTAFILELINK    "Jo një link skedari"
+    IDS_ERR_CREATEPARTFILE  "GABIM: Dështim në krijimin e pjesës së skedarit)"
+    IDS_ERR_UDP_MISCONF     "Gabim gjatë procesimit të paketës së ardhur UDP (Me sa duket, një server i keqkonfiguruar)"
+    IDS_CHAT_START          "*** Fillim i Sesionit Çat : "
+    IDS_FILEPRIO            "Parësia e Skedarit"
+    IDS_SCORE               "Pikët"
+    IDS_ASKED               "I pyetur"
+    IDS_LASTSEEN            "I parë për herë të fundit"
+    IDS_BANNED              "I dëbuar"
+    IDS_PRIOVERYHIGH        "Tepër i lartë"
+    IDS_UUSERS              "Përdorues"
+    IDS_UFAILED             "Dështoi"
+    IDS_OPENFILE            "&Hape Skedarin"
+    IDS_DATE                "Data"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PARTINFOS           "Emri i pjesës së skedarit:"
+    IDS_PARTINFOS2          "Në shkarkim (nga %d burime)"
+    IDS_USERID              "ID-ja e përdoruesit"
+    IDS_CLIENT              "Klienti"
+    IDS_SERVER              "Serveri"
+    IDS_SOURCEINFO          "I pyetur: %d herë; Pjesët e vlefshme: %d"
+    IDS_CLIENTSOURCENAME    "\nEmri i skedarit të klientit: "
+    IDS_USERINFO            "Pseudonimi: %s\n"
+    IDS_FILESTATS_SESSION   "Stat. e skedarit për këtë sesion: Kërkesat e pranuara %d nga %d, %s të transferuara\n"
+    IDS_FILESTATS_TOTAL     "Stat. e skedarit për gjithë sesionet: Kërkesat e pranuara %d nga %d, %s të transferuara"
+    IDS_REQ_UNKNOWNFILE     "Kërkohet skedar i panjohur"
+    IDS_TRANSFERTIME        "Koha që prej Transferimit të Parë: %s"
+    IDS_SF_AVERAGESIZE      "Përmasa mesatare e skedarit: %s"
+    IDS_SF_REQUESTS         "Kërkesat"
+    IDS_SF_ACCEPTS          "Kërkesat e PranuaraAccepted Requests"
+    IDS_SF_TRANSFERRED      "Të dhënat e transferuara"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_REMOVESEARCHSTRING  "Mbylle këtë rezultat kërkimi"
+    IDS_REMOVESELECTED      "Fshije Kërkimin e Zgjedhur"
+    IDS_REMOVEALLSEARCH     "Fshiji të Gjitha Kërkimet"
+    IDS_ENTERQUEUE          "Pritjet e Hyra"
+    IDS_SF_FAIL             "Serverat e Dështuar"
+    IDS_SF_WUSER            "Përdoruesit në Serverat Punues"
+    IDS_SF_WFILE            "Skedarët në Serverat Punues"
+    IDS_SF_USER             "Përdoruesit Totalë"
+    IDS_SF_FILE             "Skedarët Totalë"
+    IDS_UPLOADTIME          "Koha e Ngarkimit"
+    IDS_LASTSEENCOMPL       "E parë së fundmi e përfunduar:"
+    IDS_YES                 "Po"
+    IDS_NO                  "Jo"
+    IDS_UNBAN               "Mos dëbim"
+    IDS_SF_WORKING          "Serverat Punues"
+    IDS_ADDTOSTATIC         "Shtoje në Listë-Serverin Statik"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ADDED2SSF           "I shtuar në listë-serverin statik"
+    IDS_STATICSERVER        "Statik"
+    IDS_ERROR_SSF           "Dështim në hapjen e staticservers.dat"
+    IDS_ERR_PACKAGEERROR    "Gabim kritik gjatë procesimit të paketës së të dhënave për %s (përmasë e gabuar) - blloku i të dhënave u hodh"
+    IDS_SF_ACTIVECON        "Lidhjet aktive (llogarite)"
+    IDS_SF_MAXCONLIMITREACHED "Kufiri Maks. i Lidhjes u Arrit"
+    IDS_SF_AVGCON           "Lidhjet mesatare (llogarite)"
+    IDS_SF_PEAKCON          "Lidhjet kulmore (llogarite)"
+    IDS_ST_ACTIVEC          "Lidhjet aktive"
+    IDS_NETWORK             "Network"
+    IDS_SF_DELCOUNT         "Serverat e Fshirë"
+    IDS_QUEUEFULL           "Pritje e Plotë"
+    IDS_AVG                 "Mesatare"
+    IDS_BYTES               "Bytes"
+    IDS_KBYTES              "KB"
+    IDS_MBYTES              "MB"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_GBYTES              "GB"
+    IDS_TBYTES              "TB"
+    IDS_SECS                "sek"
+    IDS_MINS                "min"
+    IDS_HOURS               "h"
+    IDS_DAYS                "D"
+    IDS_ED2KLINKFIX         "Linket eD2K"
+    IDS_RECONNECT           "Lidhja automatike tek serveri do të kryhet në %d sekonda"
+    IDS_SERVERADDED         "Serveri i shtuar: %s"
+    IDS_IRC_IGNOREJOINMESSAGE "Përbuzi mesazhet i informacionit të Anëtarësimit"
+    IDS_STATS_SUCCUPCOUNT   "Sesionet totale të ngarkesave me sukses: %i (%.2f%%)"
+    IDS_IRC_IGNOREPARTMESSAGE "Përbuzi mesazhet e informacionit të Pjesës"
+    IDS_STATS_FAILUPCOUNT   "Sesionet totale të ngarkesave të dështuara: %i (%.2f%%)"
+    IDS_STATS_AVEUPTIME     "Koha mesatare e ngarkimit: %s"
+    IDS_SEARCHMINSIZE       "Përmasa Min. [MB]"
+    IDS_SEARCHMAXSIZE       "Përmasa Maks. [MB]"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PREF_ONLINESIG      "Lejoje nënshkrimin me linjë"
+    IDS_ERROR_SAVEFILE      "Dështim në ruajtje"
+    IDS_REQ_SHAREDFILES     "Përdoruesi %s (%u) kërkoi listën tuaj të skedarëve të shpërndarë -> %s"
+    IDS_ACCEPTED            "u pranua"
+    IDS_DENIED              "u mohua"
+    IDS_PW_CON_DOWNLBL      "Shkarkesa"
+    IDS_PW_CON_UPLBL        "Ngarkesa"
+    IDS_PW_AUTOCONNECTSTATICONLY "Autolidhu tek serverat vetëm në listën statike"
+    IDS_PW_CON_LIMITFRM     "Kufijtë"
+    IDS_PW_FILE_ICH         "I.C.H aktiv"
+    IDS_STATS_AVGLABEL      "Koha për grafikun mesatare: %i min"
+    IDS_GRAPHS              "Grafikët"
+    IDS_STREE               "Pema e statistikave"
+    IDS_IRC_IGNOREQUITMESSAGE "Përbuzi mesazhet informative të daljes"
+    IDS_STATSSETUPINFO      "Statistikat"
+    IDS_IRC_SOUNDEVENTS     "Luaji tingujt e ngjarjeve"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_NOTCONNECTEDKAD "Tanimë nuk jeni të lidhur në rrjetin Kad!"
+    IDS_IRC_NOSFS           "Nuk u zgjodh asnjë Skedar i Shpërndarë"
+    IDS_RESETLABEL          "Auto completion (history function)"
+    IDS_IRC_IGNOREMISCMESSAGE "Përbuzi mesazhet e përziera informative"
+    IDS_KNOWN               "Të njohur"
+    IDS_RAU_RUNNING         "eMule duke punuar si përdorues i paprivilegjuar ""%s"""
+    IDS_RAU_FAILED          "Dështim në nisjen e eMule si përdorues i paprivilegjuar ""eMule_Secure"". Mbajtje e privilegjeve të përdoruesit të tanishëm (""%ls"")."
+    IDS_KADCONTACTSREAD     "Lexo kontaktet %ld nga skedari."
+    IDS_ERR_KADCONTACTS     "Nuk u gjet asnjë kontakt, ju lutemi mpriheni nisjen, ose shkarkoni një skedar nodes.dat."
+    IDS_METATAGS            "Llogaritje e 'Meta Tag'-ut:"
+    IDS_FILEFORMAT          "Formati"
+    IDS_UDPREASKS           "Rrezet e Skedarit UDP"
+    IDS_DYNUP_PINGTOLERANCE_MS "Toleranca e 'ping'-ut (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_HEADER "Metoda për tolerancën e 'ping'-ut"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_MS "Milisekonda (ms)"
+    IDS_DYNUP_RADIO_PINGTOLERANCE_PERCENT "Përqindja (%)"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DOWNLOADMOVIECHUNKS "Përpiqu të shkarkosh në fillim thelat"
+    IDS_UPDATEQUEUE         "Mos e ridato listën e Pritjes në kohën reale"
+    IDS_RECOVER_SINGLE      "1 skedar u rikthye."
+    IDS_RECOVER_MULTIPLE    "%ld skedarë u rikthyen."
+    IDS_ATTEMPTING_RECOVERY "Pritje e rikthimit të arkivit..."
+    IDS_RECOVERY_SUCCESSFUL "Rikthimi i arkivit me sukses."
+    IDS_RECOVERY_FAILED     "Rikthimi i arkivit dështoi."
+    IDS_STARTNEXTFILE       "Filloje njërin skedar të pushuar kur tjetri përfundon"
+    IDS_FULLCHUNKTRANS      "Përpiqu të transferosh thela të plota tek të gjitha ngarkesat"
+    IDS_MANUALSERVERHIGHPRIO "Vëri serverat e shtuar me dorë në parësi të lartë"
+    IDS_VERBOSE             "Fjalëshumë ('feedback' shtojcë e programit)"
+    IDS_FLAT                "i sheshtë"
+    IDS_ROUND               "i rrumbullakët"
+    IDS_SAMEUSERHASH        "Klienti '%s' dhe '%s' kanë të njëjtin hash përdoruesi ose IP - u hoq '%s'"
+    IDS_SEARCHEXTENTION     "Shtojca"
+    IDS_SEARCHAVAIL         "Vlefshmëria"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_HARDLIMIT           "Kufi i rëndë"
+    IDS_COL_MORECOLORS      "më tepër..."
+    IDS_KBYTESEC            "kB/s"
+    IDS_TOOMANYCONNS        "Mjaft lidhjes"
+    IDS_DOWNLOADRENAMED     "Një skedar me atë emër ekziston që më parë, skedari u ruajt si %s"
+    IDS_TBN_DOWNLOADDONE    "U shkarkua:"
+    IDS_TBN_DOWNLOADADDED   "U shtua tek shkarkesat:"
+    IDS_PW_TBN_USESOUND     "Përdor tingull"
+    IDS_PW_TBN_ONLOG        "U shtua hyrja e ditarit"
+    IDS_PW_TBN_ONCHAT       "Sesioni i çatit filloi"
+    IDS_PW_TBN_POP_ALWAYS   "Mesazhi i çatit u mor"
+    IDS_PW_TBN_ONDOWNLOAD   "Shkarkimi përfundoi"
+    IDS_PW_EKDEV_OPTIONS    "Njoftime"
+    IDS_PW_TASKBARNOTIFIER  "Mesazh i befasishëm"
+    IDS_PW_TBN_OPTIONS      "Nxirre mesazhin kur"
+    IDS_TBN_NEWCHATMSG      "Mesazh nga"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PW_CON_CAPFRM       "Kapacitetet"
+    IDS_IRC_STATUSLOG       "Statusi i ditarit"
+    IDS_IRC_STATUS          "Statusi"
+    IDS_IRC_PRIVATECHANSTART "* Sesioni i çatit privat filloi"
+    IDS_IRC_SLAPMSG         "* %s dacka %s aneqark me një Rrëmujaxhi të stërmadh!"
+    IDS_IRC_PRIVMESSAGE     "Mesazh Privat"
+    IDS_WEB_REMOTE_LINK_ADDED "Linku u shtua: "
+    IDS_WEB_REMOTE_LINK_NOT_ADDED "Linku nuk u shtua. Fjalëkalim i gabuar."
+    IDS_SOURCEEXCHANGESWAP  "Tramba e Shkëmbimit të Burimit të Përkohshëm"
+    IDS_DL_TRY_TO_GET_PREVIEW_PARTS "Shkarko më parë pjesët që nevojiten për parashikim"
+    IDS_PR_SHORT_LOW        "[Lo]"
+    IDS_IRC_KICK            "Shkelm"
+    IDS_IRC_SLAP            "Dackë"
+    IDS_IRC_JOIN            "HYr"
+    IDS_IRC_CHANNELLIST     "Lista e kanalit"
+    IDS_IRC_CONNECT         "Lidhu"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_FO_PREF_EXISTED     "eMule diktoi rregulla ekzistues për portet e zgjedhur, të cilët nuk ishin mbishkruar ose zëvendësuar. Rregullat mungues janë shtuar me sukses.\nJu lutemi vini re se 'desktopfirewall' dhe 'routers' e palës së tretë nuk preken nga kjo!"
+    IDS_FO_PREF_FAILED      "Dështim gjatë kofigurimit të 'firewall'-it të brendshëm të WinXP për portet e zgjedhur!"
+    IDS_FO_PREF_STARTUP     "Hapi/mbylli portet në 'firewall'-in e WinXP kur hyn/del nga eMule"
+    IDS_LOG_LEVEL           "Niveli i ditarit"
+    IDS_DISABLEPEERACHE     "Mos e lejo shkarkimin nga PeerCache"
+    IDS_NEWMSG              "Mesazh i Ri nga from '%s' (IP:%s)"
+    IDS_PREF_STARTNEXTFILECATONLY "Vetëm në të njëjtën kategori"
+    IDS_LOG_ULDL_EVENTS     "Trego ngjarjet e ngarkesës/shkarkesës"
+    IDS_PEERCACHE_ENABLED   "ISP-ja juaj e përkrah teknologjinë PeerCache, leje për shkarkim nga depoja e fshehtë!"
+    IDS_IRC_EMULEPROTO_ALLOWADDFRIEND "Lejoje përdoruesin që t'iu shtojë si shok."
+    IDS_SOURCESWAPBLOCKED   "Tramba u bllokua"
+    IDS_TRICKLING           "Në mbështetje"
+    IDS_A4AF_CHECK_THIS_NOW "Verifikoje tani këtë burim ('debug')"
+    IDS_PR_SHORT_HIGH       "[Ç'kemi]"
+    IDS_STATS_FRATIO        "Raporti i Sesionit UL:DL (përveç UL-së së shokëve):"
+    IDS_STATS_UDATA_FRIENDS "Të Dhënat e Ngarkuara tek Vrimat e Shokut (Sesion): %s"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IRC_DISCONNECT      "Shkëputu"
+    IDS_IRC_HASJOINED       "* %s ka hyrë në %s"
+    IDS_IRC_HASPARTED       "* %s ka pjesëmarrë në %s (%s)"
+    IDS_IRC_WASKICKEDBY     "* %s u shqelmua nga %s (%s)"
+    IDS_IRC_NICKUSED        "Nofka juaj po përdoret që më parë në serverin IRC. Ju lutemi zgjidhni një nofkë të ndryshme në tabelën IRC tek Parapëlqimet."
+    IDS_DOWNLOAD_ALPHABETICAL "Shkarko Sipas Rendit Alfabetik"
+    IDS_IRC_HASQUIT         "* %s ka dalë (%s)"
+    IDS_IRC_NOWKNOWNAS      "* %s njihet si %s"
+    IDS_IRC_SETSMODE        "* %s vendos mënyrën: %s %s"
+    IDS_IRC_NOTSUPPORTED    "** Janë vënë disa mënyra që ende nuk durohen. Ju duhet të largoheni e të rihyni në kanal për ta ridatuar listën e nofkave.."
+    IDS_IRC_CHANNEL         "Kanali"
+    IDS_IRC_NICK            "Nofka"
+    IDS_IRC_SEND            "Dërgoje"
+    IDS_IRC_NAME            "Emri"
+    IDS_IRC_SLAPMSGSEND     "PRIVMSG %s :\001ACTION jep dacka %s aneqark me një Rrëmujaxhi të stërmadh!\001"
+    IDS_IRC_ADDTIMESTAMP    "Shtoje kohën e shtypur në mesazhe"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IRC_USEFILTER       "Përdor filtrin e listës së kanalit"
+    IDS_IRC_PERFORM         "Shfaqu"
+    IDS_IRC_USEPERFORM      "Përdor spango shfaqëse gjatë lidhjes"
+    IDS_IRC_ADDTOFRIENDLIST "Shtoje tek lista e shokëve"
+    IDS_IRC_LOADCHANNELLISTONCON "Gjatë lidhjes hap listën e kanalit të serverit"
+    IDS_IRC_ADDASFRIEND     "iu shtoi juve si shok!"
+    IDS_PW_WARNING          "Numri që ju keni zgjedhur për ""%s"" është më i madh sesa ai që duron OS-ja juaj:  %d\nKjo mund ta bëjë të paqëndrueshëm sistemin tuaj.\n\nA jeni të sigurt se doni ta bëni këtu?"
+    IDS_TAKEOVER            "Merr Përsipër"
+    IDS_CLEANUP             "Pastro"
+    IDS_RENAME              "Riemërto"
+    IDS_IRC_ADDLINKTOIRC    "Shtoje tek Fushëkapja IRC"
+    IDS_IRC_SENDLINK        "Dërgoje këtë tek shoku: "
+    IDS_IRC_RECIEVEDLINK    "%s dërgoi (%s) për t'u autonisur."
+    IDS_IRC_ACCEPTLINKS     "Pranoji linket eD2K në IRC (Përdore vetëm me kujdes!)"
+    IDS_SHARED              "Të shpërndarë"
+    IDS_DOWNLOADED          "Të shkarkuar"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SOURCENAMES         "Emrat e Burimeve"
+    IDS_PREF_STARTMIN       "Nis në minimum"
+    IDS_PS_TBN_IMPORTANT    "Urgjent: jashtë hapësirës së diskut, lidhja me serverin humbi"
+    IDS_COLORS              "Ngjyra"
+    IDS_SP_BACKGROUND       "Sfondi"
+    IDS_SP_GRID             "Skara"
+    IDS_SP_DL1              "Shkarkesa e tanishme"
+    IDS_SP_DL2              "Koha mesatare e shkarkimit"
+    IDS_SP_DL3              "Sesioni mesatar i shkarkimit"
+    IDS_SP_UL1              "Ngarkesa e tanishme"
+    IDS_SP_UL2              "Koha mesatare e ngarkesës"
+    IDS_SP_UL3              "Sesioni mesatar i ngarkimit"
+    IDS_SP_ACTCON           "Lidhjet aktive"
+    IDS_SP_ACTDL            "Shkarkesat aktive"
+    IDS_SP_ACTUL            "Ngarkesat aktive"
+    IDS_PW_TIT_UP           "Vendos kufirin e shpejtësisë së Ngarkimit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PW_TIT_DOWN         "Vër kufirin e Shpejtësisë së Shkarkimit"
+    IDS_PW_UNLIMITED        "E pakufizuar"
+    IDS_PW_MINREC           "Minimumi i Rekomanduar\t%i "
+    IDS_PW_UA               "Çoje Shpejtësinë plotësisht Lart/Poshtë"
+    IDS_PW_PA               "Mbyte Shpejtësinë Lart/Poshtë"
+    IDS_IRC_IGNOREINFOMESSAGE "Përbuzi mesazhet informative"
+    IDS_CONNECTIONLOST      "Lidhja humbi"
+    IDS_WIZ_OS_FRAME        "Sistemi Operues"
+    IDS_WIZ_CONCURENTDOWN_FRAME
+                            "Sa shkarkesa doni që të keni zakonisht në çast?"
+    IDS_HASHINGFILE         "Grirje e skedarit:"
+    IDS_WIZ_CUSTOM_FRAME    "Nëse e testuat shpejtësinë e lidhjes tuaj, vëri këtu rezultatet"
+    IDS_WIZ_HOTBUTTON_FRAME "Butonat e Paravënies"
+    IDS_WIZ_TRUEUPLOAD_TEXT "Shtrirja e vërtetë e bandës së Ngarkimit"
+    IDS_WIZ_TRUEDOWNLOAD_TEXT "Shtrirja e vërtetë e bandës së Shkarkimit"
+    IDS_FRIENDLIST          "Shokët"
+    IDS_CHATDISCONNECTED    "*** U shkëput"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WIZARD              "Zotësi..."
+    IDS_ADDFRIEND           "&Shtoje tek Shokët"
+    IDS_REMOVEFRIEND        "Fshije Shokun"
+    IDS_REMOVEFROMSTOK      "U fshi nga lista statike e serverit"
+    IDS_REMOVEFROMSTATIC    "Fshije nga Lista Statike e Serverit"
+    IDS_LENGTH              "Zgjatja"
+    IDS_VIDEO               "Video"
+    IDS_AUDIO               "Audio"
+    IDS_FILEINFO            "Info e Medias"
+    IDS_CODEC               "Kodiku"
+    IDS_BITRATE             "Bitrate"
+    IDS_WIDTH               "Gjerësia"
+    IDS_FPS                 "Kuadre/sek"
+    IDS_CHANNELS            "Kanalet"
+    IDS_SAMPLERATE          "Samplerate"
+    IDS_ROUNDBITRATE        "Bitrate i rrumbullakosur"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_HEIGHT              "Lartësia"
+    IDS_SHAREDFILES_FAILED  "Pamundësi për të kapur skedarët e shpërndarë nga '%s'"
+    IDS_SHAREDFILES_REQUEST "Kërkim i skedarëve të shpërndarë nga '%s'"
+    IDS_VIEWFILES           "&Shikoji Skedarët e Shpërndarë"
+    IDS_FRIENDSLOT          "Themelo Vrimën e Shokut"
+    IDS_FRIENDDETAIL        "(Vrima e Shokut)"
+    IDS_ASCWOP_PROXYSUPPORT "Lidhje automatike tek serveri pa proxy"
+    IDS_UDPDISABLED         "Mos e mundëso"
+    IDS_CTINFO              "Zgjidhe këtu llojin e lidhjes tënde:"
+    IDS_WIZ_CTFRAME         "Lloji i lidhjes"
+    IDS_CONCURDWL           "Shkarkesat Konkuruese"
+    IDS_UNIT                "Njësia:"
+    IDS_WIZARD_CUSTOM       "Me porosi"
+    IDS_WIZARD_ENTERBELOW   "(fute më poshtë!)"
+    IDS_STATS_MAXAVGDL      "Mesatarja e vlerës maks. të shkarkimit: %s"
+    IDS_USS_MIN             "Kujdes: USS tani për tani nuk duron shpejtësi ngarkimit më pak sesa 10K. Nëse e dini se lidhja juaj s'është e aftë ta durojë këtë, ju lutemi mos e mundësoni USS-në."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_MAXDL         "vlera maks. e shkarkimit: %s"
+    IDS_IRC_EMULEPROTO_IGNOREADDFRIEND
+                            "Përbuzi mesazhet e protokollit të eMule për shtimin e shokëve"
+    IDS_PW_FASTSRVCON       "Lidhje e Sigurt"
+    IDS_SOURCELINKFAILED    "Ju keni nevojë për një 'HighID' që të krijoni një link të vlefshëm burimi"
+    IDS_CREATESOURCELINK    "Kopjoji Linket eD2K në Fushëkapje (&Burimi)"
+    IDS_ERR_LOADSERVERMET   "Dështim në hapjen e server.met!"
+    IDS_ERR_CORRUPTCOMPRPKG "U mor paketë e ngjeshur e korruptuar për %s (gabimi %i)"
+    IDS_ERR_EMFRIENDSINVALID "Skedari emfriends.met është i pavlerë ose i korruptuar!"
+    IDS_ERR_READEMFRIENDS   "Gabim i panjohur gjatë leximit të emfriends.met: %s"
+    IDS_ERR_KNOWNSERVERINFOREC "U mor informacion i panjohur i serverit!"
+    IDS_ERR_TIMERCREATEFAILED "Gabim Fatal: Dështim në krijimin e Kohëmatësit"
+    IDS_WIZ_DOWN            "Poshtë (kbit/s)"
+    IDS_WIZ_UP              "Lart (kbit/s)"
+    IDS_SELECT_INCOMINGDIR  "Zgjidh një dosje për skedarët e ardhur"
+    IDS_SELECT_TEMPDIR      "Zgjidh një dosje për skedarët e përkohshëm"
+    IDS_PRIOAUTO            "Auto"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PRIOAUTONORMAL      "Auto [No]"
+    IDS_PRIOAUTOHIGH        "Auto [Hi]"
+    IDS_PRIOAUTORELEASE     "Auto [Re]"
+    IDS_PRIOAUTOLOW         "Auto [Lo]"
+    IDS_ERR_CONTIMEOUT      "Orvatje për lidhje tek ""%s"" (%s:%i ) jashtë kohe"
+    IDS_ERR_CONFAILED       "Lidhja tek ""%s"" (%s:%i ) dështoi."
+    IDS_OUTOFSERVERS        "Dështim gjatë lidhjes tek gjithe serverat e listuar. Një tjetër kalim."
+    IDS_PW_CONLIMITS        "Kufijtë e lidhjes"
+    IDS_MAXCON5SECLABEL     "Lidhjet e reja maks. / 5 sek."
+    IDS_PW_UAP              "Shtoji skedarët e ri të shpërndarë me autoparësi"
+    IDS_MAXCLIENT           "Përdoruesit maks."
+    IDS_PW_TWEAK            "E zgjeruar"
+    IDS_TWEAKS_WARNING      "Kujdes: Mos i ndrysho këto të dhëna pa e ditur se çfarë po bëni. Përndryshe ju lehtësisht mund t'i bëni gjërat më keq për veten tuaj. eMule do të punojë për bukuri pa ndrequr ndonjë nga këto të dhëna."
+    IDS_ADDAFRIEND          "Shto një Shok..."
+    IDS_PAF_REQINFO         "Informacion i Kërkuar"
+    IDS_PAF_MOREINFO        "Informacion Shtesë"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_NOVALIDFRIENDINFO "Ju duhet të futni një IP dhe port të vlefshëm!"
+    IDS_ADD                 "Shtoje"
+    IDS_RECOVERED_PARTMET   "Rimarrje e skedarit part.met për: %s"
+    IDS_CMT_QUEST           "Komentoje këtë skedar! (Ky tekst do të shfaqet tek të gjithë përdoruesit.)"
+    IDS_CMT_AIDE            "Për një film, ju mund të thoni zgjatjen e tij, historinë, gjuhën... Dhe nëse është i falsifikuar, ju mund t'i informoni përdoruesit e tjerë eMule..."
+    IDS_CMT_TITLE           "Komenti i Skedarit për %s"
+    IDS_CMT_ADD             "&Editoje Komentin e Skedarit..."
+    IDS_CMT_NONE            "Asnjë Koment"
+    IDS_CMT_READ            "Komenti i skedarit:"
+    IDS_CMT_NOTCONNECTED    "Ende i palidhur..."
+    IDS_CMT_SHOWALL         "Shfaqi Kome&ntet..."
+    IDS_CMT_REFRESH         "&Rifreskoje"
+    IDS_CMT_READALL         "Komente"
+    IDS_CMT_NOCOMMENT       "Nuk u fut asnjë koment..."
+    IDS_CMT_RATEQUEST       "Cilësia e skedarit"
+    IDS_CMT_RATEHELP        "Zgjidh vlerësimin e skedarit ose këshilloji përdoruesit nëse skedari është i pavlerë!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CMT_FAKE            "I pavlerë / I korruptuar / I falsifikuar"
+    IDS_CMT_POOR            "I varfër"
+    IDS_CMT_GOOD            "I mirë"
+    IDS_CMT_FAIR            "I mjaftë"
+    IDS_CMT_EXCELLENT       "I shkëlqyer"
+    IDS_CMT_NOTRATED        "I pavlerësuar"
+    IDS_KILO                "K"
+    IDS_MEGA                "M"
+    IDS_GIGA                "G"
+    IDS_TERRA               "T"
+    IDS_IRC_EMULEPROTO_IGNOREINFOMESSAGE "Përbuzi mesazhet e protokollit eMule"
+    IDS_SMARTLOWIDCHECK     "Në lidhje përdor verifikim të zgjuar 'LowID'"
+    IDS_SF_SRVOCC           "Zënia e Serverit: %.2f%%"
+    IDS_3DDEP               "Stili i masës progres"
+    IDS_AUTOTAKEED2KLINKS   "Automerri linket eD2K vetëm gjatë kohës së punës"
+    IDS_ADDNEWFILESPAUSED   "Shtoji skedarët për t'u shkarkuar në mënyrë pushimi"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_FD_STATS            "Humbje tek korruptimi: %s       U fituan nga ngjeshja: %s\nPaketa u ruajtën nga I.C.H.: %i"
+    IDS_ERR_NOHELP          "Ju lutemi vizitoni sektorin e shkarkimit të faqes tonë zyrtare për të marrë një kopje të skedarit më të ri ndihmës!\n\nA doni ta shfletoni që tani ndihmën me linjë?"
+    IDS_SHOWOVERHEAD        "Shfaq shtrirjen sipërore të bandës"
+    IDS_UPDOWNSMALL         "Lart: %.1f | Poshtë: %.1f"
+    IDS_EDITLIST            "Lista..."
+    IDS_SP_ICONBAR          "Systrayicon Speedbar"
+    IDS_RATINGRECV          "Vlerësimi për skedarin '%s' mori: %i"
+    IDS_DESCRIPTIONRECV     "Përshkrimi për skedarin '%s' mori: %s"
+    IDS_WEBSERVICES         "&Shërbime Rrjeti"
+    IDS_WEBSVEDIT           "Editoji Shërbimet e Rrjetit..."
+    IDS_IRC_EMULEPROTO_IGNORESENDLINK
+                            "Përbuzi mesazhet mesazhet e protokollit eMule për dërgimin e linkut"
+    IDS_CHECK4UPDATE        "Verifiko për version të ri"
+    IDS_STARTUP             "Fillesë"
+    IDS_NEWVERSIONAVL       "Është i vlefshëm një version i ri i eMule! Verifiko faqen kryesore të projektit për më tepër informacion."
+    IDS_NEWVERSIONAVLPOPUP  "Është i vlefshëm një version i ri i eMule. Klikoni këtu për të lexuar mbi versionin e ri!"
+    IDS_NEWVERSIONFAILED    "Pamundësi për të verifikuar versionin e ri."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CB_TBN_ONNEWVERSION "U diktua një version i ri i eMule"
+    IDS_NONEWERVERSION      "Nuk u diktua asnjë version i ri i eMule."
+    IDS_VERSIONCHECK        "&Verifikim i versionit"
+    IDS_VISITVERSIONCHECK   "\n\nA doni ta vizitoni tani faqen e informacionit?"
+    IDS_PW_VIDEOPLAYER      "Video luajtësi"
+    IDS_VIDEOBACKUP         "Krijo prapsim për parashikimin"
+    IDS_STATIC_EMPTY        "(Bosh = tipik)"
+    IDS_MYINFO              "Informacioni im"
+    IDS_ID                  "ID"
+    IDS_IDLOW               "ID e Ulët"
+    IDS_IDHIGH              "ID e Lartë"
+    IDS_UPSTATUS            "Pjesët e Përftuara"
+    IDS_TOVERHEAD           "Sipëria Totale (Paketat): %s (%s)"
+    IDS_FROVERHEAD          "Sipëria e Skedarit të Kërkuar (Paketat): %s (%s)"
+    IDS_SSOVERHEAD          "Sipëria e Shkëmbimit të Burimit (Paketat): %s (%s)"
+    IDS_SOVERHEAD           "Sipëria e Serverit (Paketat): %s (%s)"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ADDDOWNLOADSFROMCB  "T'i shtoj këto link-skedari eD2K për shkarkim?\n"
+    IDS_ADDDOWNLOADSFROMCBTITLE "Link-skedari eD2K në fushëkapje"
+    IDS_PF_WATCHCB          "Shiko fushëkapjen për linket e skedarit eD2K"
+    IDS_SECURITY            "Sigurimi"
+    IDS_IPFILTERLOADED      "U hapën %i filtra IP"
+    IDS_IPFILTER            "Filtri IP"
+    IDS_EDIT                "Editoje..."
+    IDS_FILTERLEVEL         "Niveli i filtrit"
+    IDS_FILTERSERVERBYIPFILTER "Filtro gjithashtu edhe serverat (i hedh poshtë serverat dynIP)"
+    IDS_FILTERCOMMENTSLABEL "Përbuzi mesazhet që përmbajnë: (Ndarës | )"
+    IDS_CLIENTLIST          "Klientët e Njohur"
+    IDS_FOLDER              "Dosja"
+    IDS_CL_UPLOADSTATUS     "Statusi i Ngarkimit"
+    IDS_CL_TRANSFUP         "Transferimi Lart"
+    IDS_CL_DOWNLSTATUS      "Statusi i Shkarkimit"
+    IDS_CL_TRANSFDOWN       "Transferimi Poshtë"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CL_PENDING          "Moszgjidhja"
+    IDS_CL_LOW2LOW          "I Ulët në IP të Ulët"
+    IDS_ERROR               "Gabim"
+    IDS_OPENINC             "&Hape Dosjen e Ardhjeve"
+    IDS_HOTMENU             "Menuja e nxehtë"
+    IDS_DISABLEKNOWNLIST    "Mos e mundëso listën e Klientëve të Njohur"
+    IDS_DISABLEQUEUELIST    "Mos e mundëso listën e Pritjeve"
+    IDS_USECREDITSYSTEM     "Përdor sistem krediti (shpërbleji ngarkuesit)"
+    IDS_FIRSTAUTODOWN       "Mundësoje këtë zgjedhje nëse do që eMule të drejtojë përparësitë e shkarkimit tuaj.\n\nNdezja e kësaj do ta lejojë eMule të sigurohet që shkarkesat me mjaft burime të mos ndërhyjnë me shkarkesat që kanë pak burime.\n\nKjo zgjedhje do të prekë vetëm shkarkesat e ardhshme. (Tipike: E mundësuar)"
+    IDS_FIRSTAUTOUP         "Mundësoje këtë zgjedhje nëse do që eMule të drejtojë përparësitë e ngarkimit tuaj.\n\nNdezja e kësaj do ta lejojë eMule t'i ngre skedarët e rrallë, domethënë skedarët e përhapur do e kenë më të vështirë për t'u marrë nga njerëzit e tjerë. Fikja e kësaj do ta lejojë eMule t'i ngarkojë më shpesh skedarët e përhapur, domethënë skedarët e rrallë do e kenë më të vështirë për t'u marrë nga njerëzit e tjerë.\n\nKjo zgjedhje do të prekë vetëm skedarët e ardhshëm të shpërndarë. (Tipike: E mundësua)"
+    IDS_FIRSTCREDITSYSTEM   "A doni t'i shpërbleni njerëzit që ngarkojnë prej jush?\n\nKy njihet përgjithësisht si Sistem Krediti. Ndezja e kësaj do të ndihmojë në luftën kundër depërtuesve. Nëse jeni një lëshues i përkushtuar, ju do të doni ta fikni këtë. (Tipike: E mundësuar)"
+    IDS_FIRSTFULLCHUNK      "Mundësoje këtë zgjedhje nëse do të ngarkosh thela të plota.\n\nPërdorimi i thelave të plota i jep klientit një shans më të mirë për ta përfunduar thelën. Fikja e kësaj do të ndihmojë në rrotullimin më shpejtë të pritjes tuaj. Nëse jeni një lëshues i përkushtuar, ju do të doni ta ndizni këtë. (Tipike: E mundësuar)"
+    IDS_FIRSTSAFECON        "Mundësoje këtë zgjedhje nëse do që eMule të lidhet duke përdorur Lidhje të Sigurt.\n\nFikja e kësaj veçorie e lejon eMule të lidhet tek serverat pak më shpejt, por mund t'ju shkaktojë që të merrni më tepër lidhje false LowID. (Tipike: E pamundësuar)"
+    IDS_FIRSTRUNASSIST      "A doni që të punoni një zotësi si për herë të parë?"
+    IDS_FIRSTAUTOCON        "Mundësoje këtë zgjedhje nëse do që eMule të lidhet gjatë fillesës. (Tipike: E pamundësuar)"
+    IDS_FIRSTCOMPLETE       "Tani ju keni përfunduar zotësinë si për herë të parë.\n\nTë gjitha këto të dhëna dhe më tepër mund të ndryshohen duke klikuar ikonën e parapëlqimeve. Për shpjegime dhe mbështetje shikoni ndihmën duke shtypur në eMule F1!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ENTERUSERNAME       "Ju lutemi futni emrin e përdoruesit:"
+    IDS_STATIC_CPUMEM       "Ruaje CPU-në && shfrytëzimin e kujtesës"
+    IDS_KAD_SEARCH_KEYWORD_TOO_SHORT
+                            "Shumë pak fjalë të shtypura.\r\n\r\nFjalët e shtypura në një kërkim Kad-i duhet të kenë të paktën 3 shkronja."
+    IDS_LOG2DISK            "Ruaje ditarin në disk"
+    IDS_KAD_SEARCH_KEYWORD_ALREADY_SEARCHING
+                            "Për fjalën ""%s"" po vazhdon që më parë një kërkim në Kad.\r\n\r\nPër të kërkuar sërish për atë fjalë, ose prisni derisa ky kërkim i fjalës të mbarojë, ose mbylleni panelin e kërkimit përkatës të rezultateve."
+    IDS_KAD_SEARCH_KEYWORD_INVALID
+                            "Fjalë Kad-i e pavlerë.\r\n\r\nShprehja e kërkimit në Kad ka formatin e mëposhtëm:\r\n\r\n\t<fjala-kad> [ <kërkim-shprehje-ed2k> ]\r\n\r\n<Fjala-kad> nuk duhet të përmbajë asnjë nga shkronjat e mëposhtme:\r\n\r\n\t%s"
+    IDS_EDITCAT             "Editoji Vetitë e Kategorisë"
+    IDS_PW_WS               "Ndërfaqja e Rrjetit"
+    IDS_ENABLED             "E mundësuar"
+    IDS_WEB_LOGIN           "Hyr"
+    IDS_WEB_ENTER_PASSWORD  "Futeni këtu fjalëkalimin tuaj"
+    IDS_WEB_LOGIN_NOW       "Hyr tani"
+    IDS_WEB_CONFIRM_REMOVE_SERVER
+                            "A jeni të sigurt se doni ta fshini këtë server nga lista?"
+    IDS_WEB_CONTROL         "Ndërfaqja e Rrjetit"
+    IDS_WEB_LOGOUT          "Dil"
+    IDS_WEB_ACTIONS         "Veprimet"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WEB_SHOW_UPLOAD_QUEUE "Shfaq Pritjet"
+    IDS_WEB_HIDE_UPLOAD_QUEUE "Fshihi Pritjet"
+    IDS_WEB_GZIP_COMPRESSION "Ngjeshje Gzip"
+    IDS_WEB_GZIP_COMMENT    "Ruaje trafikun, sidomos në grafikë."
+    IDS_WEB_UPLOAD_QUEUE_COMMENT
+                            "Mundësoje ose jo treguesin e pritjeve në radhë tek faqja e transferimit."
+    IDS_WEB_REFRESH_TIME    "Koha e Rifreskimit të Faqeve"
+    IDS_WEB_REFRESH_COMMENT "Koha në sekonda (zero=e pamundësuar):"
+    IDS_SV_URL              "URL"
+    IDS_WS_RELOAD_TMPL      "Tempujka"
+    IDS_SV_DEBUGLOG         "Ditari 'Debug'"
+    IDS_WS_PASS             "Fjalëkalimi"
+    IDS_WEB_FILESETTINGS    "Të dhënat e skedarit"
+    IDS_WS_ERR_LOADTEMPLATE "Tempujkat s'mund të hapen: zëvendësoje skedarin %s me një version më të ri!"
+    IDS_WEB_CONLIMITS       "Kufijtë e lidhjes"
+    IDS_INFLST_USER_TOTALDOWNLOAD "Totali i shkarkimit"
+    IDS_INFLST_USER_TOTALUPLOAD "Totali i ngarkimit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WEB_BADLOGINATTEMPT "Ndërfaqja e Rrjetit: Dështin gjatë orvatjes për hyrje"
+    IDS_ERR_TOOLARGEFILE    "Skedari më i madh sesa përmasa e duruar e protokollit edonkey (>=4GB)"
+    IDS_MSGONLYFRIENDS      "Prano vetëm nga shokët"
+    IDS_MSGONLYSEC          "Prano vetëm nga klientët e vlefshëm"
+    IDS_DAY_MO_SA           "Hën-Sht"
+    IDS_LIMITSOURCES        "Kufizoji burimet"
+    IDS_LIMITCONS5SEC       "Kufizoji lidhjet/5sek"
+    IDS_SCHED_CATSTOP       "Cat:Ndali Shkarkesat"
+    IDS_SCHED_CATRESUME     "Cat:Rimerri Shkarkesat"
+    IDS_S_DAYS              "Ditë"
+    IDS_STARTTIME           "Koha e Nisjes"
+    IDS_VALUE               "Vlera"
+    IDS_SCHED_ENTERDATARATELIMIT "Futni kufirin e vlerës së të dhënave:"
+    IDS_SCHED_ENTERVAL      "Ju lutemi futni vlerën e re:"
+    IDS_SCHED_ACTCONFIG     "Konfiguro Veprimin"
+    IDS_SELECTCAT           "Zgjidh kategorinë"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ALLUNASSIGNED       "Të gjitha të pakategorizuara"
+    IDS_ACTSESSIONS         "Sesionet aktive"
+    IDS_WEBSRV              "Ndërfaqja e Rrjetit"
+    IDS_SW_REFETCHRES       "Rilëshoji Rezultatet"
+    IDS_FILEHASH            "Hashi i Skedarit"
+    IDS_GLOBALSEARCH2       "Kërkim Global"
+    IDS_PW_PROXY            "Proxy"
+    IDS_PROXY_ENABLE        "Mundësoje proxy-n"
+    IDS_PROXY_TYPE          "Lloji i Proxy-t:"
+    IDS_PROXY_HOST          "Pronari i Proxy-t:"
+    IDS_PROXY_PORT          "Porti i Proxy-t:"
+    IDS_PROXY_AUTH          "Mundësoje vërtetësinë"
+    IDS_AUTH                "Vërtetësia"
+    IDS_SHOWCATINFO         "Shfaq infon e shkarkimit mbi tabelat e kategorisë"
+    IDS_SW_SEARCHINGINFO    "Kërkimi në progres. Rilëshim i rezultateve për një çast!"
+    IDS_LOGENTRY            "Hyrja e Ditarit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_COPY                "Kopjo"
+    IDS_SELECTALL           "Zgjidh Gjithçka"
+    IDS_AUTOSCROLL          "Autombledhje"
+    IDS_WIZ1_WELCOME_TITLE  "Mirë se erdhët në eMule"
+    IDS_WIZ1_WELCOME_ACTIONS
+                            "Kjo zotësi do t'ju prijë mes hapave të parë në konfigurimin e eMule."
+    IDS_WIZ1_WELCOME_BTN_HINT "Për të vijuar, kliko Tjetër."
+    IDS_WIZ1_END_TITLE      "Përfundim i Zotësisë"
+    IDS_WIZ1                "Zotësia e punimit të eMule për herë të parë"
+    IDS_WIZ1_END_BTN_HINT   "Për ta mbyllur këtë zotësi, kliko Mbarim."
+    IDS_WIZ1_UPLOAD_SUBTITLE "Transferim i Thelës së Plotë"
+    IDS_DL_RESUMENEXT       "Rimerre atë që po pushon"
+    IDS_DONTCHANGE          "Mos e ndrysho"
+    IDS_STARTPRIO           "Parësia për këtë kategori"
+    IDS_PREF_STARTNEXTFILECAT "Parapëlqe të njëjtën kategori"
+    IDS_REPAINTGRAPHS       "Mos rikrijo grafikë statistikë gjatë ripërmasimit"
+    IDS_SOFTFILES           "Kufiri i Skedarëve të Dobët"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_HARDFILES           "Kufiri i Skedarëve të Fortë"
+    IDS_FILTER              "Filtro"
+    IDS_LINKS               "Linket"
+    IDS_HM_SCHED_ON         "Ndize Planifikuesin"
+    IDS_HM_SCHED_OFF        "Fike Planifikuesin"
+    IDS_HM_LINKHP           "Faqja shtëpiake e eMule"
+    IDS_HM_LINKFAQ          "eMule FAQ"
+    IDS_HM_LINKVC           "Verifikimi i versionit eMule"
+    IDS_DEBUG_SOURCE_EXCHANGE
+                            "Hap shkëmbimin e burimit të klientit dhe pyetjet/përgjigjet e burimit të serverit"
+    IDS_SHAREDREQ1          "Përdoruesi %s (%u) kërkoi listën tuaj të direktorive të shpërndara -> %s"
+    IDS_SHAREDREQ2          "Përdoruesi %s (%u) kërkoi listën tuaj të skedarëve të shpërndarë për direktorinë '%s' -> %s"
+    IDS_SHAREDANSW          "Përdoruesi %s (%u) shpërndan direktorinë '%s'"
+    IDS_SHAREDANSW2         "Përdoruesi %s (%u) nuk e dërgoi listën e kërkuar të direktorive të shpërndara - i përbuzur"
+    IDS_SHAREDINFO1         "Përdoruesi %s (%u) dërgoi listën e skedarëve të shpërndarë për direktorinë '%s'"
+    IDS_SHAREDINFO2         "Përdoruesi %s (%u) mbaroi dërgimin e listave të skedarëve të shpërndarë"
+    IDS_SHAREDANSW3         "Përdoruesi %s (%u) nuk e dërgoi listën e kërkuar të skedarëve të shpërndarë për direktorinë '%s' - i përbuzur"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SHAREDREQDENIED     "Përdoruesi %s (%u) e mohoi hyrjen tek lista e direktorive/skedarëve të shpërndarë"
+    IDS_AUTOCLEANUPFN       "Pastroji emrat e skedarëve"
+    IDS_ONNEWDOWNLOAD       "Nismëtimet"
+    IDS_FILTERFILENAMEWORD  "Fut fjalët për të filtruar, të ndara me |"
+    IDS_FNFILTERTITLE       "Editoje filtrin e fjalës të emrit të skedaritr për pastrimin e emrit"
+    IDS_CHANGECATVIEW       "Zgjidh Filtrin e Shikimit"
+    IDS_STATUS_NOTCOMPLETED "E papërfunduar"
+    IDS_STATS_CUMULATIVE    "Grumbulluese"
+    IDS_STATS_OVRHD         "Sipëria"
+    IDS_STATS_RECORDS       "Regjistrimet"
+    IDS_STATS_OVRHD2        "Sipëria: %s (%s Paketa)"
+    IDS_STATS_COMPDL        "Shkarkesat e Përfunduara"
+    IDS_STATS_SVRECWORKING  "Serverat Maks. Veprues"
+    IDS_STATS_SVRECUSERS    "Përdoruesit Maks. në Linjë"
+    IDS_SEARCH_TEXT         "Kërko për"
+    IDS_STATS_SVRECFILES    "Skedarët Maks. të Vlefshëm"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_SHRECNUM      "Skedarët Maks. të Shpërndarë Ndonjëherë"
+    IDS_SEARCH_COLUMN       "Kërko në kolonën"
+    IDS_STATS_SHRECSIZE     "Përmasa më e madhe e shpërndarë"
+    IDS_STATS_SHRECASIZE    "Përmasa më e madhe mesatare e skedarit"
+    IDS_STATS_MYRUNTIME     "Koha e përgjithshme e punimit: %s"
+    IDS_STATS_SESSION       "Sesioni"
+    IDS_STATS_SRATIO        "Raporti i Sesionit UL:DL:"
+    IDS_STATS_CRATIO        "Raporti Grumbullues UL:DL:"
+    IDS_SEARCH_NORESULT     "Nuk u gjet asnjë hyrje e ngjashme."
+    IDS_STATS_CURRSRVDUR    "Zgjatja e Serverit të Tanishëm"
+    IDS_LONGSECS            "Sekonda"
+    IDS_STATS_DLSES         "Sesionet e Shkarkimit"
+    IDS_LONGMINS            "Minuta"
+    IDS_STATS_SDLSES        "Sesionet me Sukses të Shkarkimit"
+    IDS_STATS_FDLSES        "Sesionet e Dështuara të Shkarkimit"
+    IDS_STATS_AVGDATADLSES  "Shkarkimet Mesatare për Sesion"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_ULSES         "Sesionet e Ngarkimit"
+    IDS_STATS_GAINCOMP      "Fitimi Falë Ngjeshjes: %s"
+    IDS_STATS_LOSTCORRUPT   "Humbja Falë Korruptimit: %s"
+    IDS_STATS_AVGDATAULSES  "Ngarkimi Mesatar për Sesion"
+    IDS_STATS_ICHSAVED      "Pjesët e Ruajtura Falë I.C.H: %u"
+    IDS_STATS_MBRESET_TXT   "A jeni të sigurt se doni t'i rivendosni statistikat tuaja grumbulluese?\n\nNëse ju ndryshon mendja, ju mund ta ktheni këtë veprim duke klikuar butonin 'Riktheji Statistikat'."
+    IDS_STATS_MBRESET_CAP   "Konfirmoje Rivendosjen"
+    IDS_STATS_MBRESTORE_TXT "A jeni të sigurt se doni t'i rivendosni statistikat tuaja grumbulluese nga skedari i prapsimit?\n\nDuke klikuar përsëri 'Riktheji Statistikat' do të hapë statistikat e tanishme."
+    IDS_STATS_MBRESTORE_CAP "Konfirmoje Rikthimin"
+    IDS_ERR_NOSTATBKUP      "GABIM: Skedari i prapsimit të statistikave nuk u gjet..."
+    IDS_STATS_NFOLOADEDBKUP "Hapje e të dhënave statistike të prapsuara..."
+    IDS_STATS_NFORESET      "Statistikat janë rivendosur!"
+    IDS_STATS_BNRESET       "Rivendosi Statistikat"
+    IDS_STATS_BNRESTORE     "Riktheji Statistikat"
+    IDS_CONNECTIONSTATISTICS "Statistikat e Lidhjes"
+    IDS_PPGSTATS_YSCALE     "Shkalla e Statistikave të Lidhjes në boshtin Y:"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PPGSTATS_ACRATIO    "Raporti i lidhjeve aktive:"
+    IDS_STATS_PROBLEMATIC   "Problematik"
+    IDS_LONGHRS             "Orët"
+    IDS_STATS_LARGESTFILE   "Skedari më i Madh i Shpërndarë"
+    IDS_STATS_DSPF          "Pjesa e Skedarit"
+    IDS_STATS_DATASOURCE    "Burimi i të Dhënave"
+    IDS_STATS_DSFILE        "Skedar i Plotë"
+    IDS_STATS_GENERAL       "Përgjithësi"
+    IDS_STATS_TRANSTIME     "Koha e Transferimit"
+    IDS_STATS_DOWNTIME      "Koha e Shkarkimit"
+    IDS_STATS_UPTIME        "Koha e Ngarkimit"
+    IDS_STATS_TOTALSRVDUR   "Zgjatja Totale e Serverit"
+    IDS_STATS_MAXAVGUL      "Raporti maks. mesatar i ngarkimit"
+    IDS_STATS_MAXUL         "Raporti maks. i ngarkimit"
+    IDS_STATS_AVGDLTIME     "Koha Mesatare e Shkarkimit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_OLDCLIENTS    "E vjetër"
+    IDS_STATS_PRTDEF        "Tipike"
+    IDS_STATS_PRTOTHER      "Tjetër"
+    IDS_STATS_MNUTREETITLE  "Pema e Statistikave"
+    IDS_STATS_MNUTREECPYSEL "Kopjo degën e zgjedhur"
+    IDS_STATS_MNUTREECPYALL "Kopjo gjithë statistikat"
+    IDS_STATS_MNUTREEHTML   "Veçoritë HTML"
+    IDS_STATS_EXPORT2HTML   "Eksporto Statistikat..."
+    IDS_STATS_MNUTREECPYVIS "Kopjo gjithë të dukshmit"
+    IDS_STATS_MNUTREEEXPANDALL "Zgjeroji gjithë sektorët"
+    IDS_STATS_MNUTREECOLLAPSEALL "Rrëzoji gjithë sektorët"
+    IDS_STATS_MNUTREEEXPANDMAIN "Zgjeroji sektorët kryesorë"
+    IDS_STATS_LASTRESETSTATIC "Rivendosja e fundit e statistikave: %s"
+    IDS_STATS_MONTHLY       "në Muaj"
+    IDS_STATS_YEARLY        "në Vit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WEB_SHUTDOWNSYSTEM  "Mbylle sistemin"
+    IDS_WEB_ADMINMENU       "Menuja Admin"
+    IDS_WEB_MAIN_CLOSE      "Vërtet doni që eMule të përfundojë?"
+    IDS_WEB_MAIN_REBOOT     "Vërtet doni që të rinisni sistemin tuaj?"
+    IDS_WEB_MAIN_SHUTDOWN   "Vërtet doni që sistemi të mbyllet?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Shfaqi klientët e dëbuar në pritje"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Shfaqi shokët në pritje"
+    IDS_WEB_SESSIONTIMEOUT  "Jashtë-kohësi e sesionit"
+    IDS_WEB_ALLOWHILEVFUNC  "Lejoje daljen nga eMule, rinisjen dhe mbylljen"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_TIMESTATS     "Koha e Statistikave"
+    IDS_STATS_AVGANDPROJ    "Mesataret e Projektuara"
+    IDS_STATS_TIMESINCERESET "Koha që prej rivendosjes së fundit: %s"
+    IDS_CRYPT_INITFAILED    "Dështim në nisjen e kripto-fjalëve - 'secure ident' nuk u mundësuar"
+    IDS_CD_IDENT            "Identifikimi:"
+    IDS_IDENTOK             "I suksesshëm"
+    IDS_IDENTFAILED         "I pavlefshëm"
+    IDS_IDENTNOSUPPORT      "I padurueshëm ose i pamundësuar"
+    IDS_COMMITFILES         "Shkrim i sigurt i skedarit .met/.dat"
+    IDS_ERR_BADUNC          "emër-UNC i pavlerë"
+    IDS_NEVER               "Kurrë"
+    IDS_ALWAYS              "Gjithmonë"
+    IDS_ONSHUTDOWN          "Gjatë mbylljes"
+    IDS_UNCFOLDERS          "Shtigjet UNC"
+    IDS_USESECIDENT         "Përdor identifikim të sigurtë"
+    IDS_ADVSPAMFILTER       "Spamfiltër i avancuar"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CUT                 "Prije"
+    IDS_STATS_SECUREIDENT   "'Secure Ident' (OK : Dështoi )"
+    IDS_ONDISK              "Përmasa në disk: "
+    IDS_CLIENTCOL           "Kujdes: U gjet klient i ngjashëm, tek një klient tashmë i lidhur: %s (%s) dhe %s (%s)"
+    IDS_SEARCH_UNTERMSTRING "Varg i pambaruar"
+    IDS_SEARCH_GENERALERROR "Gabim i përgjithshëm"
+    IDS_SEARCH_MISSINGORRIGHT "Anë e djathtë e humbur për operatorin OR"
+    IDS_SEARCH_MISSINGNOTRIGHT "Anë e djathtë e humbur për operatorin NOT"
+    IDS_SEARCH_MISSINGEXPRPARANT "Shprehja e humbur '(' ')'"
+    IDS_SEARCH_MISSINGCLOSINGPARANT "Mbyllje e humbur ')'"
+    IDS_SEARCH_MISSINGANDLEFT "Anë e majtë e humbur e operatorit AND"
+    IDS_SEARCH_MISSINGORLEFT "Anë e majtë e humbur e operatorit OR"
+    IDS_SEARCH_MISSINGNOTLEFT "Anë e majtë e humbur e operatorit NOT"
+    IDS_SEARCH_EXPRERROR    "Dështim në analizën e kërkimit të shprehjes"
+    IDS_SEARCH_TOOCOMPLEX   "Shprehje tepër komplekse"
+    IDS_SEARCH_INVALIDMINMAX "Njësi të pavlera për përmasën Min./Maks. të skedarit të dhënë"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_VERSION             "Versioni"
+    IDS_PASTE               "Ngjite"
+    IDS_A4AF                "Trajtimi i Skedarëve (A4AF)"
+    IDS_MOBILEMULE          "MobileMule"
+    IDS_ENABLEMM            "Mundësoje MobileMule"
+    IDS_AUTOCAT_LABEL       "Auto kthim-caktim (model, i ndarë me |)"
+    IDS_SHOWEXTSETTINGS     "Shfaq më tepër kontrolle (kontrolle të mënyrës së avancuar)"
+    IDS_TREEOPTIONS_TRUE    "E vërtetë"
+    IDS_TREEOPTIONS_FALSE   "False"
+    IDS_TREEOPTIONS_OK      "OK"
+    IDS_HYPERTEXT_FONT_HINT "Shkrimi për dritaret Server, Mesazh dhe IRC"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SELECT_FONT         "Zgjidh Shkrimin"
+    IDS_SERVER_LIMITS       "Kufi i Butë / Fortë i skedarit"
+    IDS_SERVERINFO          "Informacion i Serverit"
+    IDS_KBITSSEC            "kBits/sek"
+    IDS_KBYTESSEC           "kBytes/sek"
+    IDS_ERR_CREATE_DIR      "Dështim në krijimin e direktorisë %s ""%s"" - %s"
+    IDS_WRN_INCFILE_RESERVED
+                            "Direktoria e ardhjeve nuk duhet vendosur tek një direktori instalimi për eMule."
+    IDS_WRN_TEMPFILES_RESERVED
+                            "Direktoria e të përkohshmëve nuk duhet vendosur tek një direktori instalimi për eMule."
+    IDS_WRN_INCTEMP_SAME    "Direktoritë e ardhjeve dhe përkohësive s'duhet të jenë njësoj."
+    IDS_MMFAILED            "Dështim në krijimin e Folesë MobileMule!"
+    IDS_MMSTARTED           "Serveri MobileMule nisi në Portin %i. Versioni i protokollit: %s"
+    IDS_SHOWDWLPERCENTAGE   "Shfaq përqindjen e plotësimit të shkarkimit në shiritin e progresit"
+    IDS_TBN_ONNEWDOWNLOAD   "Shkarkesa u shtua"
+    IDS_ARTIST              "Artisti"
+    IDS_ALBUM               "Albumi"
+    IDS_MMGUIDELINK         "Guida MobileMule"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CD_UPLOADREQ        "Kërkesë për ngarkim:"
+    IDS_SETTINGCHANGED_RESTART
+                            "Që të dhënat e ndryshuara të kenë efekt, ju lutemi niseni eMule!"
+    IDS_CREDITSEXPIRED      ", u fshinë %i klientë (të paparë brenda 5 muajve)"
+    IDS_SOURCESINFO         "%i  (Të dobishëm: %i, NNP: %i);  A4AF: %i"
+    IDS_SHOW_META_DATA      "Shfaq &Meta Data..."
+    IDS_META_DATA           "Meta Data"
+    IDS_TIMEBEFORE          "(%s më parë)"
+    IDS_FD_TIMEDATE         "Datat"
+    IDS_FILEINFORMATION     "Informacion Skedari"
+    IDS_STATS_FREESPACE     "Hapësira e Lirë"
+    IDS_IRC_HELPCHANNEL     "Lidhu për të ndihmuar kanalin"
+    IDS_IRC_HELPCHANNELPERFORM "/hyr në #emule | /hyr në #emule-anglisht"
+    IDS_IRC_ACCEPTLINKSFRIENDS "Vetëm nga shokët"
+    IDS_COMPLSOURCES        "Burime të Plota"
+    IDS_CHECKNOENDTIME      "Asnjë fund kohe"
+    IDS_FD_DOWNLOADSTARTED  "Shkarkesa e shtuar:"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_MATCH_KEYWORDS      "Krahasoji fjalët"
+    IDS_FAILEDREOPEN        "Gabim Fatal: Dështim në rihapjen e pjesës '%s' të skedarit (%s)!"
+    IDS_ERR_PREVIEWALREADY  "Ka që më parë një kërkesë parashikimi që pret zgjidhje nga ky klient"
+    IDS_ERR_PREVIEWFAILED   "Parashikimi nga Përdoruesi '%s' dështoi"
+    IDS_DWTOT               "Hapësira e Diskut"
+    IDS_DWTOT_NR            "Numri i Shkarkimeve: %d"
+    IDS_DWTOT_TSD           "Përmasa Totale e Shkarkesave: %s"
+    IDS_DWTOT_TCS           "Përmasa Totale e Përfunduar: %s (%.Nga%%)"
+    IDS_DWTOT_TSL           "Përmasa Totale e Lënë për Transferim: %s"
+    IDS_DWTOT_TSN           "Hapësira shtesë e nevojitur për Shkarkesat: %s"
+    IDS_DWTOT_FS            "Hapësira e Lirë në diskun e Përkohshëm: %s"
+    IDS_NEEDFREEDISKSPACE   "%s (ju duhet të lironi %s!)"
+    IDS_SERVERKEEPALIVETIMEOUT "Intervali i rifreskimit të lidhjes së serverit [min.]"
+    IDS_MORE                "&Më tepër"
+    IDS_TOOLS               "Mjete"
+    IDS_SEARCHPARAMS        "Parametrat e Kërkimit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CREATEHOSTNAMESRCLINK "Kopjoji Linket eD2K në Fushëkapje (Emri i të ftuarit)"
+    IDS_HASHINGFILESCOUNT   " (%u në grirje)"
+    IDS_CHECKDISKSPACE      "Verifiko hapësirën e diskut"
+    IDS_YOURHOSTNAME        "Emri i të ftuarit për linket e veta eD2K"
+    IDS_INSUFFICIENT        "Hapësirë disku e Pamjaftueshme"
+    IDS_MINFREEDISKSPACE    "Hapësira min. e lirë e diskut [MB]"
+    IDS_WARNING             "Kujdes"
+    IDS_IMPORTSPLPF         "Importo Shkarkesa (eM,eD,ON)"
+    IDS_IMP_STEPREADPF      "Lexim i dosjes së përkohshme"
+    IDS_IMP_STEPBASICINF    "Rigjetje e informacionit bazik nga skedari i infos së shkarkimit"
+    IDS_IMP_STEPCRDESTFILE  "Krijim i skedarit destinacion"
+    IDS_IMP_LOADDATA        "Hapje e të dhënave nga skedari i vjetër i shkarkimit (%i nga %i)"
+    IDS_IMP_SAVEDATA        "Ruajtje e bllokut të të dhënave në një skedar të vetëm shkarkimi(%i nga %i)"
+    IDS_IMP_IOERROR         "Gabim skedari gjatë shndërrimit të shkarkesës"
+    IDS_IMP_GETPFINFO       "Rigjetje e informacionit të burimit skedar-shkarkues"
+    IDS_IMP_ADDDWL          "Shtim i shkarkesës dhe ruajtje e pjesës së re të skedarit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IMP_FETCHSTATUS     "Status i lëshimit..."
+    IDS_IMP_INPROGR         "në progres"
+    IDS_IMP_ERR_DISKSP      "Gabim: Jashtë hapësirës së diskut"
+    IDS_IMP_ERR_PARTMETIO   "Gabim: Partmet nuk u gjet"
+    IDS_IMP_ERR_IO          "Gabim: Gabim IO!"
+    IDS_IMP_ERR_FAILED      "Gabim: Dështim!"
+    IDS_IMP_STATUSQUEUED    "Në pritje"
+    IDS_IMP_ALRDWL          "Në shkarkim që më parë"
+    IDS_IMP_ADDBTN          "&Shto importe"
+    IDS_IMP_RETRYBTN        "&Ripërpiqe zgjedhjen"
+    IDS_IMP_REMOVEBTN       "Hi&qe zgjedhjen"
+    IDS_IMP_SELFOLDER       "Ju lutemi zgjidhni një dosje për të kërkuar mbi shkarkesat e përkohshme! (nëndosjet do të përfshihen)"
+    IDS_IMP_DELSRC          "A doni që skedarët-burim të shkarkesave të importuara me sukses të fshihen?"
+    IDS_IMP_SIZE            "%s (Disku:%s)"
+    IDS_IMP_STATUS          "Importim %s: %s"
+    IDS_DYNUPENABLED        "Gjej automatikisht kufirin më të mirë të ngarkimit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DYNUP_PINGTOLERANCE "Toleranca e ping-ut (% nga ping-u më i ulët)"
+    IDS_DYNUP_GOINGUPDIVIDER "Vajtje lart ngadalësisë"
+    IDS_DYNUP_GOINGDOWNDIVIDER "Vajtje poshtë ngadalësisë"
+    IDS_DYNUP_NUMBEROFPINGS "Numri maks. mesatar i ping-ve"
+    IDS_DYNUP_MINUPLOAD     "Shpejtësia më e ulët e lejuar e ngarkimit"
+    IDS_ESTTIMELEFT         "Kohëmbetja e vlerësuar:"
+    IDS_TRANSFER_RATE_LABEL "Vlera e transferuar:"
+    IDS_SAVELOG             "Ruaje ditarin"
+    IDS_CMT_COPYCLIPBOARD   "Kopjoje komentin në fushëkapje"
+    IDS_ASKDOWNLOADLANG     "Gjuha që ju zgjodhët nuk është instaluar në sistemin tuaj. A doni që eMule ta shkarkojë atë nga emule-project.net?"
+    IDS_ASKDOWNLOADLANGCAP  "Shkarko skedarë gjuhe"
+    IDS_DELETESELECTED      "Fshije"
+    IDS_ERR_FAILEDDOWNLOADLANG
+                            "Dështim në shkarkimin dhe instalimin e gjuhës së zgjedhur dll nga %s!"
+    IDS_ERR_BADFOLDER       "Dosje e pavlerë.\nDosja nuk mund të krijohet. Ju lutemi verifikoni emrin dhe pozicionin."
+    IDS_AUTOREMOVEFD        "Autoheqje e shkarkesave të përfunduara"
+    IDS_MM_BLOCK            "Për MobileMule u shënuan 3 hyrje të dështuara  - çdo përpjekje e mëtejshme bllokohet për 10 min!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_KAD_NODE            "Shqyrtim i Nyjes"
+    IDS_KAD_STOREFILE       "Depozitoje Skedarin"
+    IDS_KAD_STOREKW         "Depozitoje Fjalën e shkruar"
+    IDS_KAD_UNKNOWN         "I panjohur"
+    IDS_SRV_TCPCOMPR        "Ngjeshja e TCP-së"
+    IDS_KADSEARCHLAB        "Kërkimet e tanishme"
+    IDS_SRV_UDPSR           "Protokoll i zgjeruar UDP për kërkesat e burimeve"
+    IDS_SRV_UDPFR           "Protokoll i zgjeruar UDP për kërkesat e skedarit"
+    IDS_MINLENGTH           "Zgjatja min. [hh:mm:ss]"
+    IDS_EM_HELP             "&Ndihmë"
+    IDS_WRN_FRIENDDUPLIPPORT
+                            "Shoku nuk u shtua.\r\n\r\nKa që më parë një shok me të njëjtën adresë dhe port IP të vlefshëm."
+    IDS_DYNUP               "Ana e Shpejtësisë së Ngarkimit"
+    IDS_KADOVERHEAD         "Sipëria e Kad-it (Paketat): %s (%s)"
+    IDS_FIND                "Gjej..."
+    IDS_LOG_BANNED_CLIENTS  "Shënoji klientët e dëbuar"
+    IDS_LOG_RATING_RECV     "Shënoji përshkrimet e marra të skedarit dhe vlerave"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_MM_NEWUSER          "Një përdorues i ri hyri me sukses në Serverin MobileMule"
+    IDS_RADCLIENTS          "Nga klientët e njohur"
+    IDS_KADUDPPORTERR       "Konflikte porti UDP në Kad, si me portin e Zgjer. eMule UDP, ose me portin e UDP-së së Serverit eMule. Porti është ndryshuar në %u."
+    IDS_CONFIRM_FILEDELETE  "Vërtet doni që t'i fshini nga disku gjithë skedarët e zgjedhur?"
+    IDS_OPENFOLDER          "Hap Dosjen"
+    IDS_RUNASUSER           "Punoje eMule si Përdorues të paprivilegjuar"
+    IDS_DELETE              "Fshij nga Disku"
+    IDS_BOOTSTRAP           "Mprehje"
+    IDS_VIAED2KSQ           "me anë të Serverit eD2K"
+    IDS_EM_KADEMLIA         "&Kad"
+    IDS_VIAKAD              "me anë të Kad-it"
+    IDS_VIASE               "me anë të Shkëmbim-Burimit"
+    IDS_SELECTTOOLBARBITMAP "Zgjidh Copën e shufrës së mjeteve..."
+    IDS_SELECTTOOLBARBITMAPDIR "Zgjidh Direktorinë e Copave të shufrës së mjeteve..."
+    IDS_TOOLBARSKINS        "Lëvoret e shufrës së mjeteve"
+    IDS_NOTEXTLABELS        "Asnjë Etiketë Teksti"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TEXTLABELSONRIGHT   "Etikat e Tekstit në të Djathtë"
+    IDS_TEXTLABELS          "Mundësitë e Etiketave të Tekstit"
+    IDS_ENABLETEXTLABELS    "Shfaqi Etiketat e Tekstit"
+    IDS_CUSTOMIZETOOLBAR    "Porosite shufrën e mjeteve..."
+    IDS_MINBITRATE          "Bitrate min. [kBit/s]"
+    IDS_KAD_RECHECKFW       "Riverifiko 'Firewall'-in"
+    IDS_SHAREDTITLE         "eD2K|Kad të shpërndarë"
+    IDS_WARNINGNOBS         "Mprehja tani joaktive (Kad tashmë i lidhur)."
+    IDS_FIREWALLED          "Firewalled"
+    IDS_KADEMLIA            "Kad"
+    IDS_KADCONTACTLAB       "Kontaktet"
+    IDS_KADDISTANCE         "Distanca"
+    IDS_KEY                 "Çelësi"
+    IDS_NUMBER              "Numri"
+    IDS_KAD_SEARCHSRC       "Kërko Burime"
+    IDS_KAD_SEARCHKW        "Kërko Fjalë"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LOG_SECURE_IDENT    "Shëno 'ident' të sigurtë"
+    IDS_LOG_FILTERED_IPS    "Shënoji IP-të e filtruara dhe/ose të përbuzura"
+    IDS_LOG_FILE_SAVING     "Shënoji veprimet e ruajtjes së skedarit"
+    IDS_IPFILTERFILES       "Gjithë Filtrat IP të Skedarëve (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|ZIP Files (*.zip;*.gz)|*.zip;*.gz|All Files (*.*)|*.*||"
+    IDS_DELETEIPFILTERS     "Vërtet doni që t'i fshini filtrat e zgjedhur IP?"
+    IDS_TOTAL_IPFILTER_LABEL "Filtrat IP totalë:"
+    IDS_TOTAL_IPS_LABEL     "IP-të totale:"
+    IDS_RAU_WARNING         "Kjo zgjedhje do t'i japë eMule sigurim shtesë kundër sulmeve dhe shfrytëzimeve dhe ne e inkurajojmë përdorimin e kësak mundësie.\nGjithsesi vërtet rekomandohet të lexohet manuali përpara aktivizimit!\n\nNdryshimet do të kenë efekte pas rinisjes së eMule."
+    IDS_APPEND              "Bashkangjit..."
+    IDS_SAVE                "Ruaj"
+    IDS_IP_START            "Fillo"
+    IDS_IP_END              "Fund"
+    IDS_IP_LEVEL            "Niveli"
+    IDS_IP_DESC             "Përshkrimi"
+    IDS_IP_HITS             "Hitet"
+    IDS_IP_RULES            "Filtrat IP:"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LOG_A4AF            "Shënoji veprimet A4AF"
+    IDS_A4AF_SAVE_CPU       "Mos i mundëso verifikimet A4AF për të ruajtur CPU-në"
+    IDS_SEARCH_DOC          "Dokument"
+    IDS_INSTALL_SKIN        "Instalim i lëvoreve për eMule"
+    IDS_INSTALL_SKIN_NODIR  "Nuk është zgjedhur asnjë direktori e profilit të lëvoreve për eMule ose direktoria nuk hapet!"
+    IDS_INSTALL_SKIN_DIR_ERROR
+                            "Dështim në krijimin e direktorisë ""%s"" për Lëvoren eMule - %s"
+    IDS_INSTALL_SKIN_FILE_ERROR
+                            "Dështim në nxjerrjen e skedarit ""%s"" nga Lëvorja e eMule tek skedari lokal ""%s"" - %s"
+    IDS_INSTALL_SKIN_PKG_ERROR "Ky nuk është një skedar-paketë i vlefshëm për Levoret e eMule."
+    IDS_NEXT_REASK          "Pyetja tjetër tek ky klient"
+    IDS_A4AF_FILES          "Skedarët A4AF"
+    IDS_FO_TEMPTCP_S        "Port i hapur %u (TCP) në 'firewall'-in e brendshëm të WinXP për këtë sesion të eMule"
+    IDS_FO_TEMPTCP_F        "Dështim në hapjen e portit %u (TCP) në 'firewall'-in e brendshëm të WinXP për këtë sesion të eMule"
+    IDS_FO_TEMPUDP_S        "Port i hapur %u (UDP) në 'firewall'-in e brendshëm të WinXP për këtë sesion të eMule"
+    IDS_FO_TEMPUDP_F        "Dështim në hapjen e portit %u (UDP) në 'firewall'-in e brendshëm të WinXP për këtë sesion eMule"
+    IDS_FO_PREFBUTTON       "Hap këto porte në 'firewall'-in e brendshëm të WinXP"
+    IDS_FO_PREF_SUCCCEEDED  "Sukses në hapjen e porteve të zgjedhur në 'firewall'-in e brendshëm të WinXP.\nJu lutemi vini re se 'desktopfirewall'-et dhe 'router'-at e palës së tretë nuk preken nga kjo!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IMP_ERR_BADFORMAT   "Format i panjohur ose i keq i skedarit të përkohshëm."
+    IDS_SEARCH_INVALIDCHAR  "Shprehja e kërkimit përmban shkronja të pavlera. Ju ose shtypët shkronjë '?' ose futët shkronja që nuk mund të përdoren në këtë rrjet."
+    IDS_PORTSCON            "Portet dhe Lidhja"
+    IDS_PORTINFO            "eMule përdor dy porte për komunikim me servera dhe klientë.  Këta porte duhet të jenë të lirë dhe të vlefshëm për klientët e largët. Porti TCP duhet të jetë i vlefshëm për të siguruar funksionimin kryesor të eMule. Porti UDP përdoret për Kad-in (rrjet pa server) dhe për të ulur shfrytëzimin e rrjetit (Sipërinë).\n\nJu mund t'i ndryshoni portet këtu kur nuk ka nisur asnjë aktivitet rrjeti."
+    IDS_STARTTEST           "Testoji portet"
+    IDS_TESTINFO            "Këtu mund të testoni, nëse porti juaj TCP dhe UDP mund të lidhen prej së largu. Suksesi i këtij testi nevojitet për servera dhe klientët që do të lidhen tek ju. Porti TCP duhet t'ia dalë me sukses!"
+    IDS_CONNECTIONTEST      "Testi i lidhjes"
+    IDS_NOPORTCHANGEPOSSIBLE
+                            "Ndryshimi i porteve nuk është më i mundur pas lidhjes me klientët ose serverin/Kad!\n\nJu lutemi riniseni eMule me të dhënat e ndryshuara të portit."
+    IDS_NETWORK_INFO        "Informacion i Rrjetit"
+    IDS_SP_TOTALUL          "Numri total i ngarkesave"
+    IDS_SP_ULFRIENDS        "Vrimat e ngarkimit të shokut"
+    IDS_SP_ULSLOTSNOOVERHEAD "Ngarkimi i tanishëm, përjashtuar sipërinë (vetëm Vrimat UL)"
+    IDS_ST_ACTIVEU_ZZ       "Ngarkesat Aktive"
+    IDS_ST_ULCURRENT        "Ngarkimi+Sipëria"
+    IDS_ST_ULSLOTSNOOVERHEAD "Ngarkim"
+    IDS_ST_ULFRIEND         "Ngarkimi i shokut"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATS_ACTUL_ZZ      "Ngarkimet aktive/Nevojat për mbushjen e shtrirjes së bandës: %i"
+    IDS_STATS_TOTALUL       "Ngarkimet totale: %i"
+    IDS_CHAT_DOWNLOADED     "Të shkarkuar:"
+    IDS_CHAT_UPLOADED       "Të ngarkuar:"
+    IDS_CHAT_IDENT          "Identifikimi:"
+    IDS_CHAT_CLIENT         "Klienti:"
+    IDS_MAXHALFOPENCONS     "Lidhjet maks. gjysmë të hapura"
+    IDS_WIZ_STARTWITHWINDOWS
+                            "Mundësoje këtë që eMule të punojë kur ju nisni Windows-in. [Tipike: e pamundësuar]"
+    IDS_KAD_WAITCBK         "Prit Marrjen e Kad-it"
+    IDS_KAD_TOOMANDYKADLKPS "Shumë Shikime në Kad"
+    IDS_PCDS_CLIENTWAIT     "KlientPrit"
+    IDS_PCDS_CACHEWAIT      "DepoPrit"
+    IDS_CACHE               "Depoja"
+    IDS_INDEXED             "E treguar"
+    IDS_KADINFO_SRC         "\tBurimi: %u\r\n"
+    IDS_KADINFO_KEYW        "\tFjala: %u\r\n"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STARTWITHWINDOWS    "Nis me Windows-in"
+    IDS_ADDSRCMANUALLY      "Shto Burime..."
+    IDS_BUDDY               "Plako"
+    IDS_BUDDYNONE           "Asnjë"
+    IDS_INFO                "Info"
+    IDS_HALF                "Gjysmë"
+    IDS_CONCOMPL            "Përfun"
+    IDS_KADSTATUS_STOPPING  "Ndalim"
+    IDS_KADSTATUS_ACTIVE    "Aktiv"
+    IDS_FORMAT              "Formati"
+    IDS_META_COLLECTION     "Koleksioni"
+    IDS_META_PARTPATH       "Shtegu u pjesës"
+    IDS_META_PARTHASH       "Hashi i pjesës"
+    IDS_META_GAPSTART       "Fillimi i hendekut"
+    IDS_META_GAPEND         "Fundi i hendekut"
+    IDS_FAIL                "Dështim"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_META_PREFERENCES    "Parapëlqime"
+    IDS_META_VERSION        "Versioni"
+    IDS_META_TEMPFILE       "Skedari i përkohshëm"
+    IDS_META_SERVERPORT     "Porti i Serverit"
+    IDS_META_SERVERIP       "IP-ja e Serverit"
+    IDS_META_SRCUDPPORT     "Porti i Burimit UDP"
+    IDS_META_SRCTCPPORT     "Porti i Burimit TCP"
+    IDS_META_SRCIP          "IP-ja e Burimit"
+    IDS_META_SRCTYPE        "Lloji i Burimit"
+    IDS_SEARCH_UNICODE      "Kërko me Unicode"
+    IDS_PF_ADVANCEDCALC     "Përdor metodën e llogaritjes së avancuar për kohën e mbetur"
+    IDS_PERSEC              "/s"
+    IDS_LD_ED2KLINK         "Linku ED2K"
+    IDS_LD_COPYCLIPBOARD    "Kopjoje në Fushëkapje"
+    IDS_LD_HOSTNAME         "Përdor emrin e të ftuarit (nga parapëlqimet) sesa IP-në kur krijon një burim-link"
+    IDS_SAVEACFAILED        "Dështim në ruajtjen e Hashset-it AICH!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_IACHHASH            "Hashi AICH"
+    IDS_BYTESPERSEC         "B/s"
+    IDS_KBYTESPERSEC        "KB/s"
+    IDS_MBYTESPERSEC        "MB/s"
+    IDS_GBYTESPERSEC        "GB/s"
+    IDS_TBYTESPERSEC        "TB/s"
+    IDS_STATS_MINORCLIENTS  "Minor"
+    IDS_AICH_SYNCTOTAL      "U gjetën %i skedarë pa Hashset të vlefshëm AICH, rigrirje e skedarëve që tani"
+    IDS_AICH_CALCFILE       "Llogaritje e Hashti AICH për skedarin %s"
+    IDS_AICH_WARNUSER       "Që prej versionit 0.44a, eMule përdor një hash-skedar shtojcë që ndihmon shumë në pakësimin e humbjes së të dhënave kur diktohet një korrupsion. Për shkak se ju po ridatoni nga një version më i hershëm, eMule duhet t'i rigrijë gjithë skedarët tuaj të shpërndarë për të llogaritur hashin e ri. Kjo mund të zgjasë paksa por është veprim i njëhershëm.  "
+    IDS_AICH_WORKED         "AICH riktheu me sukses %s nga %s nga pjesa %u për %s"
+    IDS_SOURCECLIENT        "Klienti-Burim"
+    IDS_USERSIP             "IP-ja e Përdoruesve"
+    IDS_FEATURES            "Veçori"
+    IDS_IRC_NEWNICK         "Zgjidh një nofkë IRC."
+    IDS_IRC_NEWNICKDESC     "Duhet të jetë një fjalë me më pak se 20 shkronja që përmbajnë (A-Z, 0-9). Sërish mund të ndryshohet tek Parapëlqimet->Irc."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SPARSEPARTFILES     "Krijo pjesët e reja të skedarit si 'të rralla' (vetëm NTFS)"
+    IDS_ASPECTRATIO         "Raporti i Aspektit"
+    IDS_NEGATEFILTER        "Mohoje Filtrin"
+    IDS_SEENCOMPL           "Përherë e Parë në Përfundim"
+    IDS_SELSKINPROFILEDIR   "Zgjidh direktorinë e profilit të lëvores"
+    IDS_ASKDLINCOMPLETE     "Skedar potencialisht i papërfunduar:\r\n\r\n%s\r\n\r\nKy skedar supozohet të jetë i paplotë në rrjet dhe prandaj ka shumë mundësi që të mos jetë shkarkuar me sukses! Vërtet doni ta shkarkoni këtë skedar?"
+    IDS_DEADSOURCES         "Burimet e Mpira"
+    IDS_LARGEICONS          "Ikona të Mëdha"
+    IDS_SMALLICONS          "Ikona të Vogla"
+    IDS_SHORTTAGS           "Pulla të shkurtra"
+    IDS_THELOAD             "Hape"
+    IDS_PACKSENT            "Paketat e Dërguara"
+    IDS_RESPONSES           "Përgjigje"
+    IDS_EXTRACT_META_DATA   "Nxirr 'meta data'"
+    IDS_META_DATA_MEDIADET  "DirectShow (për gjithë skedarët e tjerë audio/video)"
+    IDS_META_DATA_ID3LIB    "Libraria ID3 (vetëm për skedarët audio MPEG)"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_COMCTRL32_DLL_TOOOLD
+                            "Libraria e Kontrolleve të Zakonshme të Windows-it (COMCTL32.DLL) është tepër i vjetër!\r\n\r\neMule diktoi një version të ""librarisë së Kontrolleve të Zakonshme të Windows-it (COMCTL32.DLL)"" që është tepër i vjetër për t'u përdorur siç duhet nga eMule. Për të siguruar funksionim të plotë dhe të pametë të eMule, ne vërtet rekomandojmë që ta ridatoni ""librarinë e Kontrolleve të Zakonshme të Windows-it (COMCTL32.DLL)"" me të paktën versionin 5.8.\r\n\r\nShkarkoje dhe instaloje ridatimin e ""librarisë së Kontrolleve të Zakonshme të Windows-it (COMCTL32.DLL)"" në Qendrën e Shkarkimit Microsoft (R). A doni që ta vizitoni URL-in korrespondues?"
+    IDS_ASREGEXPR           "Si Shprehje e Rregullt"
+    IDS_STATIC_REGEXP       "Shprehje e Rregullt për filtrin e shikimit:"
+    IDS_CARE4ALL            "Vlerësoji Gjithë Skedarët"
+    IDS_REGEXPRESSION       "Shprehje e Rregullt"
+    IDS_SEARCHKAD           "Kad-i Kërkues"
+    IDS_DWL_IPFILTERFILE    "Shkarkim i skedar-filtrit IP"
+    IDS_DWLIPFILTERFAILED   "Shkarkimi i filtrit IP dështoi"
+    IDS_FINDBUDDY           "Gjej Plakun"
+    IDS_ERR_IPFILTERZIPEXTR "Dështim në nxerrjen e skedar-filtrit IP nga skedari ZIP i filtrit të shkarkuar ""%s""."
+    IDS_ERR_IPFILTERCONTENTERR
+                            "Skedar-filtri i shkarkuar IP ""%s"" është një skedar ZIP me përmbajtje të papritur."
+    IDS_STORENOTES          "Shënime Depozitimi"
+    IDS_NOTES               "Shënime"
+    IDS_KADSEARCHALREADY    "Një tjetër kërkim po vijon që më parë. Ju lutemi provoni sërish më vonë!"
+    IDS_WEB_SHUTDOWN        "Mbylle eMule"
+    IDS_WEB_REBOOT          "Rinise sistemin"
+    IDS_SETPFSLIMIT         "Kufiri i Burimit..."
+    IDS_SETPFSLIMITEXPLAINED
+                            "Ju lutemi futni kufirin e ri të burimit për skedarët e zgjedhur ! \n(vëre në 0 për të përdorur zgjedhje globale)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Pjesët e Shpërndara"
+    IDS_INCOMING_FILES      "Skedarët e Ardhur"
+    IDS_INCOMPLETE_FILES    "Skedarët e Papërfunduar"
+    IDS_SHARED_DIRECTORIES  "Direktoritë e Shpërndara"
+    IDS_SHAREDIR            "Shpërndaje Direktorinë"
+    IDS_SHAREDIRSUB         "Shpërnda me nëndirektori"
+    IDS_UNSHAREDIR          "Mos e shpërnda direktorinë"
+    IDS_UNSHAREDIRSUB       "Mos e shpërnda me nëndirektori"
+    IDS_ALLSHAREDFILES      "Gjithë Skedarët e Shpërndarë"
+    IDS_ALLDIRECTORIES      "Gjithë Direktoritë"
+    IDS_SEARCHRELATED       "Gjej skedarë kësisoj"
+    IDS_RELATED             "Kësisoj"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Lista e Koleksionit"
+    IDS_SEARCH_EMULECOLLECTION "Koleksion"
+    IDS_COLL_REPLACEEXISTING "A doni ta zëvendësoni skedarin ekzistues?"
+    IDS_COLL_ERR_DELETING   "Një gabim i panjohur në fshirjen e skedarit të vjetër. Doni të dilni pa e ruajtur?"
+    IDS_CREATECOLLECTION    "Krijo Koleksion"
+    IDS_COLL_SIGN           "Jepi Koleksionit Emër dhe Çelës"
+    IDS_AUTHOR              "Autori"
+    IDS_AUTHORKEY           "Çelësi i Autorit"
+    IDS_COLL_ADDINCAT       "Shto shkarkesa të reja në Kategori Koleksioni"
+    IDS_MODIFYCOLLECTION    "Modifiko Koleksionin"
+    IDS_VIEWCOLLECTION      "Shih Koleksionin"
+    IDS_COLL_TEXTFORMAT     "Ruaje koleksionin në Format Teksti të Thjeshtë"
+    IDS_SEARCHAUTHORCOLLECTION "Kërko Koleksionet e Autorit"
+    IDS_ERR_DUPL_FILES      "Skedarë identikë të shpërndarë: ""%s"" dhe ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "SensShpejtësiNgarkimi: Kursi i gjurmimit dështoi shum herë. Çaktivizim i SensShpejtësisë së Ngarkimit."
+    IDS_USS_STARTING        "SensShpejtësiNgarkimi: U krye me përgatitje. Nisje e kontrollit të shpejtësisë së ngarkimit. (60 sekondat e para do të jenë me mënyrë reagimi të shpejtë)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "SensShpejtësiNgarkimi: U diktua kufi i rritur i ngarkimit në 'prefs'. Shkuarje në mënyrë reagimi të shpejtë për 60 sekonda."
+    IDS_USS_STATE_PREPARING "Gati..."
+    IDS_USS_STATE_WAITING   "Pritje..."
+    IDS_USS_STATE_ERROR     "Gabim!"
+END
+
+#endif    // Albanisch resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "..\version.h"
+#include "lang.rc2"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

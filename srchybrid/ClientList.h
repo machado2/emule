@@ -45,21 +45,23 @@ public:
 	uint32				m_cBadRequest;
 };
 
+enum buddyState
+{
+	Disconnected,
+	Connecting,
+	Connected
+};
+
 // ----------------------CClientList Class---------------
 class CClientList
 {
 	friend class CClientListCtrl;
 
-	enum buddyState
-	{
-		Disconnected,
-		Connecting,
-		Connected
-	};
-
 public:
 	CClientList();
 	~CClientList();
+
+	// Clients
 	void	AddClient(CUpDownClient* toadd,bool bSkipDupTest = false);
 	void	RemoveClient(CUpDownClient* toremove, LPCTSTR pszReason = NULL);
 	void	GetStatistics(uint32& totalclient, int stats[NUM_CLIENTLIST_STATS],
@@ -77,14 +79,13 @@ public:
 	CUpDownClient* FindClientByServerID(uint32 uServerIP, uint32 uUserID) const;
 	CUpDownClient* FindClientByUserID_KadPort(uint32 clientID,uint16 kadPort) const;
 	CUpDownClient* FindClientByIP_KadPort(uint32 ip, uint16 port) const;
-	CUpDownClient* GetRandomKadClient() const;
-//	void	GetClientListByFileID(CUpDownClientPtrList *clientlist, const uchar *fileid);	// #zegzav:updcliuplst
 
-	// banned clients
+	// Banned clients
 	void	AddBannedClient(uint32 dwIP);
 	bool	IsBannedClient(uint32 dwIP) const;
 	void	RemoveBannedClient(uint32 dwIP);
-	UINT	GetBannedCount() const		{return m_bannedList.GetCount(); }
+	UINT	GetBannedCount() const		{ return m_bannedList.GetCount(); }
+	void	RemoveAllBannedClients();
 
 	// Tracked clients
 	void	AddTrackClient(CUpDownClient* toadd);
@@ -92,25 +93,27 @@ public:
 	UINT	GetClientsFromIP(uint32 dwIP) const;
 	void	TrackBadRequest(const CUpDownClient* upcClient, sint32 nIncreaseCounter);
 	uint32	GetBadRequests(const CUpDownClient* upcClient) const;
+	UINT	GetTrackedCount() const		{ return m_trackedClientsList.GetCount(); }
+	void	RemoveAllTrackedClients();
 
-	void	Process();
+	// Kad client list, buddy handling
 	void	RequestTCP(Kademlia::CContact* contact);
 	void	RequestBuddy(Kademlia::CContact* contact);
 	void	IncomingBuddy(Kademlia::CContact* contact, Kademlia::CUInt128* buddyID);
 	void	RemoveFromKadList(CUpDownClient* torem);
 	void	AddToKadList(CUpDownClient* toadd);
-	uint8	GetBuddyStatus() {return m_bHaveBuddy;}
-	void	DoCallBack( const uchar* hashid );
-	CUpDownClient* GetBuddy() {return m_pBuddy;}
+	uint8	GetBuddyStatus()			{ return m_nBuddyStatus; }
+	CUpDownClient* GetBuddy()			{ return m_pBuddy; }
 
-	bool	IsValidClient(CUpDownClient* tocheck);
-	void	Debug_SocketDeleted(CClientReqSocket* deleted);
+	void	Process();
+	bool	IsValidClient(CUpDownClient* tocheck) const;
+	void	Debug_SocketDeleted(CClientReqSocket* deleted) const;
 
     // ZZ:UploadSpeedSense -->
     bool GiveClientsForTraceRoute();
 	// ZZ:UploadSpeedSense <--
 
-    void ProcessA4AFClients(); // ZZ:DownloadManager
+    void	ProcessA4AFClients() const; // ZZ:DownloadManager
 	CDeadSourceList	m_globDeadSourceList;
 
 protected:
@@ -123,8 +126,7 @@ private:
 	uint32	m_dwLastBannCleanUp;
 	uint32	m_dwLastTrackedCleanUp;
 	uint32 m_dwLastClientCleanUp;
-	uint8 m_bHaveBuddy;
-	CUpDownClientPtrList KadList;
-	CCriticalSection m_RequestTCPLock;
 	CUpDownClient* m_pBuddy;
+	uint8 m_nBuddyStatus;
+	CUpDownClientPtrList m_KadList;
 };

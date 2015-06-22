@@ -43,6 +43,7 @@ BEGIN_MESSAGE_MAP(CPPgDirectories, CPropertyPage)
 	ON_BN_CLICKED(IDC_UNCADD,	OnBnClickedAddUNC)
 	ON_BN_CLICKED(IDC_UNCREM,	OnBnClickedRemUNC)
 	ON_WM_HELPINFO()
+	ON_BN_CLICKED(IDC_SELTEMPDIRADD, OnBnClickedSeltempdiradd)
 END_MESSAGE_MAP()
 
 CPPgDirectories::CPPgDirectories()
@@ -74,6 +75,8 @@ BOOL CPPgDirectories::OnInitDialog()
 	m_ctlUncPaths.InsertColumn(0, GetResString(IDS_UNCFOLDERS), LVCFMT_LEFT, 280, -1); 
 	m_ctlUncPaths.SetExtendedStyle(LVS_EX_FULLROWSELECT);
 
+	GetDlgItem(IDC_SELTEMPDIRADD)->ShowWindow(thePrefs.IsExtControlsEnabled()?SW_SHOW:SW_HIDE);
+
 	LoadSettings();
 	Localize();
 
@@ -84,7 +87,16 @@ BOOL CPPgDirectories::OnInitDialog()
 void CPPgDirectories::LoadSettings(void)
 {
 	GetDlgItem(IDC_INCFILES)->SetWindowText(thePrefs.incomingdir);
-	GetDlgItem(IDC_TEMPFILES)->SetWindowText(thePrefs.tempdir);
+
+	CString tempfolders;
+	for (int i=0;i<thePrefs.tempdir.GetCount();i++) {
+		tempfolders.Append(thePrefs.GetTempDir(i));
+		if (i+1<thePrefs.tempdir.GetCount())
+			tempfolders.Append(_T("|") );
+	}
+
+	GetDlgItem(IDC_TEMPFILES)->SetWindowText(tempfolders);
+
 	m_ShareSelector.SetSharedDirectories(&thePrefs.shareddir_list);
 	FillUncList();
 }
@@ -107,7 +119,7 @@ void CPPgDirectories::OnBnClickedSeltempdir()
 
 BOOL CPPgDirectories::OnApply()
 {
-	CString testtempdirchanged=thePrefs.GetTempDir();
+	bool testtempdirchanged=false;
 	CString testincdirchanged=thePrefs.GetIncomingDir();
 
 	CString strIncomingDir;
@@ -121,31 +133,73 @@ BOOL CPPgDirectories::OnApply()
 		return FALSE;
 	}
 	
+	// checking specified tempdir(s)
 	CString strTempDir;
 	GetDlgItemText(IDC_TEMPFILES, strTempDir);
 	if (strTempDir.IsEmpty()){
 		strTempDir = thePrefs.GetAppDir() + _T("temp");
 		SetDlgItemText(IDC_TEMPFILES, strTempDir);
 	}
-	if (thePrefs.IsInstallationDirectory(strTempDir)){
-		AfxMessageBox(GetResString(IDS_WRN_TEMPFILES_RESERVED));
-		return FALSE;
+
+	int curPos=0;
+	CStringArray temptempfolders;
+	CString atmp=strTempDir.Tokenize(_T("|"), curPos);
+	while (!atmp.IsEmpty())
+	{
+		atmp.Trim();
+		if (!atmp.IsEmpty()) {
+			if (CompareDirectories(strIncomingDir, atmp)==0){
+					AfxMessageBox(GetResString(IDS_WRN_INCTEMP_SAME));
+					return FALSE;
+			}	
+			if (thePrefs.IsInstallationDirectory(atmp)){
+				AfxMessageBox(GetResString(IDS_WRN_TEMPFILES_RESERVED));
+				return FALSE;
+			}
+			bool doubled=false;
+			for (int i=0;i<temptempfolders.GetCount();i++)	// avoid double tempdirs
+				if (temptempfolders.GetAt(i).CompareNoCase(atmp)==0) {
+					doubled=true;
+					break;
+				}
+			if (!doubled) {
+				temptempfolders.Add(atmp);
+				if (thePrefs.tempdir.GetCount()>=temptempfolders.GetCount()) {
+					if( atmp.CompareNoCase(thePrefs.GetTempDir(temptempfolders.GetCount()-1))!=0	)
+						testtempdirchanged=true;
+				} else testtempdirchanged=true;
+
+			}
+		}
+		atmp = strTempDir.Tokenize(_T("|"), curPos);
 	}
 
-	if (CompareDirectories(strIncomingDir, strTempDir)==0){
-		AfxMessageBox(GetResString(IDS_WRN_INCTEMP_SAME));
-		return FALSE;
+	if (temptempfolders.IsEmpty())
+		temptempfolders.Add(strTempDir = thePrefs.GetAppDir() + _T("temp"));
+
+	if (temptempfolders.GetCount()!=thePrefs.tempdir.GetCount())
+		testtempdirchanged=true;
+
+	// applying tempdirs
+	if (testtempdirchanged) {
+		thePrefs.tempdir.RemoveAll();
+		for (int i=0;i<temptempfolders.GetCount();i++) {
+			CString toadd=temptempfolders.GetAt(i);
+			MakeFoldername( toadd.GetBuffer(MAX_PATH) );
+			if (!PathFileExists(toadd))
+				CreateDirectory(toadd,NULL);
+			if (PathFileExists(toadd))
+				thePrefs.tempdir.Add(toadd);
+		}
 	}
 
+	// incomingdir
 	_sntprintf(thePrefs.incomingdir, ARRSIZE(thePrefs.incomingdir), _T("%s"), strIncomingDir);
 	MakeFoldername(thePrefs.incomingdir);
 	_stprintf(thePrefs.GetCategory(0)->incomingpath,_T("%s"),thePrefs.incomingdir);
 
-	_sntprintf(thePrefs.tempdir, ARRSIZE(thePrefs.tempdir), _T("%s"), strTempDir);
-	MakeFoldername(thePrefs.tempdir);
 
 	thePrefs.shareddir_list.RemoveAll();
-
 	m_ShareSelector.GetSharedDirectories(&thePrefs.shareddir_list);
 	for (int i = 0; i < m_ctlUncPaths.GetItemCount(); i++)
 		thePrefs.shareddir_list.AddTail(m_ctlUncPaths.GetItemText(i, 0));
@@ -155,21 +209,28 @@ BOOL CPPgDirectories::OnApply()
 	while (pos){
 		POSITION posLast = pos;
 		const CString& rstrDir = thePrefs.shareddir_list.GetNext(pos);
-		if (thePrefs.IsInstallationDirectory(rstrDir))
+		if (!thePrefs.IsShareableDirectory(rstrDir))
 			thePrefs.shareddir_list.RemoveAt(posLast);
 	}
 
 	theApp.emuledlg->sharedfileswnd->Reload();
 
-	if (testtempdirchanged.CompareNoCase(thePrefs.GetTempDir())!=0)
+	if (testtempdirchanged)
 		AfxMessageBox(GetResString(IDS_SETTINGCHANGED_RESTART));
 	
 	// on changing incoming dir, update incoming dirs of category of the same path
 	if (testincdirchanged.CompareNoCase(thePrefs.GetIncomingDir())!=0) {
 		CString oldpath;
+		bool dontaskagain=false;
 		for (int cat=1; cat<=thePrefs.GetCatCount()-1;cat++){
 			oldpath=CString(thePrefs.GetCatPath(cat));
 			if (oldpath.Left(testincdirchanged.GetLength()).CompareNoCase(testincdirchanged)==0) {
+
+				if (!dontaskagain) {
+					dontaskagain=true;
+					if (AfxMessageBox(GetResString(IDS_UPDATECATINCOMINGDIRS),MB_YESNO)==IDNO)
+						break;
+				}
 				_sntprintf(thePrefs.GetCategory(cat)->incomingpath, ARRSIZE(thePrefs.GetCategory(cat)->incomingpath), _T("%s%s"), thePrefs.GetIncomingDir(), oldpath.Mid(testincdirchanged.GetLength()));
 			}
 		}
@@ -265,4 +326,19 @@ BOOL CPPgDirectories::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	OnHelp();
 	return TRUE;
+}
+
+void CPPgDirectories::OnBnClickedSeltempdiradd()
+{
+	CString paths;
+	GetDlgItemText(IDC_TEMPFILES, paths);
+
+	TCHAR buffer[MAX_PATH] = {0};
+	//GetDlgItemText(IDC_TEMPFILES, buffer, ARRSIZE(buffer));
+
+	if(SelectDir(GetSafeHwnd(),buffer,GetResString(IDS_SELECT_TEMPDIR))) {
+		paths.Append(_T("|"));
+		paths.Append(buffer);
+		SetDlgItemText(IDC_TEMPFILES, paths);
+	}
 }

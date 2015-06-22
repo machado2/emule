@@ -597,7 +597,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Gebruikersnaam:"
     IDS_CD_UHASH            "Gebruikers hash:"
-    IDS_CD_CSOFT            "Client software:"
+    IDS_CD_CSOFT            "Client software"
     IDS_CD_UIP              "IP Adres:"
     IDS_CD_SIP              "Server IP:"
     IDS_CD_VERSION          "Client versie:"
@@ -1124,13 +1124,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Deactiveer Bekende Gebruikers Lijst"
     IDS_DISABLEQUEUELIST    "Deactiveer Wachtrij Lijst"
     IDS_USECREDITSYSTEM     "Gebruik Krediet Systeem (Beloon Verzenders)"
-    IDS_FIRSTAUTODOWN       "Wilt u eMule uw ontvangst prioriteiten laten regelen?\r\rDoor dit te activeren geeft u eMule de mogelijkheid om zeker te zijn dat ontvangsten met veel bronnen niet botsen met ontvangsten met weinig bronnen.\r\rIndien u zojuist heeft geupdate van eMule v0.26 en lager zijn alle ontvangsten standaard op auto-prioriteit gezet.\rDeze optie heeft alleen effect op nieuwe ontvangsten. (Standaard is Ja)"
-    IDS_FIRSTAUTOUP         "Wilt u eMule uw verzend prioriteiten laten regelen?\r\rDoor dit te activeren geeft u eMule de mogelijkheid om zeldzame bestanden sneller te verzenden wat betekent dat populaire bestanden moeilijker te krijgen zullen zijn voor anderen.\rHet uitzetten van deze optie geeft eMule de mogelijkheid om populaire bestanden vaker te verzenden waardoor zeldzame bestanden moeilijker te krijgen zullen zijn voor anderen.\r\rIndien u zojuist heeft geupdate van eMule v0.26 en lager zijn alle gedeelde bestanden standaard op auto-prioriteit gezet.\rDeze optie heeft alleen effect op nieuwe gedeelde bestanden. (Standaard is Ja)"
-    IDS_FIRSTCREDITSYSTEM   "Wilt u mensen belonen die naar u verzenden?\r\rDit is algemeen bekend als het Krediet Systeem. Door deze te activeren helpt u om leechers uit te schakelen. Indien u vooral released zult u deze optie uit moeten zetten.\r\r(Standaard is Ja)"
-    IDS_FIRSTFULLCHUNK      "Wilt u volledige chuncks verzenden?\r\\Het gebruik van Volledige Delen geeft een gebruiker een betere mogelijkheid om een bestandsdeel volledig te ontvangen. Door deze optie uit te zetten zal uw wachtrij sneller roteren. Indien u vooral released zult u deze optie aan moeten zetten.\r\r(Standaard is Ja)"
-    IDS_FIRSTSAFECON        "Wilt u eMule laten verbinden via Veilig Verbinden?\r\rHet activeren van deze optie geeft eMule de mogelijkheid om sneller met servers te verbinden maar kan tot gevolg hebben dat u vaker een onterecht Laag-ID krijgt.\r\r(Standaard is Nee)"
+    IDS_FIRSTAUTODOWN       "Enable this option if you want eMule to manage your download priorities.\n\nTurning this on will allow eMule to make sure downloads with a lot of sources do not interfere with downloads that have few sources. This option will only affect future downloads."
+    IDS_FIRSTAUTOUP         "Enable this option if you want eMule to manage your upload priorities.\n\nTurning this on will allow eMule to boost rare files meaning popular files will be harder for other people to get. Turning this off will allow eMule to upload popular files more often meaning rare files will be harder for other people to get. This option will only affect future shared files."
+    IDS_FIRSTCREDITSYSTEM   "Do you want to reward people that upload to you?\n\nThis is commonly known as the Credit System. Turning this on will help fight against leachers. If you are a dedicated releaser, you will want to turn this off."
+    IDS_FIRSTFULLCHUNK      "Enable this option if you want to upload full chunks.\n\nUsing full chunk gives the client a better chance to complete a chunk. Turning this off will help rotate your queue faster. If you are a dedicated releaser, you will want to turn this on."
+    IDS_FIRSTSAFECON        "Enable this option if you want eMule to connect using Safe Connect.\n\nTurning this feature off allows eMule to connect to servers a little faster, but can cause you to get more false LowID connects."
     IDS_FIRSTRUNASSIST      "Wilt u bij de eerste installatie de Instellingen-wizard gebruiken?"
-    IDS_FIRSTAUTOCON        "Wilt u eMule bij het opstarten automatisch laten verbinden?\r\r(Standaard is Nee)"
+    IDS_FIRSTAUTOCON        "Enable this option if you want eMule to connect at startup."
     IDS_FIRSTCOMPLETE       "U heeft de Instellingen-Wizard afgerond.\r\rAll these settings and more can be changed by clicking the preferences icon. For explainations and support check out the help by pressing F1 in eMule!"
 END
 
@@ -1326,7 +1326,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problematisch"
     IDS_LONGHRS             "Uren"
     IDS_STATS_LARGESTFILE   "Grootste Gedeelde Bestand"
-    IDS_CLIENTSOFTWARE      "Gebruikers Software"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Deelbestand"
     IDS_STATS_DATASOURCE    "Data Bron"
     IDS_STATS_DSFILE        "Afgerond Bestand"
@@ -1350,7 +1350,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Kopieer alle Statistieken"
     IDS_STATS_MNUTREEHTML   "HTML Mogelijkheden"
     IDS_STATS_EXPORT2HTML   "Exporteer alle Statistieken"
-    IDS_STATS_EXPORTVIS     "Exporteer alles wat Zichtbaar is"
     IDS_STATS_MNUTREECPYVIS "Kopieer alles wat Zichtbaar is"
     IDS_STATS_MNUTREEEXPANDALL "Toon Alle Secties volledig"
     IDS_STATS_MNUTREECOLLAPSEALL "Klap Alle Secties in elkaar"
@@ -1404,13 +1403,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Versie"
-    IDS_ALL_A4AF_TO_THIS    "Verplaats nu alle bronnen naar dit bestand"
     IDS_PASTE               "Paste"
-    IDS_ALL_A4AF_TO_OTHER   "Verplaats nu alle bronnen naar een willekeurig ander bestand"
-    IDS_ALL_A4AF_AUTO       "Verplaats automatisch alle (A4AF) bronnen naar dit bestand"
-    IDS_SWAP_A4AF_TO_THIS   "Verplaats bron nu naar dit bestand"
-    IDS_SWAP_A4AF_TO_OTHER  "Verplaats bron nu naar een willekeurig ander bestand"
-    IDS_A4AF                "Bron afhandeling (A4AF)"
+    IDS_A4AF                "Bron afhandeling"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "Activeer MobileMule"
     IDS_AUTOCAT_LABEL       "Auto Cat-Toekenning (filter, gescheiden door |)"
@@ -1611,7 +1605,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Log secure ident"
     IDS_LOG_FILTERED_IPS    "Log filtered and/or ignored IPs"
     IDS_LOG_FILE_SAVING     "Log file save actions"
-    IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|All Files (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "All IP Filter Files (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|eMule IP Filter Files (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian Files (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Text Files (*.txt)|*.txt|ZIP Files (*.zip;*.gz)|*.zip;*.gz|All Files (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "Do you really want to delete the selected IP filters?"
     IDS_TOTAL_IPFILTER_LABEL "Total IP filters:"
     IDS_TOTAL_IPS_LABEL     "Total IPs:"
@@ -1724,7 +1718,7 @@ STRINGTABLE
 BEGIN
     IDS_MAXHALFOPENCONS     "Max. Half Open Connections"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Enable this so that eMule will run when you start windows. [Default disabled]"
+                            "Enable this so that eMule will run when you start windows."
     IDS_KAD_WAITCBK         "Wait Callback Kad"
     IDS_KAD_TOOMANDYKADLKPS "Too Many Kad Lookups"
     IDS_PCDS_CLIENTWAIT     "ClientWait"
@@ -1843,6 +1837,91 @@ BEGIN
     IDS_NOTES               "Notes"
     IDS_KADSEARCHALREADY    "Another search is already in progress. Please try again later!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Shutdown eMule"
+    IDS_WEB_REBOOT          "Reboot system"
+    IDS_WEB_SHUTDOWNSYSTEM  "Shutdown system"
+    IDS_WEB_ADMINMENU       "Admin Menu"
+    IDS_WEB_MAIN_CLOSE      "Do you really want eMule to terminate?"
+    IDS_WEB_MAIN_REBOOT     "Do you really want the system to reboot?"
+    IDS_WEB_MAIN_SHUTDOWN   "Do you really want the system to shutdown?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Show banned clients on queue"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Show friends on queue"
+    IDS_WEB_SESSIONTIMEOUT  "Session Timeout"
+    IDS_WEB_ALLOWHILEVFUNC  "Allow exit eMule, reboot and shutdown"
+    IDS_SETPFSLIMIT         "Source Limit..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Please enter the new source limit for the selected file(s) ! \n(set to 0 to use global setting)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Do you want incoming folders included in the old incoming folder to be updated now?"
+    IDS_USESPEECH           "Speak notification message"
+    IDS_CONDTCPACCEPT       "Fast connection reject"
+    IDS_TCPIP_CONNS         "TCP/IP connections"
+    IDS_ERR_DELFILE         "Failed to delete file ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Do you want to cleanup the filenames of the selected files?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s seems to be corrupted and will be replaced"
+    IDS_UPLOADING           "Uploading"
+    IDS_CANCELLED           "Cancelled"
+    IDS_PW_REMEMBERDOWNLOADED "Remember downloaded files"
+    IDS_PW_REMEMBERCANCELLED "Remember cancelled files"
+    IDS_AVAILABLEPARTS      "Available Parts"
+    IDS_NOSOUND             "No sound"
+    IDS_PW_RECEIVERADDRESS  "Recipient address:"
+    IDS_PW_ENABLEEMAIL      "Enable Email Notifications"
+    IDS_EMULENOTIFICATION   "eMule Notification"
+    IDS_PW_EMAILNOTIFICATIONS "Email Notifications"
+    IDS_PW_SMTPSERVER       "SMTP-Server:"
+    IDS_PW_SENDERADDRESS    "Sender address:"
+    IDS_PW_SHOWTRANSTOOLBAR "Show additional toolbar on transferwindow"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Shared parts"
+    IDS_INCOMING_FILES      "Incoming Files"
+    IDS_INCOMPLETE_FILES    "Incomplete Files"
+    IDS_SHARED_DIRECTORIES  "Shared Directories"
+    IDS_SHAREDIR            "Share directory"
+    IDS_SHAREDIRSUB         "Share with subdirectories"
+    IDS_UNSHAREDIR          "Unshare directory"
+    IDS_UNSHAREDIRSUB       "Unshare with subdirectories"
+    IDS_ALLSHAREDFILES      "All Shared Files"
+    IDS_ALLDIRECTORIES      "All Directories"
+    IDS_SEARCHRELATED       "Find related files"
+    IDS_RELATED             "Related"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Collection List"
+    IDS_SEARCH_EMULECOLLECTION "Collection"
+    IDS_COLL_REPLACEEXISTING "Do you want to replace existing file?"
+    IDS_COLL_ERR_DELETING   "Some Unknown error in deleting old file. Exit without saving?"
+    IDS_CREATECOLLECTION    "Create Collection"
+    IDS_COLL_SIGN           "Sign Collection with Name and Key"
+    IDS_AUTHOR              "Author"
+    IDS_AUTHORKEY           "Author Key"
+    IDS_COLL_ADDINCAT       "Add new downloads in a Collection Category"
+    IDS_MODIFYCOLLECTION    "Modify Collection"
+    IDS_VIEWCOLLECTION      "View Collection"
+    IDS_COLL_TEXTFORMAT     "Save collection In A Simple Text Format"
+    IDS_SEARCHAUTHORCOLLECTION "Search Author's Collections"
+    IDS_ERR_DUPL_FILES      "Duplicate shared files: ""%s"" and ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting failed too many times. Disabling Upload SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Done with preparations. Starting control of upload speed. (First 60 seconds will be in fast reaction mode)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Raised upload limit in prefs detected. Going into fast reaction mode for 60 seconds."
+    IDS_USS_STATE_PREPARING "Preparing..."
+    IDS_USS_STATE_WAITING   "Waiting..."
+    IDS_USS_STATE_ERROR     "Error!"
 END
 
 #endif    // Dutch (Netherlands) resources

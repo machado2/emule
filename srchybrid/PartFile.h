@@ -24,7 +24,7 @@ enum EPartFileStatus{
 	PS_WAITINGFORHASH	= 2,
 	PS_HASHING			= 3,
 	PS_ERROR			= 4,
-	PS_INSUFFICIENT		= 5,	// SLUGFILLER: checkDiskspace
+	PS_INSUFFICIENT		= 5,
 	PS_UNKNOWN			= 6,
 	PS_PAUSED			= 7,
 	PS_COMPLETING		= 8,
@@ -104,10 +104,10 @@ class CPartFile : public CKnownFile
 
 	friend class CPartFileConvert;
 public:
-	CPartFile();
-	CPartFile(CSearchFile* searchresult);  //used when downloading a new file
-	CPartFile(CString edonkeylink);
-	CPartFile(class CED2KFileLink* fileLink);
+	CPartFile(uint8 cat=0);
+	CPartFile(CSearchFile* searchresult,uint8 cat=0);  //used when downloading a new file
+	CPartFile(CString edonkeylink,uint8 cat=0);
+	CPartFile(class CED2KFileLink* fileLink,uint8 cat=0);
 	virtual ~CPartFile();
 
 	bool	IsPartFile() const { return !(status == PS_COMPLETE); }
@@ -121,12 +121,13 @@ public:
 	// full path to part.met file or completed file
 	const CString& GetFullName() const { return m_fullname; }
 	void	SetFullName(CString name) { m_fullname = name; }
+	CString	GetTempPath() const;
 
 	// local file system related properties
 	bool	IsNormalFile() const { return (m_dwFileAttributes & (FILE_ATTRIBUTE_COMPRESSED | FILE_ATTRIBUTE_SPARSE_FILE)) == 0; }
 	uint64	GetRealFileSize() const;
 	void	GetSizeToTransferAndNeededSpace(uint32& pui32SizeToTransfer, uint32& pui32NeededSpace) const;
-	uint32	GetNeededSpace() const; // SLUGFILLER: checkDiskspace
+	uint32	GetNeededSpace() const;
 
 	// last file modification time (NT's version of UTC), to be used for stats only!
 	CTime	GetCFileDate() const { return CTime(m_tLastModified); }
@@ -136,7 +137,7 @@ public:
 	CTime	GetCrCFileDate() const { return CTime(m_tCreated); }
 	uint32	GetCrFileDate() const { return m_tCreated; }
 
-	void	InitializeFromLink(CED2KFileLink* fileLink);
+	void	InitializeFromLink(CED2KFileLink* fileLink, uint8 cat=0);
 	bool	CreateFromFile(LPCTSTR directory, LPCTSTR filename, LPVOID pvProgressParam) {return false;}// not supported in this class
 	bool	LoadFromFile(FILE* file) { return false; }
 	bool	WriteToFile(FILE* file) { return false; }
@@ -152,9 +153,10 @@ public:
 	void	FillGap(uint32 start, uint32 end);
 	void	DrawStatusBar(CDC* dc, LPCRECT rect, bool bFlat) /*const*/;
 	virtual void	DrawShareStatusBar(CDC* dc, LPCRECT rect, bool onlygreyrect, bool	 bFlat) const;
-	bool	IsComplete(uint32 start, uint32 end) const;
+	bool	IsComplete(uint32 start, uint32 end, bool bIgnoreBufferedData) const;
 	bool	IsPureGap(uint32 start, uint32 end) const;
 	bool	IsAlreadyRequested(uint32 start, uint32 end) const;
+    bool    ShrinkToAvoidAlreadyRequested(uint32& start, uint32& end) const;
 	bool	IsCorruptedPart(uint16 partnumber) const;
 	uint32	GetTotalGapSizeInRange(uint32 uRangeStart, uint32 uRangeEnd) const;
 	uint32	GetTotalGapSizeInPart(UINT uPart) const;
@@ -170,7 +172,8 @@ public:
 	static bool CanAddSource(uint32 userid, uint16 port, uint32 serverip, uint16 serverport, UINT* pdebug_lowiddropped = NULL, bool Ed2kID = true);
 	
 	EPartFileStatus	GetStatus(bool ignorepause = false) const;
-	void	SetStatus(EPartFileStatus in);
+	void	SetStatus(EPartFileStatus eStatus);		// set status and update GUI
+	void	_SetStatus(EPartFileStatus eStatus);	// set status and do *not* update GUI
 	void	NotifyStatusChange();
 	bool	IsStopped() const { return stopped; }
 	bool	GetCompletionError() const { return m_bCompletionError; }
@@ -228,8 +231,8 @@ public:
 	void	ResumeFile(bool resort = true);
 	void	ResumeFileInsufficient();
 
-	virtual Packet* CreateSrcInfoPacket(CUpDownClient* forClient) const;
-	void	AddClientSources(CSafeMemFile* sources, uint8 sourceexchangeversion, CUpDownClient* pClient = NULL);
+	virtual Packet* CreateSrcInfoPacket(const CUpDownClient* forClient) const;
+	void	AddClientSources(CSafeMemFile* sources, uint8 sourceexchangeversion, const CUpDownClient* pClient = NULL);
 
 	uint16	GetAvailablePartCount() const { return availablePartsCount; }
 	void	UpdateAvailablePartsCount();
@@ -238,26 +241,17 @@ public:
 	void	SetLastAnsweredTime() { m_ClientSrcAnswered = ::GetTickCount(); }
 	void	SetLastAnsweredTimeTimeout();
 
-	uint64	GetCorruptionLoss() const { return m_uCorruptionLoss; }
-	uint64	GetCompressionGain() const { return m_uCompressionGain; }
+	UINT	GetCorruptionLoss() const { return m_uCorruptionLoss; }
+	UINT	GetCompressionGain() const { return m_uCompressionGain; }
 	uint32	GetRecoveredPartsByICH() const { return m_uPartsSavedDueICH; }
 
-	bool	HasComment() const { return hasComment; }
-	void	SetHasComment(bool in) { hasComment = in; }
-
-	bool	HasRating() const { return hasRating; }
-	void	SetHasRating(bool in) { hasRating = in; }
-	bool	HasBadRating() const { return hasBadRating; }
-	void	UpdateFileRatingCommentAvail();
+	virtual void	UpdateFileRatingCommentAvail();
 
 	void	AddDownloadingSource(CUpDownClient* client);
 	void	RemoveDownloadingSource(CUpDownClient* client);
 
-	bool	IsA4AFAuto() const { return m_is_A4AF_auto; }
-	void	SetA4AFAuto(bool in) { m_is_A4AF_auto = in; }
-
 	CString GetProgressString(uint16 size) const;
-	CString GetInfoSummary(CPartFile* partfile) const;
+	CString GetInfoSummary() const;
 
 //	int		GetCommonFilePenalty() const;
 	void	UpdateDisplayedInfo(bool force = false);
@@ -303,11 +297,17 @@ public:
 	bool	hashsetneeded;
     bool    AllowSwapForSourceExchange() { return ::GetTickCount()-lastSwapForSourceExchangeTick > 30*1000; } // ZZ:DownloadManager
     void    SetSwapForSourceExchangeTick() { lastSwapForSourceExchangeTick = ::GetTickCount(); } // ZZ:DownloadManager
+	
+	uint16  SetPrivateMaxSources(uint32 in)	{ return m_uMaxSources=in; } 
+	uint16  GetPrivateMaxSources() const	{ return m_uMaxSources; } 
+	uint16	GetMaxSources() const;
+	uint16	GetMaxSourcePerFileSoft() const;
+	uint16	GetMaxSourcePerFileUDP() const;
 
     bool    GetPreviewPrio() const { return m_bpreviewprio; }
 	void    SetPreviewPrio(bool in) { m_bpreviewprio=in; }
 
-    static int RightFileHasHigherPrio(CPartFile* left, CPartFile* right);
+    static bool RightFileHasHigherPrio(CPartFile* left, CPartFile* right);
 
 	CDeadSourceList	m_DeadSourceList;
 
@@ -320,7 +320,7 @@ public:
 protected:
 	bool	GetNextEmptyBlockInPart(uint16 partnumber,Requested_Block_Struct* result) const;
 	void	CompleteFile(bool hashingdone);
-	void	CreatePartFile();
+	void	CreatePartFile(uint8 cat=0);
 	void	Init();
 
 private:
@@ -336,16 +336,17 @@ private:
 	uint16	count;
 	uint16	m_anStates[STATES_COUNT];
 	uint32	completedsize;
-	uint64	m_uCorruptionLoss;
-	uint64	m_uCompressionGain;
+	UINT	m_uCorruptionLoss;
+	UINT	m_uCompressionGain;
 	uint32	m_uPartsSavedDueICH;
 	uint32	datarate;
 	CString m_fullname;
 	CString m_partmetfilename;
 	uint32	m_uTransferred;
+	uint16  m_uMaxSources;
 	bool	paused;
 	bool	stopped;
-	bool	insufficient; // SLUGFILLER: checkDiskspace
+	bool	insufficient;
 	bool	m_bCompletionError;
 	uint8	m_iDownPriority;
 	bool	m_bAutoDownPriority;
@@ -360,10 +361,6 @@ private:
 	CList<uint16, uint16> corrupted_list;
 	uint32	m_ClientSrcAnswered;
 	uint16	availablePartsCount;
-	bool	hasRating;
-	bool	hasBadRating;
-	bool	hasComment;
-	bool	m_is_A4AF_auto;
 	CWinThread* m_AllocateThread;
 	DWORD	m_lastRefreshedDLDisplay;
 	CUpDownClientPtrList m_downloadingSourceList;

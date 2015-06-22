@@ -59,6 +59,7 @@ CQueueListCtrl::CQueueListCtrl()
 
 void CQueueListCtrl::Init()
 {
+	SetName(_T("QueueListCtrl"));
 	CImageList ilDummyImageList; //dummy list for getting the proper height of listview entries
 	ilDummyImageList.Create(1, theApp.GetSmallSytemIconSize().cy,theApp.m_iDfltImageListColorFlags|ILC_MASK, 1, 1); 
 	SetImageList(&ilDummyImageList, LVSIL_SMALL);
@@ -79,25 +80,16 @@ void CQueueListCtrl::Init()
 
 	SetAllIcons();
 	Localize();
-	LoadSettings(CPreferences::tableQueue);
+	LoadSettings();
 	// Barry - Use preferred sort order from preferences
-	int sortItem = thePrefs.GetColumnSortItem(CPreferences::tableQueue);
-	bool sortAscending = thePrefs.GetColumnSortAscending(CPreferences::tableQueue);
-	SetSortArrow(sortItem, sortAscending);
-	SortItems(SortProc, sortItem + (sortAscending ? 0:100));
+	SetSortArrow();
+	SortItems(SortProc, GetSortItem() + (GetSortAscending() ? 0:100));
 }
 
 CQueueListCtrl::~CQueueListCtrl()
 {
-	// Barry - Kill the timer that was created
-	try
-	{
-		if (m_hTimer)
-			::KillTimer(NULL, m_hTimer);
-	}
-	catch(...){
-		ASSERT(0);
-	}
+	if (m_hTimer)
+		VERIFY( ::KillTimer(NULL, m_hTimer) );
 }
 
 void CQueueListCtrl::OnSysColorChange()
@@ -205,7 +197,7 @@ void CQueueListCtrl::AddClient(/*const*/ CUpDownClient* client, bool resetclient
 	int iItemCount = GetItemCount();
 	int iItem = InsertItem(LVIF_TEXT|LVIF_PARAM,iItemCount,LPSTR_TEXTCALLBACK,0,0,0,(LPARAM)client);
 	Update(iItem);
-	theApp.emuledlg->transferwnd->UpdateListCount(2, iItemCount+1);
+	theApp.emuledlg->transferwnd->UpdateListCount(CTransferWnd::wnd2OnQueue, iItemCount+1);
 }
 
 void CQueueListCtrl::RemoveClient(const CUpDownClient* client)
@@ -219,7 +211,7 @@ void CQueueListCtrl::RemoveClient(const CUpDownClient* client)
 	sint32 result = FindItem(&find);
 	if (result != -1){
 		DeleteItem(result);
-		theApp.emuledlg->transferwnd->UpdateListCount(2);
+		theApp.emuledlg->transferwnd->UpdateListCount(CTransferWnd::wnd2OnQueue);
 	}
 }
 
@@ -245,14 +237,14 @@ void CQueueListCtrl::RefreshClient(const CUpDownClient* client)
 
 void CQueueListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
-	if( !theApp.emuledlg->IsRunning() )
+	if (!theApp.emuledlg->IsRunning())
 		return;
 	if (!lpDrawItemStruct->itemData)
 		return;
 	CDC* odc = CDC::FromHandle(lpDrawItemStruct->hDC);
-	BOOL bCtrlFocused = ((GetFocus() == this ) || (GetStyle() & LVS_SHOWSELALWAYS));
-	if( (lpDrawItemStruct->itemAction | ODA_SELECT) && (lpDrawItemStruct->itemState & ODS_SELECTED )){
-		if(bCtrlFocused)
+	BOOL bCtrlFocused = ((GetFocus() == this) || (GetStyle() & LVS_SHOWSELALWAYS));
+	if (lpDrawItemStruct->itemState & ODS_SELECTED) {
+		if (bCtrlFocused)
 			odc->SetBkColor(m_crHighlight);
 		else
 			odc->SetBkColor(m_crNoHighlight);
@@ -260,10 +252,10 @@ void CQueueListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	else
 		odc->SetBkColor(GetBkColor());
 	const CUpDownClient* client = (CUpDownClient*)lpDrawItemStruct->itemData;
-	CMemDC dc(CDC::FromHandle(lpDrawItemStruct->hDC), &lpDrawItemStruct->rcItem);
+	CMemDC dc(odc, &lpDrawItemStruct->rcItem);
 	CFont* pOldFont = dc.SelectObject(GetFont());
-	RECT cur_rec = lpDrawItemStruct->rcItem;
-	COLORREF crOldTextColor = dc.SetTextColor(m_crWindowText);
+	CRect cur_rec(lpDrawItemStruct->rcItem);
+	COLORREF crOldTextColor = dc.SetTextColor((lpDrawItemStruct->itemState & ODS_SELECTED) ? m_crHighlightText : m_crWindowText);
 
 	int iOldBkMode;
 	if (m_crWindowTextBk == CLR_NONE){
@@ -273,13 +265,12 @@ void CQueueListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	else
 		iOldBkMode = OPAQUE;
 
-	CString Sbuffer;
 	CKnownFile* file = theApp.sharedfiles->GetFileByID(client->GetUploadFileID());
 	CHeaderCtrl *pHeaderCtrl = GetHeaderCtrl();
 	int iCount = pHeaderCtrl->GetItemCount();
 	cur_rec.right = cur_rec.left - 8;
 	cur_rec.left += 4;
-
+	CString Sbuffer;
 	for(int iCurrent = 0; iCurrent < iCount; iCurrent++){
 		int iColumn = pHeaderCtrl->OrderToIndex(iCurrent);
 		if( !IsColumnHidden(iColumn) ){
@@ -336,7 +327,7 @@ void CQueueListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					imagelist.Draw(dc,image, point, ILD_NORMAL | ((client->Credits() && client->Credits()->GetCurrentIdentState(client->GetIP()) == IS_IDENTIFIED) ? INDEXTOOVERLAYMASK(1) : 0));
 					Sbuffer = client->GetUserName();
 					cur_rec.left +=20;
-					dc->DrawText(Sbuffer,Sbuffer.GetLength(),&cur_rec,DLC_DT_TEXT);
+					dc.DrawText(Sbuffer,Sbuffer.GetLength(),&cur_rec,DLC_DT_TEXT);
 					cur_rec.left -=20;
 					break;
 				}
@@ -344,7 +335,7 @@ void CQueueListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 					if(file)
 						Sbuffer = file->GetFileName();
 					else
-						Sbuffer = "?";
+						Sbuffer = _T("?");
 					break;
 				case 2:
 					if(file){
@@ -417,29 +408,30 @@ void CQueueListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 						cur_rec.top--;
 					}
 					break;
-					   }
-				if( iColumn != 9 && iColumn != 0)
-				dc->DrawText(Sbuffer,Sbuffer.GetLength(),&cur_rec,DLC_DT_TEXT);
+		   	}
+			if( iColumn != 9 && iColumn != 0)
+				dc.DrawText(Sbuffer,Sbuffer.GetLength(),&cur_rec,DLC_DT_TEXT);
 			cur_rec.left += GetColumnWidth(iColumn);
 		}
 	}
-//draw rectangle around selected item(s)
-	if ((lpDrawItemStruct->itemAction | ODA_SELECT) && (lpDrawItemStruct->itemState & ODS_SELECTED))
+
+	// draw rectangle around selected item(s)
+	if (lpDrawItemStruct->itemState & ODS_SELECTED)
 	{
 		RECT outline_rec = lpDrawItemStruct->rcItem;
 
 		outline_rec.top--;
 		outline_rec.bottom++;
-		dc->FrameRect(&outline_rec, &CBrush(GetBkColor()));
+		dc.FrameRect(&outline_rec, &CBrush(GetBkColor()));
 		outline_rec.top++;
 		outline_rec.bottom--;
 		outline_rec.left++;
 		outline_rec.right--;
 
 		if(bCtrlFocused)
-			dc->FrameRect(&outline_rec, &CBrush(m_crFocusLine));
+			dc.FrameRect(&outline_rec, &CBrush(m_crFocusLine));
 		else
-			dc->FrameRect(&outline_rec, &CBrush(m_crNoFocusLine));
+			dc.FrameRect(&outline_rec, &CBrush(m_crNoFocusLine));
 	}
 	
 	if (m_crWindowTextBk == CLR_NONE)
@@ -520,17 +512,12 @@ void CQueueListCtrl::OnColumnClick( NMHDR* pNMHDR, LRESULT* pResult){
 
 	// Barry - Store sort order in preferences
 	// Determine ascending based on whether already sorted on this column
-	int sortItem = thePrefs.GetColumnSortItem(CPreferences::tableQueue);
-	bool m_oldSortAscending = thePrefs.GetColumnSortAscending(CPreferences::tableQueue);
-	bool sortAscending = (sortItem != pNMListView->iSubItem) ? true : !m_oldSortAscending;
-	// Item is column clicked
-	sortItem = pNMListView->iSubItem;
-	// Save new preferences
-	thePrefs.SetColumnSortItem(CPreferences::tableQueue, sortItem);
-	thePrefs.SetColumnSortAscending(CPreferences::tableQueue, sortAscending);
+	bool sortAscending = (GetSortItem()!= pNMListView->iSubItem) ? true : !GetSortAscending();
+
 	// Sort table
-	SetSortArrow(sortItem, sortAscending);
-	SortItems(SortProc, sortItem + (sortAscending ? 0:100));
+	UpdateSortHistory(pNMListView->iSubItem + (sortAscending ? 0:100), 100);
+	SetSortArrow(pNMListView->iSubItem, sortAscending);
+	SortItems(SortProc, pNMListView->iSubItem + (sortAscending ? 0:100));
 
 	*pResult = 0;
 }
@@ -539,102 +526,132 @@ int CQueueListCtrl::SortProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
 	const CUpDownClient* item1 = (CUpDownClient*)lParam1;
 	const CUpDownClient* item2 = (CUpDownClient*)lParam2;
+	int iResult=0;
 	switch(lParamSort){
 		case 0: 
 			if(item1->GetUserName() && item2->GetUserName())
-				return CompareLocaleStringNoCase(item1->GetUserName(), item2->GetUserName());
+				iResult=CompareLocaleStringNoCase(item1->GetUserName(), item2->GetUserName());
 			else if(item1->GetUserName())
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		case 100:
 			if(item2->GetUserName() && item1->GetUserName())
-				return CompareLocaleStringNoCase(item2->GetUserName(), item1->GetUserName());
+				iResult=CompareLocaleStringNoCase(item2->GetUserName(), item1->GetUserName());
 			else if(item2->GetUserName())
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		
 		case 1: {
 			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
 			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
 			if( (file1 != NULL) && (file2 != NULL))
-				return CompareLocaleStringNoCase(file1->GetFileName(), file2->GetFileName());
+				iResult=CompareLocaleStringNoCase(file1->GetFileName(), file2->GetFileName());
 			else if( file1 == NULL )
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		}
 		case 101: {
 			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
 			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
 			if( (file1 != NULL) && (file2 != NULL))
-				return CompareLocaleStringNoCase(file2->GetFileName(), file1->GetFileName());
+				iResult=CompareLocaleStringNoCase(file2->GetFileName(), file1->GetFileName());
 			else if( file1 == NULL )
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		}
 		
 		case 2: {
 			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
 			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
 			if( (file1 != NULL) && (file2 != NULL))
-				return ((file1->GetUpPriority()==PR_VERYLOW) ? -1 : file1->GetUpPriority()) - ((file2->GetUpPriority()==PR_VERYLOW) ? -1 : file2->GetUpPriority());
+				iResult=((file1->GetUpPriority()==PR_VERYLOW) ? -1 : file1->GetUpPriority()) - ((file2->GetUpPriority()==PR_VERYLOW) ? -1 : file2->GetUpPriority());
 			else if( file1 == NULL )
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		}
 		case 102:{
 			CKnownFile* file1 = theApp.sharedfiles->GetFileByID(item1->GetUploadFileID());
 			CKnownFile* file2 = theApp.sharedfiles->GetFileByID(item2->GetUploadFileID());
 			if( (file1 != NULL) && (file2 != NULL))
-				return ((file2->GetUpPriority()==PR_VERYLOW) ? -1 : file2->GetUpPriority()) - ((file1->GetUpPriority()==PR_VERYLOW) ? -1 : file1->GetUpPriority());
+				iResult=((file2->GetUpPriority()==PR_VERYLOW) ? -1 : file2->GetUpPriority()) - ((file1->GetUpPriority()==PR_VERYLOW) ? -1 : file1->GetUpPriority());
 			else if( file1 == NULL )
-				return 1;
+				iResult=1;
 			else
-				return -1;
+				iResult=-1;
+			break;
 		}
 
 		case 3: 
-			return CompareUnsigned(item1->GetScore(false,false,true), item2->GetScore(false,false,true));
+			iResult=CompareUnsigned(item1->GetScore(false,false,true), item2->GetScore(false,false,true));
+			break;
 		case 103: 
-			return CompareUnsigned(item2->GetScore(false,false,true), item1->GetScore(false,false,true));
+			iResult=CompareUnsigned(item2->GetScore(false,false,true), item1->GetScore(false,false,true));
+			break;
 
 		case 4: 
-			return CompareUnsigned(item1->GetScore(false), item2->GetScore(false));
+			iResult=CompareUnsigned(item1->GetScore(false), item2->GetScore(false));
+			break;
 		case 104: 
-			return CompareUnsigned(item2->GetScore(false), item1->GetScore(false));
+			iResult=CompareUnsigned(item2->GetScore(false), item1->GetScore(false));
+			break;
 
 		case 5: 
-			return item1->GetAskedCount() - item2->GetAskedCount();
+			iResult=item1->GetAskedCount() - item2->GetAskedCount();
+			break;
 		case 105: 
-			return item2->GetAskedCount() - item1->GetAskedCount();
+			iResult=item2->GetAskedCount() - item1->GetAskedCount();
+			break;
 		
 		case 6: 
-			return item1->GetLastUpRequest() - item2->GetLastUpRequest();
+			iResult=item1->GetLastUpRequest() - item2->GetLastUpRequest();
+			break;
 		case 106: 
-			return item2->GetLastUpRequest() - item1->GetLastUpRequest();
+			iResult=item2->GetLastUpRequest() - item1->GetLastUpRequest();
+			break;
 		
 		case 7: 
-			return item1->GetWaitStartTime() - item2->GetWaitStartTime();
+			iResult=item1->GetWaitStartTime() - item2->GetWaitStartTime();
+			break;
 		case 107: 
-			return item2->GetWaitStartTime() - item1->GetWaitStartTime();
+			iResult=item2->GetWaitStartTime() - item1->GetWaitStartTime();
+			break;
 		
 		case 8: 
-			return item1->IsBanned() - item2->IsBanned();
+			iResult=item1->IsBanned() - item2->IsBanned();
+			break;
 		case 108: 
-			return item2->IsBanned() - item1->IsBanned();
+			iResult=item2->IsBanned() - item1->IsBanned();
+			break;
 		
 		case 9: 
-			return item1->GetUpPartCount() - item2->GetUpPartCount();
+			iResult=item1->GetUpPartCount() - item2->GetUpPartCount();
+			break;
 		case 109: 
-			return item2->GetUpPartCount() - item1->GetUpPartCount();
-
+			iResult=item2->GetUpPartCount() - item1->GetUpPartCount();
+			break;
 		default:
-			return 0;
+			iResult=0;
+			break;
 	}
+	int dwNextSort;
+	//call secondary sortorder, if this one results in equal
+	//(Note: yes I know this call is evil OO wise, but better than changing a lot more code, while we have only one instance anyway - might be fixed later)
+	if (iResult == 0 && (dwNextSort = theApp.emuledlg->transferwnd->queuelistctrl.GetNextSortOrder(lParamSort)) != (-1)){
+		iResult= SortProc(lParam1, lParam2, dwNextSort);
+	}
+
+	return iResult;
+
 }
 
 // Barry - Refresh the queue every 10 secs

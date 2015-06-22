@@ -23,6 +23,8 @@
 #include "LastCommonRouteFinder.h"
 #include "OtherFunctions.h"
 #include "emuledlg.h"
+#include "uploadqueue.h"
+#include "preferences.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -362,11 +364,17 @@ UINT AFX_CDECL UploadBandwidthThrottler::RunProc(LPVOID pParam) {
  * @return always returns 0.
  */
 UINT UploadBandwidthThrottler::RunInternal() {
+
+#define ADJUSTING_STEP	(1*1024)
 	DWORD lastLoopTick = ::GetTickCount();
 	sint64 realBytesToSpend = 0;
 	uint32 allowedDataRate = 0;
     uint32 rememberedSlotCounter = 0;
     DWORD lastTickReachedBandwidth = ::GetTickCount();
+	uint32 nEstiminatedLimit = 0;
+	sint32 nSlotsBusyLevel = 0;
+	DWORD nUploadStartTime = 0;
+	bool bUploadUnlimited;
 
 	while(doRun) {
         pauseEvent->Lock();
@@ -375,6 +383,31 @@ UINT UploadBandwidthThrottler::RunInternal() {
 
 		// Get current speed from UploadSpeedSense
 		allowedDataRate = theApp.lastCommonRouteFinder->GetUpload();
+		
+		bUploadUnlimited = thePrefs.GetMaxUpload() == UNLIMITED;
+		if (bUploadUnlimited && nUploadStartTime != 0 && ::GetTickCount()- nUploadStartTime > SEC2MS(60) ){ // upload is unlimited
+			if (theApp.uploadqueue){
+				if (nEstiminatedLimit == 0){ // no autolimit was set yet
+					if (nSlotsBusyLevel >= 250){ // sockets indicated that the BW limit has been reached
+						nEstiminatedLimit = theApp.uploadqueue->GetDatarate() - (3*ADJUSTING_STEP);
+						allowedDataRate = min(nEstiminatedLimit, allowedDataRate);
+						nSlotsBusyLevel = -200;
+					}
+				}
+				else{
+					if (nSlotsBusyLevel > 250){
+						nEstiminatedLimit -= ADJUSTING_STEP;
+						nSlotsBusyLevel = 0;
+
+					}
+					else if (nSlotsBusyLevel < (-250)){
+						nEstiminatedLimit += ADJUSTING_STEP;
+						nSlotsBusyLevel = 0;
+					}
+					allowedDataRate = min(nEstiminatedLimit, allowedDataRate);
+				} 
+			}
+		}
 
 		uint32 minFragSize = 1300;
         uint32 doubleSendSize = minFragSize*2; // send two packages at a time so they can share an ACK
@@ -391,7 +424,7 @@ UINT UploadBandwidthThrottler::RunInternal() {
         } else {
             // sleep for just as long as we need to get back to having one byte to send
             sleepTime = max((uint32)ceil((double)(-realBytesToSpend + 1000)/allowedDataRate), TIME_BETWEEN_UPLOAD_LOOPS);
-
+			
         }
 
         if(timeSinceLastLoop < sleepTime) {
@@ -462,7 +495,7 @@ UINT UploadBandwidthThrottler::RunInternal() {
                 }
     
 			    if(socket != NULL) {
-				    SocketSentBytes socketSentBytes = socket->SendControlData(bytesToSpend-spentBytes, minFragSize);
+				    SocketSentBytes socketSentBytes = socket->SendControlData((UINT)(bytesToSpend - spentBytes), minFragSize);
 				    uint32 lastSpentBytes = socketSentBytes.sentBytesControlPackets + socketSentBytes.sentBytesStandardPackets;
 				    spentBytes += lastSpentBytes;
 				    spentOverhead += socketSentBytes.sentBytesControlPackets;
@@ -513,7 +546,7 @@ UINT UploadBandwidthThrottler::RunInternal() {
                 ThrottledFileSocket* socket = m_StandardOrder_list.GetAt(rememberedSlotCounter);
 
 				if(socket != NULL) {
-					SocketSentBytes socketSentBytes = socket->SendFileAndControlData(min(doubleSendSize, bytesToSpend-spentBytes), doubleSendSize);
+					SocketSentBytes socketSentBytes = socket->SendFileAndControlData((UINT)min(doubleSendSize, bytesToSpend-spentBytes), doubleSendSize);
 					uint32 lastSpentBytes = socketSentBytes.sentBytesControlPackets + socketSentBytes.sentBytesStandardPackets;
 
 					spentBytes += lastSpentBytes;
@@ -524,13 +557,31 @@ UINT UploadBandwidthThrottler::RunInternal() {
 
                 rememberedSlotCounter++;
             }
+			if (bUploadUnlimited){
+				int cBusy = 0;
+				for (int i = 0; i < m_StandardOrder_list.GetSize(); i++){
+					if (m_StandardOrder_list[i] != NULL && m_StandardOrder_list[i]->IsBusy())
+						cBusy++;
+				}
+				if (m_StandardOrder_list.GetSize() > 0){
+					float fBusyPercent = ((float)cBusy/(float)m_StandardOrder_list.GetSize()) * 100;
+					if (cBusy > 2 && fBusyPercent > 75.00f && nSlotsBusyLevel < 255){
+						nSlotsBusyLevel++;
+					}
+					else if ( (cBusy <= 2 || fBusyPercent < 25.00f) && nSlotsBusyLevel > (-255)){
+						nSlotsBusyLevel--;
+					}
+					if (m_StandardOrder_list.GetSize() >= 3 && nUploadStartTime == 0)
+						nUploadStartTime = ::GetTickCount();
+				}
+			}
 
 		    // Any bandwidth that hasn't been used yet are used first to last.
 			for(uint32 slotCounter = 0; slotCounter < (uint32)m_StandardOrder_list.GetSize() && bytesToSpend > 0 && spentBytes < (uint64)bytesToSpend; slotCounter++) {
 				ThrottledFileSocket* socket = m_StandardOrder_list.GetAt(slotCounter);
 
 				if(socket != NULL) {
-                    uint32 bytesToSpendTemp = bytesToSpend-spentBytes;
+                    uint32 bytesToSpendTemp = (UINT)(bytesToSpend-spentBytes);
 					SocketSentBytes socketSentBytes = socket->SendFileAndControlData(bytesToSpendTemp, doubleSendSize);
 					uint32 lastSpentBytes = socketSentBytes.sentBytesControlPackets + socketSentBytes.sentBytesStandardPackets;
 

@@ -269,13 +269,13 @@ CPropPageFrame* CTreePropSheet::CreatePageFrame()
 
 void CTreePropSheet::MoveChildWindows(int nDx, int nDy)
 {
-	CWnd	*pWnd = GetWindow(GW_CHILD);
+	CWnd* pWnd = GetWindow(GW_CHILD);
 	while (pWnd)
 	{
-		CRect	rect;
+		CRect rect;
 		pWnd->GetWindowRect(rect);
-		rect.OffsetRect(nDx, nDy);
 		ScreenToClient(rect);
+		rect.OffsetRect(nDx, nDy);
 		pWnd->MoveWindow(rect);
 
 		pWnd = pWnd->GetNextWindow();
@@ -751,7 +751,7 @@ BOOL CTreePropSheet::OnInitDialog()
 		return bResult;
 
 	// Get tab control...
-	CTabCtrl	*pTab = GetTabControl();
+	CTabCtrl* pTab = GetTabControl();
 	if (!IsWindow(pTab->GetSafeHwnd()))
 	{
 		ASSERT(FALSE);
@@ -765,7 +765,7 @@ BOOL CTreePropSheet::OnInitDialog()
 	pTab->EnableWindow(FALSE);
 
 	// Place another (empty) tab ctrl, to get a frame instead
-	CRect	rectFrame;
+	CRect rectFrame;
 	pTab->GetWindowRect(rectFrame);
 	ScreenToClient(rectFrame);
 
@@ -779,13 +779,13 @@ BOOL CTreePropSheet::OnInitDialog()
 	m_pFrame->ShowCaption(m_bPageCaption);
 
 	// Lets make place for the tree ctrl
-	const int	nTreeWidth = m_nPageTreeWidth;
-	const int	nTreeSpace = 5;
+	const int nTreeWidth = m_nPageTreeWidth;
+	const int nTreeSpace = 5;
 
-	CRect	rectSheet;
+	CRect rectSheet;
 	GetWindowRect(rectSheet);
-	rectSheet.right+= nTreeWidth;
-	SetWindowPos(NULL, -1, -1, rectSheet.Width(), rectSheet.Height(), SWP_NOZORDER|SWP_NOMOVE);
+	rectSheet.right += nTreeWidth;
+	SetWindowPos(NULL, 0, 0, rectSheet.Width(), rectSheet.Height(), SWP_NOZORDER | SWP_NOMOVE);
 	CenterWindow();
 
 	MoveChildWindows(nTreeWidth, 0);

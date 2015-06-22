@@ -654,6 +654,8 @@ static void FatalLexError(yyconst char msg[]);
 static CStringA _strInputBuff;
 static LPCSTR _pszLexBuff;
 
+#pragma warning(disable:4127) // conditional expression is constant
+
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
  */

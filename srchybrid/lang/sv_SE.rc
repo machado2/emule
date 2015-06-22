@@ -592,7 +592,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Användarn.:"
     IDS_CD_UHASH            "Användarhash:"
-    IDS_CD_CSOFT            "Klientmjukvara:"
+    IDS_CD_CSOFT            "Klientmjukvara"
     IDS_CD_UIP              "IP-address:"
     IDS_CD_SIP              "Server-IP:"
     IDS_CD_VERSION          "Klientversion:"
@@ -853,10 +853,10 @@ BEGIN
     IDS_SP_BACKGROUND       "Bakgrund"
     IDS_SP_GRID             "Rutsystem"
     IDS_SP_DL1              "Nedladdning, nuvarande"
-    IDS_SP_DL2              "Nedladdning, tids-genomsnitt"
+    IDS_SP_DL2              "Nedladdning, genomsnittlig"
     IDS_SP_DL3              "Nedladdning, session-genomsnitt"
     IDS_SP_UL1              "Uppladdning, nuvarande"
-    IDS_SP_UL2              "Uppladdning, tids-genomsnitt"
+    IDS_SP_UL2              "Uppladdning, genomsnitt"
     IDS_SP_UL3              "Uppladdning, session-genomsnitt"
     IDS_SP_ACTCON           "Aktiva anslutningar"
     IDS_SP_ACTDL            "Aktiva nedladdningar"
@@ -1119,13 +1119,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Avaktivera kända klienter listan"
     IDS_DISABLEQUEUELIST    "Avaktivera kölistan"
     IDS_USECREDITSYSTEM     "Använd kreditsystem (gynna uppladdare)"
-    IDS_FIRSTAUTODOWN       "Vill du att eMule skall hantera dina nedladdningsprioriteringar?\r\rAnvänder du denna funktion kommer eMule att fixa så nedladdningar med många källor inte stör dom med få källor.\r\rDenna inställning kommer bara påverka framtida nedladdningar. (standard på)"
-    IDS_FIRSTAUTOUP         "Vill du att eMule skall hantera dina uppladdningsprioriteringar?\r\rAnvänder du denna funktion kommer eMule försöka förbättra spridningen av sällsynta filer.\r\rDenna inställning kommer bara påverka framtida uppladdningar. (standard på)"
-    IDS_FIRSTCREDITSYSTEM   "Vill du belöna användare som laddar upp till dig?\r\rDenna funktion kallas ofta för kreditsystem. Funktionen hjälper mot leechers. Om du är releaser skall du inte använda denna funktion.\r\r(standard på)"
-    IDS_FIRSTFULLCHUNK      "Vill du ladda upp hela delar?\r\rAnvänder du hela delar kommer klienten få en bättre chans att slutföra en del. Stänger du av detta kommer kön roteras fortare. Om du är releaser skall du använda denna funktion.\r\r(standard på)"
-    IDS_FIRSTSAFECON        "Vill du att eMule skall ansluta med säker anslutning?\r\rOm du stänger av denna funktion kommer eMule att ansluta till servrar snabbare men kan göra så att du får mer falska lågt ID anslutningar\r\r(standard av)"
+    IDS_FIRSTAUTODOWN       "Aktivera denna inställning om du vill att eMule skall ta hand om dina nedladdningsprioriteringar.\n\nAktiverar du denna inställning kommer eMule att säkerhetsställa att nedladdningar med många källor inte stryper dom med få källor. Denna inställning kommer bara att påverka kommande nedladdningar (Standard: Aktiverad)"
+    IDS_FIRSTAUTOUP         "Aktivera denna inställning om du vill att eMule skall ta hand om dina uppladdningsprioriteringar.\n\nAktiverar du denna inställning kommer eMule att försöka öka uppladdningshastigheten på sällsynta filer och minska hastigheten på populära filer. Stänger du av denna inställning kommer eMule att prioritera populära filer vilket betyder att sällsynta filer kommer bli svårare att få tag på. Denna inställning kommer bara påverka kommande utdelade filer. (Standard: Aktiverad)"
+    IDS_FIRSTCREDITSYSTEM   "Vill du gynna personer som laddar upp till dig?\n\nDenna inställnin är känd som Kreditsystemet. Aktiverar du denna inställning kommer du att straffa leechers. Om du laddar upp releaser borde du stänga av denna inställning. (Standard: Aktiverad)"
+    IDS_FIRSTFULLCHUNK      "Aktivera denna inställning om du vill ladda upp hela delar.\n\nAnvänder du hela delar har klienten en bättre chans att få hem en hel del. Stänger du av denna inställning kommer kön att gå fortare. Om du laddar upp releaser borde du stänga av denna inställning. (Standard: Aktiverad)"
+    IDS_FIRSTSAFECON        "Aktivera denna inställning om du vill att eMule skall ansluta med ""Safe Connect"".\n\nStänger du av denna inställning kommer eMule att ansluta till servrar snabbare men orsaka mer falska lågID-anslutningar. (Standard: Avaktiverad)"
     IDS_FIRSTRUNASSIST      "Vill du köra en förstagången inställnings-wizard?"
-    IDS_FIRSTAUTOCON        "Vill du att eMule skall ansluta vid start?\r\r(standard av)"
+    IDS_FIRSTAUTOCON        "Aktivera denna inställning om du vill att eMule skall ansluta vid start."
     IDS_FIRSTCOMPLETE       "Dessa funktioner och många fler kan ändras i inställningar.\r\rGå gärna in i inställningar där det finns fler val.\r\rInställningarfönstret kommer att öppnas med allmäntfliken där du kan välja användarnamn.\r\rEfter du valt ett användarnamn klicka på anslutningfliken och kör wizarden."
 END
 
@@ -1321,7 +1321,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problematisk"
     IDS_LONGHRS             "timmar"
     IDS_STATS_LARGESTFILE   "Största utdelade fil"
-    IDS_CLIENTSOFTWARE      "Klientmjukvara"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Delfil"
     IDS_STATS_DATASOURCE    "Datakälla"
     IDS_STATS_DSFILE        "Slutförd fil"
@@ -1345,7 +1345,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Kopiera all statistik"
     IDS_STATS_MNUTREEHTML   "HTML-finesser"
     IDS_STATS_EXPORT2HTML   "Exportera all statistik"
-    IDS_STATS_EXPORTVIS     "Exportera all synlig"
     IDS_STATS_MNUTREECPYVIS "Kopiera all synlig"
     IDS_STATS_MNUTREEEXPANDALL "Expandera alla sektioner"
     IDS_STATS_MNUTREECOLLAPSEALL "Stäng alla sektioner"
@@ -1398,13 +1397,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Version"
-    IDS_ALL_A4AF_TO_THIS    "För över alla källor till denna fil nu"
     IDS_PASTE               "Klistra in"
-    IDS_ALL_A4AF_TO_OTHER   "För över alla källor till en annan fil nu"
-    IDS_ALL_A4AF_AUTO       "För automatiskt över alla (A4AF)källor till denna fil"
-    IDS_SWAP_A4AF_TO_THIS   "För över källa till denna fil nu"
-    IDS_SWAP_A4AF_TO_OTHER  "För över källa till en annan fil nu"
-    IDS_A4AF                "Källhantering (A4AF)"
+    IDS_A4AF                "Källhantering"
     IDS_MOBILEMULE          "MobilMule"
     IDS_ENABLEMM            "Aktivera MobilMule"
     IDS_AUTOCAT_LABEL       "Auto Kategoritilldelning (mönster, skiljs med |)"
@@ -1606,7 +1600,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Logga säkra ident"
     IDS_LOG_FILTERED_IPS    "Logga filtrerade och/eller ignorerade IPs"
     IDS_LOG_FILE_SAVING     "Logga filsparningar"
-    IDS_IPFILTERFILES       "Alla IP-filter filer (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|eMule IP-filter filer (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Peer Guardian filer (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|Textfiler (*.txt)|*.txt|Alla filer (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "Alla filer som innehåller IP-filter (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz| Fil för eMule IP-Filter (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Fil för Peer Guardian IP-filter (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Textfiler (*.txt)|*.txt|ZIP-filer (*.zip;*.gz)|*.zip;*.gz|Alla Filer (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "Vill du verkligen ta bort valda IP-filter?"
     IDS_TOTAL_IPFILTER_LABEL "Totalt antal IP-filter:"
     IDS_TOTAL_IPS_LABEL     "Totalt antal IP:"
@@ -1698,10 +1692,10 @@ BEGIN
     IDS_NETWORK_INFO        "Nätverksinformation"
     IDS_SP_TOTALUL          "Totalt antal uppladdningar"
     IDS_SP_ULFRIENDS        "Ladda upp kompis-slots"
-    IDS_SP_ULSLOTSNOOVERHEAD "nuvarande uppladdning exlusive. overhead (UL Slots only)"
+    IDS_SP_ULSLOTSNOOVERHEAD "nuvarande uppladdning (utan overhead)"
     IDS_ST_ACTIVEU_ZZ       "Aktiva uppladdningar"
-    IDS_ST_ULCURRENT        "Uppladdning+overhead"
-    IDS_ST_ULSLOTSNOOVERHEAD "Uppladdning"
+    IDS_ST_ULCURRENT        "Nuvarande"
+    IDS_ST_ULSLOTSNOOVERHEAD "Nuvarande (utan overhead)"
     IDS_ST_ULFRIEND         "Kompis uppladdning"
 END
 
@@ -1719,7 +1713,7 @@ STRINGTABLE
 BEGIN
     IDS_MAXHALFOPENCONS     "Max. Halvöppna anslutningar"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Aktivera så att eMule startar när windows startar. [avaktiverad som standard]"
+                            "Aktivera så att eMule startar när windows startar. (avaktiverad som standard)"
     IDS_KAD_WAITCBK         "Wait Callback Kad"
     IDS_KAD_TOOMANDYKADLKPS "För många Kad Lookups"
     IDS_PCDS_CLIENTWAIT     "ClientWait"
@@ -1801,7 +1795,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_SPARSEPARTFILES     "Skapa ny delfiler som 'sparse' (endast NTFS)"
+    IDS_SPARSEPARTFILES     "Skapa nya delfiler som 'sparse' (endast NTFS)"
     IDS_ASPECTRATIO         "Aspect Ratio"
     IDS_NEGATEFILTER        "upphävningsfilter"
     IDS_SEENCOMPL           "Någonsin sedd färdig"
@@ -1825,7 +1819,7 @@ BEGIN
                             "Windows Common Controls library (COMCTL32.DLL) är för gammal!\r\n\r\neMule har hittat en version av ""Windows Common Controls library (COMCTL32.DLL)"" som är för gammal för att användas tillsammans med eMule. För en fullständig och felfri funktionalitet är det rekommenderat att uppdatera ""Windows Common Controls library (COMCTL32.DLL)"" till minst version 5.8.\r\n\r\nLadda hem och installera en uppdatering av ""Windows Common Controls library (COMCTL32.DLL)"" på Microsoft (R) Download Center. Vill du besöka den här sidan?"
     IDS_ASREGEXPR           "Som Regular Expression"
     IDS_STATIC_REGEXP       "Regular expression som filter:"
-    IDS_CARE4ALL            "Evaluate All Files"
+    IDS_CARE4ALL            "Utvärdera alla filer"
     IDS_REGEXPRESSION       "Regular Expression"
     IDS_SEARCHKAD           "Sök Kad"
     IDS_DWL_IPFILTERFILE    "Laddar hem IP-filter fil"
@@ -1838,6 +1832,91 @@ BEGIN
     IDS_NOTES               "Anteckningar"
     IDS_KADSEARCHALREADY    "En sökning är redan aktiv. Försök igen senare!"
 
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Stäng av eMule"
+    IDS_WEB_REBOOT          "Starta om datorn"
+    IDS_WEB_SHUTDOWNSYSTEM  "Stäng av datorn"
+    IDS_WEB_ADMINMENU       "Adminmeny"
+    IDS_WEB_MAIN_CLOSE      "Är du säker på att du vill stänga av eMule?"
+    IDS_WEB_MAIN_REBOOT     "Är du säker på att du vill starta om datorn?"
+    IDS_WEB_MAIN_SHUTDOWN   "Är du säker på att du vill stänga av datorn?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Visa bannade klienter i kön"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Visa kompisar i kön"
+    IDS_WEB_SESSIONTIMEOUT  "Sessionstimeout"
+    IDS_WEB_ALLOWHILEVFUNC  "Tillåt att stänga eMule, starta om och stänga av"
+    IDS_SETPFSLIMIT         "Gräns för antal källor..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Skriv in den nya gränsen för antal källor för dom valda filerna! \n(skriv in 0 för att använda den globala inställningen)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Vill du att inkommande mappar i den gamla inkommande mappen skall uppdateras nu?"
+    IDS_USESPEECH           "Speak notification message"
+    IDS_CONDTCPACCEPT       "Avvisa snabb anslutning"
+    IDS_TCPIP_CONNS         "TCP/IP anslutningar"
+    IDS_ERR_DELFILE         "Misslyckades att radera filen ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Vill du rensa filnamnen på dom valda filerna?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s verkar vara korrupt och kommer ersättas"
+    IDS_UPLOADING           "Laddar upp"
+    IDS_CANCELLED           "Avbryten"
+    IDS_PW_REMEMBERDOWNLOADED "Kom ihåg nedladdade filer"
+    IDS_PW_REMEMBERCANCELLED "Kom ihåg avbrytna filer"
+    IDS_AVAILABLEPARTS      "Tillgängliga delar"
+    IDS_NOSOUND             "Inget ljud"
+    IDS_PW_RECEIVERADDRESS  "Mottagaradress:"
+    IDS_PW_ENABLEEMAIL      "Aktivera e-postmeddeladen"
+    IDS_EMULENOTIFICATION   "eMule meddelanden"
+    IDS_PW_EMAILNOTIFICATIONS "Epostmeddelanden"
+    IDS_PW_SMTPSERVER       "SMTP-server:"
+    IDS_PW_SENDERADDRESS    "Skickas från adressen:"
+    IDS_PW_SHOWTRANSTOOLBAR "Visa ytterligare verktygsvält på överföringsfönstren"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Utdelade delar"
+    IDS_INCOMING_FILES      "Inkommande filer"
+    IDS_INCOMPLETE_FILES    "Ofullständiga filer"
+    IDS_SHARED_DIRECTORIES  "Utdelade kataloger"
+    IDS_SHAREDIR            "Dela ut katalog"
+    IDS_SHAREDIRSUB         "Dela ut med underkataloger"
+    IDS_UNSHAREDIR          "Sluta dela ut katalog"
+    IDS_UNSHAREDIRSUB       "Sluta dela ut med underkataloger"
+    IDS_ALLSHAREDFILES      "Alla delade filer"
+    IDS_ALLDIRECTORIES      "Alla kataloger"
+    IDS_SEARCHRELATED       "Hitta besläktade filer"
+    IDS_RELATED             "Besläktad"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Samlingslista"
+    IDS_SEARCH_EMULECOLLECTION "Samling"
+    IDS_COLL_REPLACEEXISTING "Vill du ersätta filen?"
+    IDS_COLL_ERR_DELETING   "Ett fel inträffade vid borttagning av den gamla filen. Avsluta utan att spara?"
+    IDS_CREATECOLLECTION    "Skapa samling"
+    IDS_COLL_SIGN           "Signera samling med namn och nyckel?"
+    IDS_AUTHOR              "Skapare"
+    IDS_AUTHORKEY           "Skaparens nyckel"
+    IDS_COLL_ADDINCAT       "Lägg till nya nedladdningar i en samlingskategori"
+    IDS_MODIFYCOLLECTION    "Ändra på samling"
+    IDS_VIEWCOLLECTION      "Visa samling"
+    IDS_COLL_TEXTFORMAT     "Spara samling i vanlig textformat"
+    IDS_SEARCHAUTHORCOLLECTION "Sök skaparens samlingar"
+    IDS_ERR_DUPL_FILES      "Duplicera utdelade filer: ""%s"" och ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "UploadSpeedSense: Tracerouting misslyckades för många gånger. Avaktiverar SpeedSense."
+    IDS_USS_STARTING        "UploadSpeedSense: Färdig med förberedningar. Börjar kontrollera uppladdningshastighet. (Dom första 60 sekunderna kommer att köras i snabbåtkomstläge)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "UploadSpeedSense: Höjd uppladdningshastighet i inställningar upptäcktes. Går in i snabbåtkomstläge i 60 sekunder."
+    IDS_USS_STATE_PREPARING "Förbereder..."
+    IDS_USS_STATE_WAITING   "Väntar..."
+    IDS_USS_STATE_ERROR     "Fel!"
 END
 
 #endif    // Swedish resources

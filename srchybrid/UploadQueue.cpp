@@ -47,6 +47,7 @@
 #include "Kademlia/Kademlia/Kademlia.h"
 #include "Kademlia/Kademlia/Prefs.h"
 #include "Log.h"
+#include "collection.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -204,6 +205,11 @@ bool CUploadQueue::AddUpNextClient(LPCTSTR pszReason, CUpDownClient* directadd){
     if(pszReason && thePrefs.GetLogUlDlEvents())
         AddDebugLogLine(false, _T("Adding client to upload list: %s Client: %s"), pszReason, newclient->DbgGetClientInfo());
 
+	if (newclient->HasCollectionUploadSlot() && directadd == NULL){
+		ASSERT( false );
+		newclient->SetCollectionUploadSlot(false);
+	}
+
 	// tell the client that we are now ready to upload
 	if (!newclient->socket || !newclient->socket->IsConnected())
 	{
@@ -245,15 +251,15 @@ void CUploadQueue::UpdateActiveClientsInfo(DWORD curTick) {
         // debug info, will remove this when I'm done.
         //AddDebugLogLine(false, _T("UploadQueue: Error! Throttler has more slots than UploadQueue! Throttler: %i UploadQueue: %i Tick: %i"), theApp.uploadBandwidthThrottler->GetStandardListSize(), uploadinglist.GetSize(), ::GetTickCount());
 
-		if(tempHighest > (uint32)uploadinglist.GetSize()) {
-        	tempHighest = uploadinglist.GetSize();
+		if(tempHighest > (uint32)uploadinglist.GetSize()+1) {
+        	tempHighest = uploadinglist.GetSize()+1;
 		}
     }
 
     m_iHighestNumberOfFullyActivatedSlotsSinceLastCall = tempHighest;
 
-    // save 15 minutes of data about number of fully active clients
-    uint32 tempMaxRemoved = -1;
+    // save some data about number of fully active clients
+    uint32 tempMaxRemoved = 0;
     while(!activeClients_tick_list.IsEmpty() && !activeClients_list.IsEmpty() && curTick-activeClients_tick_list.GetHead() > 20*1000) {
         activeClients_tick_list.RemoveHead();
 	    uint32 removed = activeClients_list.RemoveHead();
@@ -287,7 +293,7 @@ void CUploadQueue::UpdateActiveClientsInfo(DWORD curTick) {
             activeClients_list.GetPrev(activeClientsListPos);
         }
 
-        if(tempMaxRemoved > m_MaxActiveClients) {
+        if(tempMaxRemoved >= m_MaxActiveClients || tempMaxActiveClients > m_MaxActiveClients) {
             m_MaxActiveClients = tempMaxActiveClients;
         }
 
@@ -389,8 +395,8 @@ bool CUploadQueue::AcceptNewClient(uint32 curUploadSlots){
          (
           thePrefs.GetMaxUpload() == UNLIMITED &&
           !thePrefs.IsDynUpEnabled() &&
-          thePrefs.GetMaxGraphUploadRate() > 0 &&
-          curUploadSlots >= ((uint32)thePrefs.GetMaxGraphUploadRate())*1024/UPLOAD_CLIENT_DATARATE
+          thePrefs.GetMaxGraphUploadRate(true) > 0 &&
+          curUploadSlots >= ((uint32)thePrefs.GetMaxGraphUploadRate(false))*1024/UPLOAD_CLIENT_DATARATE
          )
         )
     ) // max number of clients to allow for all circumstances
@@ -459,8 +465,8 @@ bool CUploadQueue::ForceNewClient(bool allowEmptyWaitingQueue) {
     if(m_iHighestNumberOfFullyActivatedSlotsSinceLastCall > (uint32)uploadinglist.GetSize()) {
         // uploadThrottler requests another slot. If throttler says it needs another slot, we will allow more slots
         // than what we require ourself. Never allow more slots than to give each slot high enough average transfer speed, though (checked above).
-        if(thePrefs.GetLogUlDlEvents() && waitinglist.GetSize() > 0)
-            AddDebugLogLine(false, _T("UploadQueue: Added new slot since throttler needs it. m_iHighestNumberOfFullyActivatedSlotsSinceLastCall: %i uploadinglist.GetSize(): %i tick: %i"), m_iHighestNumberOfFullyActivatedSlotsSinceLastCall, uploadinglist.GetSize(), ::GetTickCount());
+        //if(thePrefs.GetLogUlDlEvents() && waitinglist.GetSize() > 0)
+        //    AddDebugLogLine(false, _T("UploadQueue: Added new slot since throttler needs it. m_iHighestNumberOfFullyActivatedSlotsSinceLastCall: %i uploadinglist.GetSize(): %i tick: %i"), m_iHighestNumberOfFullyActivatedSlotsSinceLastCall, uploadinglist.GetSize(), ::GetTickCount());
         return true;
     }
 
@@ -540,10 +546,10 @@ void CUploadQueue::AddClientToQueue(CUpDownClient* client, bool bIgnoreTimelimit
 				//Special care is given to lowID clients that missed their upload slot
 				//due to the saving bandwidth on callbacks.
 				if(thePrefs.GetLogUlDlEvents())
-					AddDebugLogLine(true, _T("Adding ****lowid when reconneting. Client: %s"), client->DbgGetClientInfo());
+					AddDebugLogLine(true, _T("Adding ****lowid when reconnecting. Client: %s"), client->DbgGetClientInfo());
 				client->m_bAddNextConnect = false;
 				RemoveFromWaitingQueue(client, true);
-				AddUpNextClient(_T("Adding ****lowid when reconneting."), client);
+				AddUpNextClient(_T("Adding ****lowid when reconnecting."), client);
 				return;
 			}
 			client->SendRankingInfo();
@@ -615,6 +621,18 @@ void CUploadQueue::AddClientToQueue(CUpDownClient* client, bool bIgnoreTimelimit
 	if (reqfile)
 		reqfile->statistic.AddRequest();
 
+	// emule collection will bypass the queue
+	if (reqfile != NULL && CCollection::HasCollectionExtention(reqfile->GetFileName()) && reqfile->GetFileSize() < MAXPRIORITYCOLL_SIZE
+		&& !client->IsDownloading() && client->socket != NULL && client->socket->IsConnected())
+	{
+		client->SetCollectionUploadSlot(true);
+		RemoveFromWaitingQueue(client, true);
+		AddUpNextClient(_T("Collection Priority Slot"), client);
+		return;
+	}
+	else
+		client->SetCollectionUploadSlot(false);
+
    // cap the list
     // the queue limit in prefs is only a soft limit. Hard limit is 25% higher, to let in powershare clients and other
     // high ranking clients after soft limit has been reached
@@ -666,7 +684,7 @@ float CUploadQueue::GetAverageCombinedFilePrioAndCredit() {
 		    CUpDownClient* cur_client =	waitinglist.GetNext(pos);
             sum += cur_client->GetCombinedFilePrioAndCredit();
         }
-        m_fAverageCombinedFilePrioAndCredit = sum/waitinglist.GetSize();
+        m_fAverageCombinedFilePrioAndCredit = (float)(sum/waitinglist.GetSize());
     }
 
     return m_fAverageCombinedFilePrioAndCredit;
@@ -708,6 +726,7 @@ bool CUploadQueue::RemoveFromUploadQueue(CUpDownClient* client, LPCTSTR pszReaso
 			theApp.clientlist->AddTrackClient(client); // Keep track of this client
 			client->SetUploadState(US_NONE);
 			client->ClearUploadBlockRequests();
+			client->SetCollectionUploadSlot(false);
 
             m_iHighestNumberOfFullyActivatedSlotsSinceLastCall = 0;
 
@@ -763,6 +782,20 @@ bool CUploadQueue::CheckForTimeOver(CUpDownClient* client){
 	//This will save some bandwidth and some unneeded swapping from upload/queue/upload..
 	if ( waitinglist.IsEmpty() || client->GetFriendSlot() )
 		return false;
+	
+	if(client->HasCollectionUploadSlot()){
+		CKnownFile* pDownloadingFile = theApp.sharedfiles->GetFileByID(client->requpfileid);
+		if(pDownloadingFile == NULL)
+			return true;
+		if (CCollection::HasCollectionExtention(pDownloadingFile->GetFileName()) && pDownloadingFile->GetFileSize() < MAXPRIORITYCOLL_SIZE)
+			return false;
+		else{
+			if (thePrefs.GetLogUlDlEvents())
+				AddDebugLogLine(DLP_HIGH, false, _T("%s: Upload session ended - client with Collection Slot tried to request blocks from another file"), client->GetUserName());
+			return true;
+		}
+	}
+	
 	if (!thePrefs.TransferFullChunks()){
 	    if( client->GetUpStartTimeDelay() > SESSIONMAXTIME){ // Try to keep the clients from downloading for ever
 		    if (thePrefs.GetLogUlDlEvents())
@@ -830,7 +863,7 @@ VOID CALLBACK CUploadQueue::UploadTimer(HWND hwnd, UINT uMsg,UINT_PTR idEvent,DW
         // Elandal: ThreadSafeLogging <--
 
 		// ZZ:UploadSpeedSense -->
-		theApp.lastCommonRouteFinder->SetPrefs(thePrefs.IsDynUpEnabled(), theApp.uploadqueue->GetDatarate(), thePrefs.GetMinUpload()*1024, (thePrefs.GetMaxUpload() != 0)?thePrefs.GetMaxUpload()*1024:thePrefs.GetMaxGraphUploadRate()*1024, thePrefs.IsDynUpUseMillisecondPingTolerance(), (thePrefs.GetDynUpPingTolerance() > 100)?((thePrefs.GetDynUpPingTolerance()-100)/100.0f):0, thePrefs.GetDynUpPingToleranceMilliseconds(), thePrefs.GetDynUpGoingUpDivider(), thePrefs.GetDynUpGoingDownDivider(), thePrefs.GetDynUpNumberOfPings(), 20); // PENDING: Hard coded min pLowestPingAllowed
+		theApp.lastCommonRouteFinder->SetPrefs(thePrefs.IsDynUpEnabled(), theApp.uploadqueue->GetDatarate(), thePrefs.GetMinUpload()*1024, (thePrefs.GetMaxUpload() != 0)?thePrefs.GetMaxUpload()*1024:thePrefs.GetMaxGraphUploadRate(false)*1024, thePrefs.IsDynUpUseMillisecondPingTolerance(), (thePrefs.GetDynUpPingTolerance() > 100)?((thePrefs.GetDynUpPingTolerance()-100)/100.0f):0, thePrefs.GetDynUpPingToleranceMilliseconds(), thePrefs.GetDynUpGoingUpDivider(), thePrefs.GetDynUpGoingDownDivider(), thePrefs.GetDynUpNumberOfPings(), 20); // PENDING: Hard coded min pLowestPingAllowed
 		// ZZ:UploadSpeedSense <--
 
         theApp.uploadqueue->Process();
@@ -902,7 +935,10 @@ VOID CALLBACK CUploadQueue::UploadTimer(HWND hwnd, UINT uMsg,UINT_PTR idEvent,DW
 					}
 				}
 			}
-			//save rates every second
+
+            theApp.uploadqueue->UpdateDatarates();
+            
+            //save rates every second
 			theStats.RecordRate();
 			// mobilemule sockets
 			theApp.mmserver->Process();
@@ -928,6 +964,7 @@ VOID CALLBACK CUploadQueue::UploadTimer(HWND hwnd, UINT uMsg,UINT_PTR idEvent,DW
 				theApp.listensocket->Process();
 				theApp.OnlineSig(); // Added By Bouc7 
 				theApp.emuledlg->ShowTransferRate();
+				thePrefs.EstimateMaxUploadCap(theApp.uploadqueue->GetDatarate()/1024);
 				
 				if (!thePrefs.TransferFullChunks())
 					theApp.uploadqueue->UpdateMaxClientScore();
@@ -941,7 +978,7 @@ VOID CALLBACK CUploadQueue::UploadTimer(HWND hwnd, UINT uMsg,UINT_PTR idEvent,DW
 				if (thePrefs.IsSchedulerEnabled())
 					theApp.scheduler->Check();
 
-                theApp.emuledlg->transferwnd->UpdateListCount(1, -1);
+                theApp.emuledlg->transferwnd->UpdateListCount(CTransferWnd::wnd2Uploading, -1);
 			}
 
 			statsave++;
@@ -992,19 +1029,17 @@ void CUploadQueue::UpdateDatarates() {
         m_lastCalculatedDataRateTick = ::GetTickCount();
 
         if(avarage_dr_list.GetSize() >= 2 && (avarage_tick_list.GetTail() > avarage_tick_list.GetHead())) {
-	        datarate = ((m_avarage_dr_sum-avarage_dr_list.GetHead())*1000) / (avarage_tick_list.GetTail()-avarage_tick_list.GetHead());
-            friendDatarate = ((avarage_friend_dr_list.GetTail()-avarage_friend_dr_list.GetHead())*1000) / (avarage_tick_list.GetTail()-avarage_tick_list.GetHead());
+	        datarate = (UINT)(((m_avarage_dr_sum - avarage_dr_list.GetHead())*1000) / (avarage_tick_list.GetTail() - avarage_tick_list.GetHead()));
+            friendDatarate = (UINT)(((avarage_friend_dr_list.GetTail() - avarage_friend_dr_list.GetHead())*1000) / (avarage_tick_list.GetTail() - avarage_tick_list.GetHead()));
         }
     }
 }
 
 uint32 CUploadQueue::GetDatarate() {
-    UpdateDatarates();
     return datarate;
 }
 
 uint32 CUploadQueue::GetToNetworkDatarate() {
-    UpdateDatarates();
     if(datarate > friendDatarate) {
         return datarate - friendDatarate;
     } else {

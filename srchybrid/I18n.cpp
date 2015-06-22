@@ -91,6 +91,7 @@ struct SLanguage {
 static SLanguage _aLanguages[] =
 {
 	{LANGID_AR_AE,	_T(""),				FALSE,	_T("ar_AE"),	1256,	_T("windows-1256")},	// Arabic (UAE)
+	{LANGID_BA_BA,	_T(""),				FALSE,	_T("ba_BA"),	1252,	_T("windows-1252")},	// Basque
 	{LANGID_BG_BG,	_T("hun"),			FALSE,	_T("bg_BG"),	1251,	_T("windows-1251")},	// Bulgarian
 	{LANGID_CA_ES,	_T(""),				FALSE,	_T("ca_ES"),	1252,	_T("windows-1252")},	// Catalan
 	{LANGID_CZ_CZ,	_T("czech"),		FALSE,	_T("cz_CZ"),	1250,	_T("windows-1250")},	// Czech
@@ -111,14 +112,16 @@ static SLanguage _aLanguages[] =
 	{LANGID_KO_KR,	_T("korean"),		FALSE,	_T("ko_KR"),	 949,	_T("euc-kr")},			// Korean
 	{LANGID_LT_LT,	_T(""),				FALSE,	_T("lt_LT"),	1257,	_T("windows-1257")},	// Lithuanian
 	{LANGID_LV_LV,	_T(""),				FALSE,	_T("lv_LV"),	1257,	_T("windows-1257")},	// Latvian
-	{LANGID_NB_NO,	_T("norwegian"),	FALSE,	_T("nb_NO"),	1252,	_T("windows-1252")},	// Norwegian (Bokmal)
+	{LANGID_NB_NO,	_T("nor"),			FALSE,	_T("nb_NO"),	1252,	_T("windows-1252")},	// Norwegian (Bokmal)
+	{LANGID_NN_NO,	_T("non"),			FALSE,	_T("nn_NO"),	1252,	_T("windows-1252")},	// Norwegian (Nynorsk)
 	{LANGID_NL_NL,	_T("dutch"),		FALSE,	_T("nl_NL"),	1252,	_T("windows-1252")},	// Dutch (Netherlands)
 	{LANGID_PL_PL,	_T("polish"),		FALSE,	_T("pl_PL"),	1250,	_T("windows-1250")},	// Polish
 	{LANGID_PT_BR,	_T("ptb"),			FALSE,	_T("pt_BR"),	1252,	_T("windows-1252")},	// Portuguese (Brazil)
 	{LANGID_PT_PT,	_T("ptg"),			FALSE,	_T("pt_PT"),	1252,	_T("windows-1252")},	// Portuguese (Portugal)
 	{LANGID_RO_RO,	_T(""),				FALSE,	_T("ro_RO"),	1250,	_T("windows-1250")},	// Rumänisch
 	{LANGID_RU_RU,	_T("russian"),		FALSE,	_T("ru_RU"),	1251,	_T("windows-1251")},	// Russian
-	{LANGID_SL_SI,	_T(""),				FALSE,	_T("sl_SI"),	1250,	_T("windows-1250")},	// Slovenian
+	{LANGID_SL_SI,	_T("slovak"),		FALSE,	_T("sl_SI"),	1250,	_T("windows-1250")},	// Slovenian
+	{LANGID_SQ_AL,	_T(""),				FALSE,	_T("sq_AL"),	1252,	_T("windows-1252")},	// Albanian (Albania)
 	{LANGID_SV_SE,	_T("swedish"),		FALSE,	_T("sv_SE"),	1252,	_T("windows-1252")},	// Swedish
 	{LANGID_TR_TR,	_T("turkish"),		FALSE,	_T("tr_TR"),	1254,	_T("windows-1254")},	// Turkish
 	{LANGID_ZH_CN,	_T("chs"),			FALSE,	_T("zh_CN"),	 936,	_T("gb2312")},			// Chinese (P.R.C.)
@@ -428,18 +431,18 @@ bool CheckThreadLocale()
 		CString str =
 			_T("eMule has detected that your system's codepage is not the same as eMule's current codepage. Do you want eMule to use your system's codepage for converting non-Unicode data to Unicode?\r\n")
 			_T("\r\n")
-			_T("If you want eMule to use your system's codepage for converting non-Unicode data, click 'Yes'. (This will give you more backward compatibility when reading older *.met files created with non-Unicode eMule versions.)\r\n")
+			_T("If you want eMule to use the current codepage for converting non-Unicode data, click 'Yes'. (If you are using eMule the first time or if you don't care about this issue at all, chose this option. This is recommended.)\r\n")
 			_T("\r\n")
-			_T("If you want eMule to use the current codepage for converting non-Unicode data, click 'No'. (If you are using eMule the first time or if you don't care about this issue at all, chose this option. This is recommended.)\r\n")
+			_T("If you want eMule to use your system's codepage for converting non-Unicode data, click 'No'. (This will give you more backward compatibility when reading older *.met files created with non-Unicode eMule versions.)\r\n")
 			_T("\r\n")
 			_T("If you want to cancel and create backup of all your config files or visit our forum to learn more about this issue, click 'Cancel'.\r\n");
-		int iAnswer = AfxMessageBox(str, MB_ICONSTOP | MB_YESNOCANCEL | MB_DEFBUTTON2);
+		int iAnswer = AfxMessageBox(str, MB_ICONSTOP | MB_YESNOCANCEL | MB_DEFBUTTON1);
 		if (iAnswer == IDCANCEL)
 			return false;
-		if (iAnswer == IDYES)
+		if (iAnswer == IDNO)
 			iSetSysACP = 1;
 	}
-	theApp.WriteProfileInt(_T("eMule"), _T("SetSystemACP"), iSetSysACP);
+	VERIFY( theApp.WriteProfileInt(_T("eMule"), _T("SetSystemACP"), iSetSysACP) );
 	return true;
 }
 
@@ -479,4 +482,47 @@ CString CPreferences::GetHtmlCharset()
 	}
 
 	return pszHtmlCharset;
+}
+
+static HHOOK s_hRTLWindowsLayoutOldCbtFilterHook = NULL;
+
+LRESULT CALLBACK RTLWindowsLayoutCbtFilterHook(int code, WPARAM wParam, LPARAM lParam)
+{
+	if (code == HCBT_CREATEWND)
+	{
+		//LPCREATESTRUCT lpcs = ((LPCBT_CREATEWND)lParam)->lpcs;
+
+		//if ((lpcs->style & WS_CHILD) == 0)
+		//	lpcs->dwExStyle |= WS_EX_LAYOUTRTL;	// doesn't seem to have any effect, but shouldn't hurt
+
+		HWND hWnd = (HWND)wParam;
+		if ((GetWindowLong(hWnd, GWL_STYLE) & WS_CHILD) == 0) {
+			SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYOUTRTL);
+		}
+	}
+	return CallNextHookEx(s_hRTLWindowsLayoutOldCbtFilterHook, code, wParam, lParam);
+}
+
+void CemuleApp::EnableRTLWindowsLayout()
+{
+	BOOL (WINAPI *pfnSetProcessDefaultLayout)(DWORD dwFlags);
+	(FARPROC&)pfnSetProcessDefaultLayout = GetProcAddress(GetModuleHandle(_T("user32")), "SetProcessDefaultLayout");
+	if (pfnSetProcessDefaultLayout)
+		(*pfnSetProcessDefaultLayout)(LAYOUT_RTL);
+
+	s_hRTLWindowsLayoutOldCbtFilterHook = SetWindowsHookEx(WH_CBT, RTLWindowsLayoutCbtFilterHook, NULL, GetCurrentThreadId());
+}
+
+void CemuleApp::DisableRTLWindowsLayout()
+{
+	if (s_hRTLWindowsLayoutOldCbtFilterHook)
+	{
+		VERIFY( UnhookWindowsHookEx(s_hRTLWindowsLayoutOldCbtFilterHook) );
+		s_hRTLWindowsLayoutOldCbtFilterHook = NULL;
+
+		BOOL (WINAPI *pfnSetProcessDefaultLayout)(DWORD dwFlags);
+		(FARPROC&)pfnSetProcessDefaultLayout = GetProcAddress(GetModuleHandle(_T("user32")), "SetProcessDefaultLayout");
+		if (pfnSetProcessDefaultLayout)
+			(*pfnSetProcessDefaultLayout)(0);
+	}
 }

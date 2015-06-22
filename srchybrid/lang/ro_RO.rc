@@ -639,7 +639,7 @@ STRINGTABLE
 BEGIN
     IDS_CD_UNAME            "Nume utilizator:"
     IDS_CD_UHASH            "Userhash:"
-    IDS_CD_CSOFT            "Soft client:"
+    IDS_CD_CSOFT            "Soft client"
     IDS_CD_UIP              "Adresã IP:"
     IDS_CD_SIP              "IP server:"
     IDS_CD_VERSION          "Versiune client:"
@@ -828,7 +828,7 @@ BEGIN
     IDS_STARTNEXTFILE       "La terminarea descãrcãrii, descarcã urmãtorul fiºier din pauzã"
     IDS_FULLCHUNKTRANS      "încearcã sã trimiþi tuturor pãrþi complete"
     IDS_MANUALSERVERHIGHPRIO "Dã prioritate mare serverelor adãugate manual"
-    IDS_VERBOSE             "Volubil (informaþii aditionale)"
+    IDS_VERBOSE             "Volubil (informaþii adiþionale)"
     IDS_FLAT                "platã"
     IDS_ROUND               "rotunjitã"
     IDS_SAMEUSERHASH        "Clienþii '%s' ºi '%s' au acelaºi userhash sau IP - '%s' eliminat"
@@ -923,10 +923,10 @@ BEGIN
     IDS_SP_BACKGROUND       "Fundal"
     IDS_SP_GRID             "Grilã"
     IDS_SP_DL1              "Descãrcãri curente"
-    IDS_SP_DL2              "Duratã medie descãrcãri"
+    IDS_SP_DL2              "Medie descãrcãri"
     IDS_SP_DL3              "Medie descãrcãri/sesiune"
     IDS_SP_UL1              "Trimiteri curente"
-    IDS_SP_UL2              "Duratã medie trimiteri"
+    IDS_SP_UL2              "Medie trimiteri"
     IDS_SP_UL3              "Medie trimiteri/sesiune"
     IDS_SP_ACTCON           "Connexiuni active"
     IDS_SP_ACTDL            "Descãrcãri active"
@@ -1148,13 +1148,13 @@ BEGIN
     IDS_DISABLEKNOWNLIST    "Dezactivare listã Clienþi cunoscuþi"
     IDS_DISABLEQUEUELIST    "Dezactivare listã Clienþi la rînd"
     IDS_USECREDITSYSTEM     "Folosesc sistemul de credite (Favorizezi clienþii ce oferã)"
-    IDS_FIRSTAUTODOWN       "Vrei ca eMule sã gestioneze prioritatea fiºierelor din descãrcare?\n\nActivarea acestei opþiuni permite ca eMule sã verifice ca fiºierele cu multe surse sã nu interfereze cu cele cu surse puþine.\n\nDacã abia ai actualizat de la v0.26 sau mai vechi, toate descãrcãrile în curs au primit prioritate 'Auto'.\n\nOpþiunea va opera numai asupra viitoarelor descãrcãri. (Recomandat: Da)"
-    IDS_FIRSTAUTOUP         "Vrei ca eMule sã gestioneze prioritatea fiºierelor din upload?\n\nActivarea acestei opþiuni permite ca eMule sã accelereze difuzarea fiºierelor rare, trimiþînd mai rar fiºierele populare.\n\nDezactivarea acestei opþiuni permite ca eMule sã trimitã în mod egal fiºiere rare ºi populare.\n\nDacã abia ai actualizat de la v0.26 sau mai vechi, toate fiºierele tale share au primit prioritate 'Auto'.\n\nOpþiunea va opera numai asupra viitoarelor fiºiere share. (Recomandat: Da)"
-    IDS_FIRSTCREDITSYSTEM   "Vrei sã favorizezi utilizatorii care-þi dau fiºiere?\n\nAsta se înþelege prin Sistemul de Credite.\n\nActivînd aceastã opþiune, vei ajuta la combaterea 'lipitorilor' (cei ce descarcã fãrã share, sau care scot fiºierele din share dupã descãrcare).\n\nDacã eºti un 'ofertant', sigur vei activa aceastã opþiune.(Recomandat: Da)"
-    IDS_FIRSTFULLCHUNK      "Vrei sã trimiþi pãrþi complete?\n\nActivarea acestei opþiuni va da clienþilor ce iau, posibilitatea de a termina descãrcarea unei pãrþi întregi (9.5 Mb).\n\nDezactivînd-o, vor trece mai mulþi clienþi pe la rînd.\n\nDacã eºti un 'ofertant', sigur vei activa aceastã opþiune.(Recomandat: Da)"
-    IDS_FIRSTSAFECON        "Vrei ca eMule sã intre pe server utilizînd metoda 'Safe Connect'?\n\nDezactivarea acestei opþiuni permite conectarea eMule mai rapidã la servere, dar creºte posibilitatea de a primi ID Scãzut.(Recomandat: Nu)"
+    IDS_FIRSTAUTODOWN       "Activeazã dacã vrei ca eMule sã gestioneze prioritatea fiºierelor la descãrcare.\n\nActivarea acestei opþiuni permite ca eMule sã verifice ca fiºierele cu multe surse sã nu interfereze cu cele cu surse puþine. Opþiunea va opera numai asupra viitoarelor descãrcãri. (Implicit: Activat)"
+    IDS_FIRSTAUTOUP         "Activeazã dacã vrei ca eMule sã gestioneze prioritatea fiºierelor la trimitere.\n\nActivarea acestei opþiuni permite ca eMule sã accelereze difuzarea fiºierelor rare, cele populare devenind mai greu accesibile. Dezactivarea acestei opþiuni permite ca eMule sã trimitã fiºierele populare mai des, în detrimentul celor rare. Opþiunea va opera numai asupra viitoarelor fiºiere share. (Implicit: Activat)"
+    IDS_FIRSTCREDITSYSTEM   "Vrei sã rãsplãteºti utilizatorii care-þi dau fiºiere?\n\nAcest lucru este cunoscut ca Sistemul de Credite. Activînd aceastã opþiune, vei ajuta la combaterea 'triºorilor'. Dacã eºti un 'ofertant', vei dezactiva aceastã opþiune. (Implicit: Activat)"
+    IDS_FIRSTFULLCHUNK      "Activeazã dacã vrei sã trimiþi pãrþi întregi.\n\nActivarea opþiunii va da clienþilor posibilitatea de a completa pãrþi întregi. Dezactivînd-o, vor trece mai mulþi clienþi pe la rînd. Dacã eºti un 'ofertant', vei activa aceastã opþiune. (Implicit: Activat)"
+    IDS_FIRSTSAFECON        "Activeazã dacã vrei ca eMule sã se conecteze prin metoda 'Safe Connect'?\n\nDezactivarea acestei opþiuni permite conectarea eMule mai rapidã la servere, dar creºte posibilitatea de a primi un fals ID mic.(Implicit: Dezactivat)"
     IDS_FIRSTRUNASSIST      "Vrei sã foloseºti îndrumarul pas cu pas de setare eMule?"
-    IDS_FIRSTAUTOCON        "Vrei ca eMule sã se conecteze la pornirea sistemului? (Recomandat: Nu)"
+    IDS_FIRSTAUTOCON        "Activeazã dacã vrei ca eMule sã se conecteze la pornirea sistemului? (Implicit: Dezactivat)"
     IDS_FIRSTCOMPLETE       "Ai încheiat procesul de setare pas cu pas.\n\nAceste opþiuni ºi altele vor putea fi ulterior modificate apãsînd butonul 'Preferinþe'.\n\nPentru explicaþii ºi suport vezi Ajutorul, apãsînd  F1 în eMule!"
 END
 
@@ -1350,7 +1350,7 @@ BEGIN
     IDS_STATS_PROBLEMATIC   "Problematici"
     IDS_LONGHRS             "ore"
     IDS_STATS_LARGESTFILE   "Cel mai mare fiºier share"
-    IDS_CLIENTSOFTWARE      "Software client"
+    IDS_SPLIT_WINDOW        "Split Window"
     IDS_STATS_DSPF          "Fiºier part"
     IDS_STATS_DATASOURCE    "Sursã date"
     IDS_STATS_DSFILE        "Fiºier complet"
@@ -1374,7 +1374,6 @@ BEGIN
     IDS_STATS_MNUTREECPYALL "Copiazã toate statisticile"
     IDS_STATS_MNUTREEHTML   "Funcþii HTML"
     IDS_STATS_EXPORT2HTML   "Exportã toate statisticile..."
-    IDS_STATS_EXPORTVIS     "Exportã toate statisticile vizibile"
     IDS_STATS_MNUTREECPYVIS "Copiazã toate statisticile vizibile"
     IDS_STATS_MNUTREEEXPANDALL "Deschide toate secþiunile"
     IDS_STATS_MNUTREECOLLAPSEALL "Închide toate secþiunile"
@@ -1428,13 +1427,8 @@ END
 STRINGTABLE 
 BEGIN
     IDS_VERSION             "Versiune"
-    IDS_ALL_A4AF_TO_THIS    "Foloseºte aici toate sursele"
     IDS_PASTE               "Adaugã"
-    IDS_ALL_A4AF_TO_OTHER   "Foloseºte altundeva toate sursele"
-    IDS_ALL_A4AF_AUTO       "Foloseºte automat aici sursele A4AF"
-    IDS_SWAP_A4AF_TO_THIS   "Foloseºte sursele A4AF aici"
-    IDS_SWAP_A4AF_TO_OTHER  "Foloseºte altundeva sursele A4AF"
-    IDS_A4AF                "Gestionarea A4AF"
+    IDS_A4AF                "Gestionarea"
     IDS_MOBILEMULE          "MobileMule"
     IDS_ENABLEMM            "Activare MobileMule"
     IDS_AUTOCAT_LABEL       "Recunoaºtere automatã categorie (exemple separate cu |)"
@@ -1636,7 +1630,7 @@ BEGIN
     IDS_LOG_SECURE_IDENT    "Logheazã identitate securizatã"
     IDS_LOG_FILTERED_IPS    "Logheazã IP-uri filtrate/ignorate"
     IDS_LOG_FILE_SAVING     "Logheazã salvãrile de fiºiere"
-    IDS_IPFILTERFILES       "Toate fiºierele de filtrare IP (*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt)|*ipfilter.dat;*ip.prefix;*.p2p;*.p2p.txt|fiºiere de filtrare IP eMule (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|fiºiere Peer Guardian (*.p2p;*.p2p.txt)|*.p2p;*.p2p.txt|fiºiere text (*.txt)|*.txt|Toate fiºierele (*.*)|*.*||"
+	  IDS_IPFILTERFILES       "Toate fiºierele de filtrare IP (*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz)|*ipfilter.dat;*ip.prefix;*.p2b;*.p2p;*.p2p.txt;*.zip;*.gz|Fiºiere filtrare IP ale eMule (*ipfilter.dat;*ip.prefix)|*ipfilter.dat;*ip.prefix|Fiºiere Peer Guardian (*.p2b;*.p2p;*.p2p.txt)|*.p2b;*.p2p;*.p2p.txt|Fiºiere text (*.txt)|*.txt|Fiºiere ZIP (*.zip;*.gz)|*.zip;*.gz|Toate fiºierele (*.*)|*.*||"
     IDS_DELETEIPFILTERS     "Chiar vrei sã ºtergi filtrele IP selectate?"
     IDS_TOTAL_IPFILTER_LABEL "Filtre IP totale:"
     IDS_TOTAL_IPS_LABEL     "Total IP-uri:"
@@ -1706,10 +1700,10 @@ BEGIN
     IDS_NETWORK_INFO        "Informaþii reþea"
     IDS_SP_TOTALUL          "Total trimiteri"
     IDS_SP_ULFRIENDS        "Sloturi trimitere prieteni"
-    IDS_SP_ULSLOTSNOOVERHEAD "trimiteri curente fãrã adiþional (numai sloturi UL)"
+    IDS_SP_ULSLOTSNOOVERHEAD "Trimiteri curente (fãrã adiþional)"
     IDS_ST_ACTIVEU_ZZ       "Trimiteri active"
-    IDS_ST_ULCURRENT        "Trimiteri+Adiþional"
-    IDS_ST_ULSLOTSNOOVERHEAD "Trimitere"
+    IDS_ST_ULCURRENT        "Curent"
+    IDS_ST_ULSLOTSNOOVERHEAD "Curent (fãrã adiþional)"
     IDS_ST_ULFRIEND         "Trimitere prieten"
 END
 
@@ -1723,7 +1717,7 @@ BEGIN
     IDS_CHAT_CLIENT         "Client:"
     IDS_MAXHALFOPENCONS     "Maxim semi-conexiuni"
     IDS_WIZ_STARTWITHWINDOWS 
-                            "Activeazã pentru ca eMule sã porneascã odatã cu Windows. [Implicit: dezactivat]"
+                            "Activeazã pentru ca eMule sã porneascã odatã cu Windows. (Implicit: dezactivat)"
     IDS_KAD_WAITCBK         "Aºtept rãspuns Kad"
     IDS_KAD_TOOMANDYKADLKPS "Prea multe cãutãri Kad"
     IDS_PCDS_CLIENTWAIT     "Aºtept Client"
@@ -1848,7 +1842,91 @@ BEGIN
 
 END
 
+STRINGTABLE 
+BEGIN
+    IDS_WEB_SHUTDOWN        "Închide eMule"
+    IDS_WEB_REBOOT          "Restart sistem"
+    IDS_WEB_SHUTDOWNSYSTEM  "Închide sistem"
+    IDS_WEB_ADMINMENU       "Meniu Admin."
+    IDS_WEB_MAIN_CLOSE      "Chiar vrei sã închizi eMule?"
+    IDS_WEB_MAIN_REBOOT     "Chiar vrei sã restartezi sistemul?"
+    IDS_WEB_MAIN_SHUTDOWN   "Chiar vrei sã închizi sistemul?"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_BANNED "Aratã clienþii alungaþi la rînd"
+    IDS_WEB_SHOW_UPLOAD_QUEUE_FRIEND "Aratã prietenii la rînd"
+    IDS_WEB_SESSIONTIMEOUT  "Sesiune expiratã"
+    IDS_WEB_ALLOWHILEVFUNC  "Permite închidere eMule, restart ºi închidere Windows"
+    IDS_SETPFSLIMIT         "Limitã surse..."
+    IDS_SETPFSLIMITEXPLAINED 
+                            "Introdu te rog noua limitã de surse pentru fiºierul(e) selectat(e) ! \n(pune 0 pentru a folosi setarea globalã)"
+    IDS_UPDATECATINCOMINGDIRS 
+                            "Vrei sã actualizezi acum dosarele de primire incluse în vechiul dosar?"
+    IDS_USESPEECH           "Spune mesajul (speech)"
+    IDS_CONDTCPACCEPT       "Respingere conexiune rapidã"
+    IDS_TCPIP_CONNS         "Conexiuni TCP/IP"
+    IDS_ERR_DELFILE         "Nu pot ºterge fiºierul ""%s"""
+    IDS_MANUAL_FILENAMECLEANUP "Vrei sã cureþi numele fiºierelor selectate?"
+    IDS_PW_RECEIVERADDRESS  "Adresã destinatar:"
+    IDS_PW_ENABLEEMAIL      "Activare anunþ prin e-mail"
+    IDS_EMULENOTIFICATION   "Anunþ eMule"
+    IDS_PW_EMAILNOTIFICATIONS "Anunþuri prin e-mail"
+    IDS_PW_SMTPSERVER       "Server SMTP:"
+    IDS_PW_SENDERADDRESS    "Adresã expeditor:"
+    IDS_PW_SHOWTRANSTOOLBAR "Aratã bara de unelte adiþionalã în Transferuri"
+    IDS_MODIFYCOLLECTION    "Modificã colecþia"
+    IDS_VIEWCOLLECTION      "Vezi colecþia"
+    IDS_COLL_TEXTFORMAT     "Salveazã colecþia ca simplu text"
+    IDS_SEARCHAUTHORCOLLECTION "Cautã în colecþiile autorului"
+    IDS_ERR_DUPL_FILES      "Dublurã la fiºiere share: ""%s"" ºi ""%s"""
+    IDS_USS_TRACEROUTEOFTENFAILED 
+                            "Autodetecþie vitezã UL: Detecþia a eºuat de prea multe ori. Dezactivez autodetecþia vitezã UL."
+    IDS_USS_STARTING        "Autodetecþie vitezã UL: Pregãtit. Încep controlul vitezei de UL. (Primele 60 sec. vor fi în modul reacþie rapidã)"
+    IDS_USS_MANUALUPLOADLIMITDETECTED 
+                            "Autodetecþie vitezã UL: Am detectat creºterea limitei UL în Preferinþe. Intru în modul reacþie rapidã pentru 60 sec."
+    IDS_USS_STATE_PREPARING "Pregãtesc..."
+    IDS_USS_STATE_WAITING   "Aºtept..."
+    IDS_USS_STATE_ERROR     "Eroare!"
+END
 #endif    // Romanian resources
+STRINGTABLE 
+BEGIN
+    IDS_SHARED_STATUS       "Pãrþi share"
+    IDS_INCOMING_FILES      "Fiºiere de primit"
+    IDS_INCOMPLETE_FILES    "Fiºiere incomplete"
+    IDS_SHARED_DIRECTORIES  "Dosare share"
+    IDS_SHAREDIR            "Share dosar"
+    IDS_SHAREDIRSUB         "Share ºi subdosarele"
+    IDS_UNSHAREDIR          "Scoate dosar din share"
+    IDS_UNSHAREDIRSUB       "Scoate ºi subdosarele din share"
+    IDS_ALLSHAREDFILES      "Toate fiºierele share"
+    IDS_ALLDIRECTORIES      "Toate dosarele"
+    IDS_SEARCHRELATED       "Cautã fiºiere similare"
+    IDS_RELATED             "Similare"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COLLECTIONLIST      "Listã colecþie"
+    IDS_SEARCH_EMULECOLLECTION "Colecþie"
+    IDS_COLL_REPLACEEXISTING "Înlocuieºti fiºierul existent?"
+    IDS_COLL_ERR_DELETING   "Eroare necunoscutã la ºtergerea fiºierului vechi. Ieºi fãrã a salva?"
+    IDS_CREATECOLLECTION    "Creeazã colecþie"
+    IDS_COLL_SIGN           "Semneazã colecþia cu nume ºi parolã"
+    IDS_AUTHOR              "Autor"
+    IDS_AUTHORKEY           "Parolã autor"
+    IDS_COLL_ADDINCAT       "Adaugã descãrcãri în categoria Colecþii"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ERR_CONFIGCORRUPT   "%s pare corupt ºi va fi înlocuit"
+    IDS_UPLOADING           "Trimit"
+    IDS_CANCELLED           "Anulat"
+    IDS_PW_REMEMBERDOWNLOADED "Þine minte fiºierele descãrcate"
+    IDS_PW_REMEMBERCANCELLED "Þine minte fiºierele anulate"
+    IDS_AVAILABLEPARTS      "Pãrþi disponibile"
+    IDS_NOSOUND             "Fãrã sunet"
+END
+
 /////////////////////////////////////////////////////////////////////////////
 
 
